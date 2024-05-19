@@ -22,7 +22,7 @@ export const weapons = [
   {
     id: 5,
     name: "Maul",
-    src: "/weapons/Maul.png",
+    src: "/weapons/maul.png",
   },
   {
     id: 6,
@@ -57,7 +57,7 @@ export const weapons = [
   {
     id: 12,
     name: "Spear",
-    src: "/weapons/Spear.png",
+    src: "/weapons/spear.png",
   },
   {
     id: 13,
