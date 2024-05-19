@@ -27,7 +27,7 @@ export const weapons = [
   {
     id: 6,
     name: "Short Bow",
-    src: "/weapons/Short_Bow.png",
+    src: "/weapons/Short_bow.png",
   },
   {
     id: 7,
