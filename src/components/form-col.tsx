@@ -28,7 +28,7 @@ const FormCol = ({
       {sortedData.map((e) => (
         <div key={e.id} className="w-full">
           <h2
-            className={clsx("text-lg font-medium text-center ", {
+            className={clsx("text-lg font-medium text-center", {
               "bg-gradient-to-r from-yellow-300 to-yellow-800":
                 e.era === "golden",
               "bg-gradient-to-r from-violet-300 to-violet-800":

@@ -9,6 +9,13 @@ import { lowUnits } from "@/assets/low-units-data";
 import { weapons } from "@/assets/weapons";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { goldenUnits } from "@/assets/golden-units-data";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Info } from "lucide-react";
 
 export interface FormData {
   discordNick: string;
@@ -61,9 +68,11 @@ export default function UnitsForm() {
                 name="discordNick"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nick na Discordzie</FormLabel>
+                    <FormLabel className="font-bold">
+                      Nick na Discordzie
+                    </FormLabel>
                     <FormControl>
-                      <Input {...field} required />
+                      <Input {...field} disabled />
                     </FormControl>
                   </FormItem>
                 )}
@@ -75,7 +84,7 @@ export default function UnitsForm() {
                 name="inGameNick"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nick w Grze</FormLabel>
+                    <FormLabel className="font-bold">Nick w Grze</FormLabel>
                     <FormControl>
                       <Input {...field} required />
                     </FormControl>
@@ -89,7 +98,7 @@ export default function UnitsForm() {
                 name="characterLevel"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Level Postaci</FormLabel>
+                    <FormLabel className="font-bold">Level Postaci</FormLabel>
                     <FormControl>
                       <Input {...field} min={1} type="number" />
                     </FormControl>
@@ -104,7 +113,9 @@ export default function UnitsForm() {
               name="artyAmount"
               render={({ field }) => (
                 <FormItem className="space-y-4">
-                  <FormLabel>Ilosc Arty</FormLabel>
+                  <FormLabel className="font-bold text-md">
+                    Ilosc Arty
+                  </FormLabel>
                   <RadioGroup
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -176,7 +187,28 @@ export default function UnitsForm() {
             />
           </div>
           <div>
-            <h2 className="font-bold pt-2 pl-2">Broń i ilosc Dowodzenia</h2>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger
+                  type="button"
+                  className="flex items-center pt-4 pl-2"
+                >
+                  <>
+                    <h2 className="font-bold text-md">
+                      Broń i ilosc Dowodzenia
+                    </h2>
+                    <Info className="h-5 hover:scale-110 ease-in-out duration-300" />
+                  </>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <div>
+                    <p>Wybierajac Bronie,</p>
+                    <p>pod nimi pojawi nam sie pole do</p>
+                    <p> wpisania naszej ilosci dowodzenia na tym ekwipunku</p>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             <ul className="flex flex-wrap p-2 gap-2 w-80 justify-center">
               {form.watch("weapons").map((e, i) => (
                 <li
@@ -195,11 +227,11 @@ export default function UnitsForm() {
                       }
                     }}
                     className={clsx(
-                      "h-16 w-16 lg:h-20 lg:w-20 rounded-full p-2 cursor-pointer hover:shadow-md transition duration-300 ease-in-out transform hover:scale-110 hover:bg-gray-300",
+                      "h-16 w-16 rounded-full p-2 cursor-pointer hover:shadow-md transition duration-300 ease-in-out transform hover:scale-110 hover:bg-gray-300",
                       { "bg-red-700 hover:bg-red-900": e.value }
                     )}
                   />
-                  {e.value && (
+                  {e.value ? (
                     <Controller
                       name={`weapons.${i}.leadership`}
                       control={form.control}
@@ -222,6 +254,8 @@ export default function UnitsForm() {
                         />
                       )}
                     />
+                  ) : (
+                    <div className="p-5" />
                   )}
                 </li>
               ))}
@@ -232,7 +266,35 @@ export default function UnitsForm() {
           </Button>
         </div>
         <div className="flex p-4 col-span-3 h-full sm:overflow-y-hidden flex-col xl:justify-around">
-          <h2 className="font-bold text-4xl text-center pb-4">Koszary</h2>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger type="button">
+                <div className="flex items-center justify-center pb-3">
+                  <h2 className="font-bold text-4xl text-center">Koszary</h2>
+                  <Info className="hover:scale-110 ease-in-out duration-300" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <div>
+                  <p>Wybieranie jednostek,</p>
+                  <p>
+                    Priorytetowo powinienes uzupelnic dane o jednostakach na
+                    zwinietej liscie
+                  </p>
+                  <p>
+                    Jesli chcesz, mozesz rozwinac liste i uzupelnic wszystkie
+                    jednostki
+                  </p>
+                  <br />
+                  <p>
+                    "Wymasterowane"- na liscie wyborow, oznacza ze mamy na
+                    jednostce dobre Doktrymy i Masterki(jesli jednostaka je
+                    posiada)
+                  </p>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <div className="flex lg:flex-row items-center sm:overflow-y-hidden flex-col xl:justify-around">
             <FormCol data={lowUnits} controller={form.control} />
             <FormCol data={heroicUnits} controller={form.control} />
