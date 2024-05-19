@@ -287,9 +287,9 @@ export default function UnitsForm() {
                   </p>
                   <br />
                   <p>
-                    "Wymasterowane"- na liscie wyborow, oznacza ze mamy na
-                    jednostce dobre Doktrymy i Masterki(jesli jednostaka je
-                    posiada)
+                    &ldquo;Wymasterowane&ldquo;- na liscie wyborow, oznacza ze
+                    mamy na jednostce dobre Doktrymy i Masterki(jesli jednostaka
+                    je posiada)
                   </p>
                 </div>
               </TooltipContent>
