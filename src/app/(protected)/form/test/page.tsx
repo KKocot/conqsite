@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import UnitsForm from "@/components/units-form";
 import React from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const Page: React.FC = () => {
   const [login, setLogin] = React.useState(false);
@@ -11,7 +12,7 @@ const Page: React.FC = () => {
       {!login ? (
         <div className="flex flex-col items-center justify-center">
           <div>Czesc kliknij zeby sie zalogowac</div>
-          <Button onClick={() => setLogin(true)}>Zaloguj</Button>
+          <Button onClick={() => signIn("discord")}>Zaloguj</Button>
         </div>
       ) : (
         <UnitsForm />

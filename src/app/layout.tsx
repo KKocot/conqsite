@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/navbar";
 
 export const metadata: Metadata = {
   title: "Kingdom of Poland",
@@ -17,10 +16,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/logo.png" sizes="any" />
       </head>
-      <body className="h-screen">
-        <Navbar />
-        {children}
-      </body>
+      <body className="h-screen">{children}</body>
     </html>
   );
 }

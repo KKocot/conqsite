@@ -11,6 +11,16 @@ export default function Home() {
       </h1>
       <div className="mt-8 max-w-md rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
         <p className="text-gray-500 dark:text-gray-400">
+          Zaloguj sie z Discord zeby uzyskac dostep do naszych uslug
+        </p>
+        <div className="mt-4 flex justify-center">
+          <Link href="/form/test">
+            <Button>Zaloguj sie</Button>
+          </Link>
+        </div>
+      </div>
+      {/* <div className="mt-8 max-w-md rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+        <p className="text-gray-500 dark:text-gray-400">
           Wypelnij prosze nasz formularz zeby usprawnic nasza wspolprace
         </p>
         <div className="mt-4 flex justify-center">
@@ -18,7 +28,7 @@ export default function Home() {
             <Button>Przejdz do formularza</Button>
           </Link>
         </div>
-      </div>
+      </div> */}
     </main>
   );
 }
