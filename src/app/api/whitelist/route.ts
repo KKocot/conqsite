@@ -8,3 +8,9 @@ export async function POST(request: Request) {
   await Whitelist.create({ username });
   return NextResponse.json({ message: "User created" }, { status: 201 });
 }
+
+export async function GET() {
+  await connectMongoDB();
+  const whitelist = await Whitelist.find();
+  return NextResponse.json({ whitelist });
+}

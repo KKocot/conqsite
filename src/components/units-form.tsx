@@ -58,7 +58,7 @@ export default function UnitsForm() {
       <form
         // @ts-ignore
         onSubmit={form.handleSubmit(onSubmit)}
-        className="sm:h-screen flex flex-col items-center sm:grid sm:grid-flow-col sm:col-span-4"
+        className="flex flex-col items-center sm:grid sm:grid-flow-col sm:col-span-4"
       >
         <div className="flex flex-col col-span-1 h-full w-fit justify-start sm:shadow-gray-600 sm:shadow-lg p-4">
           <div className="w-80 p-2 flex flex-col gap-2">
@@ -213,7 +213,7 @@ export default function UnitsForm() {
               {form.watch("weapons").map((e, i) => (
                 <li
                   key={i}
-                  className="flex flex-col items-center whitespace-nowrap gap-2"
+                  className="flex flex-col items-center whitespace-nowrap gap-2 h-[85px]"
                 >
                   <img
                     title={weapons[i].name}
@@ -241,7 +241,7 @@ export default function UnitsForm() {
                           type="number"
                           min={1}
                           max={999}
-                          className="w-16 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          className="h-5 py-0 w-16 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                           onChange={(event) => {
                             const leadershipValue = parseInt(
                               event.target.value
@@ -254,14 +254,12 @@ export default function UnitsForm() {
                         />
                       )}
                     />
-                  ) : (
-                    <div className="p-5" />
-                  )}
+                  ) : null}
                 </li>
               ))}
             </ul>
           </div>
-          <Button type="submit" className="w-full mt-auto">
+          <Button type="submit" className="w-full my-2">
             Wyslij
           </Button>
         </div>
