@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import mongoose, { Schema } from "mongoose";
 
 const SurveySchema = new Schema({
   discordNick: { type: String, required: true },
@@ -38,6 +37,6 @@ const SurveySchema = new Schema({
   },
 });
 
-const Survey = mongoose.model("Survey", SurveySchema);
+const Survey = mongoose.models.Survey || mongoose.model("Survey", SurveySchema);
 
 export default Survey;

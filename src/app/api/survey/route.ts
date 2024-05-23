@@ -1,5 +1,5 @@
 import connectMongoDB from "@/lib/mongodb";
-import Survey from "@/models/whitelist";
+import Survey from "@/models/surveys";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {

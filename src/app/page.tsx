@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Home() {
   return (
@@ -15,7 +16,7 @@ export default function Home() {
         </p>
         <div className="mt-4 flex justify-center">
           <Link href="/form/test">
-            <Button>Zaloguj sie</Button>
+            <Button onClick={() => signIn("discord")}>Zaloguj sie</Button>
           </Link>
         </div>
       </div>
