@@ -16,6 +16,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 export interface FormData {
   discordNick: string;
@@ -44,6 +46,10 @@ export const DEFAULT_FORM_DATA: FormData = {
 };
 
 export default function UnitsForm() {
+  const { data } = useSession();
+  useEffect(() => {
+    form.setValue("discordNick", data?.user?.name || "");
+  }, [data?.user?.name]);
   const form = useForm({
     defaultValues: {
       ...DEFAULT_FORM_DATA,
