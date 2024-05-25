@@ -7,7 +7,7 @@ import { signIn, useSession } from "next-auth/react";
 export default function Home() {
   const { data } = useSession();
   return (
-    <main className="flex flex-col items-center justify-center px-4 md:px-6">
+    <main className="flex flex-col items-center justify-center px-4 md:px-6 h-full">
       <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
         Witam w Kingdom of Poland
       </h1>
@@ -17,7 +17,7 @@ export default function Home() {
             Wypelnij prosze nasz formularz zeby usprawnic nasza wspolprace
           </p>
           <div className="mt-4 flex justify-center">
-            <Link href={`/form/${data.user?.name}`}>
+            <Link href="/form">
               <Button>Przejdz do formularza</Button>
             </Link>
           </div>
@@ -28,7 +28,7 @@ export default function Home() {
             Zaloguj sie z Discord zeby uzyskac dostep do naszych uslug
           </p>
           <div className="mt-4 flex justify-center">
-            <Link href="/form/test">
+            <Link href="/form">
               <Button onClick={() => signIn("discord")}>Zaloguj sie</Button>
             </Link>
           </div>

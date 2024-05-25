@@ -2,7 +2,11 @@ import connectMongoDB from "@/lib/mongodb";
 import Survey from "@/models/surveys";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+export async function PUT(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  const { id } = params;
   const {
     discordNick,
     inGameNick,
@@ -12,16 +16,20 @@ export async function POST(request: Request) {
     units,
   } = await request.json();
   await connectMongoDB();
-  await Survey.create({
-    discordNick,
-    inGameNick,
-    characterLevel,
-    artyAmount,
-    weapons,
-    units,
-  });
-  return NextResponse.json({ message: "Survey added" }, { status: 201 });
+  await Survey.updateOne(
+    { _id: id },
+    {
+      discordNick,
+      inGameNick,
+      characterLevel,
+      artyAmount,
+      weapons,
+      units,
+    }
+  );
+  return NextResponse.json({ message: "Survey updated" }, { status: 200 });
 }
+
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }

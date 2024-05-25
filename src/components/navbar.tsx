@@ -30,16 +30,16 @@ export default function Navbar() {
             />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel>Moje konto</DropdownMenuLabel>
             <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <Link href="/form">Formularz</Link>
+            </DropdownMenuItem>
             <DropdownMenuItem
               className="cursor-pointer"
               onClick={() => signOut()}
             >
               Wyloguj sie
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Link href={`/form/${data.user?.name}`}>Formularz</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
