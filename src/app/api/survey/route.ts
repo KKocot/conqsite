@@ -22,3 +22,12 @@ export async function POST(request: Request) {
   });
   return NextResponse.json({ message: "Survey added" }, { status: 201 });
 }
+export async function GET(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  const { id } = params;
+  await connectMongoDB();
+  const survey = await Survey.findOne({ _id: id });
+  return NextResponse.json({ survey }, { status: 200 });
+}
