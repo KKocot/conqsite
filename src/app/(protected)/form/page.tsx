@@ -6,8 +6,7 @@ import { useSession } from "next-auth/react";
 
 const Page: React.FC = () => {
   const [whitelist, setWhitelist] = useState([]);
-  const { data } = useSession();
-
+  const { data: userData } = useSession();
   useEffect(() => {
     const fetchWhitelist = async () => {
       try {
@@ -21,10 +20,19 @@ const Page: React.FC = () => {
 
     fetchWhitelist();
   }, []);
-  if (whitelist.length === 0 && !data) {
-    <div>loading</div>;
+  if (whitelist.length !== 0 && userData) {
+    const isWhitelisted = whitelist.some(
+      (user: { discordId: string }) => user.discordId === userData.id
+    );
+    return isWhitelisted ? (
+      <UnitsForm />
+    ) : (
+      <div className="text-center">
+        Jesli nalezysz do KoP, a nie widzisz ankiety, napisz do rekrutera o
+        pomoc
+      </div>
+    );
   }
-  return <UnitsForm />;
 };
 
 export default Page;
