@@ -56,9 +56,21 @@ export default function UnitsForm() {
     },
   });
 
-  function onSubmit(values: FormData) {
-    console.log(values);
-  }
+  const onSubmit = async (values: FormData) => {
+    try {
+      await fetch("/api/survey", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      console.log(values);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Form {...form}>
       <form
