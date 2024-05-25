@@ -18,6 +18,7 @@ import {
 import { Info } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
+import { toast } from "react-hot-toast";
 
 export interface FormData {
   discordNick: string;
@@ -45,11 +46,10 @@ export const DEFAULT_FORM_DATA: FormData = {
   },
 };
 
-export default function UnitsForm() {
-  const { data } = useSession();
+export default function UnitsForm({ username }: { username: string }) {
   useEffect(() => {
-    form.setValue("discordNick", data?.user?.name || "");
-  }, [data?.user?.name]);
+    form.setValue("discordNick", username);
+  }, [username]);
   const form = useForm({
     defaultValues: {
       ...DEFAULT_FORM_DATA,
@@ -65,9 +65,10 @@ export default function UnitsForm() {
         },
         body: JSON.stringify(values),
       });
-      console.log(values);
+      toast.success("Ankieta wyslana!");
     } catch (error) {
       console.log(error);
+      toast.error("Wystapil blad podczas wysylania ankiety");
     }
   };
 

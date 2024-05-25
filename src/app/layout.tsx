@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { NextAuthProvider } from "@/components/providers/next-auth";
 import Navbar from "@/components/navbar";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Kingdom of Poland",
@@ -22,6 +23,7 @@ export default function RootLayout({
         <body className="h-screen">
           <Navbar />
           {children}
+          <Toaster position="top-center" />
         </body>
       </html>
     </NextAuthProvider>

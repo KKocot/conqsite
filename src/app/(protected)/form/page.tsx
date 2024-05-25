@@ -5,7 +5,15 @@ import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
 const Page: React.FC = () => {
-  const [whitelist, setWhitelist] = useState([]);
+  const [whitelist, setWhitelist] = useState<
+    | {
+        idDiscord: string;
+        usernameDiscord: string;
+        __v: number;
+        _id: string;
+      }[]
+    | []
+  >([]);
   const { data: userData } = useSession();
   useEffect(() => {
     const fetchWhitelist = async () => {
@@ -21,11 +29,13 @@ const Page: React.FC = () => {
     fetchWhitelist();
   }, []);
   if (whitelist.length !== 0 && userData) {
-    const isWhitelisted = whitelist.some(
-      (user: { discordId: string }) => user.discordId === userData.id
-    );
+    const isWhitelisted =
+      whitelist.find(
+        (whitelistedUser: { idDiscord: string }) =>
+          whitelistedUser.idDiscord === userData.user.id
+      ) || null;
     return isWhitelisted ? (
-      <UnitsForm />
+      <UnitsForm username={isWhitelisted.usernameDiscord} />
     ) : (
       <div className="text-center">
         Jesli nalezysz do KoP, a nie widzisz ankiety, napisz do rekrutera o
