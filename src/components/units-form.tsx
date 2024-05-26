@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
 export interface FormData {
-  id?: string;
+  _id?: string;
   discordNick: string;
   inGameNick: string;
   characterLevel: number;
@@ -61,7 +61,6 @@ export default function UnitsForm({ username }: { username: string }) {
     };
     fetchForm();
   }, [username]);
-
   useEffect(() => {
     form.setValue("discordNick", username);
     setFormData({
@@ -73,13 +72,23 @@ export default function UnitsForm({ username }: { username: string }) {
   const form = useForm({
     values: formData,
   });
-
   const onSubmit = async (values: FormData) => {
-    setDisabled(true); // Disable the submit button to prevent multiple submissions
+    setDisabled(true);
+    setTimeout(() => {
+      setDisabled(false);
+    }, 2000);
 
     try {
-      if (!formData.id) {
-        // If there's no formData id, it's a new survey, so we POST it
+      if (formData._id) {
+        await fetch(`/api/survey/${formData._id}`, {
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
+        toast.success("Ankieta zaktualizowana!");
+      } else {
         await fetch("/api/survey", {
           method: "POST",
           headers: {
@@ -88,29 +97,14 @@ export default function UnitsForm({ username }: { username: string }) {
           body: JSON.stringify(values),
         });
         toast.success("Ankieta wysłana!");
-      } else {
-        // If there's formData id, it's an existing survey, so we PUT it
-        await fetch(`/api/survey/${formData.id}`, {
-          method: "PUT",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify(values),
-        });
-        toast.success("Ankieta zaktualizowana!");
       }
     } catch (error) {
       console.error(error);
       toast.error(
         `Wystąpił błąd podczas ${
-          formData.id ? "aktualizowania" : "wysyłania"
+          formData._id ? "aktualizowania" : "wysyłania"
         } ankiety`
       );
-    } finally {
-      // Enable the submit button after 2 seconds regardless of success or failure
-      setTimeout(() => {
-        setDisabled(false);
-      }, 2000);
     }
   };
 
