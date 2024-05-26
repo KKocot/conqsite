@@ -18,7 +18,6 @@ import {
 import { Info } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { fetchForm } from "@/lib/utils";
 
 export interface FormData {
   id?: string;
@@ -49,9 +48,18 @@ export const DEFAULT_FORM_DATA: FormData = {
 
 export default function UnitsForm({ username }: { username: string }) {
   const [disabled, setDisabled] = useState(false);
-  const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
+  const [formData, setFormData] = useState<FormData>(DEFAULT_FORM_DATA);
   useEffect(() => {
-    fetchForm(username, (e) => setFormData);
+    const fetchForm = async () => {
+      try {
+        const response = await fetch(`/api/survey/${username}`);
+        const data = await response.json();
+        if (data) setFormData(data.survey);
+      } catch (error) {
+        console.error("Error fetching:", error);
+      }
+    };
+    fetchForm();
   }, [username]);
 
   useEffect(() => {
@@ -67,12 +75,11 @@ export default function UnitsForm({ username }: { username: string }) {
   });
 
   const onSubmit = async (values: FormData) => {
-    setDisabled(true);
-    setTimeout(() => {
-      setDisabled(false);
-    }, 2000);
-    if (!formData.id) {
-      try {
+    setDisabled(true); // Disable the submit button to prevent multiple submissions
+
+    try {
+      if (!formData.id) {
+        // If there's no formData id, it's a new survey, so we POST it
         await fetch("/api/survey", {
           method: "POST",
           headers: {
@@ -80,13 +87,9 @@ export default function UnitsForm({ username }: { username: string }) {
           },
           body: JSON.stringify(values),
         });
-        toast.success("Ankieta wyslana!");
-      } catch (error) {
-        console.log(error);
-        toast.error("Wystapil blad podczas wysylania ankiety");
-      }
-    } else {
-      try {
+        toast.success("Ankieta wysłana!");
+      } else {
+        // If there's formData id, it's an existing survey, so we PUT it
         await fetch(`/api/survey/${formData.id}`, {
           method: "PUT",
           headers: {
@@ -95,10 +98,19 @@ export default function UnitsForm({ username }: { username: string }) {
           body: JSON.stringify(values),
         });
         toast.success("Ankieta zaktualizowana!");
-      } catch (error) {
-        console.log(error);
-        toast.error("Wystapil blad podczas aktualizowania ankiety");
       }
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        `Wystąpił błąd podczas ${
+          formData.id ? "aktualizowania" : "wysyłania"
+        } ankiety`
+      );
+    } finally {
+      // Enable the submit button after 2 seconds regardless of success or failure
+      setTimeout(() => {
+        setDisabled(false);
+      }, 2000);
     }
   };
 
