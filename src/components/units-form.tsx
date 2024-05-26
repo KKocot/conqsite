@@ -18,8 +18,6 @@ import {
 import { Info } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import connectMongoDB from "@/lib/mongodb";
-import Survey from "@/models/surveys";
 import { fetchForm } from "@/lib/utils";
 
 export interface FormData {
@@ -51,9 +49,8 @@ export const DEFAULT_FORM_DATA: FormData = {
 export default function UnitsForm({ username }: { username: string }) {
   const [disabled, setDisabled] = useState(false);
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
-
   useEffect(() => {
-    fetchForm(username, setFormData);
+    fetchForm(username, (e) => setFormData);
   }, [username]);
 
   useEffect(() => {
@@ -65,7 +62,7 @@ export default function UnitsForm({ username }: { username: string }) {
   }, [username, JSON.stringify(formData)]);
 
   const form = useForm({
-    defaultValues: formData,
+    values: formData,
   });
 
   const onSubmit = async (values: FormData) => {

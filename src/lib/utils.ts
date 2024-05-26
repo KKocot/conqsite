@@ -6,12 +6,12 @@ export function cn(...inputs: ClassValue[]) {
 }
 export const fetchForm = async (
   username: string,
-  setFormData: (data: any) => void
+  setFormData: (data: FormData) => void
 ) => {
   try {
     const response = await fetch(`/api/survey/${username}`);
     const data = await response.json();
-    setFormData(data.survey);
+    if (data) setFormData(data.survey);
   } catch (error) {
     console.error("Error fetching:", error);
   }
