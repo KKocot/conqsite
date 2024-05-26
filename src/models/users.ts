@@ -6,7 +6,6 @@ const UsersSchema = new Schema({
   role: {
     type: String,
     enum: ["member", "recruter", "commander", "admin", "headadmin"],
-    required: true,
     default: "member",
   },
   points: Number,
