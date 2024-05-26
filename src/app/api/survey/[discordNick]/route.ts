@@ -6,7 +6,10 @@ interface Params {
   discordNick: string;
 }
 
-export async function PUT(request: Request, { params }: { params: any }) {
+export async function PUT(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   const { id } = params;
   const {
     newDiscordNick: discordNick,

@@ -21,6 +21,7 @@ import { toast } from "react-hot-toast";
 import { fetchForm } from "@/lib/utils";
 
 export interface FormData {
+  id?: string;
   discordNick: string;
   inGameNick: string;
   characterLevel: number;
@@ -70,18 +71,34 @@ export default function UnitsForm({ username }: { username: string }) {
     setTimeout(() => {
       setDisabled(false);
     }, 2000);
-    try {
-      await fetch("/api/survey", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
-      toast.success("Ankieta wyslana!");
-    } catch (error) {
-      console.log(error);
-      toast.error("Wystapil blad podczas wysylania ankiety");
+    if (!formData.id) {
+      try {
+        await fetch("/api/survey", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
+        toast.success("Ankieta wyslana!");
+      } catch (error) {
+        console.log(error);
+        toast.error("Wystapil blad podczas wysylania ankiety");
+      }
+    } else {
+      try {
+        await fetch(`/api/survey/${formData.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
+        toast.success("Ankieta zaktualizowana!");
+      } catch (error) {
+        console.log(error);
+        toast.error("Wystapil blad podczas aktualizowania ankiety");
+      }
     }
   };
 
