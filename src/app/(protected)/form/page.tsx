@@ -6,13 +6,12 @@ import { useSession } from "next-auth/react";
 
 const Page: React.FC = () => {
   const [whitelist, setWhitelist] = useState<
-    | {
-        idDiscord: string;
-        usernameDiscord: string;
-        __v: number;
-        _id: string;
-      }[]
-    | []
+    {
+      idDiscord: string;
+      usernameDiscord: string;
+      __v: number;
+      _id: string;
+    }[]
   >([]);
   const { data: userData } = useSession();
   useEffect(() => {

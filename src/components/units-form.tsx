@@ -16,9 +16,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import connectMongoDB from "@/lib/mongodb";
+import Survey from "@/models/surveys";
+import { fetchForm } from "@/lib/utils";
 
 export interface FormData {
   discordNick: string;
@@ -47,16 +49,30 @@ export const DEFAULT_FORM_DATA: FormData = {
 };
 
 export default function UnitsForm({ username }: { username: string }) {
+  const [disabled, setDisabled] = useState(false);
+  const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
+
+  useEffect(() => {
+    fetchForm(username, setFormData);
+  }, [username]);
+
   useEffect(() => {
     form.setValue("discordNick", username);
-  }, [username]);
+    setFormData({
+      ...formData,
+      discordNick: username,
+    });
+  }, [username, JSON.stringify(formData)]);
+
   const form = useForm({
-    defaultValues: {
-      ...DEFAULT_FORM_DATA,
-    },
+    defaultValues: formData,
   });
 
   const onSubmit = async (values: FormData) => {
+    setDisabled(true);
+    setTimeout(() => {
+      setDisabled(false);
+    }, 2000);
     try {
       await fetch("/api/survey", {
         method: "POST",
@@ -278,7 +294,7 @@ export default function UnitsForm({ username }: { username: string }) {
               ))}
             </ul>
           </div>
-          <Button type="submit" className="w-full my-2">
+          <Button disabled={disabled} type="submit" className="w-full my-2">
             Wyslij
           </Button>
         </div>
