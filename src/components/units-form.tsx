@@ -55,18 +55,19 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
   });
   const [pendign, setPending] = useState(false);
 
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`/api/survey/${user_id}`);
+      const data = await response.json();
+      if (!data.error || !data.survey) setFormData(data.survey);
+    } catch (error) {
+      console.error("Error fetching:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`/api/survey/${user_id}`);
-        const data = await response.json();
-        if (!data.error || data.survey !== null) setFormData(data.survey);
-      } catch (error) {
-        console.error("Error fetching:", error);
-      }
-    };
     fetchData();
-  }, [user_id]);
+  }, [!!user_id]);
 
   const form = useForm({
     values: formData,
@@ -81,7 +82,7 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
         },
         body: JSON.stringify({
           ...values,
-          user_id: formData._id,
+          user_id: values._id,
           _id: values._id,
         }),
       });
@@ -90,7 +91,7 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
       console.error(error);
       toast.error(
         `Wystąpił błąd podczas ${
-          formData._id ? "aktualizowania" : "wysyłania"
+          values._id ? "aktualizowania" : "wysyłania"
         } ankiety`
       );
     } finally {
