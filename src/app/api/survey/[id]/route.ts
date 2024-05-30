@@ -1,26 +1,20 @@
 import connectMongoDB from "@/lib/mongodb";
 import Survey from "@/models/surveys";
 import { NextResponse } from "next/server";
-import { ZodError, z } from "zod";
+import { ZodError } from "zod";
 
 export async function GET(
   request: Request,
-  { params: { discordId } }: { params: { discordId: string } }
+  { params: { id } }: { params: { id: string } }
 ) {
   try {
     await connectMongoDB();
-    const survey = await Survey.findOne({ discordId }).exec();
-    if (!survey) {
-      return new NextResponse(JSON.stringify({ error: "Survey not found" }), {
-        status: 404,
-      });
-    }
-    return new NextResponse(JSON.stringify({ survey }), { status: 200 });
+    const survey = await Survey.findOne({ discordId: id });
+    return NextResponse.json({ survey }, { status: 200 });
   } catch (error) {
-    console.error("Error fetching survey:", error);
-    return new NextResponse(
-      JSON.stringify({ error: "Internal Server Error" }),
-      { status: 500 }
-    );
+    if (error instanceof ZodError)
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    if (error instanceof Error)
+      return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
