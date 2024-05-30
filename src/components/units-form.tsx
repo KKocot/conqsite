@@ -60,7 +60,7 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
       try {
         const response = await fetch(`/api/survey/${user_id}`);
         const data = await response.json();
-        if (!data.error) setFormData(data.survey);
+        if (!data.error || data.survey !== null) setFormData(data.survey);
       } catch (error) {
         console.error("Error fetching:", error);
       }
