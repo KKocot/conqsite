@@ -1,9 +1,19 @@
-import { AuthOptions } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
-import NextAuth, { DefaultSession } from "next-auth";
-import { JWT } from "next-auth/jwt";
+import { NextAuthConfig, User } from "next-auth";
+import DiscordProvider, { DiscordProfile } from "next-auth/providers/discord";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
 
-export const authOptions: AuthOptions = {
+import { db } from "@/db/db";
+import { accounts, DatabaseUser, users } from "@/db/schema/auth";
+import { eq } from "drizzle-orm";
+import { whitelist } from "@/db/schema/whitelist";
+import { Adapter, AdapterUser } from "next-auth/adapters";
+
+export const authOptions: NextAuthConfig = {
+  adapter: DrizzleAdapter(db, {
+    usersTable: users,
+    accountsTable: accounts,
+  }),
+
   // Configure one or more authentication providers
   providers: [
     DiscordProvider({
@@ -13,37 +23,33 @@ export const authOptions: AuthOptions = {
     // ...add more providers here
   ],
   callbacks: {
-    jwt({ token, user }) {
-      if (user) {
-        // User is available during sign-in
-        token.id = user.id;
+    async signIn({ profile, user }) {
+      if (!profile?.id) return false;
+      const [onWhitelist] = await db
+        .select()
+        .from(whitelist)
+        .where(eq(whitelist.discord_id, profile.id));
+      if (user.id) {
+        await db
+          .update(users)
+          .set({
+            name: profile.global_name,
+            image: profile.image_url,
+          })
+          .where(eq(users.id, user.id));
       }
-      return token;
+      return !!onWhitelist;
     },
-    session({ session, token }) {
-      session.user.id = token.id;
 
+    async session({ session }) {
       return session;
     },
   },
 };
 
-declare module "next-auth" {
-  /**
-   * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
-   */
-  interface Session {
-    user: {
-      /** The user's postal address. */
-      id: string;
-    } & DefaultSession["user"];
-  }
+declare module "next-auth/adapters" {
+  interface AdapterUser extends User, DatabaseUser {}
 }
-
-declare module "next-auth/jwt" {
-  /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
-  interface JWT {
-    /** OpenID ID Token */
-    id: string;
-  }
+declare module "next-auth" {
+  interface Profile extends DiscordProfile {}
 }

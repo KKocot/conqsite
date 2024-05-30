@@ -1,47 +1,18 @@
-"use client";
-
 import UnitsForm from "@/components/units-form";
-import React, { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import React from "react";
+import { auth } from "@/app/api/auth/[...nextauth]/route";
+import { db } from "@/db/db";
+import { surveys } from "@/db/schema/survey";
+import { eq } from "drizzle-orm";
 
-const Page: React.FC = () => {
-  const [whitelist, setWhitelist] = useState<
-    {
-      idDiscord: string;
-      usernameDiscord: string;
-      __v: number;
-      _id: string;
-    }[]
-  >([]);
-  const { data: userData } = useSession();
-  useEffect(() => {
-    const fetchWhitelist = async () => {
-      try {
-        const response = await fetch("/api/whitelist");
-        const data = await response.json();
-        setWhitelist(data.whitelist);
-      } catch (error) {
-        console.error("Error fetching whitelist:", error);
-      }
-    };
+const Page: React.FC = async () => {
+  const session = await auth();
+  const [surveyData] = await db
+    .select()
+    .from(surveys)
+    .where(eq(surveys.userId, session?.user?.id!));
 
-    fetchWhitelist();
-  }, []);
-  if (whitelist.length !== 0 && userData) {
-    const isWhitelisted =
-      whitelist.find(
-        (whitelistedUser: { idDiscord: string }) =>
-          whitelistedUser.idDiscord === userData.user.id
-      ) || null;
-    return isWhitelisted ? (
-      <UnitsForm username={isWhitelisted.usernameDiscord} />
-    ) : (
-      <div className="text-center">
-        Jesli nalezysz do KoP, a nie widzisz ankiety, napisz do rekrutera o
-        pomoc
-      </div>
-    );
-  }
+  return <UnitsForm surveyData={surveyData ?? null} />;
 };
 
 export default Page;

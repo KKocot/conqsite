@@ -1,23 +1,9 @@
-import connectMongoDB from "@/lib/mongodb";
-import Whitelist from "@/models/whitelist";
+import { db } from "@/db/db";
+import { insertWhitelistSchema, whitelist } from "@/db/schema/whitelist";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  const { usernameDiscord, idDiscord } = await request.json();
-  await connectMongoDB();
-  await Whitelist.create({ usernameDiscord, idDiscord });
-  return NextResponse.json({ message: "User created" }, { status: 201 });
-}
-
-export async function GET() {
-  await connectMongoDB();
-  const whitelist = await Whitelist.find();
-  return NextResponse.json({ whitelist });
-}
-
-export async function DELETE(request: Request) {
-  const id = new URL(request.url).searchParams.get("id");
-  await connectMongoDB();
-  await Whitelist.findByIdAndDelete(id);
-  return NextResponse.json({ message: "User deleted" }, { status: 200 });
+  const data = insertWhitelistSchema.parse(await request.json());
+  const [g] = await db.insert(whitelist).values(data).returning();
+  return NextResponse.json({ added: g.discord_id }, { status: 201 });
 }

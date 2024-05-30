@@ -1,9 +1,10 @@
+"use client";
 import { Input } from "./ui/input";
 import FormCol from "./form-col";
 import { Button } from "./ui/button";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import clsx from "clsx";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
 import { lowUnits } from "@/assets/low-units-data";
 import { weapons } from "@/assets/weapons";
@@ -18,61 +19,57 @@ import {
 import { Info } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { Survey } from "@/db/schema/survey";
+import { useSession } from "next-auth/react";
+import { cn } from "@/lib/utils";
 
-export interface FormData {
-  _id?: string;
-  discordNick: string;
-  inGameNick: string;
-  characterLevel: number;
-  artyAmount: "none" | "some" | "average" | "aLot";
-  weapons: { value: boolean; leadership: number }[];
-  units: {
-    low: { id: number; value: string }[];
-    heroic: { id: number; value: string }[];
-    golden: { id: number; value: string }[];
-  };
-}
-
-export const DEFAULT_FORM_DATA: FormData = {
-  discordNick: "",
+export const DEFAULT_FORM_DATA: Omit<Survey, "userId" | "id"> = {
   inGameNick: "",
   characterLevel: 0,
-  artyAmount: "none",
-  weapons: weapons.map(() => ({ value: false, leadership: 0 })),
+  artyleryAmount: "none",
+  weapons: weapons.map((weapon) => ({
+    id: weapon.id,
+    value: 0,
+  })),
   units: {
     low: lowUnits.map((unit) => ({ id: unit.id, value: "0" })),
     heroic: heroicUnits.map((unit) => ({ id: unit.id, value: "0" })),
     golden: goldenUnits.map((unit) => ({ id: unit.id, value: "0" })),
   },
 };
+const amounts = [
+  {
+    value: "none",
+    label: "Nie mam",
+  },
+  {
+    value: "some",
+    label: "Malo",
+  },
+  {
+    value: "average",
+    label: "Srednio",
+  },
+  {
+    value: "many",
+    label: "Duzo",
+  },
+];
 
-export default function UnitsForm({ username }: { username: string }) {
+interface FormDataProps {
+  surveyData: Survey | null;
+}
+export default function UnitsForm({ surveyData }: FormDataProps) {
+  const session = useSession();
   const [disabled, setDisabled] = useState(false);
-  const [formData, setFormData] = useState<FormData>(DEFAULT_FORM_DATA);
-  useEffect(() => {
-    const fetchForm = async () => {
-      try {
-        const response = await fetch(`/api/survey/${username}`);
-        const data = await response.json();
-        console.log(data);
-        if (!data.error) setFormData(data.survey);
-      } catch (error) {
-        console.error("Error fetching:", error);
-      }
-    };
-    fetchForm();
-  }, [username]);
-  useEffect(() => {
-    form.setValue("discordNick", username);
-    setFormData({
-      ...formData,
-      discordNick: username,
-    });
-  }, [username, JSON.stringify(formData)]);
-
   const form = useForm({
-    values: formData,
+    values: surveyData ?? DEFAULT_FORM_DATA,
   });
+  const { fields: weaponsArray } = useFieldArray({
+    control: form.control,
+    name: "weapons",
+  });
+
   const onSubmit = async (values: FormData) => {
     setDisabled(true);
     setTimeout(() => {
@@ -80,32 +77,25 @@ export default function UnitsForm({ username }: { username: string }) {
     }, 2000);
 
     try {
-      if (formData._id) {
-        await fetch(`/api/survey/${formData._id}`, {
-          method: "PUT",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify(values),
-        });
-        toast.success("Ankieta zaktualizowana!");
-      } else {
-        await fetch("/api/survey", {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify(values),
-        });
-        toast.success("Ankieta wysłana!");
-      }
+      await fetch(`/api/survey`, {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          ...values,
+          characterLevel: 123,
+          userId: session.data?.user?.id,
+        }),
+      });
+      toast.success("Ankieta zaktualizowana!");
     } catch (error) {
       console.error(error);
-      toast.error(
-        `Wystąpił błąd podczas ${
-          formData._id ? "aktualizowania" : "wysyłania"
-        } ankiety`
-      );
+      // toast.error(
+      //   `Wystąpił błąd podczas ${
+      //     formData._id ? "aktualizowania" : "wysyłania"
+      //   } ankiety`
+      // );
     }
   };
 
@@ -118,22 +108,6 @@ export default function UnitsForm({ username }: { username: string }) {
       >
         <div className="flex flex-col col-span-1 h-full w-fit justify-start sm:shadow-gray-600 sm:shadow-lg p-4">
           <div className="w-80 p-2 flex flex-col gap-2">
-            <div className="grid w-full max-w-sm items-center gap-1.5">
-              <FormField
-                control={form.control}
-                name="discordNick"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-bold">
-                      Nick na Discordzie
-                    </FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
             <div className="grid w-full max-w-sm items-center gap-1.5">
               <FormField
                 control={form.control}
@@ -166,78 +140,43 @@ export default function UnitsForm({ username }: { username: string }) {
           <div className="px-2 w-full">
             <FormField
               control={form.control}
-              name="artyAmount"
+              name="artyleryAmount"
               render={({ field }) => (
                 <FormItem className="space-y-4">
                   <FormLabel className="font-bold text-md">
-                    Ilosc Arty
+                    Ilosc Artylerii
                   </FormLabel>
-                  <RadioGroup
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    className="grid grid-cols-2 w-full justify-center"
-                  >
-                    <FormItem className="flex items-center space-x-3 space-y-0">
-                      <FormControl>
-                        <RadioGroupItem value="none" className="hidden" />
-                      </FormControl>
-                      <FormLabel
-                        className={clsx(
-                          "p-2 rounded-sm cursor-pointer w-24 text-center hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-110 hover:text-white border-2 border-black",
-                          {
-                            "bg-red-700 text-white": field.value === "none",
-                          }
-                        )}
-                      >
-                        Nie mam
-                      </FormLabel>
-                    </FormItem>
-                    <FormItem className="flex items-center space-x-3 space-y-0">
-                      <FormControl>
-                        <RadioGroupItem value="some" className="hidden" />
-                      </FormControl>
-                      <FormLabel
-                        className={clsx(
-                          "p-2 rounded-sm cursor-pointer w-24 text-center hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-110 hover:text-white border-2 border-black",
-                          {
-                            "bg-red-700 text-white": field.value === "some",
-                          }
-                        )}
-                      >
-                        Malo
-                      </FormLabel>
-                    </FormItem>
-                    <FormItem className="flex items-center space-x-3 space-y-0">
-                      <FormControl>
-                        <RadioGroupItem value="average" className="hidden" />
-                      </FormControl>
-                      <FormLabel
-                        className={clsx(
-                          "p-2 rounded-sm cursor-pointer w-24 text-center hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-110 hover:text-white border-2 border-black",
-                          {
-                            "bg-red-700 text-white": field.value === "average",
-                          }
-                        )}
-                      >
-                        Srednio
-                      </FormLabel>
-                    </FormItem>
-                    <FormItem className="flex items-center space-x-3 space-y-0">
-                      <FormControl>
-                        <RadioGroupItem value="aLot" className="hidden" />
-                      </FormControl>
-                      <FormLabel
-                        className={clsx(
-                          "p-2 rounded-sm cursor-pointer w-24 text-center hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-110 hover:text-white border-2 border-black",
-                          {
-                            "bg-red-700 text-white": field.value === "aLot",
-                          }
-                        )}
-                      >
-                        Duzo
-                      </FormLabel>
-                    </FormItem>
-                  </RadioGroup>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="grid grid-cols-2 w-full justify-center"
+                    >
+                      {amounts.map((amount) => (
+                        <FormItem
+                          key={amount.value}
+                          className="flex items-center space-x-3 space-y-0"
+                        >
+                          <FormControl>
+                            <RadioGroupItem
+                              value={amount.value}
+                              className="hidden"
+                            />
+                          </FormControl>
+                          <FormLabel
+                            className={clsx(
+                              "p-2 rounded-sm cursor-pointer w-24 text-center hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-110 hover:text-white border-2 border-black",
+                              {
+                                "bg-red-700 text-white": field.value === "none",
+                              }
+                            )}
+                          >
+                            {amount.label}
+                          </FormLabel>
+                        </FormItem>
+                      ))}
+                    </RadioGroup>
+                  </FormControl>
                 </FormItem>
               )}
             />
@@ -266,51 +205,44 @@ export default function UnitsForm({ username }: { username: string }) {
               </Tooltip>
             </TooltipProvider>
             <ul className="flex flex-wrap p-2 gap-2 w-80 justify-center">
-              {form.watch("weapons").map((e, i) => (
+              {weaponsArray.map((weapon, i) => (
                 <li
                   key={i}
                   className="flex flex-col items-center whitespace-nowrap gap-2 h-[85px]"
                 >
-                  <img
-                    title={weapons[i].name}
-                    src={weapons[i].src}
-                    alt={weapons[i].name}
-                    onClick={() => {
-                      const newValue = !e.value;
-                      form.setValue(`weapons.${i}.value`, newValue);
-                      if (!newValue) {
-                        form.setValue(`weapons.${i}.leadership`, 0);
-                      }
-                    }}
-                    className={clsx(
-                      "h-16 w-16 rounded-full p-2 cursor-pointer hover:shadow-md transition duration-300 ease-in-out transform hover:scale-110 hover:bg-gray-300",
-                      { "bg-red-700 hover:bg-red-900": e.value }
-                    )}
-                  />
-                  {e.value ? (
-                    <Controller
-                      name={`weapons.${i}.leadership`}
-                      control={form.control}
-                      render={({ field }) => (
+                  <Controller
+                    name={`weapons.${i}.value`}
+                    control={form.control}
+                    render={({ field }) => (
+                      <>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          title={weapons[i].name}
+                          src={weapons[i].src}
+                          alt={weapons[i].name}
+                          onMouseUp={() => {
+                            field.onChange(field.value === 0 ? 1 : 0);
+                          }}
+                          className={clsx(
+                            "h-16 w-16 rounded-full p-2 cursor-pointer hover:shadow-md transition duration-300 ease-in-out transform hover:scale-110 hover:bg-gray-300",
+                            { "bg-red-700 hover:bg-red-900": field.value }
+                          )}
+                        />
                         <Input
                           {...field}
                           type="number"
                           min={1}
                           max={999}
-                          className="h-5 py-0 w-16 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                          onChange={(event) => {
-                            const leadershipValue = parseInt(
-                              event.target.value
-                            );
-                            form.setValue(
-                              `weapons.${i}.leadership`,
-                              leadershipValue
-                            );
-                          }}
+                          className={cn(
+                            "h-5 py-0 w-16 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
+                            {
+                              invisible: field.value === 0,
+                            }
+                          )}
                         />
-                      )}
-                    />
-                  ) : null}
+                      </>
+                    )}
+                  />
                 </li>
               ))}
             </ul>

@@ -21,7 +21,7 @@ export default function Navbar() {
         KoP
       </Link>
       {data ? (
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger>
             <img
               src={data.user?.image ?? ""}
@@ -30,7 +30,7 @@ export default function Navbar() {
             />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>Moje konto</DropdownMenuLabel>
+            <DropdownMenuLabel>{data.user?.name}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Link href="/form">Formularz</Link>

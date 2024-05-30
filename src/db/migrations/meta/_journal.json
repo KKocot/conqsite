@@ -1,0 +1,27 @@
+{
+  "version": "6",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1717076419849,
+      "tag": "0000_legal_captain_cross",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1717077204837,
+      "tag": "0001_loose_sue_storm",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1717082954849,
+      "tag": "0002_brown_kat_farrell",
+      "breakpoints": true
+    }
+  ]
+}

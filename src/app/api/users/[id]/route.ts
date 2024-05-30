@@ -1,34 +1,16 @@
-import connectMongoDB from "@/lib/mongodb";
-import Users from "@/models/users";
+import { db } from "@/db/db";
+import { updateUserSchema, users } from "@/db/schema/auth";
+import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params: { id } }: { params: { id: string } }
 ) {
-  const { id } = params;
-  const {
-    newUsernameDiscor: usernameDiscord,
-    NewIdDiscor: idDiscord,
-    newRole: role,
-    newPoints: points,
-  } = await request.json();
-  await connectMongoDB();
-  await Users.findByIdAndUpdate(id, {
-    usernameDiscord,
-    idDiscord,
-    role,
-    points,
-  });
-  return NextResponse.json({ message: "User updated" }, { status: 200 });
-}
+  const data = updateUserSchema
+    .pick({ role: true, points: true })
+    .parse(await request.json());
 
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
-  const { id } = params;
-  await connectMongoDB();
-  const user = await Users.findOne({ _id: id });
-  return NextResponse.json({ user }, { status: 200 });
+  await db.update(users).set(data).where(eq(users.id, id));
+  return NextResponse.json({ message: "User updated" }, { status: 200 });
 }

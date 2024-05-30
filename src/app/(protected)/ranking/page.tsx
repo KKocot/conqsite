@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import {
@@ -13,8 +11,6 @@ import {
 import { Button } from "@/components/ui/button";
 
 export default function Component() {
-  const { data } = useSession();
-
   return (
     <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
       <div className="flex flex-col gap-6">
