@@ -46,13 +46,19 @@ export const DEFAULT_FORM_DATA: FormData = {
   },
 };
 
-export default function UnitsForm({ username }: { username: string }) {
-  const [disabled, setDisabled] = useState(false);
+export default function UnitsForm({
+  username,
+  user_id,
+}: {
+  username: string;
+  user_id: string;
+}) {
   const [formData, setFormData] = useState<FormData>(DEFAULT_FORM_DATA);
+  const [pendign, setPending] = useState(false);
   useEffect(() => {
     const fetchForm = async () => {
       try {
-        const response = await fetch(`/api/survey/${username}`);
+        const response = await fetch(`/api/survey/${user_id}`);
         const data = await response.json();
         console.log(data);
         if (!data.error) setFormData(data.survey);
@@ -74,31 +80,17 @@ export default function UnitsForm({ username }: { username: string }) {
     values: formData,
   });
   const onSubmit = async (values: FormData) => {
-    setDisabled(true);
-    setTimeout(() => {
-      setDisabled(false);
-    }, 2000);
-
+    setPending(true);
+    console.log(values);
     try {
-      if (formData._id) {
-        await fetch(`/api/survey/${formData._id}`, {
-          method: "PUT",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify(values),
-        });
-        toast.success("Ankieta zaktualizowana!");
-      } else {
-        await fetch("/api/survey", {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify(values),
-        });
-        toast.success("Ankieta wysłana!");
-      }
+      await fetch(`/api/survey`, {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({ ...values, user_id: formData._id }),
+      });
+      toast.success("Ankieta wysłana!");
     } catch (error) {
       console.error(error);
       toast.error(
@@ -106,6 +98,8 @@ export default function UnitsForm({ username }: { username: string }) {
           formData._id ? "aktualizowania" : "wysyłania"
         } ankiety`
       );
+    } finally {
+      setPending(false);
     }
   };
 
@@ -315,7 +309,7 @@ export default function UnitsForm({ username }: { username: string }) {
               ))}
             </ul>
           </div>
-          <Button disabled={disabled} type="submit" className="w-full my-2">
+          <Button disabled={pendign} type="submit" className="w-full my-2">
             Wyslij
           </Button>
         </div>

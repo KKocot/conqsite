@@ -11,6 +11,7 @@ export async function POST(request: Request) {
   const {
     discordNick,
     inGameNick,
+    discordId,
     characterLevel,
     artyAmount,
     weapons,
@@ -20,6 +21,7 @@ export async function POST(request: Request) {
   await Survey.create({
     discordNick,
     inGameNick,
+    discordId,
     characterLevel,
     artyAmount,
     weapons,

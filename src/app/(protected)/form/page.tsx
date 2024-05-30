@@ -34,7 +34,10 @@ const Page: React.FC = () => {
           whitelistedUser.idDiscord === userData.user.id
       ) || null;
     return isWhitelisted ? (
-      <UnitsForm username={isWhitelisted.usernameDiscord} />
+      <UnitsForm
+        username={isWhitelisted.usernameDiscord}
+        user_id={isWhitelisted.idDiscord}
+      />
     ) : (
       <div className="text-center">
         Jesli nalezysz do KoP, a nie widzisz ankiety, napisz do rekrutera o
