@@ -330,7 +330,7 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
                   </p>
                   <br />
                   <p>
-                    &ldquo;Wymasterowane&ldquo;- na liscie wyborow, oznacza ze
+                    &ldquo;Wymaksowane&ldquo;- na liscie wyborow, oznacza ze
                     mamy na jednostce dobre Doktrymy i Masterki(jesli jednostaka
                     je posiada)
                   </p>
