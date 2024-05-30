@@ -75,23 +75,19 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
   const onSubmit = async (values: FormData) => {
     setPending(true);
     try {
-      await fetch(`/api/survey`, {
-        method: "PUT",
+      await fetch("/api/survey", {
+        method: "POST",
         headers: {
           "Content-type": "application/json",
         },
-        body: JSON.stringify({
-          ...values,
-          user_id: values._id,
-          _id: values._id,
-        }),
+        body: JSON.stringify(values),
       });
       toast.success("Ankieta wysłana!");
     } catch (error) {
       console.error(error);
       toast.error(
         `Wystąpił błąd podczas ${
-          values._id ? "aktualizowania" : "wysyłania"
+          formData._id ? "aktualizowania" : "wysyłania"
         } ankiety`
       );
     } finally {
