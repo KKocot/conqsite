@@ -112,7 +112,7 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
                       Nick na Discordzie
                     </FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} required />
                     </FormControl>
                   </FormItem>
                 )}

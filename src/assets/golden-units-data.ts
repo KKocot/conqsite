@@ -215,4 +215,22 @@ export const goldenUnits = [
     value: 1,
     era: "golden",
   },
+  {
+    id: 25,
+    name: "Queens Knights",
+    src: "/golden-units/queens_knights_thumb.png",
+    leadership: 295,
+    masteryPoints: false,
+    value: 10,
+    era: "golden",
+  },
+  {
+    id: 26,
+    name: "Xuanjia Heavy Cavalry",
+    src: "/golden-units/xuanjia_heavy_cavalry_thumb.png",
+    leadership: 305,
+    masteryPoints: false,
+    value: 10,
+    era: "golden",
+  },
 ];
