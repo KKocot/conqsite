@@ -3,9 +3,9 @@ import Whitelist from "@/models/whitelist";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  const { usernameDiscord, idDiscord } = await request.json();
+  const { idDiscord } = await request.json();
   await connectMongoDB();
-  await Whitelist.create({ usernameDiscord, idDiscord });
+  await Whitelist.create({ idDiscord });
   return NextResponse.json({ message: "User created" }, { status: 201 });
 }
 

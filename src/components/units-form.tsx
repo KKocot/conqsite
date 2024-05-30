@@ -46,42 +46,28 @@ export const DEFAULT_FORM_DATA: FormData = {
   },
 };
 
-export default function UnitsForm({
-  username,
-  user_id,
-}: {
-  username: string;
-  user_id: string;
-}) {
+export default function UnitsForm({ user_id }: { user_id: string }) {
   const [formData, setFormData] = useState<FormData>(DEFAULT_FORM_DATA);
   const [pendign, setPending] = useState(false);
+
   useEffect(() => {
     const fetchForm = async () => {
       try {
         const response = await fetch(`/api/survey/${user_id}`);
         const data = await response.json();
-        console.log(data);
         if (!data.error) setFormData(data.survey);
       } catch (error) {
         console.error("Error fetching:", error);
       }
     };
     fetchForm();
-  }, [username]);
-  useEffect(() => {
-    form.setValue("discordNick", username);
-    setFormData({
-      ...formData,
-      discordNick: username,
-    });
-  }, [username, JSON.stringify(formData)]);
+  }, [user_id]);
 
   const form = useForm({
     values: formData,
   });
   const onSubmit = async (values: FormData) => {
     setPending(true);
-    console.log(values);
     try {
       await fetch(`/api/survey`, {
         method: "PUT",
@@ -126,7 +112,7 @@ export default function UnitsForm({
                       Nick na Discordzie
                     </FormLabel>
                     <FormControl>
-                      <Input {...field} disabled />
+                      <Input {...field} />
                     </FormControl>
                   </FormItem>
                 )}

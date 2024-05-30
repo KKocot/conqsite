@@ -1,7 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
 const WhitelistSchema = new Schema({
-  usernameDiscord: String,
   idDiscord: String,
 });
 
