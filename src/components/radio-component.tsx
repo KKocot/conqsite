@@ -13,7 +13,7 @@ type FormColData = {
   era: string;
 };
 
-const Componeny = ({
+const Component = ({
   unitValue,
   era,
   label,
@@ -71,7 +71,7 @@ const RadioComponent: FC<{
     <div>
       <FormField
         control={controller}
-        name={`units.${era}.${unitData.id}.value`}
+        name={`units.${era}.${unitData.id - 1}.value`}
         render={({ field }) => (
           <RadioGroup
             className="gap-1"
@@ -83,7 +83,7 @@ const RadioComponent: FC<{
                 <RadioGroupItem value="0" className="hidden" />
               </FormControl>
 
-              <Componeny
+              <Component
                 unitValue={field.value}
                 era={unitData.era}
                 label="Nie mam"
@@ -94,7 +94,7 @@ const RadioComponent: FC<{
               <FormControl>
                 <RadioGroupItem value="1" className="hidden" />
               </FormControl>
-              <Componeny
+              <Component
                 unitValue={field.value}
                 era={unitData.era}
                 label="Mam"
@@ -105,7 +105,7 @@ const RadioComponent: FC<{
               <FormControl>
                 <RadioGroupItem value="2" className="hidden" />
               </FormControl>
-              <Componeny
+              <Component
                 unitValue={field.value}
                 era={unitData.era}
                 label="Wymaksowana"
@@ -116,7 +116,7 @@ const RadioComponent: FC<{
               <FormControl>
                 <RadioGroupItem value="3" className="hidden" />
               </FormControl>
-              <Componeny
+              <Component
                 unitValue={field.value}
                 era={unitData.era}
                 label="Preferuje"

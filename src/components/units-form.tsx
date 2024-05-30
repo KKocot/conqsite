@@ -16,14 +16,15 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
 export interface FormData {
   _id?: string;
   discordNick: string;
   inGameNick: string;
-  characterLevel: number;
+  discordId: string;
+  characterLevel: string;
   artyAmount: "none" | "some" | "average" | "aLot";
   weapons: { value: boolean; leadership: number }[];
   units: {
@@ -36,7 +37,8 @@ export interface FormData {
 export const DEFAULT_FORM_DATA: FormData = {
   discordNick: "",
   inGameNick: "",
-  characterLevel: 0,
+  discordId: "",
+  characterLevel: "",
   artyAmount: "none",
   weapons: weapons.map(() => ({ value: false, leadership: 0 })),
   units: {
@@ -47,11 +49,14 @@ export const DEFAULT_FORM_DATA: FormData = {
 };
 
 export default function UnitsForm({ user_id }: { user_id: string }) {
-  const [formData, setFormData] = useState<FormData>(DEFAULT_FORM_DATA);
+  const [formData, setFormData] = useState<FormData>({
+    ...DEFAULT_FORM_DATA,
+    discordId: user_id,
+  });
   const [pendign, setPending] = useState(false);
 
   useEffect(() => {
-    const fetchForm = async () => {
+    const fetchData = async () => {
       try {
         const response = await fetch(`/api/survey/${user_id}`);
         const data = await response.json();
@@ -60,7 +65,7 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
         console.error("Error fetching:", error);
       }
     };
-    fetchForm();
+    fetchData();
   }, [user_id]);
 
   const form = useForm({
@@ -77,7 +82,7 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
         body: JSON.stringify({
           ...values,
           user_id: formData._id,
-          _id: values._id ?? null,
+          _id: values._id,
         }),
       });
       toast.success("Ankieta wysłana!");
@@ -96,7 +101,6 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
   return (
     <Form {...form}>
       <form
-        // @ts-ignore
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col items-center sm:grid sm:grid-flow-col sm:col-span-4 h-[calc(100vh-48px)]"
       >

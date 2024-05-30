@@ -10,14 +10,20 @@ export async function GET() {
 }
 
 export async function PUT(request: Request) {
-  const { _id, ...data } = putSurveySchema.parse(await request.json());
-  await connectMongoDB();
+  try {
+    const { _id, ...data } = putSurveySchema
+      .partial({ _id: true })
+      .parse(await request.json());
+    await connectMongoDB();
 
-  if (_id) {
-    const survey = await Survey.findByIdAndUpdate(_id, data);
-    return NextResponse.json(survey, { status: 200 });
-  } else {
-    const survey = await Survey.create(data);
-    return NextResponse.json(survey, { status: 201 });
+    if (_id) {
+      const survey = await Survey.findByIdAndUpdate(_id, data);
+      return NextResponse.json(survey, { status: 200 });
+    } else {
+      const survey = await Survey.create(data);
+      return NextResponse.json(survey, { status: 201 });
+    }
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 400 });
   }
 }

@@ -226,9 +226,9 @@ export const goldenUnits = [
   },
   {
     id: 26,
-    name: "Xuanjia Heavy Cavalry",
-    src: "/golden-units/xuanjia_heavy_cavalry_thumb.png",
-    leadership: 305,
+    name: "Xuanjia Heavy Cavalr",
+    src: "/golden-units/queens_knights_thumb.png",
+    leadership: 295,
     masteryPoints: false,
     value: 10,
     era: "golden",
