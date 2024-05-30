@@ -218,7 +218,7 @@ export const goldenUnits = [
   {
     id: 25,
     name: "Queens Knights",
-    src: "/golden-units/queens_knights_thumb.png",
+    src: "/golden-units/QK.png",
     leadership: 295,
     masteryPoints: false,
     value: 10,
@@ -227,7 +227,7 @@ export const goldenUnits = [
   {
     id: 26,
     name: "Xuanjia Heavy Cavalr",
-    src: "/golden-units/queens_knights_thumb.png",
+    src: "/golden-units/Xuandzia.png",
     leadership: 295,
     masteryPoints: false,
     value: 10,

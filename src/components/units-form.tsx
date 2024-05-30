@@ -101,7 +101,7 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col items-center sm:grid sm:grid-flow-col sm:col-span-4 h-[calc(100vh-48px)]"
       >
-        <div className="flex flex-col col-span-1 h-full w-fit justify-start sm:shadow-gray-600 sm:shadow-lg p-4">
+        <div className="flex flex-col col-span-1 sm:h-full w-fit justify-start sm:shadow-gray-600 sm:shadow-lg p-4">
           <div className="w-80 p-2 flex flex-col gap-2">
             <div className="grid w-full max-w-sm items-center gap-1.5">
               <FormField

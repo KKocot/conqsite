@@ -254,7 +254,7 @@ export const heroicUnits = [
   {
     id: 29,
     name: "Spear Sergeants",
-    src: "/heroic-units/jav_serg_pre.png",
+    src: "/heroic-units/spe_sarg_pre.png",
     leadership: 215,
     masteryPoints: true,
     value: 4,

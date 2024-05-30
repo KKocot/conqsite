@@ -11,57 +11,57 @@ export const weapons = [
   },
   {
     id: 3,
-    name: "Glaive",
-    src: "/weapons/Glaive.png",
-  },
-  {
-    id: 4,
-    name: "Longsword",
-    src: "/weapons/Longsword.png",
-  },
-  {
-    id: 5,
-    name: "Maul",
-    src: "/weapons/maul.png",
-  },
-  {
-    id: 6,
     name: "Short Bow",
     src: "/weapons/Short_bow.png",
   },
   {
-    id: 7,
+    id: 4,
+    name: "Dart",
+    src: "/weapons/dart.png",
+  },
+  {
+    id: 5,
     name: "Musket",
     src: "/weapons/Musket.png",
   },
   {
-    id: 8,
+    id: 6,
     name: "Nodachi",
     src: "/weapons/Nodachi.png",
   },
   {
-    id: 9,
+    id: 7,
     name: "Pike",
     src: "/weapons/Pike.png",
   },
   {
-    id: 10,
-    name: "Poleaxe",
-    src: "/weapons/Poleaxe.png",
-  },
-  {
-    id: 11,
-    name: "Shortsword",
-    src: "/weapons/Short_sword.png",
-  },
-  {
-    id: 12,
+    id: 8,
     name: "Spear",
     src: "/weapons/spear.png",
   },
   {
+    id: 9,
+    name: "Glaive",
+    src: "/weapons/Glaive.png",
+  },
+  {
+    id: 10,
+    name: "Longsword",
+    src: "/weapons/Longsword.png",
+  },
+  {
+    id: 11,
+    name: "Maul",
+    src: "/weapons/maul.png",
+  },
+  {
+    id: 12,
+    name: "Poleaxe",
+    src: "/weapons/Poleaxe.png",
+  },
+  {
     id: 13,
-    name: "Dart",
-    src: "/weapons/dart.png",
+    name: "Shortsword",
+    src: "/weapons/Short_sword.png",
   },
 ];
