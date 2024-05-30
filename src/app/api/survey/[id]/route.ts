@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 import { ZodError, z } from "zod";
 
 const putSurveySchema = z.object({
-  _id: z.string(),
   discordNick: z.string(),
   discordId: z.string(),
   inGameNick: z.string(),
@@ -38,21 +37,22 @@ const putSurveySchema = z.object({
   }),
 });
 
-export async function PUT(request: Request) {
+export async function PUT(
+  request: Request,
+  { params: { id } }: { params: { id: string } }
+) {
   try {
     const {
-      _id,
       discordNick,
-      discordId,
       inGameNick,
+      discordId,
       characterLevel,
       artyAmount,
       weapons,
       units,
     } = putSurveySchema.parse(await request.json());
     await connectMongoDB();
-    await Survey.findByIdAndUpdate(_id, {
-      _id,
+    await Survey.findByIdAndUpdate(id, {
       discordNick,
       inGameNick,
       discordId,

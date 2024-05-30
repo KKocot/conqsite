@@ -3,7 +3,8 @@ import mongoose, { Schema } from "mongoose";
 const SurveySchema = new Schema({
   discordNick: { type: String, required: true },
   inGameNick: { type: String, required: true },
-  characterLevel: { type: Number, required: true },
+  discordId: { type: String, required: true },
+  characterLevel: { type: String, required: true },
   artyAmount: {
     type: String,
     enum: ["none", "some", "average", "aLot"],
