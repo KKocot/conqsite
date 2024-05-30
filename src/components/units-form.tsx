@@ -88,7 +88,11 @@ export default function UnitsForm({
         headers: {
           "Content-type": "application/json",
         },
-        body: JSON.stringify({ ...values, user_id: formData._id }),
+        body: JSON.stringify({
+          ...values,
+          user_id: formData._id,
+          _id: values._id ?? null,
+        }),
       });
       toast.success("Ankieta wysłana!");
     } catch (error) {

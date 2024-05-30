@@ -33,10 +33,13 @@ export default function Navbar() {
             <DropdownMenuLabel>Moje konto</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
+              <Link href={`/${data.user.name}`}>Profil</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
               <Link href="/form">Formularz</Link>
             </DropdownMenuItem>
             <DropdownMenuItem
-              className="cursor-pointer"
+              className="cursor-pointer text-red-700"
               onClick={() => signOut()}
             >
               Wyloguj sie
