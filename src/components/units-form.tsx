@@ -300,7 +300,7 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
               ))}
             </ul>
           </div>
-          <Button disabled={pendign} type="submit" className="w-full my-2">
+          <Button disabled={true} type="submit" className="w-full my-2">
             Wyslij
           </Button>
         </div>
