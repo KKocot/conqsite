@@ -1,7 +1,8 @@
 import { AuthOptions } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
-import NextAuth, { DefaultSession } from "next-auth";
-import { JWT } from "next-auth/jwt";
+import DiscordProvider, { DiscordProfile } from "next-auth/providers/discord";
+import { DefaultSession } from "next-auth";
+import connectMongoDB from "./mongodb";
+import Whitelist from "@/models/whitelist";
 
 export const authOptions: AuthOptions = {
   // Configure one or more authentication providers
@@ -20,6 +21,23 @@ export const authOptions: AuthOptions = {
       }
       return token;
     },
+
+    async signIn({ profile }) {
+      try {
+        await connectMongoDB();
+        const ifUserExists = await Whitelist.findOne({
+          idDiscord: (profile as DiscordProfile).id,
+        });
+        if (ifUserExists) {
+          return true;
+        }
+      } catch (err) {
+        return false;
+      }
+
+      return false;
+    },
+
     session({ session, token }) {
       session.user.id = token.id;
 
