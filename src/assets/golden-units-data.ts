@@ -7,6 +7,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 10,
     era: "golden",
+    icon: "/golden-icons/Flames.png",
   },
   {
     id: 2,
@@ -16,6 +17,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 5,
     era: "golden",
+    icon: "/golden-icons/Catafract.png",
   },
   {
     id: 3,
@@ -25,6 +27,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 6,
     era: "golden",
+    icon: "/golden-icons/Gendarmes.png",
   },
   {
     id: 4,
@@ -34,6 +37,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 10,
     era: "golden",
+    icon: "/golden-icons/Falco.png",
   },
   {
     id: 5,
@@ -43,6 +47,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 4,
     era: "golden",
+    icon: "/golden-icons/LF.png",
   },
   {
     id: 6,
@@ -52,6 +57,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 2,
     era: "golden",
+    icon: "/golden-icons/Asasins.png",
   },
   {
     id: 7,
@@ -61,6 +67,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 3,
     era: "golden",
+    icon: "/golden-icons/Dogs.png",
   },
   {
     id: 8,
@@ -70,6 +77,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 7,
     era: "golden",
+    icon: "/golden-icons/Reapers.png",
   },
   {
     id: 9,
@@ -79,6 +87,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 1,
     era: "golden",
+    icon: "/",
   },
   {
     id: 10,
@@ -88,6 +97,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 6,
     era: "golden",
+    icon: "/golden-icons/LIAO.png",
   },
   {
     id: 11,
@@ -97,6 +107,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 10,
     era: "golden",
+    icon: "/golden-icons/MODAO.png",
   },
   {
     id: 12,
@@ -106,6 +117,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 6,
     era: "golden",
+    icon: "/golden-icons/Monasticos.png",
   },
   {
     id: 13,
@@ -115,6 +127,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 8,
     era: "golden",
+    icon: "/golden-icons/Orochi.png",
   },
   {
     id: 14,
@@ -124,6 +137,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 2,
     era: "golden",
+    icon: "/golden-icons/Paves.png",
   },
   {
     id: 15,
@@ -133,6 +147,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 1,
     era: "golden",
+    icon: "/golden-icons/Mariposas.png",
   },
   {
     id: 16,
@@ -142,6 +157,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 7,
     era: "golden",
+    icon: "/golden-icons/Shenji.png",
   },
   {
     id: 17,
@@ -151,6 +167,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 7,
     era: "golden",
+    icon: "/golden-icons/ShieldMaids.png",
   },
   {
     id: 18,
@@ -160,6 +177,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 4,
     era: "golden",
+    icon: "/golden-icons/Shiladars.png",
   },
   {
     id: 19,
@@ -169,6 +187,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 4,
     era: "golden",
+    icon: "/golden-icons/Tercio.png",
   },
   {
     id: 20,
@@ -178,6 +197,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 2,
     era: "golden",
+    icon: "/golden-icons/Varega.png",
   },
   {
     id: 21,
@@ -187,6 +207,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 9,
     era: "golden",
+    icon: "/golden-icons/Husares.png",
   },
   {
     id: 22,
@@ -196,6 +217,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 9,
     era: "golden",
+    icon: "/golden-icons/yanyuedao.png",
   },
   {
     id: 23,
@@ -205,6 +227,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 8,
     era: "golden",
+    icon: "/golden-icons/AlemanesChetados.png",
   },
   {
     id: 24,
@@ -214,6 +237,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 1,
     era: "golden",
+    icon: "/",
   },
   {
     id: 25,
@@ -223,6 +247,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 10,
     era: "golden",
+    icon: "/golden-icons/Lancelot.png",
   },
   {
     id: 26,
@@ -232,5 +257,6 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 10,
     era: "golden",
+    icon: "/",
   },
 ];

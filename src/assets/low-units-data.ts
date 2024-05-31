@@ -7,6 +7,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 5,
     era: "blue",
+    icon: "/",
   },
   {
     id: 2,
@@ -16,6 +17,7 @@ export const lowUnits = [
     leadership: 0,
     value: 6,
     era: "grey",
+    icon: "/",
   },
   {
     id: 3,
@@ -25,6 +27,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "blue",
+    icon: "/",
   },
   {
     id: 4,
@@ -34,6 +37,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 10,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(20).png",
   },
   {
     id: 5,
@@ -43,6 +47,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 5,
     era: "green",
+    icon: "/",
   },
   {
     id: 6,
@@ -52,6 +57,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 3,
     era: "blue",
+    icon: "/",
   },
   {
     id: 7,
@@ -61,6 +67,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 3,
     era: "blue",
+    icon: "/",
   },
   {
     id: 8,
@@ -70,6 +77,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 3,
     era: "blue",
+    icon: "/",
   },
   {
     id: 9,
@@ -79,6 +87,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(9).png",
   },
   {
     id: 10,
@@ -88,6 +97,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 8,
     era: "green",
+    icon: "/low-tiers-icons/Tier3(1).png",
   },
   {
     id: 11,
@@ -97,6 +107,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 4,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(10).png",
   },
   {
     id: 12,
@@ -106,6 +117,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 8,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(22).png",
   },
   {
     id: 13,
@@ -115,6 +127,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 8,
     era: "green",
+    icon: "/",
   },
   {
     id: 14,
@@ -124,6 +137,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 3,
     era: "blue",
+    icon: "/",
   },
   {
     id: 15,
@@ -133,6 +147,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 5,
     era: "green",
+    icon: "/",
   },
   {
     id: 16,
@@ -142,6 +157,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "green",
+    icon: "/",
   },
   {
     id: 17,
@@ -151,6 +167,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 3,
     era: "green",
+    icon: "/",
   },
   {
     id: 18,
@@ -160,6 +177,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 6,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(7).png",
   },
   {
     id: 19,
@@ -169,6 +187,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 9,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(5).png",
   },
   {
     id: 20,
@@ -178,6 +197,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 6,
     era: "blue",
+    icon: "/",
   },
   {
     id: 21,
@@ -187,6 +207,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "green",
+    icon: "/",
   },
   {
     id: 22,
@@ -196,6 +217,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "green",
+    icon: "/",
   },
   {
     id: 23,
@@ -205,6 +227,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 2,
     era: "green",
+    icon: "/",
   },
   {
     id: 24,
@@ -214,6 +237,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 7,
     era: "green",
+    icon: "/",
   },
   {
     id: 25,
@@ -223,6 +247,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 7,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(12).png",
   },
   {
     id: 26,
@@ -232,6 +257,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 6,
     era: "green",
+    icon: "/low-tiers-icons/Tier3(15).png",
   },
   {
     id: 27,
@@ -241,6 +267,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 6,
     era: "blue",
+    icon: "/",
   },
   {
     id: 28,
@@ -250,6 +277,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(18).png",
   },
   {
     id: 29,
@@ -259,6 +287,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 2,
     era: "green",
+    icon: "/",
   },
   {
     id: 30,
@@ -268,6 +297,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 1,
     era: "blue",
+    icon: "/",
   },
   {
     id: 31,
@@ -277,6 +307,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(4).png",
   },
   {
     id: 32,
@@ -286,6 +317,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 1,
     era: "grey",
+    icon: "/",
   },
   {
     id: 33,
@@ -295,6 +327,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 9,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(13).png",
   },
   {
     id: 34,
@@ -304,6 +337,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 10,
     era: "grey",
+    icon: "/",
   },
   {
     id: 35,
@@ -313,6 +347,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 4,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(19).png",
   },
   {
     id: 36,
@@ -322,6 +357,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(24).png",
   },
   {
     id: 37,
@@ -331,6 +367,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 7,
     era: "green",
+    icon: "/low-tiers-icons/Tier3(16).png",
   },
   {
     id: 38,
@@ -340,6 +377,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 4,
     era: "blue",
+    icon: "/",
   },
   {
     id: 39,
@@ -349,6 +387,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 10,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(3).png",
   },
   {
     id: 40,
@@ -358,6 +397,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 7,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(11).png",
   },
   {
     id: 41,
@@ -367,6 +407,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 6,
     era: "blue",
+    icon: "/",
   },
   {
     id: 42,
@@ -376,6 +417,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 8,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(21).png",
   },
   {
     id: 43,
@@ -385,6 +427,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 6,
     era: "green",
+    icon: "/",
   },
   {
     id: 44,
@@ -394,6 +437,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 3,
     era: "green",
+    icon: "/",
   },
   {
     id: 45,
@@ -403,6 +447,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "blue",
+    icon: "/",
   },
   {
     id: 46,
@@ -412,6 +457,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 4,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(26).png",
   },
   {
     id: 47,
@@ -421,6 +467,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 3,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(23).png",
   },
   {
     id: 48,
@@ -430,6 +477,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "blue",
+    icon: "/",
   },
   {
     id: 49,
@@ -439,6 +487,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 3,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(25).png",
   },
   {
     id: 50,
@@ -448,6 +497,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 1,
     era: "grey",
+    icon: "/",
   },
   {
     id: 51,
@@ -457,6 +507,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(8).png",
   },
   {
     id: 52,
@@ -466,6 +517,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "grey",
+    icon: "/",
   },
   {
     id: 53,
@@ -475,6 +527,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 5,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(6).png",
   },
   {
     id: 54,
@@ -484,6 +537,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "grey",
+    icon: "/",
   },
   {
     id: 55,
@@ -493,6 +547,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 1,
     era: "grey",
+    icon: "/",
   },
   {
     id: 56,
@@ -502,6 +557,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "blue",
+    icon: "/",
   },
   {
     id: 57,
@@ -511,6 +567,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 1,
     era: "grey",
+    icon: "/",
   },
   {
     id: 58,
@@ -520,6 +577,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 1,
     era: "grey",
+    icon: "/",
   },
   {
     id: 59,
@@ -529,6 +587,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(14).png",
   },
   {
     id: 60,
@@ -538,14 +597,16 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
+    icon: "/",
   },
   {
     id: 61,
-    name: "Cardoca Raiders",
+    name: "Caradocs Cavalry",
     src: "/low-tiers-units/karndogi.png",
     leadership: 195,
     masteryPoints: false,
     value: 4,
     era: "blue",
+    icon: "/low-tiers-icons/Tier3(29).png",
   },
 ];

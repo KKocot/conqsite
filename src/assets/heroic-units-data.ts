@@ -7,6 +7,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 5,
     era: "heroic",
+    icon: "/",
   },
   {
     id: 2,
@@ -16,6 +17,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 2,
     era: "heroic",
+    icon: "/heroic-icons/H.png",
   },
   {
     id: 3,
@@ -25,6 +27,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 1,
     era: "heroic",
+    icon: "/heroic-icons/azaps.png",
   },
   {
     id: 4,
@@ -34,6 +37,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 2,
     era: "heroic",
+    icon: "/heroic-icons/GH.png",
   },
   {
     id: 5,
@@ -43,6 +47,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 3,
     era: "heroic",
+    icon: "/heroic-icons/Berserkers.png",
   },
   {
     id: 6,
@@ -52,6 +57,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 7,
     era: "heroic",
+    icon: "/",
   },
   {
     id: 7,
@@ -61,6 +67,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 2,
     era: "heroic",
+    icon: "/heroic-icons/Calymores.png",
   },
   {
     id: 8,
@@ -70,6 +77,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 4,
     era: "heroic",
+    icon: "/",
   },
   {
     id: 9,
@@ -79,6 +87,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 7,
     era: "heroic",
+    icon: "/heroic-icons/HD.png",
   },
   {
     id: 10,
@@ -88,6 +97,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 8,
     era: "heroic",
+    icon: "/heroic-icons/fortebraccio.png",
   },
   {
     id: 11,
@@ -97,6 +107,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 5,
     era: "heroic",
+    icon: "/heroic-icons/viejos.png",
   },
   {
     id: 12,
@@ -106,6 +117,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 7,
     era: "heroic",
+    icon: "/heroic-icons/SA.png",
   },
   {
     id: 13,
@@ -115,6 +127,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 3,
     era: "heroic",
+    icon: "/heroic-icons/CV.png",
   },
   {
     id: 14,
@@ -124,6 +137,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 6,
     era: "heroic",
+    icon: "/",
   },
   {
     id: 15,
@@ -133,6 +147,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 7,
     era: "heroic",
+    icon: "/",
   },
   {
     id: 16,
@@ -142,6 +157,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 4,
     era: "heroic",
+    icon: "/heroic-icons/jav1.png",
   },
   {
     id: 17,
@@ -151,6 +167,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 10,
     era: "heroic",
+    icon: "/heroic-icons/PI.png",
   },
   {
     id: 18,
@@ -160,6 +177,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 10,
     era: "heroic",
+    icon: "/heroic-icons/Puertas.png",
   },
   {
     id: 19,
@@ -169,6 +187,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 5,
     era: "heroic",
+    icon: "/heroic-icons/jav2.png",
   },
   {
     id: 20,
@@ -178,6 +197,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 1,
     era: "heroic",
+    icon: "/heroic-icons/Khevtuul.png",
   },
   {
     id: 21,
@@ -187,6 +207,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 6,
     era: "heroic",
+    icon: "/",
   },
   {
     id: 22,
@@ -196,6 +217,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 8,
     era: "heroic",
+    icon: "/heroic-icons/cav.png",
   },
   {
     id: 23,
@@ -205,6 +227,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 9,
     era: "heroic",
+    icon: "/heroic-icons/HA.png",
   },
   {
     id: 24,
@@ -214,6 +237,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 6,
     era: "heroic",
+    icon: "/heroic-icons/Murmi.png",
   },
   {
     id: 25,
@@ -223,6 +247,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 7,
     era: "heroic",
+    icon: "/",
   },
   {
     id: 26,
@@ -232,6 +257,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 7,
     era: "heroic",
+    icon: "/heroic-icons/GA.png",
   },
   {
     id: 27,
@@ -241,6 +267,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 7,
     era: "heroic",
+    icon: "/heroic-icons/CPP.png",
   },
   {
     id: 28,
@@ -250,6 +277,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 1,
     era: "heroic",
+    icon: "/heroic-icons/C.png",
   },
   {
     id: 29,
@@ -259,6 +287,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 4,
     era: "heroic",
+    icon: "/heroic-icons/ST.png",
   },
   {
     id: 30,
@@ -268,6 +297,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 3,
     era: "heroic",
+    icon: "/heroic-icons/Paladines.png",
   },
   {
     id: 31,
@@ -277,6 +307,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 3,
     era: "heroic",
+    icon: "/",
   },
   {
     id: 32,
@@ -286,6 +317,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 2,
     era: "heroic",
+    icon: "/heroic-icons/tseregs.png",
   },
   {
     id: 33,
@@ -295,6 +327,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 5,
     era: "heroic",
+    icon: "/",
   },
   {
     id: 34,
@@ -304,6 +337,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 7,
     era: "heroic",
+    icon: "/heroic-icons/Yeomen.png",
   },
   {
     id: 35,
@@ -313,6 +347,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 3,
     era: "heroic",
+    icon: "/",
   },
   {
     id: 36,
@@ -322,6 +357,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 9,
     era: "heroic",
+    icon: "/",
   },
   {
     id: 37,
@@ -331,5 +367,6 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 4,
     era: "heroic",
+    icon: "/heroic-icons/Galahad.png",
   },
 ];

@@ -11,6 +11,7 @@ type FormColData = {
   masteryPoints: boolean;
   value: number;
   era: string;
+  icon: string;
 };
 
 const FormCol = ({
