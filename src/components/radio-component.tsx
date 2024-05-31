@@ -73,57 +73,61 @@ const RadioComponent: FC<{
         control={controller}
         name={`units.${era}.${unitData.id - 1}.value`}
         render={({ field }) => (
-          <RadioGroup
-            className="gap-1"
-            onValueChange={field.onChange}
-            defaultValue={field.value}
-          >
-            <FormItem className="flex items-center space-y-0">
-              <FormControl>
-                <RadioGroupItem value="0" className="hidden" />
-              </FormControl>
+          <FormItem>
+            <FormControl>
+              <RadioGroup
+                className="gap-1"
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+              >
+                <FormItem className="flex items-center space-y-0">
+                  <FormControl>
+                    <RadioGroupItem value="0" className="hidden" />
+                  </FormControl>
 
-              <Component
-                unitValue={field.value}
-                era={unitData.era}
-                label="Nie mam"
-                value="0"
-              />
-            </FormItem>
-            <FormItem className="flex items-center space-y-0">
-              <FormControl>
-                <RadioGroupItem value="1" className="hidden" />
-              </FormControl>
-              <Component
-                unitValue={field.value}
-                era={unitData.era}
-                label="Mam"
-                value="1"
-              />
-            </FormItem>
-            <FormItem className="flex items-center space-y-0">
-              <FormControl>
-                <RadioGroupItem value="2" className="hidden" />
-              </FormControl>
-              <Component
-                unitValue={field.value}
-                era={unitData.era}
-                label="Wymaksowana"
-                value="2"
-              />
-            </FormItem>
-            <FormItem className="flex items-center space-y-0">
-              <FormControl>
-                <RadioGroupItem value="3" className="hidden" />
-              </FormControl>
-              <Component
-                unitValue={field.value}
-                era={unitData.era}
-                label="Preferuje"
-                value="3"
-              />
-            </FormItem>
-          </RadioGroup>
+                  <Component
+                    unitValue={field.value}
+                    era={unitData.era}
+                    label="Nie mam"
+                    value="0"
+                  />
+                </FormItem>
+                <FormItem className="flex items-center space-y-0">
+                  <FormControl>
+                    <RadioGroupItem value="1" className="hidden" />
+                  </FormControl>
+                  <Component
+                    unitValue={field.value}
+                    era={unitData.era}
+                    label="Mam"
+                    value="1"
+                  />
+                </FormItem>
+                <FormItem className="flex items-center space-y-0">
+                  <FormControl>
+                    <RadioGroupItem value="2" className="hidden" />
+                  </FormControl>
+                  <Component
+                    unitValue={field.value}
+                    era={unitData.era}
+                    label="Wymaksowana"
+                    value="2"
+                  />
+                </FormItem>
+                <FormItem className="flex items-center space-y-0">
+                  <FormControl>
+                    <RadioGroupItem value="3" className="hidden" />
+                  </FormControl>
+                  <Component
+                    unitValue={field.value}
+                    era={unitData.era}
+                    label="Preferuje"
+                    value="3"
+                  />
+                </FormItem>
+              </RadioGroup>
+            </FormControl>
+          </FormItem>
         )}
       />
     </div>
@@ -131,3 +135,10 @@ const RadioComponent: FC<{
 };
 
 export default RadioComponent;
+
+<FormItem className="flex items-center space-x-3 space-y-0">
+  <FormControl>
+    <RadioGroupItem value="all" />
+  </FormControl>
+  <FormLabel className="font-normal">All new messages</FormLabel>
+</FormItem>;
