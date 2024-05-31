@@ -90,7 +90,8 @@ export default function Component() {
             </Avatar>
             <div>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                {profile.inGameNick}
+                <span>{profile.inGameNick}</span>(
+                <span className="text-red-600">{profile.characterLevel}</span>)
               </h2>
               <p className="text-gray-500 dark:text-gray-400 mt-1">
                 {profile.discordNick}
