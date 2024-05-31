@@ -16,8 +16,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
-import { use, useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
+import { useEffect, useState } from "react";
+import ReactLoading from "react-loading";
+import { toast, Bounce } from "react-toastify";
 
 export interface FormData {
   _id?: string;
@@ -64,7 +65,6 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
       console.error("Error fetching:", error);
     }
   };
-
   useEffect(() => {
     fetchData();
   }, [pending]);
@@ -93,13 +93,34 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
           );
         }
       }
-      toast.success("Ankieta wysłana!");
+      toast.success(`Ankieta ${formData._id ? "zaktualizowana" : "wyslana"}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     } catch (error) {
       console.error("Error occurred:", error);
       toast.error(
         `Wystąpił błąd podczas ${
           formData._id ? "aktualizowania" : "wysyłania"
-        } ankiety`
+        } ankiety`,
+        {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        }
       );
     } finally {
       setPending(false);
@@ -312,7 +333,7 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
             </ul>
           </div>
           <Button disabled={pending} type="submit" className="w-full my-2">
-            Wyslij
+            {pending ? <ReactLoading type="bubbles" color="#fff" /> : "Wyślij"}
           </Button>
         </div>
         <div className="flex p-4 col-span-3 h-full sm:overflow-y-hidden flex-col xl:justify-around">
