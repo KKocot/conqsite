@@ -60,7 +60,7 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
     try {
       const response = await fetch(`/api/survey/${user_id}`);
       const data = await response.json();
-      if (!data.error) setFormData(data.survey);
+      setFormData((prev) => (data.survey === null ? prev : data.survey));
     } catch (error) {
       console.error("Error fetching:", error);
     }
@@ -81,13 +81,13 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
         },
         body: JSON.stringify(values),
       });
-
       if (formData._id) {
         const deleteResponse = await fetch(`/api/survey/${formData._id}`, {
           method: "DELETE",
         });
 
         if (!deleteResponse.ok) {
+          console.log("delete failed");
           throw new Error(
             `Delete request failed with status: ${deleteResponse.status}`
           );
