@@ -37,7 +37,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 10,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(20).png",
+    icon: "/low-tiers-icons/Zykalian.png",
   },
   {
     id: 5,
@@ -87,7 +87,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(9).png",
+    icon: "/low-tiers-icons/Condottieri.png",
   },
   {
     id: 10,
@@ -97,7 +97,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 8,
     era: "green",
-    icon: "/low-tiers-icons/Tier3(1).png",
+    icon: "/low-tiers-icons/Coutiliers.png",
   },
   {
     id: 11,
@@ -107,7 +107,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 4,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(10).png",
+    icon: "/low-tiers-icons/Monks.png",
   },
   {
     id: 12,
@@ -117,7 +117,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 8,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(22).png",
+    icon: "/low-tiers-icons/DemesneArbalists.png",
   },
   {
     id: 13,
@@ -177,7 +177,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 6,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(7).png",
+    icon: "/low-tiers-icons/Dimachaeri.png",
   },
   {
     id: 19,
@@ -187,7 +187,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 9,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(5).png",
+    icon: "/low-tiers-icons/Halberdiers.png",
   },
   {
     id: 20,
@@ -247,7 +247,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 7,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(12).png",
+    icon: "/low-tiers-icons/IroncapSpearmen.png",
   },
   {
     id: 26,
@@ -257,7 +257,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 6,
     era: "green",
-    icon: "/low-tiers-icons/Tier3(15).png",
+    icon: "/low-tiers-icons/IroncapSwordsmen.png",
   },
   {
     id: 27,
@@ -267,7 +267,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 6,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(2).png",
+    icon: "/low-tiers-icons/Jangjus.png",
   },
   {
     id: 28,
@@ -277,7 +277,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(18).png",
+    icon: "/low-tiers-icons/Janissaries.png",
   },
   {
     id: 29,
@@ -307,7 +307,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(4).png",
+    icon: "/low-tiers-icons/Landsknechts.png",
   },
   {
     id: 32,
@@ -327,7 +327,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 9,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(13).png",
+    icon: "/low-tiers-icons/Mace.png",
   },
   {
     id: 34,
@@ -347,7 +347,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 4,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(19).png",
+    icon: "/low-tiers-icons/Namkhan.png",
   },
   {
     id: 36,
@@ -357,7 +357,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(24).png",
+    icon: "/low-tiers-icons/Outriders.png",
   },
   {
     id: 37,
@@ -367,7 +367,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 7,
     era: "green",
-    icon: "/low-tiers-icons/Tier3(16).png",
+    icon: "/low-tiers-icons/PikeMilitia.png",
   },
   {
     id: 38,
@@ -387,7 +387,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 10,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(3).png",
+    icon: "/low-tiers-icons/PrefectureGuards.png",
   },
   {
     id: 40,
@@ -397,7 +397,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 7,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(11).png",
+    icon: "/low-tiers-icons/PrefecturePikemen.png",
   },
   {
     id: 41,
@@ -417,7 +417,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 8,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(21).png",
+    icon: "/low-tiers-icons/RattanMarksmen.png",
   },
   {
     id: 43,
@@ -457,7 +457,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 4,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(26).png",
+    icon: "/low-tiers-icons/Ronin.png",
   },
   {
     id: 47,
@@ -467,7 +467,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 3,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(23).png",
+    icon: "/low-tiers-icons/Schutzdieners.png",
   },
   {
     id: 48,
@@ -487,7 +487,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 3,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(25).png",
+    icon: "/low-tiers-icons/SelemchidCavalry.png",
   },
   {
     id: 50,
@@ -507,7 +507,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(8).png",
+    icon: "/low-tiers-icons/Fenrir.png",
   },
   {
     id: 52,
@@ -527,7 +527,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 5,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(6).png",
+    icon: "/low-tiers-icons/Squires.png",
   },
   {
     id: 54,
@@ -587,7 +587,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(14).png",
+    icon: "/low-tiers-icons/WuxingPikemen.png",
   },
   {
     id: 60,
@@ -607,6 +607,6 @@ export const lowUnits = [
     masteryPoints: false,
     value: 4,
     era: "blue",
-    icon: "/low-tiers-icons/Tier3(29).png",
+    icon: "/low-tiers-icons/CaradocsCavalry.png",
   },
 ];

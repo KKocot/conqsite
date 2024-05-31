@@ -33,7 +33,7 @@ export default function Navbar() {
             <DropdownMenuLabel>Moje konto</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <Link className="w-full" href={`/${data.user.name}`}>
+              <Link className="w-full" href={`/${data.user.id}`}>
                 Profil
               </Link>
             </DropdownMenuItem>
