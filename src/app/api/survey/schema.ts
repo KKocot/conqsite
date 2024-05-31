@@ -1,6 +1,5 @@
 import z from "zod";
 export const putSurveySchema = z.object({
-  _id: z.string().min(1).optional(),
   discordNick: z.string(),
   discordId: z.string(),
   inGameNick: z.string(),

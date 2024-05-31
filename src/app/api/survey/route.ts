@@ -11,9 +11,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { _id, ...data } = putSurveySchema
-      .partial({ _id: true })
-      .parse(await request.json());
+    const data = putSurveySchema.parse(await request.json());
     await connectMongoDB();
 
     const survey = await Survey.create(data);

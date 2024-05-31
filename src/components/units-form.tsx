@@ -53,13 +53,13 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
     ...DEFAULT_FORM_DATA,
     discordId: user_id,
   });
-  const [pendign, setPending] = useState(false);
+  const [pending, setPending] = useState(false);
 
   const fetchData = async () => {
     try {
       const response = await fetch(`/api/survey/${user_id}`);
       const data = await response.json();
-      if (!data.error || !data.survey) setFormData(data.survey);
+      if (!data.error) setFormData(data.survey);
     } catch (error) {
       console.error("Error fetching:", error);
     }
@@ -67,8 +67,7 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
 
   useEffect(() => {
     fetchData();
-  }, [!!user_id]);
-
+  }, [pending]);
   const form = useForm({
     values: formData,
   });
@@ -82,9 +81,21 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
         },
         body: JSON.stringify(values),
       });
+
+      if (formData._id) {
+        const deleteResponse = await fetch(`/api/survey/${formData._id}`, {
+          method: "DELETE",
+        });
+
+        if (!deleteResponse.ok) {
+          throw new Error(
+            `Delete request failed with status: ${deleteResponse.status}`
+          );
+        }
+      }
       toast.success("Ankieta wysłana!");
     } catch (error) {
-      console.error(error);
+      console.error("Error occurred:", error);
       toast.error(
         `Wystąpił błąd podczas ${
           formData._id ? "aktualizowania" : "wysyłania"
@@ -300,7 +311,7 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
               ))}
             </ul>
           </div>
-          <Button disabled={true} type="submit" className="w-full my-2">
+          <Button disabled={pending} type="submit" className="w-full my-2">
             Wyslij
           </Button>
         </div>

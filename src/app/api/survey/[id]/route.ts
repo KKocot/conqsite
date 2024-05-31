@@ -18,3 +18,12 @@ export async function GET(
       return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
+
+export async function DELETE(
+  request: Request,
+  { params: { id } }: { params: { id: string } }
+) {
+  await connectMongoDB();
+  await Survey.findByIdAndDelete(id);
+  return NextResponse.json({ message: "Survey deleted" }, { status: 200 });
+}
