@@ -38,16 +38,16 @@ export default function Home() {
               Sprawdz co wziac na TW
             </p>
             <div className="mt-4 flex flex-col sm:flex-row gap-3 justify-center items-center">
-              <Link href="/">
+              <Link href="/lineups/one">
                 <Button>Szara Straz</Button>
               </Link>
-              <Link href="/">
+              <Link href="/lineups/two">
                 <Button>Przedchoragiewni</Button>
               </Link>
-              <Link href="/">
-                <Button>Biedna Pierdolona Piechota</Button>
+              <Link href="/lineups/three">
+                <Button>Biedna Piechota</Button>
               </Link>
-              <Link href="/">
+              <Link href="/lineups/four">
                 <Button>Lineup 4</Button>
               </Link>
             </div>
