@@ -22,7 +22,7 @@ export default function RootLayout({
         <head>
           <link rel="icon" href="/logo.png" sizes="any" />
         </head>
-        <body className="h-screen">
+        <body>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

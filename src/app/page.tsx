@@ -7,7 +7,7 @@ import { signIn, useSession } from "next-auth/react";
 export default function Home() {
   const { data } = useSession();
   return (
-    <main className="flex flex-col items-center justify-center px-4 md:px-6 sm:h-full">
+    <main className="flex flex-col items-center justify-center px-4 md:px-6 sm:h-full my-12">
       <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl text-center">
         Witam w Kingdom of Poland
       </h1>
