@@ -116,6 +116,7 @@ export default function Component() {
                   <TableHead className="text-center">Preferuje</TableHead>
                   <TableHead className="text-center">Wymaksowana</TableHead>
                   <TableHead className="text-center">Posiadam</TableHead>
+                  <TableHead className="text-center">Nie posiadam</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -123,26 +124,31 @@ export default function Component() {
                   <List units={golden} value="3" />
                   <List units={golden} value="2" />
                   <List units={golden} value="1" />
+                  <List units={golden} value="" />
                 </TableRow>
                 <TableRow>
                   <List units={heroic} value="3" />
                   <List units={heroic} value="2" />
                   <List units={heroic} value="1" />
+                  <List units={heroic} value="0" />
                 </TableRow>
                 <TableRow>
                   <List units={blue} value="3" />
                   <List units={blue} value="2" />
                   <List units={blue} value="1" />
+                  <List units={blue} value="0" />
                 </TableRow>
                 <TableRow>
                   <List units={green} value="3" />
                   <List units={green} value="2" />
                   <List units={green} value="1" />
+                  <List units={green} value="0" />
                 </TableRow>
                 <TableRow>
                   <List units={grey} value="3" />
                   <List units={grey} value="2" />
                   <List units={grey} value="1" />
+                  <List units={grey} value="0" />
                 </TableRow>
               </TableBody>
             </Table>
