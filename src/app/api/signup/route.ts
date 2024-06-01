@@ -1,25 +1,27 @@
 import connectMongoDB from "@/lib/mongodb";
 import Signup from "@/models/signup";
 import { NextResponse } from "next/server";
+import { ZodError } from "zod";
+import { putSignUpSchema } from "./shema";
 
 export async function POST(request: Request) {
-  const { date, lineup_one, lineup_two, lineup_tree, lineup_four } =
-    await request.json();
-  await connectMongoDB();
-  await Signup.create({
-    date,
-    lineup_one,
-    lineup_two,
-    lineup_tree,
-    lineup_four,
-  });
-  return NextResponse.json({ message: "Lists created" }, { status: 201 });
+  try {
+    const data = putSignUpSchema.parse(await request.json());
+    await connectMongoDB();
+    const signup = await Signup.create(data);
+    return NextResponse.json(signup, { status: 201 });
+  } catch (error) {
+    if (error instanceof ZodError)
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    if (error instanceof Error)
+      return NextResponse.json({ message: error.message }, { status: 500 });
+  }
 }
 
 export async function GET() {
   await connectMongoDB();
-  const list = await Signup.find();
-  return NextResponse.json({ list });
+  const signup = await Signup.find();
+  return NextResponse.json({ signup });
 }
 
 export async function DELETE(request: Request) {

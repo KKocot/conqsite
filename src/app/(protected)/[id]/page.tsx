@@ -90,72 +90,66 @@ export default function Component() {
   }, [params.id]);
 
   return (
-    <div className="flex items-center justify-center">
-      <div className="rounded-lg shadow-md sm:m-12">
-        <div className="p-2 sm:p-8">
-          <div className="flex items-center gap-10">
-            <Avatar className="w-16 h-16">
-              <AvatarImage alt="@shadcn" src="/placeholder-avatar.jpg" />
-              <AvatarFallback>KK</AvatarFallback>
-            </Avatar>
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                <span>{profile.inGameNick}</span>(
-                <span className="text-red-600">{profile.characterLevel}</span>)
-              </h2>
-              <p className="text-gray-500 dark:text-gray-400 mt-1">
-                {profile.discordNick}
-              </p>
-            </div>
+    <div>
+      <div className="p-2 sm:p-8">
+        <div className="flex items-center gap-10">
+          <Avatar className="w-16 h-16">
+            <AvatarImage alt="@shadcn" src="/placeholder-avatar.jpg" />
+            <AvatarFallback>KK</AvatarFallback>
+          </Avatar>
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+              <span>{profile.inGameNick}</span>(
+              <span className="text-red-600">{profile.characterLevel}</span>)
+            </h2>
+            <p className="text-gray-500 dark:text-gray-400 mt-1">
+              {profile.discordNick}
+            </p>
           </div>
-          <div className="py-8">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-center px-0">Preferuje</TableHead>
-                  <TableHead className="text-center px-0">
-                    Wymaksowana
-                  </TableHead>
-                  <TableHead className="text-center px-0">Posiadam</TableHead>
-                  <TableHead className="text-center px-0">
-                    Nie posiadam
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <TableRow>
-                  <List units={golden} value="3" />
-                  <List units={golden} value="2" />
-                  <List units={golden} value="1" />
-                  <List units={golden} value="0" />
-                </TableRow>
-                <TableRow>
-                  <List units={heroic} value="3" />
-                  <List units={heroic} value="2" />
-                  <List units={heroic} value="1" />
-                  <List units={heroic} value="0" />
-                </TableRow>
-                <TableRow>
-                  <List units={blue} value="3" />
-                  <List units={blue} value="2" />
-                  <List units={blue} value="1" />
-                  <List units={blue} value="0" />
-                </TableRow>
-                <TableRow>
-                  <List units={green} value="3" />
-                  <List units={green} value="2" />
-                  <List units={green} value="1" />
-                  <List units={green} value="0" />
-                </TableRow>
-                <TableRow>
-                  <List units={grey} value="3" />
-                  <List units={grey} value="2" />
-                  <List units={grey} value="1" />
-                  <List units={grey} value="0" />
-                </TableRow>
-              </TableBody>
-            </Table>
-          </div>
+        </div>
+        <div className="py-8">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="text-center px-0">Preferuje</TableHead>
+                <TableHead className="text-center px-0">Wymaksowana</TableHead>
+                <TableHead className="text-center px-0">Posiadam</TableHead>
+                <TableHead className="text-center px-0">Nie posiadam</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <List units={golden} value="3" />
+                <List units={golden} value="2" />
+                <List units={golden} value="1" />
+                <List units={golden} value="0" />
+              </TableRow>
+              <TableRow>
+                <List units={heroic} value="3" />
+                <List units={heroic} value="2" />
+                <List units={heroic} value="1" />
+                <List units={heroic} value="0" />
+              </TableRow>
+              <TableRow>
+                <List units={blue} value="3" />
+                <List units={blue} value="2" />
+                <List units={blue} value="1" />
+                <List units={blue} value="0" />
+              </TableRow>
+              <TableRow>
+                <List units={green} value="3" />
+                <List units={green} value="2" />
+                <List units={green} value="1" />
+                <List units={green} value="0" />
+              </TableRow>
+              <TableRow>
+                <List units={grey} value="3" />
+                <List units={grey} value="2" />
+                <List units={grey} value="1" />
+                <List units={grey} value="0" />
+              </TableRow>
+            </TableBody>
+          </Table>
         </div>
       </div>
     </div>

@@ -13,7 +13,6 @@ export async function POST(request: Request) {
   try {
     const data = putSurveySchema.parse(await request.json());
     await connectMongoDB();
-
     const survey = await Survey.create(data);
     return NextResponse.json(survey, { status: 201 });
   } catch (error) {
