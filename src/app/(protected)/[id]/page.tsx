@@ -9,7 +9,6 @@ import { weapons } from "@/assets/weapons";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { goldenUnits } from "@/assets/golden-units-data";
 import {
-  TableCaption,
   TableHeader,
   TableRow,
   TableHead,
@@ -113,10 +112,14 @@ export default function Component() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="text-center">Preferuje</TableHead>
-                  <TableHead className="text-center">Wymaksowana</TableHead>
-                  <TableHead className="text-center">Posiadam</TableHead>
-                  <TableHead className="text-center">Nie posiadam</TableHead>
+                  <TableHead className="text-center px-0">Preferuje</TableHead>
+                  <TableHead className="text-center px-0">
+                    Wymaksowana
+                  </TableHead>
+                  <TableHead className="text-center px-0">Posiadam</TableHead>
+                  <TableHead className="text-center px-0">
+                    Nie posiadam
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -124,7 +127,7 @@ export default function Component() {
                   <List units={golden} value="3" />
                   <List units={golden} value="2" />
                   <List units={golden} value="1" />
-                  <List units={golden} value="" />
+                  <List units={golden} value="0" />
                 </TableRow>
                 <TableRow>
                   <List units={heroic} value="3" />

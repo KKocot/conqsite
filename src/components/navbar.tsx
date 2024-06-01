@@ -16,7 +16,7 @@ import { ModeToggle } from "./theme-menu";
 export default function Navbar() {
   const { data } = useSession();
   return (
-    <nav className="flex justify-between items-center bg-slate-700 dark:bg-slate-950 px-8 py-1">
+    <nav className="flex justify-between items-center bg-primary px-8 py-1">
       <Link className="text-white font-bold flex items-center gap-2" href={"/"}>
         <img src="/logo.png" alt="logo" className="h-10" />
         KoP
