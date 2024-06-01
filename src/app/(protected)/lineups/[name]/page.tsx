@@ -81,7 +81,7 @@ const Page: React.FC = () => {
       </Accordion>
       <ul className="flex flex-col gap-2">
         {form.map((e, index) => (
-          <Item index={index} name={e} />
+          <Item key={index + e} index={index} name={e} />
         ))}
       </ul>
     </div>
