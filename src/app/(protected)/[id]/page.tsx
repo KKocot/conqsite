@@ -91,8 +91,8 @@ export default function Component() {
   }, [params.id]);
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-      <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md w-full">
+    <div className="flex items-center justify-center">
+      <div className="rounded-lg shadow-md sm:m-12">
         <div className="p-2 sm:p-8">
           <div className="flex items-center gap-10">
             <Avatar className="w-16 h-16">
