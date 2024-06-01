@@ -8,6 +8,15 @@ import { lowUnits } from "@/assets/low-units-data";
 import { weapons } from "@/assets/weapons";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { goldenUnits } from "@/assets/golden-units-data";
+import {
+  TableCaption,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+  Table,
+} from "@/components/ui/table";
 
 interface Unit {
   era: string;
@@ -34,20 +43,22 @@ function ownedUnits(
 
 const List = ({ units, value }: { units: Unit[]; value: string }) => {
   return (
-    <ul className="grid grid-cols-2 justify-items-center my-2 gap-1">
-      {units.map((unit) =>
-        unit.matchingGolden?.value === value ? (
-          <li key={unit.id}>
-            <img
-              src={unit.icon}
-              alt={unit.name}
-              className="h-8 w-8 md:h-12 md:w-12"
-              title={unit.name}
-            />
-          </li>
-        ) : null
-      )}
-    </ul>
+    <TableCell>
+      <div className="flex flex-wrap gap-2 justify-center">
+        {units.map((unit) =>
+          unit.matchingGolden?.value === value ? (
+            <span key={unit.id} className="w-fit">
+              <Avatar className="h-8 w-8 md:h-12 md:w-12" title={unit.name}>
+                <AvatarImage alt={unit.name} src={unit.icon} />
+                <AvatarFallback>
+                  <img src={unit.src} />
+                </AvatarFallback>
+              </Avatar>
+            </span>
+          ) : null
+        )}
+      </div>
+    </TableCell>
   );
 };
 
@@ -80,10 +91,10 @@ export default function Component() {
   }, [params.id]);
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-800 min-h-screen flex items-center justify-center">
-      <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md w-full max-w-2xl">
+    <div className="bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+      <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md w-full">
         <div className="p-2 sm:p-8">
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center gap-10">
             <Avatar className="w-16 h-16">
               <AvatarImage alt="@shadcn" src="/placeholder-avatar.jpg" />
               <AvatarFallback>KK</AvatarFallback>
@@ -98,47 +109,43 @@ export default function Component() {
               </p>
             </div>
           </div>
-          <div className="flex flex-row justify-around py-8">
-            <div>
-              <h1 className="text-center">Golden</h1>
-              <div className="flex flex-col">
-                <List units={golden} value="3" />
-                <List units={golden} value="2" />
-                <List units={golden} value="1" />
-              </div>
-            </div>
-            <div>
-              <h1 className="text-center">Heroic</h1>
-              <div className="flex flex-col">
-                <List units={heroic} value="3" />
-                <List units={heroic} value="2" />
-                <List units={heroic} value="1" />
-              </div>
-            </div>
-            <div>
-              <h1 className="text-center">Blue</h1>
-              <div className="flex flex-col">
-                <List units={blue} value="3" />
-                <List units={blue} value="2" />
-                <List units={blue} value="1" />
-              </div>
-            </div>
-            <div>
-              <h1 className="text-center">Green</h1>
-              <div className="flex flex-col">
-                <List units={green} value="3" />
-                <List units={green} value="2" />
-                <List units={green} value="1" />
-              </div>
-            </div>
-            <div>
-              <h1 className="text-center">Grey</h1>
-              <div className="flex flex-col">
-                <List units={grey} value="3" />
-                <List units={grey} value="2" />
-                <List units={grey} value="1" />
-              </div>
-            </div>
+          <div className="py-8">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-center">Preferuje</TableHead>
+                  <TableHead className="text-center">Wymaksowana</TableHead>
+                  <TableHead className="text-center">Posiadam</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <List units={golden} value="3" />
+                  <List units={golden} value="2" />
+                  <List units={golden} value="1" />
+                </TableRow>
+                <TableRow>
+                  <List units={heroic} value="3" />
+                  <List units={heroic} value="2" />
+                  <List units={heroic} value="1" />
+                </TableRow>
+                <TableRow>
+                  <List units={blue} value="3" />
+                  <List units={blue} value="2" />
+                  <List units={blue} value="1" />
+                </TableRow>
+                <TableRow>
+                  <List units={green} value="3" />
+                  <List units={green} value="2" />
+                  <List units={green} value="1" />
+                </TableRow>
+                <TableRow>
+                  <List units={grey} value="3" />
+                  <List units={grey} value="2" />
+                  <List units={grey} value="1" />
+                </TableRow>
+              </TableBody>
+            </Table>
           </div>
         </div>
       </div>
