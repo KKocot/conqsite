@@ -16,6 +16,7 @@ import {
   TableCell,
   Table,
 } from "@/components/ui/table";
+import clsx from "clsx";
 
 interface Unit {
   era: string;
@@ -47,7 +48,22 @@ const List = ({ units, value }: { units: Unit[]; value: string }) => {
         {units.map((unit) =>
           unit.matchingGolden?.value === value ? (
             <span key={unit.id} className="w-fit">
-              <Avatar className="h-8 w-8 md:h-12 md:w-12" title={unit.name}>
+              {unit.value >= 9 ? (
+                <div className="group relative w-fit" title="Jednostka z Mety">
+                  <div className="absolute bottom-auto left-5 right-auto top-2 z-50 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 scale-x-100 whitespace-nowrap rounded-full bg-red-600 px-1.5 py-1 text-center text-xs font-bold leading-none text-white">
+                    M
+                  </div>
+                </div>
+              ) : null}
+              <Avatar
+                className={clsx(
+                  "h-8 w-8 md:h-12 md:w-12 border-solid border-2 border-transparent shadow-md",
+                  {
+                    "border-red-600": unit.value >= 9,
+                  }
+                )}
+                title={unit.name}
+              >
                 <AvatarImage alt={unit.name} src={unit.icon} />
                 <AvatarFallback>
                   <img src={unit.src} />
