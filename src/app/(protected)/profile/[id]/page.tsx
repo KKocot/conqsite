@@ -50,7 +50,7 @@ const List = ({ units, value }: { units: Unit[]; value: string }) => {
             <span key={unit.id} className="w-fit">
               {unit.value >= 9 ? (
                 <div className="group relative w-fit" title="Jednostka z Mety">
-                  <div className="absolute bottom-auto left-5 right-auto top-2 z-50 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 scale-x-100 whitespace-nowrap rounded-full bg-red-600 px-1.5 py-1 text-center text-xs font-bold leading-none text-white">
+                  <div className="absolute bottom-auto left-2 sm:left-5 right-auto sm:top-2 z-50 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 scale-x-100 whitespace-nowrap rounded-full bg-red-600 px-1.5 py-1 text-center text-xs font-bold leading-none text-white">
                     M
                   </div>
                 </div>
