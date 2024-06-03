@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { goldenUnits } from "@/assets/golden-units-data";
+import { heroicUnits } from "@/assets/heroic-units-data";
+import { lowUnits } from "@/assets/low-units-data";
 import { Autocompleter } from "@/components/autocompleter";
 import { Input } from "@/components/ui/input";
 import {
@@ -28,24 +30,17 @@ const form = [
   "User 14",
   "User 15",
 ];
-const Item = ({ index, name }: { index: number; name: string }) => {
+const Item = ({ name }: { name: string }) => {
   const [value, setValue] = useState("");
+  const arrays = [...goldenUnits, ...heroicUnits, ...lowUnits];
   return (
     <li className="grid grid-cols-11 border-2 border-primary p-2 rounded-2xl items-center">
-      <span className="col-span-1">{index + 1}</span>
       <span className="col-span-2">
         <Input value={name} className="p-1" />
       </span>
       <span className="col-span-2">
-        <Autocompleter value={value} onChange={setValue} items={goldenUnits} />
+        <Autocompleter value={value} onChange={setValue} items={arrays} />
       </span>
-      <span className="col-span-2">
-        <Autocompleter value={value} onChange={setValue} items={goldenUnits} />
-      </span>
-      <span className="col-span-2">
-        <Autocompleter value={value} onChange={setValue} items={goldenUnits} />
-      </span>
-      <span className="col-span-2 text-center">Opis</span>
     </li>
   );
 };
@@ -81,7 +76,7 @@ const Page: React.FC = () => {
       </Accordion>
       <ul className="flex flex-col gap-2">
         {form.map((e, index) => (
-          <Item key={index + e} index={index} name={e} />
+          <Item key={index + e} name={e} />
         ))}
       </ul>
     </div>

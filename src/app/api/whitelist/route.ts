@@ -18,6 +18,6 @@ export async function GET() {
 export async function DELETE(request: Request) {
   const id = new URL(request.url).searchParams.get("id");
   await connectMongoDB();
-  await Whitelist.findByIdAndDelete(id);
+  await Whitelist.findOneAndDelete({ discordId: id });
   return NextResponse.json({ message: "User deleted" }, { status: 200 });
 }
