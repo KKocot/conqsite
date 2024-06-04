@@ -30,16 +30,27 @@ const form = [
   "User 14",
   "User 15",
 ];
-const Item = ({ name }: { name: string }) => {
-  const [value, setValue] = useState("");
+const elements = Array.from({ length: 40 }, (_, index) => index + 1);
+
+const Item = () => {
+  const [unitValue, setUnitValue] = useState("");
+  const [user, setUser] = useState("");
   const arrays = [...goldenUnits, ...heroicUnits, ...lowUnits];
   return (
     <li className="grid grid-cols-11 border-2 border-primary p-2 rounded-2xl items-center">
       <span className="col-span-2">
-        <Input value={name} className="p-1" />
+        <Input
+          value={user}
+          className="p-1"
+          onChange={(e) => setUser(e.target.value)}
+        />
       </span>
       <span className="col-span-2">
-        <Autocompleter value={value} onChange={setValue} items={arrays} />
+        <Autocompleter
+          value={unitValue}
+          onChange={setUnitValue}
+          items={arrays}
+        />
       </span>
     </li>
   );
@@ -75,8 +86,8 @@ const Page: React.FC = () => {
         </AccordionItem>
       </Accordion>
       <ul className="flex flex-col gap-2">
-        {form.map((e, index) => (
-          <Item key={index + e} name={e} />
+        {elements.map((index) => (
+          <Item key={index} />
         ))}
       </ul>
     </div>
