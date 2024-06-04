@@ -33,7 +33,7 @@ export default function Home() {
               </Link>
             </div>
           </div> */}
-          {/* <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+          <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
             <p className="text-gray-500 dark:text-gray-400 text-center">
               Sprawdz co wziac na TW
             </p>
@@ -48,10 +48,10 @@ export default function Home() {
                 <Button>Biedna Piechota</Button>
               </Link>
               <Link href="/lineups/four">
-                <Button>Lineup 4</Button>
+                <Button>Cebulowa Flota</Button>
               </Link>
             </div>
-          </div> */}
+          </div>
         </>
       ) : (
         <div className="mt-8 max-w-md rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
