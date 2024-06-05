@@ -358,9 +358,11 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
                   </p>
                   <br />
                   <p>
-                    &ldquo;Wymaksowane&ldquo;- na liscie wyborow, oznacza ze
-                    mamy na jednostce dobre Doktrymy i Masterki(jesli jednostaka
-                    je posiada)
+                    nie mam - no to wiadomo <br />
+                    mam - mam na max lvl <br />
+                    wymaksowana - full doktryny i masteri <br />
+                    preferuje - mam max lvl i cos tam jakies doktryny i troche
+                    masteri jak sa, ale umiem tym grac
                   </p>
                 </div>
               </TooltipContent>
