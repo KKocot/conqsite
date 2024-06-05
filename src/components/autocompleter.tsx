@@ -66,7 +66,7 @@ export function Autocompleter({
             {items &&
               items.map((item) => (
                 <CommandItem
-                  key={item.id}
+                  key={item.id + Math.random()}
                   className="p-0"
                   onSelect={() => onChange(item.name)}
                 >

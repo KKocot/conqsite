@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { goldenUnits } from "@/assets/golden-units-data";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { lowUnits } from "@/assets/low-units-data";
@@ -13,29 +13,16 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
-const form = [
-  "User 1",
-  "User 2",
-  "User 3",
-  "User 4",
-  "User 5",
-  "User 6",
-  "User 7",
-  "User 8",
-  "User 9",
-  "User 10",
-  "User 11",
-  "User 12",
-  "User 13",
-  "User 14",
-  "User 15",
-];
+import { getCloserDay, getLineup } from "@/lib/utils";
+import { useParams } from "next/navigation";
+import { ItemProps } from "@/lib/type";
 const elements = Array.from({ length: 40 }, (_, index) => index + 1);
 
 const Item = () => {
   const [unitValue, setUnitValue] = useState("");
   const [user, setUser] = useState("");
   const arrays = [...goldenUnits, ...heroicUnits, ...lowUnits];
+
   return (
     <li className="grid grid-cols-11 border-2 border-primary p-2 rounded-2xl items-center">
       <span className="col-span-2">
@@ -73,6 +60,24 @@ const CheckboxItem = ({ label }: { label: string }) => {
 };
 
 const Page: React.FC = () => {
+  const params = useParams<{ name: string }>();
+  const [signup, setSignup] = useState<ItemProps>();
+
+  const next_tw = getCloserDay();
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`/api/signup/${next_tw}`);
+      const data = await response.json();
+      setSignup(data.signup);
+    } catch (error) {
+      console.error("Error fetching:", error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const lineup = signup ? getLineup(params.name, signup) : [];
   return (
     <div className="flex flex-col gap-5 p-2">
       <Accordion type="single" collapsible>
