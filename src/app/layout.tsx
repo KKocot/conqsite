@@ -17,12 +17,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <NextAuthProvider>
-      <html lang="en">
-        <head>
-          <link rel="icon" href="/logo.png" sizes="any" />
-        </head>
-        <body>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/logo.png" sizes="any" />
+      </head>
+      <body>
+        <NextAuthProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -33,8 +33,8 @@ export default function RootLayout({
             {children}
             <ToastContainer />
           </ThemeProvider>
-        </body>
-      </html>
-    </NextAuthProvider>
+        </NextAuthProvider>
+      </body>
+    </html>
   );
 }
