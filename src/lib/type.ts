@@ -5,3 +5,49 @@ export interface ItemProps {
   lineup_3: string[];
   lineup_4: string[];
 }
+
+export interface SurveyProps {
+  discordNick: string;
+  inGameNick: string;
+  discordId: string;
+  characterLevel: string;
+  artyAmount: "none" | "some" | "average" | "aLot";
+
+  weapons: [
+    {
+      value: Boolean;
+      leadership: number;
+    }
+  ];
+  units: {
+    low: [
+      {
+        id: number;
+        value: string;
+      }
+    ];
+    heroic: [
+      {
+        id: number;
+        value: string;
+      }
+    ];
+    golden: [
+      {
+        id: number;
+        value: string;
+      }
+    ];
+  };
+}
+
+export interface Unit {
+  era: string;
+  icon: string;
+  id: number;
+  leadership: number;
+  masteryPoints: boolean;
+  name: string;
+  src: string;
+  value: number;
+}

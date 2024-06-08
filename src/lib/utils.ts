@@ -32,7 +32,7 @@ export function getNextDay(dayOfWeek: string) {
   const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed, so add 1
   const date = String(today.getDate()).padStart(2, "0");
 
-  return `${year}-${month}-${date}`;
+  return `${year}-${date}-${month}`;
 }
 export function getCloserDay() {
   const nextTuesday = getNextDay("Tuesday");
@@ -53,5 +53,20 @@ export function getLineup(lineup: string, signup: ItemProps) {
       return signup.lineup_4;
     default:
       return [];
+  }
+}
+
+export function getLineupName(lineup: string) {
+  switch (lineup) {
+    case "one":
+      return "Szara Straż";
+    case "two":
+      return "Tarcza Króla";
+    case "three":
+      return "Czerwona Flota";
+    case "four":
+      return "Biedna Piechota";
+    default:
+      return "Nieznany skład";
   }
 }

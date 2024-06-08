@@ -8,17 +8,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 import { Checkbox } from "@/components/ui/checkbox";
-
-interface Unit {
-  era: string;
-  icon: string;
-  id: number;
-  leadership: number;
-  masteryPoints: boolean;
-  name: string;
-  src: string;
-  value: number;
-}
+import { Unit } from "@/lib/type";
 
 export function Autocompleter({
   value,
