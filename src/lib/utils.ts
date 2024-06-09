@@ -61,11 +61,11 @@ export function getLineupName(lineup: string) {
     case "one":
       return "Szara Straż";
     case "two":
-      return "Tarcza Króla";
+      return "Królewska Tarcza";
     case "three":
       return "Czerwona Flota";
     case "four":
-      return "Biedna Piechota";
+      return "Zielona Piechota";
     default:
       return "Nieznany skład";
   }

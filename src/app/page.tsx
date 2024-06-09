@@ -42,13 +42,13 @@ export default function Home() {
                 <Button>Szara Straz</Button>
               </Link>
               <Link href="/lineups/two">
-                <Button>Przedchoragiewni</Button>
+                <Button>Królewska Tarcza</Button>
               </Link>
               <Link href="/lineups/three">
-                <Button>Biedna Piechota</Button>
+                <Button>Czerwona Flota</Button>
               </Link>
               <Link href="/lineups/four">
-                <Button>Cebulowa Flota</Button>
+                <Button>Zielona Piechota</Button>
               </Link>
             </div>
           </div>

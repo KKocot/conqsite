@@ -51,3 +51,8 @@ export interface Unit {
   src: string;
   value: number;
 }
+export interface SheetData {
+  username: string;
+  unit1: string;
+  unit2: string;
+}

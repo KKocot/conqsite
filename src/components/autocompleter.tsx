@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/command";
 import { useEffect, useRef, useState } from "react";
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Unit } from "@/lib/type";
 
 export function Autocompleter({

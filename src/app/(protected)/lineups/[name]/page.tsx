@@ -1,24 +1,23 @@
 "use client";
 
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { goldenUnits } from "@/assets/golden-units-data";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { lowUnits } from "@/assets/low-units-data";
-import { Autocompleter } from "@/components/autocompleter";
-import { Input } from "@/components/ui/input";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Checkbox } from "@/components/ui/checkbox";
 import { getCloserDay, getLineup, getLineupName } from "@/lib/utils";
 import { useParams } from "next/navigation";
-import { ItemProps, SurveyProps, Unit } from "@/lib/type";
+import { ItemProps, SheetData, SurveyProps, Unit } from "@/lib/type";
 import { Badge } from "@/components/ui/badge";
+import CheckboxItem from "@/components/sheet-form-filter";
+import { Autocompleter } from "@/components/autocompleter";
+import { Input } from "@/components/ui/input";
 
-const elements = Array.from({ length: 40 }, (_, index) => index + 1);
 const others = [
   {
     era: "other",
@@ -61,60 +60,6 @@ const others = [
     value: 1,
   },
 ] as Unit[];
-const Item = () => {
-  const [unitValue, setUnitValue] = useState("");
-  const [user, setUser] = useState("");
-  const arrays = [...goldenUnits, ...heroicUnits, ...lowUnits, ...others];
-
-  return (
-    <li className="grid grid-cols-11 border-2 border-primary p-2 rounded-2xl items-center">
-      <span className="col-span-2">
-        <Input
-          value={user}
-          className="p-1"
-          onChange={(e) => setUser(e.target.value)}
-        />
-      </span>
-      <span className="col-span-2">
-        <Autocompleter
-          value={unitValue}
-          onChange={setUnitValue}
-          items={arrays}
-        />
-      </span>
-    </li>
-  );
-};
-
-const CheckboxItem = ({
-  label,
-  checked,
-  onChange,
-}: {
-  label: string;
-  checked: boolean;
-  onChange: (e: boolean) => void;
-}) => {
-  return (
-    <AccordionContent>
-      <div className="flex items-center space-x-2">
-        <Checkbox
-          id={label}
-          checked={checked}
-          onCheckedChange={(e) => {
-            onChange(e as boolean);
-          }}
-        />
-        <label
-          htmlFor={label}
-          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-        >
-          {label}
-        </label>
-      </div>
-    </AccordionContent>
-  );
-};
 
 const Page: React.FC = () => {
   const params = useParams<{ name: string }>();
@@ -128,10 +73,34 @@ const Page: React.FC = () => {
     golden_checked: true,
     other_checked: true,
   });
+  const [sheetData, setSheetData] = useState<SheetData>({
+    username: "",
+    unit1: "",
+    unit2: "",
+  });
+
+  const blueUnits = lowUnits.filter((unit) => unit.era === "blue");
+  const greenUnits = lowUnits.filter((unit) => unit.era === "green");
+  const greyUnits = lowUnits.filter((unit) => unit.era === "grey");
+  const golden_era = filterUnits.golden_checked ? goldenUnits : [];
+  const heroic_era = filterUnits.heroic_checked ? heroicUnits : [];
+  const silver_era = filterUnits.silver_checked ? blueUnits : [];
+  const chivalric_era = filterUnits.chivalric_checked ? greenUnits : [];
+  const rustic_era = filterUnits.rustic_checked ? greyUnits : [];
+  const others_unit = filterUnits.other_checked ? others : [];
+  const units = [
+    ...golden_era,
+    ...heroic_era,
+    ...silver_era,
+    ...chivalric_era,
+    ...rustic_era,
+    ...others_unit,
+  ];
   const next_tw = getCloserDay();
   const fetchLineup = async () => {
     try {
-      const response = await fetch(`/api/signup/${next_tw}`);
+      // const response = await fetch(`/api/signup/${next_tw}`);
+      const response = await fetch(`/api/signup/2024-08-06`);
       const data = await response.json();
       setSignup(data.signup);
     } catch (error) {
@@ -157,7 +126,12 @@ const Page: React.FC = () => {
   const lineup_members = surveys
     ? surveys?.filter((survey) => lineup.includes(survey.discordId))
     : [];
+  const squad_length = lineup_members.length;
   const lineup_name = getLineupName(params.name);
+  const elements = Array.from(
+    { length: squad_length },
+    (_, index) => index + 1
+  );
   return (
     <div className="flex flex-col gap-5 p-2">
       <h1 className="text-5xl font-bold text-center">{lineup_name}</h1>
@@ -245,3 +219,28 @@ const Page: React.FC = () => {
 };
 
 export default Page;
+
+const Item = () => {
+  const [unitValue, setUnitValue] = useState("");
+  const [user, setUser] = useState("");
+  const arrays = [...goldenUnits, ...heroicUnits, ...lowUnits];
+
+  return (
+    <li className="grid grid-cols-11 border-2 border-primary p-2 rounded-2xl items-center">
+      <span className="col-span-2">
+        <Input
+          value={user}
+          className="p-1"
+          onChange={(e) => setUser(e.target.value)}
+        />
+      </span>
+      <span className="col-span-2">
+        <Autocompleter
+          value={unitValue}
+          onChange={setUnitValue}
+          items={arrays}
+        />
+      </span>
+    </li>
+  );
+};
