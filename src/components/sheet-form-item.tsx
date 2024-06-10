@@ -1,17 +1,14 @@
-import { goldenUnits } from "@/assets/golden-units-data";
+import { Unit } from "@/lib/type";
 import { Autocompleter } from "./autocompleter";
 import { Input } from "./ui/input";
-import { heroicUnits } from "@/assets/heroic-units-data";
 import { useState } from "react";
-import { lowUnits } from "@/assets/low-units-data";
 
-const Item = () => {
+const Item = ({ units }: { units: Unit[] }) => {
   const [unitValue, setUnitValue] = useState("");
   const [user, setUser] = useState("");
-  const arrays = [...goldenUnits, ...heroicUnits, ...lowUnits];
 
   return (
-    <li className="grid grid-cols-11 border-2 border-primary p-2 rounded-2xl items-center">
+    <li className="grid grid-cols-11 border-2 border-primary p-2 rounded-2xl items-center gap-2">
       <span className="col-span-2">
         <Input
           value={user}
@@ -23,9 +20,18 @@ const Item = () => {
         <Autocompleter
           value={unitValue}
           onChange={setUnitValue}
-          items={arrays}
+          items={units}
+        />
+      </span>
+      <span className="col-span-2">
+        <Autocompleter
+          value={unitValue}
+          onChange={setUnitValue}
+          items={units}
         />
       </span>
     </li>
   );
 };
+
+export default Item;

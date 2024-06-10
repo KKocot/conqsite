@@ -40,7 +40,6 @@ export function Autocompleter({
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
-
   return (
     <Command className="w-full border" ref={autocompleteRef}>
       <CommandInput
@@ -55,7 +54,7 @@ export function Autocompleter({
             {items &&
               items.map((item) => (
                 <CommandItem
-                  key={item.id + Math.random()}
+                  key={item.id + item.name}
                   className="p-0"
                   onSelect={() => onChange(item.name)}
                 >

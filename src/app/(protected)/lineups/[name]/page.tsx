@@ -15,8 +15,8 @@ import { useParams } from "next/navigation";
 import { ItemProps, SheetData, SurveyProps, Unit } from "@/lib/type";
 import { Badge } from "@/components/ui/badge";
 import CheckboxItem from "@/components/sheet-form-filter";
-import { Autocompleter } from "@/components/autocompleter";
-import { Input } from "@/components/ui/input";
+
+import Item from "@/components/sheet-form-item";
 
 const others = [
   {
@@ -211,7 +211,7 @@ const Page: React.FC = () => {
       </div>
       <ul className="flex flex-col gap-2">
         {elements.map((index) => (
-          <Item key={index} />
+          <Item key={index} units={units} />
         ))}
       </ul>
     </div>
@@ -219,28 +219,3 @@ const Page: React.FC = () => {
 };
 
 export default Page;
-
-const Item = () => {
-  const [unitValue, setUnitValue] = useState("");
-  const [user, setUser] = useState("");
-  const arrays = [...goldenUnits, ...heroicUnits, ...lowUnits];
-
-  return (
-    <li className="grid grid-cols-11 border-2 border-primary p-2 rounded-2xl items-center">
-      <span className="col-span-2">
-        <Input
-          value={user}
-          className="p-1"
-          onChange={(e) => setUser(e.target.value)}
-        />
-      </span>
-      <span className="col-span-2">
-        <Autocompleter
-          value={unitValue}
-          onChange={setUnitValue}
-          items={arrays}
-        />
-      </span>
-    </li>
-  );
-};
