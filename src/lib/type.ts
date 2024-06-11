@@ -59,3 +59,9 @@ export interface SheetTypes {
   weapon: string;
   description: string;
 }
+
+export interface WeaponsTypes {
+  id: number;
+  name: string;
+  src: string;
+}

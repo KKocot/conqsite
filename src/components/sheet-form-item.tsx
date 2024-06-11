@@ -1,16 +1,18 @@
-import { SheetTypes, SurveyProps, Unit } from "@/lib/type";
+import { SheetTypes, SurveyProps, Unit, WeaponsTypes } from "@/lib/type";
 import { Autocompleter } from "./autocompleter";
-import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 
 const Item = ({
   units,
+  users,
+  weapons,
   index,
   data,
   onEdit,
-  users,
 }: {
   units: Unit[];
+  users: SurveyProps[];
+  weapons: WeaponsTypes[];
   index: number;
   data: SheetTypes;
   onEdit: (
@@ -22,7 +24,6 @@ const Item = ({
     weapon: string,
     description: string
   ) => void;
-  users: SurveyProps[];
 }) => {
   const users_list = users.map((user) => user.inGameNick);
   return (
@@ -64,6 +65,7 @@ const Item = ({
       <span className="col-span-2">
         <Autocompleter
           value={data.unit2}
+          units={units}
           onChange={(value) =>
             onEdit(
               index,
@@ -75,12 +77,12 @@ const Item = ({
               data.description
             )
           }
-          units={units}
         />
       </span>
       <span className="col-span-2">
         <Autocompleter
           value={data.unit3}
+          units={units}
           onChange={(value) =>
             onEdit(
               index,
@@ -92,21 +94,20 @@ const Item = ({
               data.description
             )
           }
-          units={units}
         />
       </span>
       <span className="col-span-2">
-        <Input
+        <Autocompleter
+          weapons={weapons}
           value={data.weapon}
-          className="p-1"
-          onChange={(e) =>
+          onChange={(value) =>
             onEdit(
               index,
               data.username,
               data.unit1,
               data.unit2,
               data.unit3,
-              e.target.value,
+              value,
               data.description
             )
           }

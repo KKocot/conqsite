@@ -7,18 +7,20 @@ import {
 } from "@/components/ui/command";
 import { useEffect, useRef, useState } from "react";
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
-import { Unit } from "@/lib/type";
+import { Unit, WeaponsTypes } from "@/lib/type";
 
 export function Autocompleter({
   value,
   onChange,
   units,
   users,
+  weapons,
 }: {
   value: string;
   onChange: (e: string) => void;
   units?: Unit[];
   users?: string[];
+  weapons?: WeaponsTypes[];
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -36,7 +38,7 @@ export function Autocompleter({
     }
   };
   const onKey = (e: KeyboardEvent) => {
-    if (e.key === "Escape" || e.key === "Enter") {
+    if (e.key === "Escape" || e.key === "Enter" || e.key === "Tab") {
       setIsOpen(false);
     }
   };
@@ -58,7 +60,7 @@ export function Autocompleter({
       />
       <CommandList>
         {isOpen && (
-          <CommandGroup className="absolute max-h-60 w-52 overflow-scroll bg-primary">
+          <CommandGroup className="absolute max-h-60 w-52 overflow-scroll bg-slate-200 shadow-md dark:bg-blue-900">
             {units
               ? units.map((item) => (
                   <CommandItem
@@ -98,6 +100,32 @@ export function Autocompleter({
                       title={item}
                     >
                       <span>{item}</span>
+                    </div>
+                  </CommandItem>
+                ))
+              : null}
+            {weapons
+              ? weapons.map((item) => (
+                  <CommandItem
+                    key={item.id + item.name}
+                    className="p-0"
+                    onSelect={() => onChange(item.name)}
+                  >
+                    <div
+                      onClick={() => onChange(item.name)}
+                      className="w-56 px-2 py-1 even:bg-black flex items-center gap-2"
+                      title={item.name}
+                    >
+                      <Avatar
+                        className="h-8 w-8 md:h-12 md:w-12"
+                        title={item.name}
+                      >
+                        <AvatarImage alt={item.name} src={item.src} />
+                        <AvatarFallback>
+                          <img src="/logo.png" />
+                        </AvatarFallback>
+                      </Avatar>
+                      <span>{item.name}</span>
                     </div>
                   </CommandItem>
                 ))

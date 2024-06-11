@@ -15,7 +15,7 @@ import { useParams } from "next/navigation";
 import { ItemProps, SheetTypes, SurveyProps, Unit } from "@/lib/type";
 import { Badge } from "@/components/ui/badge";
 import CheckboxItem from "@/components/sheet-form-filter";
-
+import { weapons } from "@/assets/weapons";
 import Item from "@/components/sheet-form-item";
 
 const others = [
@@ -78,7 +78,6 @@ const Page: React.FC = () => {
     const blueUnits = lowUnits.filter((unit) => unit.era === "blue");
     const greenUnits = lowUnits.filter((unit) => unit.era === "green");
     const greyUnits = lowUnits.filter((unit) => unit.era === "grey");
-
     const golden_era = filterUnits.golden_checked ? goldenUnits : [];
     const heroic_era = filterUnits.heroic_checked ? heroicUnits : [];
     const silver_era = filterUnits.silver_checked ? blueUnits : [];
@@ -106,6 +105,7 @@ const Page: React.FC = () => {
     heroicUnits,
     others,
   ]);
+
   const next_tw = getCloserDay();
   const fetchLineup = async () => {
     try {
@@ -131,7 +131,6 @@ const Page: React.FC = () => {
     fetchLineup();
     fetchSurveys();
   }, []);
-
   const lineup = signup ? getLineup(params.name, signup) : [];
   const lineup_members = surveys
     ? surveys?.filter((survey) => lineup.includes(survey.discordId))
@@ -257,6 +256,7 @@ const Page: React.FC = () => {
         {sheetData.map((e, index) => (
           <Item
             users={lineup_members}
+            weapons={weapons}
             key={index}
             index={index}
             units={units}
