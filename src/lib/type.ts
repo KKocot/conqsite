@@ -56,4 +56,6 @@ export interface SheetTypes {
   unit1: string;
   unit2: string;
   unit3: string;
+  weapon: string;
+  description: string;
 }

@@ -12,11 +12,13 @@ import { Unit } from "@/lib/type";
 export function Autocompleter({
   value,
   onChange,
-  items,
+  units,
+  users,
 }: {
   value: string;
   onChange: (e: string) => void;
-  items: Unit[];
+  units?: Unit[];
+  users?: string[];
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -56,32 +58,50 @@ export function Autocompleter({
       />
       <CommandList>
         {isOpen && (
-          <CommandGroup className="absolute max-h-36 overflow-scroll bg-primary">
-            {items &&
-              items.map((item) => (
-                <CommandItem
-                  key={item.id + item.name}
-                  className="p-0"
-                  onSelect={() => onChange(item.name)}
-                >
-                  <div
-                    onClick={() => onChange(item.name)}
-                    className="w-56 px-2 py-1 even:bg-black flex items-center gap-2"
-                    title={item.name}
+          <CommandGroup className="absolute max-h-60 w-52 overflow-scroll bg-primary">
+            {units
+              ? units.map((item) => (
+                  <CommandItem
+                    key={item.id + item.name}
+                    className="p-0"
+                    onSelect={() => onChange(item.name)}
                   >
-                    <Avatar
-                      className="h-8 w-8 md:h-12 md:w-12"
+                    <div
+                      onClick={() => onChange(item.name)}
+                      className="w-56 px-2 py-1 even:bg-black flex items-center gap-2"
                       title={item.name}
                     >
-                      <AvatarImage alt={item.name} src={item.icon} />
-                      <AvatarFallback>
-                        <img src="/logo.png" />
-                      </AvatarFallback>
-                    </Avatar>
-                    <span>{item.name}</span>
-                  </div>
-                </CommandItem>
-              ))}
+                      <Avatar
+                        className="h-8 w-8 md:h-12 md:w-12"
+                        title={item.name}
+                      >
+                        <AvatarImage alt={item.name} src={item.icon} />
+                        <AvatarFallback>
+                          <img src="/logo.png" />
+                        </AvatarFallback>
+                      </Avatar>
+                      <span>{item.name}</span>
+                    </div>
+                  </CommandItem>
+                ))
+              : null}
+            {users
+              ? users.map((item) => (
+                  <CommandItem
+                    key={item}
+                    className="p-0"
+                    onSelect={() => onChange(item)}
+                  >
+                    <div
+                      onClick={() => onChange(item)}
+                      className="w-56 px-2 py-1 even:bg-black"
+                      title={item}
+                    >
+                      <span>{item}</span>
+                    </div>
+                  </CommandItem>
+                ))
+              : null}
           </CommandGroup>
         )}
       </CommandList>

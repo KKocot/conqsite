@@ -146,6 +146,8 @@ const Page: React.FC = () => {
         unit1: "",
         unit2: "",
         unit3: "",
+        weapon: "",
+        description: "",
       }))
     );
   }, [squad_length]);
@@ -154,7 +156,9 @@ const Page: React.FC = () => {
     username: string,
     unit1: string,
     unit2: string,
-    unit3: string
+    unit3: string,
+    weapon: string,
+    description: string
   ) => {
     setSheetData((prev) =>
       prev.map((item, i) =>
@@ -165,6 +169,8 @@ const Page: React.FC = () => {
               unit1: unit1,
               unit2: unit2,
               unit3: unit3,
+              weapon: weapon,
+              description: description,
             }
           : item
       )
@@ -247,18 +253,17 @@ const Page: React.FC = () => {
           </div>
         ))}
       </div>
-      <ul className="flex flex-col gap-2">
-        {sheetData.length > 0
-          ? sheetData.map((e, index) => (
-              <Item
-                key={index}
-                index={index}
-                units={units}
-                data={e}
-                onEdit={handleEdit}
-              />
-            ))
-          : null}
+      <ul className="grid grid-cols-5 gap-2">
+        {sheetData.map((e, index) => (
+          <Item
+            users={lineup_members}
+            key={index}
+            index={index}
+            units={units}
+            data={e}
+            onEdit={handleEdit}
+          />
+        ))}
       </ul>
     </div>
   );
