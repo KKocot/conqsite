@@ -170,7 +170,6 @@ const Page: React.FC = () => {
       )
     );
   };
-  console.log(sheetData);
   return (
     <div className="flex flex-col gap-5 p-2">
       <h1 className="text-5xl font-bold text-center">{lineup_name}</h1>

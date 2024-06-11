@@ -19,7 +19,6 @@ const Item = ({
     unit3: string
   ) => void;
 }) => {
-  console.log(data, index);
   return (
     <li className="grid grid-cols-11 border-2 border-primary p-2 rounded-2xl items-center gap-2">
       <span className="col-span-2">
