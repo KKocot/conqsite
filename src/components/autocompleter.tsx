@@ -33,11 +33,17 @@ export function Autocompleter({
       setIsOpen(false);
     }
   };
+  const onKey = (e: KeyboardEvent) => {
+    if (e.key === "Escape" || e.key === "Enter") {
+      setIsOpen(false);
+    }
+  };
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
-
+    window.addEventListener("keydown", onKey);
     return () => {
       document.removeEventListener("click", handleClickOutside);
+      window.removeEventListener("keydown", onKey);
     };
   }, []);
   return (
@@ -69,7 +75,7 @@ export function Autocompleter({
                     >
                       <AvatarImage alt={item.name} src={item.icon} />
                       <AvatarFallback>
-                        <img src={item.src} />
+                        <img src="/logo.png" />
                       </AvatarFallback>
                     </Avatar>
                     <span>{item.name}</span>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useMemo, useState } from "react";
 import { goldenUnits } from "@/assets/golden-units-data";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { lowUnits } from "@/assets/low-units-data";
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/accordion";
 import { getCloserDay, getLineup, getLineupName } from "@/lib/utils";
 import { useParams } from "next/navigation";
-import { ItemProps, SheetData, SurveyProps, Unit } from "@/lib/type";
+import { ItemProps, SheetTypes, SurveyProps, Unit } from "@/lib/type";
 import { Badge } from "@/components/ui/badge";
 import CheckboxItem from "@/components/sheet-form-filter";
 
@@ -73,29 +73,39 @@ const Page: React.FC = () => {
     golden_checked: true,
     other_checked: true,
   });
-  const [sheetData, setSheetData] = useState<SheetData>({
-    username: "",
-    unit1: "",
-    unit2: "",
-  });
 
-  const blueUnits = lowUnits.filter((unit) => unit.era === "blue");
-  const greenUnits = lowUnits.filter((unit) => unit.era === "green");
-  const greyUnits = lowUnits.filter((unit) => unit.era === "grey");
-  const golden_era = filterUnits.golden_checked ? goldenUnits : [];
-  const heroic_era = filterUnits.heroic_checked ? heroicUnits : [];
-  const silver_era = filterUnits.silver_checked ? blueUnits : [];
-  const chivalric_era = filterUnits.chivalric_checked ? greenUnits : [];
-  const rustic_era = filterUnits.rustic_checked ? greyUnits : [];
-  const others_unit = filterUnits.other_checked ? others : [];
-  const units = [
-    ...golden_era,
-    ...heroic_era,
-    ...silver_era,
-    ...chivalric_era,
-    ...rustic_era,
-    ...others_unit,
-  ];
+  const units = useMemo(() => {
+    const blueUnits = lowUnits.filter((unit) => unit.era === "blue");
+    const greenUnits = lowUnits.filter((unit) => unit.era === "green");
+    const greyUnits = lowUnits.filter((unit) => unit.era === "grey");
+
+    const golden_era = filterUnits.golden_checked ? goldenUnits : [];
+    const heroic_era = filterUnits.heroic_checked ? heroicUnits : [];
+    const silver_era = filterUnits.silver_checked ? blueUnits : [];
+    const chivalric_era = filterUnits.chivalric_checked ? greenUnits : [];
+    const rustic_era = filterUnits.rustic_checked ? greyUnits : [];
+    const others_unit = filterUnits.other_checked ? others : [];
+
+    return [
+      ...golden_era,
+      ...heroic_era,
+      ...silver_era,
+      ...chivalric_era,
+      ...rustic_era,
+      ...others_unit,
+    ];
+  }, [
+    lowUnits,
+    filterUnits.golden_checked,
+    filterUnits.heroic_checked,
+    filterUnits.silver_checked,
+    filterUnits.chivalric_checked,
+    filterUnits.rustic_checked,
+    filterUnits.other_checked,
+    goldenUnits,
+    heroicUnits,
+    others,
+  ]);
   const next_tw = getCloserDay();
   const fetchLineup = async () => {
     try {
@@ -128,10 +138,39 @@ const Page: React.FC = () => {
     : [];
   const squad_length = lineup_members.length;
   const lineup_name = getLineupName(params.name);
-  const elements = Array.from(
-    { length: squad_length },
-    (_, index) => index + 1
-  );
+  const [sheetData, setSheetData] = useState<SheetTypes[]>([]);
+  useEffect(() => {
+    setSheetData(
+      Array.from({ length: squad_length }, () => ({
+        username: "",
+        unit1: "",
+        unit2: "",
+        unit3: "",
+      }))
+    );
+  }, [squad_length]);
+  const handleEdit = (
+    index: number,
+    username: string,
+    unit1: string,
+    unit2: string,
+    unit3: string
+  ) => {
+    setSheetData((prev) =>
+      prev.map((item, i) =>
+        i === index
+          ? {
+              ...item,
+              username: username,
+              unit1: unit1,
+              unit2: unit2,
+              unit3: unit3,
+            }
+          : item
+      )
+    );
+  };
+  console.log(sheetData);
   return (
     <div className="flex flex-col gap-5 p-2">
       <h1 className="text-5xl font-bold text-center">{lineup_name}</h1>
@@ -210,14 +249,17 @@ const Page: React.FC = () => {
         ))}
       </div>
       <ul className="flex flex-col gap-2">
-        {elements.map((index) => (
-          <Item
-            key={index}
-            units={units}
-            data={sheetData}
-            setData={setSheetData}
-          />
-        ))}
+        {sheetData.length > 0
+          ? sheetData.map((e, index) => (
+              <Item
+                key={index}
+                index={index}
+                units={units}
+                data={e}
+                onEdit={handleEdit}
+              />
+            ))
+          : null}
       </ul>
     </div>
   );
