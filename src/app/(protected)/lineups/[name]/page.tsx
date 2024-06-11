@@ -211,7 +211,12 @@ const Page: React.FC = () => {
       </div>
       <ul className="flex flex-col gap-2">
         {elements.map((index) => (
-          <Item key={index} units={units} />
+          <Item
+            key={index}
+            units={units}
+            data={sheetData}
+            setData={setSheetData}
+          />
         ))}
       </ul>
     </div>
