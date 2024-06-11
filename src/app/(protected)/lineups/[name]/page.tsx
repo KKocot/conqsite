@@ -131,16 +131,13 @@ const Page: React.FC = () => {
     fetchLineup();
     fetchSurveys();
   }, []);
-  const lineup = signup ? getLineup(params.name, signup) : [];
-  const lineup_members = surveys
-    ? surveys?.filter((survey) => lineup.includes(survey.discordId))
-    : [];
-  const squad_length = lineup_members.length;
+  const [sortedUsers, setSortedUsers] = useState<SurveyProps[]>([]);
   const lineup_name = getLineupName(params.name);
   const [sheetData, setSheetData] = useState<SheetTypes[]>([]);
+
   useEffect(() => {
     setSheetData(
-      Array.from({ length: squad_length }, () => ({
+      Array.from({ length: sortedUsers.length }, () => ({
         username: "",
         unit1: "",
         unit2: "",
@@ -149,7 +146,14 @@ const Page: React.FC = () => {
         description: "",
       }))
     );
-  }, [squad_length]);
+    if (surveys && signup) {
+      setSortedUsers(
+        surveys.filter((survey) =>
+          getLineup(params.name, signup).includes(survey.discordId)
+        )
+      );
+    }
+  }, [sortedUsers.length, surveys]);
   const handleEdit = (
     index: number,
     username: string,
@@ -246,7 +250,7 @@ const Page: React.FC = () => {
         </AccordionItem>
       </Accordion>
       <div className="flex flex-wrap gap-1">
-        {lineup_members.map((survey) => (
+        {sortedUsers.map((survey) => (
           <div key={survey.discordId}>
             <Badge variant="secondary">{survey.inGameNick}</Badge>
           </div>
@@ -255,7 +259,7 @@ const Page: React.FC = () => {
       <ul className="grid grid-cols-5 gap-2">
         {sheetData.map((e, index) => (
           <Item
-            users={lineup_members}
+            users={sortedUsers}
             weapons={weapons}
             key={index}
             index={index}
