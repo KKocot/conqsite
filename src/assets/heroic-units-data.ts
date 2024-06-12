@@ -197,7 +197,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 1,
     era: "heroic",
-    icon: "/heroic-icons/none",
+    icon: "/heroic-icons/Kebultoletolelelelelleowie",
   },
   {
     id: 21,
@@ -277,7 +277,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 1,
     era: "heroic",
-    icon: "/heroic-icons/C.png",
+    icon: "/heroic-icons/Tuptajace_Konie.png",
   },
   {
     id: 29,
@@ -312,7 +312,7 @@ export const heroicUnits = [
   {
     id: 32,
     name: "Tseregs",
-    src: "/heroic-units/tseregs.png",
+    src: "/heroic-units/Tseregi.png",
     leadership: 225,
     masteryPoints: false,
     value: 2,
