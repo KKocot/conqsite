@@ -42,7 +42,11 @@ const Item = ({
         {user
           ? weapons.map((weapon, index) =>
               user.weapons[index].value ? (
-                <span key={weapon.id}>
+                <span
+                  key={weapon.id}
+                  className="flex flex-col items-center justify-around"
+                  title={weapon.name}
+                >
                   <img src={weapon.src} className="rounded-full h-5" />
                   <span>{user.weapons[index].leadership}</span>
                 </span>
