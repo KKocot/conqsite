@@ -70,3 +70,20 @@ export function getLineupName(lineup: string) {
       return "Nieznany skład";
   }
 }
+
+export function getArtyAmount(
+  amount: "none" | "some" | "average" | "aLot" | undefined
+) {
+  switch (amount) {
+    case "none":
+      return { title: "Nie ma artylerii", label: "Brak" };
+    case "some":
+      return { title: "Ma trochę artylerii", label: "Trochę" };
+    case "average":
+      return { title: "Ma średnią ilość artylerii", label: "Średnio" };
+    case "aLot":
+      return { title: "Ma dużo artylerii", label: "Dużo" };
+    default:
+      return { title: "", label: "" };
+  }
+}

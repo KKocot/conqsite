@@ -2,6 +2,8 @@ import { SheetTypes, SurveyProps, Unit, WeaponsTypes } from "@/lib/type";
 import { Autocompleter } from "./autocompleter";
 import { Textarea } from "./ui/textarea";
 import { useEffect, useState } from "react";
+import { getArtyAmount } from "@/lib/utils";
+import { PackageOpen } from "lucide-react";
 
 const Item = ({
   units,
@@ -28,6 +30,7 @@ const Item = ({
 }) => {
   const users_list = users.map((user) => user.inGameNick);
   const [user, setUser] = useState<SurveyProps | undefined>();
+  const user_artillery = getArtyAmount(user?.artyAmount);
   function findUserByNick(nickname: string) {
     return users.find(
       (user) => user.discordNick === nickname || user.inGameNick === nickname
@@ -36,6 +39,7 @@ const Item = ({
   useEffect(() => {
     setUser(findUserByNick(data.username));
   }, [data.username]);
+
   return (
     <li className="grid grid-cols-14 border-2 border-primary p-2 rounded-2xl items-center gap-2 w-56">
       <span className="col-span-2 flex flex-wrap gap-2">
@@ -53,6 +57,13 @@ const Item = ({
               ) : null
             )
           : null}
+        <span
+          title={user_artillery.title}
+          className="flex flex-col items-center"
+        >
+          <PackageOpen className="h-5" />
+          <span>{user_artillery.label}</span>
+        </span>
       </span>
       <span className="col-span-2">
         <Autocompleter
