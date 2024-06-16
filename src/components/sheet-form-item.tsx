@@ -1,6 +1,7 @@
 import { SheetTypes, SurveyProps, Unit, WeaponsTypes } from "@/lib/type";
 import { Autocompleter } from "./autocompleter";
 import { Textarea } from "./ui/textarea";
+import { useEffect, useState } from "react";
 
 const Item = ({
   units,
@@ -26,8 +27,29 @@ const Item = ({
   ) => void;
 }) => {
   const users_list = users.map((user) => user.inGameNick);
+  const [user, setUser] = useState<SurveyProps | undefined>();
+  function findUserByNick(nickname: string) {
+    return users.find(
+      (user) => user.discordNick === nickname || user.inGameNick === nickname
+    );
+  }
+  useEffect(() => {
+    setUser(findUserByNick(data.username));
+  }, [data.username]);
   return (
     <li className="grid grid-cols-14 border-2 border-primary p-2 rounded-2xl items-center gap-2 w-56">
+      <span className="col-span-2 flex flex-wrap gap-2">
+        {user
+          ? weapons.map((weapon, index) =>
+              user.weapons[index].value ? (
+                <span key={weapon.id}>
+                  <img src={weapon.src} className="rounded-full h-5" />
+                  <span>{user.weapons[index].leadership}</span>
+                </span>
+              ) : null
+            )
+          : null}
+      </span>
       <span className="col-span-2">
         <Autocompleter
           value={data.username}
