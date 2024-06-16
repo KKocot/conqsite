@@ -57,13 +57,15 @@ const Item = ({
               ) : null
             )
           : null}
-        <span
-          title={user_artillery.title}
-          className="flex flex-col items-center"
-        >
-          <PackageOpen className="h-5" />
-          <span>{user_artillery.label}</span>
-        </span>
+        {user ? (
+          <span
+            title={user_artillery.title}
+            className="flex flex-col items-center"
+          >
+            <PackageOpen className="h-5" />
+            <span>{user_artillery.label}</span>
+          </span>
+        ) : null}
       </span>
       <span className="col-span-2">
         <Autocompleter
