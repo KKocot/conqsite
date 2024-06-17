@@ -69,7 +69,9 @@ export function Autocompleter({
                     onSelect={() => onChange(item.name)}
                   >
                     <div
-                      onClick={() => onChange(item.name)}
+                      onClick={() => {
+                        onChange(item.name), setIsOpen(false);
+                      }}
                       className="w-56 px-2 py-1 even:bg-black flex items-center gap-2"
                       title={item.name}
                     >
@@ -95,7 +97,9 @@ export function Autocompleter({
                     onSelect={() => onChange(item)}
                   >
                     <div
-                      onClick={() => onChange(item)}
+                      onClick={() => {
+                        onChange(item), setIsOpen(false);
+                      }}
                       className="w-56 px-2 py-1 even:bg-black"
                       title={item}
                     >
@@ -112,7 +116,9 @@ export function Autocompleter({
                     onSelect={() => onChange(item.name)}
                   >
                     <div
-                      onClick={() => onChange(item.name)}
+                      onClick={() => {
+                        onChange(item.name), setIsOpen(false);
+                      }}
                       className="w-56 px-2 py-1 even:bg-black flex items-center gap-2"
                       title={item.name}
                     >
