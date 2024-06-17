@@ -19,6 +19,8 @@ import { weapons } from "@/assets/weapons";
 import Item from "@/components/sheet-form-item";
 import clsx from "clsx";
 import { useLocalStorage } from "usehooks-ts";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const others = [
   {
@@ -64,7 +66,6 @@ const others = [
 ] as Unit[];
 
 const Page: React.FC = () => {
-  const [client, setClient] = useState(false);
   const params = useParams<{ name: string }>();
   const [signup, setSignup] = useState<ItemProps>();
   const [surveys, setSurveys] = useState<SurveyProps[]>();
@@ -87,7 +88,6 @@ const Page: React.FC = () => {
     const chivalric_era = filterUnits.chivalric_checked ? greenUnits : [];
     const rustic_era = filterUnits.rustic_checked ? greyUnits : [];
     const others_unit = filterUnits.other_checked ? others : [];
-
     return [
       ...golden_era,
       ...heroic_era,
@@ -139,10 +139,8 @@ const Page: React.FC = () => {
   const [storage, setStorage] = useLocalStorage<SheetTypes[]>("sheetData", []);
   const [sheetData, setSheetData] = useState<SheetTypes[]>([]);
   const [userList, setUserList] = useState<SurveyProps[]>([]);
+  console.log(storage);
 
-  useEffect(() => {
-    setStorage(sheetData);
-  }, [JSON.stringify(sheetData)]);
   useEffect(() => {
     setSheetData(
       Array.from({ length: sortedUsers.length }, () => ({
@@ -163,6 +161,18 @@ const Page: React.FC = () => {
       );
     }
   }, [sortedUsers.length, surveys]);
+  useEffect(() => {
+    setUserList(
+      sortedUsers.filter(
+        (user) =>
+          !sheetData.some(
+            (input) =>
+              user.inGameNick.toLocaleLowerCase() ===
+              input.username.toLocaleLowerCase()
+          )
+      )
+    );
+  }, [JSON.stringify(sheetData)]);
   const handleEdit = (
     index: number,
     username: string,
@@ -188,21 +198,14 @@ const Page: React.FC = () => {
       )
     );
   };
-  useEffect(() => {
-    setUserList(
-      sortedUsers.filter(
-        (user) =>
-          !sheetData.some(
-            (input) =>
-              user.inGameNick.toLocaleLowerCase() ===
-              input.username.toLocaleLowerCase()
-          )
-      )
-    );
-  }, [JSON.stringify(sheetData)]);
+
   return (
     <div className="flex flex-col gap-5 p-2">
       <h1 className="text-5xl font-bold text-center">{lineup_name}</h1>
+      <div className="flex justify-center gap-2">
+        <Button onClick={() => setStorage(sheetData)}>Zapisz szablon</Button>
+        <Button onClick={() => setSheetData(storage)}>Zaladuj szablon</Button>
+      </div>
       <Accordion type="single" collapsible>
         <AccordionItem value="item-1">
           <AccordionTrigger>Filtry</AccordionTrigger>
@@ -273,15 +276,17 @@ const Page: React.FC = () => {
       <div className="flex flex-wrap gap-1">
         {sortedUsers.map((survey) => (
           <div key={survey.discordId}>
-            <Badge
-              variant="secondary"
-              className={clsx({
-                "bg-red-800 text-white hover:text-black dark:hover:text-white":
-                  !userList.some((e) => e.discordId === survey.discordId),
-              })}
-            >
-              {survey.inGameNick}
-            </Badge>
+            <Link target="_blank" href={`/profile/${survey.discordId}`}>
+              <Badge
+                variant="secondary"
+                className={clsx({
+                  "bg-red-800 text-white hover:text-black dark:hover:text-white":
+                    !userList.some((e) => e.discordId === survey.discordId),
+                })}
+              >
+                {survey.inGameNick}
+              </Badge>
+            </Link>
           </div>
         ))}
       </div>
