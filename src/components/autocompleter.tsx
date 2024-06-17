@@ -78,9 +78,7 @@ export function Autocompleter({
                     >
                       <Avatar className="h-8 w-8" title={item.name}>
                         <AvatarImage alt={item.name} src={item.icon} />
-                        <AvatarFallback>
-                          <img src="/logo.png" />
-                        </AvatarFallback>
+                        <AvatarFallback>U</AvatarFallback>
                       </Avatar>
                       <span>{item.name}</span>
                     </div>
@@ -122,9 +120,7 @@ export function Autocompleter({
                     >
                       <Avatar className="h-8 w-8" title={item.name}>
                         <AvatarImage alt={item.name} src={item.src} />
-                        <AvatarFallback>
-                          <img src="/logo.png" />
-                        </AvatarFallback>
+                        <AvatarFallback>W</AvatarFallback>
                       </Avatar>
                       <span>{item.name}</span>
                     </div>
