@@ -18,6 +18,7 @@ import CheckboxItem from "@/components/sheet-form-filter";
 import { weapons } from "@/assets/weapons";
 import Item from "@/components/sheet-form-item";
 import clsx from "clsx";
+import { useLocalStorage } from "usehooks-ts";
 
 const others = [
   {
@@ -63,6 +64,7 @@ const others = [
 ] as Unit[];
 
 const Page: React.FC = () => {
+  const [client, setClient] = useState(false);
   const params = useParams<{ name: string }>();
   const [signup, setSignup] = useState<ItemProps>();
   const [surveys, setSurveys] = useState<SurveyProps[]>();
@@ -134,8 +136,13 @@ const Page: React.FC = () => {
   }, []);
   const [sortedUsers, setSortedUsers] = useState<SurveyProps[]>([]);
   const lineup_name = getLineupName(params.name);
+  const [storage, setStorage] = useLocalStorage<SheetTypes[]>("sheetData", []);
   const [sheetData, setSheetData] = useState<SheetTypes[]>([]);
   const [userList, setUserList] = useState<SurveyProps[]>([]);
+
+  useEffect(() => {
+    setStorage(sheetData);
+  }, [JSON.stringify(sheetData)]);
   useEffect(() => {
     setSheetData(
       Array.from({ length: sortedUsers.length }, () => ({
@@ -147,6 +154,7 @@ const Page: React.FC = () => {
         description: "",
       }))
     );
+
     if (surveys && signup) {
       setSortedUsers(
         surveys.filter((survey) =>
@@ -268,9 +276,8 @@ const Page: React.FC = () => {
             <Badge
               variant="secondary"
               className={clsx({
-                "bg-red-800": !userList.some(
-                  (e) => e.discordId === survey.discordId
-                ),
+                "bg-red-800 text-white hover:text-black dark:hover:text-white":
+                  !userList.some((e) => e.discordId === survey.discordId),
               })}
             >
               {survey.inGameNick}
