@@ -53,6 +53,7 @@ export function Autocompleter({
   return (
     <Command className="w-full border" ref={autocompleteRef}>
       <CommandInput
+        className="h-6 py-0"
         ref={inputRef}
         onFocus={handleInputFocus}
         value={value}
@@ -60,7 +61,7 @@ export function Autocompleter({
       />
       <CommandList>
         {isOpen && (
-          <CommandGroup className="absolute max-h-60 w-52 overflow-scroll bg-slate-200 shadow-md dark:bg-blue-900">
+          <CommandGroup className="absolute max-h-60 w-52 overflow-scroll bg-slate-200 shadow-md dark:bg-blue-900 z-10">
             {units
               ? units.map((item) => (
                   <CommandItem
@@ -75,10 +76,7 @@ export function Autocompleter({
                       className="w-56 px-2 py-1 even:bg-black flex items-center gap-2"
                       title={item.name}
                     >
-                      <Avatar
-                        className="h-8 w-8 md:h-12 md:w-12"
-                        title={item.name}
-                      >
+                      <Avatar className="h-8 w-8" title={item.name}>
                         <AvatarImage alt={item.name} src={item.icon} />
                         <AvatarFallback>
                           <img src="/logo.png" />
@@ -122,10 +120,7 @@ export function Autocompleter({
                       className="w-56 px-2 py-1 even:bg-black flex items-center gap-2"
                       title={item.name}
                     >
-                      <Avatar
-                        className="h-8 w-8 md:h-12 md:w-12"
-                        title={item.name}
-                      >
+                      <Avatar className="h-8 w-8" title={item.name}>
                         <AvatarImage alt={item.name} src={item.src} />
                         <AvatarFallback>
                           <img src="/logo.png" />
