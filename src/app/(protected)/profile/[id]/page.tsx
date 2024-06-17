@@ -5,7 +5,6 @@ import { DEFAULT_FORM_DATA, FormData } from "@/components/units-form";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { lowUnits } from "@/assets/low-units-data";
-import { weapons } from "@/assets/weapons";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { goldenUnits } from "@/assets/golden-units-data";
 import {
@@ -66,7 +65,7 @@ const List = ({ units, value }: { units: Unit[]; value: string }) => {
               >
                 <AvatarImage alt={unit.name} src={unit.icon} />
                 <AvatarFallback>
-                  <img src={unit.src} />
+                  <img src="/logo.png" />
                 </AvatarFallback>
               </Avatar>
             </span>
