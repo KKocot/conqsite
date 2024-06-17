@@ -17,6 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import CheckboxItem from "@/components/sheet-form-filter";
 import { weapons } from "@/assets/weapons";
 import Item from "@/components/sheet-form-item";
+import clsx from "clsx";
 
 const others = [
   {
@@ -134,7 +135,7 @@ const Page: React.FC = () => {
   const [sortedUsers, setSortedUsers] = useState<SurveyProps[]>([]);
   const lineup_name = getLineupName(params.name);
   const [sheetData, setSheetData] = useState<SheetTypes[]>([]);
-
+  const [userList, setUserList] = useState<SurveyProps[]>([]);
   useEffect(() => {
     setSheetData(
       Array.from({ length: sortedUsers.length }, () => ({
@@ -179,6 +180,18 @@ const Page: React.FC = () => {
       )
     );
   };
+  useEffect(() => {
+    setUserList(
+      sortedUsers.filter(
+        (user) =>
+          !sheetData.some(
+            (input) =>
+              user.inGameNick.toLocaleLowerCase() ===
+              input.username.toLocaleLowerCase()
+          )
+      )
+    );
+  }, [JSON.stringify(sheetData)]);
   return (
     <div className="flex flex-col gap-5 p-2">
       <h1 className="text-5xl font-bold text-center">{lineup_name}</h1>
@@ -252,14 +265,23 @@ const Page: React.FC = () => {
       <div className="flex flex-wrap gap-1">
         {sortedUsers.map((survey) => (
           <div key={survey.discordId}>
-            <Badge variant="secondary">{survey.inGameNick}</Badge>
+            <Badge
+              variant="secondary"
+              className={clsx({
+                "bg-red-800": !userList.some(
+                  (e) => e.discordId === survey.discordId
+                ),
+              })}
+            >
+              {survey.inGameNick}
+            </Badge>
           </div>
         ))}
       </div>
       <ul className="grid grid-cols-5 gap-2">
         {sheetData.map((e, index) => (
           <Item
-            users={sortedUsers}
+            users={userList}
             weapons={weapons}
             key={index}
             index={index}
