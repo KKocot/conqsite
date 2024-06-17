@@ -136,10 +136,12 @@ const Page: React.FC = () => {
   }, []);
   const [sortedUsers, setSortedUsers] = useState<SurveyProps[]>([]);
   const lineup_name = getLineupName(params.name);
-  const [storage, setStorage] = useLocalStorage<SheetTypes[]>("sheetData", []);
+  const [storage, setStorage] = useLocalStorage<SheetTypes[]>(
+    `sheetData_${lineup_name}`,
+    []
+  );
   const [sheetData, setSheetData] = useState<SheetTypes[]>([]);
   const [userList, setUserList] = useState<SurveyProps[]>([]);
-  console.log(storage);
 
   useEffect(() => {
     setSheetData(
