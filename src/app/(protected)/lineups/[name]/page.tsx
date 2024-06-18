@@ -10,7 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { getCloserDay, getLineup, getLineupName } from "@/lib/utils";
+import { addUsers, getCloserDay, getLineup, getLineupName } from "@/lib/utils";
 import { useParams } from "next/navigation";
 import { ItemProps, SheetTypes, SurveyProps, Unit } from "@/lib/type";
 import { Badge } from "@/components/ui/badge";
@@ -67,6 +67,7 @@ const others = [
 
 const Page: React.FC = () => {
   const params = useParams<{ name: string }>();
+  const [reload, setReload] = useState(false);
   const [signup, setSignup] = useState<ItemProps>();
   const [surveys, setSurveys] = useState<SurveyProps[]>();
   const [filterUnits, setFilterUnits] = useState({
@@ -113,7 +114,7 @@ const Page: React.FC = () => {
   const fetchLineup = async () => {
     try {
       // const response = await fetch(`/api/signup/${next_tw}`);
-      const response = await fetch(`/api/signup/2024-08-06`);
+      const response = await fetch(`/api/signup/2024-06-22`);
       const data = await response.json();
       setSignup(data.signup);
     } catch (error) {
@@ -207,6 +208,29 @@ const Page: React.FC = () => {
       <div className="flex justify-center gap-2">
         <Button onClick={() => setStorage(sheetData)}>Zapisz szablon</Button>
         <Button onClick={() => setSheetData(storage)}>Zaladuj szablon</Button>
+        <Button
+          onClick={() => {
+            setSheetData(addUsers(sheetData, userList)), setReload(!reload);
+          }}
+        >
+          Autosort
+        </Button>
+        <Button
+          onClick={() =>
+            setSheetData(
+              Array.from({ length: sortedUsers.length }, () => ({
+                username: "",
+                unit1: "",
+                unit2: "",
+                unit3: "",
+                weapon: "",
+                description: "",
+              }))
+            )
+          }
+        >
+          Wyczysc
+        </Button>
       </div>
       <Accordion type="single" collapsible>
         <AccordionItem value="item-1">
@@ -292,6 +316,7 @@ const Page: React.FC = () => {
           </div>
         ))}
       </div>
+
       <ul className="grid grid-cols-5 gap-2">
         {sheetData.map((e, index) => (
           <Item
