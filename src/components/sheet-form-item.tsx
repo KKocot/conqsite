@@ -1,4 +1,10 @@
-import { SheetTypes, SurveyProps, Unit, WeaponsTypes } from "@/lib/type";
+import {
+  BorderColorProps,
+  SheetTypes,
+  SurveyProps,
+  Unit,
+  WeaponsTypes,
+} from "@/lib/type";
 import { Autocompleter } from "./autocompleter";
 import { Textarea } from "./ui/textarea";
 import { useEffect, useState } from "react";
@@ -6,28 +12,6 @@ import { getArtyAmount } from "@/lib/utils";
 import { PackageOpen } from "lucide-react";
 import clsx from "clsx";
 import { Button } from "./ui/button";
-
-type BorderColorProps =
-  | "red"
-  | "blue"
-  | "slate"
-  | "cyan"
-  | "neutral"
-  | "stone"
-  | "orange"
-  | "amber"
-  | "yellow"
-  | "lime"
-  | "green"
-  | "emerald"
-  | "teal"
-  | "sky"
-  | "indigo"
-  | "violet"
-  | "purple"
-  | "fuchsia"
-  | "pink"
-  | "rose";
 
 const ColorMenu = ({
   setColor,
@@ -140,10 +124,10 @@ const Item = ({
     unit2: string,
     unit3: string,
     weapon: string,
-    description: string
+    description: string,
+    color: BorderColorProps
   ) => void;
 }) => {
-  const [color, setColor] = useState<BorderColorProps>("slate");
   const users_list = users.map((user) => user.inGameNick);
   const [user, setUser] = useState<SurveyProps | undefined>();
   const user_artillery = getArtyAmount(user?.artyAmount);
@@ -161,26 +145,26 @@ const Item = ({
       className={clsx(
         "grid grid-cols-14 border-4  p-2 rounded-2xl items-center gap-2 w-56",
         {
-          "border-red-700": "red" === color,
-          "border-blue-700": "blue" === color,
-          "border-slate-700": "slate" === color,
-          "border-cyan-700": "cyan" === color,
-          "border-neutral-700": "neutral" === color,
-          "border-stone-700": "stone" === color,
-          "border-orange-700": "orange" === color,
-          "border-amber-700": "amber" === color,
-          "border-yellow-700": "yellow" === color,
-          "border-lime-700": "lime" === color,
-          "border-green-700": "green" === color,
-          "border-emerald-700": "emerald" === color,
-          "border-teal-700": "teal" === color,
-          "border-sky-700": "sky" === color,
-          "border-indigo-700": "indigo" === color,
-          "border-violet-700": "violet" === color,
-          "border-purple-700": "purple" === color,
-          "border-fuchsia-700": "fuchsia" === color,
-          "border-pink-700": "pink" === color,
-          "border-rose-700": "rose" === color,
+          "border-red-700": "red" === data.color,
+          "border-blue-700": "blue" === data.color,
+          "border-slate-700": "slate" === data.color,
+          "border-cyan-700": "cyan" === data.color,
+          "border-neutral-700": "neutral" === data.color,
+          "border-stone-700": "stone" === data.color,
+          "border-orange-700": "orange" === data.color,
+          "border-amber-700": "amber" === data.color,
+          "border-yellow-700": "yellow" === data.color,
+          "border-lime-700": "lime" === data.color,
+          "border-green-700": "green" === data.color,
+          "border-emerald-700": "emerald" === data.color,
+          "border-teal-700": "teal" === data.color,
+          "border-sky-700": "sky" === data.color,
+          "border-indigo-700": "indigo" === data.color,
+          "border-violet-700": "violet" === data.color,
+          "border-purple-700": "purple" === data.color,
+          "border-fuchsia-700": "fuchsia" === data.color,
+          "border-pink-700": "pink" === data.color,
+          "border-rose-700": "rose" === data.color,
         }
       )}
     >
@@ -220,7 +204,8 @@ const Item = ({
               data.unit2,
               data.unit3,
               data.weapon,
-              data.description
+              data.description,
+              data.color
             )
           }
           users={users_list}
@@ -238,7 +223,8 @@ const Item = ({
               data.unit2,
               data.unit3,
               data.weapon,
-              data.description
+              data.description,
+              data.color
             )
           }
         />
@@ -255,7 +241,8 @@ const Item = ({
               value,
               data.unit3,
               data.weapon,
-              data.description
+              data.description,
+              data.color
             )
           }
         />
@@ -272,7 +259,8 @@ const Item = ({
               data.unit2,
               value,
               data.weapon,
-              data.description
+              data.description,
+              data.color
             )
           }
         />
@@ -289,7 +277,8 @@ const Item = ({
               data.unit2,
               data.unit3,
               value,
-              data.description
+              data.description,
+              data.color
             )
           }
         />
@@ -306,12 +295,26 @@ const Item = ({
               data.unit2,
               data.unit3,
               data.weapon,
-              e.target.value
+              e.target.value,
+              data.color
             )
           }
         />
       </span>
-      <ColorMenu setColor={(e) => setColor(e)} />
+      <ColorMenu
+        setColor={(value) =>
+          onEdit(
+            index,
+            data.username,
+            data.unit1,
+            data.unit2,
+            data.unit3,
+            data.weapon,
+            data.description,
+            value
+          )
+        }
+      />
     </li>
   );
 };

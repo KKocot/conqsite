@@ -12,7 +12,13 @@ import {
 } from "@/components/ui/accordion";
 import { addUsers, getCloserDay, getLineup, getLineupName } from "@/lib/utils";
 import { useParams } from "next/navigation";
-import { ItemProps, SheetTypes, SurveyProps, Unit } from "@/lib/type";
+import {
+  BorderColorProps,
+  ItemProps,
+  SheetTypes,
+  SurveyProps,
+  Unit,
+} from "@/lib/type";
 import { Badge } from "@/components/ui/badge";
 import CheckboxItem from "@/components/sheet-form-filter";
 import { weapons } from "@/assets/weapons";
@@ -154,6 +160,7 @@ const Page: React.FC = () => {
         unit3: "",
         weapon: "",
         description: "",
+        color: "slate",
       }))
     );
 
@@ -184,7 +191,8 @@ const Page: React.FC = () => {
     unit2: string,
     unit3: string,
     weapon: string,
-    description: string
+    description: string,
+    color: BorderColorProps
   ) => {
     setSheetData((prev) =>
       prev.map((item, i) =>
@@ -197,6 +205,7 @@ const Page: React.FC = () => {
               unit3: unit3,
               weapon: weapon,
               description: description,
+              color: color,
             }
           : item
       )
@@ -229,6 +238,7 @@ const Page: React.FC = () => {
                 unit3: "",
                 weapon: "",
                 description: "",
+                color: "slate",
               }))
             )
           }
