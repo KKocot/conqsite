@@ -7,7 +7,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 5,
     era: "blue",
-    icon: "/low-tiers-icons/Alchemists.png",
+    icon: "/low-tiers-icons/Alchemists.webp",
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "blue",
-    icon: "/low-tiers-icons/Bagpipers.png",
+    icon: "/low-tiers-icons/Bagpipers.webp",
   },
   {
     id: 4,
@@ -37,7 +37,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 10,
     era: "blue",
-    icon: "/low-tiers-icons/Zykalian_Militia.png",
+    icon: "/low-tiers-icons/Zykalian_Militia.webp",
   },
   {
     id: 5,
@@ -87,7 +87,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
-    icon: "/low-tiers-icons/Condottieri_Guards.png",
+    icon: "/low-tiers-icons/Condottieri_Guards.webp",
   },
   {
     id: 10,
@@ -107,7 +107,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 4,
     era: "blue",
-    icon: "/low-tiers-icons/Cudgel_Monks.png",
+    icon: "/low-tiers-icons/Cudgel_Monks.webp",
   },
   {
     id: 12,
@@ -137,7 +137,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 3,
     era: "blue",
-    icon: "/low-tiers-icons/Demesne_Arquebusiers.png",
+    icon: "/low-tiers-icons/Demesne_Arquebusiers.webp",
   },
   {
     id: 15,
@@ -177,7 +177,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 6,
     era: "blue",
-    icon: "/low-tiers-icons/Dimacheri.png",
+    icon: "/low-tiers-icons/Dimacheri.webp",
   },
   {
     id: 19,
@@ -187,7 +187,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 9,
     era: "blue",
-    icon: "/low-tiers-icons/Halberdiers.png",
+    icon: "/low-tiers-icons/Halberdiers.webp",
   },
   {
     id: 20,
@@ -247,7 +247,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 7,
     era: "blue",
-    icon: "/low-tiers-icons/Ironcap_SPearmen.png",
+    icon: "/low-tiers-icons/Ironcap_SPearmen.webp",
   },
   {
     id: 26,
@@ -267,7 +267,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 6,
     era: "blue",
-    icon: "/low-tiers-icons/Jangjus.png",
+    icon: "/low-tiers-icons/Jangjus.webp",
   },
   {
     id: 28,
@@ -277,7 +277,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
-    icon: "/low-tiers-icons/Janissaries.png",
+    icon: "/low-tiers-icons/Janissaries.webp",
   },
   {
     id: 29,
@@ -297,7 +297,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 1,
     era: "blue",
-    icon: "/low-tiers-icons/Khorchins.png",
+    icon: "/low-tiers-icons/Khorchins.webp",
   },
   {
     id: 31,
@@ -307,7 +307,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
-    icon: "/low-tiers-icons/Landsknechts.png",
+    icon: "/low-tiers-icons/Landsknechts.webp",
   },
   {
     id: 32,
@@ -327,7 +327,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 9,
     era: "blue",
-    icon: "/low-tiers-icons/Mace_Sergeants.png",
+    icon: "/low-tiers-icons/Mace_Sergeants.webp",
   },
   {
     id: 34,
@@ -347,7 +347,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 4,
     era: "blue",
-    icon: "/low-tiers-icons/Namkhan_Archers.png",
+    icon: "/low-tiers-icons/Namkhan_Archers.webp",
   },
   {
     id: 36,
@@ -357,7 +357,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
-    icon: "/low-tiers-icons/Outriders.png",
+    icon: "/low-tiers-icons/Outriders.webp",
   },
   {
     id: 37,
@@ -387,7 +387,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 10,
     era: "blue",
-    icon: "/low-tiers-icons/Prefecture_Guards.png",
+    icon: "/low-tiers-icons/Prefecture_Guards.webp",
   },
   {
     id: 40,
@@ -397,7 +397,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 7,
     era: "blue",
-    icon: "/low-tiers-icons/Prefecture_Pikemens.png",
+    icon: "/low-tiers-icons/Prefecture_Pikemens.webp",
   },
   {
     id: 41,
@@ -407,7 +407,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 6,
     era: "blue",
-    icon: "/low-tiers-icons/Feathered_Crossbowmen.png",
+    icon: "/low-tiers-icons/Feathered_Crossbowmen.webp",
   },
   {
     id: 42,
@@ -417,7 +417,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 8,
     era: "blue",
-    icon: "/low-tiers-icons/Rattan_Marksmen.png",
+    icon: "/low-tiers-icons/Rattan_Marksmen.webp",
   },
   {
     id: 43,
@@ -447,7 +447,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "blue",
-    icon: "/low-tiers-icons/Rattan_Vipers.png",
+    icon: "/low-tiers-icons/Rattan_Vipers.webp",
   },
   {
     id: 46,
@@ -457,7 +457,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 4,
     era: "blue",
-    icon: "/low-tiers-icons/Ronin.png",
+    icon: "/low-tiers-icons/Ronin.webp",
   },
   {
     id: 47,
@@ -467,7 +467,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 3,
     era: "blue",
-    icon: "/low-tiers-icons/Schutzdieners.png",
+    icon: "/low-tiers-icons/Schutzdieners.webp",
   },
   {
     id: 48,
@@ -507,7 +507,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
-    icon: "/low-tiers-icons/Favourite_Sons.png",
+    icon: "/low-tiers-icons/Favourite_Sons.webp",
   },
   {
     id: 52,
@@ -527,7 +527,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 5,
     era: "blue",
-    icon: "/low-tiers-icons/Squires.png",
+    icon: "/low-tiers-icons/Squires.webp",
   },
   {
     id: 54,
@@ -587,12 +587,12 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
-    icon: "/low-tiers-icons/Wuxing_Pikemen.png",
+    icon: "/low-tiers-icons/Wuxing_Pikemen.webp",
   },
   {
     id: 60,
     name: "Naginata Monks",
-    src: "/low-tiers-units/mnisi_z_naginantami.png",
+    src: "/low-tiers-units/mnisi_z_naginantami.webp",
     leadership: 125,
     masteryPoints: false,
     value: 7,
@@ -607,6 +607,6 @@ export const lowUnits = [
     masteryPoints: false,
     value: 4,
     era: "blue",
-    icon: "/low-tiers-icons/Caradocs_Cavalry.png",
+    icon: "/low-tiers-icons/Caradocs_Cavalry.webp",
   },
 ];
