@@ -56,7 +56,7 @@ const List = ({ units, value }: { units: Unit[]; value: string }) => {
               ) : null}
               <Avatar
                 className={clsx(
-                  "h-8 w-8 md:h-12 md:w-12 border-solid border-2 border-transparent shadow-md",
+                  "h-8 w-8 md:h-12 md:w-12 border-solid border-2 border-transparent shadow-md rounded-none",
                   {
                     "border-red-600": unit.value >= 9,
                   }
@@ -64,7 +64,7 @@ const List = ({ units, value }: { units: Unit[]; value: string }) => {
                 title={unit.name}
               >
                 <AvatarImage alt={unit.name} src={unit.icon} />
-                <AvatarFallback>U</AvatarFallback>
+                <AvatarFallback className="rounded-none">U</AvatarFallback>
               </Avatar>
             </span>
           ) : null
