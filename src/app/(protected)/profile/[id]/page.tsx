@@ -64,9 +64,7 @@ const List = ({ units, value }: { units: Unit[]; value: string }) => {
                 title={unit.name}
               >
                 <AvatarImage alt={unit.name} src={unit.icon} />
-                <AvatarFallback>
-                  <img src="/logo.png" />
-                </AvatarFallback>
+                <AvatarFallback>U</AvatarFallback>
               </Avatar>
             </span>
           ) : null

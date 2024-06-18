@@ -7,7 +7,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 10,
     era: "golden",
-    icon: "/golden-icons/Flames.png",
+    icon: "/golden-icons/Siphonarioi.png",
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 5,
     era: "golden",
-    icon: "/golden-icons/Catafract.png",
+    icon: "/golden-icons/Elite_Cataphract_Lancers.png",
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 6,
     era: "golden",
-    icon: "/golden-icons/Gendarmes.png",
+    icon: "/golden-icons/Company_Dordonnance.png",
   },
   {
     id: 4,
@@ -37,7 +37,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 10,
     era: "golden",
-    icon: "/golden-icons/Falco.png",
+    icon: "/golden-icons/Falconetti_Gunners.png",
   },
   {
     id: 5,
@@ -47,7 +47,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 4,
     era: "golden",
-    icon: "/golden-icons/LF.png",
+    icon: "/golden-icons/Fire_Lancers.png",
   },
   {
     id: 6,
@@ -57,7 +57,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 2,
     era: "golden",
-    icon: "/golden-icons/Asasins.png",
+    icon: "/golden-icons/Hashashins.png",
   },
   {
     id: 7,
@@ -67,7 +67,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 3,
     era: "golden",
-    icon: "/golden-icons/Dogs.png",
+    icon: "/golden-icons/Blood_Hunters.png",
   },
   {
     id: 8,
@@ -77,7 +77,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 7,
     era: "golden",
-    icon: "/golden-icons/Reapers.png",
+    icon: "/golden-icons/Iron_Reapers.png",
   },
   {
     id: 9,
@@ -87,7 +87,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 1,
     era: "golden",
-    icon: "/",
+    icon: "/golden-icons/Keshigs.png",
   },
   {
     id: 10,
@@ -97,7 +97,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 6,
     era: "golden",
-    icon: "/golden-icons/LIAO.png",
+    icon: "/golden-icons/Liaos_rangers.png",
   },
   {
     id: 11,
@@ -107,7 +107,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 10,
     era: "golden",
-    icon: "/golden-icons/MODAO.png",
+    icon: "/golden-icons/Dynastic_Guards.png",
   },
   {
     id: 12,
@@ -117,7 +117,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 6,
     era: "golden",
-    icon: "/golden-icons/Monasticos.png",
+    icon: "/golden-icons/Elite_Monastic_Knights.png",
   },
   {
     id: 13,
@@ -127,7 +127,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 8,
     era: "golden",
-    icon: "/golden-icons/Orochi.png",
+    icon: "/golden-icons/Orochi_Samurais.png",
   },
   {
     id: 14,
@@ -137,7 +137,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 2,
     era: "golden",
-    icon: "/golden-icons/Paves.png",
+    icon: "/golden-icons/Pavise_Crossbowman.png",
   },
   {
     id: 15,
@@ -147,7 +147,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 1,
     era: "golden",
-    icon: "/golden-icons/Mariposas.png",
+    icon: "/golden-icons/Rattan_Rangers.png",
   },
   {
     id: 16,
@@ -157,7 +157,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 7,
     era: "golden",
-    icon: "/golden-icons/Shenji.png",
+    icon: "/golden-icons/Shenji_Grenadiers.png",
   },
   {
     id: 17,
@@ -167,7 +167,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 7,
     era: "golden",
-    icon: "/golden-icons/ShieldMaids.png",
+    icon: "/golden-icons/Shieldmaidens.png",
   },
   {
     id: 18,
@@ -177,7 +177,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 4,
     era: "golden",
-    icon: "/golden-icons/Shiladars.png",
+    icon: "/golden-icons/Silahdars.png",
   },
   {
     id: 19,
@@ -187,7 +187,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 4,
     era: "golden",
-    icon: "/golden-icons/Tercio.png",
+    icon: "/golden-icons/Tercio_Arquebusiers.png",
   },
   {
     id: 20,
@@ -197,7 +197,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 2,
     era: "golden",
-    icon: "/golden-icons/Varega.png",
+    icon: "/golden-icons/Kings_Guards.png",
   },
   {
     id: 21,
@@ -207,7 +207,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 9,
     era: "golden",
-    icon: "/golden-icons/Husares.png",
+    icon: "/golden-icons/Elite_Winged_Hussars.png",
   },
   {
     id: 22,
@@ -217,7 +217,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 9,
     era: "golden",
-    icon: "/golden-icons/yanyuedao.png",
+    icon: "/golden-icons/Yanyudea_enforcers.png",
   },
   {
     id: 23,
@@ -227,7 +227,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 8,
     era: "golden",
-    icon: "/golden-icons/AlemanesChetados.png",
+    icon: "/golden-icons/Bloodied_Zweihanders.png",
   },
   {
     id: 24,
@@ -237,7 +237,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 1,
     era: "golden",
-    icon: "/",
+    icon: "/golden-icons/Retiarii.png",
   },
   {
     id: 25,
@@ -247,7 +247,7 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 10,
     era: "golden",
-    icon: "/golden-icons/Lancelot.png",
+    icon: "/golden-icons/Queens_Paladins.png",
   },
   {
     id: 26,
@@ -257,6 +257,6 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 10,
     era: "golden",
-    icon: "/",
+    icon: "/golden-icons/Star_Banner_Cavalry.png",
   },
 ];
