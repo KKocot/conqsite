@@ -32,7 +32,7 @@ export function getNextDay(dayOfWeek: string) {
   const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed, so add 1
   const date = String(today.getDate()).padStart(2, "0");
 
-  return `${year}-${month}-${date}`;
+  return `${year}-${date}-${month}`;
 }
 export function getCloserDay() {
   const nextTuesday = getNextDay("Tuesday");
@@ -51,7 +51,43 @@ export function getLineup(lineup: string, signup: ItemProps) {
       return signup.lineup_3;
     case "four":
       return signup.lineup_4;
+    case "five":
+      return signup.lineup_5;
     default:
       return [];
+  }
+}
+
+export function getLineupName(lineup: string) {
+  switch (lineup) {
+    case "one":
+      return "Szara Straż";
+    case "two":
+      return "Królewska Tarcza";
+    case "three":
+      return "Czerwona Flota";
+    case "four":
+      return "Zielona Piechota";
+    case "five":
+      return "Jakas nazwa";
+    default:
+      return "Nieznany skład";
+  }
+}
+
+export function getArtyAmount(
+  amount: "none" | "some" | "average" | "aLot" | undefined
+) {
+  switch (amount) {
+    case "none":
+      return { title: "Nie ma artylerii", label: "Brak" };
+    case "some":
+      return { title: "Ma trochę artylerii", label: "Trochę" };
+    case "average":
+      return { title: "Ma średnią ilość artylerii", label: "Średnio" };
+    case "aLot":
+      return { title: "Ma dużo artylerii", label: "Dużo" };
+    default:
+      return { title: "", label: "" };
   }
 }

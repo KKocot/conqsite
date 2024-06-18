@@ -4,6 +4,16 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 
+const command_whitelist = [
+  "708720225427652679",
+  "329336538372636673",
+  "764198143331008584",
+  "865868334037336085",
+  "304569512169046016",
+  "350754163170344963",
+  "303156898532818944",
+  "373563828513931266",
+];
 export default function Home() {
   const { data } = useSession();
   return (
@@ -33,25 +43,30 @@ export default function Home() {
               </Link>
             </div>
           </div> */}
-          <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-            <p className="text-gray-500 dark:text-gray-400 text-center">
-              Sprawdz co wziac na TW
-            </p>
-            <div className="mt-4 flex flex-col sm:flex-row gap-3 justify-center items-center">
-              <Link href="/lineups/one">
-                <Button>Szara Straz</Button>
-              </Link>
-              <Link href="/lineups/two">
-                <Button>Przedchoragiewni</Button>
-              </Link>
-              <Link href="/lineups/three">
-                <Button>Biedna Piechota</Button>
-              </Link>
-              <Link href="/lineups/four">
-                <Button>Cebulowa Flota</Button>
-              </Link>
+          {command_whitelist.includes(data.user.id) ? (
+            <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+              <p className="text-gray-500 dark:text-gray-400 text-center">
+                Sprawdz co wziac na TW
+              </p>
+              <div className="mt-4 flex flex-col sm:flex-row gap-3 justify-center items-center">
+                <Link href="/lineups/one">
+                  <Button>Szara Straz</Button>
+                </Link>
+                <Link href="/lineups/two">
+                  <Button>Królewska Tarcza</Button>
+                </Link>
+                <Link href="/lineups/three">
+                  <Button>Czerwona Flota</Button>
+                </Link>
+                <Link href="/lineups/four">
+                  <Button>Zielona Piechota</Button>
+                </Link>
+                <Link href="/lineups/five">
+                  <Button>Jakas nazwa</Button>
+                </Link>
+              </div>
             </div>
-          </div>
+          ) : null}
         </>
       ) : (
         <div className="mt-8 max-w-md rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
