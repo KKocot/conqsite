@@ -23,82 +23,102 @@ const ColorMenu = ({
       <Button
         onClick={() => setColor("red")}
         className="bg-red-700 w-2 h-2 p-2"
+        title="red"
       />
       <Button
         onClick={() => setColor("blue")}
         className="bg-blue-700 w-2 h-2 p-2"
+        title="blue"
       />
       <Button
         onClick={() => setColor("slate")}
         className="bg-slate-700 w-2 h-2 p-2"
+        title="slate"
       />
       <Button
         onClick={() => setColor("cyan")}
         className="bg-cyan-700 w-2 h-2 p-2"
+        title="cyan"
       />
       <Button
         onClick={() => setColor("neutral")}
         className="bg-neutral-700 w-2 h-2 p-2"
+        title="neutral"
       />
       <Button
         onClick={() => setColor("stone")}
         className="bg-stone-700 w-2 h-2 p-2"
+        title="stone"
       />
       <Button
         onClick={() => setColor("orange")}
         className="bg-orange-700 w-2 h-2 p-2"
+        title="orange"
       />
       <Button
         onClick={() => setColor("amber")}
         className="bg-amber-700 w-2 h-2 p-2"
+        title="amber"
       />
       <Button
         onClick={() => setColor("yellow")}
         className="bg-yellow-700 w-2 h-2 p-2"
+        title="yellow"
       />
       <Button
         onClick={() => setColor("lime")}
         className="bg-lime-700 w-2 h-2 p-2"
+        title="lime"
       />
       <Button
         onClick={() => setColor("green")}
         className="bg-green-700 w-2 h-2 p-2"
+        title="green"
       />
       <Button
         onClick={() => setColor("emerald")}
         className="bg-emerald-700 w-2 h-2 p-2"
+        title="emerald"
       />
       <Button
         onClick={() => setColor("teal")}
         className="bg-teal-700 w-2 h-2 p-2"
+        title="teal"
       />
       <Button
         onClick={() => setColor("sky")}
         className="bg-sky-700 w-2 h-2 p-2"
+        title="sky"
       />
       <Button
         onClick={() => setColor("indigo")}
         className="bg-indigo-700 w-2 h-2 p-2"
+        title="indigo"
       />
       <Button
         onClick={() => setColor("violet")}
         className="bg-violet-700 w-2 h-2 p-2"
+        title="violet"
       />
       <Button
         onClick={() => setColor("purple")}
         className="bg-purple-700 w-2 h-2 p-2"
+        title="purple"
       />
       <Button
         onClick={() => setColor("fuchsia")}
         className="bg-fuchsia-700 w-2 h-2 p-2"
+        title="fuchsia"
       />
       <Button
         onClick={() => setColor("pink")}
         className="bg-pink-700 w-2 h-2 p-2"
+        title="pink"
       />
       <Button
         onClick={() => setColor("rose")}
         className="bg-rose-700 w-2 h-2 p-2"
+        title="rose"
       />
     </div>
   );
@@ -143,7 +163,7 @@ const Item = ({
   return (
     <li
       className={clsx(
-        "grid grid-cols-14 border-4  p-2 rounded-2xl items-center gap-2 w-56",
+        "grid grid-cols-14 border-4  p-2 rounded-2xl gap-2 w-56 mx-auto",
         {
           "border-red-700": "red" === data.color,
           "border-blue-700": "blue" === data.color,

@@ -246,110 +246,107 @@ const Page: React.FC = () => {
           Wyczysc
         </Button>
       </div>
-      {showPreview ? (
-        <div>Preview</div>
-      ) : (
-        <>
-          <Accordion type="single" collapsible>
-            <AccordionItem value="item-1">
-              <AccordionTrigger>Filtry</AccordionTrigger>
-              <AccordionContent className="flex justify-around p-2 flex-wrap">
-                <CheckboxItem
-                  checked={filterUnits.golden_checked}
-                  label="Epoka Złota"
-                  onChange={() =>
-                    setFilterUnits((prev) => ({
-                      ...prev,
-                      golden_checked: !prev.golden_checked,
-                    }))
-                  }
-                />
-                <CheckboxItem
-                  checked={filterUnits.heroic_checked}
-                  label="Epoka Heroiczna"
-                  onChange={() =>
-                    setFilterUnits((prev) => ({
-                      ...prev,
-                      heroic_checked: !prev.heroic_checked,
-                    }))
-                  }
-                />
-                <CheckboxItem
-                  checked={filterUnits.silver_checked}
-                  label="Epoka Srebrna"
-                  onChange={() =>
-                    setFilterUnits((prev) => ({
-                      ...prev,
-                      silver_checked: !prev.silver_checked,
-                    }))
-                  }
-                />
-                <CheckboxItem
-                  checked={filterUnits.chivalric_checked}
-                  label="Epoka Rycerska"
-                  onChange={() =>
-                    setFilterUnits((prev) => ({
-                      ...prev,
-                      chivalric_checked: !prev.chivalric_checked,
-                    }))
-                  }
-                />
-                <CheckboxItem
-                  checked={filterUnits.rustic_checked}
-                  label="Epoka Feudalna i Rustykalna"
-                  onChange={() =>
-                    setFilterUnits((prev) => ({
-                      ...prev,
-                      rustic_checked: !prev.rustic_checked,
-                    }))
-                  }
-                />
-                <CheckboxItem
-                  checked={filterUnits.other_checked}
-                  label="Ogolne"
-                  onChange={() =>
-                    setFilterUnits((prev) => ({
-                      ...prev,
-                      other_checked: !prev.other_checked,
-                    }))
-                  }
-                />
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-          <div className="flex flex-wrap gap-1">
-            {sortedUsers.map((survey) => (
-              <div key={survey.discordId}>
-                <Link target="_blank" href={`/profile/${survey.discordId}`}>
-                  <Badge
-                    variant="secondary"
-                    className={clsx({
-                      "bg-red-800 text-white hover:text-black dark:hover:text-white":
-                        !userList.some((e) => e.discordId === survey.discordId),
-                    })}
-                  >
-                    {survey.inGameNick}
-                  </Badge>
-                </Link>
-              </div>
-            ))}
-          </div>
 
-          <ul className="grid grid-cols-5 gap-2">
-            {sheetData.map((e, index) => (
-              <Item
-                users={userList}
-                weapons={weapons}
-                key={index}
-                index={index}
-                units={units}
-                data={e}
-                onEdit={handleEdit}
+      <div className={clsx("flex flex-col gap-2", { hidden: showPreview })}>
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="px-6">Filtry</AccordionTrigger>
+            <AccordionContent className="flex justify-around p-2 flex-wrap">
+              <CheckboxItem
+                checked={filterUnits.golden_checked}
+                label="Epoka Złota"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    golden_checked: !prev.golden_checked,
+                  }))
+                }
               />
-            ))}
-          </ul>
-        </>
-      )}
+              <CheckboxItem
+                checked={filterUnits.heroic_checked}
+                label="Epoka Heroiczna"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    heroic_checked: !prev.heroic_checked,
+                  }))
+                }
+              />
+              <CheckboxItem
+                checked={filterUnits.silver_checked}
+                label="Epoka Srebrna"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    silver_checked: !prev.silver_checked,
+                  }))
+                }
+              />
+              <CheckboxItem
+                checked={filterUnits.chivalric_checked}
+                label="Epoka Rycerska"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    chivalric_checked: !prev.chivalric_checked,
+                  }))
+                }
+              />
+              <CheckboxItem
+                checked={filterUnits.rustic_checked}
+                label="Epoka Feudalna i Rustykalna"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    rustic_checked: !prev.rustic_checked,
+                  }))
+                }
+              />
+              <CheckboxItem
+                checked={filterUnits.other_checked}
+                label="Ogolne"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    other_checked: !prev.other_checked,
+                  }))
+                }
+              />
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+        <div className="flex flex-wrap gap-2 p-4">
+          {sortedUsers.map((survey) => (
+            <div key={survey.discordId}>
+              <Link target="_blank" href={`/profile/${survey.discordId}`}>
+                <Badge
+                  variant="secondary"
+                  className={clsx({
+                    "bg-red-800 text-white hover:text-black dark:hover:text-white":
+                      !userList.some((e) => e.discordId === survey.discordId),
+                  })}
+                >
+                  {survey.inGameNick}
+                </Badge>
+              </Link>
+            </div>
+          ))}
+        </div>
+        <ul className="grid grid-cols-5 gap-8">
+          {sheetData.map((e, index) => (
+            <Item
+              users={userList}
+              weapons={weapons}
+              key={index}
+              index={index}
+              units={units}
+              data={e}
+              onEdit={handleEdit}
+            />
+          ))}
+        </ul>
+      </div>
+      <div className={clsx({ hidden: !showPreview })}>Preview</div>
     </div>
   );
 };
