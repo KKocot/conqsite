@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { goldenUnits } from "@/assets/golden-units-data";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { lowUnits } from "@/assets/low-units-data";
@@ -27,6 +27,14 @@ import clsx from "clsx";
 import { useLocalStorage } from "usehooks-ts";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const others = [
   {
@@ -346,7 +354,86 @@ const Page: React.FC = () => {
           ))}
         </ul>
       </div>
-      <div className={clsx({ hidden: !showPreview })}>Preview</div>
+      <div className={clsx({ hidden: !showPreview })}>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">Nick</TableHead>
+              <TableHead>Pierwsza Jednostka</TableHead>
+              <TableHead>Druga Jednostka</TableHead>
+              <TableHead>Trzecia Jednostka</TableHead>
+              <TableHead>Bron</TableHead>
+              <TableHead className="text-right">Opis</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {sheetData.map((e, index) => {
+              const unit1 = units.find((unit) => unit.name === e.unit1);
+              const unit2 = units.find((unit) => unit.name === e.unit2);
+              const unit3 = units.find((unit) => unit.name === e.unit3);
+              const weapon = weapons.find((w) => w.name === e.weapon);
+              return (
+                <TableRow
+                  key={index}
+                  className={clsx("bg-t-4 p-2 text-white font-extrabold", {
+                    "bg-red-700": "red" === e.color,
+                    "bg-blue-700": "blue" === e.color,
+                    "dark:bg-slate-950 bg-slate-700": "slate" === e.color,
+                    "bg-cyan-700": "cyan" === e.color,
+                    "bg-neutral-700": "neutral" === e.color,
+                    "bg-stone-700": "stone" === e.color,
+                    "bg-orange-700": "orange" === e.color,
+                    "bg-amber-700": "amber" === e.color,
+                    "bg-yellow-700": "yellow" === e.color,
+                    "bg-lime-700": "lime" === e.color,
+                    "bg-green-700": "green" === e.color,
+                    "bg-emerald-700": "emerald" === e.color,
+                    "bg-teal-700": "teal" === e.color,
+                    "bg-sky-700": "sky" === e.color,
+                    "bg-indigo-700": "indigo" === e.color,
+                    "bg-violet-700": "violet" === e.color,
+                    "bg-purple-700": "purple" === e.color,
+                    "bg-fuchsia-700": "fuchsia" === e.color,
+                    "bg-pink-700": "pink" === e.color,
+                    "bg-rose-700": "rose" === e.color,
+                  })}
+                >
+                  <TableCell>{e.username}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <img className="h-8" src={unit1?.icon} alt="U1" />
+                      <span>{unit1?.name}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <img className="h-8" src={unit2?.icon} alt="U2" />
+                      <span>{unit2?.name}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <img className="h-8" src={unit3?.icon} alt="U3" />
+                      <span>{unit3?.name}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <img
+                        className="h-8 rounded-full"
+                        src={weapon?.src}
+                        alt="W"
+                      />
+                      <span>{weapon?.name}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-right">{e.description}</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 };

@@ -51,7 +51,7 @@ export function Autocompleter({
     };
   }, []);
   return (
-    <Command className="w-full border" ref={autocompleteRef}>
+    <Command className="w-full border h-fit" ref={autocompleteRef}>
       <CommandInput
         className="h-6 py-0"
         ref={inputRef}
