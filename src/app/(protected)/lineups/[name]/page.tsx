@@ -35,6 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 
 const others = [
   {
@@ -401,29 +402,37 @@ const Page: React.FC = () => {
                   <TableCell>{e.username}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <img className="h-8" src={unit1?.icon} alt="U1" />
+                      <Avatar className="h-8 w-8" title={unit1?.name}>
+                        <AvatarImage alt={unit1?.name} src={unit1?.icon} />
+                      </Avatar>
                       <span>{unit1?.name}</span>
                     </div>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <img className="h-8" src={unit2?.icon} alt="U2" />
+                      <Avatar className="h-8 w-8" title={unit2?.name}>
+                        <AvatarImage alt={unit2?.name} src={unit2?.icon} />
+                      </Avatar>
                       <span>{unit2?.name}</span>
                     </div>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <img className="h-8" src={unit3?.icon} alt="U3" />
+                      <Avatar className="h-8 w-8" title={unit3?.name}>
+                        <AvatarImage alt={unit3?.name} src={unit3?.icon} />
+                      </Avatar>
                       <span>{unit3?.name}</span>
                     </div>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <img
-                        className="h-8 rounded-full"
-                        src={weapon?.src}
-                        alt="W"
-                      />
+                      <Avatar className="h-8 w-8" title={weapon?.name}>
+                        <AvatarImage
+                          className="rounded-full"
+                          alt={weapon?.name}
+                          src={weapon?.src}
+                        />
+                      </Avatar>
                       <span>{weapon?.name}</span>
                     </div>
                   </TableCell>

@@ -76,9 +76,14 @@ export function Autocompleter({
                       className="w-56 px-2 py-1 even:bg-black flex items-center gap-2"
                       title={item.name}
                     >
-                      <Avatar className="h-8 w-8" title={item.name}>
+                      <Avatar
+                        className="h-8 w-8 rounded-none"
+                        title={item.name}
+                      >
                         <AvatarImage alt={item.name} src={item.icon} />
-                        <AvatarFallback>U</AvatarFallback>
+                        <AvatarFallback className="rounded-none">
+                          U
+                        </AvatarFallback>
                       </Avatar>
                       <span>{item.name}</span>
                     </div>
