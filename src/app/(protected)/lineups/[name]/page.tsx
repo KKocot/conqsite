@@ -376,28 +376,31 @@ const Page: React.FC = () => {
               return (
                 <TableRow
                   key={index}
-                  className={clsx("bg-t-4 p-2 text-white font-extrabold", {
-                    "bg-red-700": "red" === e.color,
-                    "bg-blue-700": "blue" === e.color,
-                    "dark:bg-slate-950 bg-slate-700": "slate" === e.color,
-                    "bg-cyan-700": "cyan" === e.color,
-                    "bg-neutral-700": "neutral" === e.color,
-                    "bg-stone-700": "stone" === e.color,
-                    "bg-orange-700": "orange" === e.color,
-                    "bg-amber-700": "amber" === e.color,
-                    "bg-yellow-700": "yellow" === e.color,
-                    "bg-lime-700": "lime" === e.color,
-                    "bg-green-700": "green" === e.color,
-                    "bg-emerald-700": "emerald" === e.color,
-                    "bg-teal-700": "teal" === e.color,
-                    "bg-sky-700": "sky" === e.color,
-                    "bg-indigo-700": "indigo" === e.color,
-                    "bg-violet-700": "violet" === e.color,
-                    "bg-purple-700": "purple" === e.color,
-                    "bg-fuchsia-700": "fuchsia" === e.color,
-                    "bg-pink-700": "pink" === e.color,
-                    "bg-rose-700": "rose" === e.color,
-                  })}
+                  className={clsx(
+                    "bg-t-4 p-2 text-white font-extrabold bg-gradient-to-r to-slate-950 to-10%",
+                    {
+                      "from-red-800": "red" === e.color,
+                      "from-blue-800": "blue" === e.color,
+                      "dark:from-slate-950 from-slate-800": "slate" === e.color,
+                      "from-cyan-800": "cyan" === e.color,
+                      "from-neutral-800": "neutral" === e.color,
+                      "from-stone-800": "stone" === e.color,
+                      "from-orange-800": "orange" === e.color,
+                      "from-amber-800": "amber" === e.color,
+                      "from-yellow-800": "yellow" === e.color,
+                      "from-lime-800": "lime" === e.color,
+                      "from-green-800": "green" === e.color,
+                      "from-emerald-800": "emerald" === e.color,
+                      "from-teal-800": "teal" === e.color,
+                      "from-sky-800": "sky" === e.color,
+                      "from-indigo-800": "indigo" === e.color,
+                      "from-violet-800": "violet" === e.color,
+                      "from-purple-800": "purple" === e.color,
+                      "from-fuchsia-800": "fuchsia" === e.color,
+                      "from-pink-800": "pink" === e.color,
+                      "from-rose-800": "rose" === e.color,
+                    }
+                  )}
                 >
                   <TableCell>{e.username}</TableCell>
                   <TableCell>
