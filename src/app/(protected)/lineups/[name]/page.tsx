@@ -162,7 +162,7 @@ const Page: React.FC = () => {
 
   useEffect(() => {
     setSheetData(
-      Array.from({ length: sortedUsers.length }, () => ({
+      Array.from({ length: sortedUsers.length + 20 }, () => ({
         username: "",
         unit1: "",
         unit2: "",
@@ -228,7 +228,7 @@ const Page: React.FC = () => {
         <Button onClick={() => setStorage(sheetData)}>Zapisz szablon</Button>
         <Button onClick={() => setSheetData(storage)}>Zaladuj szablon</Button>
         <Button onClick={() => setShowPreview(!showPreview)}>
-          {showPreview ? "Ukryj" : "Podglad"}
+          {showPreview ? "Edytor" : "Podglad"}
         </Button>
         <Button
           onClick={() => {
@@ -240,7 +240,7 @@ const Page: React.FC = () => {
         <Button
           onClick={() =>
             setSheetData(
-              Array.from({ length: sortedUsers.length }, () => ({
+              Array.from({ length: sortedUsers.length + 20 }, () => ({
                 username: "",
                 unit1: "",
                 unit2: "",
@@ -377,7 +377,7 @@ const Page: React.FC = () => {
                 <TableRow
                   key={index}
                   className={clsx(
-                    "bg-t-4 p-2 text-white font-extrabold bg-gradient-to-r to-slate-950 to-10%",
+                    "text-white font-extrabold bg-gradient-to-r to-slate-950 to-10%",
                     {
                       "from-red-800": "red" === e.color,
                       "from-blue-800": "blue" === e.color,
@@ -402,8 +402,8 @@ const Page: React.FC = () => {
                     }
                   )}
                 >
-                  <TableCell>{e.username}</TableCell>
-                  <TableCell>
+                  <TableCell className="p-1 px-4">{e.username}</TableCell>
+                  <TableCell className="p-1">
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8" title={unit1?.name}>
                         <AvatarImage alt={unit1?.name} src={unit1?.icon} />
@@ -411,7 +411,7 @@ const Page: React.FC = () => {
                       <span>{unit1?.name}</span>
                     </div>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="p-1">
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8" title={unit2?.name}>
                         <AvatarImage alt={unit2?.name} src={unit2?.icon} />
@@ -419,7 +419,7 @@ const Page: React.FC = () => {
                       <span>{unit2?.name}</span>
                     </div>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="p-1">
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8" title={unit3?.name}>
                         <AvatarImage alt={unit3?.name} src={unit3?.icon} />
@@ -427,7 +427,7 @@ const Page: React.FC = () => {
                       <span>{unit3?.name}</span>
                     </div>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="p-1">
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8" title={weapon?.name}>
                         <AvatarImage
@@ -439,7 +439,9 @@ const Page: React.FC = () => {
                       <span>{weapon?.name}</span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-right">{e.description}</TableCell>
+                  <TableCell className="text-right p-1">
+                    {e.description}
+                  </TableCell>
                 </TableRow>
               );
             })}
