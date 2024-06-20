@@ -43,7 +43,7 @@ export default function Component() {
             <TableHeader>
               <TableRow>
                 <TableHead>Gracz</TableHead>
-                <TableHead>Rank</TableHead>
+                <TableHead>Level</TableHead>
                 <TableHead>Profil</TableHead>
               </TableRow>
             </TableHeader>
