@@ -53,7 +53,7 @@ export default function Home() {
                   <Button>Friendship is Magic</Button>
                 </Link>
                 <Link href="/lineups/two">
-                  <Button>King's Order</Button>
+                  <Button>King&lsquo;s Order</Button>
                 </Link>
                 <Link href="/lineups/three">
                   <Button>Królewska Tarcza</Button>

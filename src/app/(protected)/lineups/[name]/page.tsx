@@ -443,6 +443,7 @@ const Page: React.FC = () => {
                     <Avatar className="flex gap-1">
                       {artli.map((a) => (
                         <AvatarImage
+                          key={a.id}
                           className="h-8 w-8 rounded-full"
                           alt={a?.name}
                           src={a?.src}
