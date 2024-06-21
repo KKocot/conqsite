@@ -59,7 +59,7 @@ export interface SheetTypes {
   unit3: string;
   weapon: string;
   description: string;
-  color: BorderColorProps;
+  color: string;
   artillery: ArtilleryProps[];
 }
 
@@ -68,28 +68,6 @@ export interface WeaponsTypes {
   name: string;
   src: string;
 }
-
-export type BorderColorProps =
-  | "red"
-  | "blue"
-  | "slate"
-  | "cyan"
-  | "neutral"
-  | "stone"
-  | "orange"
-  | "amber"
-  | "yellow"
-  | "lime"
-  | "green"
-  | "emerald"
-  | "teal"
-  | "sky"
-  | "indigo"
-  | "violet"
-  | "purple"
-  | "fuchsia"
-  | "pink"
-  | "rose";
 
 export interface ArtilleryProps {
   check: boolean;

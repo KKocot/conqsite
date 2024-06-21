@@ -1,4 +1,4 @@
-export const altillery = [
+export const artillery = [
   {
     name: "Bombard",
     src: "/artillery/Bombard.webp",

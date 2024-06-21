@@ -14,7 +14,6 @@ import { addUsers, getCloserDay, getLineup, getLineupName } from "@/lib/utils";
 import { useParams } from "next/navigation";
 import {
   ArtilleryProps,
-  BorderColorProps,
   ItemProps,
   SheetTypes,
   SurveyProps,
@@ -37,6 +36,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
+import { artillery } from "@/assets/artillery";
 
 const DEFAULT_ARTILLERY = [
   { id: 1, check: false },
@@ -216,7 +216,7 @@ const Page: React.FC = () => {
     unit3: string,
     weapon: string,
     description: string,
-    color: BorderColorProps,
+    color: string,
     artillery: ArtilleryProps[]
   ) => {
     setSheetData((prev) =>
@@ -382,6 +382,7 @@ const Page: React.FC = () => {
               <TableHead>Druga Jednostka</TableHead>
               <TableHead>Trzecia Jednostka</TableHead>
               <TableHead>Bron</TableHead>
+              <TableHead>Artyleria</TableHead>
               <TableHead className="text-right">Opis</TableHead>
             </TableRow>
           </TableHeader>
@@ -391,34 +392,13 @@ const Page: React.FC = () => {
               const unit2 = units.find((unit) => unit.name === e.unit2);
               const unit3 = units.find((unit) => unit.name === e.unit3);
               const weapon = weapons.find((w) => w.name === e.weapon);
+              const artli = artillery.filter((a) =>
+                e.artillery.find((art) => art.id === a.id && art.check)
+              );
               return (
                 <TableRow
                   key={index}
-                  className={clsx(
-                    "text-white font-extrabold bg-gradient-to-r to-slate-950 to-20% border-2 border-stale-400",
-                    {
-                      "from-red-800": "red" === e.color,
-                      "from-blue-800": "blue" === e.color,
-                      "dark:from-slate-950 from-slate-800": "slate" === e.color,
-                      "from-cyan-800": "cyan" === e.color,
-                      "from-neutral-800": "neutral" === e.color,
-                      "from-stone-800": "stone" === e.color,
-                      "from-orange-800": "orange" === e.color,
-                      "from-amber-800": "amber" === e.color,
-                      "from-yellow-800": "yellow" === e.color,
-                      "from-lime-800": "lime" === e.color,
-                      "from-green-800": "green" === e.color,
-                      "from-emerald-800": "emerald" === e.color,
-                      "from-teal-800": "teal" === e.color,
-                      "from-sky-800": "sky" === e.color,
-                      "from-indigo-800": "indigo" === e.color,
-                      "from-violet-800": "violet" === e.color,
-                      "from-purple-800": "purple" === e.color,
-                      "from-fuchsia-800": "fuchsia" === e.color,
-                      "from-pink-800": "pink" === e.color,
-                      "from-rose-800": "rose" === e.color,
-                    }
-                  )}
+                  className={`text-white font-extrabold bg-gradient-to-r to-slate-950 to-20% border-2 border-stale-400 from${e.color}`}
                 >
                   <TableCell className="p-1 px-4 whitespace-nowrap overflow-clip">
                     {index + 1 + ". " + e.username}
@@ -447,8 +427,9 @@ const Page: React.FC = () => {
                       <span>{unit3?.name}</span>
                     </div>
                   </TableCell>
-                  <TableCell className="p-1">
-                    <div className="flex items-center gap-2">
+
+                  <TableCell className="p-1 w-fit">
+                    <div className="flex items-center gap-2 justify-center">
                       <Avatar className="h-8 w-8" title={weapon?.name}>
                         <AvatarImage
                           className="rounded-full"
@@ -456,10 +437,21 @@ const Page: React.FC = () => {
                           src={weapon?.src}
                         />
                       </Avatar>
-                      <span>{weapon?.name}</span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-right pr-4">
+                  <TableCell className="w-fit py-1">
+                    <Avatar className="flex gap-1">
+                      {artli.map((a) => (
+                        <AvatarImage
+                          className="h-8 w-8 rounded-full"
+                          alt={a?.name}
+                          src={a?.src}
+                          title={a?.name}
+                        />
+                      ))}
+                    </Avatar>
+                  </TableCell>
+                  <TableCell className="text-center pr-4 py-1 font-semibold">
                     {e.description}
                   </TableCell>
                 </TableRow>
