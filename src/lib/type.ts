@@ -60,6 +60,7 @@ export interface SheetTypes {
   weapon: string;
   description: string;
   color: BorderColorProps;
+  artillery: ArtilleryProps[];
 }
 
 export interface WeaponsTypes {
@@ -89,3 +90,8 @@ export type BorderColorProps =
   | "fuchsia"
   | "pink"
   | "rose";
+
+export interface ArtilleryProps {
+  check: boolean;
+  id: number;
+}

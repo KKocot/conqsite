@@ -13,6 +13,7 @@ import {
 import { addUsers, getCloserDay, getLineup, getLineupName } from "@/lib/utils";
 import { useParams } from "next/navigation";
 import {
+  ArtilleryProps,
   BorderColorProps,
   ItemProps,
   SheetTypes,
@@ -35,48 +36,62 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
+import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
+
+const DEFAULT_ARTILLERY = [
+  { id: 1, check: false },
+  { id: 2, check: false },
+  { id: 3, check: false },
+  { id: 4, check: false },
+  { id: 5, check: false },
+  { id: 6, check: false },
+  { id: 7, check: false },
+  { id: 8, check: false },
+  { id: 9, check: false },
+  { id: 10, check: false },
+  { id: 11, check: false },
+] as ArtilleryProps[];
 
 const others = [
   {
     era: "other",
     icon: "",
     id: 90,
-    leadership: 1,
+    leadership: 0,
     masteryPoints: false,
     name: "Kwawaleria",
     src: "",
-    value: 1,
+    value: 0,
   },
   {
     era: "other",
     icon: "",
     id: 91,
-    leadership: 1,
+    leadership: 0,
     masteryPoints: false,
     name: "Antykawaleria",
     src: "",
-    value: 1,
+    value: 0,
   },
   {
     era: "other",
     icon: "",
     id: 92,
-    leadership: 1,
+    leadership: 0,
     masteryPoints: false,
     name: "Zbrojna Piechota",
     src: "",
-    value: 1,
+    value: 0,
   },
   {
     era: "other",
     icon: "",
     id: 93,
-    leadership: 1,
+    leadership: 0,
     masteryPoints: false,
     name: "Specjalne",
     src: "",
-    value: 1,
+    value: 0,
   },
 ] as Unit[];
 
@@ -169,6 +184,7 @@ const Page: React.FC = () => {
         weapon: "",
         description: "",
         color: "slate",
+        artillery: DEFAULT_ARTILLERY,
       }))
     );
 
@@ -200,7 +216,8 @@ const Page: React.FC = () => {
     unit3: string,
     weapon: string,
     description: string,
-    color: BorderColorProps
+    color: BorderColorProps,
+    artillery: ArtilleryProps[]
   ) => {
     setSheetData((prev) =>
       prev.map((item, i) =>
@@ -214,6 +231,7 @@ const Page: React.FC = () => {
               weapon: weapon,
               description: description,
               color: color,
+              artillery: artillery,
             }
           : item
       )
@@ -247,6 +265,7 @@ const Page: React.FC = () => {
                 weapon: "",
                 description: "",
                 color: "slate",
+                artillery: DEFAULT_ARTILLERY,
               }))
             )
           }
@@ -376,7 +395,7 @@ const Page: React.FC = () => {
                 <TableRow
                   key={index}
                   className={clsx(
-                    "text-white font-extrabold bg-gradient-to-r to-slate-950 to-10%",
+                    "text-white font-extrabold bg-gradient-to-r to-slate-950 to-20% border-2 border-stale-400",
                     {
                       "from-red-800": "red" === e.color,
                       "from-blue-800": "blue" === e.color,
@@ -401,7 +420,7 @@ const Page: React.FC = () => {
                     }
                   )}
                 >
-                  <TableCell className="p-1 px-4">
+                  <TableCell className="p-1 px-4 whitespace-nowrap overflow-clip">
                     {index + 1 + ". " + e.username}
                   </TableCell>
                   <TableCell className="p-1">
@@ -440,7 +459,7 @@ const Page: React.FC = () => {
                       <span>{weapon?.name}</span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-right p-1">
+                  <TableCell className="text-right pr-4">
                     {e.description}
                   </TableCell>
                 </TableRow>

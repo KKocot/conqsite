@@ -1,4 +1,5 @@
 import {
+  ArtilleryProps,
   BorderColorProps,
   SheetTypes,
   SurveyProps,
@@ -13,7 +14,12 @@ import { PackageOpen } from "lucide-react";
 import clsx from "clsx";
 import { Button } from "./ui/button";
 import { altillery } from "@/assets/artillery";
-import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const ColorMenu = ({
   setColor,
@@ -147,7 +153,8 @@ const Item = ({
     unit3: string,
     weapon: string,
     description: string,
-    color: BorderColorProps
+    color: BorderColorProps,
+    altillery: ArtilleryProps[]
   ) => void;
 }) => {
   const users_list = users.map((user) => user.inGameNick);
@@ -161,7 +168,7 @@ const Item = ({
   useEffect(() => {
     setUser(findUserByNick(data.username));
   }, [data.username]);
-
+  console.log(data);
   return (
     <li
       className={clsx(
@@ -218,7 +225,8 @@ const Item = ({
               data.unit3,
               data.weapon,
               data.description,
-              data.color
+              data.color,
+              data.artillery
             )
           }
           users={users_list}
@@ -238,7 +246,8 @@ const Item = ({
               data.unit3,
               data.weapon,
               data.description,
-              data.color
+              data.color,
+              data.artillery
             )
           }
         />
@@ -257,7 +266,8 @@ const Item = ({
               data.unit3,
               data.weapon,
               data.description,
-              data.color
+              data.color,
+              data.artillery
             )
           }
         />
@@ -276,7 +286,8 @@ const Item = ({
               value,
               data.weapon,
               data.description,
-              data.color
+              data.color,
+              data.artillery
             )
           }
         />
@@ -294,43 +305,74 @@ const Item = ({
               data.unit3,
               value,
               data.description,
-              data.color
+              data.color,
+              data.artillery
             )
           }
         />
       </span>
       <span>
-        <div className="flex flex-wrap justify-between">
-          {altillery.slice(0, 7).map((e) => (
-            <img
-              className={clsx(
-                "h-9 w-9 rounded-full mt-2 p-1 cursor-pointer hover:shadow-md transition duration-300 ease-in-out transform hover:scale-110 hover:bg-gray-300",
-                { "bg-emerald-700 hover:bg-emerald-900": false }
-              )}
-              title={e.name}
-              alt={e.name}
-              src={e.src}
-            />
-          ))}
-          <span
-            title={user_artillery.title}
-            className="flex flex-col items-center mt-2"
-          >
-            <PackageOpen className="h-5" />
-            <span className="text-xs">{user_artillery.label}</span>
-          </span>
-          {altillery.slice(7, 9).map((e) => (
-            <img
-              className={clsx(
-                "h-9 w-9 mt-2 rounded-full p-1 cursor-pointer hover:shadow-md transition duration-300 ease-in-out transform hover:scale-110 hover:bg-gray-300",
-                { "bg-emerald-700 hover:bg-emerald-900": false }
-              )}
-              title={e.name}
-              alt={e.name}
-              src={e.src}
-            />
-          ))}
-        </div>
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger>Artyleria</AccordionTrigger>
+            <AccordionContent>
+              <div className="flex flex-wrap gap-2 justify-center">
+                {altillery.map((e) => (
+                  <img
+                    className={clsx(
+                      "h-10 w-10 rounded-full mt-2 p-1 cursor-pointer hover:shadow-md transition duration-300 ease-in-out transform hover:scale-110 hover:bg-gray-300",
+                      {
+                        "bg-emerald-700 hover:bg-emerald-900":
+                          data.artillery.find((a) => a.id === e.id)?.check,
+                      }
+                    )}
+                    key={e.id}
+                    title={e.name}
+                    alt={e.name}
+                    src={e.src}
+                    onClick={() => {
+                      const artilleryIndex = data.artillery.findIndex(
+                        (art) => art.id === e.id
+                      );
+
+                      let updatedArtillery;
+                      if (artilleryIndex !== -1) {
+                        updatedArtillery = data.artillery.map((art, index) =>
+                          index === artilleryIndex
+                            ? { ...art, check: !art.check }
+                            : art
+                        );
+                      } else {
+                        updatedArtillery = [
+                          ...data.artillery,
+                          { id: e.id, check: true },
+                        ];
+                      }
+                      onEdit(
+                        index,
+                        data.username,
+                        data.unit1,
+                        data.unit2,
+                        data.unit3,
+                        data.weapon,
+                        data.description,
+                        data.color,
+                        updatedArtillery
+                      );
+                    }}
+                  />
+                ))}
+                <span
+                  title={user_artillery.title}
+                  className="flex flex-col items-center mt-2"
+                >
+                  <PackageOpen className="h-5" />
+                  <span className="text-xs">{user_artillery.label}</span>
+                </span>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </span>
       <span>
         <Textarea
@@ -345,7 +387,8 @@ const Item = ({
               data.unit3,
               data.weapon,
               e.target.value,
-              data.color
+              data.color,
+              data.artillery
             )
           }
         />
@@ -360,7 +403,8 @@ const Item = ({
             data.unit3,
             data.weapon,
             data.description,
-            value
+            value,
+            data.artillery
           )
         }
       />

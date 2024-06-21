@@ -44,4 +44,14 @@ export const altillery = [
     src: "/artillery/mortar.webp",
     id: 9,
   },
+  {
+    name: "Trebuchet",
+    src: "/artillery/treb.webp",
+    id: 10,
+  },
+  {
+    name: "Siege Tower",
+    src: "/artillery/tower.webp",
+    id: 11,
+  },
 ];
