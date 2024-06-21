@@ -39,8 +39,12 @@ const colors = [
 const ColorMenu = ({ setColor }: { setColor: (e: string) => void }) => {
   return (
     <div className="flex flex-wrap gap-1 justify-center">
-      {colors.map((e, index) => (
-        <Button onClick={() => setColor(e)} className={`w-1 h-1 p-3 bg${e}`} />
+      {colors.map((e) => (
+        <Button
+          key={e}
+          onClick={() => setColor(e)}
+          className={`w-1 h-1 p-3 bg${e}`}
+        />
       ))}
     </div>
   );
