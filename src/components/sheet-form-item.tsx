@@ -234,6 +234,7 @@ const Item = ({
       <span>
         <Autocompleter
           value={data.unit1}
+          user={user}
           units={units}
           onChange={(value) =>
             onEdit(
@@ -252,6 +253,7 @@ const Item = ({
       <span>
         <Autocompleter
           value={data.unit2}
+          user={user}
           units={units}
           onChange={(value) =>
             onEdit(
@@ -270,6 +272,7 @@ const Item = ({
       <span>
         <Autocompleter
           value={data.unit3}
+          user={user}
           units={units}
           onChange={(value) =>
             onEdit(

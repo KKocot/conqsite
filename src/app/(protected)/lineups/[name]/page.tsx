@@ -129,8 +129,7 @@ const Page: React.FC = () => {
   const next_tw = getCloserDay();
   const fetchLineup = async () => {
     try {
-      // const response = await fetch(`/api/signup/${next_tw}`);
-      const response = await fetch(`/api/signup/2024-06-22`);
+      const response = await fetch(`/api/signup/${next_tw}`);
       const data = await response.json();
       setSignup(data.signup);
     } catch (error) {
@@ -359,7 +358,7 @@ const Page: React.FC = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">Nick</TableHead>
+              <TableHead>Nick</TableHead>
               <TableHead>Pierwsza Jednostka</TableHead>
               <TableHead>Druga Jednostka</TableHead>
               <TableHead>Trzecia Jednostka</TableHead>
@@ -402,7 +401,9 @@ const Page: React.FC = () => {
                     }
                   )}
                 >
-                  <TableCell className="p-1 px-4">{e.username}</TableCell>
+                  <TableCell className="p-1 px-4">
+                    {index + 1 + ". " + e.username}
+                  </TableCell>
                   <TableCell className="p-1">
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8" title={unit1?.name}>
