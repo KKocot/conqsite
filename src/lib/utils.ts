@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { ItemProps } from "./type";
+import { ItemProps, SheetTypes, SurveyProps } from "./type";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -32,7 +32,7 @@ export function getNextDay(dayOfWeek: string) {
   const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed, so add 1
   const date = String(today.getDate()).padStart(2, "0");
 
-  return `${year}-${date}-${month}`;
+  return `${year}-${month}-${date}`;
 }
 export function getCloserDay() {
   const nextTuesday = getNextDay("Tuesday");
@@ -61,15 +61,15 @@ export function getLineup(lineup: string, signup: ItemProps) {
 export function getLineupName(lineup: string) {
   switch (lineup) {
     case "one":
-      return "Szara Straż";
+      return "Friendship is Magic";
     case "two":
-      return "Królewska Tarcza";
+      return "King's Order";
     case "three":
-      return "Czerwona Flota";
+      return "Królewska Tarcza";
     case "four":
-      return "Zielona Piechota";
+      return "Czerwona Flota";
     case "five":
-      return "Jakas nazwa";
+      return "Zielona Piechota";
     default:
       return "Nieznany skład";
   }
@@ -90,4 +90,19 @@ export function getArtyAmount(
     default:
       return { title: "", label: "" };
   }
+}
+
+export function addUsers(data: SheetTypes[], users: SurveyProps[]) {
+  let userIndex = 0;
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].username === "") {
+      if (userIndex < users.length) {
+        data[i].username = users[userIndex].inGameNick;
+        userIndex++;
+      } else {
+        break;
+      }
+    }
+  }
+  return data;
 }

@@ -7,7 +7,8 @@ import {
 } from "@/components/ui/command";
 import { useEffect, useRef, useState } from "react";
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
-import { Unit, WeaponsTypes } from "@/lib/type";
+import { SurveyProps, Unit, WeaponsTypes } from "@/lib/type";
+import clsx from "clsx";
 
 export function Autocompleter({
   value,
@@ -15,12 +16,14 @@ export function Autocompleter({
   units,
   users,
   weapons,
+  user,
 }: {
   value: string;
   onChange: (e: string) => void;
   units?: Unit[];
   users?: string[];
   weapons?: WeaponsTypes[];
+  user?: SurveyProps;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -50,15 +53,54 @@ export function Autocompleter({
       window.removeEventListener("keydown", onKey);
     };
   }, []);
+  const unit = units?.find((unit) => unit.name === value);
+  const weapon = weapons?.find((weapon) => weapon.name === value);
+  function findUserPrefences(user?: SurveyProps, unit?: Unit) {
+    switch (unit?.era) {
+      case "golden":
+        return user?.units.golden.find((u) => u.id === unit?.id);
+      case "heroic":
+        return user?.units.heroic.find((u) => u.id === unit?.id);
+      default:
+        return user?.units.low.find((u) => u.id === unit?.id);
+    }
+  }
+  const user_preferences = findUserPrefences(user, unit);
   return (
-    <Command className="w-full border" ref={autocompleteRef}>
-      <CommandInput
-        className="h-6 py-0"
-        ref={inputRef}
-        onFocus={handleInputFocus}
-        value={value}
-        onValueChange={(e) => onChange(e)}
-      />
+    <Command className="w-full border h-fit" ref={autocompleteRef}>
+      <div className="flex">
+        {units ? (
+          <Avatar className="h-8 w-8 rounded-none">
+            <AvatarImage alt={unit?.name} src={unit?.icon} />
+          </Avatar>
+        ) : weapon ? (
+          <Avatar className="h-8 w-8 rounded-none">
+            <AvatarImage alt={weapon.name} src={weapon?.src} />
+          </Avatar>
+        ) : (
+          <div className="w-9" />
+        )}
+
+        <CommandInput
+          className="h-6 py-0"
+          ref={inputRef}
+          onFocus={handleInputFocus}
+          value={value}
+          onValueChange={(e) => onChange(e)}
+        />
+        {unit ? (
+          <span
+            className={clsx("p-1", {
+              "bg-green-800": user_preferences?.value === "3",
+              "bg-blue-800": user_preferences?.value === "2",
+              "bg-yellow-800": user_preferences?.value === "1",
+              "bg-red-800": user_preferences?.value === "0",
+            })}
+          >
+            {unit.leadership}
+          </span>
+        ) : null}
+      </div>
       <CommandList>
         {isOpen && (
           <CommandGroup className="absolute max-h-60 w-52 overflow-scroll bg-slate-200 shadow-md dark:bg-blue-900 z-10">
@@ -76,9 +118,14 @@ export function Autocompleter({
                       className="w-56 px-2 py-1 even:bg-black flex items-center gap-2"
                       title={item.name}
                     >
-                      <Avatar className="h-8 w-8" title={item.name}>
+                      <Avatar
+                        className="h-8 w-8 rounded-none"
+                        title={item.name}
+                      >
                         <AvatarImage alt={item.name} src={item.icon} />
-                        <AvatarFallback>U</AvatarFallback>
+                        <AvatarFallback className="rounded-none">
+                          U
+                        </AvatarFallback>
                       </Avatar>
                       <span>{item.name}</span>
                     </div>

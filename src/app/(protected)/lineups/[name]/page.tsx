@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { goldenUnits } from "@/assets/golden-units-data";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { lowUnits } from "@/assets/low-units-data";
@@ -10,9 +10,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { getCloserDay, getLineup, getLineupName } from "@/lib/utils";
+import { addUsers, getCloserDay, getLineup, getLineupName } from "@/lib/utils";
 import { useParams } from "next/navigation";
-import { ItemProps, SheetTypes, SurveyProps, Unit } from "@/lib/type";
+import {
+  ArtilleryProps,
+  ItemProps,
+  SheetTypes,
+  SurveyProps,
+  Unit,
+} from "@/lib/type";
 import { Badge } from "@/components/ui/badge";
 import CheckboxItem from "@/components/sheet-form-filter";
 import { weapons } from "@/assets/weapons";
@@ -21,54 +27,80 @@ import clsx from "clsx";
 import { useLocalStorage } from "usehooks-ts";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
+import { artillery } from "@/assets/artillery";
+
+const DEFAULT_ARTILLERY = [
+  { id: 1, check: false },
+  { id: 2, check: false },
+  { id: 3, check: false },
+  { id: 4, check: false },
+  { id: 5, check: false },
+  { id: 6, check: false },
+  { id: 7, check: false },
+  { id: 8, check: false },
+  { id: 9, check: false },
+  { id: 10, check: false },
+  { id: 11, check: false },
+] as ArtilleryProps[];
 
 const others = [
   {
     era: "other",
     icon: "",
     id: 90,
-    leadership: 1,
+    leadership: 0,
     masteryPoints: false,
     name: "Kwawaleria",
     src: "",
-    value: 1,
+    value: 0,
   },
   {
     era: "other",
     icon: "",
     id: 91,
-    leadership: 1,
+    leadership: 0,
     masteryPoints: false,
     name: "Antykawaleria",
     src: "",
-    value: 1,
+    value: 0,
   },
   {
     era: "other",
     icon: "",
     id: 92,
-    leadership: 1,
+    leadership: 0,
     masteryPoints: false,
     name: "Zbrojna Piechota",
     src: "",
-    value: 1,
+    value: 0,
   },
   {
     era: "other",
     icon: "",
     id: 93,
-    leadership: 1,
+    leadership: 0,
     masteryPoints: false,
     name: "Specjalne",
     src: "",
-    value: 1,
+    value: 0,
   },
 ] as Unit[];
 
 const Page: React.FC = () => {
   const params = useParams<{ name: string }>();
+  const [reload, setReload] = useState(false);
   const [signup, setSignup] = useState<ItemProps>();
   const [surveys, setSurveys] = useState<SurveyProps[]>();
+  const [showPreview, setShowPreview] = useState(false);
   const [filterUnits, setFilterUnits] = useState({
     rustic_checked: true,
     chivalric_checked: true,
@@ -112,8 +144,7 @@ const Page: React.FC = () => {
   const next_tw = getCloserDay();
   const fetchLineup = async () => {
     try {
-      // const response = await fetch(`/api/signup/${next_tw}`);
-      const response = await fetch(`/api/signup/2024-08-06`);
+      const response = await fetch(`/api/signup/${next_tw}`);
       const data = await response.json();
       setSignup(data.signup);
     } catch (error) {
@@ -145,13 +176,15 @@ const Page: React.FC = () => {
 
   useEffect(() => {
     setSheetData(
-      Array.from({ length: sortedUsers.length }, () => ({
+      Array.from({ length: sortedUsers.length + 20 }, () => ({
         username: "",
         unit1: "",
         unit2: "",
         unit3: "",
         weapon: "",
         description: "",
+        color: "slate",
+        artillery: DEFAULT_ARTILLERY,
       }))
     );
 
@@ -182,7 +215,9 @@ const Page: React.FC = () => {
     unit2: string,
     unit3: string,
     weapon: string,
-    description: string
+    description: string,
+    color: string,
+    artillery: ArtilleryProps[]
   ) => {
     setSheetData((prev) =>
       prev.map((item, i) =>
@@ -195,6 +230,8 @@ const Page: React.FC = () => {
               unit3: unit3,
               weapon: weapon,
               description: description,
+              color: color,
+              artillery: artillery,
             }
           : item
       )
@@ -207,104 +244,223 @@ const Page: React.FC = () => {
       <div className="flex justify-center gap-2">
         <Button onClick={() => setStorage(sheetData)}>Zapisz szablon</Button>
         <Button onClick={() => setSheetData(storage)}>Zaladuj szablon</Button>
+        <Button onClick={() => setShowPreview(!showPreview)}>
+          {showPreview ? "Edytor" : "Podglad"}
+        </Button>
+        <Button
+          onClick={() => {
+            setSheetData(addUsers(sheetData, userList)), setReload(!reload);
+          }}
+        >
+          Autosort
+        </Button>
+        <Button
+          onClick={() =>
+            setSheetData(
+              Array.from({ length: sortedUsers.length + 20 }, () => ({
+                username: "",
+                unit1: "",
+                unit2: "",
+                unit3: "",
+                weapon: "",
+                description: "",
+                color: "slate",
+                artillery: DEFAULT_ARTILLERY,
+              }))
+            )
+          }
+        >
+          Wyczysc
+        </Button>
       </div>
-      <Accordion type="single" collapsible>
-        <AccordionItem value="item-1">
-          <AccordionTrigger>Filtry</AccordionTrigger>
-          <AccordionContent className="flex justify-around p-2 flex-wrap">
-            <CheckboxItem
-              checked={filterUnits.golden_checked}
-              label="Epoka Złota"
-              onChange={() =>
-                setFilterUnits((prev) => ({
-                  ...prev,
-                  golden_checked: !prev.golden_checked,
-                }))
-              }
+
+      <div className={clsx("flex flex-col gap-2", { hidden: showPreview })}>
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="px-6">Filtry</AccordionTrigger>
+            <AccordionContent className="flex justify-around p-2 flex-wrap">
+              <CheckboxItem
+                checked={filterUnits.golden_checked}
+                label="Epoka Złota"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    golden_checked: !prev.golden_checked,
+                  }))
+                }
+              />
+              <CheckboxItem
+                checked={filterUnits.heroic_checked}
+                label="Epoka Heroiczna"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    heroic_checked: !prev.heroic_checked,
+                  }))
+                }
+              />
+              <CheckboxItem
+                checked={filterUnits.silver_checked}
+                label="Epoka Srebrna"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    silver_checked: !prev.silver_checked,
+                  }))
+                }
+              />
+              <CheckboxItem
+                checked={filterUnits.chivalric_checked}
+                label="Epoka Rycerska"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    chivalric_checked: !prev.chivalric_checked,
+                  }))
+                }
+              />
+              <CheckboxItem
+                checked={filterUnits.rustic_checked}
+                label="Epoka Feudalna i Rustykalna"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    rustic_checked: !prev.rustic_checked,
+                  }))
+                }
+              />
+              <CheckboxItem
+                checked={filterUnits.other_checked}
+                label="Ogolne"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    other_checked: !prev.other_checked,
+                  }))
+                }
+              />
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+        <div className="flex flex-wrap gap-2 p-4">
+          {sortedUsers.map((survey) => (
+            <div key={survey.discordId}>
+              <Link target="_blank" href={`/profile/${survey.discordId}`}>
+                <Badge
+                  variant="secondary"
+                  className={clsx({
+                    "bg-red-800 text-white hover:text-black dark:hover:text-white":
+                      !userList.some((e) => e.discordId === survey.discordId),
+                  })}
+                >
+                  {survey.inGameNick}
+                </Badge>
+              </Link>
+            </div>
+          ))}
+        </div>
+        <ul className="grid grid-cols-5 gap-8">
+          {sheetData.map((e, index) => (
+            <Item
+              users={userList}
+              weapons={weapons}
+              key={index}
+              index={index}
+              units={units}
+              data={e}
+              onEdit={handleEdit}
             />
-            <CheckboxItem
-              checked={filterUnits.heroic_checked}
-              label="Epoka Heroiczna"
-              onChange={() =>
-                setFilterUnits((prev) => ({
-                  ...prev,
-                  heroic_checked: !prev.heroic_checked,
-                }))
-              }
-            />
-            <CheckboxItem
-              checked={filterUnits.silver_checked}
-              label="Epoka Srebrna"
-              onChange={() =>
-                setFilterUnits((prev) => ({
-                  ...prev,
-                  silver_checked: !prev.silver_checked,
-                }))
-              }
-            />
-            <CheckboxItem
-              checked={filterUnits.chivalric_checked}
-              label="Epoka Rycerska"
-              onChange={() =>
-                setFilterUnits((prev) => ({
-                  ...prev,
-                  chivalric_checked: !prev.chivalric_checked,
-                }))
-              }
-            />
-            <CheckboxItem
-              checked={filterUnits.rustic_checked}
-              label="Epoka Feudalna i Rustykalna"
-              onChange={() =>
-                setFilterUnits((prev) => ({
-                  ...prev,
-                  rustic_checked: !prev.rustic_checked,
-                }))
-              }
-            />
-            <CheckboxItem
-              checked={filterUnits.other_checked}
-              label="Ogolne"
-              onChange={() =>
-                setFilterUnits((prev) => ({
-                  ...prev,
-                  other_checked: !prev.other_checked,
-                }))
-              }
-            />
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-      <div className="flex flex-wrap gap-1">
-        {sortedUsers.map((survey) => (
-          <div key={survey.discordId}>
-            <Link target="_blank" href={`/profile/${survey.discordId}`}>
-              <Badge
-                variant="secondary"
-                className={clsx({
-                  "bg-red-800 text-white hover:text-black dark:hover:text-white":
-                    !userList.some((e) => e.discordId === survey.discordId),
-                })}
-              >
-                {survey.inGameNick}
-              </Badge>
-            </Link>
-          </div>
-        ))}
+          ))}
+        </ul>
       </div>
-      <ul className="grid grid-cols-5 gap-2">
-        {sheetData.map((e, index) => (
-          <Item
-            users={userList}
-            weapons={weapons}
-            key={index}
-            index={index}
-            units={units}
-            data={e}
-            onEdit={handleEdit}
-          />
-        ))}
-      </ul>
+      <div className={clsx({ hidden: !showPreview })}>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Nick</TableHead>
+              <TableHead>Pierwsza Jednostka</TableHead>
+              <TableHead>Druga Jednostka</TableHead>
+              <TableHead>Trzecia Jednostka</TableHead>
+              <TableHead>Bron</TableHead>
+              <TableHead>Artyleria</TableHead>
+              <TableHead className="text-right">Opis</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {sheetData.map((e, index) => {
+              const unit1 = units.find((unit) => unit.name === e.unit1);
+              const unit2 = units.find((unit) => unit.name === e.unit2);
+              const unit3 = units.find((unit) => unit.name === e.unit3);
+              const weapon = weapons.find((w) => w.name === e.weapon);
+              const artli = artillery.filter((a) =>
+                e.artillery.find((art) => art.id === a.id && art.check)
+              );
+              return (
+                <TableRow
+                  key={index}
+                  className={`text-white font-extrabold bg-gradient-to-r to-slate-950 to-20% border-2 border-stale-400 from${e.color}`}
+                >
+                  <TableCell className="p-1 px-4 whitespace-nowrap overflow-clip">
+                    {index + 1 + ". " + e.username}
+                  </TableCell>
+                  <TableCell className="p-1">
+                    <div className="flex items-center gap-2">
+                      <Avatar className="h-8 w-8" title={unit1?.name}>
+                        <AvatarImage alt={unit1?.name} src={unit1?.icon} />
+                      </Avatar>
+                      <span>{unit1?.name}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="p-1">
+                    <div className="flex items-center gap-2">
+                      <Avatar className="h-8 w-8" title={unit2?.name}>
+                        <AvatarImage alt={unit2?.name} src={unit2?.icon} />
+                      </Avatar>
+                      <span>{unit2?.name}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="p-1">
+                    <div className="flex items-center gap-2">
+                      <Avatar className="h-8 w-8" title={unit3?.name}>
+                        <AvatarImage alt={unit3?.name} src={unit3?.icon} />
+                      </Avatar>
+                      <span>{unit3?.name}</span>
+                    </div>
+                  </TableCell>
+
+                  <TableCell className="p-1 w-fit">
+                    <div className="flex items-center gap-2 justify-center">
+                      <Avatar className="h-8 w-8" title={weapon?.name}>
+                        <AvatarImage
+                          className="rounded-full"
+                          alt={weapon?.name}
+                          src={weapon?.src}
+                        />
+                      </Avatar>
+                    </div>
+                  </TableCell>
+                  <TableCell className="w-fit py-1">
+                    <Avatar className="flex gap-1">
+                      {artli.map((a) => (
+                        <AvatarImage
+                          key={a.id}
+                          className="h-8 w-8 rounded-full"
+                          alt={a?.name}
+                          src={a?.src}
+                          title={a?.name}
+                        />
+                      ))}
+                    </Avatar>
+                  </TableCell>
+                  <TableCell className="text-center pr-4 py-1 font-semibold">
+                    {e.description}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 };

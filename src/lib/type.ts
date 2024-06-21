@@ -59,10 +59,17 @@ export interface SheetTypes {
   unit3: string;
   weapon: string;
   description: string;
+  color: string;
+  artillery: ArtilleryProps[];
 }
 
 export interface WeaponsTypes {
   id: number;
   name: string;
   src: string;
+}
+
+export interface ArtilleryProps {
+  check: boolean;
+  id: number;
 }

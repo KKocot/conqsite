@@ -46,23 +46,23 @@ export default function Home() {
           {command_whitelist.includes(data.user.id) ? (
             <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
               <p className="text-gray-500 dark:text-gray-400 text-center">
-                Sprawdz co wziac na TW
+                Rozpisz składy na najbliższe Wojny Królestw
               </p>
               <div className="mt-4 flex flex-col sm:flex-row gap-3 justify-center items-center">
                 <Link href="/lineups/one">
-                  <Button>Szara Straz</Button>
+                  <Button>Friendship is Magic</Button>
                 </Link>
                 <Link href="/lineups/two">
-                  <Button>Królewska Tarcza</Button>
+                  <Button>King&lsquo;s Order</Button>
                 </Link>
                 <Link href="/lineups/three">
-                  <Button>Czerwona Flota</Button>
+                  <Button>Królewska Tarcza</Button>
                 </Link>
                 <Link href="/lineups/four">
-                  <Button>Zielona Piechota</Button>
+                  <Button>Czerwona Flota</Button>
                 </Link>
                 <Link href="/lineups/five">
-                  <Button>Jakas nazwa</Button>
+                  <Button>Zielona Piechota</Button>
                 </Link>
               </div>
             </div>
