@@ -7,7 +7,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 5,
     era: "heroic",
-    icon: "/",
+    icon: "/heroic-icons/Armiger_Lancers.webp",
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 2,
     era: "heroic",
-    icon: "/heroic-icons/H.png",
+    icon: "/heroic-icons/Axe_Raiders.webp",
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 1,
     era: "heroic",
-    icon: "/heroic-icons/azaps.png",
+    icon: "/heroic-icons/Azaps.webp",
   },
   {
     id: 4,
@@ -37,7 +37,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 2,
     era: "heroic",
-    icon: "/heroic-icons/GH.png",
+    icon: "/heroic-icons/Oriflamme_Guards.webp",
   },
   {
     id: 5,
@@ -47,7 +47,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 3,
     era: "heroic",
-    icon: "/heroic-icons/Berserkers.png",
+    icon: "/heroic-icons/Berserkers.webp",
   },
   {
     id: 6,
@@ -57,7 +57,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 7,
     era: "heroic",
-    icon: "/",
+    icon: "/heroic-icons/Camel_Lancers.webp",
   },
   {
     id: 7,
@@ -67,7 +67,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 2,
     era: "heroic",
-    icon: "/heroic-icons/Calymores.png",
+    icon: "/heroic-icons/Eastray_Swordsmen.webp",
   },
   {
     id: 8,
@@ -77,7 +77,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 4,
     era: "heroic",
-    icon: "/",
+    icon: "/heroic-icons/Brawling_Brethren.webp",
   },
   {
     id: 9,
@@ -87,7 +87,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 7,
     era: "heroic",
-    icon: "/heroic-icons/HD.png",
+    icon: "/heroic-icons/Dagger-Axe_Lancers.webp",
   },
   {
     id: 10,
@@ -97,7 +97,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 8,
     era: "heroic",
-    icon: "/heroic-icons/fortebraccio.png",
+    icon: "/heroic-icons/Fortebraccio.webp",
   },
   {
     id: 11,
@@ -107,7 +107,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 5,
     era: "heroic",
-    icon: "/heroic-icons/viejos.png",
+    icon: "/heroic-icons/Linwu_Veterans.webp",
   },
   {
     id: 12,
@@ -117,7 +117,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 7,
     era: "heroic",
-    icon: "/heroic-icons/SA.png",
+    icon: "/heroic-icons/Imperial_Sergeants.webp",
   },
   {
     id: 13,
@@ -127,7 +127,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 3,
     era: "heroic",
-    icon: "/heroic-icons/CV.png",
+    icon: "/heroic-icons/Vargrs_Fangs.webp",
   },
   {
     id: 14,
@@ -137,7 +137,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 6,
     era: "heroic",
-    icon: "/",
+    icon: "/heroic-icons/Imperial_Archers.webp",
   },
   {
     id: 15,
@@ -147,7 +147,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 7,
     era: "heroic",
-    icon: "/",
+    icon: "/heroic-icons/Imperial_Arquebusiers.webp",
   },
   {
     id: 16,
@@ -157,7 +157,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 4,
     era: "heroic",
-    icon: "/heroic-icons/jav1.png",
+    icon: "/heroic-icons/Imperial_Javelineers.webp",
   },
   {
     id: 17,
@@ -167,7 +167,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 10,
     era: "heroic",
-    icon: "/heroic-icons/PI.png",
+    icon: "/heroic-icons/Imperial_Pikemen.webp",
   },
   {
     id: 18,
@@ -177,7 +177,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 10,
     era: "heroic",
-    icon: "/heroic-icons/Puertas.png",
+    icon: "/heroic-icons/Imperial_Spearmen.webp",
   },
   {
     id: 19,
@@ -187,7 +187,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 5,
     era: "heroic",
-    icon: "/heroic-icons/jav2.png",
+    icon: "/heroic-icons/Javelin_Sergeants.webp",
   },
   {
     id: 20,
@@ -197,7 +197,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 1,
     era: "heroic",
-    icon: "/heroic-icons/Khevtuul.png",
+    icon: "/heroic-icons/Kebultoletolelelelelleowie.webp",
   },
   {
     id: 21,
@@ -207,7 +207,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 6,
     era: "heroic",
-    icon: "/",
+    icon: "/heroic-icons/Kriegsrat_Fusiliers.webp",
   },
   {
     id: 22,
@@ -217,7 +217,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 8,
     era: "heroic",
-    icon: "/heroic-icons/cav.png",
+    icon: "/heroic-icons/Holy_Kriegsbruders.webp",
   },
   {
     id: 23,
@@ -227,7 +227,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 9,
     era: "heroic",
-    icon: "/heroic-icons/HA.png",
+    icon: "/heroic-icons/Men-At-Arms.webp",
   },
   {
     id: 24,
@@ -237,7 +237,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 6,
     era: "heroic",
-    icon: "/heroic-icons/Murmi.png",
+    icon: "/heroic-icons/Secutores.webp",
   },
   {
     id: 25,
@@ -247,7 +247,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 7,
     era: "heroic",
-    icon: "/",
+    icon: "/heroic-icons/Onna_Musha.webp",
   },
   {
     id: 26,
@@ -257,7 +257,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 7,
     era: "heroic",
-    icon: "/heroic-icons/GA.png",
+    icon: "/heroic-icons/Palace_Guards.webp",
   },
   {
     id: 27,
@@ -267,7 +267,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 7,
     era: "heroic",
-    icon: "/heroic-icons/CPP.png",
+    icon: "/heroic-icons/Prefecture_Heavy_Cavalry.webp",
   },
   {
     id: 28,
@@ -277,7 +277,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 1,
     era: "heroic",
-    icon: "/heroic-icons/C.png",
+    icon: "/heroic-icons/Tuptajace_Konie.webp",
   },
   {
     id: 29,
@@ -287,7 +287,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 4,
     era: "heroic",
-    icon: "/heroic-icons/ST.png",
+    icon: "/heroic-icons/Spear_Sergeants.webp",
   },
   {
     id: 30,
@@ -297,7 +297,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 3,
     era: "heroic",
-    icon: "/heroic-icons/Paladines.png",
+    icon: "/heroic-icons/Synmachean_Paladins.webp",
   },
   {
     id: 31,
@@ -307,17 +307,17 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 3,
     era: "heroic",
-    icon: "/",
+    icon: "/heroic-icons/Synmachean_Stalwarts.webp",
   },
   {
     id: 32,
     name: "Tseregs",
-    src: "/heroic-units/tseregs.png",
+    src: "/heroic-units/Tseregi.png",
     leadership: 225,
     masteryPoints: false,
     value: 2,
     era: "heroic",
-    icon: "/heroic-icons/tseregs.png",
+    icon: "/heroic-icons/tseregs.webp",
   },
   {
     id: 33,
@@ -327,7 +327,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 5,
     era: "heroic",
-    icon: "/",
+    icon: "/heroic-icons/Longbowmen.webp",
   },
   {
     id: 34,
@@ -337,7 +337,7 @@ export const heroicUnits = [
     masteryPoints: true,
     value: 7,
     era: "heroic",
-    icon: "/heroic-icons/Yeomen.png",
+    icon: "/heroic-icons/Yeomen.webp",
   },
   {
     id: 35,
@@ -347,7 +347,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 3,
     era: "heroic",
-    icon: "/",
+    icon: "/heroic-icons/none",
   },
   {
     id: 36,
@@ -357,16 +357,16 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 9,
     era: "heroic",
-    icon: "/",
+    icon: "/heroic-icons/Mansion_Guards.webp",
   },
   {
     id: 37,
-    name: "Percival guardsmen",
+    name: "Percival Guardsmen",
     src: "/heroic-units/persiwal.png",
     leadership: 225,
     masteryPoints: false,
     value: 4,
     era: "heroic",
-    icon: "/heroic-icons/Galahad.png",
+    icon: "/heroic-icons/Camelots_Garrison.webp",
   },
 ];

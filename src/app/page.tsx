@@ -33,7 +33,7 @@ export default function Home() {
               </Link>
             </div>
           </div>
-          {/* <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+          <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
             <p className="text-gray-500 dark:text-gray-400">
               Sprawdz kto jest najlepszy w naszej społecznosci
             </p>
@@ -42,7 +42,7 @@ export default function Home() {
                 <Button>Rankinng</Button>
               </Link>
             </div>
-          </div> */}
+          </div>
           {command_whitelist.includes(data.user.id) ? (
             <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
               <p className="text-gray-500 dark:text-gray-400 text-center">

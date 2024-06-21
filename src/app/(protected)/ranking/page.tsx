@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   TableHead,
   TableRow,
@@ -10,13 +10,32 @@ import {
   Table,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { SurveyProps } from "@/lib/type";
+import Link from "next/link";
 
 export default function Component() {
+  const [surveys, setSurveys] = useState<SurveyProps[]>();
+
+  const fetchSurveys = async () => {
+    try {
+      const response = await fetch(`/api/survey`);
+      const data = await response.json();
+      setSurveys(data.surveys);
+    } catch (error) {
+      console.error("Error fetching:", error);
+    }
+  };
+  const sort_by_level = surveys?.sort((a, b) => {
+    return Number(b.characterLevel) - Number(a.characterLevel);
+  });
+  useEffect(() => {
+    fetchSurveys();
+  }, []);
   return (
     <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
       <div className="flex flex-col gap-6">
         <div className="text-center">
-          <h1 className="text-3xl font-bold">Ranking obecnosci na TW</h1>
+          <h1 className="text-3xl font-bold">Ranking KoP</h1>
         </div>
 
         <div className="overflow-x-auto">
@@ -24,26 +43,28 @@ export default function Component() {
             <TableHeader>
               <TableRow>
                 <TableHead>Gracz</TableHead>
-                <TableHead>Rank</TableHead>
-                <TableHead>Punkty</TableHead>
+                <TableHead>Level</TableHead>
                 <TableHead>Profil</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {Array.from({ length: 10 }).map((_, index) => (
-                <TableRow key={index}>
-                  <TableCell className="font-medium">
-                    Gracz {index + 1}
-                  </TableCell>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{index}</TableCell>
-                  <TableCell>
-                    <Button size="sm" variant="outline">
-                      Pokaz profil
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {sort_by_level
+                ? sort_by_level.map((e, index) => (
+                    <TableRow key={index}>
+                      <TableCell className="font-medium">
+                        {index + 1 + ". " + e.inGameNick}
+                      </TableCell>
+                      <TableCell>{e.characterLevel}</TableCell>
+                      <TableCell>
+                        <Link target="_blank" href={`/profile/${e.discordId}`}>
+                          <Button size="sm" variant="outline">
+                            Pokaz profil
+                          </Button>
+                        </Link>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : null}
             </TableBody>
           </Table>
         </div>
