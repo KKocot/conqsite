@@ -12,6 +12,8 @@ import { getArtyAmount } from "@/lib/utils";
 import { PackageOpen } from "lucide-react";
 import clsx from "clsx";
 import { Button } from "./ui/button";
+import { altillery } from "@/assets/artillery";
+import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 
 const ColorMenu = ({
   setColor,
@@ -203,15 +205,6 @@ const Item = ({
               ) : null
             )
           : null}
-        {user ? (
-          <span
-            title={user_artillery.title}
-            className="flex flex-col items-center"
-          >
-            <PackageOpen className="h-5" />
-            <span>{user_artillery.label}</span>
-          </span>
-        ) : null}
       </span>
       <span>
         <Autocompleter
@@ -305,6 +298,39 @@ const Item = ({
             )
           }
         />
+      </span>
+      <span>
+        <div className="flex flex-wrap justify-between">
+          {altillery.slice(0, 7).map((e) => (
+            <img
+              className={clsx(
+                "h-9 w-9 rounded-full mt-2 p-1 cursor-pointer hover:shadow-md transition duration-300 ease-in-out transform hover:scale-110 hover:bg-gray-300",
+                { "bg-emerald-700 hover:bg-emerald-900": false }
+              )}
+              title={e.name}
+              alt={e.name}
+              src={e.src}
+            />
+          ))}
+          <span
+            title={user_artillery.title}
+            className="flex flex-col items-center mt-2"
+          >
+            <PackageOpen className="h-5" />
+            <span className="text-xs">{user_artillery.label}</span>
+          </span>
+          {altillery.slice(7, 9).map((e) => (
+            <img
+              className={clsx(
+                "h-9 w-9 mt-2 rounded-full p-1 cursor-pointer hover:shadow-md transition duration-300 ease-in-out transform hover:scale-110 hover:bg-gray-300",
+                { "bg-emerald-700 hover:bg-emerald-900": false }
+              )}
+              title={e.name}
+              alt={e.name}
+              src={e.src}
+            />
+          ))}
+        </div>
       </span>
       <span>
         <Textarea
