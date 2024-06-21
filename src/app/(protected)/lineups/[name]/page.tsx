@@ -241,36 +241,48 @@ const Page: React.FC = () => {
   return (
     <div className="flex flex-col gap-5 p-2">
       <h1 className="text-5xl font-bold text-center">{lineup_name}</h1>
-      <div className="flex justify-center gap-2">
-        <Button onClick={() => setStorage(sheetData)}>Zapisz szablon</Button>
-        <Button onClick={() => setSheetData(storage)}>Zaladuj szablon</Button>
+      <div className="flex justify-around gap-2">
         <Button onClick={() => setShowPreview(!showPreview)}>
           {showPreview ? "Edytor" : "Podglad"}
         </Button>
+        <div className="flex gap-2">
+          <Button
+            size="sm"
+            onClick={() => setStorage(sheetData)}
+            variant="success"
+          >
+            Zapisz szablon
+          </Button>
+          <Button size="sm" onClick={() => setSheetData(storage)}>
+            Zaladuj szablon
+          </Button>
+          <Button
+            size="sm"
+            variant="destructive"
+            onClick={() =>
+              setSheetData(
+                Array.from({ length: sortedUsers.length + 20 }, () => ({
+                  username: "",
+                  unit1: "",
+                  unit2: "",
+                  unit3: "",
+                  weapon: "",
+                  description: "",
+                  color: "slate",
+                  artillery: DEFAULT_ARTILLERY,
+                }))
+              )
+            }
+          >
+            Wyczysc
+          </Button>
+        </div>
         <Button
           onClick={() => {
             setSheetData(addUsers(sheetData, userList)), setReload(!reload);
           }}
         >
           Autosort
-        </Button>
-        <Button
-          onClick={() =>
-            setSheetData(
-              Array.from({ length: sortedUsers.length + 20 }, () => ({
-                username: "",
-                unit1: "",
-                unit2: "",
-                unit3: "",
-                weapon: "",
-                description: "",
-                color: "slate",
-                artillery: DEFAULT_ARTILLERY,
-              }))
-            )
-          }
-        >
-          Wyczysc
         </Button>
       </div>
 
