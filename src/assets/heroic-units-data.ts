@@ -85,7 +85,7 @@ export const heroicUnits = [
     src: "/heroic-units/dag_axe_lan_pre.png",
     leadership: 245,
     masteryPoints: false,
-    value: 7,
+    value: 8,
     era: "heroic",
     icon: "/heroic-icons/Dagger-Axe_Lancers.webp",
   },
@@ -312,7 +312,7 @@ export const heroicUnits = [
   {
     id: 32,
     name: "Tseregs",
-    src: "/heroic-units/Tseregi.png",
+    src: "/heroic-units/tseregs.png",
     leadership: 225,
     masteryPoints: false,
     value: 2,
