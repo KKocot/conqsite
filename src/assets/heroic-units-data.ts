@@ -277,7 +277,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 1,
     era: "heroic",
-    icon: "/heroic-icons/Tuptajace_Konie.webp",
+    icon: "/heroic-icons/Tuptajace_Konie.png",
   },
   {
     id: 29,
@@ -317,7 +317,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 2,
     era: "heroic",
-    icon: "/heroic-icons/tseregs.webp",
+    icon: "/heroic-icons/Tseregi.webp",
   },
   {
     id: 33,
@@ -347,7 +347,7 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 3,
     era: "heroic",
-    icon: "/heroic-icons/none",
+    icon: "/heroic-icons/Imperial_Arquebusiers.webp",
   },
   {
     id: 36,
