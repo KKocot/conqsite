@@ -46,17 +46,17 @@ const DEFAULT_ARTILLERY = [
 const others = [
   {
     era: "other",
-    icon: "",
+    icon: "/others-units/cav.jpg",
     id: 90,
     leadership: 0,
     masteryPoints: false,
-    name: "Kwawaleria",
+    name: "Kawaleria",
     src: "",
     value: 0,
   },
   {
     era: "other",
-    icon: "",
+    icon: "/others-units/piki.jpg",
     id: 91,
     leadership: 0,
     masteryPoints: false,
@@ -66,7 +66,7 @@ const others = [
   },
   {
     era: "other",
-    icon: "",
+    icon: "/others-units/zbrojni.jpg",
     id: 92,
     leadership: 0,
     masteryPoints: false,
@@ -76,7 +76,7 @@ const others = [
   },
   {
     era: "other",
-    icon: "",
+    icon: "/others-units/special.jpg",
     id: 93,
     leadership: 0,
     masteryPoints: false,

@@ -17,6 +17,7 @@ export function Autocompleter({
   users,
   weapons,
   user,
+  placeholder,
 }: {
   value: string;
   onChange: (e: string) => void;
@@ -24,6 +25,7 @@ export function Autocompleter({
   users?: string[];
   weapons?: WeaponsTypes[];
   user?: SurveyProps;
+  placeholder: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -82,6 +84,7 @@ export function Autocompleter({
         )}
 
         <CommandInput
+          placeholder={placeholder}
           className="h-6 py-0"
           ref={inputRef}
           onFocus={handleInputFocus}

@@ -7,7 +7,7 @@ import {
 } from "@/lib/type";
 import { Autocompleter } from "./autocompleter";
 import { Textarea } from "./ui/textarea";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getArtyAmount } from "@/lib/utils";
 import { PackageOpen } from "lucide-react";
 import clsx from "clsx";
@@ -83,9 +83,26 @@ const Item = ({
       (user) => user.discordNick === nickname || user.inGameNick === nickname
     );
   }
+  const leadership = useMemo(() => {
+    const unit1_leadership = units.find(
+      (unit) => unit.name === data.unit1
+    )?.leadership;
+    const unit2_leadership = units.find(
+      (unit) => unit.name === data.unit2
+    )?.leadership;
+    const unit3_leadership = units.find(
+      (unit) => unit.name === data.unit3
+    )?.leadership;
+    return (
+      (unit1_leadership ? unit1_leadership : 0) +
+      (unit2_leadership ? unit2_leadership : 0) +
+      (unit3_leadership ? unit3_leadership : 0)
+    );
+  }, [data.unit1, data.unit2, data.unit3]);
   useEffect(() => {
     setUser(findUserByNick(data.username));
   }, [data.username]);
+
   return (
     <li
       className={` grid grid-cols-14 border-4  p-2 rounded-2xl gap-2 w-56 mx-auto border${data.color}`}
@@ -108,6 +125,7 @@ const Item = ({
       </span>
       <span>
         <Autocompleter
+          placeholder="Gracz"
           value={data.username}
           onChange={(value) =>
             onEdit(
@@ -127,6 +145,7 @@ const Item = ({
       </span>
       <span>
         <Autocompleter
+          placeholder="Pierwsza Jednostka"
           value={data.unit1}
           user={user}
           units={units}
@@ -147,6 +166,7 @@ const Item = ({
       </span>
       <span>
         <Autocompleter
+          placeholder="Druga Jednostka"
           value={data.unit2}
           user={user}
           units={units}
@@ -167,6 +187,7 @@ const Item = ({
       </span>
       <span>
         <Autocompleter
+          placeholder="Trzecia Jednostka"
           value={data.unit3}
           user={user}
           units={units}
@@ -185,8 +206,11 @@ const Item = ({
           }
         />
       </span>
+      <span>{"Koszt Dowodzenia: " + (leadership ? leadership : 0)}</span>
+
       <span>
         <Autocompleter
+          placeholder="Broń"
           weapons={weapons}
           value={data.weapon}
           onChange={(value) =>
@@ -269,6 +293,7 @@ const Item = ({
       </span>
       <span>
         <Textarea
+          placeholder="Opis"
           value={data.description}
           className="p-1"
           onChange={(e) =>
