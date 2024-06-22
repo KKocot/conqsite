@@ -312,8 +312,8 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
                         <Input
                           {...field}
                           type="number"
-                          min={1}
-                          max={999}
+                          min={700}
+                          max={800}
                           className="h-5 py-0 w-16 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                           onChange={(event) => {
                             const leadershipValue = parseInt(

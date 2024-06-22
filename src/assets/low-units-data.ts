@@ -17,7 +17,7 @@ export const lowUnits = [
     leadership: 0,
     value: 6,
     era: "grey",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 3,
@@ -47,7 +47,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 5,
     era: "green",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 6,
@@ -57,7 +57,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 3,
     era: "blue",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 7,
@@ -67,7 +67,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 3,
     era: "blue",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 8,
@@ -77,7 +77,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 3,
     era: "blue",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 9,
@@ -97,7 +97,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 8,
     era: "green",
-    icon: "/",
+    icon: "/low-tiers-icons/Coutiliers.webp",
   },
   {
     id: 11,
@@ -117,7 +117,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 8,
     era: "blue",
-    icon: "/",
+    icon: "/low-tiers-icons/Arbalists.webp",
   },
   {
     id: 13,
@@ -127,7 +127,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 8,
     era: "green",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 14,
@@ -147,7 +147,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 5,
     era: "green",
-    icon: "/",
+    icon: "/low-tiers-icons/Demesne_Crossbowmen.webp",
   },
   {
     id: 16,
@@ -157,7 +157,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "green",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 17,
@@ -167,7 +167,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 3,
     era: "green",
-    icon: "/",
+    icon: "/low-tiers-icons/Demesne_Spearmen.webp",
   },
   {
     id: 18,
@@ -197,7 +197,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 6,
     era: "blue",
-    icon: "/",
+    icon: "/low-tiers-icons/Rattan_Vipers.webp",
   },
   {
     id: 21,
@@ -207,7 +207,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "green",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 22,
@@ -217,7 +217,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "green",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 23,
@@ -227,7 +227,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 2,
     era: "green",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 24,
@@ -237,7 +237,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 7,
     era: "green",
-    icon: "/",
+    icon: "/low-tiers-icons/Ironcap_Scouts.webp",
   },
   {
     id: 25,
@@ -257,7 +257,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 6,
     era: "green",
-    icon: "/",
+    icon: "/low-tiers-icons/Ironcap_Swordsmen.webp",
   },
   {
     id: 27,
@@ -287,7 +287,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 2,
     era: "green",
-    icon: "/",
+    icon: "/low-tiers-icons/Javelin_Militia.webp",
   },
   {
     id: 30,
@@ -317,7 +317,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 1,
     era: "grey",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 33,
@@ -337,7 +337,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 10,
     era: "grey",
-    icon: "/",
+    icon: "/low-tiers-icons/Martelatori.webp",
   },
   {
     id: 35,
@@ -367,7 +367,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 7,
     era: "green",
-    icon: "/",
+    icon: "/low-tiers-icons/Pike_Militia.webp",
   },
   {
     id: 38,
@@ -377,7 +377,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 4,
     era: "blue",
-    icon: "/",
+    icon: "/low-tiers-icons/Rattan_Vipers.webp",
   },
   {
     id: 39,
@@ -427,7 +427,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 6,
     era: "green",
-    icon: "/",
+    icon: "/low-tiers-icons/Pike_Militia.webp",
   },
   {
     id: 44,
@@ -437,7 +437,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 3,
     era: "green",
-    icon: "/",
+    icon: "/low-tiers-icons/Rattan_Roundshields.webp",
   },
   {
     id: 45,
@@ -477,7 +477,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "blue",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 49,
@@ -487,7 +487,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 3,
     era: "blue",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 50,
@@ -497,7 +497,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 1,
     era: "grey",
-    icon: "/",
+    icon: "/low-tiers-icons/Serfs.webp",
   },
   {
     id: 51,
@@ -517,7 +517,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "grey",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 53,
@@ -537,7 +537,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "grey",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 55,
@@ -547,7 +547,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 1,
     era: "grey",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 56,
@@ -557,7 +557,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "blue",
-    icon: "/",
+    icon: "/low-tiers-icons/Rattan_Vipers.webp",
   },
   {
     id: 57,
@@ -567,7 +567,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 1,
     era: "grey",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 58,
@@ -577,7 +577,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 1,
     era: "grey",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 59,
@@ -597,7 +597,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
-    icon: "/",
+    icon: "/unit.jpg",
   },
   {
     id: 61,

@@ -27,16 +27,7 @@ import clsx from "clsx";
 import { useLocalStorage } from "usehooks-ts";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import { artillery } from "@/assets/artillery";
+import Preview from "@/components/preview";
 
 const DEFAULT_ARTILLERY = [
   { id: 1, check: false },
@@ -55,17 +46,17 @@ const DEFAULT_ARTILLERY = [
 const others = [
   {
     era: "other",
-    icon: "",
+    icon: "/others-units/cav.jpg",
     id: 90,
     leadership: 0,
     masteryPoints: false,
-    name: "Kwawaleria",
+    name: "Kawaleria",
     src: "",
     value: 0,
   },
   {
     era: "other",
-    icon: "",
+    icon: "/others-units/piki.jpg",
     id: 91,
     leadership: 0,
     masteryPoints: false,
@@ -75,7 +66,7 @@ const others = [
   },
   {
     era: "other",
-    icon: "",
+    icon: "/others-units/zbrojni.jpg",
     id: 92,
     leadership: 0,
     masteryPoints: false,
@@ -85,7 +76,7 @@ const others = [
   },
   {
     era: "other",
-    icon: "",
+    icon: "/others-units/special.jpg",
     id: 93,
     leadership: 0,
     masteryPoints: false,
@@ -241,36 +232,48 @@ const Page: React.FC = () => {
   return (
     <div className="flex flex-col gap-5 p-2">
       <h1 className="text-5xl font-bold text-center">{lineup_name}</h1>
-      <div className="flex justify-center gap-2">
-        <Button onClick={() => setStorage(sheetData)}>Zapisz szablon</Button>
-        <Button onClick={() => setSheetData(storage)}>Zaladuj szablon</Button>
+      <div className="flex justify-around gap-2">
         <Button onClick={() => setShowPreview(!showPreview)}>
           {showPreview ? "Edytor" : "Podglad"}
         </Button>
+        <div className="flex gap-2">
+          <Button
+            size="sm"
+            onClick={() => setStorage(sheetData)}
+            variant="success"
+          >
+            Zapisz szablon
+          </Button>
+          <Button size="sm" onClick={() => setSheetData(storage)}>
+            Zaladuj szablon
+          </Button>
+          <Button
+            size="sm"
+            variant="destructive"
+            onClick={() =>
+              setSheetData(
+                Array.from({ length: sortedUsers.length + 20 }, () => ({
+                  username: "",
+                  unit1: "",
+                  unit2: "",
+                  unit3: "",
+                  weapon: "",
+                  description: "",
+                  color: "slate",
+                  artillery: DEFAULT_ARTILLERY,
+                }))
+              )
+            }
+          >
+            Wyczysc
+          </Button>
+        </div>
         <Button
           onClick={() => {
             setSheetData(addUsers(sheetData, userList)), setReload(!reload);
           }}
         >
           Autosort
-        </Button>
-        <Button
-          onClick={() =>
-            setSheetData(
-              Array.from({ length: sortedUsers.length + 20 }, () => ({
-                username: "",
-                unit1: "",
-                unit2: "",
-                unit3: "",
-                weapon: "",
-                description: "",
-                color: "slate",
-                artillery: DEFAULT_ARTILLERY,
-              }))
-            )
-          }
-        >
-          Wyczysc
         </Button>
       </div>
 
@@ -374,92 +377,7 @@ const Page: React.FC = () => {
         </ul>
       </div>
       <div className={clsx({ hidden: !showPreview })}>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Nick</TableHead>
-              <TableHead>Pierwsza Jednostka</TableHead>
-              <TableHead>Druga Jednostka</TableHead>
-              <TableHead>Trzecia Jednostka</TableHead>
-              <TableHead>Bron</TableHead>
-              <TableHead>Artyleria</TableHead>
-              <TableHead className="text-right">Opis</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {sheetData.map((e, index) => {
-              const unit1 = units.find((unit) => unit.name === e.unit1);
-              const unit2 = units.find((unit) => unit.name === e.unit2);
-              const unit3 = units.find((unit) => unit.name === e.unit3);
-              const weapon = weapons.find((w) => w.name === e.weapon);
-              const artli = artillery.filter((a) =>
-                e.artillery.find((art) => art.id === a.id && art.check)
-              );
-              return (
-                <TableRow
-                  key={index}
-                  className={`text-white font-extrabold bg-gradient-to-r to-slate-950 to-20% border-2 border-stale-400 from${e.color}`}
-                >
-                  <TableCell className="p-1 px-4 whitespace-nowrap overflow-clip">
-                    {index + 1 + ". " + e.username}
-                  </TableCell>
-                  <TableCell className="p-1">
-                    <div className="flex items-center gap-2">
-                      <Avatar className="h-8 w-8" title={unit1?.name}>
-                        <AvatarImage alt={unit1?.name} src={unit1?.icon} />
-                      </Avatar>
-                      <span>{unit1?.name}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="p-1">
-                    <div className="flex items-center gap-2">
-                      <Avatar className="h-8 w-8" title={unit2?.name}>
-                        <AvatarImage alt={unit2?.name} src={unit2?.icon} />
-                      </Avatar>
-                      <span>{unit2?.name}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="p-1">
-                    <div className="flex items-center gap-2">
-                      <Avatar className="h-8 w-8" title={unit3?.name}>
-                        <AvatarImage alt={unit3?.name} src={unit3?.icon} />
-                      </Avatar>
-                      <span>{unit3?.name}</span>
-                    </div>
-                  </TableCell>
-
-                  <TableCell className="p-1 w-fit">
-                    <div className="flex items-center gap-2 justify-center">
-                      <Avatar className="h-8 w-8" title={weapon?.name}>
-                        <AvatarImage
-                          className="rounded-full"
-                          alt={weapon?.name}
-                          src={weapon?.src}
-                        />
-                      </Avatar>
-                    </div>
-                  </TableCell>
-                  <TableCell className="w-fit py-1">
-                    <Avatar className="flex gap-1">
-                      {artli.map((a) => (
-                        <AvatarImage
-                          key={a.id}
-                          className="h-8 w-8 rounded-full"
-                          alt={a?.name}
-                          src={a?.src}
-                          title={a?.name}
-                        />
-                      ))}
-                    </Avatar>
-                  </TableCell>
-                  <TableCell className="text-center pr-4 py-1 font-semibold">
-                    {e.description}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+        <Preview data={sheetData} units={units} />
       </div>
 
       <div className=" bg-red-700 bg-blue-700 bg-cyan-700 bg-neutral-700 bg-orange-700 bg-yellow-700 bg-lime-700 bg-teal-700 bg-sky-700 bg-indigo-700 bg-violet-700 bg-fuchsia-700 bg-rose-700 bg-slate-700 hidden from-red-700 from-blue-700 from-cyan-700 from-neutral-700 from-orange-700 from-yellow-700 from-lime-700 from-teal-700 from-sky-700 from-indigo-700 from-violet-700 from-fuchsia-700 from-rose-700 from-slate-700 border-red-700 border-blue-700 border-cyan-700 border-neutral-700 border-orange-700 border-yellow-700 border-lime-700 border-teal-700 border-sky-700 border-indigo-700 border-violet-700 border-fuchsia-700 border-rose-700border-slate-700" />

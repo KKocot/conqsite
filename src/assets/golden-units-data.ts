@@ -257,6 +257,6 @@ export const goldenUnits = [
     masteryPoints: false,
     value: 10,
     era: "golden",
-    icon: "/golden-icons/Star_Banner_Cavalry.webp",
+    icon: "/golden-icons/Star_Banner_Cavalry.png",
   },
 ];

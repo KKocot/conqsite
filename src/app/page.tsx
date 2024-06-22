@@ -3,17 +3,8 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
+import { command_whitelist } from "@/assets/whitelists";
 
-const command_whitelist = [
-  "708720225427652679",
-  "329336538372636673",
-  "764198143331008584",
-  "865868334037336085",
-  "304569512169046016",
-  "350754163170344963",
-  "303156898532818944",
-  "373563828513931266",
-];
 export default function Home() {
   const { data } = useSession();
   return (
