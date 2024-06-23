@@ -127,7 +127,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "green",
-    icon: "/unit.jpg",
+    icon: "/low-tiers-icons/Demesne_Archers.webp",
   },
   {
     id: 14,
@@ -207,7 +207,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "green",
-    icon: "/unit.jpg",
+    icon: "/low-tiers-icons/Ironcap_Archers.webp",
   },
   {
     id: 22,
@@ -217,7 +217,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "green",
-    icon: "/unit.jpg",
+    icon: "/low-tiers-icons/Ironcap_Arquebusiers.webp",
   },
   {
     id: 23,
@@ -317,7 +317,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 1,
     era: "grey",
-    icon: "/unit.jpg",
+    icon: "/low-tiers-icons/Levy_Bowmen.webp",
   },
   {
     id: 33,
@@ -567,7 +567,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 1,
     era: "grey",
-    icon: "/unit.jpg",
+    icon: "/low-tiers-icons/Village_Watchmen.webp",
   },
   {
     id: 58,
@@ -577,7 +577,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 1,
     era: "grey",
-    icon: "/unit.jpg",
+    icon: "/low-tiers-icons/Woodcutters.webp",
   },
   {
     id: 59,
@@ -597,7 +597,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 7,
     era: "blue",
-    icon: "/unit.jpg",
+    icon: "/low-tiers-icons/Naginata_Monks.webp",
   },
   {
     id: 61,
