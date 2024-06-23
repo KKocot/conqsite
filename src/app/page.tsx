@@ -47,10 +47,10 @@ export default function Home() {
                   <Button>King&lsquo;s Order</Button>
                 </Link>
                 <Link href="/lineups/three">
-                  <Button>Królewska Tarcza</Button>
+                  <Button>Czerwona Flota</Button>
                 </Link>
                 <Link href="/lineups/four">
-                  <Button>Czerwona Flota</Button>
+                  <Button>Królewska Tarcza</Button>
                 </Link>
                 <Link href="/lineups/five">
                   <Button>Zielona Piechota</Button>
