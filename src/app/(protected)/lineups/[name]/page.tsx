@@ -99,6 +99,7 @@ const Page: React.FC = () => {
     heroic_checked: true,
     golden_checked: true,
     other_checked: true,
+    meta_units_only: true,
   });
 
   const units = useMemo(() => {
@@ -111,6 +112,7 @@ const Page: React.FC = () => {
     const chivalric_era = filterUnits.chivalric_checked ? greenUnits : [];
     const rustic_era = filterUnits.rustic_checked ? greyUnits : [];
     const others_unit = filterUnits.other_checked ? others : [];
+
     return [
       ...golden_era,
       ...heroic_era,
@@ -283,6 +285,16 @@ const Page: React.FC = () => {
             <AccordionTrigger className="px-6">Filtry</AccordionTrigger>
             <AccordionContent className="flex justify-around p-2 flex-wrap">
               <CheckboxItem
+                checked={filterUnits.meta_units_only}
+                label="Tylko meta jednostki"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    meta_units_only: !prev.meta_units_only,
+                  }))
+                }
+              />
+              <CheckboxItem
                 checked={filterUnits.golden_checked}
                 label="Epoka Złota"
                 onChange={() =>
@@ -369,7 +381,11 @@ const Page: React.FC = () => {
               weapons={weapons}
               key={index}
               index={index}
-              units={units}
+              units={
+                filterUnits.meta_units_only
+                  ? units.filter((e) => e.value > 7)
+                  : units
+              }
               data={e}
               onEdit={handleEdit}
             />
