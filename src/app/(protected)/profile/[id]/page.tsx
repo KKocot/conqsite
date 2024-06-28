@@ -16,6 +16,7 @@ import {
   Table,
 } from "@/components/ui/table";
 import clsx from "clsx";
+import { weapons } from "@/assets/weapons";
 
 interface Unit {
   era: string;
@@ -30,10 +31,10 @@ interface Unit {
 }
 
 function ownedUnits(
-  golden_units: any[],
+  units: Unit[],
   profile_units: { id: number; value: string }[]
 ) {
-  const mergedGoldenUnits = golden_units.map((unit) => {
+  const mergedGoldenUnits = units.map((unit) => {
     const matchingGolden = profile_units.find((g) => g.id === unit.id);
     return { ...unit, matchingGolden };
   });
@@ -89,6 +90,16 @@ export default function Component() {
   const blue = ownedUnits(blueUnits, profile.units.low);
   const green = ownedUnits(greenUnits, profile.units.low);
   const grey = ownedUnits(greyUnits, profile.units.low);
+  const weapons_list = weapons.map((weapon) => {
+    const matchingWeapon = profile.weapons.find(
+      (w, index) => index + 1 === weapon.id
+    );
+    return { ...weapon, matchingWeapon };
+  });
+  // const mergedGoldenUnits = units.map((unit) => {
+  //   const matchingGolden = profile_units.find((g) => g.id === unit.id);
+  //   return { ...unit, matchingGolden };
+  // });
   const fetchData = async () => {
     try {
       const response = await fetch(`/api/survey/${params.id}`);
@@ -119,6 +130,20 @@ export default function Component() {
               {profile.discordNick}
             </p>
           </div>
+          <ul className="flex gap-8 flex-wrap">
+            {weapons_list.map((e) =>
+              e.matchingWeapon?.value ? (
+                <li
+                  key={e.id}
+                  className="flex flex-col items-center w-18"
+                  title={"Dowodzenie: " + e.matchingWeapon.leadership}
+                >
+                  <img src={e.src} className="rounded-full w-12 h-12" />
+                  <span className="text-sm">{e.name}</span>
+                </li>
+              ) : null
+            )}
+          </ul>
         </div>
         <div className="py-8">
           <Table>
