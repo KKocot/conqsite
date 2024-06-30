@@ -12,7 +12,6 @@ import { SheetTypes, Unit } from "@/lib/type";
 import { weapons } from "@/assets/weapons";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import clsx from "clsx";
 
 const Preview = ({ data, units }: { data: SheetTypes[]; units: Unit[] }) => {
   const [show, setShow] = useState<boolean>(true);
