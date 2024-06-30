@@ -103,6 +103,35 @@ const Item = ({
     setUser(findUserByNick(data.username));
   }, [data.username]);
 
+  function mapUnitsByEra(
+    units: Unit[],
+    userUnits?: SurveyProps,
+    era: string | string[] = "low"
+  ) {
+    const isEraArray = Array.isArray(era);
+    const filteredUnits = units?.filter((u) =>
+      isEraArray ? era.includes(u.era) : u.era === era
+    );
+    const userUnitsKey: string = isEraArray ? "low" : era;
+    const userUnitsFiltered =
+      userUnits?.units?.[userUnitsKey as keyof typeof userUnits.units] ?? [];
+
+    return filteredUnits?.map((unit: Unit) => {
+      const userUnit = userUnitsFiltered?.find((u) => u.id === unit.id);
+      return { pref: userUnit?.value, ...unit };
+    });
+  }
+
+  const golden_units_user = mapUnitsByEra(units, user, "golden");
+  const heroic_units_user = mapUnitsByEra(units, user, "heroic");
+  const low_units_user = mapUnitsByEra(units, user, ["blue", "green", "grey"]);
+  const other_units_user = units?.filter((u) => u.era === "other");
+  const units_user = [
+    ...golden_units_user,
+    ...heroic_units_user,
+    ...low_units_user,
+    ...other_units_user,
+  ];
   return (
     <li
       className={` grid grid-cols-14 border-4  p-2 rounded-2xl gap-2 w-56 mx-auto border${data.color}`}
@@ -148,7 +177,7 @@ const Item = ({
           placeholder="Pierwsza Jednostka"
           value={data.unit1}
           user={user}
-          units={units}
+          units={units_user}
           onChange={(value) =>
             onEdit(
               index,
@@ -169,7 +198,7 @@ const Item = ({
           placeholder="Druga Jednostka"
           value={data.unit2}
           user={user}
-          units={units}
+          units={units_user}
           onChange={(value) =>
             onEdit(
               index,
@@ -190,7 +219,7 @@ const Item = ({
           placeholder="Trzecia Jednostka"
           value={data.unit3}
           user={user}
-          units={units}
+          units={units_user}
           onChange={(value) =>
             onEdit(
               index,
