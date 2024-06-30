@@ -52,7 +52,7 @@ const others = [
     masteryPoints: false,
     name: "Kawaleria",
     src: "",
-    value: 0,
+    value: 10,
   },
   {
     era: "other",
@@ -62,7 +62,7 @@ const others = [
     masteryPoints: false,
     name: "Antykawaleria",
     src: "",
-    value: 0,
+    value: 10,
   },
   {
     era: "other",
@@ -72,7 +72,7 @@ const others = [
     masteryPoints: false,
     name: "Zbrojna Piechota",
     src: "",
-    value: 0,
+    value: 10,
   },
   {
     era: "other",
@@ -82,7 +82,7 @@ const others = [
     masteryPoints: false,
     name: "Specjalne",
     src: "",
-    value: 0,
+    value: 10,
   },
 ] as Unit[];
 
