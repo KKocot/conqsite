@@ -374,6 +374,12 @@ const Page: React.FC = () => {
             </div>
           ))}
         </div>
+        <div className="flex justify-center gap-2">
+          <span className="text-yellow-600">Preferuje</span>
+          <span className="text-purple-600">Wymaksowana</span>
+          <span className="text-blue-600">Mam</span>
+          <span className="text-red-600">Nie mam</span>
+        </div>
         <ul className="grid grid-cols-5 gap-8">
           {sheetData.map((e, index) => (
             <Item
