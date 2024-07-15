@@ -40,19 +40,13 @@ export default function Home() {
                 Rozpisz składy na najbliższe Wojny Królestw
               </p>
               <div className="mt-4 flex flex-col sm:flex-row gap-3 justify-center items-center">
-                <Link href="/lineups/one">
-                  <Button>Friendship is Magic</Button>
-                </Link>
                 <Link href="/lineups/two">
                   <Button>King&lsquo;s Order</Button>
                 </Link>
                 <Link href="/lineups/three">
-                  <Button>Czerwona Flota</Button>
-                </Link>
-                <Link href="/lineups/four">
                   <Button>Królewska Tarcza</Button>
                 </Link>
-                <Link href="/lineups/five">
+                <Link href="/lineups/four">
                   <Button>Zielona Piechota</Button>
                 </Link>
               </div>

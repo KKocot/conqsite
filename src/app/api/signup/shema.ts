@@ -6,5 +6,4 @@ export const putSignUpSchema = z.object({
   lineup_2: z.array(z.string()),
   lineup_3: z.array(z.string()),
   lineup_4: z.array(z.string()),
-  lineup_5: z.array(z.string()),
 });

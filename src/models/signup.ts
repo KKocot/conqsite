@@ -6,7 +6,6 @@ const SignUpSchema = new Schema({
   lineup_2: [String],
   lineup_3: [String],
   lineup_4: [String],
-  lineup_5: [String],
 });
 
 const SignUp = mongoose.models.SignUp || mongoose.model("SignUp", SignUpSchema);

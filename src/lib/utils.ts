@@ -51,8 +51,6 @@ export function getLineup(lineup: string, signup: ItemProps) {
       return signup.lineup_3;
     case "four":
       return signup.lineup_4;
-    case "five":
-      return signup.lineup_5;
     default:
       return [];
   }
@@ -68,8 +66,6 @@ export function getLineupName(lineup: string) {
       return "Czerwona Flota";
     case "four":
       return "Królewska Tarcza";
-    case "five":
-      return "Zielona Piechota";
     default:
       return "Nieznany skład";
   }
