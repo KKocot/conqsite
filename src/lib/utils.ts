@@ -43,8 +43,6 @@ export function getCloserDay() {
 
 export function getLineup(lineup: string, signup: ItemProps) {
   switch (lineup) {
-    case "one":
-      return signup.lineup_1;
     case "two":
       return signup.lineup_2;
     case "three":
@@ -58,8 +56,6 @@ export function getLineup(lineup: string, signup: ItemProps) {
 
 export function getLineupName(lineup: string) {
   switch (lineup) {
-    case "one":
-      return "Friendship is Magic";
     case "two":
       return "King's Order";
     case "three":
