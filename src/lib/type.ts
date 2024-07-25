@@ -4,7 +4,6 @@ export interface ItemProps {
   lineup_2: string[];
   lineup_3: string[];
   lineup_4: string[];
-  lineup_5: string[];
 }
 
 export interface SurveyProps {
