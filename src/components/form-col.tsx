@@ -25,9 +25,9 @@ const FormCol = ({
   const sortedUnitData = showMore ? data : data.filter((e) => e.value > 7);
   const sortedData = sortedUnitData.sort((a, b) => b.value - a.value);
   return (
-    <div className="sm:overflow-y-scroll flex flex-col items-center h-full w-72 relative">
+    <div className="flex flex-wrap sm:shadow-gray-600 sm:shadow-lg p-4 gap-4 justify-center">
       {sortedData.map((e) => (
-        <div key={e.id} className="w-full">
+        <div key={e.id} className="w-[270px]">
           <h2
             className={clsx("text-lg font-medium text-center", {
               "bg-gradient-to-r from-yellow-300 to-yellow-800":
@@ -50,12 +50,12 @@ const FormCol = ({
         </div>
       ))}
       <Button
-        className="sticky bottom-0 w-full"
+        className="sticky bottom-0 w-full bg-gray-300 font-bold text-xl items-center"
         type="button"
         variant="secondary"
         onClick={() => setShowMore((prev) => !prev)}
       >
-        {showMore ? "Pokaż mniej" : "Pokaz wiecej"}
+        {showMore ? "Show meta units only" : "Show all units"}
       </Button>
     </div>
   );
