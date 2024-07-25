@@ -369,4 +369,14 @@ export const heroicUnits = [
     era: "heroic",
     icon: "/heroic-icons/Camelots_Garrison.webp",
   },
+  {
+    id: 38,
+    name: "Nowa Kawaleria",
+    src: "/heroic-units/Kawaleria_towarzyszaca.webp",
+    leadership: 205,
+    masteryPoints: false,
+    value: 8,
+    era: "heroic",
+    icon: "/heroic-icons/Kawaleria_towarzyszaca_icon.webp",
+  },
 ];

@@ -609,4 +609,14 @@ export const lowUnits = [
     era: "blue",
     icon: "/low-tiers-icons/Caradocs_Cavalry.webp",
   },
+  {
+    id: 62,
+    name: "Procarze",
+    src: "/low-tiers-units/Psiloi_Slingers.webp",
+    leadership: 100,
+    masteryPoints: false,
+    value: 5,
+    era: "blue",
+    icon: "/low-tiers-icons/Psiloi_Slingers_icon.webp",
+  },
 ];

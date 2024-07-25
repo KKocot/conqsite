@@ -259,4 +259,14 @@ export const goldenUnits = [
     era: "golden",
     icon: "/golden-icons/Star_Banner_Cavalry.png",
   },
+  {
+    id: 27,
+    name: "Sunguard Fallangs",
+    src: "/golden-units/Soneczna_falanga.webp",
+    leadership: 290,
+    masteryPoints: false,
+    value: 8,
+    era: "golden",
+    icon: "/golden-icons/Soneczna_falanga_icon.webp",
+  },
 ];
