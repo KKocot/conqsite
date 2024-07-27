@@ -35,13 +35,8 @@ export default function Navbar() {
               <DropdownMenuLabel>Moje konto</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Link className="w-full" href={`/profile/${data.user.id}`}>
+                <Link className="w-full" href="/profile">
                   Profil
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link className="w-full" href="/form">
-                  Formularz
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem
