@@ -17,9 +17,13 @@ type FormColData = {
 const FormCol = ({
   data,
   controller,
+  moveToStep,
+  step,
 }: {
   data: FormColData[];
   controller: any;
+  moveToStep: (step: number) => void;
+  step: number;
 }) => {
   const [showMore, setShowMore] = useState(false);
   const sortedUnitData = showMore ? data : data.filter((e) => e.value > 7);
@@ -50,13 +54,31 @@ const FormCol = ({
         </div>
       ))}
       <Button
-        className="sticky bottom-0 w-full bg-gray-300 font-bold text-xl items-center"
+        className="sticky bottom-0 w-full bg-gray-300 dark:bg-slate-800 font-bold text-xl items-center"
         type="button"
         variant="secondary"
         onClick={() => setShowMore((prev) => !prev)}
       >
         {showMore ? "Show meta units only" : "Show all units"}
       </Button>
+      <div className="flex w-full gap-4">
+        <Button
+          type="button"
+          onClick={() => moveToStep(step - 1)}
+          disabled={step === 1}
+          className="w-1/2"
+        >
+          Prev
+        </Button>
+
+        <Button
+          type="button"
+          onClick={() => moveToStep(step + 1)}
+          className="w-1/2"
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
 };

@@ -68,6 +68,7 @@ export default function WizardForm({ user_id }: { user_id: string }) {
                 })}
               >
                 <Item
+                  moveToStep={setStep}
                   tooltip={
                     i === 0
                       ? "General"
@@ -78,7 +79,6 @@ export default function WizardForm({ user_id }: { user_id: string }) {
                       : "Golden Era"
                   }
                   page={i + 1}
-                  moveToStep={setStep}
                 />
               </div>
               {i !== 3 ? <MoveRight /> : null}
@@ -86,36 +86,29 @@ export default function WizardForm({ user_id }: { user_id: string }) {
           ))}
         </ul>
         {step === 1 ? (
-          <StepGeneral form={form} />
+          <FormCol
+            data={lowUnits}
+            controller={form.control}
+            moveToStep={setStep}
+            step={step}
+          />
         ) : step === 2 ? (
-          <FormCol data={lowUnits} controller={form.control} />
+          <FormCol
+            data={heroicUnits}
+            controller={form.control}
+            moveToStep={setStep}
+            step={step}
+          />
         ) : step === 3 ? (
-          <FormCol data={heroicUnits} controller={form.control} />
+          <FormCol
+            data={goldenUnits}
+            controller={form.control}
+            moveToStep={setStep}
+            step={step}
+          />
         ) : step === 4 ? (
-          <FormCol data={goldenUnits} controller={form.control} />
+          <StepGeneral form={form} moveToStep={setStep} />
         ) : null}
-        <div className="flex justify-around w-full">
-          <Button
-            disabled={step === 1}
-            onClick={() => setStep((prev) => prev - 1)}
-            type="button"
-          >
-            Previous
-          </Button>
-          {step < 4 ? (
-            <Button onClick={() => setStep((prev) => prev + 1)} type="button">
-              Next
-            </Button>
-          ) : (
-            // <Link
-            //   className="h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md"
-            //   // href={`/profile/${user_id}`}
-            //   href="" // for testing
-            // >
-            <Button type="submit">Send</Button>
-            // </Link>
-          )}
-        </div>
       </form>
     </Form>
   );
