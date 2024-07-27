@@ -47,7 +47,7 @@ const FormCol = ({
           </h2>
           <div className="items-center grid grid-cols-2">
             <div className="flex justify-center">
-              <img className="h-32" src={e.src} />
+              <img className="h-40" src={e.src} />
             </div>
             <RadioComponent unitData={e} controller={controller} />
           </div>

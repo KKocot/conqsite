@@ -125,6 +125,17 @@ const RadioComponent: FC<{
                     value="3"
                   />
                 </FormItem>
+                <FormItem className="flex items-center space-y-0">
+                  <FormControl>
+                    <RadioGroupItem value="4" className="hidden" />
+                  </FormControl>
+                  <Component
+                    unitValue={field.value}
+                    era={unitData.era}
+                    label="Wymaksowana i Preferuje"
+                    value="4"
+                  />
+                </FormItem>
               </RadioGroup>
             </FormControl>
           </FormItem>
