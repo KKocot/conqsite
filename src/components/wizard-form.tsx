@@ -1,5 +1,5 @@
 import { MoveRight } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import StepGeneral from "./step-general";
 import Link from "next/link";
@@ -8,20 +8,22 @@ import { lowUnits } from "@/assets/low-units-data";
 import { weapons } from "@/assets/weapons";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { goldenUnits } from "@/assets/golden-units-data";
-import { FormData } from "@/lib/type";
 import { useForm, Controller } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
 import FormCol from "./form-col";
+import clsx from "clsx";
+import { SurveyProps } from "@/lib/type";
 
-export const DEFAULT_FORM_DATA: FormData = {
+export const DEFAULT_FORM_DATA: SurveyProps = {
   discordNick: "",
   inGameNick: "",
   discordId: "",
   characterLevel: "",
+  house: "",
   artyAmount: "none",
-  weapons: weapons.map(() => ({ value: false, leadership: 0, preferences: 0 })),
+  weapons: weapons.map(() => ({ value: false, leadership: 0, pref: 0 })),
   units: {
-    low: lowUnits.map((unit) => ({ id: unit.id, value: "0" })),
+    low: lowUnits.map((unit) => ({ id: unit.id, value: "0", pref: "" })),
     heroic: heroicUnits.map((unit) => ({ id: unit.id, value: "0" })),
     golden: goldenUnits.map((unit) => ({ id: unit.id, value: "0" })),
   },
@@ -33,7 +35,21 @@ export default function WizardForm({ user_id }: { user_id: string }) {
   const form = useForm({
     values: storage,
   });
-  const onSubmit = async (values: FormData) => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`/api/survey/${user_id}`);
+      const data = await response.json();
+      setStorage(data.survey);
+    } catch (error) {
+      console.error("Error fetching:", error);
+    }
+  };
+  useEffect(() => {
+    if (!storage) {
+      fetchData();
+    }
+  }, []);
+  const onSubmit = async (values: SurveyProps) => {
     console.log(values);
   };
   return (
@@ -43,14 +59,31 @@ export default function WizardForm({ user_id }: { user_id: string }) {
         className="flex flex-col items-center p-4 gap-6"
       >
         <h1 className="text-3xl font-bold">Form</h1>
-        <ul className="flex gap-4 items-center">
-          <Item tooltip="General" page={1} moveToStep={setStep} />
-          <MoveRight />
-          <Item tooltip="Low Eras" page={2} moveToStep={setStep} />
-          <MoveRight />
-          <Item tooltip="Heroic Era" page={3} moveToStep={setStep} />
-          <MoveRight />
-          <Item tooltip="Golden Era" page={4} moveToStep={setStep} />
+        <ul className="flex gap-4 text-primary">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <li key={i} className="flex items-center gap-4">
+              <div
+                className={clsx("rounded-full", {
+                  "border-4 border-primary font-bold": step === i + 1,
+                })}
+              >
+                <Item
+                  tooltip={
+                    i === 0
+                      ? "General"
+                      : i === 1
+                      ? "Low Eras"
+                      : i === 2
+                      ? "Heroic Era"
+                      : "Golden Era"
+                  }
+                  page={i + 1}
+                  moveToStep={setStep}
+                />
+              </div>
+              {i !== 3 ? <MoveRight /> : null}
+            </li>
+          ))}
         </ul>
         {step === 1 ? (
           <StepGeneral form={form} />
@@ -74,13 +107,13 @@ export default function WizardForm({ user_id }: { user_id: string }) {
               Next
             </Button>
           ) : (
-            <Link
-              className="h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md"
-              href={`/profile/${user_id}`}
-              type="submit"
-            >
-              Send
-            </Link>
+            // <Link
+            //   className="h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md"
+            //   // href={`/profile/${user_id}`}
+            //   href="" // for testing
+            // >
+            <Button type="submit">Send</Button>
+            // </Link>
           )}
         </div>
       </form>
@@ -98,12 +131,12 @@ const Item = ({
   moveToStep: (e: number) => void;
 }) => {
   return (
-    <li
+    <div
       title={tooltip}
       onClick={() => moveToStep(page)}
       className="border-2 rounded-full w-10 h-10 flex items-center justify-center cursor-pointer text-primary border-primary"
     >
       {page}
-    </li>
+    </div>
   );
 };

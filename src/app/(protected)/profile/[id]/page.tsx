@@ -1,7 +1,7 @@
 "use client";
 
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
-import { DEFAULT_FORM_DATA, FormData } from "@/components/units-form";
+import { DEFAULT_FORM_DATA } from "@/components/units-form";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { lowUnits } from "@/assets/low-units-data";
@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/table";
 import clsx from "clsx";
 import { weapons } from "@/assets/weapons";
+import { SurveyProps } from "@/lib/type";
 
 interface Unit {
   era: string;
@@ -77,7 +78,7 @@ const List = ({ units, value }: { units: Unit[]; value: string }) => {
 
 export default function Component() {
   const params = useParams();
-  const [profile, setProfile] = useState<FormData>({
+  const [profile, setProfile] = useState<SurveyProps>({
     ...DEFAULT_FORM_DATA,
     discordId: Array.isArray(params.id) ? params.id[0] : params.id,
   });

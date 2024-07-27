@@ -19,29 +19,16 @@ import { Info } from "lucide-react";
 import { useEffect, useState } from "react";
 import ReactLoading from "react-loading";
 import { toast, Bounce } from "react-toastify";
+import { SurveyProps } from "@/lib/type";
 
-export interface FormData {
-  _id?: string;
-  discordNick: string;
-  inGameNick: string;
-  discordId: string;
-  characterLevel: string;
-  artyAmount: "none" | "some" | "average" | "aLot";
-  weapons: { value: boolean; leadership: number }[];
-  units: {
-    low: { id: number; value: string }[];
-    heroic: { id: number; value: string }[];
-    golden: { id: number; value: string }[];
-  };
-}
-
-export const DEFAULT_FORM_DATA: FormData = {
+export const DEFAULT_FORM_DATA: SurveyProps = {
   discordNick: "",
   inGameNick: "",
   discordId: "",
   characterLevel: "",
   artyAmount: "none",
-  weapons: weapons.map(() => ({ value: false, leadership: 0 })),
+  house: "",
+  weapons: weapons.map(() => ({ value: false, leadership: 0, pref: 0 })),
   units: {
     low: lowUnits.map((unit) => ({ id: unit.id, value: "0" })),
     heroic: heroicUnits.map((unit) => ({ id: unit.id, value: "0" })),
@@ -50,7 +37,7 @@ export const DEFAULT_FORM_DATA: FormData = {
 };
 
 export default function UnitsForm({ user_id }: { user_id: string }) {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<SurveyProps>({
     ...DEFAULT_FORM_DATA,
     discordId: user_id,
   });
@@ -71,7 +58,7 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
   const form = useForm({
     values: formData,
   });
-  const onSubmit = async (values: FormData) => {
+  const onSubmit = async (values: SurveyProps) => {
     setPending(true);
     try {
       await fetch("/api/survey", {

@@ -13,6 +13,13 @@ import {
 } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
 import { Label } from "./ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const StepGeneral = ({ form }: { form: any }) => {
   return (
@@ -54,83 +61,101 @@ const StepGeneral = ({ form }: { form: any }) => {
             </FormItem>
           )}
         />
-        <div>
-          <FormField
-            control={form.control}
-            name="artyAmount"
-            render={({ field }) => (
-              <FormItem className="space-y-4">
-                <FormLabel className="font-bold text-md">Ilosc Arty</FormLabel>
-                <RadioGroup
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  className="grid grid-cols-2 w-full justify-center"
-                >
-                  <FormItem className="flex items-center">
-                    <FormControl>
-                      <RadioGroupItem value="none" className="hidden" />
-                    </FormControl>
-                    <FormLabel
-                      className={clsx(
-                        "p-2 rounded-sm cursor-pointer w-24 text-center hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-110 hover:text-white border-2 border-black",
-                        {
-                          "bg-red-700 text-white": field.value === "none",
-                        }
-                      )}
-                    >
-                      Nie mam
-                    </FormLabel>
-                  </FormItem>
-                  <FormItem className="flex items-center">
-                    <FormControl>
-                      <RadioGroupItem value="some" className="hidden" />
-                    </FormControl>
-                    <FormLabel
-                      className={clsx(
-                        "p-2 rounded-sm cursor-pointer w-24 text-center hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-110 hover:text-white border-2 border-black",
-                        {
-                          "bg-red-700 text-white": field.value === "some",
-                        }
-                      )}
-                    >
-                      Malo
-                    </FormLabel>
-                  </FormItem>
-                  <FormItem className="flex items-center">
-                    <FormControl>
-                      <RadioGroupItem value="average" className="hidden" />
-                    </FormControl>
-                    <FormLabel
-                      className={clsx(
-                        "p-2 rounded-sm cursor-pointer w-24 text-center hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-110 hover:text-white border-2 border-black",
-                        {
-                          "bg-red-700 text-white": field.value === "average",
-                        }
-                      )}
-                    >
-                      Srednio
-                    </FormLabel>
-                  </FormItem>
-                  <FormItem className="flex items-center">
-                    <FormControl>
-                      <RadioGroupItem value="aLot" className="hidden" />
-                    </FormControl>
-                    <FormLabel
-                      className={clsx(
-                        "p-2 rounded-sm cursor-pointer w-24 text-center hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-110 hover:text-white border-2 border-black",
-                        {
-                          "bg-red-700 text-white": field.value === "aLot",
-                        }
-                      )}
-                    >
-                      Duzo
-                    </FormLabel>
-                  </FormItem>
-                </RadioGroup>
-              </FormItem>
-            )}
-          />
-        </div>
+        <FormField
+          control={form.control}
+          name="house"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>House</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your house" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="kov">Kingdom of Poland</SelectItem>
+                  <SelectItem value="erebus">Erebus</SelectItem>
+                </SelectContent>
+              </Select>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="artyAmount"
+          render={({ field }) => (
+            <FormItem className="space-y-4">
+              <FormLabel className="font-bold text-md">Ilosc Arty</FormLabel>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="grid grid-cols-2 w-full justify-center"
+              >
+                <FormItem className="flex items-center">
+                  <FormControl>
+                    <RadioGroupItem value="none" className="hidden" />
+                  </FormControl>
+                  <FormLabel
+                    className={clsx(
+                      "p-2 rounded-sm cursor-pointer w-24 text-center hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-110 hover:text-white border-2 border-black",
+                      {
+                        "bg-red-700 text-white": field.value === "none",
+                      }
+                    )}
+                  >
+                    Nie mam
+                  </FormLabel>
+                </FormItem>
+                <FormItem className="flex items-center">
+                  <FormControl>
+                    <RadioGroupItem value="some" className="hidden" />
+                  </FormControl>
+                  <FormLabel
+                    className={clsx(
+                      "p-2 rounded-sm cursor-pointer w-24 text-center hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-110 hover:text-white border-2 border-black",
+                      {
+                        "bg-red-700 text-white": field.value === "some",
+                      }
+                    )}
+                  >
+                    Malo
+                  </FormLabel>
+                </FormItem>
+                <FormItem className="flex items-center">
+                  <FormControl>
+                    <RadioGroupItem value="average" className="hidden" />
+                  </FormControl>
+                  <FormLabel
+                    className={clsx(
+                      "p-2 rounded-sm cursor-pointer w-24 text-center hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-110 hover:text-white border-2 border-black",
+                      {
+                        "bg-red-700 text-white": field.value === "average",
+                      }
+                    )}
+                  >
+                    Srednio
+                  </FormLabel>
+                </FormItem>
+                <FormItem className="flex items-center">
+                  <FormControl>
+                    <RadioGroupItem value="aLot" className="hidden" />
+                  </FormControl>
+                  <FormLabel
+                    className={clsx(
+                      "p-2 rounded-sm cursor-pointer w-24 text-center hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-110 hover:text-white border-2 border-black",
+                      {
+                        "bg-red-700 text-white": field.value === "aLot",
+                      }
+                    )}
+                  >
+                    Duzo
+                  </FormLabel>
+                </FormItem>
+              </RadioGroup>
+            </FormItem>
+          )}
+        />
       </div>
 
       <div>
