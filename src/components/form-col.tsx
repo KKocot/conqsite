@@ -31,7 +31,7 @@ const FormCol = ({
   return (
     <div className="flex flex-wrap sm:shadow-gray-600 sm:shadow-lg p-4 gap-4 justify-center">
       {sortedData.map((e) => (
-        <div key={e.id} className="w-[270px]">
+        <div key={e.id + e.name} className="w-[270px]">
           <h2
             className={clsx("text-lg font-medium text-center", {
               "bg-gradient-to-r from-yellow-300 to-yellow-800":
