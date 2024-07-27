@@ -241,7 +241,7 @@ const StepGeneral = ({
                       )}
                     />
                     <Controller
-                      name={`weapons.${i}.preferences`}
+                      name={`weapons.${i}.pref`}
                       control={form.control}
                       render={({ field }) => (
                         <>
@@ -259,7 +259,7 @@ const StepGeneral = ({
                                 event.target.value
                               );
                               form.setValue(
-                                `weapons.${i}.preferences`,
+                                `weapons.${i}.pref`,
                                 preferencesValue
                               );
                             }}
