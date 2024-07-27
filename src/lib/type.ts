@@ -14,7 +14,7 @@ export interface SurveyProps {
   characterLevel: string;
   house: string;
   artyAmount: "none" | "some" | "average" | "aLot";
-  weapons: { value: boolean; leadership: number; pref: number }[];
+  weapons: { value: boolean; leadership: number; pref?: number }[];
   units: {
     low: { id: number; value: string }[];
     heroic: { id: number; value: string }[];

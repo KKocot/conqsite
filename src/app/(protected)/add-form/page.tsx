@@ -1,10 +1,10 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import UnitsForm from "@/components/units-form";
 import { useSession } from "next-auth/react";
 import React from "react";
 import { adduser_whitelist } from "@/assets/whitelists";
+import WizardForm from "@/components/wizard-form";
 const Page: React.FC = () => {
   const { data } = useSession();
   const user_id = data ? data?.user.id : "";
@@ -18,7 +18,9 @@ const Page: React.FC = () => {
         value={discordId}
         onChange={(e) => setDiscordId(e.target.value)}
       />
-      {discordId.length > 17 ? <UnitsForm user_id={discordId} /> : null}
+      {discordId.length > 17 ? (
+        <WizardForm user_id={discordId} updateForm={false} />
+      ) : null}
     </div>
   ) : (
     <div className="flex justify-center my-56">Nie masz dostepu</div>

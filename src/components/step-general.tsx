@@ -2,8 +2,8 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import clsx from "clsx";
-import { useForm, Controller } from "react-hook-form";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
+import { Controller } from "react-hook-form";
+import { FormControl, FormField, FormItem, FormLabel } from "./ui/form";
 import { weapons } from "@/assets/weapons";
 import {
   Tooltip,
@@ -86,8 +86,10 @@ const StepGeneral = ({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="kov">Kingdom of Poland</SelectItem>
-                    <SelectItem value="erebus">Erebus</SelectItem>
+                    <SelectItem value="KingdomOfPoland">
+                      KingdomOfPoland
+                    </SelectItem>
+                    <SelectItem value="Erebus">Erebus</SelectItem>
                   </SelectContent>
                 </Select>
               </FormItem>
@@ -273,7 +275,11 @@ const StepGeneral = ({
         </div>
       </div>
       <div className="flex w-full gap-4">
-        <Button type="button" onClick={() => moveToStep(3)} className="w-1/2">
+        <Button
+          type="button"
+          onClick={() => moveToStep(prev_step)}
+          className="w-1/2"
+        >
           Prev
         </Button>
 

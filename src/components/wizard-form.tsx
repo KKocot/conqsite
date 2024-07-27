@@ -1,18 +1,18 @@
 import { MoveRight } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
 import StepGeneral from "./step-general";
-import Link from "next/link";
 import { useLocalStorage } from "usehooks-ts";
 import { lowUnits } from "@/assets/low-units-data";
 import { weapons } from "@/assets/weapons";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { goldenUnits } from "@/assets/golden-units-data";
-import { useForm, Controller } from "react-hook-form";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
+import { useForm } from "react-hook-form";
+import { Form } from "./ui/form";
 import FormCol from "./form-col";
 import clsx from "clsx";
 import { SurveyProps } from "@/lib/type";
+import { useRouter } from "next/navigation";
+import Loading from "react-loading";
 
 export const DEFAULT_FORM_DATA: SurveyProps = {
   discordNick: "",
@@ -23,35 +23,73 @@ export const DEFAULT_FORM_DATA: SurveyProps = {
   artyAmount: "none",
   weapons: weapons.map(() => ({ value: false, leadership: 0, pref: 0 })),
   units: {
-    low: lowUnits.map((unit) => ({ id: unit.id, value: "0", pref: "" })),
+    low: lowUnits.map((unit) => ({ id: unit.id, value: "0", pref: "0" })),
     heroic: heroicUnits.map((unit) => ({ id: unit.id, value: "0" })),
     golden: goldenUnits.map((unit) => ({ id: unit.id, value: "0" })),
   },
 };
 
-export default function WizardForm({ user_id }: { user_id: string }) {
+export default function WizardForm({
+  user_id,
+  updateForm,
+}: {
+  user_id: string;
+  updateForm: boolean;
+}) {
+  const router = useRouter();
   const [step, setStep] = useState(1);
   const [storage, setStorage] = useLocalStorage("MyForm", DEFAULT_FORM_DATA);
+  const [unitform, setForm] = useState<SurveyProps>(DEFAULT_FORM_DATA);
+  const [loading, setLoading] = useState(false);
   const form = useForm({
-    values: storage,
+    values: { ...unitform, discordId: user_id },
   });
   const fetchData = async () => {
+    setLoading(true);
     try {
       const response = await fetch(`/api/survey/${user_id}`);
       const data = await response.json();
-      setStorage(data.survey);
+      setForm(data.survey);
     } catch (error) {
       console.error("Error fetching:", error);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
-    if (!storage) {
+    if (updateForm) {
       fetchData();
     }
   }, []);
   const onSubmit = async (values: SurveyProps) => {
-    console.log(values);
+    setStorage(values);
+    try {
+      const response = await fetch("/api/survey", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error occurred:", errorData);
+      } else {
+        const responseData = await response.json();
+        console.log("Success:", responseData);
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+    }
+    router.push(`/profile/${user_id}`);
   };
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loading color="#94a3b8" />
+      </div>
+    );
   return (
     <Form {...form}>
       <form
@@ -71,12 +109,12 @@ export default function WizardForm({ user_id }: { user_id: string }) {
                   moveToStep={setStep}
                   tooltip={
                     i === 0
-                      ? "General"
-                      : i === 1
                       ? "Low Eras"
-                      : i === 2
+                      : i === 1
                       ? "Heroic Era"
-                      : "Golden Era"
+                      : i === 2
+                      ? "Golden Era"
+                      : "General"
                   }
                   page={i + 1}
                 />

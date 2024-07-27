@@ -355,11 +355,11 @@ export default function UnitsForm({ user_id }: { user_id: string }) {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <div className="flex lg:flex-row items-center sm:overflow-y-hidden flex-col xl:justify-around">
+          {/* <div className="flex lg:flex-row items-center sm:overflow-y-hidden flex-col xl:justify-around">
             <FormCol data={lowUnits} controller={form.control} />
             <FormCol data={heroicUnits} controller={form.control} />
             <FormCol data={goldenUnits} controller={form.control} />
-          </div>
+          </div> */}
         </div>
       </form>
     </Form>

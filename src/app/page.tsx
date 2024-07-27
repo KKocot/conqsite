@@ -10,30 +10,24 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center px-4 md:px-6 sm:h-full my-12">
       <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl text-center">
-        Witam w Kingdom of Poland
+        Conqueror's Blade
       </h1>
       {data ? (
         <>
           <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-            <p className="text-gray-500 dark:text-gray-400">
-              Wypelnij prosze nasz formularz zeby usprawnic nasza wspolprace
+            <p className="text-gray-500 dark:text-gray-400 text-center">
+              Fill your form
             </p>
-            <div className="mt-4 flex justify-center">
-              <Link href="/form">
-                <Button>Przejdz do formularza</Button>
+            <div className="mt-4 flex gap-4 justify-center">
+              <Link href="/new-form">
+                <Button>New Form</Button>
+              </Link>
+              <Link href="/update-form">
+                <Button>Update Form</Button>
               </Link>
             </div>
           </div>
-          <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-            <p className="text-gray-500 dark:text-gray-400">
-              Sprawdz kto jest najlepszy w naszej społecznosci
-            </p>
-            <div className="mt-4 flex justify-center">
-              <Link href="/ranking">
-                <Button>Rankinng</Button>
-              </Link>
-            </div>
-          </div>
+
           {command_whitelist.includes(data.user.id) ? (
             <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
               <p className="text-gray-500 dark:text-gray-400 text-center">

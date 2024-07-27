@@ -5,6 +5,7 @@ const SurveySchema = new Schema({
   inGameNick: { type: String, required: true },
   discordId: { type: String, required: true },
   characterLevel: { type: String, required: true },
+  house: { type: String, required: true },
   artyAmount: {
     type: String,
     enum: ["none", "some", "average", "aLot"],
@@ -14,6 +15,7 @@ const SurveySchema = new Schema({
     {
       value: { type: Boolean, required: true },
       leadership: { type: Number, required: true },
+      pref: { type: Number, required: false },
     },
   ],
   units: {
