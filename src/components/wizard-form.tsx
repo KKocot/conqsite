@@ -29,13 +29,7 @@ export const DEFAULT_FORM_DATA: SurveyProps = {
   },
 };
 
-export default function WizardForm({
-  user_id,
-  updateForm,
-}: {
-  user_id: string;
-  updateForm: boolean;
-}) {
+export default function WizardForm({ user_id }: { user_id: string }) {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [storage, setStorage] = useLocalStorage("MyForm", DEFAULT_FORM_DATA);
@@ -57,9 +51,7 @@ export default function WizardForm({
     }
   };
   useEffect(() => {
-    if (updateForm) {
-      fetchData();
-    }
+    fetchData();
   }, []);
   const onSubmit = async (values: SurveyProps) => {
     setStorage(values);

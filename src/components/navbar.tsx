@@ -32,13 +32,6 @@ export default function Navbar() {
               />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>Moje konto</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Link className="w-full" href="/profile">
-                  Profil
-                </Link>
-              </DropdownMenuItem>
               <DropdownMenuItem
                 className="cursor-pointer text-red-700"
                 onClick={() => signOut()}

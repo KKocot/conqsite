@@ -18,9 +18,7 @@ const Page: React.FC = () => {
         value={discordId}
         onChange={(e) => setDiscordId(e.target.value)}
       />
-      {discordId.length > 17 ? (
-        <WizardForm user_id={discordId} updateForm={false} />
-      ) : null}
+      {discordId.length > 17 ? <WizardForm user_id={discordId} /> : null}
     </div>
   ) : (
     <div className="flex justify-center my-56">Nie masz dostepu</div>

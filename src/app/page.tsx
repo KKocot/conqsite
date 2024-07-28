@@ -10,17 +10,14 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center px-4 md:px-6 sm:h-full my-12">
       <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl text-center">
-        Conqueror's Blade
+        Conqueror&lsquo;s Blade
       </h1>
       {data ? (
         <>
           <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-            <p className="text-gray-500 dark:text-gray-400 text-center">
-              Fill your form
-            </p>
-            <div className="mt-4 flex gap-4 justify-center">
-              <Link href="/new-form">
-                <Button>New Form</Button>
+            <div className="flex gap-4 justify-center">
+              <Link href="/profile">
+                <Button>My Profile</Button>
               </Link>
               <Link href="/update-form">
                 <Button>Update Form</Button>
@@ -30,10 +27,7 @@ export default function Home() {
 
           {command_whitelist.includes(data.user.id) ? (
             <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-              <p className="text-gray-500 dark:text-gray-400 text-center">
-                Rozpisz składy na najbliższe Wojny Królestw
-              </p>
-              <div className="mt-4 flex flex-col sm:flex-row gap-3 justify-center items-center">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
                 <Link href="/lineups/two">
                   <Button>King&lsquo;s Order</Button>
                 </Link>
