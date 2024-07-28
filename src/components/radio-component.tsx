@@ -146,10 +146,3 @@ const RadioComponent: FC<{
 };
 
 export default RadioComponent;
-
-<FormItem className="flex items-center space-x-3 space-y-0">
-  <FormControl>
-    <RadioGroupItem value="all" />
-  </FormControl>
-  <FormLabel className="font-normal">All new messages</FormLabel>
-</FormItem>;

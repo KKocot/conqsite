@@ -33,17 +33,70 @@ export default function WizardForm({ user_id }: { user_id: string }) {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [storage, setStorage] = useLocalStorage("MyForm", DEFAULT_FORM_DATA);
-  const [unitform, setForm] = useState<SurveyProps>(DEFAULT_FORM_DATA);
-  const [loading, setLoading] = useState(false);
-  const form = useForm({
-    values: { ...unitform, discordId: user_id },
+  const [unitForm, setUnitForm] = useState<SurveyProps>({
+    ...DEFAULT_FORM_DATA,
+    discordId: user_id,
   });
+  const [loading, setLoading] = useState(false);
+
+  interface Unit {
+    id: number;
+    value: string;
+  }
+
+  const low_units_diff = lowUnits.length - unitForm.units.low.length;
+  const heroic_units_diff = heroicUnits.length - unitForm.units.heroic.length;
+  const golden_units_diff = goldenUnits.length - unitForm.units.golden.length;
+  const no_new_units = 0;
+  const createNewUnits = (
+    existingUnits: Unit[],
+    diff: number,
+    baseId: number
+  ): Unit[] => {
+    const newUnits: Unit[] = [];
+    for (let i = 0; i < diff; i++) {
+      newUnits.push({ id: baseId + i + 1, value: "0" });
+    }
+    return [...existingUnits, ...newUnits];
+  };
+  const form = useForm({
+    values: {
+      ...unitForm,
+      units: {
+        low:
+          low_units_diff > no_new_units
+            ? createNewUnits(
+                unitForm.units.low,
+                low_units_diff,
+                unitForm.units.low.length
+              )
+            : unitForm.units.low,
+        heroic:
+          heroic_units_diff > no_new_units
+            ? createNewUnits(
+                unitForm.units.heroic,
+                heroic_units_diff,
+                unitForm.units.heroic.length
+              )
+            : unitForm.units.heroic,
+        golden:
+          golden_units_diff > no_new_units
+            ? createNewUnits(
+                unitForm.units.golden,
+                golden_units_diff,
+                unitForm.units.golden.length
+              )
+            : unitForm.units.golden,
+      },
+    },
+  });
+  // console.log(form.getValues());
   const fetchData = async () => {
     setLoading(true);
     try {
       const response = await fetch(`/api/survey/${user_id}`);
       const data = await response.json();
-      setForm(data.survey);
+      setUnitForm(data.survey);
     } catch (error) {
       console.error("Error fetching:", error);
     } finally {
@@ -74,7 +127,7 @@ export default function WizardForm({ user_id }: { user_id: string }) {
     } catch (error) {
       console.error("Error occurred:", error);
     }
-    router.push(`/profile/${user_id}`);
+    // router.push(`/profile`);
   };
   if (loading)
     return (

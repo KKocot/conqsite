@@ -8,4 +8,4 @@ export const command_whitelist_erebus = [
   "303156898532818944", // me
   "209445355425628161", // Leksa
 ];
-export const adduser_whitelist = [];
+export const adduser_whitelist = ["303156898532818944"];

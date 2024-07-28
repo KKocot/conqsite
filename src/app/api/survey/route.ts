@@ -4,9 +4,12 @@ import { NextResponse } from "next/server";
 import { putSurveySchema } from "./schema";
 import { ZodError } from "zod";
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const query =
+    searchParams.get("house") === "" ? undefined : searchParams.get("house");
   await connectMongoDB();
-  const surveys = await Survey.find();
+  const surveys = await Survey.find({ house: query });
   return NextResponse.json({ surveys });
 }
 export async function POST(request: Request) {
