@@ -252,7 +252,7 @@ const StepGeneral = ({
                             {...field}
                             type="number"
                             min={1}
-                            max={9}
+                            max={4}
                             className="h-5 w-16 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             onChange={(event) => {
                               const preferencesValue = parseInt(

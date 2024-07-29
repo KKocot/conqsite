@@ -90,7 +90,6 @@ export default function WizardForm({ user_id }: { user_id: string }) {
       },
     },
   });
-  // console.log(form.getValues());
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -127,7 +126,7 @@ export default function WizardForm({ user_id }: { user_id: string }) {
     } catch (error) {
       console.error("Error occurred:", error);
     }
-    // router.push(`/profile`);
+    router.push(`/profile`);
   };
   if (loading)
     return (

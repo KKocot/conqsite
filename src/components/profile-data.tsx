@@ -11,6 +11,8 @@ import {
   Table,
 } from "@/components/ui/table";
 import List from "./unit-list";
+import { weapons } from "@/assets/weapons";
+import clsx from "clsx";
 
 const ProfileData = ({ profile }: { profile: SurveyProps }) => {
   const golden = ownedUnits(goldenUnits, profile.units.golden);
@@ -18,51 +20,82 @@ const ProfileData = ({ profile }: { profile: SurveyProps }) => {
   const blue = ownedUnits(blueUnits, profile.units.low);
   const green = ownedUnits(greenUnits, profile.units.low);
   const grey = ownedUnits(greyUnits, profile.units.low);
+  const weapons_list = weapons.map((weapon) => {
+    const matchingWeapon = profile.weapons.find(
+      (w, index) => index + 1 === weapon.id
+    );
+    return { ...weapon, matchingWeapon };
+  });
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="text-center px-0">
-            Wymaksowana i Preferuje
-          </TableHead>
-          <TableHead className="text-center px-0">Preferuje</TableHead>
-          <TableHead className="text-center px-0">Wymaksowana</TableHead>
-          <TableHead className="text-center px-0">Posiadam</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        <TableRow>
-          <List units={golden} value="4" />
-          <List units={golden} value="3" />
-          <List units={golden} value="2" />
-          <List units={golden} value="1" />
-        </TableRow>
-        <TableRow>
-          <List units={heroic} value="4" />
-          <List units={heroic} value="3" />
-          <List units={heroic} value="2" />
-          <List units={heroic} value="1" />
-        </TableRow>
-        <TableRow>
-          <List units={blue} value="4" />
-          <List units={blue} value="3" />
-          <List units={blue} value="2" />
-          <List units={blue} value="1" />
-        </TableRow>
-        <TableRow>
-          <List units={green} value="4" />
-          <List units={green} value="3" />
-          <List units={green} value="2" />
-          <List units={green} value="1" />
-        </TableRow>
-        <TableRow>
-          <List units={grey} value="4" />
-          <List units={grey} value="3" />
-          <List units={grey} value="2" />
-          <List units={grey} value="1" />
-        </TableRow>
-      </TableBody>
-    </Table>
+    <>
+      <ul className="flex gap-8 flex-wrap">
+        {weapons_list.map((e) =>
+          e.matchingWeapon?.value ? (
+            <li
+              key={e.id}
+              className="flex flex-col items-center w-18"
+              title={"Dowodzenie: " + e.matchingWeapon.leadership}
+            >
+              <img src={e.src} className="rounded-full w-12 h-12" />
+              <span
+                className={clsx("text-sm", {
+                  "text-yellow-600": e.matchingWeapon.pref === 1,
+                  "text-purple-600": e.matchingWeapon.pref === 2,
+                  "text-blue-600": e.matchingWeapon.pref === 3,
+                  "text-green-600": e.matchingWeapon.pref === 4,
+                })}
+              >
+                Leadership: {e.matchingWeapon.leadership}
+              </span>
+            </li>
+          ) : null
+        )}
+      </ul>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="text-center px-0">
+              Wymaksowana i Preferuje
+            </TableHead>
+            <TableHead className="text-center px-0">Preferuje</TableHead>
+            <TableHead className="text-center px-0">Wymaksowana</TableHead>
+            <TableHead className="text-center px-0">Posiadam</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <List units={golden} value="4" />
+            <List units={golden} value="3" />
+            <List units={golden} value="2" />
+            <List units={golden} value="1" />
+          </TableRow>
+          <TableRow>
+            <List units={heroic} value="4" />
+            <List units={heroic} value="3" />
+            <List units={heroic} value="2" />
+            <List units={heroic} value="1" />
+          </TableRow>
+          <TableRow>
+            <List units={blue} value="4" />
+            <List units={blue} value="3" />
+            <List units={blue} value="2" />
+            <List units={blue} value="1" />
+          </TableRow>
+          <TableRow>
+            <List units={green} value="4" />
+            <List units={green} value="3" />
+            <List units={green} value="2" />
+            <List units={green} value="1" />
+          </TableRow>
+          <TableRow>
+            <List units={grey} value="4" />
+            <List units={grey} value="3" />
+            <List units={grey} value="2" />
+            <List units={grey} value="1" />
+          </TableRow>
+        </TableBody>
+      </Table>
+    </>
   );
 };
 

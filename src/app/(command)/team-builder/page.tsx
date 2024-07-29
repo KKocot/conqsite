@@ -17,6 +17,10 @@ import {
 } from "@/components/ui/accordion";
 import CheckboxItem from "@/components/sheet-form-filter";
 import { UserProfile } from "@/components/user-profile";
+import { set } from "mongoose";
+import Loading from "react-loading";
+import { Badge } from "@/components/ui/badge";
+import clsx from "clsx";
 
 // const next_tw = getCloserDay();
 const next_tw = "2024-07-27";
@@ -54,7 +58,7 @@ const Page: React.FC = () => {
   const [surveys, setSurveys] = useState<SurveyProps[]>();
   const [noData, setNoData] = useState(true);
   const [userList, setUserList] = useState<SurveyProps[]>([]); //table
-
+  const [loading, setLoading] = useState(false);
   const [filterUnits, setFilterUnits] = useState({
     rustic_checked: true,
     chivalric_checked: true,
@@ -82,6 +86,7 @@ const Page: React.FC = () => {
     ? "Erebus"
     : "";
   const fetchLineup = async (house: string) => {
+    setLoading(true);
     try {
       const response = await fetch(`/api/signup/${next_tw}`);
       const data = await response.json();
@@ -99,15 +104,20 @@ const Page: React.FC = () => {
       setSignup(lineups);
     } catch (error) {
       console.error("Error fetching:", error);
+    } finally {
+      setTimeout(() => setLoading(false), 1000);
     }
   };
   const fetchSurveys = async (house: string) => {
+    setLoading(true);
     try {
       const response = await fetch(`/api/survey?house=${house}`);
       const data = await response.json();
       setSurveys(data.surveys);
     } catch (error) {
       console.error("Error fetching:", error);
+    } finally {
+      setTimeout(() => setLoading(false), 1000);
     }
   };
 
@@ -136,13 +146,18 @@ const Page: React.FC = () => {
     ];
   }, [lineupFilterErebus.raid_1, lineupFilterErebus.raid_2]);
   const all_players_list = [...kop_players_list, ...erebus_players_list].flat();
-  console.log(kop_players_list.flat());
   function handlerGetData() {
     fetchLineup(commander_house);
     fetchSurveys(commander_house);
     setNoData(false);
   }
-
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loading color="#94a3b8" />
+      </div>
+    );
+  }
   return noData ? (
     <div className="flex flex-col gap-5 p-2">
       <Button onClick={() => handlerGetData()}>Load data</Button>
@@ -294,7 +309,17 @@ const Page: React.FC = () => {
         {all_players_list.map((survey) =>
           survey ? (
             <div key={survey.discordId}>
-              <UserProfile player={survey} playersList={userList} />
+              <UserProfile player={survey}>
+                <Badge
+                  variant="secondary"
+                  className={clsx("cursor-pointer", {
+                    "bg-red-800 text-white hover:text-black dark:hover:text-white":
+                      userList.some((e) => e.discordId === survey.discordId),
+                  })}
+                >
+                  {survey.inGameNick}
+                </Badge>
+              </UserProfile>
             </div>
           ) : null
         )}

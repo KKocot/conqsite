@@ -36,6 +36,9 @@ export default function Home() {
                 <Link href="/team-builder">
                   <Button>Build team</Button>
                 </Link>
+                <Link href="/my-house">
+                  <Button>My House</Button>
+                </Link>
               </div>
             </div>
           ) : null}
