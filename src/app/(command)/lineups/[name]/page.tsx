@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { goldenUnits } from "@/assets/golden-units-data";
 import { heroicUnits } from "@/assets/heroic-units-data";
-import { lowUnits } from "@/assets/low-units-data";
+import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
 import {
   Accordion,
   AccordionContent,
@@ -12,13 +12,7 @@ import {
 } from "@/components/ui/accordion";
 import { addUsers, getCloserDay, getLineup, getLineupName } from "@/lib/utils";
 import { useParams } from "next/navigation";
-import {
-  ArtilleryProps,
-  ItemProps,
-  SheetTypes,
-  SurveyProps,
-  Unit,
-} from "@/lib/type";
+import { ArtilleryProps, ItemProps, SheetTypes, SurveyProps } from "@/lib/type";
 import { Badge } from "@/components/ui/badge";
 import CheckboxItem from "@/components/sheet-form-filter";
 import { weapons } from "@/assets/weapons";
@@ -28,6 +22,7 @@ import { useLocalStorage } from "usehooks-ts";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Preview from "@/components/preview";
+import { others } from "@/assets/other-units-data";
 
 const DEFAULT_ARTILLERY = [
   { id: 1, check: false },
@@ -42,49 +37,6 @@ const DEFAULT_ARTILLERY = [
   { id: 10, check: false },
   { id: 11, check: false },
 ] as ArtilleryProps[];
-
-const others = [
-  {
-    era: "other",
-    icon: "/others-units/cav.jpg",
-    id: 90,
-    leadership: 0,
-    masteryPoints: false,
-    name: "Kawaleria",
-    src: "",
-    value: 10,
-  },
-  {
-    era: "other",
-    icon: "/others-units/piki.jpg",
-    id: 91,
-    leadership: 0,
-    masteryPoints: false,
-    name: "Antykawaleria",
-    src: "",
-    value: 10,
-  },
-  {
-    era: "other",
-    icon: "/others-units/zbrojni.jpg",
-    id: 92,
-    leadership: 0,
-    masteryPoints: false,
-    name: "Zbrojna Piechota",
-    src: "",
-    value: 10,
-  },
-  {
-    era: "other",
-    icon: "/others-units/special.jpg",
-    id: 93,
-    leadership: 0,
-    masteryPoints: false,
-    name: "Specjalne",
-    src: "",
-    value: 10,
-  },
-] as Unit[];
 
 const Page: React.FC = () => {
   const params = useParams<{ name: string }>();
@@ -103,9 +55,6 @@ const Page: React.FC = () => {
   });
 
   const units = useMemo(() => {
-    const blueUnits = lowUnits.filter((unit) => unit.era === "blue");
-    const greenUnits = lowUnits.filter((unit) => unit.era === "green");
-    const greyUnits = lowUnits.filter((unit) => unit.era === "grey");
     const golden_era = filterUnits.golden_checked ? goldenUnits : [];
     const heroic_era = filterUnits.heroic_checked ? heroicUnits : [];
     const silver_era = filterUnits.silver_checked ? blueUnits : [];
@@ -122,16 +71,12 @@ const Page: React.FC = () => {
       ...others_unit,
     ];
   }, [
-    lowUnits,
     filterUnits.golden_checked,
     filterUnits.heroic_checked,
     filterUnits.silver_checked,
     filterUnits.chivalric_checked,
     filterUnits.rustic_checked,
     filterUnits.other_checked,
-    goldenUnits,
-    heroicUnits,
-    others,
   ]);
 
   const next_tw = getCloserDay();
@@ -262,7 +207,19 @@ const Page: React.FC = () => {
                   weapon: "",
                   description: "",
                   color: "slate",
-                  artillery: DEFAULT_ARTILLERY,
+                  artillery: [
+                    { id: 1, check: false },
+                    { id: 2, check: false },
+                    { id: 3, check: false },
+                    { id: 4, check: false },
+                    { id: 5, check: false },
+                    { id: 6, check: false },
+                    { id: 7, check: false },
+                    { id: 8, check: false },
+                    { id: 9, check: false },
+                    { id: 10, check: false },
+                    { id: 11, check: false },
+                  ],
                 }))
               )
             }

@@ -620,3 +620,7 @@ export const lowUnits = [
     icon: "/low-tiers-icons/Psiloi_Slingers_icon.webp",
   },
 ];
+
+export const blueUnits = lowUnits.filter((unit) => unit.era === "blue");
+export const greenUnits = lowUnits.filter((unit) => unit.era === "green");
+export const greyUnits = lowUnits.filter((unit) => unit.era === "grey");

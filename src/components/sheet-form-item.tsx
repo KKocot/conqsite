@@ -134,7 +134,7 @@ const Item = ({
   ];
   return (
     <li
-      className={` grid grid-cols-14 border-4  p-2 rounded-2xl gap-2 w-56 mx-auto border${data.color}`}
+      className={`grid grid-cols-14 border-4 p-2 rounded-2xl gap-2 w-56 mx-auto border${data.color}`}
     >
       <span className="flex flex-wrap gap-2">
         {user

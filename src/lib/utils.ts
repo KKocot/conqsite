@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { ItemProps, SheetTypes, SurveyProps } from "./type";
+import { ItemProps, SheetTypes, SurveyProps, Unit } from "./type";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -97,4 +97,15 @@ export function addUsers(data: SheetTypes[], users: SurveyProps[]) {
     }
   }
   return data;
+}
+
+export function ownedUnits(
+  units: Unit[],
+  profile_units: { id: number; value: string }[]
+) {
+  const mergedGoldenUnits = units.map((unit) => {
+    const matchingGolden = profile_units.find((g) => g.id === unit.id);
+    return { ...unit, matchingGolden };
+  });
+  return mergedGoldenUnits;
 }
