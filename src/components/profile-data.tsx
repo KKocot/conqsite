@@ -54,12 +54,18 @@ const ProfileData = ({ profile }: { profile: SurveyProps }) => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="text-center px-0">
+            <TableHead className="text-center px-0 text-yellow-500">
               Wymaksowana i Preferuje
             </TableHead>
-            <TableHead className="text-center px-0">Preferuje</TableHead>
-            <TableHead className="text-center px-0">Wymaksowana</TableHead>
-            <TableHead className="text-center px-0">Posiadam</TableHead>
+            <TableHead className="text-center px-0 text-purple-500">
+              Preferuje
+            </TableHead>
+            <TableHead className="text-center px-0 text-blue-500">
+              Wymaksowana
+            </TableHead>
+            <TableHead className="text-center px-0 text-green-500">
+              Posiadam
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

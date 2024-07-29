@@ -19,7 +19,7 @@ export function UserProfile({
 }) {
   return (
     <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogTrigger>{children}</DialogTrigger>
       <DialogContent className="max-w-full md:w-3/4 w-full h-fit max-h-full">
         <DialogHeader>
           <DialogTitle>

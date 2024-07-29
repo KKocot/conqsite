@@ -145,8 +145,25 @@ const Item = ({
                   className="flex flex-col items-center justify-around"
                   title={weapon.name}
                 >
-                  <img src={weapon.src} className="rounded-full h-5" />
-                  <span>{user.weapons[index].leadership}</span>
+                  <img
+                    src={weapon.src}
+                    className={clsx("rounded-full h-5 shadow-md", {
+                      "shadow-yellow-500": user.weapons[index].pref === 4,
+                      "border-purple-500": user.weapons[index].pref === 3,
+                      "border-blue-500": user.weapons[index].pref === 2,
+                      "border-green-500": user.weapons[index].pref === 1,
+                    })}
+                  />
+                  <span
+                    className={clsx({
+                      "text-yellow-500": user.weapons[index].pref === 4,
+                      "text-purple-500": user.weapons[index].pref === 3,
+                      "text-blue-500": user.weapons[index].pref === 2,
+                      "text-green-500": user.weapons[index].pref === 1,
+                    })}
+                  >
+                    {user.weapons[index].leadership}
+                  </span>
                 </span>
               ) : null
             )

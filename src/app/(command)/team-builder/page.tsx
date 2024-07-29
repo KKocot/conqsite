@@ -5,10 +5,10 @@ import {
   command_whitelist_kov,
 } from "@/assets/whitelists";
 import { Button } from "@/components/ui/button";
-import { SurveyProps } from "@/lib/type";
+import { ArtilleryProps, SheetTypes, SurveyProps } from "@/lib/type";
 import { getCloserDay } from "@/lib/utils";
 import { useSession } from "next-auth/react";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -17,10 +17,15 @@ import {
 } from "@/components/ui/accordion";
 import CheckboxItem from "@/components/sheet-form-filter";
 import { UserProfile } from "@/components/user-profile";
-import { set } from "mongoose";
 import Loading from "react-loading";
 import { Badge } from "@/components/ui/badge";
 import clsx from "clsx";
+import { weapons } from "@/assets/weapons";
+import Item from "@/components/sheet-form-item";
+import { goldenUnits } from "@/assets/golden-units-data";
+import { heroicUnits } from "@/assets/heroic-units-data";
+import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
+import { others } from "@/assets/other-units-data";
 
 // const next_tw = getCloserDay();
 const next_tw = "2024-07-27";
@@ -59,6 +64,8 @@ const Page: React.FC = () => {
   const [noData, setNoData] = useState(true);
   const [userList, setUserList] = useState<SurveyProps[]>([]); //table
   const [loading, setLoading] = useState(false);
+  const [sheetData, setSheetData] = useState<SheetTypes[]>([]);
+
   const [filterUnits, setFilterUnits] = useState({
     rustic_checked: true,
     chivalric_checked: true,
@@ -120,7 +127,29 @@ const Page: React.FC = () => {
       setTimeout(() => setLoading(false), 1000);
     }
   };
-
+  const units = useMemo(() => {
+    const golden_era = filterUnits.golden_checked ? goldenUnits : [];
+    const heroic_era = filterUnits.heroic_checked ? heroicUnits : [];
+    const silver_era = filterUnits.silver_checked ? blueUnits : [];
+    const chivalric_era = filterUnits.chivalric_checked ? greenUnits : [];
+    const rustic_era = filterUnits.rustic_checked ? greyUnits : [];
+    const others_unit = filterUnits.other_checked ? others : [];
+    return [
+      ...golden_era,
+      ...heroic_era,
+      ...silver_era,
+      ...chivalric_era,
+      ...rustic_era,
+      ...others_unit,
+    ];
+  }, [
+    filterUnits.golden_checked,
+    filterUnits.heroic_checked,
+    filterUnits.silver_checked,
+    filterUnits.chivalric_checked,
+    filterUnits.rustic_checked,
+    filterUnits.other_checked,
+  ]);
   const kop_players_list = useMemo(() => {
     if (!surveys || !signup) return [];
     const lineup_ko = getLineup(surveys, signup?.lineup_2 ?? []);
@@ -143,14 +172,74 @@ const Page: React.FC = () => {
     return [
       lineupFilterErebus.raid_1 ? lineup_raid_1 : [],
       lineupFilterErebus.raid_2 ? lineup_raid_2 : [],
-    ];
+    ].filter(Array.isArray); // Ensure only arrays are returned
   }, [lineupFilterErebus.raid_1, lineupFilterErebus.raid_2]);
-  const all_players_list = [...kop_players_list, ...erebus_players_list].flat();
+
+  const all_players_list: SurveyProps[] = [
+    ...kop_players_list,
+    ...erebus_players_list,
+  ].flat();
   function handlerGetData() {
     fetchLineup(commander_house);
     fetchSurveys(commander_house);
     setNoData(false);
   }
+  const handleEdit = (
+    index: number,
+    username: string,
+    unit1: string,
+    unit2: string,
+    unit3: string,
+    weapon: string,
+    description: string,
+    color: string,
+    artillery: ArtilleryProps[]
+  ) => {
+    setSheetData((prev) =>
+      prev.map((item, i) =>
+        i === index
+          ? {
+              ...item,
+              username: username,
+              unit1: unit1,
+              unit2: unit2,
+              unit3: unit3,
+              weapon: weapon,
+              description: description,
+              color: color,
+              artillery: artillery,
+            }
+          : item
+      )
+    );
+  };
+  useEffect(() => {
+    setSheetData((prev) => {
+      const requiredLength = all_players_list.length + 20;
+      if (prev.length < requiredLength) {
+        const newCards = Array.from(
+          { length: requiredLength - prev.length },
+          () => DEFAULT_CARD
+        );
+        return [...prev, ...newCards];
+      } else if (prev.length > requiredLength) {
+        return prev.slice(0, requiredLength);
+      }
+      return prev;
+    });
+  }, [all_players_list.length, surveys]);
+  useEffect(() => {
+    setUserList(
+      all_players_list.filter(
+        (user) =>
+          !sheetData.some(
+            (input) =>
+              user.inGameNick.toLocaleLowerCase() ===
+              input.username.toLocaleLowerCase()
+          )
+      )
+    );
+  }, [JSON.stringify(sheetData)]);
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -306,24 +395,46 @@ const Page: React.FC = () => {
         ) : null}
       </Accordion>
       <div className="flex flex-wrap gap-2 p-4">
-        {all_players_list.map((survey) =>
-          survey ? (
-            <div key={survey.discordId}>
-              <UserProfile player={survey}>
-                <Badge
-                  variant="secondary"
-                  className={clsx("cursor-pointer", {
-                    "bg-red-800 text-white hover:text-black dark:hover:text-white":
-                      userList.some((e) => e.discordId === survey.discordId),
-                  })}
-                >
-                  {survey.inGameNick}
-                </Badge>
-              </UserProfile>
-            </div>
-          ) : null
-        )}
+        {all_players_list.map((survey) => (
+          <div key={survey.discordId}>
+            <UserProfile player={survey}>
+              <Badge
+                variant="secondary"
+                className={clsx({
+                  "bg-red-800 text-white hover:text-black dark:hover:text-white":
+                    !userList.some((e) => e.discordId === survey.discordId),
+                })}
+              >
+                {survey.inGameNick}
+              </Badge>
+            </UserProfile>
+          </div>
+        ))}
       </div>
+      <div className="flex justify-center gap-2">
+        <span className="text-yellow-500">Wymaksowana i Preferuje</span>
+        <span className="text-purple-500">Preferuje</span>
+        <span className="text-blue-500">Wymaksowana</span>
+        <span className="text-green-500">Mam</span>
+      </div>
+      <ul className="grid grid-cols-5 gap-8">
+        {sheetData.map((e, index) => (
+          <Item
+            users={userList}
+            weapons={weapons}
+            key={index}
+            index={index}
+            units={
+              filterUnits.meta_units_only
+                ? units.filter((e) => e.value > 7)
+                : units
+            }
+            data={e}
+            onEdit={handleEdit}
+          />
+        ))}
+      </ul>
+      <div className=" bg-red-700 bg-blue-700 bg-cyan-700 bg-neutral-700 bg-orange-700 bg-yellow-700 bg-lime-700 bg-teal-700 bg-sky-700 bg-indigo-700 bg-violet-700 bg-fuchsia-700 bg-rose-700 bg-slate-700 hidden from-red-700 from-blue-700 from-cyan-700 from-neutral-700 from-orange-700 from-yellow-700 from-lime-700 from-teal-700 from-sky-700 from-indigo-700 from-violet-700 from-fuchsia-700 from-rose-700 from-slate-700 border-red-700 border-blue-700 border-cyan-700 border-neutral-700 border-orange-700 border-yellow-700 border-lime-700 border-teal-700 border-sky-700 border-indigo-700 border-violet-700 border-fuchsia-700 border-rose-700 border-slate-700" />
     </div>
   );
 };
