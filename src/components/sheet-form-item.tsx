@@ -191,7 +191,7 @@ const Item = ({
       </span>
       <span>
         <Autocompleter
-          placeholder="Pierwsza Jednostka"
+          placeholder="1st Unit"
           value={data.unit1}
           user={user}
           units={units_user}
@@ -212,7 +212,7 @@ const Item = ({
       </span>
       <span>
         <Autocompleter
-          placeholder="Druga Jednostka"
+          placeholder="2nd Unit"
           value={data.unit2}
           user={user}
           units={units_user}
@@ -233,7 +233,7 @@ const Item = ({
       </span>
       <span>
         <Autocompleter
-          placeholder="Trzecia Jednostka"
+          placeholder="3rd Unit"
           value={data.unit3}
           user={user}
           units={units_user}
@@ -252,7 +252,7 @@ const Item = ({
           }
         />
       </span>
-      <span>{"Koszt Dowodzenia: " + (leadership ? leadership : 0)}</span>
+      <span>{"Leadership cost: " + (leadership ? leadership : 0)}</span>
 
       <span>
         <Autocompleter
@@ -277,7 +277,7 @@ const Item = ({
       <span>
         <Accordion type="single" collapsible>
           <AccordionItem value="item-1">
-            <AccordionTrigger>Artyleria</AccordionTrigger>
+            <AccordionTrigger>Artillery</AccordionTrigger>
             <AccordionContent>
               <div className="flex flex-wrap gap-2 justify-center">
                 {artillery.map((e) => (

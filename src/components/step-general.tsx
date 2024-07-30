@@ -38,7 +38,7 @@ const StepGeneral = ({
             name="discordNick"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-bold">Nick na Discordzie</FormLabel>
+                <FormLabel className="font-bold">Discord Nick</FormLabel>
                 <FormControl>
                   <Input {...field} required />
                 </FormControl>
@@ -50,7 +50,7 @@ const StepGeneral = ({
             name="inGameNick"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-bold">Nick w Grze</FormLabel>
+                <FormLabel className="font-bold">Nick in Game</FormLabel>
                 <FormControl>
                   <Input {...field} required />
                 </FormControl>
@@ -62,7 +62,7 @@ const StepGeneral = ({
             name="characterLevel"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-bold">Level Postaci</FormLabel>
+                <FormLabel className="font-bold">Hero Level</FormLabel>
                 <FormControl>
                   <Input {...field} min={1} type="number" />
                 </FormControl>
@@ -100,7 +100,9 @@ const StepGeneral = ({
             name="artyAmount"
             render={({ field }) => (
               <FormItem className="space-y-4">
-                <FormLabel className="font-bold text-md">Ilosc Arty</FormLabel>
+                <FormLabel className="font-bold text-md">
+                  Amount of Artillery
+                </FormLabel>
                 <RadioGroup
                   onValueChange={field.onChange}
                   defaultValue={field.value}
@@ -118,7 +120,7 @@ const StepGeneral = ({
                         }
                       )}
                     >
-                      Nie mam
+                      Not at all
                     </FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center">
@@ -133,7 +135,7 @@ const StepGeneral = ({
                         }
                       )}
                     >
-                      Malo
+                      Some
                     </FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center">
@@ -148,7 +150,7 @@ const StepGeneral = ({
                         }
                       )}
                     >
-                      Srednio
+                      Average
                     </FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center">
@@ -163,7 +165,7 @@ const StepGeneral = ({
                         }
                       )}
                     >
-                      Duzo
+                      A lot
                     </FormLabel>
                   </FormItem>
                 </RadioGroup>
@@ -176,15 +178,14 @@ const StepGeneral = ({
             <Tooltip>
               <TooltipTrigger type="button" className="flex items-center">
                 <>
-                  <h2 className="font-bold text-md">Broń i ilosc Dowodzenia</h2>
+                  <h2 className="font-bold text-md">Weapons</h2>
                   <Info className="h-5 hover:scale-110 ease-in-out duration-300" />
                 </>
               </TooltipTrigger>
               <TooltipContent>
                 <div>
-                  <p>Wybierajac Bronie,</p>
-                  <p>pod nimi pojawi nam sie pole do</p>
-                  <p> wpisania naszej ilosci dowodzenia na tym ekwipunku</p>
+                  <p>1 - I preffer</p>
+                  <p>4 - I can take, but preffer not</p>
                 </div>
               </TooltipContent>
             </Tooltip>

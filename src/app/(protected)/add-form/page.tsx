@@ -21,7 +21,7 @@ const Page: React.FC = () => {
       {discordId.length > 17 ? <WizardForm user_id={discordId} /> : null}
     </div>
   ) : (
-    <div className="flex justify-center my-56">Nie masz dostepu</div>
+    <div className="flex justify-center my-56">You have no access</div>
   );
 };
 export default Page;

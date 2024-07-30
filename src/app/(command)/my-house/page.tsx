@@ -21,8 +21,7 @@ const MyHousePage = () => {
   const commander_house = command_whitelist_kov.includes(
     commander?.user?.id ?? ""
   )
-    ? // ? "KingdomOfPoland" // Line commented for tests
-      ""
+    ? "KingdomOfPoland"
     : command_whitelist_erebus.includes(commander?.user?.id ?? "")
     ? "Erebus"
     : "";

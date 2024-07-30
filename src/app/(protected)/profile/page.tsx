@@ -97,19 +97,19 @@ export default function Component() {
               <TableHeader>
                 <TableRow>
                   <TableHead className="text-center px-0 text-yellow-500">
-                    Wymaksowana i Preferuje
+                    Maxed and Preffer
                   </TableHead>
                   <TableHead className="text-center px-0 text-purple-500">
-                    Preferuje
+                    Preffer
                   </TableHead>
                   <TableHead className="text-center px-0 text-blue-500">
-                    Wymaksowana
+                    Maxed
                   </TableHead>
                   <TableHead className="text-center px-0 text-green-500">
-                    Posiadam
+                    I have
                   </TableHead>
                   <TableHead className="text-center px-0 text-red-500">
-                    Nie posiadam
+                    I dont have
                   </TableHead>
                 </TableRow>
               </TableHeader>

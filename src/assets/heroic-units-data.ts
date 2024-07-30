@@ -371,7 +371,7 @@ export const heroicUnits = [
   },
   {
     id: 38,
-    name: "Nowa Kawaleria",
+    name: "Companion Cavalry",
     src: "/heroic-units/Kawaleria_towarzyszaca.webp",
     leadership: 205,
     masteryPoints: false,

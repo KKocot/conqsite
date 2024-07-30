@@ -88,7 +88,7 @@ const RadioComponent: FC<{
                   <Component
                     unitValue={field.value}
                     era={unitData.era}
-                    label="Nie mam"
+                    label="I dont have"
                     value="0"
                   />
                 </FormItem>
@@ -99,7 +99,7 @@ const RadioComponent: FC<{
                   <Component
                     unitValue={field.value}
                     era={unitData.era}
-                    label="Mam"
+                    label="I have"
                     value="1"
                   />
                 </FormItem>
@@ -110,7 +110,7 @@ const RadioComponent: FC<{
                   <Component
                     unitValue={field.value}
                     era={unitData.era}
-                    label="Wymaksowana"
+                    label="Maxed"
                     value="2"
                   />
                 </FormItem>
@@ -121,7 +121,7 @@ const RadioComponent: FC<{
                   <Component
                     unitValue={field.value}
                     era={unitData.era}
-                    label="Preferuje"
+                    label="Preffer"
                     value="3"
                   />
                 </FormItem>
@@ -132,7 +132,7 @@ const RadioComponent: FC<{
                   <Component
                     unitValue={field.value}
                     era={unitData.era}
-                    label="Wymaksowana i Preferuje"
+                    label="Maxed and Preffer"
                     value="4"
                   />
                 </FormItem>

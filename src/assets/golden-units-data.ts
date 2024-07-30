@@ -261,7 +261,7 @@ export const goldenUnits = [
   },
   {
     id: 27,
-    name: "Sunguard Fallangs",
+    name: "Sunward Phalanx",
     src: "/golden-units/Soneczna_falanga.webp",
     leadership: 290,
     masteryPoints: false,

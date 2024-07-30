@@ -26,6 +26,8 @@ import { goldenUnits } from "@/assets/golden-units-data";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
 import { others } from "@/assets/other-units-data";
+import Preview from "@/components/preview";
+import { useLocalStorage } from "usehooks-ts";
 
 // const next_tw = getCloserDay();
 const next_tw = "2024-07-27";
@@ -65,7 +67,8 @@ const Page: React.FC = () => {
   const [userList, setUserList] = useState<SurveyProps[]>([]);
   const [loading, setLoading] = useState(false);
   const [sheetData, setSheetData] = useState<SheetTypes[]>([]);
-
+  const [showPreview, setShowPreview] = useState(false);
+  const [storage, setStorage] = useLocalStorage<SheetTypes[]>(`sheetData`, []);
   const [filterUnits, setFilterUnits] = useState({
     rustic_checked: true,
     chivalric_checked: true,
@@ -86,8 +89,7 @@ const Page: React.FC = () => {
   const commander_house = command_whitelist_kov.includes(
     commander?.user?.id ?? ""
   )
-    ? // ? "KingdomOfPoland" // Line commented for tests
-      ""
+    ? "KingdomOfPoland"
     : command_whitelist_erebus.includes(commander?.user?.id ?? "")
     ? "Erebus"
     : "";
@@ -97,9 +99,8 @@ const Page: React.FC = () => {
       const response = await fetch(`/api/signup/${next_tw}`);
       const data = await response.json();
       const lineups =
-        house === ""
-          ? // house === "KingdomOfPoland"
-            {
+        house === "KingdomOfPoland"
+          ? {
               lineup_2: data.signup.lineup_2,
               lineup_3: data.signup.lineup_3,
             }
@@ -244,178 +245,214 @@ const Page: React.FC = () => {
       <Button onClick={() => handlerGetData()}>Load data</Button>
     </div>
   ) : (
-    <div className="flex flex-col gap-5 p-2">
-      <Accordion type="single" collapsible>
-        <AccordionItem value="item-1">
-          <AccordionTrigger className="px-6">Units</AccordionTrigger>
-          <AccordionContent className="flex justify-around p-2 flex-wrap">
-            <CheckboxItem
-              checked={filterUnits.meta_units_only}
-              label="Tylko meta jednostki"
-              onChange={() =>
-                setFilterUnits((prev) => ({
-                  ...prev,
-                  meta_units_only: !prev.meta_units_only,
-                }))
-              }
-            />
-            <CheckboxItem
-              checked={filterUnits.golden_checked}
-              label="Epoka Złota"
-              onChange={() =>
-                setFilterUnits((prev) => ({
-                  ...prev,
-                  golden_checked: !prev.golden_checked,
-                }))
-              }
-            />
-            <CheckboxItem
-              checked={filterUnits.heroic_checked}
-              label="Epoka Heroiczna"
-              onChange={() =>
-                setFilterUnits((prev) => ({
-                  ...prev,
-                  heroic_checked: !prev.heroic_checked,
-                }))
-              }
-            />
-            <CheckboxItem
-              checked={filterUnits.silver_checked}
-              label="Epoka Srebrna"
-              onChange={() =>
-                setFilterUnits((prev) => ({
-                  ...prev,
-                  silver_checked: !prev.silver_checked,
-                }))
-              }
-            />
-            <CheckboxItem
-              checked={filterUnits.chivalric_checked}
-              label="Epoka Rycerska"
-              onChange={() =>
-                setFilterUnits((prev) => ({
-                  ...prev,
-                  chivalric_checked: !prev.chivalric_checked,
-                }))
-              }
-            />
-            <CheckboxItem
-              checked={filterUnits.rustic_checked}
-              label="Epoka Feudalna i Rustykalna"
-              onChange={() =>
-                setFilterUnits((prev) => ({
-                  ...prev,
-                  rustic_checked: !prev.rustic_checked,
-                }))
-              }
-            />
-            <CheckboxItem
-              checked={filterUnits.other_checked}
-              label="Ogolne"
-              onChange={() =>
-                setFilterUnits((prev) => ({
-                  ...prev,
-                  other_checked: !prev.other_checked,
-                }))
-              }
-            />
-          </AccordionContent>
-        </AccordionItem>
-        {commander_house === "" ? (
-          // commander_house === "KingdomOfPoland"
-          <AccordionItem value="item-2">
-            <AccordionTrigger className="px-6">Lineup</AccordionTrigger>
-            <AccordionContent className="flex justify-around p-2 flex-wrap">
-              <CheckboxItem
-                checked={lineupFilterKoP.ko_checked}
-                label="King's Order"
-                onChange={() =>
-                  setLineupFilterKoP((prev) => ({
-                    ...prev,
-                    ko_checked: !prev.ko_checked,
-                  }))
-                }
-              />
-              <CheckboxItem
-                checked={lineupFilterKoP.kt_checked}
-                label="Królewska Tarcza"
-                onChange={() =>
-                  setLineupFilterKoP((prev) => ({
-                    ...prev,
-                    kt_checked: !prev.kt_checked,
-                  }))
-                }
-              />
-            </AccordionContent>
-          </AccordionItem>
-        ) : commander_house === "Erebus" ? (
-          <AccordionItem value="item-3">
-            <AccordionTrigger className="px-6">Lineup</AccordionTrigger>
-            <AccordionContent className="flex justify-around p-2 flex-wrap">
-              <CheckboxItem
-                checked={lineupFilterErebus.raid_1}
-                label="Raid 1"
-                onChange={() =>
-                  setLineupFilterErebus((prev) => ({
-                    ...prev,
-                    raid_1: !prev.raid_1,
-                  }))
-                }
-              />
-              <CheckboxItem
-                checked={lineupFilterErebus.raid_2}
-                label="Raid 2"
-                onChange={() =>
-                  setLineupFilterErebus((prev) => ({
-                    ...prev,
-                    raid_2: !prev.raid_2,
-                  }))
-                }
-              />
-            </AccordionContent>
-          </AccordionItem>
-        ) : null}
-      </Accordion>
-      <div className="flex flex-wrap gap-2 p-4">
-        {all_players_list.map((survey) => (
-          <div key={survey.discordId}>
-            <UserProfile player={survey}>
-              <Badge
-                variant="secondary"
-                className={clsx({
-                  "bg-red-800 text-white hover:text-black dark:hover:text-white":
-                    !userList.some((e) => e.discordId === survey.discordId),
-                })}
-              >
-                {survey.inGameNick}
-              </Badge>
-            </UserProfile>
-          </div>
-        ))}
-      </div>
-      <div className="flex justify-center gap-2">
-        <span className="text-yellow-500">Wymaksowana i Preferuje</span>
-        <span className="text-purple-500">Preferuje</span>
-        <span className="text-blue-500">Wymaksowana</span>
-        <span className="text-green-500">Mam</span>
-      </div>
-      <ul className="grid grid-cols-5 gap-8">
-        {sheetData.map((e, index) => (
-          <Item
-            users={userList}
-            weapons={weapons}
-            key={index}
-            index={index}
-            units={
-              filterUnits.meta_units_only
-                ? units.filter((e) => e.value > 7)
-                : units
+    <div>
+      <div className="flex p-4 items-center justify-around">
+        <Button onClick={() => setShowPreview(!showPreview)}>
+          {showPreview ? "Edytor" : "Podglad"}
+        </Button>
+        <div className="flex justify-center gap-4">
+          <Button
+            size="sm"
+            onClick={() => setStorage(sheetData)}
+            variant="success"
+          >
+            Save Template
+          </Button>
+          <Button size="sm" onClick={() => setSheetData(storage)}>
+            Load Template
+          </Button>
+          <Button
+            size="sm"
+            variant="destructive"
+            onClick={() =>
+              setSheetData(() => {
+                const requiredLength = all_players_list.length + 10;
+                return Array.from(
+                  { length: requiredLength },
+                  () => DEFAULT_CARD
+                );
+              })
             }
-            data={e}
-            onEdit={handleEdit}
-          />
-        ))}
-      </ul>
+          >
+            Clean sheet
+          </Button>
+        </div>
+      </div>
+      <div className={clsx("flex flex-col gap-5 p-2", { hidden: showPreview })}>
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="px-6">Units</AccordionTrigger>
+            <AccordionContent className="flex justify-around p-2 flex-wrap">
+              <CheckboxItem
+                checked={filterUnits.meta_units_only}
+                label="Tylko meta jednostki"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    meta_units_only: !prev.meta_units_only,
+                  }))
+                }
+              />
+              <CheckboxItem
+                checked={filterUnits.golden_checked}
+                label="Epoka Złota"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    golden_checked: !prev.golden_checked,
+                  }))
+                }
+              />
+              <CheckboxItem
+                checked={filterUnits.heroic_checked}
+                label="Epoka Heroiczna"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    heroic_checked: !prev.heroic_checked,
+                  }))
+                }
+              />
+              <CheckboxItem
+                checked={filterUnits.silver_checked}
+                label="Epoka Srebrna"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    silver_checked: !prev.silver_checked,
+                  }))
+                }
+              />
+              <CheckboxItem
+                checked={filterUnits.chivalric_checked}
+                label="Epoka Rycerska"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    chivalric_checked: !prev.chivalric_checked,
+                  }))
+                }
+              />
+              <CheckboxItem
+                checked={filterUnits.rustic_checked}
+                label="Epoka Feudalna i Rustykalna"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    rustic_checked: !prev.rustic_checked,
+                  }))
+                }
+              />
+              <CheckboxItem
+                checked={filterUnits.other_checked}
+                label="Ogolne"
+                onChange={() =>
+                  setFilterUnits((prev) => ({
+                    ...prev,
+                    other_checked: !prev.other_checked,
+                  }))
+                }
+              />
+            </AccordionContent>
+          </AccordionItem>
+          {commander_house === "KingdomOfPoland" ? (
+            <AccordionItem value="item-2">
+              <AccordionTrigger className="px-6">Lineup</AccordionTrigger>
+              <AccordionContent className="flex justify-around p-2 flex-wrap">
+                <CheckboxItem
+                  checked={lineupFilterKoP.ko_checked}
+                  label="King's Order"
+                  onChange={() =>
+                    setLineupFilterKoP((prev) => ({
+                      ...prev,
+                      ko_checked: !prev.ko_checked,
+                    }))
+                  }
+                />
+                <CheckboxItem
+                  checked={lineupFilterKoP.kt_checked}
+                  label="Królewska Tarcza"
+                  onChange={() =>
+                    setLineupFilterKoP((prev) => ({
+                      ...prev,
+                      kt_checked: !prev.kt_checked,
+                    }))
+                  }
+                />
+              </AccordionContent>
+            </AccordionItem>
+          ) : commander_house === "Erebus" ? (
+            <AccordionItem value="item-3">
+              <AccordionTrigger className="px-6">Lineup</AccordionTrigger>
+              <AccordionContent className="flex justify-around p-2 flex-wrap">
+                <CheckboxItem
+                  checked={lineupFilterErebus.raid_1}
+                  label="Raid 1"
+                  onChange={() =>
+                    setLineupFilterErebus((prev) => ({
+                      ...prev,
+                      raid_1: !prev.raid_1,
+                    }))
+                  }
+                />
+                <CheckboxItem
+                  checked={lineupFilterErebus.raid_2}
+                  label="Raid 2"
+                  onChange={() =>
+                    setLineupFilterErebus((prev) => ({
+                      ...prev,
+                      raid_2: !prev.raid_2,
+                    }))
+                  }
+                />
+              </AccordionContent>
+            </AccordionItem>
+          ) : null}
+        </Accordion>
+        <div className="flex flex-wrap gap-2 p-4">
+          {all_players_list.map((survey) => (
+            <div key={survey.discordId}>
+              <UserProfile player={survey}>
+                <Badge
+                  variant="secondary"
+                  className={clsx({
+                    "bg-red-800 text-white hover:text-black dark:hover:text-white":
+                      !userList.some((e) => e.discordId === survey.discordId),
+                  })}
+                >
+                  {survey.inGameNick}
+                </Badge>
+              </UserProfile>
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-center gap-2">
+          <span className="text-yellow-500">Maxed and Preffer</span>
+          <span className="text-purple-500">Preffer</span>
+          <span className="text-blue-500">Maxed</span>
+          <span className="text-green-500">I have</span>
+        </div>
+        <ul className="grid grid-cols-5 gap-8">
+          {sheetData.map((e, index) => (
+            <Item
+              users={userList}
+              weapons={weapons}
+              key={index}
+              index={index}
+              units={
+                filterUnits.meta_units_only
+                  ? units.filter((e) => e.value > 7)
+                  : units
+              }
+              data={e}
+              onEdit={handleEdit}
+            />
+          ))}
+        </ul>
+      </div>
+      <div className={clsx({ hidden: !showPreview })}>
+        <Preview data={sheetData} units={units} />
+      </div>
       <div className=" bg-red-700 bg-blue-700 bg-cyan-700 bg-neutral-700 bg-orange-700 bg-yellow-700 bg-lime-700 bg-teal-700 bg-sky-700 bg-indigo-700 bg-violet-700 bg-fuchsia-700 bg-rose-700 bg-slate-700 hidden from-red-700 from-blue-700 from-cyan-700 from-neutral-700 from-orange-700 from-yellow-700 from-lime-700 from-teal-700 from-sky-700 from-indigo-700 from-violet-700 from-fuchsia-700 from-rose-700 from-slate-700 border-red-700 border-blue-700 border-cyan-700 border-neutral-700 border-orange-700 border-yellow-700 border-lime-700 border-teal-700 border-sky-700 border-indigo-700 border-violet-700 border-fuchsia-700 border-rose-700 border-slate-700" />
     </div>
   );

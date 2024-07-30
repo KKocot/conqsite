@@ -36,12 +36,12 @@ export default function Navbar() {
                 className="cursor-pointer text-red-700"
                 onClick={() => signOut()}
               >
-                Wyloguj sie
+                Logout
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Button onClick={() => signIn("discord")}>Zaloguj sie</Button>
+          <Button onClick={() => signIn("discord")}>Login</Button>
         )}
         <ModeToggle />
       </div>

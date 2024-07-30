@@ -611,13 +611,13 @@ export const lowUnits = [
   },
   {
     id: 62,
-    name: "Procarze",
+    name: "Psiloi Slingers",
     src: "/low-tiers-units/Psiloi_Slingers.webp",
     leadership: 100,
     masteryPoints: false,
     value: 5,
     era: "blue",
-    icon: "/low-tiers-icons/Psiloi_Slingers_icon.webp",
+    icon: "/low-tiers-icons/Psiloi_Slingers_icon.png",
   },
 ];
 
