@@ -35,9 +35,9 @@ const Preview = ({ data, units }: { data: SheetTypes[]; units: Unit[] }) => {
             <TableHead className="w-2">
               {show ? "Trzecia Jednostka" : "3"}
             </TableHead>
-            <TableHead className="w-[10px] text-center">Bron</TableHead>
-            <TableHead className="w-[180px] text-center">Artyleria</TableHead>
-            <TableHead>Opis</TableHead>
+            <TableHead className="w-[10px] text-center">Weapon</TableHead>
+            <TableHead className="w-[180px] text-center">Artillery</TableHead>
+            <TableHead>Description</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

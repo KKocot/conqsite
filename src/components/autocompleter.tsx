@@ -93,10 +93,10 @@ export function Autocompleter({
         {unit ? (
           <span
             className={clsx("p-1", {
-              "bg-yellow-800": user_preferences?.value === "3",
-              "bg-purple-800": user_preferences?.value === "2",
-              "bg-blue-800": user_preferences?.value === "1",
-              "bg-red-800": user_preferences?.value === "0",
+              "bg-yellow-800": user_preferences?.value === "4",
+              "bg-purple-800": user_preferences?.value === "3",
+              "bg-blue-800": user_preferences?.value === "2",
+              "bg-green-800": user_preferences?.value === "1",
             })}
           >
             {unit.leadership}
@@ -122,10 +122,12 @@ export function Autocompleter({
                           "w-56 px-2 py-1 flex items-center gap-2 hover:bg-slate-600 dark:bg-slate-800 bg-slate-300",
                           {
                             "to-40% bg-gradient-to-r from-yellow-700 dark:to-slate-800 to-slate-300 hover:to-yellow-700":
-                              item.pref === "3",
+                              item.pref === "4",
                             "to-40% bg-gradient-to-r from-purple-700 dark:to-slate-800 to-slate-300 hover:to-purple-700":
-                              item.pref === "2",
+                              item.pref === "3",
                             "to-40% bg-gradient-to-r from-blue-700 dark:to-slate-800 to-slate-300 hover:to-blue-700":
+                              item.pref === "2",
+                            "to-40% bg-gradient-to-r from-green-700 dark:to-slate-800 to-slate-300 hover:to-green-700":
                               item.pref === "1",
                           }
                         )}

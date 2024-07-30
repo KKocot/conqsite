@@ -32,28 +32,16 @@ export default function Navbar() {
               />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>Moje konto</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Link className="w-full" href={`/profile/${data.user.id}`}>
-                  Profil
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link className="w-full" href="/form">
-                  Formularz
-                </Link>
-              </DropdownMenuItem>
               <DropdownMenuItem
                 className="cursor-pointer text-red-700"
                 onClick={() => signOut()}
               >
-                Wyloguj sie
+                Logout
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Button onClick={() => signIn("discord")}>Zaloguj sie</Button>
+          <Button onClick={() => signIn("discord")}>Login</Button>
         )}
         <ModeToggle />
       </div>

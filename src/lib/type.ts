@@ -8,37 +8,18 @@ export interface ItemProps {
 }
 
 export interface SurveyProps {
+  _id?: string;
   discordNick: string;
   inGameNick: string;
   discordId: string;
   characterLevel: string;
+  house: string;
   artyAmount: "none" | "some" | "average" | "aLot";
-
-  weapons: [
-    {
-      value: Boolean;
-      leadership: number;
-    }
-  ];
+  weapons: { value: boolean; leadership: number; pref?: number }[];
   units: {
-    low: [
-      {
-        id: number;
-        value: string;
-      }
-    ];
-    heroic: [
-      {
-        id: number;
-        value: string;
-      }
-    ];
-    golden: [
-      {
-        id: number;
-        value: string;
-      }
-    ];
+    low: { id: number; value: string }[];
+    heroic: { id: number; value: string }[];
+    golden: { id: number; value: string }[];
   };
 }
 

@@ -134,7 +134,7 @@ const Item = ({
   ];
   return (
     <li
-      className={` grid grid-cols-14 border-4  p-2 rounded-2xl gap-2 w-56 mx-auto border${data.color}`}
+      className={`grid grid-cols-14 border-4 p-2 rounded-2xl gap-2 w-56 mx-auto border${data.color}`}
     >
       <span className="flex flex-wrap gap-2">
         {user
@@ -145,8 +145,25 @@ const Item = ({
                   className="flex flex-col items-center justify-around"
                   title={weapon.name}
                 >
-                  <img src={weapon.src} className="rounded-full h-5" />
-                  <span>{user.weapons[index].leadership}</span>
+                  <img
+                    src={weapon.src}
+                    className={clsx("rounded-full h-5 shadow-md", {
+                      "shadow-yellow-500": user.weapons[index].pref === 4,
+                      "border-purple-500": user.weapons[index].pref === 3,
+                      "border-blue-500": user.weapons[index].pref === 2,
+                      "border-green-500": user.weapons[index].pref === 1,
+                    })}
+                  />
+                  <span
+                    className={clsx({
+                      "text-yellow-500": user.weapons[index].pref === 4,
+                      "text-purple-500": user.weapons[index].pref === 3,
+                      "text-blue-500": user.weapons[index].pref === 2,
+                      "text-green-500": user.weapons[index].pref === 1,
+                    })}
+                  >
+                    {user.weapons[index].leadership}
+                  </span>
                 </span>
               ) : null
             )
@@ -174,7 +191,7 @@ const Item = ({
       </span>
       <span>
         <Autocompleter
-          placeholder="Pierwsza Jednostka"
+          placeholder="1st Unit"
           value={data.unit1}
           user={user}
           units={units_user}
@@ -195,7 +212,7 @@ const Item = ({
       </span>
       <span>
         <Autocompleter
-          placeholder="Druga Jednostka"
+          placeholder="2nd Unit"
           value={data.unit2}
           user={user}
           units={units_user}
@@ -216,7 +233,7 @@ const Item = ({
       </span>
       <span>
         <Autocompleter
-          placeholder="Trzecia Jednostka"
+          placeholder="3rd Unit"
           value={data.unit3}
           user={user}
           units={units_user}
@@ -235,7 +252,7 @@ const Item = ({
           }
         />
       </span>
-      <span>{"Koszt Dowodzenia: " + (leadership ? leadership : 0)}</span>
+      <span>{"Leadership cost: " + (leadership ? leadership : 0)}</span>
 
       <span>
         <Autocompleter
@@ -260,7 +277,7 @@ const Item = ({
       <span>
         <Accordion type="single" collapsible>
           <AccordionItem value="item-1">
-            <AccordionTrigger>Artyleria</AccordionTrigger>
+            <AccordionTrigger>Artillery</AccordionTrigger>
             <AccordionContent>
               <div className="flex flex-wrap gap-2 justify-center">
                 {artillery.map((e) => (

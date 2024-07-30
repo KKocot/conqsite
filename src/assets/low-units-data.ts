@@ -609,4 +609,18 @@ export const lowUnits = [
     era: "blue",
     icon: "/low-tiers-icons/Caradocs_Cavalry.webp",
   },
+  {
+    id: 62,
+    name: "Psiloi Slingers",
+    src: "/low-tiers-units/Psiloi_Slingers.webp",
+    leadership: 100,
+    masteryPoints: false,
+    value: 5,
+    era: "blue",
+    icon: "/low-tiers-icons/Psiloi_Slingers_icon.png",
+  },
 ];
+
+export const blueUnits = lowUnits.filter((unit) => unit.era === "blue");
+export const greenUnits = lowUnits.filter((unit) => unit.era === "green");
+export const greyUnits = lowUnits.filter((unit) => unit.era === "grey");

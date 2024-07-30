@@ -17,17 +17,21 @@ type FormColData = {
 const FormCol = ({
   data,
   controller,
+  moveToStep,
+  step,
 }: {
   data: FormColData[];
   controller: any;
+  moveToStep: (step: number) => void;
+  step: number;
 }) => {
   const [showMore, setShowMore] = useState(false);
   const sortedUnitData = showMore ? data : data.filter((e) => e.value > 7);
   const sortedData = sortedUnitData.sort((a, b) => b.value - a.value);
   return (
-    <div className="sm:overflow-y-scroll flex flex-col items-center h-full w-72 relative">
+    <div className="flex flex-wrap sm:shadow-gray-600 sm:shadow-lg p-4 gap-4 justify-center">
       {sortedData.map((e) => (
-        <div key={e.id} className="w-full">
+        <div key={e.id + e.name} className="w-[270px]">
           <h2
             className={clsx("text-lg font-medium text-center", {
               "bg-gradient-to-r from-yellow-300 to-yellow-800":
@@ -43,20 +47,38 @@ const FormCol = ({
           </h2>
           <div className="items-center grid grid-cols-2">
             <div className="flex justify-center">
-              <img className="h-32" src={e.src} />
+              <img className="h-40" src={e.src} />
             </div>
             <RadioComponent unitData={e} controller={controller} />
           </div>
         </div>
       ))}
       <Button
-        className="sticky bottom-0 w-full"
+        className="sticky bottom-0 w-full bg-gray-300 dark:bg-slate-800 font-bold text-xl items-center"
         type="button"
         variant="secondary"
         onClick={() => setShowMore((prev) => !prev)}
       >
-        {showMore ? "Pokaż mniej" : "Pokaz wiecej"}
+        {showMore ? "Show meta units only" : "Show all units"}
       </Button>
+      <div className="flex w-full gap-4">
+        <Button
+          type="button"
+          onClick={() => moveToStep(step - 1)}
+          disabled={step === 1}
+          className="w-1/2"
+        >
+          Prev
+        </Button>
+
+        <Button
+          type="button"
+          onClick={() => moveToStep(step + 1)}
+          className="w-1/2"
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
 };
