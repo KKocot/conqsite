@@ -62,7 +62,7 @@ const Page: React.FC = () => {
   const [signup, setSignup] = useState<any>(null);
   const [surveys, setSurveys] = useState<SurveyProps[]>();
   const [noData, setNoData] = useState(true);
-  const [userList, setUserList] = useState<SurveyProps[]>([]); //table
+  const [userList, setUserList] = useState<SurveyProps[]>([]);
   const [loading, setLoading] = useState(false);
   const [sheetData, setSheetData] = useState<SheetTypes[]>([]);
 
@@ -78,7 +78,6 @@ const Page: React.FC = () => {
   const [lineupFilterKoP, setLineupFilterKoP] = useState({
     ko_checked: false,
     kt_checked: false,
-    zp_checked: false,
   });
   const [lineupFilterErebus, setLineupFilterErebus] = useState({
     raid_1: false,
@@ -103,10 +102,9 @@ const Page: React.FC = () => {
             {
               lineup_2: data.signup.lineup_2,
               lineup_3: data.signup.lineup_3,
-              lineup_4: data.signup.lineup_4,
             }
           : house === "Erebus"
-          ? { lineup_1: data.signup.lineup_1 }
+          ? { lineup_4: data.signup.lineup_4, lineup_5: data.signup.lineup_5 }
           : null;
       setSignup(lineups);
     } catch (error) {
@@ -154,21 +152,15 @@ const Page: React.FC = () => {
     if (!surveys || !signup) return [];
     const lineup_ko = getLineup(surveys, signup?.lineup_2 ?? []);
     const lineup_kt = getLineup(surveys, signup?.lineup_3 ?? []);
-    const lineup_zp = getLineup(surveys, signup?.lineup_4 ?? []);
     return [
       lineupFilterKoP.ko_checked ? lineup_ko : [],
       lineupFilterKoP.kt_checked ? lineup_kt : [],
-      lineupFilterKoP.zp_checked ? lineup_zp : [],
     ];
-  }, [
-    lineupFilterKoP.ko_checked,
-    lineupFilterKoP.kt_checked,
-    lineupFilterKoP.zp_checked,
-  ]);
+  }, [lineupFilterKoP.ko_checked, lineupFilterKoP.kt_checked]);
   const erebus_players_list = useMemo(() => {
     if (!surveys || !signup) return [];
-    const lineup_raid_1 = getLineup(surveys, signup?.lineup_1 ?? []);
-    const lineup_raid_2 = getLineup(surveys, signup?.lineup_2 ?? []);
+    const lineup_raid_1 = getLineup(surveys, signup?.lineup_4 ?? []);
+    const lineup_raid_2 = getLineup(surveys, signup?.lineup_5 ?? []);
     return [
       lineupFilterErebus.raid_1 ? lineup_raid_1 : [],
       lineupFilterErebus.raid_2 ? lineup_raid_2 : [],
@@ -215,7 +207,7 @@ const Page: React.FC = () => {
   };
   useEffect(() => {
     setSheetData((prev) => {
-      const requiredLength = all_players_list.length + 20;
+      const requiredLength = all_players_list.length + 10;
       if (prev.length < requiredLength) {
         const newCards = Array.from(
           { length: requiredLength - prev.length },
@@ -351,16 +343,6 @@ const Page: React.FC = () => {
                   setLineupFilterKoP((prev) => ({
                     ...prev,
                     kt_checked: !prev.kt_checked,
-                  }))
-                }
-              />
-              <CheckboxItem
-                checked={lineupFilterKoP.zp_checked}
-                label="Zielona Piechota"
-                onChange={() =>
-                  setLineupFilterKoP((prev) => ({
-                    ...prev,
-                    zp_checked: !prev.zp_checked,
                   }))
                 }
               />
