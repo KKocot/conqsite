@@ -33,10 +33,7 @@ export default function WizardForm({ user_id }: { user_id: string }) {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [storage, setStorage] = useLocalStorage("MyForm", DEFAULT_FORM_DATA);
-  const [unitForm, setUnitForm] = useState<SurveyProps>({
-    ...DEFAULT_FORM_DATA,
-    discordId: user_id,
-  });
+  const [unitForm, setUnitForm] = useState<SurveyProps>(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
 
   interface Unit {
@@ -95,7 +92,11 @@ export default function WizardForm({ user_id }: { user_id: string }) {
     try {
       const response = await fetch(`/api/survey/${user_id}`);
       const data = await response.json();
-      setUnitForm(data.survey);
+      setUnitForm(
+        data.survey === null
+          ? { ...DEFAULT_FORM_DATA, discordId: user_id }
+          : data.survey
+      );
     } catch (error) {
       console.error("Error fetching:", error);
     } finally {
@@ -113,7 +114,7 @@ export default function WizardForm({ user_id }: { user_id: string }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, discordId: user_id }),
       });
 
       if (!response.ok) {
