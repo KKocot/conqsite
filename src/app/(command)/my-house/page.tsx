@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { UserProfile } from "@/components/user-profile";
 import { SurveyProps } from "@/lib/type";
+import clsx from "clsx";
 import { useSession } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
 import Loading from "react-loading";
@@ -18,13 +19,13 @@ const MyHousePage = () => {
   const [surveys, setSurveys] = useState<SurveyProps[]>();
   const [inputQuery, setInputQuery] = useState<string>("");
 
-  const commander_house = command_whitelist_kov.includes(
-    commander?.user?.id ?? ""
-  )
-    ? "KingdomOfPoland"
-    : command_whitelist_erebus.includes(commander?.user?.id ?? "")
-    ? "Erebus"
-    : "";
+  const commander_house = commander?.user?.id
+    ? command_whitelist_kov.includes(commander?.user?.id)
+      ? "KingdomOfPoland"
+      : command_whitelist_erebus.includes(commander?.user?.id)
+      ? "Erebus"
+      : ""
+    : null;
 
   const fetchSurveys = async (house: string) => {
     setLoading(true);
@@ -40,19 +41,23 @@ const MyHousePage = () => {
   };
   const filtredSurveys = useMemo(
     () =>
-      surveys?.filter((value) => {
-        const searchWord = inputQuery.toLowerCase();
-        const countryName = value.inGameNick.toLowerCase();
-        if (countryName.includes(searchWord)) {
-          return true;
-        }
-        return false;
-      }),
+      surveys
+        ?.sort((a, b) => Number(a.characterLevel) - Number(b.characterLevel))
+        .reverse()
+        .filter((value) => {
+          const searchWord = inputQuery.toLowerCase();
+          const countryName = value.inGameNick.toLowerCase();
+          if (countryName.includes(searchWord)) {
+            return true;
+          }
+          return false;
+        }),
     [inputQuery, JSON.stringify(surveys)]
   );
   useEffect(() => {
-    fetchSurveys(commander_house);
+    if (commander_house !== null) fetchSurveys(commander_house);
   }, [commander?.user.id]);
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -66,16 +71,29 @@ const MyHousePage = () => {
       <h1 className="text-5xl font-bold text-center py-10">
         {commander_house}
       </h1>
-      <Input
-        className="mx-4"
-        onChange={(e) => setInputQuery(e.target.value)}
-        value={inputQuery}
-      />
+      <div>
+        <Input
+          className="mx-4"
+          onChange={(e) => setInputQuery(e.target.value)}
+          value={inputQuery}
+        />
+      </div>
       <div className="flex gap-4 p-4 flex-wrap">
         {filtredSurveys?.map((e) => (
           <div key={e.discordId}>
             <UserProfile player={e}>
-              <Badge className="cursor-pointer text-md p-2 hover:bg-destructive">
+              <Badge
+                className={clsx(
+                  "cursor-pointer text-md p-2 hover:bg-destructive",
+                  {
+                    "bg-red-500": Number(e.characterLevel) <= 500,
+                    "bg-green-500": Number(e.characterLevel) > 500,
+                    "bg-blue-500": Number(e.characterLevel) > 1000,
+                    "bg-purple-500": Number(e.characterLevel) > 2000,
+                    "bg-yellow-500": Number(e.characterLevel) > 3000,
+                  }
+                )}
+              >
                 {e.inGameNick}
               </Badge>
             </UserProfile>
