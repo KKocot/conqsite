@@ -153,18 +153,18 @@ const Item = ({
                   <img
                     src={weapon.src}
                     className={clsx("rounded-full h-5 shadow-md", {
-                      "shadow-yellow-500": user.weapons[index].pref === 4,
-                      "border-purple-500": user.weapons[index].pref === 3,
-                      "border-blue-500": user.weapons[index].pref === 2,
-                      "border-green-500": user.weapons[index].pref === 1,
+                      "shadow-yellow-500": user.weapons[index].pref === 1,
+                      "shadow-purple-500": user.weapons[index].pref === 2,
+                      "shadow-blue-500": user.weapons[index].pref === 3,
+                      "shadow-green-500": user.weapons[index].pref === 4,
                     })}
                   />
                   <span
                     className={clsx({
-                      "text-yellow-500": user.weapons[index].pref === 4,
-                      "text-purple-500": user.weapons[index].pref === 3,
-                      "text-blue-500": user.weapons[index].pref === 2,
-                      "text-green-500": user.weapons[index].pref === 1,
+                      "text-yellow-500": user.weapons[index].pref === 1,
+                      "text-purple-500": user.weapons[index].pref === 2,
+                      "text-blue-500": user.weapons[index].pref === 3,
+                      "text-green-500": user.weapons[index].pref === 4,
                     })}
                   >
                     {user.weapons[index].leadership}
