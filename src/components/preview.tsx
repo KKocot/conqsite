@@ -12,32 +12,33 @@ import { SheetTypes, Unit } from "@/lib/type";
 import { weapons } from "@/assets/weapons";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 const Preview = ({ data, units }: { data: SheetTypes[]; units: Unit[] }) => {
   const [show, setShow] = useState<boolean>(true);
+  const t = useTranslations("BuildTeam");
+
   return (
     <div>
       <div className="flex justify-around">
         <Button size="sm" onClick={() => setShow((prev) => !prev)}>
-          {show ? "Ukryj nazwy" : "Pokaż nazwy"}
+          {show ? t("hide_names") : t("show_names")}
         </Button>
       </div>
       <Table className="my-12">
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Nick</TableHead>
-            <TableHead className="w-2">
-              {show ? "Pierwsza Jednostka" : "1"}
+            <TableHead className="w-[100px]">{t("username")}</TableHead>
+            <TableHead className="w-2">{show ? t("1st_unit") : "1"}</TableHead>
+            <TableHead className="w-2">{show ? t("2nd_unit") : "2"}</TableHead>
+            <TableHead className="w-2">{show ? t("3rd_unit") : "3"}</TableHead>
+            <TableHead className="w-[10px] text-center">
+              {t("weapon")}
             </TableHead>
-            <TableHead className="w-2">
-              {show ? "Druga Jednostka" : "2"}
+            <TableHead className="w-[180px] text-center">
+              {t("artillery")}
             </TableHead>
-            <TableHead className="w-2">
-              {show ? "Trzecia Jednostka" : "3"}
-            </TableHead>
-            <TableHead className="w-[10px] text-center">Weapon</TableHead>
-            <TableHead className="w-[180px] text-center">Artillery</TableHead>
-            <TableHead>Description</TableHead>
+            <TableHead>{t("description")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

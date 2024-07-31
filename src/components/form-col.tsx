@@ -2,6 +2,7 @@ import { useState } from "react";
 import clsx from "clsx";
 import { Button } from "./ui/button";
 import RadioComponent from "./radio-component";
+import { useTranslations } from "next-intl";
 
 type FormColData = {
   id: number;
@@ -25,6 +26,7 @@ const FormCol = ({
   moveToStep: (step: number) => void;
   step: number;
 }) => {
+  const t = useTranslations("AddForm");
   const [showMore, setShowMore] = useState(false);
   const sortedUnitData = showMore ? data : data.filter((e) => e.value > 7);
   const sortedData = sortedUnitData.sort((a, b) => b.value - a.value);
@@ -59,7 +61,7 @@ const FormCol = ({
         variant="secondary"
         onClick={() => setShowMore((prev) => !prev)}
       >
-        {showMore ? "Show meta units only" : "Show all units"}
+        {showMore ? t("show_meta_only") : t("show_all")}
       </Button>
       <div className="flex w-full gap-4">
         <Button
@@ -68,7 +70,7 @@ const FormCol = ({
           disabled={step === 1}
           className="w-1/2"
         >
-          Prev
+          {t("previous")}
         </Button>
 
         <Button
@@ -76,7 +78,7 @@ const FormCol = ({
           onClick={() => moveToStep(step + 1)}
           className="w-1/2"
         >
-          Next
+          {t("next")}
         </Button>
       </div>
     </div>

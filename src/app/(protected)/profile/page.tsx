@@ -21,6 +21,7 @@ import { ownedUnits } from "@/lib/utils";
 import List from "@/components/unit-list";
 import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Avatar } from "@radix-ui/react-avatar";
+import { useTranslations } from "next-intl";
 
 export default function Component() {
   const { data: user_data } = useSession();
@@ -29,6 +30,7 @@ export default function Component() {
     storage ?? DEFAULT_FORM_DATA
   );
   const [isClient, setIsClient] = useState(false);
+  const t = useTranslations("BuildTeam");
 
   const golden = ownedUnits(goldenUnits, profile.units.golden);
   const heroic = ownedUnits(heroicUnits, profile.units.heroic);
@@ -83,7 +85,7 @@ export default function Component() {
                   <li
                     key={e.id}
                     className="flex flex-col items-center w-18"
-                    title={"Dowodzenie: " + e.matchingWeapon.leadership}
+                    title={t("leadership") + ": " + e.matchingWeapon.leadership}
                   >
                     <img src={e.src} className="rounded-full w-12 h-12" />
                     <span className="text-sm">{e.name}</span>
@@ -97,19 +99,19 @@ export default function Component() {
               <TableHeader>
                 <TableRow>
                   <TableHead className="text-center px-0 text-yellow-500">
-                    Maxed and Preffer
+                    {t("maxed_and_preffer")}
                   </TableHead>
                   <TableHead className="text-center px-0 text-purple-500">
-                    Preffer
+                    {t("preffer")}
                   </TableHead>
                   <TableHead className="text-center px-0 text-blue-500">
-                    Maxed
+                    {t("maxed")}
                   </TableHead>
                   <TableHead className="text-center px-0 text-green-500">
-                    I have
+                    {t("i_have")}
                   </TableHead>
                   <TableHead className="text-center px-0 text-red-500">
-                    I dont have
+                    {t("i_dont_have")}
                   </TableHead>
                 </TableRow>
               </TableHeader>

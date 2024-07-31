@@ -2,6 +2,7 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { FC } from "react";
 import { FormControl, FormField, FormItem, FormLabel } from "./ui/form";
 import clsx from "clsx";
+import { useTranslations } from "next-intl";
 
 type FormColData = {
   id: number;
@@ -60,6 +61,7 @@ const RadioComponent: FC<{
   unitData: FormColData;
   controller: any;
 }> = ({ unitData, controller }) => {
+  const t = useTranslations("AddForm");
   const era =
     unitData.era === "golden"
       ? "golden"
@@ -88,7 +90,7 @@ const RadioComponent: FC<{
                   <Component
                     unitValue={field.value}
                     era={unitData.era}
-                    label="I dont have"
+                    label={t("i_dont_have")}
                     value="0"
                   />
                 </FormItem>
@@ -99,7 +101,7 @@ const RadioComponent: FC<{
                   <Component
                     unitValue={field.value}
                     era={unitData.era}
-                    label="I have"
+                    label={t("i_have")}
                     value="1"
                   />
                 </FormItem>
@@ -110,7 +112,7 @@ const RadioComponent: FC<{
                   <Component
                     unitValue={field.value}
                     era={unitData.era}
-                    label="Maxed"
+                    label={t("maxed")}
                     value="2"
                   />
                 </FormItem>
@@ -121,7 +123,7 @@ const RadioComponent: FC<{
                   <Component
                     unitValue={field.value}
                     era={unitData.era}
-                    label="Preffer"
+                    label={t("preffer")}
                     value="3"
                   />
                 </FormItem>
@@ -132,7 +134,7 @@ const RadioComponent: FC<{
                   <Component
                     unitValue={field.value}
                     era={unitData.era}
-                    label="Maxed and Preffer"
+                    label={t("maxed_and_preffer")}
                     value="4"
                   />
                 </FormItem>

@@ -7,19 +7,18 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ModeToggle } from "./theme-menu";
+import { useTranslations } from "next-intl";
 
 export default function Navbar() {
+  const t = useTranslations("HomePage");
   const { data } = useSession();
   return (
     <nav className="flex justify-between items-center bg-primary px-8 py-1">
       <Link className="text-white font-bold flex items-center gap-2" href={"/"}>
         <img src="/logo.png" alt="logo" className="h-10" />
-        KoP
       </Link>
       <div className="flex items-center gap-6">
         {data ? (
@@ -36,7 +35,7 @@ export default function Navbar() {
                 className="cursor-pointer text-red-700"
                 onClick={() => signOut()}
               >
-                Logout
+                {t("logout")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
