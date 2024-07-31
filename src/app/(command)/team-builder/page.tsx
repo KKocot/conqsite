@@ -247,7 +247,7 @@ const Page: React.FC = () => {
     <div>
       <div className="flex p-4 items-center justify-around">
         <Button onClick={() => setShowPreview(!showPreview)}>
-          {showPreview ? "Edytor" : "Podglad"}
+          {showPreview ? "Editor" : "Preview"}
         </Button>
         <div className="flex justify-center gap-4">
           <Button
@@ -258,7 +258,11 @@ const Page: React.FC = () => {
           >
             Save Template
           </Button>
-          <Button size="sm" onClick={() => setSheetData(storage)}>
+          <Button
+            size="sm"
+            onClick={() => setSheetData(storage)}
+            disabled={all_players_list.length === 0}
+          >
             Load Template
           </Button>
           <Button
