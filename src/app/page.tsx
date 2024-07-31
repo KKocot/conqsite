@@ -49,9 +49,7 @@ export default function Home() {
             Login to access your profile
           </p>
           <div className="mt-4 flex justify-center">
-            <Link href="/form">
-              <Button onClick={() => signIn("discord")}>Login</Button>
-            </Link>
+            <Button onClick={() => signIn("discord")}>Login</Button>
           </div>
         </div>
       )}
