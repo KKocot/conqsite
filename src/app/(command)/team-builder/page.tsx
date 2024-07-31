@@ -29,8 +29,7 @@ import { others } from "@/assets/other-units-data";
 import Preview from "@/components/preview";
 import { useLocalStorage } from "usehooks-ts";
 
-// const next_tw = getCloserDay();
-const next_tw = "2024-07-27";
+const next_tw = getCloserDay();
 
 const DEFAULT_CARD = {
   username: "",
@@ -255,6 +254,7 @@ const Page: React.FC = () => {
             size="sm"
             onClick={() => setStorage(sheetData)}
             variant="success"
+            className="text-white"
           >
             Save Template
           </Button>
