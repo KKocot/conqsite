@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ModeToggle } from "./theme-menu";
 import { useTranslations } from "next-intl";
+import LanguageToggle from "./language-toggle";
 
 export default function Navbar() {
   const t = useTranslations("HomePage");
@@ -20,6 +21,7 @@ export default function Navbar() {
       <Link className="text-white font-bold flex items-center gap-2" href={"/"}>
         <img src="/logo.png" alt="logo" className="h-10" />
       </Link>
+      <LanguageToggle />
       <div className="flex items-center gap-6">
         {data ? (
           <DropdownMenu>
