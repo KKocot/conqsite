@@ -13,6 +13,7 @@ import clsx from "clsx";
 import { SurveyProps } from "@/lib/type";
 import { useRouter } from "next/navigation";
 import Loading from "react-loading";
+import { useTranslations } from "next-intl";
 
 export const DEFAULT_FORM_DATA: SurveyProps = {
   discordNick: "",
@@ -30,6 +31,7 @@ export const DEFAULT_FORM_DATA: SurveyProps = {
 };
 
 export default function WizardForm({ user_id }: { user_id: string }) {
+  const t = useTranslations("AddForm");
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [storage, setStorage] = useLocalStorage("MyForm", DEFAULT_FORM_DATA);
@@ -141,7 +143,7 @@ export default function WizardForm({ user_id }: { user_id: string }) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col items-center p-4 gap-6"
       >
-        <h1 className="text-3xl font-bold">Form</h1>
+        <h1 className="text-3xl font-bold">{t("form")}</h1>
         <ul className="flex gap-4 text-primary">
           {Array.from({ length: 4 }).map((_, i) => (
             <li key={i} className="flex items-center gap-4">
@@ -154,12 +156,12 @@ export default function WizardForm({ user_id }: { user_id: string }) {
                   moveToStep={setStep}
                   tooltip={
                     i === 0
-                      ? "Low Eras"
+                      ? t("low_eras")
                       : i === 1
-                      ? "Heroic Era"
+                      ? t("heroic_eras")
                       : i === 2
-                      ? "Golden Era"
-                      : "General"
+                      ? t("golden_era")
+                      : t("general")
                   }
                   page={i + 1}
                 />

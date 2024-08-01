@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useTranslations } from "next-intl";
 
 const StepGeneral = ({
   form,
@@ -28,6 +29,7 @@ const StepGeneral = ({
   form: any;
   moveToStep: (e: number) => void;
 }) => {
+  const t = useTranslations("AddForm");
   const prev_step = 3;
   return (
     <div className="flex flex-col sm:shadow-gray-600 dark:sm:shadow-slate-900 sm:shadow-lg p-4 gap-4">
@@ -38,7 +40,7 @@ const StepGeneral = ({
             name="discordNick"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-bold">Discord Nick</FormLabel>
+                <FormLabel className="font-bold">{t("discord_nick")}</FormLabel>
                 <FormControl>
                   <Input {...field} required />
                 </FormControl>
@@ -50,7 +52,7 @@ const StepGeneral = ({
             name="inGameNick"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-bold">Nick in Game</FormLabel>
+                <FormLabel className="font-bold">{t("nick_in_game")}</FormLabel>
                 <FormControl>
                   <Input {...field} required />
                 </FormControl>
@@ -62,7 +64,7 @@ const StepGeneral = ({
             name="characterLevel"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-bold">Hero Level</FormLabel>
+                <FormLabel className="font-bold">{t("hero_level")}</FormLabel>
                 <FormControl>
                   <Input {...field} min={1} type="number" />
                 </FormControl>
@@ -74,7 +76,7 @@ const StepGeneral = ({
             name="house"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>House</FormLabel>
+                <FormLabel>{t("house")}</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
@@ -101,7 +103,7 @@ const StepGeneral = ({
             render={({ field }) => (
               <FormItem className="space-y-4">
                 <FormLabel className="font-bold text-md">
-                  Amount of Artillery
+                  {t("amount_of_artillery")}
                 </FormLabel>
                 <RadioGroup
                   onValueChange={field.onChange}
@@ -120,7 +122,7 @@ const StepGeneral = ({
                         }
                       )}
                     >
-                      Not at all
+                      {t("not_at_all")}
                     </FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center">
@@ -135,7 +137,7 @@ const StepGeneral = ({
                         }
                       )}
                     >
-                      Some
+                      {t("some")}
                     </FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center">
@@ -150,7 +152,7 @@ const StepGeneral = ({
                         }
                       )}
                     >
-                      Average
+                      {t("average")}
                     </FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center">
@@ -165,7 +167,7 @@ const StepGeneral = ({
                         }
                       )}
                     >
-                      A lot
+                      {t("a_lot")}
                     </FormLabel>
                   </FormItem>
                 </RadioGroup>
@@ -178,14 +180,14 @@ const StepGeneral = ({
             <Tooltip>
               <TooltipTrigger type="button" className="flex items-center">
                 <>
-                  <h2 className="font-bold text-md">Weapons</h2>
+                  <h2 className="font-bold text-md">{t("weapons")}</h2>
                   <Info className="h-5 hover:scale-110 ease-in-out duration-300" />
                 </>
               </TooltipTrigger>
               <TooltipContent>
                 <div>
-                  <p>1 - I preffer</p>
-                  <p>4 - I can take, but preffer not</p>
+                  <p>1 - {t("i_preffer")}</p>
+                  <p>4 - {t("not_preffer")}</p>
                 </div>
               </TooltipContent>
             </Tooltip>
@@ -220,7 +222,7 @@ const StepGeneral = ({
                       render={({ field }) => (
                         <>
                           <Label className="font-bold text-xs">
-                            Leadership
+                            {t("leadership")}
                           </Label>
                           <Input
                             {...field}
@@ -247,7 +249,7 @@ const StepGeneral = ({
                       render={({ field }) => (
                         <>
                           <Label className="font-bold text-xs">
-                            Preferences
+                            {t("preferences")}
                           </Label>
                           <Input
                             {...field}
@@ -281,11 +283,11 @@ const StepGeneral = ({
           onClick={() => moveToStep(prev_step)}
           className="w-1/2"
         >
-          Prev
+          {t("previous")}
         </Button>
 
         <Button type="submit" className="w-1/2">
-          Send
+          {t("submit")}
         </Button>
       </div>
     </div>

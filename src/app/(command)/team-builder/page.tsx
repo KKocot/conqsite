@@ -28,6 +28,7 @@ import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
 import { others } from "@/assets/other-units-data";
 import Preview from "@/components/preview";
 import { useLocalStorage } from "usehooks-ts";
+import { useTranslations } from "next-intl";
 
 const next_tw = getCloserDay();
 
@@ -60,6 +61,7 @@ function getLineup(surveys: SurveyProps[] | undefined, lineup: string[]) {
 
 const Page: React.FC = () => {
   const { data: commander } = useSession();
+  const t = useTranslations("BuildTeam");
   const [signup, setSignup] = useState<any>(null);
   const [surveys, setSurveys] = useState<SurveyProps[]>();
   const [noData, setNoData] = useState(true);
@@ -241,13 +243,13 @@ const Page: React.FC = () => {
   }
   return noData ? (
     <div className="flex flex-col gap-5 p-2">
-      <Button onClick={() => handlerGetData()}>Load data</Button>
+      <Button onClick={() => handlerGetData()}>{t("load_data")}</Button>
     </div>
   ) : (
     <div>
       <div className="flex p-4 items-center justify-around">
         <Button onClick={() => setShowPreview(!showPreview)}>
-          {showPreview ? "Editor" : "Preview"}
+          {showPreview ? t("editor") : t("preview")}
         </Button>
         <div className="flex justify-center gap-4">
           <Button
@@ -256,14 +258,14 @@ const Page: React.FC = () => {
             variant="success"
             className="text-white"
           >
-            Save Template
+            {t("save_template")}
           </Button>
           <Button
             size="sm"
             onClick={() => setSheetData(storage)}
             disabled={all_players_list.length === 0}
           >
-            Load Template
+            {t("load_template")}
           </Button>
           <Button
             size="sm"
@@ -278,18 +280,18 @@ const Page: React.FC = () => {
               })
             }
           >
-            Clean sheet
+            {t("clean_sheet")}
           </Button>
         </div>
       </div>
       <div className={clsx("flex flex-col gap-5 p-2", { hidden: showPreview })}>
         <Accordion type="single" collapsible>
           <AccordionItem value="item-1">
-            <AccordionTrigger className="px-6">Units</AccordionTrigger>
+            <AccordionTrigger className="px-6">{t("units")}</AccordionTrigger>
             <AccordionContent className="flex justify-around p-2 flex-wrap">
               <CheckboxItem
                 checked={filterUnits.meta_units_only}
-                label="Tylko meta jednostki"
+                label={t("meta_units_only")}
                 onChange={() =>
                   setFilterUnits((prev) => ({
                     ...prev,
@@ -299,7 +301,7 @@ const Page: React.FC = () => {
               />
               <CheckboxItem
                 checked={filterUnits.golden_checked}
-                label="Epoka Złota"
+                label={t("golden_era")}
                 onChange={() =>
                   setFilterUnits((prev) => ({
                     ...prev,
@@ -309,7 +311,7 @@ const Page: React.FC = () => {
               />
               <CheckboxItem
                 checked={filterUnits.heroic_checked}
-                label="Epoka Heroiczna"
+                label={t("heroic_era")}
                 onChange={() =>
                   setFilterUnits((prev) => ({
                     ...prev,
@@ -319,7 +321,7 @@ const Page: React.FC = () => {
               />
               <CheckboxItem
                 checked={filterUnits.silver_checked}
-                label="Epoka Srebrna"
+                label={t("silver_era")}
                 onChange={() =>
                   setFilterUnits((prev) => ({
                     ...prev,
@@ -329,7 +331,7 @@ const Page: React.FC = () => {
               />
               <CheckboxItem
                 checked={filterUnits.chivalric_checked}
-                label="Epoka Rycerska"
+                label={t("knight_era")}
                 onChange={() =>
                   setFilterUnits((prev) => ({
                     ...prev,
@@ -339,7 +341,7 @@ const Page: React.FC = () => {
               />
               <CheckboxItem
                 checked={filterUnits.rustic_checked}
-                label="Epoka Feudalna i Rustykalna"
+                label={t("feudal__and_rustical_era")}
                 onChange={() =>
                   setFilterUnits((prev) => ({
                     ...prev,
@@ -349,7 +351,7 @@ const Page: React.FC = () => {
               />
               <CheckboxItem
                 checked={filterUnits.other_checked}
-                label="Ogolne"
+                label={t("general")}
                 onChange={() =>
                   setFilterUnits((prev) => ({
                     ...prev,
@@ -361,7 +363,9 @@ const Page: React.FC = () => {
           </AccordionItem>
           {commander_house === "KingdomOfPoland" ? (
             <AccordionItem value="item-2">
-              <AccordionTrigger className="px-6">Lineup</AccordionTrigger>
+              <AccordionTrigger className="px-6">
+                {t("lineup")}
+              </AccordionTrigger>
               <AccordionContent className="flex justify-around p-2 flex-wrap">
                 <CheckboxItem
                   checked={lineupFilterKoP.ko_checked}
@@ -431,10 +435,10 @@ const Page: React.FC = () => {
           ))}
         </div>
         <div className="flex justify-center gap-2">
-          <span className="text-yellow-500">Maxed and Preffer</span>
-          <span className="text-purple-500">Preffer</span>
-          <span className="text-blue-500">Maxed</span>
-          <span className="text-green-500">I have</span>
+          <span className="text-yellow-500">{t("maxed_and_preffer")}</span>
+          <span className="text-purple-500">{t("preffer")}</span>
+          <span className="text-blue-500">{t("maxed")}</span>
+          <span className="text-green-500">{t("i_have")}</span>
         </div>
         <ul className="grid grid-cols-5 gap-8">
           {sheetData.map((e, index) => (

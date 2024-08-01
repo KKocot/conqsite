@@ -13,8 +13,10 @@ import {
 import List from "./unit-list";
 import { weapons } from "@/assets/weapons";
 import clsx from "clsx";
+import { useTranslations } from "next-intl";
 
 const ProfileData = ({ profile }: { profile: SurveyProps }) => {
+  const t = useTranslations("BuildTeam");
   const golden = ownedUnits(goldenUnits, profile.units.golden);
   const heroic = ownedUnits(heroicUnits, profile.units.heroic);
   const blue = ownedUnits(blueUnits, profile.units.low);
@@ -34,7 +36,7 @@ const ProfileData = ({ profile }: { profile: SurveyProps }) => {
             <li
               key={e.id}
               className="flex flex-col items-center w-18"
-              title={"Dowodzenie: " + e.matchingWeapon.leadership}
+              title={t("leadership") + ": " + e.matchingWeapon.leadership}
             >
               <img src={e.src} className="rounded-full w-12 h-12" />
               <span
@@ -45,7 +47,7 @@ const ProfileData = ({ profile }: { profile: SurveyProps }) => {
                   "text-green-600": e.matchingWeapon.pref === 4,
                 })}
               >
-                Leadership: {e.matchingWeapon.leadership}
+                {t("leadership")}: {e.matchingWeapon.leadership}
               </span>
             </li>
           ) : null
@@ -55,16 +57,16 @@ const ProfileData = ({ profile }: { profile: SurveyProps }) => {
         <TableHeader>
           <TableRow>
             <TableHead className="text-center px-0 text-yellow-500">
-              Maxed and Preffer
+              {t("maxed_and_preffer")}
             </TableHead>
             <TableHead className="text-center px-0 text-purple-500">
-              Preffer
+              {t("preffer")}
             </TableHead>
             <TableHead className="text-center px-0 text-blue-500">
-              Maxed
+              {t("maxed")}
             </TableHead>
             <TableHead className="text-center px-0 text-green-500">
-              I have
+              {t("i_have")}{" "}
             </TableHead>
           </TableRow>
         </TableHeader>

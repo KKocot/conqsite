@@ -19,6 +19,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useTranslations } from "next-intl";
 
 const colors = [
   "-red-700",
@@ -75,6 +76,7 @@ const Item = ({
     altillery: ArtilleryProps[]
   ) => void;
 }) => {
+  const t = useTranslations("BuildTeam");
   const users_list = users.map((user) => user.inGameNick);
   const [user, setUser] = useState<SurveyProps | undefined>();
   const user_artillery = getArtyAmount(user?.artyAmount);
@@ -176,7 +178,7 @@ const Item = ({
       </span>
       <span>
         <Autocompleter
-          placeholder="Gracz"
+          placeholder={t("username")}
           value={data.username}
           onChange={(value) =>
             onEdit(
@@ -196,7 +198,7 @@ const Item = ({
       </span>
       <span>
         <Autocompleter
-          placeholder="1st Unit"
+          placeholder={t("1st_unit")}
           value={data.unit1}
           user={user}
           units={units_user}
@@ -217,7 +219,7 @@ const Item = ({
       </span>
       <span>
         <Autocompleter
-          placeholder="2nd Unit"
+          placeholder={t("2nd_unit")}
           value={data.unit2}
           user={user}
           units={units_user}
@@ -238,7 +240,7 @@ const Item = ({
       </span>
       <span>
         <Autocompleter
-          placeholder="3rd Unit"
+          placeholder={t("3rd_unit")}
           value={data.unit3}
           user={user}
           units={units_user}
@@ -257,11 +259,11 @@ const Item = ({
           }
         />
       </span>
-      <span>{"Leadership cost: " + (leadership ? leadership : 0)}</span>
+      <span>{t("leadership_cost") + (leadership ? leadership : 0)}</span>
 
       <span>
         <Autocompleter
-          placeholder="Broń"
+          placeholder={t("weapon")}
           weapons={weapons}
           value={data.weapon}
           onChange={(value) =>
@@ -282,7 +284,7 @@ const Item = ({
       <span>
         <Accordion type="single" collapsible>
           <AccordionItem value="item-1">
-            <AccordionTrigger>Artillery</AccordionTrigger>
+            <AccordionTrigger>{t("artillery")}</AccordionTrigger>
             <AccordionContent>
               <div className="flex flex-wrap gap-2 justify-center">
                 {artillery.map((e) => (
@@ -344,7 +346,7 @@ const Item = ({
       </span>
       <span>
         <Textarea
-          placeholder="Opis"
+          placeholder={t("description")}
           value={data.description}
           className="p-1"
           onChange={(e) =>
