@@ -49,6 +49,7 @@ const LanguageToggle = () => {
         <DropdownMenuContent>
           {languages.map((l) => (
             <DropdownMenuItem
+              key={l.code}
               onClick={() => changeLanguage(l.code)}
               disabled={locale === l.code}
             >
