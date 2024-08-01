@@ -364,7 +364,7 @@ const Page: React.FC = () => {
           {commander_house === "KingdomOfPoland" ? (
             <AccordionItem value="item-2">
               <AccordionTrigger className="px-6">
-                {t("lineup")}
+                {t("lineups")}
               </AccordionTrigger>
               <AccordionContent className="flex justify-around p-2 flex-wrap">
                 <CheckboxItem
@@ -391,7 +391,9 @@ const Page: React.FC = () => {
             </AccordionItem>
           ) : commander_house === "Erebus" ? (
             <AccordionItem value="item-3">
-              <AccordionTrigger className="px-6">Lineup</AccordionTrigger>
+              <AccordionTrigger className="px-6">
+                {t("lineups")}
+              </AccordionTrigger>
               <AccordionContent className="flex justify-around p-2 flex-wrap">
                 <CheckboxItem
                   checked={lineupFilterErebus.raid_1}

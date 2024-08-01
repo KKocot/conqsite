@@ -9,13 +9,18 @@ const LanguageToggle = () => {
   const [locale, setLocale] = useState("en");
 
   useEffect(() => {
-    const currentLocale = searchParams.get("locale") || "en";
+    const storedLocale = localStorage.getItem("locale");
+    const currentLocale = storedLocale || searchParams.get("locale") || "en";
     setLocale(currentLocale);
+    if (!storedLocale) {
+      localStorage.setItem("locale", currentLocale);
+    }
   }, [searchParams]);
 
   const changeLanguage = (newLocale: string) => {
     setLocale(newLocale);
-    document.cookie = `locale=${newLocale}; path=/`;
+    localStorage.setItem("locale", newLocale);
+    document.cookie = `locale=${newLocale}; path=/`; // Set the locale in cookies
     const params = new URLSearchParams(searchParams);
     params.set("locale", newLocale);
     router.push(`${pathname}?${params.toString()}`);
@@ -28,10 +33,10 @@ const LanguageToggle = () => {
         English
       </Button>
       <Button onClick={() => changeLanguage("pl")} disabled={locale === "pl"}>
-        Polski
+        Polish
       </Button>
       <Button onClick={() => changeLanguage("fr")} disabled={locale === "fr"}>
-        Français
+        French
       </Button>
     </div>
   );
