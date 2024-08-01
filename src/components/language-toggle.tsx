@@ -1,6 +1,12 @@
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Button } from "./ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import ReactCountryFlag from "react-country-flag";
 
 const LanguageToggle = () => {
   const router = useRouter();
@@ -26,27 +32,33 @@ const LanguageToggle = () => {
     router.push(`${pathname}?${params.toString()}`);
     router.refresh();
   };
-
+  const languages = [
+    { code: "gb", name: "English" },
+    { code: "pl", name: "Polski" },
+    { code: "fr", name: "Français" },
+    { code: "de", name: "Deutsch" },
+    { code: "tr", name: "Türkçe" },
+    { code: "es", name: "Español" },
+  ];
   return (
     <div>
-      <Button onClick={() => changeLanguage("en")} disabled={locale === "en"}>
-        English
-      </Button>
-      <Button onClick={() => changeLanguage("pl")} disabled={locale === "pl"}>
-        Polish
-      </Button>
-      <Button onClick={() => changeLanguage("fr")} disabled={locale === "fr"}>
-        French
-      </Button>
-      <Button onClick={() => changeLanguage("de")} disabled={locale === "de"}>
-        Deutsch
-      </Button>
-      <Button onClick={() => changeLanguage("tr")} disabled={locale === "tr"}>
-        Türkçe
-      </Button>
-      <Button onClick={() => changeLanguage("es")} disabled={locale === "es"}>
-        Español
-      </Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger className="h-10 w-10 rounded-full dark:bg-black items-center flex justify-center bg-white">
+          <ReactCountryFlag countryCode={locale} svg title={locale} />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          {languages.map((l) => (
+            <DropdownMenuItem
+              onClick={() => changeLanguage(l.code)}
+              disabled={locale === l.code}
+            >
+              <ReactCountryFlag countryCode={l.code} svg title={l.name} />
+
+              {l.name}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 };

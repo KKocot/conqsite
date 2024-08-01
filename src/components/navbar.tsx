@@ -21,7 +21,6 @@ export default function Navbar() {
       <Link className="text-white font-bold flex items-center gap-2" href={"/"}>
         <img src="/logo.png" alt="logo" className="h-10" />
       </Link>
-      <LanguageToggle />
       <div className="flex items-center gap-6">
         {data ? (
           <DropdownMenu>
@@ -45,6 +44,7 @@ export default function Navbar() {
           <Button onClick={() => signIn("discord")}>Login</Button>
         )}
         <ModeToggle />
+        <LanguageToggle />
       </div>
     </nav>
   );
