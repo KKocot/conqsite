@@ -38,6 +38,15 @@ const LanguageToggle = () => {
       <Button onClick={() => changeLanguage("fr")} disabled={locale === "fr"}>
         French
       </Button>
+      <Button onClick={() => changeLanguage("de")} disabled={locale === "de"}>
+        Deutsch
+      </Button>
+      <Button onClick={() => changeLanguage("tr")} disabled={locale === "tr"}>
+        Türkçe
+      </Button>
+      <Button onClick={() => changeLanguage("es")} disabled={locale === "es"}>
+        Español
+      </Button>
     </div>
   );
 };
