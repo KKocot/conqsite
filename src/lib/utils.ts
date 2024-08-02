@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { ItemProps, SheetTypes, SurveyProps, Unit } from "./type";
+import { SheetTypes, SurveyProps, Unit } from "./type";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -41,32 +41,6 @@ export function getCloserDay() {
   return nextTuesday < nextSaturday ? nextTuesday : nextSaturday;
 }
 
-export function getLineup(lineup: string, signup: ItemProps) {
-  switch (lineup) {
-    case "two":
-      return signup.lineup_2;
-    case "three":
-      return signup.lineup_3;
-    case "four":
-      return signup.lineup_4;
-    default:
-      return [];
-  }
-}
-
-export function getLineupName(lineup: string) {
-  switch (lineup) {
-    case "two":
-      return "King's Order";
-    case "three":
-      return "Królewska Tarcza";
-    case "four":
-      return "Zielona Piechota";
-    default:
-      return "Nieznany skład";
-  }
-}
-
 export function getArtyAmount(
   amount: "none" | "some" | "average" | "aLot" | undefined
 ) {
@@ -82,21 +56,6 @@ export function getArtyAmount(
     default:
       return { title: "", label: "" };
   }
-}
-
-export function addUsers(data: SheetTypes[], users: SurveyProps[]) {
-  let userIndex = 0;
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].username === "") {
-      if (userIndex < users.length) {
-        data[i].username = users[userIndex].inGameNick;
-        userIndex++;
-      } else {
-        break;
-      }
-    }
-  }
-  return data;
 }
 
 export function ownedUnits(

@@ -3,6 +3,7 @@
 import {
   command_whitelist_erebus,
   command_whitelist_kop,
+  command_whitelist_blackforge,
 } from "@/assets/whitelists";
 import { Button } from "@/components/ui/button";
 import { ArtilleryProps, SheetTypes, SurveyProps } from "@/lib/type";
@@ -65,6 +66,7 @@ const Page: React.FC = () => {
   const [surveys, setSurveys] = useState<SurveyProps[]>();
   const [noData, setNoData] = useState(true);
   const [userList, setUserList] = useState<SurveyProps[]>([]);
+  console.log("userList", userList);
   const [loading, setLoading] = useState(false);
   const [sheetData, setSheetData] = useState<SheetTypes[]>([]);
   const [showPreview, setShowPreview] = useState(false);
@@ -81,8 +83,13 @@ const Page: React.FC = () => {
   const [lineupFilterKoP, setLineupFilterKoP] = useState({
     ko_checked: false,
     kt_checked: false,
+    zp_checked: false,
   });
   const [lineupFilterErebus, setLineupFilterErebus] = useState({
+    raid_1: false,
+    raid_2: false,
+  });
+  const [lineupFilterBlackForge, setLineupFilterBlackForge] = useState({
     raid_1: false,
     raid_2: false,
   });
@@ -90,6 +97,8 @@ const Page: React.FC = () => {
     commander?.user?.id ?? ""
   )
     ? "KingdomOfPoland"
+    : command_whitelist_blackforge.includes(commander?.user?.id ?? "")
+    ? "BlackForge"
     : command_whitelist_erebus.includes(commander?.user?.id ?? "")
     ? "Erebus"
     : "";
@@ -103,9 +112,12 @@ const Page: React.FC = () => {
           ? {
               lineup_2: data.signup.lineup_2,
               lineup_3: data.signup.lineup_3,
+              lineup_4: data.signup.lineup_4,
             }
           : house === "Erebus"
-          ? { lineup_4: data.signup.lineup_4, lineup_5: data.signup.lineup_5 }
+          ? { lineup_5: data.signup.lineup_5, lineup_6: data.signup.lineup_6 }
+          : house === "BlackForge"
+          ? { lineup_7: data.signup.lineup_7, lineup_8: data.signup.lineup_8 }
           : null;
       setSignup(lineups);
     } catch (error) {
@@ -153,24 +165,41 @@ const Page: React.FC = () => {
     if (!surveys || !signup) return [];
     const lineup_ko = getLineup(surveys, signup?.lineup_2 ?? []);
     const lineup_kt = getLineup(surveys, signup?.lineup_3 ?? []);
+    const lineup_zp = getLineup(surveys, signup?.lineup_4 ?? []);
     return [
       lineupFilterKoP.ko_checked ? lineup_ko : [],
       lineupFilterKoP.kt_checked ? lineup_kt : [],
-    ];
-  }, [lineupFilterKoP.ko_checked, lineupFilterKoP.kt_checked]);
+      lineupFilterKoP.zp_checked ? lineup_zp : [],
+    ].filter(Array.isArray);
+  }, [
+    lineupFilterKoP.ko_checked,
+    lineupFilterKoP.kt_checked,
+    lineupFilterKoP.zp_checked,
+  ]);
   const erebus_players_list = useMemo(() => {
     if (!surveys || !signup) return [];
-    const lineup_raid_1 = getLineup(surveys, signup?.lineup_4 ?? []);
-    const lineup_raid_2 = getLineup(surveys, signup?.lineup_5 ?? []);
+    const lineup_raid_1 = getLineup(surveys, signup?.lineup_5 ?? []);
+    const lineup_raid_2 = getLineup(surveys, signup?.lineup_6 ?? []);
     return [
       lineupFilterErebus.raid_1 ? lineup_raid_1 : [],
       lineupFilterErebus.raid_2 ? lineup_raid_2 : [],
-    ].filter(Array.isArray); // Ensure only arrays are returned
+    ].filter(Array.isArray);
   }, [lineupFilterErebus.raid_1, lineupFilterErebus.raid_2]);
+
+  const blackforge_players_list = useMemo(() => {
+    if (!surveys || !signup) return [];
+    const lineup_raid_1 = getLineup(surveys, signup?.lineup_7 ?? []);
+    const lineup_raid_2 = getLineup(surveys, signup?.lineup_8 ?? []);
+    return [
+      lineupFilterBlackForge.raid_1 ? lineup_raid_1 : [],
+      lineupFilterBlackForge.raid_2 ? lineup_raid_2 : [],
+    ].filter(Array.isArray); // Ensure only arrays are returned
+  }, [lineupFilterBlackForge.raid_1, lineupFilterBlackForge.raid_2]);
 
   const all_players_list: SurveyProps[] = [
     ...kop_players_list,
     ...erebus_players_list,
+    ...blackforge_players_list,
   ].flat();
   function handlerGetData() {
     fetchLineup(commander_house);
@@ -390,6 +419,16 @@ const Page: React.FC = () => {
                       }))
                     }
                   />
+                  <CheckboxItem
+                    checked={lineupFilterKoP.zp_checked}
+                    label="Zielona Piechota"
+                    onChange={() =>
+                      setLineupFilterKoP((prev) => ({
+                        ...prev,
+                        zp_checked: !prev.zp_checked,
+                      }))
+                    }
+                  />
                 </>
               ) : commander_house === "Erebus" ? (
                 <>
@@ -408,6 +447,29 @@ const Page: React.FC = () => {
                     label="Raid 2"
                     onChange={() =>
                       setLineupFilterErebus((prev) => ({
+                        ...prev,
+                        raid_2: !prev.raid_2,
+                      }))
+                    }
+                  />
+                </>
+              ) : commander_house === "BlackForge" ? (
+                <>
+                  <CheckboxItem
+                    checked={lineupFilterBlackForge.raid_1}
+                    label="Raid 1"
+                    onChange={() =>
+                      setLineupFilterBlackForge((prev) => ({
+                        ...prev,
+                        raid_1: !prev.raid_1,
+                      }))
+                    }
+                  />
+                  <CheckboxItem
+                    checked={lineupFilterBlackForge.raid_2}
+                    label="Raid 2"
+                    onChange={() =>
+                      setLineupFilterBlackForge((prev) => ({
                         ...prev,
                         raid_2: !prev.raid_2,
                       }))
