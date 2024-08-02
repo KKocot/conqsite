@@ -21,7 +21,7 @@ const Preview = ({ data, units }: { data: SheetTypes[]; units: Unit[] }) => {
   return (
     <div>
       <div className="flex justify-around">
-        <Button size="sm" onClick={() => setShow((prev) => !prev)}>
+        <Button onClick={() => setShow((prev) => !prev)} variant="tab">
           {show ? t("hide_names") : t("show_names")}
         </Button>
       </div>

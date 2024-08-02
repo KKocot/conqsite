@@ -9,12 +9,6 @@ import { ArtilleryProps, SheetTypes, SurveyProps } from "@/lib/type";
 import { getCloserDay } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useMemo, useState } from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import CheckboxItem from "@/components/sheet-form-filter";
 import { UserProfile } from "@/components/user-profile";
 import Loading from "react-loading";
@@ -29,6 +23,11 @@ import { others } from "@/assets/other-units-data";
 import Preview from "@/components/preview";
 import { useLocalStorage } from "usehooks-ts";
 import { useTranslations } from "next-intl";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const next_tw = getCloserDay();
 
@@ -246,30 +245,33 @@ const Page: React.FC = () => {
       <Button onClick={() => handlerGetData()}>{t("load_data")}</Button>
     </div>
   ) : (
-    <div>
-      <div className="flex p-4 items-center justify-around">
-        <Button onClick={() => setShowPreview(!showPreview)}>
+    <div className="flex justify-center flex-col items-center">
+      <div className="flex items-center justify-around bg-secondary w-3/4">
+        <Button
+          onClick={() => setShowPreview(!showPreview)}
+          variant="tab"
+          className="rounded-none"
+        >
           {showPreview ? t("editor") : t("preview")}
         </Button>
         <div className="flex justify-center gap-4">
           <Button
-            size="sm"
             onClick={() => setStorage(sheetData)}
-            variant="success"
-            className="text-white"
+            variant="tab"
+            className="hover:bg-green-700"
           >
             {t("save_template")}
           </Button>
           <Button
-            size="sm"
             onClick={() => setSheetData(storage)}
             disabled={all_players_list.length === 0}
+            variant="tab"
           >
             {t("load_template")}
           </Button>
           <Button
-            size="sm"
-            variant="destructive"
+            variant="tab"
+            className="hover:bg-red-700"
             onClick={() =>
               setSheetData(() => {
                 const requiredLength = all_players_list.length + 10;
@@ -283,12 +285,12 @@ const Page: React.FC = () => {
             {t("clean_sheet")}
           </Button>
         </div>
-      </div>
-      <div className={clsx("flex flex-col gap-5 p-2", { hidden: showPreview })}>
-        <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
-            <AccordionTrigger className="px-6">{t("units")}</AccordionTrigger>
-            <AccordionContent className="flex justify-around p-2 flex-wrap">
+        <div className="flex gap-4">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="tab">{t("units")}</Button>
+            </PopoverTrigger>
+            <PopoverContent className="gap-4 flex flex-col">
               <CheckboxItem
                 checked={filterUnits.meta_units_only}
                 label={t("meta_units_only")}
@@ -359,66 +361,65 @@ const Page: React.FC = () => {
                   }))
                 }
               />
-            </AccordionContent>
-          </AccordionItem>
-          {commander_house === "KingdomOfPoland" ? (
-            <AccordionItem value="item-2">
-              <AccordionTrigger className="px-6">
-                {t("lineups")}
-              </AccordionTrigger>
-              <AccordionContent className="flex justify-around p-2 flex-wrap">
-                <CheckboxItem
-                  checked={lineupFilterKoP.ko_checked}
-                  label="King's Order"
-                  onChange={() =>
-                    setLineupFilterKoP((prev) => ({
-                      ...prev,
-                      ko_checked: !prev.ko_checked,
-                    }))
-                  }
-                />
-                <CheckboxItem
-                  checked={lineupFilterKoP.kt_checked}
-                  label="Królewska Tarcza"
-                  onChange={() =>
-                    setLineupFilterKoP((prev) => ({
-                      ...prev,
-                      kt_checked: !prev.kt_checked,
-                    }))
-                  }
-                />
-              </AccordionContent>
-            </AccordionItem>
-          ) : commander_house === "Erebus" ? (
-            <AccordionItem value="item-3">
-              <AccordionTrigger className="px-6">
-                {t("lineups")}
-              </AccordionTrigger>
-              <AccordionContent className="flex justify-around p-2 flex-wrap">
-                <CheckboxItem
-                  checked={lineupFilterErebus.raid_1}
-                  label="Raid 1"
-                  onChange={() =>
-                    setLineupFilterErebus((prev) => ({
-                      ...prev,
-                      raid_1: !prev.raid_1,
-                    }))
-                  }
-                />
-                <CheckboxItem
-                  checked={lineupFilterErebus.raid_2}
-                  label="Raid 2"
-                  onChange={() =>
-                    setLineupFilterErebus((prev) => ({
-                      ...prev,
-                      raid_2: !prev.raid_2,
-                    }))
-                  }
-                />
-              </AccordionContent>
-            </AccordionItem>
-          ) : null}
-        </Accordion>
+            </PopoverContent>
+          </Popover>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="tab">{t("lineups")}</Button>
+            </PopoverTrigger>
+            <PopoverContent className="gap-4 flex flex-col">
+              {commander_house === "KingdomOfPoland" ? (
+                <>
+                  <CheckboxItem
+                    checked={lineupFilterKoP.ko_checked}
+                    label="King's Order"
+                    onChange={() =>
+                      setLineupFilterKoP((prev) => ({
+                        ...prev,
+                        ko_checked: !prev.ko_checked,
+                      }))
+                    }
+                  />
+                  <CheckboxItem
+                    checked={lineupFilterKoP.kt_checked}
+                    label="Królewska Tarcza"
+                    onChange={() =>
+                      setLineupFilterKoP((prev) => ({
+                        ...prev,
+                        kt_checked: !prev.kt_checked,
+                      }))
+                    }
+                  />
+                </>
+              ) : commander_house === "Erebus" ? (
+                <>
+                  <CheckboxItem
+                    checked={lineupFilterErebus.raid_1}
+                    label="Raid 1"
+                    onChange={() =>
+                      setLineupFilterErebus((prev) => ({
+                        ...prev,
+                        raid_1: !prev.raid_1,
+                      }))
+                    }
+                  />
+                  <CheckboxItem
+                    checked={lineupFilterErebus.raid_2}
+                    label="Raid 2"
+                    onChange={() =>
+                      setLineupFilterErebus((prev) => ({
+                        ...prev,
+                        raid_2: !prev.raid_2,
+                      }))
+                    }
+                  />
+                </>
+              ) : null}
+            </PopoverContent>
+          </Popover>
+        </div>
+      </div>
+      <div className={clsx("flex flex-col gap-5 p-2", { hidden: showPreview })}>
         <div className="flex flex-wrap gap-2 p-4">
           {all_players_list.map((survey) => (
             <div key={survey.discordId}>
