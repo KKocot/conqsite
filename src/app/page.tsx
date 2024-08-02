@@ -5,14 +5,14 @@ import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import {
   command_whitelist_erebus,
-  command_whitelist_kov,
+  command_whitelist_kop,
 } from "@/assets/whitelists";
 import { useTranslations } from "next-intl";
 
 export default function Home() {
   const t = useTranslations("HomePage");
   const { data } = useSession();
-  const commanders = [...command_whitelist_kov, ...command_whitelist_erebus];
+  const commanders = [...command_whitelist_kop, ...command_whitelist_erebus];
 
   return (
     <main className="flex flex-col items-center justify-center px-4 md:px-6 sm:h-full my-12">

@@ -2,7 +2,7 @@
 
 import {
   command_whitelist_erebus,
-  command_whitelist_kov,
+  command_whitelist_kop,
 } from "@/assets/whitelists";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -20,7 +20,7 @@ const MyHousePage = () => {
   const [inputQuery, setInputQuery] = useState<string>("");
 
   const commander_house = commander?.user?.id
-    ? command_whitelist_kov.includes(commander?.user?.id)
+    ? command_whitelist_kop.includes(commander?.user?.id)
       ? "KingdomOfPoland"
       : command_whitelist_erebus.includes(commander?.user?.id)
       ? "Erebus"

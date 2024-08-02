@@ -22,6 +22,7 @@ import List from "@/components/unit-list";
 import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Avatar } from "@radix-ui/react-avatar";
 import { useTranslations } from "next-intl";
+import clsx from "clsx";
 
 export default function Component() {
   const { data: user_data } = useSession();
@@ -65,7 +66,7 @@ export default function Component() {
           <div className="flex items-center gap-10">
             <Avatar className="w-16 h-16">
               <AvatarImage
-                alt="@shadcn"
+                alt="avatar"
                 src={user_data?.user.image ?? "/placeholder-avatar.jpg"}
               />
               <AvatarFallback>KK</AvatarFallback>
@@ -84,7 +85,12 @@ export default function Component() {
                 e.matchingWeapon?.value ? (
                   <li
                     key={e.id}
-                    className="flex flex-col items-center w-18"
+                    className={clsx("flex flex-col items-center w-18", {
+                      "text-green-500": e.matchingWeapon.pref === 4,
+                      "text-blue-500": e.matchingWeapon.pref === 3,
+                      "text-purple-500": e.matchingWeapon.pref === 2,
+                      "text-yellow-500": e.matchingWeapon.pref === 1,
+                    })}
                     title={t("leadership") + ": " + e.matchingWeapon.leadership}
                   >
                     <img src={e.src} className="rounded-full w-12 h-12" />
@@ -98,19 +104,19 @@ export default function Component() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="text-center px-0 text-yellow-500">
+                  <TableHead className="text-center px-1 text-yellow-500">
                     {t("maxed_and_preffer")}
                   </TableHead>
-                  <TableHead className="text-center px-0 text-purple-500">
+                  <TableHead className="text-center px-1 text-purple-500">
                     {t("preffer")}
                   </TableHead>
-                  <TableHead className="text-center px-0 text-blue-500">
+                  <TableHead className="text-center px-1 text-blue-500">
                     {t("maxed")}
                   </TableHead>
-                  <TableHead className="text-center px-0 text-green-500">
+                  <TableHead className="text-center px-1 text-green-500">
                     {t("i_have")}
                   </TableHead>
-                  <TableHead className="text-center px-0 text-red-500">
+                  <TableHead className="text-center px-1 text-red-500">
                     {t("i_dont_have")}
                   </TableHead>
                 </TableRow>

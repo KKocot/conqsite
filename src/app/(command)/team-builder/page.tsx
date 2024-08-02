@@ -2,7 +2,7 @@
 
 import {
   command_whitelist_erebus,
-  command_whitelist_kov,
+  command_whitelist_kop,
 } from "@/assets/whitelists";
 import { Button } from "@/components/ui/button";
 import { ArtilleryProps, SheetTypes, SurveyProps } from "@/lib/type";
@@ -87,7 +87,7 @@ const Page: React.FC = () => {
     raid_1: false,
     raid_2: false,
   });
-  const commander_house = command_whitelist_kov.includes(
+  const commander_house = command_whitelist_kop.includes(
     commander?.user?.id ?? ""
   )
     ? "KingdomOfPoland"
