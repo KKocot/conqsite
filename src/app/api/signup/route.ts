@@ -3,8 +3,15 @@ import Signup from "@/models/signup";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { putSignUpSchema } from "./shema";
+import { headers } from "next/headers";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export async function POST(request: Request) {
+  const discordKey = headers().get("discord-key");
+
+  if (!discordKey || discordKey !== process.env.BOT_KEY)
+    return new Response("401");
   try {
     const data = putSignUpSchema.parse(await request.json());
     await connectMongoDB();
@@ -19,14 +26,12 @@ export async function POST(request: Request) {
 }
 
 export async function GET() {
+  const session = await getServerSession(authOptions);
+  const discordKey = headers().get("discord-key");
+  if (!session || !discordKey || discordKey !== process.env.BOT_KEY)
+    return new Response("401");
+
   await connectMongoDB();
   const signup = await Signup.find();
   return NextResponse.json({ signup });
-}
-
-export async function DELETE(request: Request) {
-  const id = new URL(request.url).searchParams.get("id");
-  await connectMongoDB();
-  await Signup.findByIdAndDelete(id);
-  return NextResponse.json({ message: "List deleted" }, { status: 200 });
 }
