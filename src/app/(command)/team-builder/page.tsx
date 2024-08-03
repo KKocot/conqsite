@@ -29,6 +29,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  ChevronDown,
+  FileDown,
+  FileUp,
+  ScanEye,
+  SlidersHorizontal,
+  Trash2,
+} from "lucide-react";
 
 const next_tw = getCloserDay();
 
@@ -66,7 +74,6 @@ const Page: React.FC = () => {
   const [surveys, setSurveys] = useState<SurveyProps[]>();
   const [noData, setNoData] = useState(true);
   const [userList, setUserList] = useState<SurveyProps[]>([]);
-  console.log("userList", userList);
   const [loading, setLoading] = useState(false);
   const [sheetData, setSheetData] = useState<SheetTypes[]>([]);
   const [showPreview, setShowPreview] = useState(false);
@@ -275,12 +282,13 @@ const Page: React.FC = () => {
     </div>
   ) : (
     <div className="flex justify-center flex-col items-center">
-      <div className="flex items-center justify-around bg-secondary w-3/4">
+      <div className="flex items-center justify-around bg-indigo-950 w-3/4">
         <Button
           onClick={() => setShowPreview(!showPreview)}
           variant="tab"
           className="rounded-none"
         >
+          <ScanEye className="h-5 w-5" />
           {showPreview ? t("editor") : t("preview")}
         </Button>
         <div className="flex justify-center gap-4">
@@ -289,6 +297,7 @@ const Page: React.FC = () => {
             variant="tab"
             className="hover:bg-green-700"
           >
+            <FileDown className="w-5 h-5" />
             {t("save_template")}
           </Button>
           <Button
@@ -296,6 +305,7 @@ const Page: React.FC = () => {
             disabled={all_players_list.length === 0}
             variant="tab"
           >
+            <FileUp className="w-5 h-5" />
             {t("load_template")}
           </Button>
           <Button
@@ -311,13 +321,18 @@ const Page: React.FC = () => {
               })
             }
           >
+            <Trash2 className="w-5 h-5" />
             {t("clean_sheet")}
           </Button>
         </div>
         <div className="flex gap-4">
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="tab">{t("units")}</Button>
+              <Button variant="tab">
+                <SlidersHorizontal className="w-5 h-5" />
+                {t("units")}
+                <ChevronDown />
+              </Button>
             </PopoverTrigger>
             <PopoverContent className="gap-4 flex flex-col">
               <CheckboxItem
@@ -394,7 +409,11 @@ const Page: React.FC = () => {
           </Popover>
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="tab">{t("lineups")}</Button>
+              <Button variant="tab">
+                <SlidersHorizontal className="w-5 h-5" />
+                {t("lineups")}
+                <ChevronDown />
+              </Button>
             </PopoverTrigger>
             <PopoverContent className="gap-4 flex flex-col">
               {commander_house === "KingdomOfPoland" ? (

@@ -42,17 +42,18 @@ export function getCloserDay() {
 }
 
 export function getArtyAmount(
-  amount: "none" | "some" | "average" | "aLot" | undefined
+  amount: "none" | "some" | "average" | "aLot" | undefined,
+  t: (key: string) => string
 ) {
   switch (amount) {
     case "none":
-      return { title: "Nie ma artylerii", label: "Brak" };
+      return { title: t("no_artillery"), label: t("not_at_all") };
     case "some":
-      return { title: "Ma trochę artylerii", label: "Trochę" };
+      return { title: t("some_artillery"), label: t("some") };
     case "average":
-      return { title: "Ma średnią ilość artylerii", label: "Średnio" };
+      return { title: t("average_artillery"), label: t("average") };
     case "aLot":
-      return { title: "Ma dużo artylerii", label: "Dużo" };
+      return { title: t("a_lot_artillery"), label: t("a_lot") };
     default:
       return { title: "", label: "" };
   }

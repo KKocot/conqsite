@@ -76,6 +76,14 @@
     "description": "Beschreibung",
     "hide_names": "Namen ausblenden",
     "show_names": "Namen anzeigen",
-    "meta_unit": "Meta-Einheit"
+    "meta_unit": "Meta-Einheit",
+    "not_at_all": "Überhaupt nicht",
+    "some": "Einige",
+    "average": "Durchschnittlich",
+    "a_lot": "Viel",
+    "no_artillery": "Keine Artillerie",
+    "some_artillery": "Hat etwas Artillerie",
+    "average_artillery": "Hat eine durchschnittliche Menge an Artillerie",
+    "a_lot_artillery": "Hat viel Artillerie"
   }
 }

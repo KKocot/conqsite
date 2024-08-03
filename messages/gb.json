@@ -76,6 +76,14 @@
     "description": "Description",
     "hide_names": "Hide names",
     "show_names": "Show names",
-    "meta_unit": "Meta Unit"
+    "meta_unit": "Meta Unit",
+    "not_at_all": "Not at all",
+    "some": "Some",
+    "average": "Average",
+    "a_lot": "A lot",
+    "no_artillery": "No artillery",
+    "some_artillery": "Has some artillery",
+    "average_artillery": "Has an average amount of artillery",
+    "a_lot_artillery": "Has a lot of artillery"
   }
 }
