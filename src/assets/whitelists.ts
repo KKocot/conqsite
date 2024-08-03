@@ -13,5 +13,6 @@ export const command_whitelist_erebus = [
   "307173174905405440", // Biggy
   "589558372571807784", // HayvanNedd
   "142340700602761216", // NasuSenofilico
+  "589558372571807784", // HayvanWeary
 ];
 export const adduser_whitelist = ["303156898532818944"];
