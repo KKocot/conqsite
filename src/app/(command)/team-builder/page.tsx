@@ -170,6 +170,14 @@ const Page: React.FC = () => {
       setTimeout(() => setLoading(false), 1000);
     }
   };
+  const house_tag =
+    commander_house === "KingdomOfPoland"
+      ? "KoP"
+      : commander_house === "Erebus"
+      ? "E"
+      : commander_house === "BlackForge"
+      ? "BF"
+      : "";
   const onSubmit = async (values: any) => {
     try {
       const response = await fetch("/api/template", {
@@ -178,9 +186,9 @@ const Page: React.FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          templateName: templateName.includes("E_")
+          templateName: templateName.includes(`${house_tag}_`)
             ? templateName
-            : `E_${templateName}`,
+            : `${house_tag}_${templateName}`,
           house: commander_house,
           sheet: values,
         }),
