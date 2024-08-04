@@ -54,9 +54,9 @@ const Preview = ({ data, units }: { data: SheetTypes[]; units: Unit[] }) => {
             return e.username !== "" ? (
               <Fragment key={index}>
                 {index % 5 === 0 ? (
-                  <h2 className="text-lg px-6 py-2 font-bold">
-                    Group {groupNumber}
-                  </h2>
+                  <TableRow className="text-lg px-6 py-2 font-bold">
+                    <TableCell> Group {groupNumber}</TableCell>
+                  </TableRow>
                 ) : null}
                 {/*TODO: Translation for'Group'*/}
                 <TableRow
