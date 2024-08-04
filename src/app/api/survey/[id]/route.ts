@@ -18,10 +18,8 @@ export async function GET(
     await connectMongoDB();
     const survey = await Survey.findOne({ discordId: id });
     if (
-      !session ||
-      !discordKey ||
-      discordKey !== process.env.BOT_KEY ||
-      user_id !== survey.discordId
+      (!session && !discordKey && user_id !== survey.discordId) ||
+      (discordKey && discordKey !== process.env.BOT_KEY)
     )
       return new Response("401");
     return NextResponse.json({ survey }, { status: 200 });

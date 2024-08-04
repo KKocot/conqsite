@@ -28,7 +28,10 @@ export async function POST(request: Request) {
 export async function GET() {
   const session = await getServerSession(authOptions);
   const discordKey = headers().get("discord-key");
-  if (!session || !discordKey || discordKey !== process.env.BOT_KEY)
+  if (
+    (!session && !discordKey) ||
+    (discordKey && discordKey !== process.env.BOT_KEY)
+  )
     return new Response("401");
 
   await connectMongoDB();
