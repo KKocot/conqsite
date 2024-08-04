@@ -8,8 +8,8 @@ export async function DELETE(
   { params: { id } }: { params: { id: string } }
 ) {
   const discordKey = headers().get("discord-key");
-  if (!discordKey || discordKey !== process.env.BOT_KEY)
-    return new Response("401");
+  // if (!discordKey || discordKey !== process.env.BOT_KEY)
+  //   return new Response("401");
   await connectMongoDB();
   await Whitelist.findOneAndDelete({ idDiscord: id });
   return NextResponse.json({ message: "User deleted" }, { status: 200 });

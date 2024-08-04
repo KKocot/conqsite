@@ -10,8 +10,8 @@ import { authOptions } from "@/lib/auth";
 export async function POST(request: Request) {
   const discordKey = headers().get("discord-key");
 
-  if (!discordKey || discordKey !== process.env.BOT_KEY)
-    return new Response("401");
+  // if (!discordKey || discordKey !== process.env.BOT_KEY)
+  //   return new Response("401");
   try {
     const data = putSignUpSchema.parse(await request.json());
     await connectMongoDB();
@@ -28,11 +28,11 @@ export async function POST(request: Request) {
 export async function GET() {
   const session = await getServerSession(authOptions);
   const discordKey = headers().get("discord-key");
-  if (
-    (!session && !discordKey) ||
-    (discordKey && discordKey !== process.env.BOT_KEY)
-  )
-    return new Response("401");
+  // if (
+  //   (!session && !discordKey) ||
+  //   (discordKey && discordKey !== process.env.BOT_KEY)
+  // )
+  return new Response("401");
 
   await connectMongoDB();
   const signup = await Signup.find();

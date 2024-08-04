@@ -10,13 +10,13 @@ export async function GET(
   request: Request,
   { params: { date } }: { params: { date: string } }
 ) {
-  const session = await getServerSession(authOptions);
-  const discordKey = headers().get("discord-key");
-  if (
-    (!session && !discordKey) ||
-    (discordKey && discordKey !== process.env.BOT_KEY)
-  )
-    return new Response("401");
+  // const session = await getServerSession(authOptions);
+  // const discordKey = headers().get("discord-key");
+  // if (
+  //   (!session && !discordKey) ||
+  //   (discordKey && discordKey !== process.env.BOT_KEY)
+  // )
+  // return new Response("401");
   try {
     await connectMongoDB();
     const signup = await Signup.findOne({ date: date });
@@ -27,4 +27,13 @@ export async function GET(
     if (error instanceof Error)
       return NextResponse.json({ message: error.message }, { status: 500 });
   }
+}
+
+export async function DELETE(
+  request: Request,
+  { params: { date } }: { params: { date: string } }
+) {
+  await connectMongoDB();
+  await Signup.findOneAndDelete({ date: date });
+  return NextResponse.json({ message: "List deleted" }, { status: 200 });
 }

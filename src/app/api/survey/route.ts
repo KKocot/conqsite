@@ -15,11 +15,11 @@ export async function GET(request: Request) {
     searchParams.get("house") === "" ? undefined : searchParams.get("house");
   await connectMongoDB();
   const surveys = await Survey.find({ house: query });
-  if (
-    (!session && !discordKey) ||
-    (discordKey && discordKey !== process.env.BOT_KEY)
-  )
-    return new Response("401");
+  // if (
+  //   (!session && !discordKey) ||
+  //   (discordKey && discordKey !== process.env.BOT_KEY)
+  // )
+  // return new Response("401");
 
   //TODO: Check if user is on right whitelist
   return NextResponse.json({ surveys });
@@ -30,11 +30,11 @@ export async function POST(request: Request) {
     const discordKey = headers().get("discord-key");
     const user_id = session?.user?.id;
     const data = putSurveySchema.parse(await request.json());
-    if (
-      (!session && !discordKey && user_id !== data.discordId) ||
-      (discordKey && discordKey !== process.env.BOT_KEY)
-    )
-      return new Response("401");
+    // if (
+    //   (!session && !discordKey && user_id !== data.discordId) ||
+    //   (discordKey && discordKey !== process.env.BOT_KEY)
+    // )
+    //   return new Response("401");
 
     await connectMongoDB();
 
