@@ -43,6 +43,7 @@ const Preview = ({ data, units }: { data: SheetTypes[]; units: Unit[] }) => {
         </TableHeader>
         <TableBody>
           {data.map((e, index) => {
+            const groupNumber = Math.floor(index / 5) + 1;
             const unit1 = units.find((unit) => unit.name === e.unit1);
             const unit2 = units.find((unit) => unit.name === e.unit2);
             const unit3 = units.find((unit) => unit.name === e.unit3);
@@ -51,66 +52,74 @@ const Preview = ({ data, units }: { data: SheetTypes[]; units: Unit[] }) => {
               e.artillery.find((art) => art.id === a.id && art.check)
             );
             return e.username !== "" ? (
-              <TableRow
-                key={index}
-                className={`text-white font-extrabold bg-gradient-to-r to-slate-950 to-20% border-2 border-stale-400 from${e.color}`}
-              >
-                <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
-                  {index + 1 + ". " + e.username}
-                </TableCell>
-                <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
-                  <div className="flex items-center gap-2">
-                    <Avatar className="h-8 w-8" title={unit1?.name}>
-                      <AvatarImage alt={unit1?.name} src={unit1?.icon} />
-                    </Avatar>
-                    {show ? <span>{unit1?.name}</span> : null}
-                  </div>
-                </TableCell>
-                <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
-                  <div className="flex items-center gap-2">
-                    <Avatar className="h-8 w-8" title={unit2?.name}>
-                      <AvatarImage alt={unit2?.name} src={unit2?.icon} />
-                    </Avatar>
-                    {show ? <span>{unit2?.name}</span> : null}
-                  </div>
-                </TableCell>
-                <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
-                  <div className="flex items-center gap-2">
-                    <Avatar className="h-8 w-8" title={unit3?.name}>
-                      <AvatarImage alt={unit3?.name} src={unit3?.icon} />
-                    </Avatar>
-                    {show ? <span>{unit3?.name}</span> : null}
-                  </div>
-                </TableCell>
+              <>
+                {index % 5 === 0 ? (
+                  <h2 className="text-lg px-6 py-2 font-bold">
+                    Group {groupNumber}
+                  </h2>
+                ) : null}
+                {/*TODO: Translation for'Group'*/}
+                <TableRow
+                  key={index}
+                  className={`text-white font-extrabold bg-gradient-to-r to-slate-950 to-20% border-2 border-stale-400 from${e.color}`}
+                >
+                  <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
+                    {index + 1 + ". " + e.username}
+                  </TableCell>
+                  <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
+                    <div className="flex items-center gap-2">
+                      <Avatar className="h-8 w-8" title={unit1?.name}>
+                        <AvatarImage alt={unit1?.name} src={unit1?.icon} />
+                      </Avatar>
+                      {show ? <span>{unit1?.name}</span> : null}
+                    </div>
+                  </TableCell>
+                  <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
+                    <div className="flex items-center gap-2">
+                      <Avatar className="h-8 w-8" title={unit2?.name}>
+                        <AvatarImage alt={unit2?.name} src={unit2?.icon} />
+                      </Avatar>
+                      {show ? <span>{unit2?.name}</span> : null}
+                    </div>
+                  </TableCell>
+                  <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
+                    <div className="flex items-center gap-2">
+                      <Avatar className="h-8 w-8" title={unit3?.name}>
+                        <AvatarImage alt={unit3?.name} src={unit3?.icon} />
+                      </Avatar>
+                      {show ? <span>{unit3?.name}</span> : null}
+                    </div>
+                  </TableCell>
 
-                <TableCell className="p-1 w-fit">
-                  <div className="flex items-center gap-2 justify-center">
-                    <Avatar className="h-8 w-8" title={weapon?.name}>
-                      <AvatarImage
-                        className="rounded-full"
-                        alt={weapon?.name}
-                        src={weapon?.src}
-                      />
+                  <TableCell className="p-1 w-fit">
+                    <div className="flex items-center gap-2 justify-center">
+                      <Avatar className="h-8 w-8" title={weapon?.name}>
+                        <AvatarImage
+                          className="rounded-full"
+                          alt={weapon?.name}
+                          src={weapon?.src}
+                        />
+                      </Avatar>
+                    </div>
+                  </TableCell>
+                  <TableCell className="w-fit py-1">
+                    <Avatar className="flex gap-1">
+                      {artli.map((a) => (
+                        <AvatarImage
+                          key={a.id}
+                          className="h-8 w-8 rounded-full"
+                          alt={a?.name}
+                          src={a?.src}
+                          title={a?.name}
+                        />
+                      ))}
                     </Avatar>
-                  </div>
-                </TableCell>
-                <TableCell className="w-fit py-1">
-                  <Avatar className="flex gap-1">
-                    {artli.map((a) => (
-                      <AvatarImage
-                        key={a.id}
-                        className="h-8 w-8 rounded-full"
-                        alt={a?.name}
-                        src={a?.src}
-                        title={a?.name}
-                      />
-                    ))}
-                  </Avatar>
-                </TableCell>
-                <TableCell className="pr-2 py-1 font-semibold">
-                  {e.description}
-                </TableCell>
-              </TableRow>
+                  </TableCell>
+                  <TableCell className="pr-2 py-1 font-semibold">
+                    {e.description}
+                  </TableCell>
+                </TableRow>
+              </>
             ) : null;
           })}
         </TableBody>
