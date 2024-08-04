@@ -453,7 +453,7 @@ const Page: React.FC = () => {
                 <>
                   <CheckboxItem
                     checked={lineupFilterErebus.raid_1}
-                    label="Raid 1"
+                    label="NaShin"
                     onChange={() =>
                       setLineupFilterErebus((prev) => ({
                         ...prev,
@@ -463,7 +463,7 @@ const Page: React.FC = () => {
                   />
                   <CheckboxItem
                     checked={lineupFilterErebus.raid_2}
-                    label="Raid 2"
+                    label="Wallsy raid"
                     onChange={() =>
                       setLineupFilterErebus((prev) => ({
                         ...prev,

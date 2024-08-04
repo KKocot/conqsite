@@ -107,46 +107,16 @@ export function Autocompleter({
         {isOpen && (
           <CommandGroup className="absolute max-h-60 p-0 w-52 overflow-scroll bg-slate-200 shadow-md dark:bg-blue-900 z-10">
             {units
-              ? units.map((item) =>
-                  item.pref !== "0" ? (
-                    <CommandItem
-                      key={item.id + item.name}
-                      className="p-0 cursor-pointer"
-                      onSelect={() => onChange(item.name)}
-                    >
-                      <div
-                        onClick={() => {
-                          onChange(item.name), setIsOpen(false);
-                        }}
-                        className={clsx(
-                          "w-56 px-2 py-1 flex items-center gap-2 hover:bg-slate-600 dark:bg-slate-800 bg-slate-300",
-                          {
-                            "to-40% bg-gradient-to-r from-yellow-700 dark:to-slate-800 to-slate-300 hover:to-yellow-700":
-                              item.pref === "4",
-                            "to-40% bg-gradient-to-r from-purple-700 dark:to-slate-800 to-slate-300 hover:to-purple-700":
-                              item.pref === "3",
-                            "to-40% bg-gradient-to-r from-blue-700 dark:to-slate-800 to-slate-300 hover:to-blue-700":
-                              item.pref === "2",
-                            "to-40% bg-gradient-to-r from-green-700 dark:to-slate-800 to-slate-300 hover:to-green-700":
-                              item.pref === "1",
-                          }
-                        )}
-                        title={item.name}
-                      >
-                        <Avatar
-                          className="h-8 w-8 rounded-none"
-                          title={item.name}
-                        >
-                          <AvatarImage alt={item.name} src={item.icon} />
-                          <AvatarFallback className="rounded-none">
-                            U
-                          </AvatarFallback>
-                        </Avatar>
-                        <span>{item.name}</span>
-                      </div>
-                    </CommandItem>
-                  ) : null
-                )
+              ? units.map((item) => {
+                  const characterLevel = Number(user?.characterLevel);
+                  if (
+                    characterLevel === 1 ||
+                    (item.pref !== "0" && characterLevel > 1)
+                  ) {
+                    return renderCommandItem(item, onChange, setIsOpen);
+                  }
+                  return null;
+                })
               : null}
             {users
               ? users.map((item) => (
@@ -196,3 +166,47 @@ export function Autocompleter({
     </Command>
   );
 }
+
+const renderCommandItem = (
+  item: Unit,
+  onChange: OnChange,
+  setIsOpen: SetIsOpen
+) => (
+  <CommandItem
+    key={item.id + item.name}
+    className="p-0 cursor-pointer"
+    onSelect={() => onChange(item.name)}
+  >
+    <div
+      onClick={() => {
+        onChange(item.name);
+        setIsOpen(false);
+      }}
+      className={clsx(
+        "w-56 px-2 py-1 flex items-center gap-2 hover:bg-slate-600 dark:bg-slate-800 bg-slate-300",
+        {
+          "to-40% bg-gradient-to-r from-yellow-700 dark:to-slate-800 to-slate-300 hover:to-yellow-700":
+            item.pref === "4",
+          "to-40% bg-gradient-to-r from-purple-700 dark:to-slate-800 to-slate-300 hover:to-purple-700":
+            item.pref === "3",
+          "to-40% bg-gradient-to-r from-blue-700 dark:to-slate-800 to-slate-300 hover:to-blue-700":
+            item.pref === "2",
+          "to-40% bg-gradient-to-r from-green-700 dark:to-slate-800 to-slate-300 hover:to-green-700":
+            item.pref === "1",
+          "to-40% bg-gradient-to-r from-gray-700 dark:to-slate-800 to-slate-300 hover:to-gray-700":
+            item.pref === "0",
+        }
+      )}
+      title={item.name}
+    >
+      <Avatar className="h-8 w-8 rounded-none" title={item.name}>
+        <AvatarImage alt={item.name} src={item.icon} />
+        <AvatarFallback className="rounded-none">U</AvatarFallback>
+      </Avatar>
+      <span>{item.name}</span>
+    </div>
+  </CommandItem>
+);
+
+type OnChange = (name: string) => void;
+type SetIsOpen = (isOpen: boolean) => void;
