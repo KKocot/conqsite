@@ -37,6 +37,15 @@ import {
   SlidersHorizontal,
   Trash2,
 } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 const next_tw = getCloserDay();
 
@@ -76,7 +85,11 @@ const Page: React.FC = () => {
   const [userList, setUserList] = useState<SurveyProps[]>([]);
   const [loading, setLoading] = useState(false);
   const [sheetData, setSheetData] = useState<SheetTypes[]>([]);
+  const [templates, setTemplates] = useState<
+    { house: string; templateName: string; sheet: SheetTypes[] }[]
+  >([]);
   const [showPreview, setShowPreview] = useState(false);
+  const [templateName, setTemplateName] = useState("");
   const [storage, setStorage] = useLocalStorage<SheetTypes[]>(`sheetData`, []);
   const [filterUnits, setFilterUnits] = useState({
     rustic_checked: true,
@@ -145,6 +158,45 @@ const Page: React.FC = () => {
       setTimeout(() => setLoading(false), 1000);
     }
   };
+  const fetchTemplate = async (house: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/template?house=${house}`);
+      const data = await response.json();
+      setTemplates(data.surveys);
+    } catch (error) {
+      console.error("Error fetching:", error);
+    } finally {
+      setTimeout(() => setLoading(false), 1000);
+    }
+  };
+  const onSubmit = async (values: any) => {
+    try {
+      const response = await fetch("/api/template", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          templateName: templateName.includes("E_")
+            ? templateName
+            : `E_${templateName}`,
+          house: commander_house,
+          sheet: values,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error occurred:", errorData);
+      } else {
+        const responseData = await response.json();
+        console.log("Success:", responseData);
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+    }
+  };
   const units = useMemo(() => {
     const golden_era = filterUnits.golden_checked ? goldenUnits : [];
     const heroic_era = filterUnits.heroic_checked ? heroicUnits : [];
@@ -211,6 +263,7 @@ const Page: React.FC = () => {
   function handlerGetData() {
     fetchLineup(commander_house);
     fetchSurveys(commander_house);
+    fetchTemplate(commander_house);
     setNoData(false);
   }
   const handleEdit = (
@@ -499,6 +552,48 @@ const Page: React.FC = () => {
             </PopoverContent>
           </Popover>
         </div>
+      </div>
+
+      <div className="flex justify-center items-center gap-4 bg-indigo-950 p-1">
+        <div className="flex">
+          <Input
+            onChange={(e) => setTemplateName(e.target.value)}
+            placeholder="Name new template"
+            className="w-48"
+            value={templateName}
+          />
+          <Button
+            onClick={() => onSubmit(sheetData)}
+            disabled={templateName === ""}
+            variant="tab"
+            className="hover:bg-green-700"
+          >
+            Save Template on Server
+          </Button>
+          {/* TODO Translation */}
+        </div>
+        <Select disabled={all_players_list.length === 0}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select Template" />
+            {/*TODO translation */}
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {templates.map((e) => (
+                <SelectLabel
+                  className="cursor-pointer p-2"
+                  key={e.templateName}
+                  onClick={() => {
+                    setSheetData(e.sheet);
+                    setTemplateName(e.templateName);
+                  }}
+                >
+                  {e.templateName}
+                </SelectLabel>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </div>
       <div className={clsx("flex flex-col gap-5 p-2", { hidden: showPreview })}>
         <div className="flex flex-wrap gap-2 p-4">

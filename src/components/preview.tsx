@@ -11,7 +11,7 @@ import { artillery } from "@/assets/artillery";
 import { SheetTypes, Unit } from "@/lib/type";
 import { weapons } from "@/assets/weapons";
 import { Button } from "./ui/button";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useTranslations } from "next-intl";
 
 const Preview = ({ data, units }: { data: SheetTypes[]; units: Unit[] }) => {
@@ -52,7 +52,7 @@ const Preview = ({ data, units }: { data: SheetTypes[]; units: Unit[] }) => {
               e.artillery.find((art) => art.id === a.id && art.check)
             );
             return e.username !== "" ? (
-              <>
+              <Fragment key={index}>
                 {index % 5 === 0 ? (
                   <h2 className="text-lg px-6 py-2 font-bold">
                     Group {groupNumber}
@@ -60,7 +60,6 @@ const Preview = ({ data, units }: { data: SheetTypes[]; units: Unit[] }) => {
                 ) : null}
                 {/*TODO: Translation for'Group'*/}
                 <TableRow
-                  key={index}
                   className={`text-white font-extrabold bg-gradient-to-r to-slate-950 to-20% border-2 border-stale-400 from${e.color}`}
                 >
                   <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
@@ -119,7 +118,7 @@ const Preview = ({ data, units }: { data: SheetTypes[]; units: Unit[] }) => {
                     {e.description}
                   </TableCell>
                 </TableRow>
-              </>
+              </Fragment>
             ) : null;
           })}
         </TableBody>
