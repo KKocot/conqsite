@@ -2,19 +2,14 @@
 
 import {
   command_whitelist_erebus,
-  command_whitelist_kov,
+  command_whitelist_kop,
+  command_whitelist_blackforge,
 } from "@/assets/whitelists";
 import { Button } from "@/components/ui/button";
 import { ArtilleryProps, SheetTypes, SurveyProps } from "@/lib/type";
 import { getCloserDay } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useMemo, useState } from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import CheckboxItem from "@/components/sheet-form-filter";
 import { UserProfile } from "@/components/user-profile";
 import Loading from "react-loading";
@@ -29,6 +24,28 @@ import { others } from "@/assets/other-units-data";
 import Preview from "@/components/preview";
 import { useLocalStorage } from "usehooks-ts";
 import { useTranslations } from "next-intl";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  ChevronDown,
+  FileDown,
+  FileUp,
+  ScanEye,
+  SlidersHorizontal,
+  Trash2,
+} from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 const next_tw = getCloserDay();
 
@@ -68,7 +85,11 @@ const Page: React.FC = () => {
   const [userList, setUserList] = useState<SurveyProps[]>([]);
   const [loading, setLoading] = useState(false);
   const [sheetData, setSheetData] = useState<SheetTypes[]>([]);
+  const [templates, setTemplates] = useState<
+    { house: string; templateName: string; sheet: SheetTypes[] }[]
+  >([]);
   const [showPreview, setShowPreview] = useState(false);
+  const [templateName, setTemplateName] = useState("");
   const [storage, setStorage] = useLocalStorage<SheetTypes[]>(`sheetData`, []);
   const [filterUnits, setFilterUnits] = useState({
     rustic_checked: true,
@@ -82,15 +103,22 @@ const Page: React.FC = () => {
   const [lineupFilterKoP, setLineupFilterKoP] = useState({
     ko_checked: false,
     kt_checked: false,
+    zp_checked: false,
   });
   const [lineupFilterErebus, setLineupFilterErebus] = useState({
     raid_1: false,
     raid_2: false,
   });
-  const commander_house = command_whitelist_kov.includes(
+  const [lineupFilterBlackForge, setLineupFilterBlackForge] = useState({
+    raid_1: false,
+    raid_2: false,
+  });
+  const commander_house = command_whitelist_kop.includes(
     commander?.user?.id ?? ""
   )
     ? "KingdomOfPoland"
+    : command_whitelist_blackforge.includes(commander?.user?.id ?? "")
+    ? "BlackForge"
     : command_whitelist_erebus.includes(commander?.user?.id ?? "")
     ? "Erebus"
     : "";
@@ -104,9 +132,12 @@ const Page: React.FC = () => {
           ? {
               lineup_2: data.signup.lineup_2,
               lineup_3: data.signup.lineup_3,
+              lineup_4: data.signup.lineup_4,
             }
           : house === "Erebus"
-          ? { lineup_4: data.signup.lineup_4, lineup_5: data.signup.lineup_5 }
+          ? { lineup_5: data.signup.lineup_5, lineup_6: data.signup.lineup_6 }
+          : house === "BlackForge"
+          ? { lineup_7: data.signup.lineup_7, lineup_8: data.signup.lineup_8 }
           : null;
       setSignup(lineups);
     } catch (error) {
@@ -125,6 +156,53 @@ const Page: React.FC = () => {
       console.error("Error fetching:", error);
     } finally {
       setTimeout(() => setLoading(false), 1000);
+    }
+  };
+  const fetchTemplate = async (house: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/template?house=${house}`);
+      const data = await response.json();
+      setTemplates(data.surveys);
+    } catch (error) {
+      console.error("Error fetching:", error);
+    } finally {
+      setTimeout(() => setLoading(false), 1000);
+    }
+  };
+  const house_tag =
+    commander_house === "KingdomOfPoland"
+      ? "KoP"
+      : commander_house === "Erebus"
+      ? "E"
+      : commander_house === "BlackForge"
+      ? "BF"
+      : "";
+  const onSubmit = async (values: any) => {
+    try {
+      const response = await fetch("/api/template", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          templateName: templateName.includes(`${house_tag}_`)
+            ? templateName
+            : `${house_tag}_${templateName}`,
+          house: commander_house,
+          sheet: values,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error occurred:", errorData);
+      } else {
+        const responseData = await response.json();
+        console.log("Success:", responseData);
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
     }
   };
   const units = useMemo(() => {
@@ -154,28 +232,46 @@ const Page: React.FC = () => {
     if (!surveys || !signup) return [];
     const lineup_ko = getLineup(surveys, signup?.lineup_2 ?? []);
     const lineup_kt = getLineup(surveys, signup?.lineup_3 ?? []);
+    const lineup_zp = getLineup(surveys, signup?.lineup_4 ?? []);
     return [
       lineupFilterKoP.ko_checked ? lineup_ko : [],
       lineupFilterKoP.kt_checked ? lineup_kt : [],
-    ];
-  }, [lineupFilterKoP.ko_checked, lineupFilterKoP.kt_checked]);
+      lineupFilterKoP.zp_checked ? lineup_zp : [],
+    ].filter(Array.isArray);
+  }, [
+    lineupFilterKoP.ko_checked,
+    lineupFilterKoP.kt_checked,
+    lineupFilterKoP.zp_checked,
+  ]);
   const erebus_players_list = useMemo(() => {
     if (!surveys || !signup) return [];
-    const lineup_raid_1 = getLineup(surveys, signup?.lineup_4 ?? []);
-    const lineup_raid_2 = getLineup(surveys, signup?.lineup_5 ?? []);
+    const lineup_raid_1 = getLineup(surveys, signup?.lineup_5 ?? []);
+    const lineup_raid_2 = getLineup(surveys, signup?.lineup_6 ?? []);
     return [
       lineupFilterErebus.raid_1 ? lineup_raid_1 : [],
       lineupFilterErebus.raid_2 ? lineup_raid_2 : [],
-    ].filter(Array.isArray); // Ensure only arrays are returned
+    ].filter(Array.isArray);
   }, [lineupFilterErebus.raid_1, lineupFilterErebus.raid_2]);
+
+  const blackforge_players_list = useMemo(() => {
+    if (!surveys || !signup) return [];
+    const lineup_raid_1 = getLineup(surveys, signup?.lineup_7 ?? []);
+    const lineup_raid_2 = getLineup(surveys, signup?.lineup_8 ?? []);
+    return [
+      lineupFilterBlackForge.raid_1 ? lineup_raid_1 : [],
+      lineupFilterBlackForge.raid_2 ? lineup_raid_2 : [],
+    ].filter(Array.isArray); // Ensure only arrays are returned
+  }, [lineupFilterBlackForge.raid_1, lineupFilterBlackForge.raid_2]);
 
   const all_players_list: SurveyProps[] = [
     ...kop_players_list,
     ...erebus_players_list,
+    ...blackforge_players_list,
   ].flat();
   function handlerGetData() {
     fetchLineup(commander_house);
     fetchSurveys(commander_house);
+    fetchTemplate(commander_house);
     setNoData(false);
   }
   const handleEdit = (
@@ -246,30 +342,36 @@ const Page: React.FC = () => {
       <Button onClick={() => handlerGetData()}>{t("load_data")}</Button>
     </div>
   ) : (
-    <div>
-      <div className="flex p-4 items-center justify-around">
-        <Button onClick={() => setShowPreview(!showPreview)}>
+    <div className="flex justify-center flex-col items-center">
+      <div className="flex items-center justify-around bg-indigo-950 w-3/4">
+        <Button
+          onClick={() => setShowPreview(!showPreview)}
+          variant="tab"
+          className="rounded-none"
+        >
+          <ScanEye className="h-5 w-5" />
           {showPreview ? t("editor") : t("preview")}
         </Button>
         <div className="flex justify-center gap-4">
           <Button
-            size="sm"
             onClick={() => setStorage(sheetData)}
-            variant="success"
-            className="text-white"
+            variant="tab"
+            className="hover:bg-green-700"
           >
+            <FileDown className="w-5 h-5" />
             {t("save_template")}
           </Button>
           <Button
-            size="sm"
             onClick={() => setSheetData(storage)}
             disabled={all_players_list.length === 0}
+            variant="tab"
           >
+            <FileUp className="w-5 h-5" />
             {t("load_template")}
           </Button>
           <Button
-            size="sm"
-            variant="destructive"
+            variant="tab"
+            className="hover:bg-red-700"
             onClick={() =>
               setSheetData(() => {
                 const requiredLength = all_players_list.length + 10;
@@ -280,15 +382,20 @@ const Page: React.FC = () => {
               })
             }
           >
+            <Trash2 className="w-5 h-5" />
             {t("clean_sheet")}
           </Button>
         </div>
-      </div>
-      <div className={clsx("flex flex-col gap-5 p-2", { hidden: showPreview })}>
-        <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
-            <AccordionTrigger className="px-6">{t("units")}</AccordionTrigger>
-            <AccordionContent className="flex justify-around p-2 flex-wrap">
+        <div className="flex gap-4">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="tab">
+                <SlidersHorizontal className="w-5 h-5" />
+                {t("units")}
+                <ChevronDown />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="gap-4 flex flex-col">
               <CheckboxItem
                 checked={filterUnits.meta_units_only}
                 label={t("meta_units_only")}
@@ -359,66 +466,144 @@ const Page: React.FC = () => {
                   }))
                 }
               />
-            </AccordionContent>
-          </AccordionItem>
-          {commander_house === "KingdomOfPoland" ? (
-            <AccordionItem value="item-2">
-              <AccordionTrigger className="px-6">
+            </PopoverContent>
+          </Popover>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="tab">
+                <SlidersHorizontal className="w-5 h-5" />
                 {t("lineups")}
-              </AccordionTrigger>
-              <AccordionContent className="flex justify-around p-2 flex-wrap">
-                <CheckboxItem
-                  checked={lineupFilterKoP.ko_checked}
-                  label="King's Order"
-                  onChange={() =>
-                    setLineupFilterKoP((prev) => ({
-                      ...prev,
-                      ko_checked: !prev.ko_checked,
-                    }))
-                  }
-                />
-                <CheckboxItem
-                  checked={lineupFilterKoP.kt_checked}
-                  label="Królewska Tarcza"
-                  onChange={() =>
-                    setLineupFilterKoP((prev) => ({
-                      ...prev,
-                      kt_checked: !prev.kt_checked,
-                    }))
-                  }
-                />
-              </AccordionContent>
-            </AccordionItem>
-          ) : commander_house === "Erebus" ? (
-            <AccordionItem value="item-3">
-              <AccordionTrigger className="px-6">
-                {t("lineups")}
-              </AccordionTrigger>
-              <AccordionContent className="flex justify-around p-2 flex-wrap">
-                <CheckboxItem
-                  checked={lineupFilterErebus.raid_1}
-                  label="Raid 1"
-                  onChange={() =>
-                    setLineupFilterErebus((prev) => ({
-                      ...prev,
-                      raid_1: !prev.raid_1,
-                    }))
-                  }
-                />
-                <CheckboxItem
-                  checked={lineupFilterErebus.raid_2}
-                  label="Raid 2"
-                  onChange={() =>
-                    setLineupFilterErebus((prev) => ({
-                      ...prev,
-                      raid_2: !prev.raid_2,
-                    }))
-                  }
-                />
-              </AccordionContent>
-            </AccordionItem>
-          ) : null}
-        </Accordion>
+                <ChevronDown />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="gap-4 flex flex-col">
+              {commander_house === "KingdomOfPoland" ? (
+                <>
+                  <CheckboxItem
+                    checked={lineupFilterKoP.ko_checked}
+                    label="King's Order"
+                    onChange={() =>
+                      setLineupFilterKoP((prev) => ({
+                        ...prev,
+                        ko_checked: !prev.ko_checked,
+                      }))
+                    }
+                  />
+                  <CheckboxItem
+                    checked={lineupFilterKoP.kt_checked}
+                    label="Królewska Tarcza"
+                    onChange={() =>
+                      setLineupFilterKoP((prev) => ({
+                        ...prev,
+                        kt_checked: !prev.kt_checked,
+                      }))
+                    }
+                  />
+                  <CheckboxItem
+                    checked={lineupFilterKoP.zp_checked}
+                    label="Zielona Piechota"
+                    onChange={() =>
+                      setLineupFilterKoP((prev) => ({
+                        ...prev,
+                        zp_checked: !prev.zp_checked,
+                      }))
+                    }
+                  />
+                </>
+              ) : commander_house === "Erebus" ? (
+                <>
+                  <CheckboxItem
+                    checked={lineupFilterErebus.raid_1}
+                    label="NaShin"
+                    onChange={() =>
+                      setLineupFilterErebus((prev) => ({
+                        ...prev,
+                        raid_1: !prev.raid_1,
+                      }))
+                    }
+                  />
+                  <CheckboxItem
+                    checked={lineupFilterErebus.raid_2}
+                    label="Wallsy raid"
+                    onChange={() =>
+                      setLineupFilterErebus((prev) => ({
+                        ...prev,
+                        raid_2: !prev.raid_2,
+                      }))
+                    }
+                  />
+                </>
+              ) : commander_house === "BlackForge" ? (
+                <>
+                  <CheckboxItem
+                    checked={lineupFilterBlackForge.raid_1}
+                    label="Raid 1"
+                    onChange={() =>
+                      setLineupFilterBlackForge((prev) => ({
+                        ...prev,
+                        raid_1: !prev.raid_1,
+                      }))
+                    }
+                  />
+                  <CheckboxItem
+                    checked={lineupFilterBlackForge.raid_2}
+                    label="Raid 2"
+                    onChange={() =>
+                      setLineupFilterBlackForge((prev) => ({
+                        ...prev,
+                        raid_2: !prev.raid_2,
+                      }))
+                    }
+                  />
+                </>
+              ) : null}
+            </PopoverContent>
+          </Popover>
+        </div>
+      </div>
+
+      <div className="flex justify-center items-center gap-4 bg-indigo-950 p-1">
+        <div className="flex">
+          <Input
+            onChange={(e) => setTemplateName(e.target.value)}
+            placeholder="Name new template"
+            className="w-48"
+            value={templateName}
+          />
+          <Button
+            onClick={() => onSubmit(sheetData)}
+            disabled={templateName === ""}
+            variant="tab"
+            className="hover:bg-green-700"
+          >
+            Save Template on Server
+          </Button>
+          {/* TODO Translation */}
+        </div>
+        <Select disabled={all_players_list.length === 0}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select Template" />
+            {/*TODO translation */}
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {templates.map((e) => (
+                <SelectLabel
+                  className="cursor-pointer p-2"
+                  key={e.templateName}
+                  onClick={() => {
+                    setSheetData(e.sheet);
+                    setTemplateName(e.templateName);
+                  }}
+                >
+                  {e.templateName}
+                </SelectLabel>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+      <div className={clsx("flex flex-col gap-5 p-2", { hidden: showPreview })}>
         <div className="flex flex-wrap gap-2 p-4">
           {all_players_list.map((survey) => (
             <div key={survey.discordId}>

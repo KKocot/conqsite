@@ -12,7 +12,6 @@ const Page: React.FC = () => {
   const { data } = useSession();
   const user_id = data ? data?.user.id : "";
   const [discordId, setDiscordId] = React.useState<string>("");
-  console.log(adduser_whitelist.includes(user_id));
   return adduser_whitelist.includes(user_id) ? (
     <div>
       <Input

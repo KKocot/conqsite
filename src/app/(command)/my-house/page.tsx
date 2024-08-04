@@ -2,7 +2,8 @@
 
 import {
   command_whitelist_erebus,
-  command_whitelist_kov,
+  command_whitelist_kop,
+  command_whitelist_blackforge,
 } from "@/assets/whitelists";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -20,8 +21,10 @@ const MyHousePage = () => {
   const [inputQuery, setInputQuery] = useState<string>("");
 
   const commander_house = commander?.user?.id
-    ? command_whitelist_kov.includes(commander?.user?.id)
+    ? command_whitelist_kop.includes(commander?.user?.id)
       ? "KingdomOfPoland"
+      : command_whitelist_blackforge.includes(commander?.user?.id)
+      ? "BlackForge"
       : command_whitelist_erebus.includes(commander?.user?.id)
       ? "Erebus"
       : ""
@@ -71,9 +74,9 @@ const MyHousePage = () => {
       <h1 className="text-5xl font-bold text-center py-10">
         {commander_house}
       </h1>
-      <div>
+      <div className="flex justify-center">
         <Input
-          className="mx-4"
+          className="w-3/4"
           onChange={(e) => setInputQuery(e.target.value)}
           value={inputQuery}
         />

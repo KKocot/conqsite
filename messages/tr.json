@@ -76,6 +76,14 @@
     "description": "Açıklama",
     "hide_names": "İsimleri gizle",
     "show_names": "İsimleri göster",
-    "meta_unit": "Meta Birim"
+    "meta_unit": "Meta Birim",
+    "not_at_all": "Hiç",
+    "some": "Biraz",
+    "average": "Ortalama",
+    "a_lot": "Çok",
+    "no_artillery": "Topçu yok",
+    "some_artillery": "Biraz topçu var",
+    "average_artillery": "Ortalama miktarda topçu var",
+    "a_lot_artillery": "Çok topçu var"
   }
 }

@@ -79,7 +79,7 @@ const Item = ({
   const t = useTranslations("BuildTeam");
   const users_list = users.map((user) => user.inGameNick);
   const [user, setUser] = useState<SurveyProps | undefined>();
-  const user_artillery = getArtyAmount(user?.artyAmount);
+  const user_artillery = getArtyAmount(user?.artyAmount, t);
   function findUserByNick(nickname: string) {
     return users.find(
       (user) => user.discordNick === nickname || user.inGameNick === nickname
