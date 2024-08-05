@@ -111,7 +111,7 @@ export function Autocompleter({
                   const characterLevel = Number(user?.characterLevel);
                   if (
                     characterLevel === 1 ||
-                    (item.pref !== "0" && characterLevel > 1)
+                    (item.pref !== "0" && characterLevel !== 1)
                   ) {
                     return renderCommandItem(item, onChange, setIsOpen);
                   }
