@@ -3,6 +3,7 @@ export const command_whitelist_kop = [
   "657219523216277534", // Krang
   "329336538372636673", // Samoczek
   "865868334037336085", // Sujdi
+  "764198143331008584", // SirEddard
 ];
 export const command_whitelist_erebus = [
   "303156898532818944", // me
