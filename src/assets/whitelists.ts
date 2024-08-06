@@ -16,6 +16,7 @@ export const command_whitelist_erebus = [
   "589558372571807784", // HayvanNedd
   "142340700602761216", // NasuSenofilico
   "589558372571807784", // HayvanWeary
+  "290544464253026314", // LeexDiin
 ];
 export const command_whitelist_blackforge = [
   "141661799153008640", // Horizon
