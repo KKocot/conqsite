@@ -20,6 +20,7 @@ export const DEFAULT_FORM_DATA: SurveyProps = {
   inGameNick: "",
   discordId: "",
   characterLevel: "",
+  avatar: "",
   house: "",
   artyAmount: "none",
   weapons: weapons.map(() => ({ value: false, leadership: 0, pref: 0 })),
@@ -30,7 +31,13 @@ export const DEFAULT_FORM_DATA: SurveyProps = {
   },
 };
 
-export default function WizardForm({ user_id }: { user_id: string }) {
+export default function WizardForm({
+  user_id,
+  avatar,
+}: {
+  user_id: string;
+  avatar?: string;
+}) {
   const t = useTranslations("AddForm");
   const router = useRouter();
   const [step, setStep] = useState(1);
@@ -116,7 +123,7 @@ export default function WizardForm({ user_id }: { user_id: string }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...values, discordId: user_id }),
+        body: JSON.stringify({ ...values, discordId: user_id, avatar: avatar }),
       });
 
       if (!response.ok) {

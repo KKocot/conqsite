@@ -13,6 +13,7 @@ export interface SurveyProps {
   inGameNick: string;
   discordId: string;
   characterLevel: string;
+  avatar?: string;
   house: string;
   artyAmount: "none" | "some" | "average" | "aLot";
   weapons: { value: boolean; leadership: number; pref?: number }[];

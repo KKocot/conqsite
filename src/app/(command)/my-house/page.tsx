@@ -97,6 +97,13 @@ const MyHousePage = () => {
                   }
                 )}
               >
+                {e.avatar ? (
+                  <img
+                    src={e.avatar}
+                    alt={e.inGameNick}
+                    className="w-8 h-8 mr-1 rounded-full"
+                  />
+                ) : null}
                 {e.inGameNick}
               </Badge>
             </UserProfile>
