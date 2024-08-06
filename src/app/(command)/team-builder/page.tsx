@@ -29,7 +29,7 @@ import StorageTemplate from "@/components/storage-template";
 
 const next_tw = getCloserDay();
 
-export const DEFAULT_CARD = {
+const DEFAULT_CARD = {
   username: "",
   unit1: "",
   unit2: "",
