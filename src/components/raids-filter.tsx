@@ -3,7 +3,7 @@ import CheckboxItem from "./sheet-form-filter";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { useTranslations } from "next-intl";
-import { Dispatch, FC } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 
 type Filter = {
   ko: boolean;
@@ -18,7 +18,7 @@ type Filter = {
 interface RaidsFilterProps {
   userHouse: string;
   filter: Filter;
-  setFilter: Dispatch<React.SetStateAction<Filter>>;
+  setFilter: Dispatch<SetStateAction<Filter>>;
 }
 
 const RaidsFilter: FC<RaidsFilterProps> = ({
@@ -27,7 +27,7 @@ const RaidsFilter: FC<RaidsFilterProps> = ({
   setFilter,
 }) => {
   const t = useTranslations("BuildTeam");
-
+  console.log(filter);
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -46,7 +46,7 @@ const RaidsFilter: FC<RaidsFilterProps> = ({
               onChange={() =>
                 setFilter((prev) => ({
                   ...prev,
-                  ko_checked: !prev.ko,
+                  ko: !prev.ko,
                 }))
               }
             />
@@ -56,7 +56,7 @@ const RaidsFilter: FC<RaidsFilterProps> = ({
               onChange={() =>
                 setFilter((prev) => ({
                   ...prev,
-                  kt_checked: !prev.kt,
+                  kt: !prev.kt,
                 }))
               }
             />
@@ -66,7 +66,7 @@ const RaidsFilter: FC<RaidsFilterProps> = ({
               onChange={() =>
                 setFilter((prev) => ({
                   ...prev,
-                  zp_checked: !prev.zp,
+                  zp: !prev.zp,
                 }))
               }
             />
@@ -79,7 +79,7 @@ const RaidsFilter: FC<RaidsFilterProps> = ({
               onChange={() =>
                 setFilter((prev) => ({
                   ...prev,
-                  raid_1: !prev.nashin,
+                  nashin: !prev.nashin,
                 }))
               }
             />
@@ -89,7 +89,7 @@ const RaidsFilter: FC<RaidsFilterProps> = ({
               onChange={() =>
                 setFilter((prev) => ({
                   ...prev,
-                  raid_2: !prev.wallsy,
+                  wallsy: !prev.wallsy,
                 }))
               }
             />
@@ -102,7 +102,7 @@ const RaidsFilter: FC<RaidsFilterProps> = ({
               onChange={() =>
                 setFilter((prev) => ({
                   ...prev,
-                  raid_1: !prev.blackforge_1,
+                  blackforge_1: !prev.blackforge_1,
                 }))
               }
             />
@@ -112,7 +112,7 @@ const RaidsFilter: FC<RaidsFilterProps> = ({
               onChange={() =>
                 setFilter((prev) => ({
                   ...prev,
-                  raid_2: !prev.blackforge_2,
+                  blackforge_2: !prev.blackforge_2,
                 }))
               }
             />
