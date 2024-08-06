@@ -78,6 +78,7 @@ const StepGeneral = ({
               <FormItem>
                 <FormLabel>{t("house")}</FormLabel>
                 <Select
+                  disabled={true}
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                   required
@@ -92,6 +93,7 @@ const StepGeneral = ({
                       KingdomOfPoland
                     </SelectItem>
                     <SelectItem value="Erebus">Erebus</SelectItem>
+                    <SelectItem value="BlackForge">BlackForge</SelectItem>
                   </SelectContent>
                 </Select>
               </FormItem>
