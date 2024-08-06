@@ -55,10 +55,9 @@ const Preview = ({ data, units }: { data: SheetTypes[]; units: Unit[] }) => {
               <Fragment key={index}>
                 {index % 5 === 0 ? (
                   <TableRow className="text-lg px-6 py-2 font-bold">
-                    <TableCell> Group {groupNumber}</TableCell>
+                    <TableCell>{`${t("group")} ${groupNumber}`}</TableCell>
                   </TableRow>
                 ) : null}
-                {/*TODO: Translation for'Group'*/}
                 <TableRow
                   className={`text-white font-extrabold bg-gradient-to-r to-slate-950 to-20% border-2 border-stale-400 from${e.color}`}
                 >

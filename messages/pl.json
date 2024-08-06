@@ -84,6 +84,9 @@
     "no_artillery": "Nie ma artylerii",
     "some_artillery": "Ma trochę artylerii",
     "average_artillery": "Ma średnią ilość artylerii",
-    "a_lot_artillery": "Ma dużo artylerii"
+    "a_lot_artillery": "Ma dużo artylerii",
+    "select_template": "Wybierz szablon",
+    "save_template_to_db": "Zapisz szablon na serwerze",
+    "group": "Grupa"
   }
 }
