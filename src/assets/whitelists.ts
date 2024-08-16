@@ -13,7 +13,7 @@ export const command_whitelist_erebus = [
   "947208488982048808", // HayvanWallsy
   "397572624471031818", // HayvanDawX
   "307173174905405440", // Biggy
-  "589558372571807784", // HayvanNedd
+  "139355419914010624", // HayvanNedd
   "142340700602761216", // NasuSenofilico
   "589558372571807784", // HayvanWeary
   "290544464253026314", // LeexDiin

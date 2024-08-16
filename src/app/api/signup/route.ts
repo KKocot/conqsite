@@ -32,7 +32,7 @@ export async function GET() {
   //   (!session && !discordKey) ||
   //   (discordKey && discordKey !== process.env.BOT_KEY)
   // )
-  return new Response("401");
+  // return new Response("401");
 
   await connectMongoDB();
   const signup = await Signup.find();
