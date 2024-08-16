@@ -28,7 +28,7 @@ export default function Home() {
       {data ? (
         <>
           <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-            <h1 className="pb-4 text-lg text-center">{t("Member menu")}</h1>
+            <h1 className="pb-4 text-lg text-center">Member menu</h1>
             <div className="flex gap-4 justify-center">
               <Link href="/profile">
                 <Button>{t("my_profile")}</Button>
@@ -41,9 +41,7 @@ export default function Home() {
 
           {commanders.includes(data.user.id) ? (
             <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-              <h1 className="pb-4 text-lg text-center">
-                {t("High Command menu")}
-              </h1>
+              <h1 className="pb-4 text-lg text-center">High Command menu</h1>
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
                 <Link href="/team-builder">
                   <Button>{t("build_team")}</Button>
@@ -56,12 +54,10 @@ export default function Home() {
           ) : null}
           {commanders.includes(data.user.id) ? (
             <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-              <h1 className="pb-4 text-lg text-center">
-                {t("House Leader menu")}
-              </h1>
+              <h1 className="pb-4 text-lg text-center">House Leader menu</h1>
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
                 <Link href="/settings">
-                  <Button>{t("settings")}</Button>
+                  <Button>Settings</Button>
                 </Link>
               </div>
             </div>
