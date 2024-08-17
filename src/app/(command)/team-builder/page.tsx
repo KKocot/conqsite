@@ -1,10 +1,5 @@
 "use client";
 
-import {
-  command_whitelist_erebus,
-  command_whitelist_kop,
-  command_whitelist_blackforge,
-} from "@/assets/whitelists";
 import { Button } from "@/components/ui/button";
 import { ArtilleryProps, SheetTypes, SurveyProps } from "@/lib/type";
 import { getCloserDay } from "@/lib/utils";
@@ -26,6 +21,7 @@ import TemplateMenu from "@/components/templates-menu";
 import UnitsFilter from "@/components/units-filter";
 import RaidsFilter from "@/components/raids-filter";
 import StorageTemplate from "@/components/storage-template";
+import { useRolesContext } from "@/components/providers/globalData";
 
 const next_tw = getCloserDay();
 
@@ -86,15 +82,11 @@ const Page: React.FC = () => {
     blackforge_2: false,
   });
 
-  const commander_house = command_whitelist_kop.includes(
-    commander?.user?.id ?? ""
-  )
-    ? "KingdomOfPoland"
-    : command_whitelist_blackforge.includes(commander?.user?.id ?? "")
-    ? "BlackForge"
-    : command_whitelist_erebus.includes(commander?.user?.id ?? "")
-    ? "Erebus"
-    : "";
+  const command_list = useRolesContext();
+  const commander_house =
+    commander && commander.user.id
+      ? command_list.find((e) => e.discordId === commander.user.id)
+      : "";
   const fetchLineup = async (house: string) => {
     setLoading(true);
     try {
@@ -192,8 +184,9 @@ const Page: React.FC = () => {
     ...blackforge_players_list,
   ].flat();
   function handlerGetData() {
-    fetchLineup(commander_house);
-    fetchSurveys(commander_house);
+    if (!commander_house) return;
+    fetchLineup(commander_house.house);
+    fetchSurveys(commander_house.house);
     setNoData(false);
   }
   const handleEdit = (
@@ -282,14 +275,14 @@ const Page: React.FC = () => {
         <div className="flex gap-4">
           <UnitsFilter filters={filterUnits} setFilter={setFilterUnits} />
           <RaidsFilter
-            userHouse={commander_house}
+            userHouse={commander_house ? commander_house.house : ""}
             filter={filterLineup}
             setFilter={setFilterLineup}
           />
         </div>
       </div>
       <TemplateMenu
-        userHouse={commander_house}
+        userHouse={commander_house ? commander_house.house : ""}
         data={sheetData}
         setData={setSheetData}
         players={all_players_list}

@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  command_whitelist_erebus,
-  command_whitelist_kop,
-  command_whitelist_blackforge,
-} from "@/assets/whitelists";
+import { useRolesContext } from "@/components/providers/globalData";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { UserProfile } from "@/components/user-profile";
@@ -19,16 +15,11 @@ const MyHousePage = () => {
   const [loading, setLoading] = useState(false);
   const [surveys, setSurveys] = useState<SurveyProps[]>();
   const [inputQuery, setInputQuery] = useState<string>("");
-
-  const commander_house = commander?.user?.id
-    ? command_whitelist_kop.includes(commander?.user?.id)
-      ? "KingdomOfPoland"
-      : command_whitelist_blackforge.includes(commander?.user?.id)
-      ? "BlackForge"
-      : command_whitelist_erebus.includes(commander?.user?.id)
-      ? "Erebus"
-      : ""
-    : null;
+  const command_list = useRolesContext();
+  const commander_house =
+    commander && commander.user.id
+      ? command_list.find((e) => e.discordId === commander.user.id)
+      : "";
 
   const fetchSurveys = async (house: string) => {
     setLoading(true);
@@ -58,7 +49,7 @@ const MyHousePage = () => {
     [inputQuery, JSON.stringify(surveys)]
   );
   useEffect(() => {
-    if (commander_house !== null) fetchSurveys(commander_house);
+    if (commander_house) fetchSurveys(commander_house.house);
   }, [commander?.user.id]);
 
   if (loading) {
@@ -72,7 +63,7 @@ const MyHousePage = () => {
   return (
     <div>
       <h1 className="text-5xl font-bold text-center py-10">
-        {commander_house}
+        {commander_house ? commander_house.house : ""}
       </h1>
       <div className="flex justify-center">
         <Input

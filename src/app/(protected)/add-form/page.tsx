@@ -3,16 +3,20 @@
 import { Input } from "@/components/ui/input";
 import { useSession } from "next-auth/react";
 import React from "react";
-import { adduser_whitelist } from "@/assets/whitelists";
 import WizardForm from "@/components/wizard-form";
 import { useTranslations } from "next-intl";
+import { useRolesContext } from "@/components/providers/globalData";
 
 const Page: React.FC = () => {
   const t = useTranslations("AddForm");
   const { data } = useSession();
   const user_id = data ? data?.user.id : "";
   const [discordId, setDiscordId] = React.useState<string>("");
-  return adduser_whitelist.includes(user_id) ? (
+  const commanders = useRolesContext();
+
+  return commanders
+    .filter((e) => e.role === "HouseLeader" || e.role === "RightHand")
+    .some((e) => e.discordId === user_id) ? (
     <div>
       <Input
         placeholder="Discord ID"
