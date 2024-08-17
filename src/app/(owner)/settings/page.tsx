@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  command_whitelist_blackforge,
-  command_whitelist_erebus,
-  command_whitelist_kop,
-} from "@/assets/whitelists";
+import { useRolesContext } from "@/components/providers/globalData";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -36,23 +32,21 @@ interface Roles {
 
 const SettingsPage = () => {
   const { data: commander } = useSession();
-  const [roles, setRoles] = useState<Roles[]>();
-  const commander_house = commander?.user?.id
-    ? command_whitelist_kop.includes(commander?.user?.id)
-      ? "KingdomOfPoland"
-      : command_whitelist_blackforge.includes(commander?.user?.id)
-      ? "BlackForge"
-      : command_whitelist_erebus.includes(commander?.user?.id)
-      ? "Erebus"
-      : ""
+  const rolesList = useRolesContext();
+  const house = rolesList
+    ? rolesList.find((e) => e.discordId === commander?.user.id)?.house
     : "";
 
+  const roles = rolesList ? rolesList.filter((e) => e.house === house) : [];
   const [user, setUser] = useState<Roles>({
     discordNick: "",
     discordId: "",
     house: "",
     role: "",
   });
+  useEffect(() => {
+    if (house) setUser((prev) => ({ ...prev, house: house }));
+  }, [house]);
   const disabled = !user.discordNick || !user.discordId || !user.role;
   function onAdd() {
     try {
@@ -67,21 +61,7 @@ const SettingsPage = () => {
       console.error("Error adding:", error);
     }
   }
-  const fetchRoles = async (house: string) => {
-    try {
-      const response = await fetch(`/api/roles?house=${house}`);
-      const data = await response.json();
-      setRoles(data.roles);
-    } catch (error) {
-      console.error("Error fetching:", error);
-    }
-  };
-  useEffect(() => {
-    if (commander_house) {
-      fetchRoles(commander_house);
-      setUser((prev) => ({ ...prev, house: commander_house }));
-    }
-  }, [commander_house]);
+
   return (
     <div className="p-12">
       <div className="flex flex-col gap-2">
@@ -115,16 +95,15 @@ const SettingsPage = () => {
             <SelectContent>
               <SelectItem value="HighCommand">HighCommand</SelectItem>
               <SelectItem value="RightHand">RightHand</SelectItem>
-              <SelectItem value="Blacklist">Blacklist</SelectItem>
             </SelectContent>
           </Select>
         </div>
         <Button
           disabled={disabled}
-          className="w-fit self-end"
+          className="w-fit self-end m-6"
           onClick={() => onAdd()}
         >
-          Add Role
+          Add To List
         </Button>
       </div>
       {roles ? (
@@ -175,7 +154,9 @@ const ItemsList = ({ roles, role }: { roles: Roles[]; role: string }) => {
               "bg-blue-500": role.role === "HighCommand",
             })}
           >
-            <TableCell className="font-bold p-2">{role.discordNick}</TableCell>
+            <TableCell className="font-bold p-2" title={role.discordId}>
+              {role.discordNick}
+            </TableCell>
             <TableCell className="p-2">{role.role}</TableCell>
             <TableCell className="p-2">
               <Button

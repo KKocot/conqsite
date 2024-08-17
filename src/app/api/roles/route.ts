@@ -13,14 +13,12 @@ export async function POST(request: Request) {
     });
 
     let role;
-    console.log(role);
     if (existingRole) {
       role = await Roles.findByIdAndUpdate(existingRole._id, data, {
         new: true,
       });
     } else {
       role = await Roles.create(data);
-      console.log(role);
     }
 
     return NextResponse.json(role, { status: 201 });
@@ -32,11 +30,9 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const query = searchParams.get("house");
+export async function GET() {
   await connectMongoDB();
-  const roles = await Roles.find({ house: query });
+  const roles = await Roles.find();
   return NextResponse.json({ roles });
 }
 

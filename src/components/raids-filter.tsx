@@ -27,7 +27,6 @@ const RaidsFilter: FC<RaidsFilterProps> = ({
   setFilter,
 }) => {
   const t = useTranslations("BuildTeam");
-  console.log(filter);
   return (
     <Popover>
       <PopoverTrigger asChild>
