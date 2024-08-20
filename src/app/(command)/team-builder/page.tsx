@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArtilleryProps, SheetTypes, SurveyProps } from "@/lib/type";
 import { getCloserDay } from "@/lib/utils";
 import { useSession } from "next-auth/react";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { use, useEffect, useMemo, useState } from "react";
 import Loading from "react-loading";
 import clsx from "clsx";
 import { weapons } from "@/assets/weapons";
@@ -49,19 +49,30 @@ const DEFAULT_CARD = {
 };
 
 function getLineup(surveys: SurveyProps[] | undefined, lineup: string[]) {
-  return surveys?.filter((survey) => lineup.includes(survey.discordId));
+  const data = surveys?.filter((survey) => lineup.includes(survey.discordId));
+  return data;
+}
+interface Signup {
+  name: string;
+  signup: string[];
+}
+
+interface LineupData {
+  date: string;
+  house: string;
+  lineup: Signup[];
 }
 
 const Page: React.FC = () => {
   const { data: commander } = useSession();
   const t = useTranslations("BuildTeam");
-  const [signup, setSignup] = useState<any>(null);
+  const [signup, setSignup] = useState<LineupData | null>(null);
   const [surveys, setSurveys] = useState<SurveyProps[]>();
-  const [noData, setNoData] = useState(true);
   const [userList, setUserList] = useState<SurveyProps[]>([]);
   const [loading, setLoading] = useState(false);
   const [sheetData, setSheetData] = useState<SheetTypes[]>([]);
-
+  const [allPlayers, setAllPlayers] = useState<SurveyProps[]>([]);
+  const [lineup, setLineup] = useState<string[]>([]);
   const [showPreview, setShowPreview] = useState(false);
   const [filterUnits, setFilterUnits] = useState({
     rustic_checked: true,
@@ -72,15 +83,6 @@ const Page: React.FC = () => {
     other_checked: true,
     meta_units_only: true,
   });
-  const [filterLineup, setFilterLineup] = useState({
-    ko: false,
-    kt: false,
-    zp: false,
-    nashin: false,
-    wallsy: false,
-    blackforge_1: false,
-    blackforge_2: false,
-  });
 
   const command_list = useRolesContext();
   const commander_house =
@@ -90,21 +92,11 @@ const Page: React.FC = () => {
   const fetchLineup = async (house: string) => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/signup/${next_tw}`);
+      const response = await fetch(
+        `/api/attendance?house=${house}&date=${next_tw}`
+      );
       const data = await response.json();
-      const lineups =
-        house === "KingdomOfPoland"
-          ? {
-              lineup_2: data.signup.lineup_2,
-              lineup_3: data.signup.lineup_3,
-              lineup_4: data.signup.lineup_4,
-            }
-          : house === "Erebus"
-          ? { lineup_5: data.signup.lineup_5, lineup_6: data.signup.lineup_6 }
-          : house === "BlackForge"
-          ? { lineup_7: data.signup.lineup_7, lineup_8: data.signup.lineup_8 }
-          : null;
-      setSignup(lineups);
+      setSignup(data.attendance[0]);
     } catch (error) {
       console.error("Error fetching:", error);
     } finally {
@@ -147,48 +139,16 @@ const Page: React.FC = () => {
     filterUnits.rustic_checked,
     filterUnits.other_checked,
   ]);
-  const kop_players_list = useMemo(() => {
-    if (!surveys || !signup) return [];
-    const lineup_ko = getLineup(surveys, signup?.lineup_2 ?? []);
-    const lineup_kt = getLineup(surveys, signup?.lineup_3 ?? []);
-    const lineup_zp = getLineup(surveys, signup?.lineup_4 ?? []);
-    return [
-      filterLineup.ko ? lineup_ko : [],
-      filterLineup.kt ? lineup_kt : [],
-      filterLineup.zp ? lineup_zp : [],
-    ].filter(Array.isArray);
-  }, [filterLineup.ko, filterLineup.kt, filterLineup.zp]);
-  const erebus_players_list = useMemo(() => {
-    if (!surveys || !signup) return [];
-    const lineup_raid_1 = getLineup(surveys, signup?.lineup_5 ?? []);
-    const lineup_raid_2 = getLineup(surveys, signup?.lineup_6 ?? []);
-    return [
-      filterLineup.nashin ? lineup_raid_1 : [],
-      filterLineup.wallsy ? lineup_raid_2 : [],
-    ].filter(Array.isArray);
-  }, [filterLineup.nashin, filterLineup.wallsy]);
+  useEffect(() => {
+    setAllPlayers(getLineup(surveys, lineup) ?? []);
+  }, [lineup.length]);
 
-  const blackforge_players_list = useMemo(() => {
-    if (!surveys || !signup) return [];
-    const lineup_raid_1 = getLineup(surveys, signup?.lineup_7 ?? []);
-    const lineup_raid_2 = getLineup(surveys, signup?.lineup_8 ?? []);
-    return [
-      filterLineup.blackforge_1 ? lineup_raid_1 : [],
-      filterLineup.blackforge_2 ? lineup_raid_2 : [],
-    ].filter(Array.isArray); // Ensure only arrays are returned
-  }, [filterLineup.blackforge_1, filterLineup.blackforge_2]);
-
-  const all_players_list: SurveyProps[] = [
-    ...kop_players_list,
-    ...erebus_players_list,
-    ...blackforge_players_list,
-  ].flat();
-  function handlerGetData() {
+  useEffect(() => {
     if (!commander_house) return;
     fetchLineup(commander_house.house);
     fetchSurveys(commander_house.house);
-    setNoData(false);
-  }
+  }, [commander_house]);
+
   const handleEdit = (
     index: number,
     username: string,
@@ -220,7 +180,7 @@ const Page: React.FC = () => {
   };
   useEffect(() => {
     setSheetData((prev) => {
-      const requiredLength = all_players_list.length + 10;
+      const requiredLength = allPlayers.length + 10;
       if (prev.length < requiredLength) {
         const newCards = Array.from(
           { length: requiredLength - prev.length },
@@ -232,10 +192,10 @@ const Page: React.FC = () => {
       }
       return prev;
     });
-  }, [all_players_list.length, surveys]);
+  }, [allPlayers.length, surveys]);
   useEffect(() => {
     setUserList(
-      all_players_list.filter(
+      allPlayers.filter(
         (user) =>
           !sheetData.some(
             (input) =>
@@ -252,11 +212,7 @@ const Page: React.FC = () => {
       </div>
     );
   }
-  return noData ? (
-    <div className="flex flex-col gap-5 p-2">
-      <Button onClick={() => handlerGetData()}>{t("load_data")}</Button>
-    </div>
-  ) : (
+  return (
     <div className="flex justify-center flex-col items-center">
       <div className="flex items-center justify-around bg-indigo-950 w-3/4">
         <Button
@@ -270,25 +226,23 @@ const Page: React.FC = () => {
         <StorageTemplate
           data={sheetData}
           setData={setSheetData}
-          playersNum={all_players_list.length}
+          playersNum={allPlayers.length}
         />
         <div className="flex gap-4">
           <UnitsFilter filters={filterUnits} setFilter={setFilterUnits} />
-          <RaidsFilter
-            userHouse={commander_house ? commander_house.house : ""}
-            filter={filterLineup}
-            setFilter={setFilterLineup}
-          />
+          {signup?.lineup ? (
+            <RaidsFilter lineups={signup.lineup} setLineup={setLineup} />
+          ) : null}
         </div>
       </div>
       <TemplateMenu
         userHouse={commander_house ? commander_house.house : ""}
         data={sheetData}
         setData={setSheetData}
-        players={all_players_list}
+        players={allPlayers}
       />
       <div className={clsx("flex flex-col gap-5 p-2", { hidden: showPreview })}>
-        <UsersList players={all_players_list} allPlayers={userList} />
+        <UsersList players={allPlayers} allPlayers={userList} />
         <div className="flex justify-center gap-2">
           <span className="text-yellow-500">{t("maxed_and_preffer")}</span>
           <span className="text-purple-500">{t("preffer")}</span>

@@ -3,30 +3,30 @@ import CheckboxItem from "./sheet-form-filter";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { useTranslations } from "next-intl";
-import { Dispatch, FC, SetStateAction } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 
-type Filter = {
-  ko: boolean;
-  kt: boolean;
-  zp: boolean;
-  nashin: boolean;
-  wallsy: boolean;
-  blackforge_1: boolean;
-  blackforge_2: boolean;
-};
-
-interface RaidsFilterProps {
-  userHouse: string;
-  filter: Filter;
-  setFilter: Dispatch<SetStateAction<Filter>>;
+interface Signup {
+  name: string;
+  signup: string[];
 }
 
-const RaidsFilter: FC<RaidsFilterProps> = ({
-  userHouse,
-  filter,
-  setFilter,
-}) => {
+interface RaidsFilterProps {
+  lineups: Signup[];
+  setLineup: Dispatch<SetStateAction<string[]>>;
+}
+
+const RaidsFilter: FC<RaidsFilterProps> = ({ lineups, setLineup }) => {
+  const [loadedLineup, setLoadedLineup] = useState<string[]>([]);
   const t = useTranslations("BuildTeam");
+  const addLineup = (lineup: Signup) => {
+    setLoadedLineup((prev) => [...prev, lineup.name]);
+    setLineup((prev) => [...(prev || []), ...lineup.signup]);
+  };
+  const removeLineup = (lineup: Signup) => {
+    setLoadedLineup((prev) => prev.filter((e) => !lineup.name.includes(e)));
+    setLineup((prev) => (prev || []).filter((e) => !lineup.signup.includes(e)));
+  };
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -36,87 +36,22 @@ const RaidsFilter: FC<RaidsFilterProps> = ({
           <ChevronDown />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="gap-4 flex flex-col">
-        {userHouse === "KingdomOfPoland" ? (
-          <>
-            <CheckboxItem
-              checked={filter.ko}
-              label="King's Order"
-              onChange={() =>
-                setFilter((prev) => ({
-                  ...prev,
-                  ko: !prev.ko,
-                }))
-              }
-            />
-            <CheckboxItem
-              checked={filter.kt}
-              label="Królewska Tarcza"
-              onChange={() =>
-                setFilter((prev) => ({
-                  ...prev,
-                  kt: !prev.kt,
-                }))
-              }
-            />
-            <CheckboxItem
-              checked={filter.zp}
-              label="Zielona Piechota"
-              onChange={() =>
-                setFilter((prev) => ({
-                  ...prev,
-                  zp: !prev.zp,
-                }))
-              }
-            />
-          </>
-        ) : userHouse === "Erebus" ? (
-          <>
-            <CheckboxItem
-              checked={filter.nashin}
-              label="NaShin"
-              onChange={() =>
-                setFilter((prev) => ({
-                  ...prev,
-                  nashin: !prev.nashin,
-                }))
-              }
-            />
-            <CheckboxItem
-              checked={filter.wallsy}
-              label="Wallsy raid"
-              onChange={() =>
-                setFilter((prev) => ({
-                  ...prev,
-                  wallsy: !prev.wallsy,
-                }))
-              }
-            />
-          </>
-        ) : userHouse === "BlackForge" ? (
-          <>
-            <CheckboxItem
-              checked={filter.blackforge_1}
-              label="Raid 1"
-              onChange={() =>
-                setFilter((prev) => ({
-                  ...prev,
-                  blackforge_1: !prev.blackforge_1,
-                }))
-              }
-            />
-            <CheckboxItem
-              checked={filter.blackforge_2}
-              label="Raid 2"
-              onChange={() =>
-                setFilter((prev) => ({
-                  ...prev,
-                  blackforge_2: !prev.blackforge_2,
-                }))
-              }
-            />
-          </>
-        ) : null}
+      <PopoverContent className="gap-4 flex flex-col w-fit">
+        {lineups.map((e) => (
+          <Button
+            className="w-fit"
+            variant="tab"
+            key={e.name}
+            onClick={() =>
+              loadedLineup.includes(e.name) ? removeLineup(e) : addLineup(e)
+            }
+          >
+            {loadedLineup.includes(e.name)
+              ? "Remove Lineup: "
+              : "Load Lineup: "}
+            {e.name}
+          </Button>
+        ))}
       </PopoverContent>
     </Popover>
   );
