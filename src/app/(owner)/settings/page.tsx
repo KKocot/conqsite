@@ -29,6 +29,13 @@ interface Roles {
   role: string;
   discordNick: string;
 }
+interface Data {
+  house: string;
+  member: string;
+  lineup: string;
+  technical: string;
+  logs: string;
+}
 
 const SettingsPage = () => {
   const { data: commander } = useSession();
@@ -44,8 +51,18 @@ const SettingsPage = () => {
     house: "",
     role: "",
   });
+  const [data, setData] = useState<Data>({
+    house: "",
+    member: "",
+    lineup: "",
+    technical: "",
+    logs: "",
+  });
   useEffect(() => {
-    if (house) setUser((prev) => ({ ...prev, house: house }));
+    if (house) {
+      setUser((prev) => ({ ...prev, house: house }));
+      setData((prev) => ({ ...prev, house: house }));
+    }
   }, [house]);
   const disabled = !user.discordNick || !user.discordId || !user.role;
   function onAdd() {
@@ -64,8 +81,8 @@ const SettingsPage = () => {
 
   return (
     <div className="p-12">
-      <div className="flex flex-col gap-2">
-        <h1>Settings Page</h1>
+      <h1 className="text-center text-3xl">Settings Page</h1>
+      <div className="flex gap-2">
         <div>
           <span>Username</span>
           <Input
@@ -90,7 +107,7 @@ const SettingsPage = () => {
             onValueChange={(e) => setUser((prev) => ({ ...prev, role: e }))}
           >
             <SelectTrigger>
-              <SelectValue />
+              <SelectValue placeholder="Pick one" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="HighCommand">HighCommand</SelectItem>
@@ -106,24 +123,114 @@ const SettingsPage = () => {
           Add To List
         </Button>
       </div>
-      {roles ? (
-        <div>
+      <div className="flex justify-around">
+        {roles ? (
+          <div className="w-1/3">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Nick</TableHead>
+                  <TableHead>Role</TableHead>
+                  <TableHead></TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <ItemsList roles={roles} role="HouseLeader" />
+                <ItemsList roles={roles} role="RightHand" />
+                <ItemsList roles={roles} role="HighCommand" />
+              </TableBody>
+            </Table>
+          </div>
+        ) : null}
+        <div className="w-1/3 flex flex-col">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Nick</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead></TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead className="w-[180px]">Discord ID/Name</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              <ItemsList roles={roles} role="HouseLeader" />
-              <ItemsList roles={roles} role="RightHand" />
-              <ItemsList roles={roles} role="HighCommand" />
+              <TableRow>
+                <TableCell>House</TableCell>
+                <TableCell>Your unical house name</TableCell>
+                <TableCell>
+                  <Input
+                    placeholder="name"
+                    value={data.house}
+                    onChange={(e) =>
+                      setData((prev) => ({ ...prev, house: e.target.value }))
+                    }
+                    disabled={true}
+                  />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Member</TableCell>
+                <TableCell>
+                  Bot need to know who should have access to website
+                </TableCell>
+                <TableCell>
+                  <Input
+                    placeholder="discord id"
+                    value={data.member}
+                    onChange={(e) =>
+                      setData((prev) => ({ ...prev, member: e.target.value }))
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Lineup</TableCell>
+                <TableCell>
+                  Bot need to know how to split your house to lineups if you
+                  have more them one raid
+                </TableCell>
+                <TableCell>
+                  <Input
+                    placeholder="discord id"
+                    value={data.lineup}
+                    onChange={(e) =>
+                      setData((prev) => ({ ...prev, lineup: e.target.value }))
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Technical</TableCell>
+                <TableCell>Who on discord can manage bot options</TableCell>
+                <TableCell>
+                  <Input
+                    placeholder="discord id"
+                    value={data.technical}
+                    onChange={(e) =>
+                      setData((prev) => ({
+                        ...prev,
+                        technical: e.target.value,
+                      }))
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Logs</TableCell>
+                <TableCell>Channel to see bot logs</TableCell>
+                <TableCell>
+                  <Input
+                    placeholder="discord id"
+                    value={data.logs}
+                    onChange={(e) =>
+                      setData((prev) => ({ ...prev, logs: e.target.value }))
+                    }
+                  />
+                </TableCell>
+              </TableRow>
             </TableBody>
           </Table>
+          <Button className="rounded-none w-fit self-end">Save</Button>
         </div>
-      ) : null}
+      </div>
     </div>
   );
 };
