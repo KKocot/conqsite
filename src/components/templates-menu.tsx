@@ -25,8 +25,8 @@ const TemplateMenu = ({
 }) => {
   const t = useTranslations("BuildTeam");
   const [templates, setTemplates] = useState<
-    { house: string; templateName: string; sheet: SheetTypes[] }[]
-  >([]);
+    { house: string; templateName: string; sheet: SheetTypes[] }[] | undefined
+  >(undefined);
   const [templateName, setTemplateName] = useState("");
   const house_tag =
     userHouse === "KingdomOfPoland"
@@ -101,18 +101,20 @@ const TemplateMenu = ({
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            {templates.map((e) => (
-              <SelectLabel
-                className="cursor-pointer p-2"
-                key={e.templateName}
-                onClick={() => {
-                  setData(e.sheet);
-                  setTemplateName(e.templateName);
-                }}
-              >
-                {e.templateName}
-              </SelectLabel>
-            ))}
+            {templates
+              ? templates.map((e) => (
+                  <SelectLabel
+                    className="cursor-pointer p-2"
+                    key={e.templateName}
+                    onClick={() => {
+                      setData(e.sheet);
+                      setTemplateName(e.templateName);
+                    }}
+                  >
+                    {e.templateName}
+                  </SelectLabel>
+                ))
+              : null}
           </SelectGroup>
         </SelectContent>
       </Select>

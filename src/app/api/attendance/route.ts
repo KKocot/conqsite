@@ -2,11 +2,21 @@ import Attendance from "@/models/attendance";
 import { attendanceSchema } from "./schema";
 import connectMongoDB from "@/lib/mongodb";
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import Roles from "@/models/roles";
+import { ZodError } from "zod";
+import { headers } from "next/headers";
 
 export async function POST(request: Request) {
   try {
-    const data = attendanceSchema.parse(await request.json());
+    const discordKey = headers().get("discord-key");
+    //Allow access only to the Discord Bot
+    if (!discordKey || discordKey !== process.env.BOT_KEY)
+      return new Response("401");
+
     await connectMongoDB();
+    const data = attendanceSchema.parse(await request.json());
     const existingAttendance = await Attendance.findOne({
       date: data.date,
       house: data.house,
@@ -27,6 +37,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json(attendance, { status: 201 });
   } catch (error) {
+    if (error instanceof ZodError)
+      return NextResponse.json({ message: error.message }, { status: 400 });
     if (error instanceof Error)
       return NextResponse.json({ message: error.message }, { status: 500 });
   }
@@ -34,10 +46,29 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  await connectMongoDB();
-  const attendance = await Attendance.find({
-    house: searchParams.get("house"),
-    date: searchParams.get("date"),
-  });
-  return NextResponse.json({ attendance });
+  const date = searchParams.get("date");
+  const house = searchParams.get("house");
+  const session = await getServerSession(authOptions);
+
+  try {
+    await connectMongoDB();
+    const roles = await Roles.find({ house: house });
+    const userRoles = roles.some(
+      (role) => role.discordId === session?.user?.id
+    );
+
+    // Allow access only to high roles
+    if (!userRoles) return new Response("401");
+
+    const attendance = await Attendance.find({
+      house: house,
+      date: date,
+    });
+    return NextResponse.json({ attendance });
+  } catch (error) {
+    if (error instanceof ZodError)
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    if (error instanceof Error)
+      return NextResponse.json({ message: error.message }, { status: 500 });
+  }
 }

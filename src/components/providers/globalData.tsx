@@ -28,7 +28,8 @@ export const useRolesContext = () => {
 };
 export const RolesProvider = ({ children }: { children: ReactNode }) => {
   const [roles, setRoles] = useState<Role[]>([]);
-  const origin = "http://localhost:3000";
+  const origin = typeof window !== "undefined" ? window.origin : "";
+
   useEffect(() => {
     const fetchData = async () => {
       try {

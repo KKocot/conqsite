@@ -5,17 +5,26 @@ import { ZodError } from "zod";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { putTemplateSchema } from "./schema";
+import Roles from "@/models/roles";
 
 export async function POST(request: Request) {
+  const session = await getServerSession(authOptions);
   try {
-    const session = await getServerSession(authOptions);
-    const data = putTemplateSchema.parse(await request.json());
-    // if (!session) return new Response("401");
     await connectMongoDB();
+    const data = putTemplateSchema.parse(await request.json());
+    const roles = await Roles.find({ house: data.house });
+
+    const userRoles = roles.some(
+      (role) => role.discordId === session?.user?.id
+    );
+
+    // Allow access only to high roles
+    if (!userRoles) return new Response("401");
 
     const existingTemplate = await Template.findOne({
       templateName: data.templateName,
     });
+
     let template;
     if (existingTemplate) {
       template = await Template.findByIdAndUpdate(existingTemplate._id, data, {
@@ -37,14 +46,47 @@ export async function POST(request: Request) {
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("house");
-  await connectMongoDB();
-  const surveys = await Template.find({ house: query });
-  // if (
-  //   (!session && !discordKey) ||
-  //   (discordKey && discordKey !== process.env.BOT_KEY)
-  // )
-  // return new Response("401");
+  const session = await getServerSession(authOptions);
 
-  //TODO: Check if user is on right whitelist
-  return NextResponse.json({ surveys });
+  try {
+    await connectMongoDB();
+    const roles = await Roles.find({ house: query });
+    const userRoles = roles.some(
+      (role) => role.discordId === session?.user?.id
+    );
+
+    // Allow access only to high roles
+    if (!userRoles) return new Response("401");
+
+    const surveys = await Template.find({ house: query });
+    return NextResponse.json({ surveys });
+  } catch (error) {
+    if (error instanceof ZodError)
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    if (error instanceof Error)
+      return NextResponse.json({ message: error.message }, { status: 500 });
+  }
+}
+
+export async function DELETE({ params: { id } }: { params: { id: string } }) {
+  const session = await getServerSession(authOptions);
+  try {
+    await connectMongoDB();
+    const template = await Template.findById(id);
+    const roles = await Roles.find({ house: template.house });
+    const userRoles = roles
+      .filter((e) => e.role === "RightHand" || e.role === "HouseLeader")
+      .some((role) => role.discordId === session?.user?.id);
+
+    if (!userRoles) return new Response("401");
+    // Allow access only to house leaders and right hands
+
+    await Template.findByIdAndDelete(id);
+    return NextResponse.json({ message: "Template deleted" }, { status: 200 });
+  } catch (error) {
+    if (error instanceof ZodError)
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    if (error instanceof Error)
+      return NextResponse.json({ message: error.message }, { status: 500 });
+  }
 }

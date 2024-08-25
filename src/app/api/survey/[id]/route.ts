@@ -7,21 +7,20 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
 export async function GET(
-  request: Request,
+  _request: Request,
   { params: { id } }: { params: { id: string } }
 ) {
   const session = await getServerSession(authOptions);
   const discordKey = headers().get("discord-key");
-  const user_id = session?.user?.id;
+
+  // Allow access to all logged in users
+  if (!(session || (discordKey && discordKey === process.env.BOT_KEY))) {
+    return new Response("401");
+  }
 
   try {
     await connectMongoDB();
     const survey = await Survey.findOne({ discordId: id });
-    if (
-      (!session && !discordKey && user_id !== survey.discordId) ||
-      (discordKey && discordKey !== process.env.BOT_KEY)
-    )
-      return new Response("401");
     return NextResponse.json({ survey }, { status: 200 });
   } catch (error) {
     if (error instanceof ZodError)
@@ -31,16 +30,21 @@ export async function GET(
   }
 }
 
-export async function DELETE(
-  request: Request,
-  { params: { id } }: { params: { id: string } }
-) {
+export async function DELETE({ params: { id } }: { params: { id: string } }) {
   const discordKey = headers().get("discord-key");
 
-  // if (!discordKey || discordKey !== process.env.BOT_KEY)
-  //   return new Response("401");
+  // Allow access only to the Discord Bot
+  if (!discordKey || discordKey !== process.env.BOT_KEY)
+    return new Response("401");
 
-  await connectMongoDB();
-  await Survey.findByIdAndDelete(id);
-  return NextResponse.json({ message: "Survey deleted" }, { status: 200 });
+  try {
+    await connectMongoDB();
+    await Survey.findByIdAndDelete(id);
+    return NextResponse.json({ message: "Survey deleted" }, { status: 200 });
+  } catch (error) {
+    if (error instanceof ZodError)
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    if (error instanceof Error)
+      return NextResponse.json({ message: error.message }, { status: 500 });
+  }
 }

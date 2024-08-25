@@ -14,11 +14,8 @@ export default async function Layout({
   const commanders = await fetch(`${origin}/api/roles`).then((res) =>
     res.json()
   );
-  if (
-    !commanders.roles
-      .filter((e: Role) => e.role !== "Blacklist")
-      .some((e: Role) => e.discordId === session?.user.id)
-  )
+  const data: Role[] | undefined = commanders.roles;
+  if (data && !data.some((e: Role) => e.discordId === session?.user.id))
     redirect("/");
   return children;
 }

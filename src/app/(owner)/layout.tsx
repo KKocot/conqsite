@@ -11,13 +11,17 @@ export default async function Layout({
   const session = await getServerSession(authOptions);
   const origin = process.env.ORIGIN;
 
-  const owners = await fetch(`${origin}/api/roles`).then((res) => res.json());
+  const highestCommanders = await fetch(`${origin}/api/roles`).then((res) =>
+    res.json()
+  );
+  const data: Role[] | undefined = highestCommanders.roles;
   if (
-    !owners.roles
+    data &&
+    !data
       .filter((e: Role) => e.role === "HouseLeader" || e.role === "RightHand")
       .some((e: Role) => e.discordId === session?.user.id)
-  ) {
+  )
     redirect("/");
-  }
+
   return children;
 }
