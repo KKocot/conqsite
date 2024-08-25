@@ -9,8 +9,8 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 
 export const metadata: Metadata = {
-  title: "Kingdom of Poland",
-  description: "Counquerors Blade Kingdom of Poland",
+  title: "House management app",
+  description: "Counquerors Blade app to house management",
 };
 
 export default async function RootLayout({
