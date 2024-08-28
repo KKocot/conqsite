@@ -23,6 +23,7 @@ import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Avatar } from "@radix-ui/react-avatar";
 import { useTranslations } from "next-intl";
 import clsx from "clsx";
+import Link from "next/link";
 
 export default function Component() {
   const { data: user_data } = useSession();
@@ -31,8 +32,25 @@ export default function Component() {
     storage ?? DEFAULT_FORM_DATA
   );
   const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    if (!storage) fetchData();
+    setIsClient(true);
+  }, []);
   const t = useTranslations("BuildTeam");
-
+  if (!profile)
+    return (
+      <div className="flex flex-col items-center">
+        <div className="text-center py-12 text-2xl font-extrabold">
+          Update form first
+        </div>
+        <Link
+          href="/update-form"
+          className="block w-fit text-center text-destructive p-4 hover:text-destructive-foreground"
+        >
+          Update Form
+        </Link>
+      </div>
+    );
   const golden = ownedUnits(goldenUnits, profile.units.golden);
   const heroic = ownedUnits(heroicUnits, profile.units.heroic);
   const blue = ownedUnits(blueUnits, profile.units.low);
@@ -54,10 +72,6 @@ export default function Component() {
       console.error("Error fetching:", error);
     }
   };
-  useEffect(() => {
-    if (!storage) fetchData();
-    setIsClient(true);
-  }, []);
 
   return (
     <div>

@@ -116,14 +116,20 @@ export default function WizardForm({
     fetchData();
   }, []);
   const onSubmit = async (values: SurveyProps) => {
-    setStorage(values);
+    const data = {
+      ...values,
+      discordId: user_id,
+      avatar: avatar,
+      house: values.house === "" ? "none" : values.house,
+    };
+    setStorage(data);
     try {
       const response = await fetch("/api/survey", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...values, discordId: user_id, avatar: avatar }),
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
