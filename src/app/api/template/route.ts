@@ -1,6 +1,6 @@
 import connectMongoDB from "@/lib/mongodb";
 import Template from "@/models/template";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -58,8 +58,8 @@ export async function GET(request: Request) {
     // Allow access only to high roles
     if (!userRoles) return new Response("401");
 
-    const surveys = await Template.find({ house: query });
-    return NextResponse.json({ surveys });
+    const templates = await Template.find({ house: query });
+    return NextResponse.json({ templates });
   } catch (error) {
     if (error instanceof ZodError)
       return NextResponse.json({ message: error.message }, { status: 400 });
@@ -68,8 +68,16 @@ export async function GET(request: Request) {
   }
 }
 
-export async function DELETE({ params: { id } }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
+
+  if (!id) {
+    return NextResponse.json({ message: "ID is required" }, { status: 400 });
+  }
+
   const session = await getServerSession(authOptions);
+
   try {
     await connectMongoDB();
     const template = await Template.findById(id);
@@ -78,8 +86,8 @@ export async function DELETE({ params: { id } }: { params: { id: string } }) {
       .filter((e) => e.role === "RightHand" || e.role === "HouseLeader")
       .some((role) => role.discordId === session?.user?.id);
 
-    if (!userRoles) return new Response("401");
     // Allow access only to house leaders and right hands
+    if (!userRoles) return new Response("401");
 
     await Template.findByIdAndDelete(id);
     return NextResponse.json({ message: "Template deleted" }, { status: 200 });

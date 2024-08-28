@@ -1,15 +1,21 @@
 import connectMongoDB from "@/lib/mongodb";
 import Whitelist from "@/models/whitelist";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
-import { headers } from "next/headers";
 
-export async function DELETE({ params: { id } }: { params: { id: string } }) {
-  const discordKey = headers().get("discord-key");
+export async function DELETE(request: NextRequest) {
+  const discordKey = request.headers.get("discord-key");
 
-  //Allow access only to the Discord Bot
+  // Allow access only to the Discord Bot
   if (!discordKey || discordKey !== process.env.BOT_KEY)
     return new Response("401");
+
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
+
+  if (!id) {
+    return NextResponse.json({ message: "ID is required" }, { status: 400 });
+  }
 
   try {
     await connectMongoDB();

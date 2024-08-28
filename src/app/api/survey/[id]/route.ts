@@ -1,6 +1,6 @@
 import connectMongoDB from "@/lib/mongodb";
 import Survey from "@/models/surveys";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { headers } from "next/headers";
 import { getServerSession } from "next-auth";
@@ -30,20 +30,25 @@ export async function GET(
   }
 }
 
-export async function DELETE({ params: { id } }: { params: { id: string } }) {
-  const discordKey = headers().get("discord-key");
+export async function DELETE(request: Request) {
+  const discordKey = request.headers.get("discord-key");
 
   // Allow access only to the Discord Bot
   if (!discordKey || discordKey !== process.env.BOT_KEY)
     return new Response("401");
+
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
+
+  if (!id) {
+    return NextResponse.json({ message: "ID is required" }, { status: 400 });
+  }
 
   try {
     await connectMongoDB();
     await Survey.findByIdAndDelete(id);
     return NextResponse.json({ message: "Survey deleted" }, { status: 200 });
   } catch (error) {
-    if (error instanceof ZodError)
-      return NextResponse.json({ message: error.message }, { status: 400 });
     if (error instanceof Error)
       return NextResponse.json({ message: error.message }, { status: 500 });
   }

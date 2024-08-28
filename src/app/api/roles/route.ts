@@ -5,6 +5,7 @@ import { putRolestSchema } from "./schema";
 import { ZodError } from "zod";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
@@ -55,19 +56,20 @@ export async function GET() {
 }
 
 export async function DELETE(request: Request) {
+  const discordKey = headers().get("discord-key");
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
   try {
     await connectMongoDB();
-    const { searchParams } = new URL(request.url);
-    const id = searchParams.get("id");
     const session = await getServerSession(authOptions);
-    const user_id = session?.user?.id;
     const roles = await Roles.findOneAndDelete({ discordId: id });
     const houseRoles = await Roles.find({ house: roles.house });
     const userRoles = houseRoles
       .filter((e) => e.role === "RightHand" || e.role === "HouseLeader")
-      .some((role) => role.discordId === user_id);
-    // Allow access only to house leaders and right hands
-    if (!userRoles) return new Response("401");
+      .some((role) => role.discordId === session?.user?.id);
+    // Allow access only to house leaders and right hands and Discord Bot
+    if (!userRoles || (discordKey && discordKey === process.env.BOT_KEY))
+      return new Response("401");
     return NextResponse.json({ roles });
   } catch (error) {
     if (error instanceof ZodError)

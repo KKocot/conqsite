@@ -44,6 +44,7 @@ export interface SheetTypes {
   description: string;
   color: string;
   artillery: ArtilleryProps[];
+  _id?: string;
 }
 
 export interface WeaponsTypes {
