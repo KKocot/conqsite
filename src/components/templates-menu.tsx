@@ -13,6 +13,7 @@ import { SheetTypes, SurveyProps } from "@/lib/type";
 import { useTranslations } from "next-intl";
 import { useRolesContext } from "./providers/globalData";
 import { useSession } from "next-auth/react";
+import { toast } from "react-toastify";
 
 const TemplateMenu = ({
   userHouse,
@@ -74,14 +75,17 @@ const TemplateMenu = ({
           sheet: values,
         }),
       });
-
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Error occurred:", errorData);
       } else {
         const responseData = await response.json();
         fetchTemplate(userHouse);
-
+        toast.success("Template Saved", {
+          data: {
+            title: "Template Saved in Database",
+          },
+        });
         console.log("Success:", responseData);
       }
     } catch (error) {
@@ -117,7 +121,7 @@ const TemplateMenu = ({
         <SelectContent>
           <SelectGroup>
             {templates
-              ? templates.reverse().map((e) => (
+              ? templates.map((e) => (
                   <div
                     className="cursor-pointer p-2 flex justify-between items-center"
                     key={e.templateName}
@@ -135,26 +139,36 @@ const TemplateMenu = ({
                         variant="ghost"
                         className="text-destructive"
                         onClick={async () => {
-                          try {
-                            const response = await fetch(
-                              `/api/template?id=${e._id}`,
-                              {
-                                method: "DELETE",
-                                headers: {
-                                  "Content-Type": "application/json",
-                                },
+                          const confirmed = confirm(
+                            "Are you sure you want to delete this template?"
+                          );
+                          if (confirmed) {
+                            try {
+                              const response = await fetch(
+                                `/api/template?id=${e._id}`,
+                                {
+                                  method: "DELETE",
+                                  headers: {
+                                    "Content-Type": "application/json",
+                                  },
+                                }
+                              );
+                              if (!response.ok) {
+                                const errorData = await response.json();
+                                console.error("Error occurred:", errorData);
+                              } else {
+                                const responseData = await response.json();
+                                console.log("Success:", responseData);
+                                fetchTemplate(userHouse);
+                                toast.error("Template Deleted", {
+                                  data: {
+                                    title: "Template Deleted",
+                                  },
+                                });
                               }
-                            );
-                            if (!response.ok) {
-                              const errorData = await response.json();
-                              console.error("Error occurred:", errorData);
-                            } else {
-                              const responseData = await response.json();
-                              console.log("Success:", responseData);
-                              fetchTemplate(userHouse);
+                            } catch (error) {
+                              console.error("Error occurred:", error);
                             }
-                          } catch (error) {
-                            console.error("Error occurred:", error);
                           }
                         }}
                       >

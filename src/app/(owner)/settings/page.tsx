@@ -109,20 +109,25 @@ const SettingsPage = () => {
   };
 
   const onDelete = async (discordId: string) => {
-    try {
-      const response = await fetch(`/api/roles?id=${discordId}`, {
-        method: "DELETE",
-      });
+    const confirmed = confirm(
+      "Are you sure you want to delete this player from his role?"
+    );
+    if (confirmed) {
+      try {
+        const response = await fetch(`/api/roles?id=${discordId}`, {
+          method: "DELETE",
+        });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Error occurred:", errorData);
-      } else {
-        fetchData();
-        console.log("Success:", await response.json());
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Error occurred:", errorData);
+        } else {
+          fetchData();
+          console.log("Success:", await response.json());
+        }
+      } catch (error) {
+        console.error("Error deleting:", error);
       }
-    } catch (error) {
-      console.error("Error deleting:", error);
     }
   };
 
