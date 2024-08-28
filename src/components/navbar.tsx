@@ -42,7 +42,7 @@ export default function Navbar() {
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Button onClick={() => signIn("discord")}>Login</Button>
+          <Button onClick={() => signIn()}>Login</Button>
         )}
         <ModeToggle />
         <LanguageToggle />

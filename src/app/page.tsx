@@ -63,7 +63,7 @@ export default function Home() {
             {t("login_to_access_your_profile")}
           </p>
           <div className="mt-4 flex justify-center">
-            <Button onClick={() => signIn("discord")}>{t("login")}</Button>
+            <Button onClick={() => signIn()}>{t("login")}</Button>
           </div>
         </div>
       )}

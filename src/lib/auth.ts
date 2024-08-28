@@ -22,20 +22,14 @@ export const authOptions: AuthOptions = {
       return token;
     },
 
-    async signIn({ profile }) {
+    async signIn() {
       try {
         await connectMongoDB();
-        const ifUserExists = await Whitelist.findOne({
-          idDiscord: (profile as DiscordProfile).id,
-        });
-        if (ifUserExists) {
-          return true;
-        }
+
+        return true;
       } catch (err) {
         return false;
       }
-
-      return false;
     },
 
     session({ session, token }) {
