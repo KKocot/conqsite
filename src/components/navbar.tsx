@@ -23,6 +23,8 @@ export default function Navbar() {
       </Link>
       <div className="flex items-center gap-6">
         <Link href="/policy">Privacy Policy</Link>
+        <Link href="/tos">Terms of Service</Link>
+        <Link href="/docs">Documentation</Link>
         {data ? (
           <DropdownMenu>
             <DropdownMenuTrigger>
