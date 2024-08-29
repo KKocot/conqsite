@@ -37,7 +37,7 @@ export default async function RootLayout({
             >
               <Navbar />
               <RolesProvider>{children}</RolesProvider>
-              <ToastContainer />
+              <ToastContainer theme="colored" autoClose={2000} />
             </ThemeProvider>
           </NextAuthProvider>
         </NextIntlClientProvider>
