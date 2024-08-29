@@ -42,14 +42,6 @@ const TemplateMenu = ({
     | undefined
   >(undefined);
   const [templateName, setTemplateName] = useState("");
-  const house_tag =
-    userHouse === "KingdomOfPoland"
-      ? "KoP"
-      : userHouse === "Erebus"
-      ? "E"
-      : userHouse === "BlackForge"
-      ? "BF"
-      : "";
 
   const fetchTemplate = async (house: string) => {
     try {
@@ -68,9 +60,9 @@ const TemplateMenu = ({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          templateName: templateName.includes(`${house_tag}_`)
+          templateName: templateName.includes(`${userHouse}_`)
             ? templateName
-            : `${house_tag}_${templateName}`,
+            : `${userHouse}_${templateName}`,
           house: userHouse,
           sheet: values,
         }),
@@ -129,10 +121,13 @@ const TemplateMenu = ({
                     <SelectLabel
                       onClick={() => {
                         setData(e.sheet);
-                        setTemplateName(e.templateName);
+                        setTemplateName(
+                          e.templateName.replace(`${userHouse}_`, "")
+                        );
+                        toast.info("Template loaded");
                       }}
                     >
-                      {e.templateName}
+                      {e.templateName.replace(`${userHouse}_`, "")}
                     </SelectLabel>
                     {highestRole ? (
                       <Button
@@ -160,11 +155,8 @@ const TemplateMenu = ({
                                 const responseData = await response.json();
                                 console.log("Success:", responseData);
                                 fetchTemplate(userHouse);
-                                toast.error("Template Deleted", {
-                                  data: {
-                                    title: "Template Deleted",
-                                  },
-                                });
+                                setTemplateName("");
+                                toast.error("Template Deleted");
                               }
                             } catch (error) {
                               console.error("Error occurred:", error);

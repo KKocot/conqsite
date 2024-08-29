@@ -4,6 +4,7 @@ import { useLocalStorage } from "usehooks-ts";
 import { SheetTypes } from "@/lib/type";
 import { useTranslations } from "next-intl";
 import { Dispatch, FC } from "react";
+import { toast } from "react-toastify";
 
 interface ChildComponentProps {
   data: SheetTypes[];
@@ -45,7 +46,10 @@ const StorageTemplate: FC<ChildComponentProps> = ({
   return (
     <div className="flex justify-center gap-4">
       <Button
-        onClick={() => setStorage(data)}
+        onClick={() => {
+          setStorage(data);
+          toast.success("template saved");
+        }}
         variant="tab"
         className="hover:bg-green-700"
       >
@@ -53,7 +57,10 @@ const StorageTemplate: FC<ChildComponentProps> = ({
         {t("save_template")}
       </Button>
       <Button
-        onClick={() => setData(storage)}
+        onClick={() => {
+          setData(storage);
+          toast.info("Template loaded");
+        }}
         disabled={playersNum === 0}
         variant="tab"
       >

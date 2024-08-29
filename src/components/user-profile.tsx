@@ -10,7 +10,7 @@ import { SurveyProps } from "@/lib/type";
 import ProfileData from "./profile-data";
 import { ReactNode } from "react";
 import { Avatar } from "@radix-ui/react-avatar";
-import { AvatarFallback, AvatarImage } from "./ui/avatar";
+import { AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 
 export function UserProfile({
