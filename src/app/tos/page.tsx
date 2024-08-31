@@ -6,10 +6,11 @@ const TosPage: React.FC = () => {
       </h1>
       <h2 className="text-2xl font-semibold mb-4">1. General Provisions</h2>
       <p className="mb-4">
-        These Terms of Service ("Terms") outline the rules and conditions for
-        using the bot "Konqueruś" and website "cb-social". By using our
-        services, the user fully accepts these Terms. If you do not agree with
-        the conditions, you should not use our services.
+        These Terms of Service (&quot;Terms&quot;) outline the rules and
+        conditions for using the bot &quot;Konqueruś&quot; and website
+        &quot;cb-social&quot;. By using our services, the user fully accepts
+        these Terms. If you do not agree with the conditions, you should not use
+        our services.
       </p>
       <h2 className="text-2xl font-semibold mb-4">2. Services</h2>
       <p className="mb-4">The bot and website offer services such as:</p>
@@ -60,9 +61,9 @@ const TosPage: React.FC = () => {
         6. Limitation of Liability
       </h2>
       <p className="mb-4">
-        The services are provided "as is," without any warranties, either
-        express or implied. A bot or website is not guaranteed to run smoothly,
-        error-free or always available.
+        The services are provided &quot;as is,&quot; without any warranties,
+        either express or implied. A bot or website is not guaranteed to run
+        smoothly, error-free or always available.
       </p>
       <p className="mb-4">We are not liable for any damages resulting from:</p>
       <ul className="list-disc list-inside mb-4">
