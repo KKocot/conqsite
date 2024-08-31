@@ -10,8 +10,13 @@ import { getLocale, getMessages } from "next-intl/server";
 import { RolesProvider } from "@/components/providers/globalData";
 
 export const metadata: Metadata = {
+<<<<<<< HEAD
   title: "Counquerors Blade",
   description: "Counquerors Blade team builder",
+=======
+  title: "House management app",
+  description: "Counquerors Blade app to house management",
+>>>>>>> main
 };
 
 export default async function RootLayout({
