@@ -3,21 +3,13 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
-import {
-  command_whitelist_erebus,
-  command_whitelist_kop,
-  command_whitelist_blackforge,
-} from "@/assets/whitelists";
 import { useTranslations } from "next-intl";
+import { useRolesContext } from "@/components/providers/globalData";
 
 export default function Home() {
   const t = useTranslations("HomePage");
   const { data } = useSession();
-  const commanders = [
-    ...command_whitelist_kop,
-    ...command_whitelist_erebus,
-    ...command_whitelist_blackforge,
-  ];
+  const commanders = useRolesContext();
 
   return (
     <main className="flex flex-col items-center justify-center px-4 md:px-6 sm:h-full my-12">
@@ -28,6 +20,7 @@ export default function Home() {
       {data ? (
         <>
           <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+            <h1 className="pb-4 text-lg text-center">Member menu</h1>
             <div className="flex gap-4 justify-center">
               <Link href="/profile">
                 <Button>{t("my_profile")}</Button>
@@ -35,17 +28,33 @@ export default function Home() {
               <Link href="/update-form">
                 <Button>{t("update_form")}</Button>
               </Link>
+              <Link href="/house">
+                <Button>House</Button>
+              </Link>
             </div>
           </div>
 
-          {commanders.includes(data.user.id) ? (
+          {commanders.some((e) => e.discordId === data.user.id) ? (
             <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+              <h1 className="pb-4 text-lg text-center">High Command menu</h1>
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
                 <Link href="/team-builder">
                   <Button>{t("build_team")}</Button>
                 </Link>
                 <Link href="/my-house">
                   <Button>{t("my_house")}</Button>
+                </Link>
+              </div>
+            </div>
+          ) : null}
+          {commanders
+            .filter((e) => e.role === "HouseLeader" || e.role === "RightHand")
+            .some((e) => e.discordId === data.user.id) ? (
+            <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+              <h1 className="pb-4 text-lg text-center">House Leader menu</h1>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+                <Link href="/settings">
+                  <Button>Settings</Button>
                 </Link>
               </div>
             </div>
@@ -57,7 +66,7 @@ export default function Home() {
             {t("login_to_access_your_profile")}
           </p>
           <div className="mt-4 flex justify-center">
-            <Button onClick={() => signIn("discord")}>{t("login")}</Button>
+            <Button onClick={() => signIn()}>{t("login")}</Button>
           </div>
         </div>
       )}

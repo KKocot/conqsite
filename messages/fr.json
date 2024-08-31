@@ -84,6 +84,9 @@
     "no_artillery": "Pas d'artillerie",
     "some_artillery": "A un peu d'artillerie",
     "average_artillery": "A une quantité moyenne d'artillerie",
-    "a_lot_artillery": "A beaucoup d'artillerie"
+    "a_lot_artillery": "A beaucoup d'artillerie",
+    "select_template": "Sélectionner le modèle",
+    "save_template_to_db": "Enregistrer le modèle sur le serveur",
+    "group": "Groupe"
   }
 }

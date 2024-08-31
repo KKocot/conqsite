@@ -6,6 +6,7 @@ const SurveySchema = new Schema({
   discordId: { type: String, required: true },
   characterLevel: { type: String, required: true },
   house: { type: String, required: true },
+  avatar: { type: String, required: false },
   artyAmount: {
     type: String,
     enum: ["none", "some", "average", "aLot"],

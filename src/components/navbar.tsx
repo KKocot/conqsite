@@ -22,6 +22,9 @@ export default function Navbar() {
         <img src="/logo.png" alt="logo" className="h-10" />
       </Link>
       <div className="flex items-center gap-6">
+        <Link href="/policy">Privacy Policy</Link>
+        <Link href="/tos">Terms of Service</Link>
+        <Link href="/docs">Documentation</Link>
         {data ? (
           <DropdownMenu>
             <DropdownMenuTrigger>
@@ -41,7 +44,7 @@ export default function Navbar() {
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Button onClick={() => signIn("discord")}>Login</Button>
+          <Button onClick={() => signIn()}>Login</Button>
         )}
         <ModeToggle />
         <LanguageToggle />

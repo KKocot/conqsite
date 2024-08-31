@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ThemeProvider } from "next-themes";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
+import { RolesProvider } from "@/components/providers/globalData";
 
 export const metadata: Metadata = {
   title: "House management app",
@@ -19,9 +20,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const locale = await getLocale();
-
-  // Providing all messages to the client
-  // side is the easiest way to get started
   const messages = await getMessages();
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -38,8 +36,8 @@ export default async function RootLayout({
               disableTransitionOnChange
             >
               <Navbar />
-              {children}
-              <ToastContainer />
+              <RolesProvider>{children}</RolesProvider>
+              <ToastContainer theme="colored" autoClose={2000} />
             </ThemeProvider>
           </NextAuthProvider>
         </NextIntlClientProvider>

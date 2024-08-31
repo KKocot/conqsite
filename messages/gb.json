@@ -84,6 +84,9 @@
     "no_artillery": "No artillery",
     "some_artillery": "Has some artillery",
     "average_artillery": "Has an average amount of artillery",
-    "a_lot_artillery": "Has a lot of artillery"
+    "a_lot_artillery": "Has a lot of artillery",
+    "select_template": "Select Template",
+    "save_template_to_db": "Save Template on Server",
+    "group": "Group"
   }
 }

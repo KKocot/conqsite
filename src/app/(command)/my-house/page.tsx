@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  command_whitelist_erebus,
-  command_whitelist_kop,
-  command_whitelist_blackforge,
-} from "@/assets/whitelists";
+import { useRolesContext } from "@/components/providers/globalData";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { UserProfile } from "@/components/user-profile";
@@ -13,23 +9,22 @@ import clsx from "clsx";
 import { useSession } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
 import Loading from "react-loading";
+import { toast } from "react-toastify";
 
 const MyHousePage = () => {
   const { data: commander } = useSession();
   const [loading, setLoading] = useState(false);
   const [surveys, setSurveys] = useState<SurveyProps[]>();
   const [inputQuery, setInputQuery] = useState<string>("");
+  const command_list = useRolesContext();
+  const commander_house =
+    commander && commander.user.id
+      ? command_list.find((e) => e.discordId === commander.user.id)
+      : "";
 
-  const commander_house = commander?.user?.id
-    ? command_whitelist_kop.includes(commander?.user?.id)
-      ? "KingdomOfPoland"
-      : command_whitelist_blackforge.includes(commander?.user?.id)
-      ? "BlackForge"
-      : command_whitelist_erebus.includes(commander?.user?.id)
-      ? "Erebus"
-      : ""
-    : null;
-
+  const highestRoles = command_list
+    .filter((e) => e.role === "HouseLeader" || e.role === "RightHand")
+    .some((e) => e.discordId === commander?.user.id);
   const fetchSurveys = async (house: string) => {
     setLoading(true);
     try {
@@ -58,8 +53,8 @@ const MyHousePage = () => {
     [inputQuery, JSON.stringify(surveys)]
   );
   useEffect(() => {
-    if (commander_house !== null) fetchSurveys(commander_house);
-  }, [commander?.user.id]);
+    if (commander_house) fetchSurveys(commander_house.house);
+  }, [commander?.user.id, commander_house]);
 
   if (loading) {
     return (
@@ -69,10 +64,42 @@ const MyHousePage = () => {
     );
   }
 
+  const onDelete = async (values: SurveyProps) => {
+    const accept = confirm(
+      "Are you sure you want to delete this player from your house?"
+    );
+    if (accept) {
+      const data = {
+        ...values,
+        house: "none",
+      };
+      try {
+        const response = await fetch("/api/survey", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Error occurred:", errorData);
+        } else {
+          const responseData = await response.json();
+          toast.success("Player removed from your house");
+          if (commander_house) fetchSurveys(commander_house.house);
+          console.log("Success:", responseData);
+        }
+      } catch (error) {
+        console.error("Error occurred:", error);
+      }
+    }
+  };
   return (
     <div>
       <h1 className="text-5xl font-bold text-center py-10">
-        {commander_house}
+        {commander_house ? commander_house.house : ""}
       </h1>
       <div className="flex justify-center">
         <Input
@@ -84,7 +111,11 @@ const MyHousePage = () => {
       <div className="flex gap-4 p-4 flex-wrap">
         {filtredSurveys?.map((e) => (
           <div key={e.discordId}>
-            <UserProfile player={e}>
+            <UserProfile
+              player={e}
+              canDelete={highestRoles}
+              handleDelete={(e) => onDelete(e)}
+            >
               <Badge
                 className={clsx(
                   "cursor-pointer text-md p-2 hover:bg-destructive",
@@ -97,6 +128,13 @@ const MyHousePage = () => {
                   }
                 )}
               >
+                {e.avatar ? (
+                  <img
+                    src={e.avatar}
+                    alt={e.inGameNick}
+                    className="w-8 h-8 mr-1 rounded-full"
+                  />
+                ) : null}
                 {e.inGameNick}
               </Badge>
             </UserProfile>

@@ -13,6 +13,7 @@ export interface SurveyProps {
   inGameNick: string;
   discordId: string;
   characterLevel: string;
+  avatar?: string;
   house: string;
   artyAmount: "none" | "some" | "average" | "aLot";
   weapons: { value: boolean; leadership: number; pref?: number }[];
@@ -43,6 +44,7 @@ export interface SheetTypes {
   description: string;
   color: string;
   artillery: ArtilleryProps[];
+  _id?: string;
 }
 
 export interface WeaponsTypes {
