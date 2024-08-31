@@ -37,7 +37,7 @@ export default function Component() {
     setIsClient(true);
   }, []);
   const t = useTranslations("BuildTeam");
-  if (!profile)
+  if (!profile) {
     return (
       <div className="flex flex-col items-center">
         <div className="text-center py-12 text-2xl font-extrabold">
@@ -51,6 +51,7 @@ export default function Component() {
         </Link>
       </div>
     );
+  }
   const golden = ownedUnits(goldenUnits, profile.units.golden);
   const heroic = ownedUnits(heroicUnits, profile.units.heroic);
   const blue = ownedUnits(blueUnits, profile.units.low);

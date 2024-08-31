@@ -28,6 +28,9 @@ export default function Home() {
               <Link href="/update-form">
                 <Button>{t("update_form")}</Button>
               </Link>
+              <Link href="/house">
+                <Button>House</Button>
+              </Link>
             </div>
           </div>
 
