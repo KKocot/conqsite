@@ -1,15 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { SurveyProps } from "@/lib/type";
+import { set } from "mongoose";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
-//   all: 90,
-//   average_on_tw: 60,
-//   list_of_members: []
-//   lineups: []
-//
+import Loading from "react-loading";
 
 interface HouseProps {
   name: string;
@@ -21,46 +17,59 @@ interface HouseProps {
 }
 const HousePage = () => {
   const { data: user_data } = useSession();
-  const [profile, setProfile] = useState<SurveyProps | undefined>();
   const [house, setHouse] = useState<HouseProps>();
+  const [pending, setPending] = useState(false);
 
   const fetchData = async () => {
+    setPending(true);
     try {
-      const response = await fetch(`/api/survey/${user_data?.user.id}`);
-      const data = await response.json();
-      setProfile(data.survey);
+      // Fetch survey data
+      const surveyResponse = await fetch(`/api/survey/${user_data?.user.id}`);
+      const surveyData = await surveyResponse.json();
+
+      // Fetch house data if survey data is successfully fetched
+      if (surveyData.survey) {
+        const houseResponse = await fetch(
+          `/api/house?name=${surveyData.survey.house}`
+        );
+        const houseData = await houseResponse.json();
+        setHouse(houseData);
+      }
     } catch (error) {
       console.error("Error fetching:", error);
-    }
-  };
-  const fetchHouses = async () => {
-    try {
-      const response = await fetch(`/api/house?name=${profile?.house}`);
-      const data = await response.json();
-      setHouse(data);
-    } catch (error) {
-      console.error("Error fetching:", error);
+    } finally {
+      setPending(false);
     }
   };
 
   useEffect(() => {
-    if (!profile) fetchData();
-    if (profile) fetchHouses();
-  }, [profile]);
+    if (!!user_data) fetchData();
+  }, [!!user_data]);
+
+  if (pending)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loading color="#94a3b8" />
+      </div>
+    );
+
   return (
-    <div className="flex flex-col">
+    <div>
       {house ? (
-        <div className="flex flex-col w-52">
-          <div className="flex flex-col items-center">
+        <div className="flex min-h-screen">
+          <div className="flex flex-col items-center w-1/6 gap-2 shadow-lg shadow-primary-foreground min-h-screen">
             <h1 className="text-4xl font-bold">{house.name}</h1>
             <img src={house.avatar} alt="House Avatar" />
+            <div>{house.description}</div>
+            <div>{house.country}</div>
+            <div>{house.server}</div>
+            <Link target="_blank" href={house.discordLink}>
+              <Button>Discord</Button>
+            </Link>
           </div>
-          <div>{house.description}</div>
-          <div>{house.country}</div>
-          <div>{house.server}</div>
-          <Link target="_blank" href={house.discordLink}>
-            <Button>Join Discord</Button>
-          </Link>
+          <div className="w-5/6 ">
+            <div>Next TW Preview</div>
+          </div>
         </div>
       ) : (
         <div className="flex justify-evenly p-4">
