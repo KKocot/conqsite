@@ -64,10 +64,10 @@ export async function DELETE(request: Request) {
     const session = await getServerSession(authOptions);
     const roles = await Roles.findOneAndDelete({ discordId: id });
     const houseRoles = await Roles.find({ house: roles.house });
-    const userRoles = houseRoles
-      .filter((e) => e.role === "RightHand" || e.role === "HouseLeader")
-      .some((role) => role.discordId === session?.user?.id);
-    // Allow access only to house leaders and right hands and Discord Bot
+    const userRoles = houseRoles.some(
+      (role) => role.discordId === session?.user?.id
+    );
+    // Allow access only to high command roles and Discord Bot
     if (!userRoles || (discordKey && discordKey === process.env.BOT_KEY))
       return new Response("401");
     return NextResponse.json({ roles });

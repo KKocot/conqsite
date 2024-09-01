@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/table";
 import { weapons } from "@/assets/weapons";
 import { SurveyProps } from "@/lib/type";
-import { DEFAULT_FORM_DATA } from "@/components/wizard-form";
 import { useSession } from "next-auth/react";
 import Loading from "react-loading";
 import { ownedUnits } from "@/lib/utils";
@@ -25,16 +24,89 @@ import clsx from "clsx";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
+import { useRolesContext } from "@/components/providers/globalData";
 
 export default function Component() {
   const { data: user_data } = useSession();
-  const [profile, setProfile] = useState<SurveyProps>(DEFAULT_FORM_DATA);
-  const [isClient, setIsClient] = useState(false);
-  useEffect(() => {
-    fetchData();
-    setIsClient(true);
-  }, []);
+  const [profile, setProfile] = useState<SurveyProps>();
+  const [pending, setPending] = useState(false);
+  const [housePending, setHousePending] = useState(false);
   const t = useTranslations("BuildTeam");
+  const houseLeader = useRolesContext()
+    ?.filter((e) => e.role === "HouseLeader")
+    .some((role) => role.discordId === user_data?.user.id);
+
+  const fetchData = async () => {
+    setPending(true);
+    try {
+      const response = await fetch(`/api/survey/${user_data?.user.id}`);
+      const data = await response.json();
+      setProfile(data.survey);
+      if (data.survey === null) {
+        setPending(false);
+      }
+    } catch (error) {
+      console.error("Error fetching:", error);
+    } finally {
+      setPending(false);
+    }
+  };
+
+  const onDelete = async (values: SurveyProps) => {
+    const accept = confirm(
+      "Are you sure you want to delete this player from your house?"
+    );
+    if (accept) {
+      setHousePending(true);
+      const data = {
+        ...values,
+        house: "none",
+      };
+      try {
+        const response = await fetch("/api/survey", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        const responseRoles = await fetch(
+          `/api/roles?id=${user_data?.user.id}`,
+          {
+            method: "DELETE",
+          }
+        );
+
+        if (!response.ok || !responseRoles.ok) {
+          const errorRoles = await responseRoles.json();
+          const errorData = await response.json();
+          console.error("Error occurred:", errorData, errorRoles);
+        } else {
+          const responseData = await response.json();
+          toast.success(`You left ${values.house}`);
+          fetchData();
+          console.log("Success:", responseData);
+        }
+      } catch (error) {
+        console.error("Error occurred:", error);
+      } finally {
+        setHousePending(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (!!user_data) fetchData();
+  }, [!!user_data]);
+
+  if (pending || !user_data) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loading color="#94a3b8" />
+      </div>
+    );
+  }
+
   if (!profile) {
     return (
       <div className="flex flex-col items-center">
@@ -50,6 +122,7 @@ export default function Component() {
       </div>
     );
   }
+
   const golden = ownedUnits(goldenUnits, profile.units.golden);
   const heroic = ownedUnits(heroicUnits, profile.units.heroic);
   const blue = ownedUnits(blueUnits, profile.units.low);
@@ -61,69 +134,32 @@ export default function Component() {
     );
     return { ...weapon, matchingWeapon };
   });
-  const fetchData = async () => {
-    try {
-      const response = await fetch(`/api/survey/${user_data?.user.id}`);
-      const data = await response.json();
-      setProfile(data.survey);
-    } catch (error) {
-      console.error("Error fetching:", error);
-    }
-  };
-  const onDelete = async (values: SurveyProps) => {
-    const accept = confirm(
-      "Are you sure you want to delete this player from your house?"
-    );
-    if (accept) {
-      const data = {
-        ...values,
-        house: "none",
-      };
-      try {
-        const response = await fetch("/api/survey", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          console.error("Error occurred:", errorData);
-        } else {
-          const responseData = await response.json();
-          toast.success(`You left ${values.house}`);
-          fetchData();
-          console.log("Success:", responseData);
-        }
-      } catch (error) {
-        console.error("Error occurred:", error);
-      }
-    }
-  };
   return (
     <div>
-      {isClient ? (
-        <div className="p-2 sm:p-8">
-          <div className="flex items-center gap-10">
-            <Avatar className="w-16 h-16">
-              <AvatarImage
-                alt="avatar"
-                src={user_data?.user.image ?? "/placeholder-avatar.jpg"}
-              />
-              <AvatarFallback>KK</AvatarFallback>
-            </Avatar>
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                <span>{profile.inGameNick}</span>(
-                <span className="text-red-600">{profile.characterLevel}</span>)
-              </h2>
-              <p className="text-gray-500 dark:text-gray-400 mt-1">
-                {profile.discordNick}
-                {profile.house !== "none" ? (
-                  <>
-                    <span>{" from " + profile.house}</span>
+      <div className="p-2 sm:p-8">
+        <div className="flex items-center gap-10">
+          <Avatar className="w-16 h-16">
+            <AvatarImage
+              alt="avatar"
+              src={user_data?.user.image ?? "/placeholder-avatar.jpg"}
+            />
+            <AvatarFallback>KK</AvatarFallback>
+          </Avatar>
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+              <span>{profile.inGameNick}</span>(
+              <span className="text-red-600">{profile.characterLevel}</span>)
+            </h2>
+            <div className="text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1">
+              {profile.discordNick}
+              {profile.house !== "none" ? (
+                <div className="flex items-center">
+                  <span>{"from " + profile.house}</span>
+                  {houseLeader ? null : housePending ? (
+                    <span>
+                      <Loading color="#94a3b8" className="" />
+                    </span>
+                  ) : (
                     <Button
                       onClick={() => onDelete(profile)}
                       variant="ghost"
@@ -132,96 +168,92 @@ export default function Component() {
                     >
                       X
                     </Button>
-                  </>
-                ) : null}
-              </p>
+                  )}
+                </div>
+              ) : null}
             </div>
-            <ul className="flex gap-8 flex-wrap">
-              {weapons_list.map((e) =>
-                e.matchingWeapon?.value ? (
-                  <li
-                    key={e.id}
-                    className={clsx("flex flex-col items-center w-18", {
-                      "text-green-500": e.matchingWeapon.pref === 4,
-                      "text-blue-500": e.matchingWeapon.pref === 3,
-                      "text-purple-500": e.matchingWeapon.pref === 2,
-                      "text-yellow-500": e.matchingWeapon.pref === 1,
-                    })}
-                    title={t("leadership") + ": " + e.matchingWeapon.leadership}
-                  >
-                    <img src={e.src} className="rounded-full w-12 h-12" />
-                    <span className="text-sm">{e.name}</span>
-                  </li>
-                ) : null
-              )}
-            </ul>
           </div>
-          <div className="py-8">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-center px-1 text-yellow-500">
-                    {t("maxed_and_preffer")}
-                  </TableHead>
-                  <TableHead className="text-center px-1 text-purple-500">
-                    {t("preffer")}
-                  </TableHead>
-                  <TableHead className="text-center px-1 text-blue-500">
-                    {t("maxed")}
-                  </TableHead>
-                  <TableHead className="text-center px-1 text-green-500">
-                    {t("i_have")}
-                  </TableHead>
-                  <TableHead className="text-center px-1 text-red-500">
-                    {t("i_dont_have")}
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <TableRow>
-                  <List units={golden} value="4" />
-                  <List units={golden} value="3" />
-                  <List units={golden} value="2" />
-                  <List units={golden} value="1" />
-                  <List units={golden} value="0" />
-                </TableRow>
-                <TableRow>
-                  <List units={heroic} value="4" />
-                  <List units={heroic} value="3" />
-                  <List units={heroic} value="2" />
-                  <List units={heroic} value="1" />
-                  <List units={heroic} value="0" />
-                </TableRow>
-                <TableRow>
-                  <List units={blue} value="4" />
-                  <List units={blue} value="3" />
-                  <List units={blue} value="2" />
-                  <List units={blue} value="1" />
-                  <List units={blue} value="0" />
-                </TableRow>
-                <TableRow>
-                  <List units={green} value="4" />
-                  <List units={green} value="3" />
-                  <List units={green} value="2" />
-                  <List units={green} value="1" />
-                  <List units={green} value="0" />
-                </TableRow>
-                <TableRow>
-                  <List units={grey} value="4" />
-                  <List units={grey} value="3" />
-                  <List units={grey} value="2" />
-                  <List units={grey} value="1" />
-                  <List units={grey} value="0" />
-                </TableRow>
-              </TableBody>
-            </Table>
-          </div>
+          <ul className="flex gap-8 flex-wrap">
+            {weapons_list.map((e) =>
+              e.matchingWeapon?.value ? (
+                <li
+                  key={e.id}
+                  className={clsx("flex flex-col items-center w-18", {
+                    "text-green-500": e.matchingWeapon.pref === 4,
+                    "text-blue-500": e.matchingWeapon.pref === 3,
+                    "text-purple-500": e.matchingWeapon.pref === 2,
+                    "text-yellow-500": e.matchingWeapon.pref === 1,
+                  })}
+                  title={t("leadership") + ": " + e.matchingWeapon.leadership}
+                >
+                  <img src={e.src} className="rounded-full w-12 h-12" />
+                  <span className="text-sm">{e.name}</span>
+                </li>
+              ) : null
+            )}
+          </ul>
         </div>
-      ) : (
-        <div className="flex justify-center items-center h-screen">
-          <Loading color="#94a3b8" />
+        <div className="py-8">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="text-center px-1 text-yellow-500">
+                  {t("maxed_and_preffer")}
+                </TableHead>
+                <TableHead className="text-center px-1 text-purple-500">
+                  {t("preffer")}
+                </TableHead>
+                <TableHead className="text-center px-1 text-blue-500">
+                  {t("maxed")}
+                </TableHead>
+                <TableHead className="text-center px-1 text-green-500">
+                  {t("i_have")}
+                </TableHead>
+                <TableHead className="text-center px-1 text-red-500">
+                  {t("i_dont_have")}
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <List units={golden} value="4" />
+                <List units={golden} value="3" />
+                <List units={golden} value="2" />
+                <List units={golden} value="1" />
+                <List units={golden} value="0" />
+              </TableRow>
+              <TableRow>
+                <List units={heroic} value="4" />
+                <List units={heroic} value="3" />
+                <List units={heroic} value="2" />
+                <List units={heroic} value="1" />
+                <List units={heroic} value="0" />
+              </TableRow>
+              <TableRow>
+                <List units={blue} value="4" />
+                <List units={blue} value="3" />
+                <List units={blue} value="2" />
+                <List units={blue} value="1" />
+                <List units={blue} value="0" />
+              </TableRow>
+              <TableRow>
+                <List units={green} value="4" />
+                <List units={green} value="3" />
+                <List units={green} value="2" />
+                <List units={green} value="1" />
+                <List units={green} value="0" />
+              </TableRow>
+              <TableRow>
+                <List units={grey} value="4" />
+                <List units={grey} value="3" />
+                <List units={grey} value="2" />
+                <List units={grey} value="1" />
+                <List units={grey} value="0" />
+              </TableRow>
+            </TableBody>
+          </Table>
         </div>
-      )}
+      </div>
     </div>
   );
 }
