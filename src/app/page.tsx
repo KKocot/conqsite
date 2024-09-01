@@ -31,6 +31,9 @@ export default function Home() {
               <Link href="/house">
                 <Button>House</Button>
               </Link>
+              <Link href="/houses">
+                <Button>All Houses</Button>
+              </Link>
             </div>
           </div>
 
