@@ -15,7 +15,6 @@ import { weapons } from "@/assets/weapons";
 import { SurveyProps } from "@/lib/type";
 import { DEFAULT_FORM_DATA } from "@/components/wizard-form";
 import { useSession } from "next-auth/react";
-import { useLocalStorage } from "usehooks-ts";
 import Loading from "react-loading";
 import { ownedUnits } from "@/lib/utils";
 import List from "@/components/unit-list";
@@ -29,13 +28,10 @@ import { toast } from "react-toastify";
 
 export default function Component() {
   const { data: user_data } = useSession();
-  const [storage, setStorage] = useLocalStorage("MyForm", null);
-  const [profile, setProfile] = useState<SurveyProps>(
-    storage ?? DEFAULT_FORM_DATA
-  );
+  const [profile, setProfile] = useState<SurveyProps>(DEFAULT_FORM_DATA);
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
-    if (!storage) fetchData();
+    fetchData();
     setIsClient(true);
   }, []);
   const t = useTranslations("BuildTeam");
@@ -69,7 +65,6 @@ export default function Component() {
     try {
       const response = await fetch(`/api/survey/${user_data?.user.id}`);
       const data = await response.json();
-      setStorage(data.survey);
       setProfile(data.survey);
     } catch (error) {
       console.error("Error fetching:", error);
