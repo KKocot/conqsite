@@ -1,7 +1,6 @@
 import { MoveRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import StepGeneral from "./step-general";
-import { useLocalStorage } from "usehooks-ts";
 import { lowUnits } from "@/assets/low-units-data";
 import { weapons } from "@/assets/weapons";
 import { heroicUnits } from "@/assets/heroic-units-data";
@@ -41,7 +40,6 @@ export default function WizardForm({
   const t = useTranslations("AddForm");
   const router = useRouter();
   const [step, setStep] = useState(1);
-  const [storage, setStorage] = useLocalStorage("MyForm", DEFAULT_FORM_DATA);
   const [unitForm, setUnitForm] = useState<SurveyProps>(DEFAULT_FORM_DATA);
   const [loading, setLoading] = useState(false);
 
@@ -122,7 +120,6 @@ export default function WizardForm({
       avatar: avatar,
       house: values.house === "" ? "none" : values.house,
     };
-    setStorage(data);
     try {
       const response = await fetch("/api/survey", {
         method: "POST",
