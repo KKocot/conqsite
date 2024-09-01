@@ -24,6 +24,8 @@ import { Avatar } from "@radix-ui/react-avatar";
 import { useTranslations } from "next-intl";
 import clsx from "clsx";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { toast } from "react-toastify";
 
 export default function Component() {
   const { data: user_data } = useSession();
@@ -73,7 +75,38 @@ export default function Component() {
       console.error("Error fetching:", error);
     }
   };
+  const onDelete = async (values: SurveyProps) => {
+    const accept = confirm(
+      "Are you sure you want to delete this player from your house?"
+    );
+    if (accept) {
+      const data = {
+        ...values,
+        house: "none",
+      };
+      try {
+        const response = await fetch("/api/survey", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
 
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Error occurred:", errorData);
+        } else {
+          const responseData = await response.json();
+          toast.success(`You left ${values.house}`);
+          fetchData();
+          console.log("Success:", responseData);
+        }
+      } catch (error) {
+        console.error("Error occurred:", error);
+      }
+    }
+  };
   return (
     <div>
       {isClient ? (
@@ -93,6 +126,19 @@ export default function Component() {
               </h2>
               <p className="text-gray-500 dark:text-gray-400 mt-1">
                 {profile.discordNick}
+                {profile.house !== "none" ? (
+                  <>
+                    <span>{" from " + profile.house}</span>
+                    <Button
+                      onClick={() => onDelete(profile)}
+                      variant="ghost"
+                      className="text-destructive"
+                      title="Leave House"
+                    >
+                      X
+                    </Button>
+                  </>
+                ) : null}
               </p>
             </div>
             <ul className="flex gap-8 flex-wrap">
