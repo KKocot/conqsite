@@ -23,7 +23,6 @@ import { useSession } from "next-auth/react";
 import { NextResponse } from "next/server";
 import { useEffect, useState } from "react";
 import ReactLoading from "react-loading";
-import { ZodError } from "zod";
 
 interface Roles {
   _id?: string;
