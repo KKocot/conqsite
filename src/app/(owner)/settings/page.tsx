@@ -384,7 +384,7 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData }) => (
           </TableCell>
         </TableRow>
         {data.lineup.map((element, i) => (
-          <TableRow>
+          <TableRow key={i}>
             <TableCell>{`Lineup ${i + 1}`}</TableCell>
             <TableCell>
               Bot need to know how to split your house to lineups if you have
