@@ -2,7 +2,6 @@ import { AuthOptions } from "next-auth";
 import DiscordProvider, { DiscordProfile } from "next-auth/providers/discord";
 import { DefaultSession } from "next-auth";
 import connectMongoDB from "./mongodb";
-import Whitelist from "@/models/whitelist";
 
 export const authOptions: AuthOptions = {
   // Configure one or more authentication providers
