@@ -18,7 +18,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import clsx from "clsx";
-import { set } from "mongoose";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
@@ -31,11 +30,11 @@ interface Roles {
 }
 
 interface Data {
-  house: string;
-  member: string;
-  lineup: string;
-  technical: string;
-  logs: string;
+  house: { name: string; id: string };
+  member: { name: string; id: string };
+  lineup: { name: string; id: string; roleId: string }[];
+  logs: { logs: string; attendance: string };
+  tw: { server: string; member: string };
 }
 
 const SettingsPage = () => {
@@ -48,14 +47,13 @@ const SettingsPage = () => {
     role: "",
   });
   const [data, setData] = useState<Data>({
-    house: "",
-    member: "",
-    lineup: "",
-    technical: "",
-    logs: "",
+    house: { name: "", id: "" },
+    member: { name: "", id: "" },
+    lineup: [{ name: "", id: "", roleId: "" }],
+    logs: { logs: "", attendance: "" },
+    tw: { server: "", member: "" },
   });
 
-  // Fetch roles data from API
   const fetchData = async () => {
     try {
       const response = await fetch("/api/roles");
@@ -74,7 +72,10 @@ const SettingsPage = () => {
   useEffect(() => {
     if (house) {
       setUser((prev) => ({ ...prev, house }));
-      setData((prev) => ({ ...prev, house }));
+      setData((prev) => ({
+        ...prev,
+        house: { name: house, id: prev.house.id },
+      }));
     }
   }, [rolesList, commander]);
 
@@ -134,18 +135,20 @@ const SettingsPage = () => {
   return (
     <div className="p-12">
       <h1 className="text-center text-3xl">Settings Page</h1>
-      <UserForm
-        user={user}
-        setUser={setUser}
-        disabled={disabled}
-        onAdd={onAdd}
-      />
-      <div className="flex justify-around">
-        <RolesTable
-          rolesList={rolesList}
-          house={user.house}
-          onDelete={onDelete}
-        />
+      <div className="flex gap-4">
+        <div>
+          <RolesTable
+            rolesList={rolesList}
+            house={user.house}
+            onDelete={onDelete}
+          />
+          <UserForm
+            user={user}
+            setUser={setUser}
+            disabled={disabled}
+            onAdd={onAdd}
+          />
+        </div>
         <DataForm data={data} setData={setData} />
       </div>
     </div>
@@ -165,10 +168,11 @@ const UserForm: React.FC<UserFormProps> = ({
   disabled,
   onAdd,
 }) => (
-  <div className="flex gap-2">
+  <div className="flex gap-2 my-6">
     <div>
-      <span>Username</span>
       <Input
+        className="w-[120px]"
+        placeholder="Nick"
         value={user.discordNick}
         onChange={(e) =>
           setUser((prev) => ({ ...prev, discordNick: e.target.value }))
@@ -176,8 +180,9 @@ const UserForm: React.FC<UserFormProps> = ({
       />
     </div>
     <div>
-      <span>Discord ID</span>
       <Input
+        className="w-[120px]"
+        placeholder="Discord ID"
         value={user.discordId}
         onChange={(e) =>
           setUser((prev) => ({ ...prev, discordId: e.target.value }))
@@ -185,10 +190,9 @@ const UserForm: React.FC<UserFormProps> = ({
       />
     </div>
     <div>
-      <span>Role</span>
       <Select onValueChange={(e) => setUser((prev) => ({ ...prev, role: e }))}>
-        <SelectTrigger>
-          <SelectValue placeholder="Pick one" />
+        <SelectTrigger className="w-[150px]">
+          <SelectValue placeholder="Pick a role" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="HighCommand">HighCommand</SelectItem>
@@ -196,7 +200,7 @@ const UserForm: React.FC<UserFormProps> = ({
         </SelectContent>
       </Select>
     </div>
-    <Button disabled={disabled} className="w-fit self-end m-6" onClick={onAdd}>
+    <Button disabled={disabled} className="w-fit self-end" onClick={onAdd}>
       Add To List
     </Button>
   </div>
@@ -213,7 +217,7 @@ const RolesTable: React.FC<RolesTableProps> = ({
   house,
   onDelete,
 }) => (
-  <div className="w-1/3">
+  <div>
     <Table>
       <TableHeader>
         <TableRow>
@@ -249,13 +253,14 @@ interface DataFormProps {
 }
 
 const DataForm: React.FC<DataFormProps> = ({ data, setData }) => (
-  <div className="w-1/3 flex flex-col">
+  <div className="flex flex-col">
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Name</TableHead>
+          <TableHead className="w-[100px]">Name</TableHead>
           <TableHead>Description</TableHead>
-          <TableHead className="w-[180px]">Discord ID/Name</TableHead>
+          <TableHead className="w-[180px]">Name</TableHead>
+          <TableHead className="w-[180px]">ID</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -264,12 +269,27 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData }) => (
           <TableCell>Your unical house name</TableCell>
           <TableCell>
             <Input
-              placeholder="name"
-              value={data.house}
+              placeholder="House"
+              value={data.house.name}
               onChange={(e) =>
-                setData((prev) => ({ ...prev, house: e.target.value }))
+                setData((prev) => ({
+                  ...prev,
+                  house: { name: e.target.value, id: prev.house.id },
+                }))
               }
               disabled={true}
+            />
+          </TableCell>
+          <TableCell>
+            <Input
+              placeholder="Discord"
+              value={data.house.id}
+              onChange={(e) =>
+                setData((prev) => ({
+                  ...prev,
+                  house: { name: prev.house.name, id: e.target.value },
+                }))
+              }
             />
           </TableCell>
         </TableRow>
@@ -280,59 +300,175 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData }) => (
           </TableCell>
           <TableCell>
             <Input
-              placeholder="discord id"
-              value={data.member}
+              placeholder="Role"
+              value={data.member.name}
               onChange={(e) =>
-                setData((prev) => ({ ...prev, member: e.target.value }))
+                setData((prev) => ({
+                  ...prev,
+                  member: { name: e.target.value, id: prev.member.id },
+                }))
               }
             />
           </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>Lineup</TableCell>
-          <TableCell>
-            Bot need to know how to split your house to lineups if you have more
-            them one raid
-          </TableCell>
           <TableCell>
             <Input
-              placeholder="discord id"
-              value={data.lineup}
+              placeholder="Role"
+              value={data.member.id}
               onChange={(e) =>
-                setData((prev) => ({ ...prev, lineup: e.target.value }))
-              }
-            />
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>Technical</TableCell>
-          <TableCell>Who on discord can manage bot options</TableCell>
-          <TableCell>
-            <Input
-              placeholder="discord id"
-              value={data.technical}
-              onChange={(e) =>
-                setData((prev) => ({ ...prev, technical: e.target.value }))
+                setData((prev) => ({
+                  ...prev,
+                  member: { name: prev.member.name, id: e.target.value },
+                }))
               }
             />
           </TableCell>
         </TableRow>
         <TableRow>
           <TableCell>Logs</TableCell>
-          <TableCell>Channel to see bot logs</TableCell>
+          <TableCell>Channel to see bot logs</TableCell> <TableCell></TableCell>
           <TableCell>
             <Input
-              placeholder="discord id"
-              value={data.logs}
+              placeholder="Channel"
+              className="mb-6"
+              value={data.logs.logs}
               onChange={(e) =>
-                setData((prev) => ({ ...prev, logs: e.target.value }))
+                setData((prev) => ({
+                  ...prev,
+                  logs: {
+                    logs: e.target.value,
+                    attendance: prev.logs.attendance,
+                  },
+                }))
+              }
+            />
+            <Input
+              placeholder="Channel"
+              value={data.logs.attendance}
+              onChange={(e) =>
+                setData((prev) => ({
+                  ...prev,
+                  logs: { logs: prev.logs.logs, attendance: e.target.value },
+                }))
               }
             />
           </TableCell>
         </TableRow>
+        <TableRow>
+          <TableCell>
+            <span>Tw Zone</span>
+          </TableCell>
+          <TableCell>Discord, member role </TableCell>
+          <TableCell></TableCell>
+          <TableCell>
+            <Input
+              placeholder="Server"
+              className="mb-6"
+              value={data.tw.server}
+              onChange={(e) =>
+                setData((prev) => ({
+                  ...prev,
+                  tw: { server: e.target.value, member: prev.tw.member },
+                }))
+              }
+            />
+            <Input
+              placeholder="Role"
+              value={data.tw.member}
+              onChange={(e) =>
+                setData((prev) => ({
+                  ...prev,
+                  tw: { server: prev.tw.server, member: e.target.value },
+                }))
+              }
+            />
+          </TableCell>
+        </TableRow>
+        {data.lineup.map((element, i) => (
+          <TableRow>
+            <TableCell>{`Lineup ${i + 1}`}</TableCell>
+            <TableCell>
+              Bot need to know how to split your house to lineups if you have
+              more them one raid
+            </TableCell>
+            <TableCell>
+              <Input
+                placeholder="Role"
+                className="mb-6"
+                value={element.name}
+                onChange={(e) =>
+                  setData((prev) => ({
+                    ...prev,
+                    lineup: data.lineup.map((lineup, index) =>
+                      index === i ? { ...lineup, name: e.target.value } : lineup
+                    ),
+                  }))
+                }
+              />
+              <div className="flex gap-2">
+                {data.lineup.length === 1 ? null : (
+                  <Button
+                    variant="destructive"
+                    onClick={() =>
+                      setData((prev) => ({
+                        ...prev,
+                        lineup: prev.lineup.filter((_, index) => index !== i),
+                      }))
+                    }
+                  >
+                    Delete Lineup
+                  </Button>
+                )}
+                {data.lineup.length !== i + 1 ? null : (
+                  <Button
+                    onClick={() =>
+                      setData((prev) => ({
+                        ...prev,
+                        lineup: [
+                          ...prev.lineup,
+                          { name: "", id: "", roleId: "" },
+                        ],
+                      }))
+                    }
+                  >
+                    Add Lineup
+                  </Button>
+                )}
+              </div>
+            </TableCell>
+            <TableCell>
+              <Input
+                className="mb-6"
+                placeholder="Channel"
+                value={element.id}
+                onChange={(e) =>
+                  setData((prev) => ({
+                    ...prev,
+                    lineup: data.lineup.map((lineup, index) =>
+                      index === i ? { ...lineup, id: e.target.value } : lineup
+                    ),
+                  }))
+                }
+              />
+              <Input
+                placeholder="Role"
+                value={element.roleId}
+                onChange={(e) =>
+                  setData((prev) => ({
+                    ...prev,
+                    lineup: data.lineup.map((lineup, index) =>
+                      index === i
+                        ? { ...lineup, roleId: e.target.value }
+                        : lineup
+                    ),
+                  }))
+                }
+              />
+            </TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
-    <Button className="rounded-none w-fit self-end">Save</Button>
+    {/* <Button className="rounded-none w-fit self-end">Save</Button> */}
   </div>
 );
 

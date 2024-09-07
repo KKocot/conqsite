@@ -11,9 +11,17 @@ export default async function Layout({
   const session = await getServerSession(authOptions);
   const origin = process.env.ORIGIN;
 
-  const commanders = await fetch(`${origin}/api/roles`).then((res) =>
-    res.json()
-  );
+  let commanders;
+  try {
+    const response = await fetch(`${origin}/api/roles`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    commanders = await response.json();
+  } catch (error) {
+    console.error("Error fetching commanders:", error);
+    commanders = []; // or handle the error as needed
+  }
   const data: Role[] | undefined = commanders.roles;
   if (data && !data.some((e: Role) => e.discordId === session?.user.id))
     redirect("/");
