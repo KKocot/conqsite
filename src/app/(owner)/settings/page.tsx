@@ -288,7 +288,7 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
         {
           mode: "no-cors",
           headers: {
-            BOT_KEY: "EP3vbhkjI3E7WF07ZFG3dW5E98iTk8tH",
+            BOT_KEY: process.env.SITE_KEY ?? "",
           },
         }
       );
