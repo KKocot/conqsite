@@ -3,22 +3,9 @@
 import UserForm from "@/components/high-role-form";
 import RolesTable from "@/components/high-role-table";
 import DataForm from "@/components/house-settings-table";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import clsx from "clsx";
-import { CircleArrowRight } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { NextResponse } from "next/server";
 import { useEffect, useState } from "react";
-import ReactLoading from "react-loading";
+import Loading from "react-loading";
 
 export interface Roles {
   _id?: string;
@@ -39,6 +26,7 @@ export interface Data {
 const SettingsPage = () => {
   const { data: commander } = useSession();
   const [rolesList, setRolesList] = useState<Roles[]>([]);
+  const [pending, setPending] = useState(false);
   const [user, setUser] = useState<Roles>({
     discordNick: "",
     discordId: "",
@@ -54,27 +42,42 @@ const SettingsPage = () => {
   });
 
   const fetchData = async () => {
+    setPending(true);
     try {
       const response = await fetch("/api/roles");
       const result = await response.json();
       setRolesList(result.roles);
     } catch (error) {
       console.error("Error fetching roles:", error);
+    } finally {
+      setPending(false);
     }
   };
-
+  const fetchSettings = async () => {
+    setPending(true);
+    try {
+      const response = await fetch(`/api/houseSettings?house=${house}`);
+      const result = await response.json();
+      setData({
+        ...result,
+        house: { name: house, id: result.house.id },
+      });
+    } catch (error) {
+      console.error("Error fetching settings:", error);
+    } finally {
+      setPending(false);
+    }
+  };
   useEffect(() => {
     fetchData();
   }, []);
+
   const house =
     rolesList.find((e) => e.discordId === commander?.user.id)?.house || "";
   useEffect(() => {
     if (house) {
+      fetchSettings();
       setUser((prev) => ({ ...prev, house }));
-      setData((prev) => ({
-        ...prev,
-        house: { name: house, id: prev.house.id },
-      }));
     }
   }, [rolesList, commander]);
 
@@ -130,6 +133,13 @@ const SettingsPage = () => {
       }
     }
   };
+  if (pending) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loading color="#94a3b8" />
+      </div>
+    );
+  }
 
   return (
     <div className="p-12">

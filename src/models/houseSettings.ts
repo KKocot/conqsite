@@ -1,76 +1,42 @@
 import mongoose, { Schema } from "mongoose";
 
-interface House {
-  name: string;
-  id: string;
-}
-
-interface Member {
-  name: string;
-  id: string;
-}
-
-interface Lineup {
-  name: string;
-  id: string;
-  roleId: string;
-}
-
-interface Logs {
-  logs: string;
-  attendance: string;
-}
-
-interface TW {
-  server: string;
-  member: string;
-}
-
-interface settingsModel {
-  house: House;
-  member: Member;
-  lineup: Lineup[];
-  logs: Logs;
-  tw: TW;
-}
-
 // Create Mongoose schemas
 const HouseSchema: Schema = new Schema({
-  name: { type: String, required: true },
-  id: { type: String, required: true },
+  name: String,
+  id: String,
 });
 
 const MemberSchema: Schema = new Schema({
-  name: { type: String, required: true },
-  id: { type: String, required: true },
+  name: String,
+  id: String,
 });
 
 const LineupSchema: Schema = new Schema({
-  name: { type: String, required: true },
-  id: { type: String, required: true },
-  roleId: { type: String, required: true },
+  name: String,
+  id: String,
+  roleId: String,
 });
 
 const LogsSchema: Schema = new Schema({
-  logs: { type: String, required: true },
-  attendance: { type: String, required: true },
+  logs: String,
+  attendance: String,
 });
 
 const TWSchema: Schema = new Schema({
-  server: { type: String, required: true },
-  member: { type: String, required: true },
+  server: String,
+  member: String,
 });
 
-const HouseSettingsSchema: Schema = new Schema({
-  house: { type: HouseSchema, required: true },
-  member: { type: MemberSchema, required: true },
-  lineup: { type: [LineupSchema], required: true },
-  logs: { type: LogsSchema, required: true },
-  tw: { type: TWSchema, required: true },
+const HouseSettingsShema: Schema = new Schema({
+  id: String,
+  house: HouseSchema,
+  member: MemberSchema,
+  lineup: [LineupSchema],
+  logs: LogsSchema,
+  tw: TWSchema,
 });
 
-const HouseSettings = mongoose.model<settingsModel>(
-  "houseSettings",
-  HouseSettingsSchema
-);
+const HouseSettings =
+  mongoose.models.HouseSettings ||
+  mongoose.model("HouseSettings", HouseSettingsShema);
 export default HouseSettings;

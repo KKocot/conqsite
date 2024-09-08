@@ -32,6 +32,7 @@ const putHouseSettingsSchema = z.object({
   lineup: z.array(LineupSchema),
   logs: LogsSchema,
   tw: TwSchema,
+  id: z.string(),
 });
 
 export default putHouseSettingsSchema;

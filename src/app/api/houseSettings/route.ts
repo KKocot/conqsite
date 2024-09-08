@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     if (!userRoles) return new Response("401");
 
     const houseSettingsExists = await HouseSettings.findOne({
-      house: { name: house },
+      id: house,
     });
     let houseSettings;
     if (houseSettingsExists) {
@@ -43,8 +43,9 @@ export async function POST(request: Request) {
   } catch (error) {
     if (error instanceof ZodError)
       return NextResponse.json({ message: error.message }, { status: 400 });
-    if (error instanceof Error)
+    if (error instanceof Error) {
       return NextResponse.json({ message: error.message }, { status: 500 });
+    }
   }
 }
 
@@ -66,7 +67,7 @@ export async function GET(request: Request) {
       return new Response("401");
 
     const houseSettings = await HouseSettings.findOne({
-      house: { name: house },
+      id: house,
     });
     return new Response(JSON.stringify(houseSettings), { status: 200 });
   } catch (error) {

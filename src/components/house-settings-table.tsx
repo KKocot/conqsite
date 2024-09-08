@@ -77,7 +77,7 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
         `/api/houseSettings?house=${data.house.name}`,
         {
           method: "POST",
-          body: JSON.stringify(data),
+          body: JSON.stringify({ ...data, id: data.house.name }),
           headers: {
             "Content-Type": "application/json",
           },
@@ -138,6 +138,7 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
             <TableCell>
               <Input
                 placeholder="Discord"
+                disabled={checkConnection}
                 type="number"
                 value={data.house.id}
                 onChange={(e) =>
