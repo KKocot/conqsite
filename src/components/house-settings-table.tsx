@@ -46,15 +46,8 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
     setPending(true);
     try {
       const response = await fetch(
-        `http://bot.host2play.com:2005/api/server_verification?guild_id=${data.house.id}&member_id=${userId}`,
-        {
-          mode: "no-cors",
-          headers: {
-            BOT_KEY: process.env.SITE_KEY ?? "",
-          },
-        }
+        `http://bot.host2play.com:2005/api/server_verification?guild_id=${data.house.id}&member_id=${userId}&member=${data.member.id}&logs=${data.logs.logs}&attendance=${data.logs.attendance}&tw_server=${data.tw.server}&tw_member=${data.tw.member}`
       );
-
       if (response.ok) {
         setCheckConnection(true);
         console.log("Connection with discord is ok");
@@ -171,6 +164,7 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
             <TableCell>
               <Input
                 placeholder="Role"
+                disabled={checkConnection}
                 type="number"
                 value={data.member.id}
                 onChange={(e) =>
@@ -194,6 +188,7 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
               <Input
                 placeholder="Logs channel"
                 type="number"
+                disabled={checkConnection}
                 className="mb-6"
                 value={data.logs.logs}
                 onChange={(e) =>
@@ -208,6 +203,7 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
               />
               <Input
                 placeholder="Attendance channel"
+                disabled={checkConnection}
                 type="number"
                 value={data.logs.attendance}
                 onChange={(e) =>
@@ -229,6 +225,7 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
               <Input
                 placeholder="Server"
                 className="mb-6"
+                disabled={checkConnection}
                 type="number"
                 value={data.tw.server}
                 onChange={(e) =>
@@ -241,6 +238,7 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
               <Input
                 placeholder="Role"
                 value={data.tw.member}
+                disabled={checkConnection}
                 type="number"
                 onChange={(e) =>
                   setData((prev) => ({
@@ -308,6 +306,7 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
               <TableCell>
                 <Input
                   className="mb-6"
+                  disabled={checkConnection}
                   type="number"
                   placeholder="Channel"
                   value={element.id}
@@ -322,6 +321,7 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
                 />
                 <Input
                   placeholder="Role"
+                  disabled={checkConnection}
                   type="number"
                   value={element.roleId}
                   onChange={(e) =>
@@ -341,7 +341,7 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
         </TableBody>
       </Table>
       <div className="flex justify-center mt-6 items-center">
-        <Button onClick={() => fetchCheck()}>
+        <Button onClick={() => fetchCheck()} disabled={check}>
           Check connection with discord
         </Button>
         {pending ? (
@@ -353,11 +353,7 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
         ) : (
           <div className="w-[144.5px]" />
         )}
-        <Button
-          // disabled={!checkConnection}
-          disabled={check}
-          onClick={saveSettings}
-        >
+        <Button disabled={!checkConnection} onClick={saveSettings}>
           Save Settings
         </Button>
       </div>
