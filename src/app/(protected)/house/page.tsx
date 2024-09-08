@@ -1,7 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { SurveyProps } from "@/lib/type";
-import { set } from "mongoose";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";

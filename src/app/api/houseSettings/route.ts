@@ -16,7 +16,7 @@ export async function POST(request: Request) {
   try {
     await connectMongoDB();
     const data = putHouseSettingsSchema.parse(await request.json());
-    const roles = await Roles.find({ house: data.house });
+    const roles = await Roles.find({ house: house });
     const userRoles = roles
       .filter((e) => e.role === "RightHand" || e.role === "HouseLeader")
       .some((role) => role.discordId === session?.user?.id);

@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 interface House {
   name: string;
@@ -26,7 +26,7 @@ interface TW {
   member: string;
 }
 
-interface Data extends Document {
+interface settingsModel {
   house: House;
   member: Member;
   lineup: Lineup[];
@@ -61,7 +61,7 @@ const TWSchema: Schema = new Schema({
   member: { type: String, required: true },
 });
 
-const DataSchema: Schema = new Schema({
+const HouseSettingsSchema: Schema = new Schema({
   house: { type: HouseSchema, required: true },
   member: { type: MemberSchema, required: true },
   lineup: { type: [LineupSchema], required: true },
@@ -69,5 +69,8 @@ const DataSchema: Schema = new Schema({
   tw: { type: TWSchema, required: true },
 });
 
-const HouseSettings = mongoose.model<Data>("Data", DataSchema);
+const HouseSettings = mongoose.model<settingsModel>(
+  "houseSettings",
+  HouseSettingsSchema
+);
 export default HouseSettings;
