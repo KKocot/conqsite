@@ -117,7 +117,11 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
         <TableBody>
           <TableRow>
             <TableCell>House</TableCell>
-            <TableCell>Your unical house name</TableCell>
+            <TableCell>
+              We need to know what is your House Discord. Make sure Konquerus is
+              on your discord. By this ID we know on what serwer Konquerus
+              should work.
+            </TableCell>
             <TableCell>
               <Input
                 placeholder="House"
@@ -148,7 +152,8 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
           <TableRow>
             <TableCell>Member</TableCell>
             <TableCell>
-              Bot need to know who should have access to website
+              What is your Discord member role name and his DiscordID. By this
+              ID Konquerus know who is member of your house.
             </TableCell>
             <TableCell>
               <Input
@@ -178,11 +183,15 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
           </TableRow>
           <TableRow>
             <TableCell>Logs</TableCell>
-            <TableCell>Channel to see bot logs</TableCell>
+            <TableCell>
+              Channels or channel to see logs about actions on discord and
+              attendance on TW after event. You can use same channel or even
+              channel Tread
+            </TableCell>
             <TableCell></TableCell>
             <TableCell>
               <Input
-                placeholder="Channel"
+                placeholder="Logs channel"
                 type="number"
                 className="mb-6"
                 value={data.logs.logs}
@@ -197,7 +206,7 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
                 }
               />
               <Input
-                placeholder="Channel"
+                placeholder="Attendance channel"
                 type="number"
                 value={data.logs.attendance}
                 onChange={(e) =>
@@ -211,7 +220,9 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
           </TableRow>
           <TableRow>
             <TableCell>Tw Zone</TableCell>
-            <TableCell>Discord, member role </TableCell>
+            <TableCell>
+              We need to know if you play TW on main DC server or difren one.
+            </TableCell>
             <TableCell></TableCell>
             <TableCell>
               <Input
