@@ -58,11 +58,9 @@ export async function GET(request: Request) {
   try {
     await connectMongoDB();
     const roles = await Roles.find({ house: house });
-    const userRoles = roles
-      .filter((e) => e.role === "RightHand" || e.role === "HouseLeader")
-      .some((role) => role.discordId === session?.user?.id);
-
-    // Allow access only to high roles and bot
+    const userRoles = roles.some(
+      (role) => role.discordId === session?.user?.id
+    );
     if (!userRoles || (discordKey && discordKey === process.env.BOT_KEY))
       return new Response("401");
 
