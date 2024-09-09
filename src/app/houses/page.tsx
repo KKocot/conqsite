@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-interface HouseProps {
+export interface HouseProps {
   name: string;
   description: string;
   country: string;

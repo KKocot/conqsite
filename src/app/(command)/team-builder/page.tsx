@@ -22,6 +22,7 @@ import UnitsFilter from "@/components/units-filter";
 import RaidsFilter from "@/components/raids-filter";
 import StorageTemplate from "@/components/storage-template";
 import { useRolesContext } from "@/components/providers/globalData";
+import { NextResponse } from "next/server";
 
 const next_tw = getCloserDay();
 
@@ -74,6 +75,8 @@ const Page: React.FC = () => {
   const [allPlayers, setAllPlayers] = useState<SurveyProps[]>([]);
   const [lineup, setLineup] = useState<string[]>([]);
   const [showPreview, setShowPreview] = useState(false);
+  const [houseId, setHouseId] = useState<number | null>(null);
+  const [pending, setPending] = useState(false);
   const [filterUnits, setFilterUnits] = useState({
     rustic_checked: true,
     chivalric_checked: true,
@@ -83,12 +86,30 @@ const Page: React.FC = () => {
     other_checked: true,
     meta_units_only: true,
   });
-
   const command_list = useRolesContext();
   const commander_house =
     commander && commander.user.id
       ? command_list.find((e) => e.discordId === commander.user.id)
       : "";
+
+  const fetchSettings = async (house: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/houseSettings?house=${house}`);
+      const result = await response.json();
+      setHouseId(result.house.id);
+    } catch (error) {
+      console.error("Error fetching settings:", error);
+      return (
+        <div className="flex justify-center items-center h-screen">
+          Finish settings first
+        </div>
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const fetchLineup = async (house: string) => {
     setLoading(true);
     try {
@@ -113,6 +134,24 @@ const Page: React.FC = () => {
       console.error("Error fetching:", error);
     } finally {
       setTimeout(() => setLoading(false), 1000);
+    }
+  };
+
+  const loadLineup = async () => {
+    try {
+      const response = await fetch(
+        `http://bot.host2play.com:2005/api/attendance/${houseId}`
+      );
+      if (response.ok) {
+        console.log("Connection with discord is ok");
+      } else {
+        console.error("Error fetching data");
+      }
+    } catch (error) {
+      if (error instanceof Error)
+        return NextResponse.json({ message: error.message }, { status: 500 });
+    } finally {
+      setPending((prev) => !prev);
     }
   };
 
@@ -145,9 +184,12 @@ const Page: React.FC = () => {
 
   useEffect(() => {
     if (!commander_house) return;
+    fetchSettings(commander_house.house);
     fetchLineup(commander_house.house);
     fetchSurveys(commander_house.house);
-  }, [commander_house]);
+
+    console.log(pending);
+  }, [Boolean(commander_house), pending]);
 
   const handleEdit = (
     index: number,
@@ -234,6 +276,9 @@ const Page: React.FC = () => {
             <RaidsFilter lineups={signup.lineup} setLineup={setLineup} />
           ) : null}
         </div>
+        <Button onClick={loadLineup} variant="tab" disabled={houseId === null}>
+          Load Signup
+        </Button>
       </div>
       <TemplateMenu
         userHouse={commander_house ? commander_house.house : ""}

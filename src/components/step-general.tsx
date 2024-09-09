@@ -21,6 +21,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import { HouseProps } from "@/app/houses/page";
 
 const StepGeneral = ({
   form,
@@ -29,6 +31,20 @@ const StepGeneral = ({
   form: any;
   moveToStep: (e: number) => void;
 }) => {
+  const [houses, setHouses] = useState<HouseProps[]>([]);
+  const fetchHouses = async () => {
+    try {
+      const response = await fetch("/api/house");
+      const data = await response.json();
+      setHouses(data);
+    } catch (error) {
+      console.error("Error fetching:", error);
+    }
+  };
+  useEffect(() => {
+    fetchHouses();
+  }, []);
+
   const t = useTranslations("AddForm");
   const prev_step = 3;
   return (
@@ -89,11 +105,11 @@ const StepGeneral = ({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="KingdomOfPoland">
-                      KingdomOfPoland
-                    </SelectItem>
-                    <SelectItem value="Erebus">Erebus</SelectItem>
-                    <SelectItem value="BlackForge">BlackForge</SelectItem>
+                    {houses.map((e) => (
+                      <SelectItem value={e.name} key={e.name}>
+                        {e.name} - {e.server}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </FormItem>

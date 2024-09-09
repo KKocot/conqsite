@@ -120,7 +120,10 @@ const MyHousePage = () => {
                 className={clsx(
                   "cursor-pointer text-md p-2 hover:bg-destructive",
                   {
-                    "bg-red-500": Number(e.characterLevel) <= 500,
+                    "bg-gray-500": Number(e.characterLevel) === 1,
+                    "bg-red-500":
+                      Number(e.characterLevel) > 1 &&
+                      Number(e.characterLevel) <= 500,
                     "bg-green-500": Number(e.characterLevel) > 500,
                     "bg-blue-500": Number(e.characterLevel) > 1000,
                     "bg-purple-500": Number(e.characterLevel) > 2000,
