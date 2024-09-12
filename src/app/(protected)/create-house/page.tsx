@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import Loading from "react-loading";
 import { useRouter } from "next/navigation";
 
-interface HouseProps {
+export interface HouseProps {
   name: string;
   description: string;
   country: string;
@@ -20,7 +20,7 @@ interface HouseProps {
   avatar: string;
   server: string;
 }
-const HOUSE_PUBLIC_DATA = {
+export const HOUSE_PUBLIC_DATA = {
   name: "",
   description: "",
   country: "",

@@ -1,6 +1,4 @@
-import ReactLoading from "react-loading";
 import { Button } from "./ui/button";
-import { CircleArrowRight } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -10,9 +8,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Data } from "@/app/(owner)/settings/page";
-import { useState } from "react";
-import { NextResponse } from "next/server";
 import { Input } from "./ui/input";
+import { toast } from "react-toastify";
 
 const validate = (data: Data) => {
   if (
@@ -39,10 +36,9 @@ const areAllNamesUnique = (data: { lineup: { name: string }[] }) => {
 interface DataFormProps {
   data: Data;
   setData: React.Dispatch<React.SetStateAction<Data>>;
-  userId: string;
 }
 
-const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
+const DataForm: React.FC<DataFormProps> = ({ data, setData }) => {
   const check = validate(data);
   const uniqueNames = areAllNamesUnique(data);
 
@@ -63,6 +59,7 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
         const errorData = await response.json();
         console.error("Error occurred:", errorData);
       } else {
+        toast.success("House settings saved");
         console.log("Success:", await response.json());
       }
     } catch (error) {

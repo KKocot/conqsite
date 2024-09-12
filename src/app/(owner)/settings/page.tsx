@@ -1,7 +1,10 @@
 "use client";
 
+import { HOUSE_PUBLIC_DATA } from "@/app/(protected)/create-house/page";
+import { HouseProps } from "@/app/houses/page";
 import UserForm from "@/components/high-role-form";
 import RolesTable from "@/components/high-role-table";
+import HouseDetails from "@/components/house-details";
 import DataForm from "@/components/house-settings-table";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -40,7 +43,8 @@ const SettingsPage = () => {
     logs: { logs: "", attendance: "" },
     tw: { server: "", member: "" },
   });
-
+  const [houseDetails, setHouseDetails] =
+    useState<HouseProps>(HOUSE_PUBLIC_DATA);
   const fetchData = async () => {
     setPending(true);
     try {
@@ -56,11 +60,14 @@ const SettingsPage = () => {
   const fetchSettings = async () => {
     setPending(true);
     try {
-      const response = await fetch(`/api/houseSettings?house=${house}`);
-      const result = await response.json();
+      const settingsResponse = await fetch(`/api/houseSettings?house=${house}`);
+      const settingsResult = await settingsResponse.json();
+      const detailsResponse = await fetch(`/api/house?name=${house}`);
+      const detailsResult = await detailsResponse.json();
+      setHouseDetails(detailsResult);
       setData({
-        ...result,
-        house: { name: house, id: result.house.id },
+        ...settingsResult,
+        house: { name: house, id: settingsResult.house.id },
       });
     } catch (error) {
       console.error("Error fetching settings:", error);
@@ -68,6 +75,7 @@ const SettingsPage = () => {
       setPending(false);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -159,7 +167,10 @@ const SettingsPage = () => {
           />
         </div>
         {commander && commander.user.id ? (
-          <DataForm data={data} setData={setData} userId={commander?.user.id} />
+          <DataForm data={data} setData={setData} />
+        ) : null}
+        {houseDetails ? (
+          <HouseDetails house={houseDetails} setHouse={setHouseDetails} />
         ) : null}
       </div>
     </div>
