@@ -22,9 +22,15 @@ export default function Navbar() {
         <img src="/logo.png" alt="logo" className="h-10" />
       </Link>
       <div className="flex items-center gap-6">
-        <Link href="/policy">Privacy Policy</Link>
-        <Link href="/tos">Terms of Service</Link>
-        <Link href="/docs">Documentation</Link>
+        <Link href="/policy" className="text-white">
+          Privacy Policy
+        </Link>
+        <Link href="/tos" className="text-white">
+          Terms of Service
+        </Link>
+        <Link href="/docs" className="text-white">
+          Documentation
+        </Link>
         {data ? (
           <DropdownMenu>
             <DropdownMenuTrigger>

@@ -65,7 +65,7 @@ const ItemsList: React.FC<ItemsListProps> = ({ roles, role, handleDelete }) => (
         <TableRow
           key={role._id}
           className={clsx({
-            "bg-yellow-500 text-secondary hover:text-white":
+            "bg-yellow-500 text-secondary dark:hover:text-white text-black":
               role.role === "HouseLeader",
             "bg-purple-500": role.role === "RightHand",
             "bg-blue-500": role.role === "HighCommand",

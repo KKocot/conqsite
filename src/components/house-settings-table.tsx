@@ -31,6 +31,11 @@ const validate = (data: Data) => {
   return false;
 };
 
+const areAllNamesUnique = (data: { lineup: { name: string }[] }) => {
+  const names = data.lineup.map((item) => item.name);
+  const uniqueNames = new Set(names);
+  return uniqueNames.size === names.length;
+};
 interface DataFormProps {
   data: Data;
   setData: React.Dispatch<React.SetStateAction<Data>>;
@@ -39,30 +44,7 @@ interface DataFormProps {
 
 const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
   const check = validate(data);
-  const [checkConnection, setCheckConnection] = useState(false);
-  const [pending, setPending] = useState(false);
-  const [errorBox, setErrorBox] = useState(false);
-  const fetchCheck = async () => {
-    setPending(true);
-    try {
-      const response = await fetch(
-        `http://bot.host2play.com:2005/api/server_verification?guild_id=${data.house.id}&member_id=${userId}&member=${data.member.id}&logs=${data.logs.logs}&attendance=${data.logs.attendance}&tw_server=${data.tw.server}&tw_member=${data.tw.member}`
-      );
-      if (response.ok) {
-        setCheckConnection(true);
-        console.log("Connection with discord is ok");
-        setErrorBox(false);
-      } else {
-        setErrorBox(true);
-        console.error("Error fetching data");
-      }
-    } catch (error) {
-      if (error instanceof Error)
-        return NextResponse.json({ message: error.message }, { status: 500 });
-    } finally {
-      setPending(false);
-    }
-  };
+  const uniqueNames = areAllNamesUnique(data);
 
   const saveSettings = async () => {
     try {
@@ -93,16 +75,16 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="font-extrabold text-xl text-primary-foreground">
+            <TableHead className="font-extrabold text-xl text-primary">
               Name
             </TableHead>
-            <TableHead className="font-extrabold text-xl text-primary-foreground">
+            <TableHead className="font-extrabold text-xl text-primary">
               Description
             </TableHead>
-            <TableHead className="font-extrabold text-xl text-primary-foreground">
+            <TableHead className="font-extrabold text-xl text-primary">
               Name
             </TableHead>
-            <TableHead className="font-extrabold text-xl text-primary-foreground">
+            <TableHead className="font-extrabold text-xl text-primary">
               ID
             </TableHead>
           </TableRow>
@@ -113,7 +95,7 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
             <TableCell>
               We need to know what is your House Discord. Make sure Konquerus is
               on your discord. By this ID we know on what serwer Konquerus
-              should work.
+              should work. If you want change house name, type to support.
             </TableCell>
             <TableCell>
               <Input
@@ -131,7 +113,6 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
             <TableCell>
               <Input
                 placeholder="Discord"
-                disabled={checkConnection}
                 type="number"
                 value={data.house.id}
                 onChange={(e) =>
@@ -164,7 +145,6 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
             <TableCell>
               <Input
                 placeholder="Role"
-                disabled={checkConnection}
                 type="number"
                 value={data.member.id}
                 onChange={(e) =>
@@ -188,7 +168,6 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
               <Input
                 placeholder="Logs channel"
                 type="number"
-                disabled={checkConnection}
                 className="mb-6"
                 value={data.logs.logs}
                 onChange={(e) =>
@@ -203,7 +182,6 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
               />
               <Input
                 placeholder="Attendance channel"
-                disabled={checkConnection}
                 type="number"
                 value={data.logs.attendance}
                 onChange={(e) =>
@@ -225,7 +203,6 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
               <Input
                 placeholder="Server"
                 className="mb-6"
-                disabled={checkConnection}
                 type="number"
                 value={data.tw.server}
                 onChange={(e) =>
@@ -238,7 +215,6 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
               <Input
                 placeholder="Role"
                 value={data.tw.member}
-                disabled={checkConnection}
                 type="number"
                 onChange={(e) =>
                   setData((prev) => ({
@@ -306,7 +282,6 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
               <TableCell>
                 <Input
                   className="mb-6"
-                  disabled={checkConnection}
                   type="number"
                   placeholder="Channel"
                   value={element.id}
@@ -321,7 +296,6 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
                 />
                 <Input
                   placeholder="Role"
-                  disabled={checkConnection}
                   type="number"
                   value={element.roleId}
                   onChange={(e) =>
@@ -340,26 +314,16 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData, userId }) => {
           ))}
         </TableBody>
       </Table>
-      <div className="flex justify-center mt-6 items-center">
-        <Button onClick={() => fetchCheck()} disabled={check}>
-          Check connection with discord
-        </Button>
-        {pending ? (
-          <div className="flex items-center">
-            <ReactLoading type="balls" color="#fff" />
-            <ReactLoading type="balls" color="#fff" className="ml-[-7.5px]" />
-            <CircleArrowRight />
-          </div>
-        ) : (
-          <div className="w-[144.5px]" />
-        )}
-        <Button disabled={!checkConnection} onClick={saveSettings}>
-          Save Settings
-        </Button>
-      </div>
-      {errorBox ? (
+      <Button
+        disabled={check || !uniqueNames}
+        onClick={saveSettings}
+        className="w-fit self-center"
+      >
+        Save Settings
+      </Button>
+      {!uniqueNames ? (
         <div className="bg-red-500 text-white p-2 rounded-md mt-4 w-fit self-center">
-          Error occurred while checking connection with discord
+          Lineups names must be unique
         </div>
       ) : null}
     </div>

@@ -137,24 +137,6 @@ const Page: React.FC = () => {
     }
   };
 
-  const loadLineup = async () => {
-    try {
-      const response = await fetch(
-        `http://bot.host2play.com:2005/api/attendance/${houseId}`
-      );
-      if (response.ok) {
-        console.log("Connection with discord is ok");
-      } else {
-        console.error("Error fetching data");
-      }
-    } catch (error) {
-      if (error instanceof Error)
-        return NextResponse.json({ message: error.message }, { status: 500 });
-    } finally {
-      setPending((prev) => !prev);
-    }
-  };
-
   const units = useMemo(() => {
     const golden_era = filterUnits.golden_checked ? goldenUnits : [];
     const heroic_era = filterUnits.heroic_checked ? heroicUnits : [];
@@ -276,9 +258,6 @@ const Page: React.FC = () => {
             <RaidsFilter lineups={signup.lineup} setLineup={setLineup} />
           ) : null}
         </div>
-        <Button onClick={loadLineup} variant="tab" disabled={houseId === null}>
-          Load Signup
-        </Button>
       </div>
       <TemplateMenu
         userHouse={commander_house ? commander_house.house : ""}
