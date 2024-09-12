@@ -1,6 +1,5 @@
 "use client";
 
-import { HOUSE_PUBLIC_DATA } from "@/app/(protected)/create-house/page";
 import { HouseProps } from "@/app/houses/page";
 import UserForm from "@/components/high-role-form";
 import RolesTable from "@/components/high-role-table";
@@ -43,8 +42,14 @@ const SettingsPage = () => {
     logs: { logs: "", attendance: "" },
     tw: { server: "", member: "" },
   });
-  const [houseDetails, setHouseDetails] =
-    useState<HouseProps>(HOUSE_PUBLIC_DATA);
+  const [houseDetails, setHouseDetails] = useState<HouseProps>({
+    name: "",
+    description: "",
+    country: "",
+    discordLink: "",
+    avatar: "",
+    server: "",
+  });
   const fetchData = async () => {
     setPending(true);
     try {

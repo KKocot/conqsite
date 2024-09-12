@@ -20,19 +20,17 @@ export interface HouseProps {
   avatar: string;
   server: string;
 }
-export const HOUSE_PUBLIC_DATA = {
-  name: "",
-  description: "",
-  country: "",
-  discordLink: "",
-  avatar: "",
-  members: 0,
-  server: "",
-};
 
 const CreateHousePage = () => {
   const { data: user } = useSession();
-  const [house, setHouse] = useState<HouseProps>(HOUSE_PUBLIC_DATA);
+  const [house, setHouse] = useState<HouseProps>({
+    name: "",
+    description: "",
+    country: "",
+    discordLink: "",
+    avatar: "",
+    server: "",
+  });
   const [houses, setHouses] = useState<HouseProps[]>([]);
   const [pending, setPending] = useState(false);
   const [profile, setProfile] = useState<SurveyProps>();
