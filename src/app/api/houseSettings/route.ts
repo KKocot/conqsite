@@ -22,7 +22,7 @@ export async function POST(request: Request) {
       .some((role) => role.discordId === session?.user?.id);
 
     // Allow access only to high roles
-    if (!userRoles) return new Response("401");
+    // if (!userRoles) return new Response("401");
 
     const houseSettingsExists = await HouseSettings.findOne({
       id: house,

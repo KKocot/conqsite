@@ -50,7 +50,13 @@ export default function Navbar() {
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Button onClick={() => signIn()}>Login</Button>
+          <Button
+            onClick={() =>
+              signIn("discord", { callbackURL: process.env.NEXTAUTH_URL })
+            }
+          >
+            {t("login")}
+          </Button>
         )}
         <ModeToggle />
         <LanguageToggle />

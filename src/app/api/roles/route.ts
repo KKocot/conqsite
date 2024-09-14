@@ -38,11 +38,18 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
   try {
     await connectMongoDB();
-    const roles = await Roles.find();
-    return NextResponse.json({ roles });
+    if (id) {
+      const roles = await Roles.findOne({ discordId: id });
+      return NextResponse.json({ roles });
+    } else {
+      const roles = await Roles.find();
+      return NextResponse.json({ roles });
+    }
   } catch (error) {
     if (error instanceof ZodError)
       return NextResponse.json({ message: error.message }, { status: 400 });
