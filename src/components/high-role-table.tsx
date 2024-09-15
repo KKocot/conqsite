@@ -1,4 +1,3 @@
-import { Roles } from "@/app/(owner)/settings/page";
 import {
   Table,
   TableBody,
@@ -9,6 +8,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "./ui/button";
 import clsx from "clsx";
+import { Roles } from "@/lib/get-data";
 
 interface RolesTableProps {
   rolesList: Roles[];

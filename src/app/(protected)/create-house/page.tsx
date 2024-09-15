@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { DEFAULT_FORM_DATA } from "@/components/wizard-form";
 import { SurveyProps } from "@/lib/type";
-import { set } from "mongoose";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Loading from "react-loading";

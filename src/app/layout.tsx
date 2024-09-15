@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { NextAuthProvider } from "@/components/providers/next-auth";
 import Navbar from "@/components/navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ThemeProvider } from "next-themes";
-import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
-import { RolesProvider } from "@/components/providers/globalData";
+import Providers from "@/components/providers/providers";
+import { NextIntlClientProvider } from "next-intl";
 
 export const metadata: Metadata = {
   title: "House management app",
@@ -21,26 +19,23 @@ export default async function RootLayout({
 }>) {
   const locale = await getLocale();
   const messages = await getMessages();
+  const plainMessages = JSON.parse(JSON.stringify(messages)); // Ensure it's a plain object
+
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/logo.png" sizes="any" />
       </head>
       <body>
-        <NextIntlClientProvider messages={messages}>
-          <NextAuthProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
+        <Providers>
+          <NextIntlClientProvider messages={plainMessages}>
+            <>
               <Navbar />
-              <RolesProvider>{children}</RolesProvider>
+              {children}
               <ToastContainer theme="colored" autoClose={2000} />
-            </ThemeProvider>
-          </NextAuthProvider>
-        </NextIntlClientProvider>
+            </>
+          </NextIntlClientProvider>
+        </Providers>
       </body>
     </html>
   );

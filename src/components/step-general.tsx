@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { HouseProps } from "@/app/houses/page";
+import { HouseDetails } from "@/lib/get-data";
 
 const StepGeneral = ({
   form,
@@ -31,7 +31,7 @@ const StepGeneral = ({
   form: any;
   moveToStep: (e: number) => void;
 }) => {
-  const [houses, setHouses] = useState<HouseProps[]>([]);
+  const [houses, setHouses] = useState<HouseDetails[]>([]);
   const fetchHouses = async () => {
     try {
       const response = await fetch("/api/house");

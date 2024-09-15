@@ -1,21 +1,22 @@
-import { HouseProps } from "@/app/houses/page";
+import { HouseDetails } from "@/lib/get-data";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { toast } from "react-toastify";
+import { useState } from "react";
 
 interface HouseFormProps {
-  house: HouseProps;
-  setHouse: React.Dispatch<React.SetStateAction<HouseProps>>;
+  data: HouseDetails;
 }
 
-const HouseDetails = ({ house, setHouse }: HouseFormProps) => {
+const HouseDetailsForm = ({ data }: HouseFormProps) => {
+  const [houseDetails, setHouseDetails] = useState<HouseDetails>(data);
   const saveDetails = async () => {
     try {
-      const response = await fetch(`/api/house?name=${house.name}`, {
+      const response = await fetch(`/api/house?name=${houseDetails.name}`, {
         method: "POST",
-        body: JSON.stringify({ ...house, id: house.name }),
+        body: JSON.stringify({ ...houseDetails, id: houseDetails.name }),
         headers: {
           "Content-Type": "application/json",
         },
@@ -34,18 +35,19 @@ const HouseDetails = ({ house, setHouse }: HouseFormProps) => {
   };
 
   const validation = {
-    descriptionTooLong: house.description.length > 250,
+    descriptionTooLong: houseDetails.description.length > 250,
     wrongDiscordLink:
-      house.discordLink.length > 0 && !house.discordLink.includes("discord.gg"),
+      houseDetails.discordLink.length > 0 &&
+      !houseDetails.discordLink.includes("discord.gg"),
   };
   return (
     <div className="p-4 flex flex-col gap-4">
       <div>
         <Label>House Name</Label>
         <Input
-          value={house.name}
+          value={houseDetails.name}
           onChange={(e) =>
-            setHouse((prev) => ({ ...prev, name: e.target.value }))
+            setHouseDetails((prev) => ({ ...prev, name: e.target.value }))
           }
           disabled={true}
         />
@@ -53,9 +55,12 @@ const HouseDetails = ({ house, setHouse }: HouseFormProps) => {
       <div>
         <Label>House Description</Label>
         <Textarea
-          value={house.description}
+          value={houseDetails.description}
           onChange={(e) =>
-            setHouse((prev) => ({ ...prev, description: e.target.value }))
+            setHouseDetails((prev) => ({
+              ...prev,
+              description: e.target.value,
+            }))
           }
         />
         {validation.descriptionTooLong ? <p>Description is too long</p> : null}
@@ -63,18 +68,21 @@ const HouseDetails = ({ house, setHouse }: HouseFormProps) => {
       <div>
         <Label>Country</Label>
         <Input
-          value={house.country}
+          value={houseDetails.country}
           onChange={(e) =>
-            setHouse((prev) => ({ ...prev, country: e.target.value }))
+            setHouseDetails((prev) => ({ ...prev, country: e.target.value }))
           }
         />
       </div>
       <div>
         <Label>Discord Link</Label>
         <Input
-          value={house.discordLink}
+          value={houseDetails.discordLink}
           onChange={(e) =>
-            setHouse((prev) => ({ ...prev, discordLink: e.target.value }))
+            setHouseDetails((prev) => ({
+              ...prev,
+              discordLink: e.target.value,
+            }))
           }
         />
         {validation.wrongDiscordLink ? <p>Discord link is incorrect</p> : null}
@@ -82,18 +90,18 @@ const HouseDetails = ({ house, setHouse }: HouseFormProps) => {
       <div>
         <Label>Avatar</Label>
         <Input
-          value={house.avatar}
+          value={houseDetails.avatar}
           onChange={(e) =>
-            setHouse((prev) => ({ ...prev, avatar: e.target.value }))
+            setHouseDetails((prev) => ({ ...prev, avatar: e.target.value }))
           }
         />
       </div>
       <div>
         <Label>Server</Label>
         <Input
-          value={house.server}
+          value={houseDetails.server}
           onChange={(e) =>
-            setHouse((prev) => ({ ...prev, server: e.target.value }))
+            setHouseDetails((prev) => ({ ...prev, server: e.target.value }))
           }
         />
       </div>
@@ -101,8 +109,8 @@ const HouseDetails = ({ house, setHouse }: HouseFormProps) => {
         disabled={
           validation.descriptionTooLong ||
           validation.wrongDiscordLink ||
-          !house.name ||
-          !house.server
+          !houseDetails.name ||
+          !houseDetails.server
         }
         className="w-fit self-center"
         onClick={saveDetails}
@@ -113,4 +121,4 @@ const HouseDetails = ({ house, setHouse }: HouseFormProps) => {
   );
 };
 
-export default HouseDetails;
+export default HouseDetailsForm;

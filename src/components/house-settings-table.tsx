@@ -7,11 +7,12 @@ import {
   TableCell,
   TableRow,
 } from "@/components/ui/table";
-import { Data } from "@/app/(owner)/settings/page";
 import { Input } from "./ui/input";
 import { toast } from "react-toastify";
+import { HouseSettings } from "@/lib/get-data";
+import { FC, useState } from "react";
 
-const validate = (data: Data) => {
+const validate = (data: HouseSettings) => {
   if (
     !data.house.name ||
     !data.house.id ||
@@ -33,22 +34,23 @@ const areAllNamesUnique = (data: { lineup: { name: string }[] }) => {
   const uniqueNames = new Set(names);
   return uniqueNames.size === names.length;
 };
+
 interface DataFormProps {
-  data: Data;
-  setData: React.Dispatch<React.SetStateAction<Data>>;
+  data: HouseSettings;
 }
 
-const DataForm: React.FC<DataFormProps> = ({ data, setData }) => {
+const DataForm: FC<DataFormProps> = ({ data }) => {
+  const [houseSettings, setHouseSettings] = useState<HouseSettings>(data);
   const check = validate(data);
   const uniqueNames = areAllNamesUnique(data);
 
   const saveSettings = async () => {
     try {
       const response = await fetch(
-        `/api/houseSettings?house=${data.house.name}`,
+        `/api/houseSettings?house=${houseSettings.house.name}`,
         {
           method: "POST",
-          body: JSON.stringify({ ...data, id: data.house.name }),
+          body: JSON.stringify({ ...data, id: houseSettings.house.name }),
           headers: {
             "Content-Type": "application/json",
           },
@@ -97,9 +99,9 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData }) => {
             <TableCell>
               <Input
                 placeholder="House"
-                value={data.house.name}
+                value={houseSettings.house.name}
                 onChange={(e) =>
-                  setData((prev) => ({
+                  setHouseSettings((prev) => ({
                     ...prev,
                     house: { name: e.target.value, id: prev.house.id },
                   }))
@@ -110,9 +112,9 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData }) => {
               <Input
                 placeholder="Discord"
                 type="number"
-                value={data.house.id}
+                value={houseSettings.house.id}
                 onChange={(e) =>
-                  setData((prev) => ({
+                  setHouseSettings((prev) => ({
                     ...prev,
                     house: { name: prev.house.name, id: e.target.value },
                   }))
@@ -129,9 +131,9 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData }) => {
             <TableCell>
               <Input
                 placeholder="Role"
-                value={data.member.name}
+                value={houseSettings.member.name}
                 onChange={(e) =>
-                  setData((prev) => ({
+                  setHouseSettings((prev) => ({
                     ...prev,
                     member: { name: e.target.value, id: prev.member.id },
                   }))
@@ -142,9 +144,9 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData }) => {
               <Input
                 placeholder="Role"
                 type="number"
-                value={data.member.id}
+                value={houseSettings.member.id}
                 onChange={(e) =>
-                  setData((prev) => ({
+                  setHouseSettings((prev) => ({
                     ...prev,
                     member: { name: prev.member.name, id: e.target.value },
                   }))
@@ -165,9 +167,9 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData }) => {
                 placeholder="Logs channel"
                 type="number"
                 className="mb-6"
-                value={data.logs.logs}
+                value={houseSettings.logs.logs}
                 onChange={(e) =>
-                  setData((prev) => ({
+                  setHouseSettings((prev) => ({
                     ...prev,
                     logs: {
                       logs: e.target.value,
@@ -179,9 +181,9 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData }) => {
               <Input
                 placeholder="Attendance channel"
                 type="number"
-                value={data.logs.attendance}
+                value={houseSettings.logs.attendance}
                 onChange={(e) =>
-                  setData((prev) => ({
+                  setHouseSettings((prev) => ({
                     ...prev,
                     logs: { logs: prev.logs.logs, attendance: e.target.value },
                   }))
@@ -200,9 +202,9 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData }) => {
                 placeholder="Server"
                 className="mb-6"
                 type="number"
-                value={data.tw.server}
+                value={houseSettings.tw.server}
                 onChange={(e) =>
-                  setData((prev) => ({
+                  setHouseSettings((prev) => ({
                     ...prev,
                     tw: { server: e.target.value, member: prev.tw.member },
                   }))
@@ -210,10 +212,10 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData }) => {
               />
               <Input
                 placeholder="Role"
-                value={data.tw.member}
+                value={houseSettings.tw.member}
                 type="number"
                 onChange={(e) =>
-                  setData((prev) => ({
+                  setHouseSettings((prev) => ({
                     ...prev,
                     tw: { server: prev.tw.server, member: e.target.value },
                   }))
@@ -221,7 +223,7 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData }) => {
               />
             </TableCell>
           </TableRow>
-          {data.lineup.map((element, i) => (
+          {houseSettings.lineup.map((element, i) => (
             <TableRow key={i}>
               <TableCell>{`Lineup ${i + 1}`}</TableCell>
               <TableCell>
@@ -234,9 +236,9 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData }) => {
                   className="mb-6"
                   value={element.name}
                   onChange={(e) =>
-                    setData((prev) => ({
+                    setHouseSettings((prev) => ({
                       ...prev,
-                      lineup: data.lineup.map((lineup, index) =>
+                      lineup: houseSettings.lineup.map((lineup, index) =>
                         index === i
                           ? { ...lineup, name: e.target.value }
                           : lineup
@@ -245,11 +247,11 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData }) => {
                   }
                 />
                 <div className="flex gap-2">
-                  {data.lineup.length === 1 ? null : (
+                  {houseSettings.lineup.length === 1 ? null : (
                     <Button
                       variant="destructive"
                       onClick={() =>
-                        setData((prev) => ({
+                        setHouseSettings((prev) => ({
                           ...prev,
                           lineup: prev.lineup.filter((_, index) => index !== i),
                         }))
@@ -258,10 +260,10 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData }) => {
                       Delete Lineup
                     </Button>
                   )}
-                  {data.lineup.length !== i + 1 ? null : (
+                  {houseSettings.lineup.length !== i + 1 ? null : (
                     <Button
                       onClick={() =>
-                        setData((prev) => ({
+                        setHouseSettings((prev) => ({
                           ...prev,
                           lineup: [
                             ...prev.lineup,
@@ -282,9 +284,9 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData }) => {
                   placeholder="Channel"
                   value={element.id}
                   onChange={(e) =>
-                    setData((prev) => ({
+                    setHouseSettings((prev) => ({
                       ...prev,
-                      lineup: data.lineup.map((lineup, index) =>
+                      lineup: houseSettings.lineup.map((lineup, index) =>
                         index === i ? { ...lineup, id: e.target.value } : lineup
                       ),
                     }))
@@ -295,9 +297,9 @@ const DataForm: React.FC<DataFormProps> = ({ data, setData }) => {
                   type="number"
                   value={element.roleId}
                   onChange={(e) =>
-                    setData((prev) => ({
+                    setHouseSettings((prev) => ({
                       ...prev,
-                      lineup: data.lineup.map((lineup, index) =>
+                      lineup: houseSettings.lineup.map((lineup, index) =>
                         index === i
                           ? { ...lineup, roleId: e.target.value }
                           : lineup

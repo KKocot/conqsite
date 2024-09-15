@@ -1,20 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { HouseDetails } from "@/lib/get-data";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-export interface HouseProps {
-  name: string;
-  description: string;
-  country: string;
-  discordLink: string;
-  avatar: string;
-  server: string;
-}
 const HousesPage = () => {
-  const [houses, setHouses] = useState<HouseProps[]>([]);
+  const [houses, setHouses] = useState<HouseDetails[]>([]);
   const fetchHouses = async () => {
     try {
       const response = await fetch("/api/house");
