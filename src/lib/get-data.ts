@@ -69,3 +69,9 @@ export const getSurveys = async (house: string): Promise<Survey[]> => {
   const result = await response.json();
   return result.surveys;
 };
+
+export const getSurvey = async (discordId: string): Promise<Survey> => {
+  const response = await fetch(`/api/survey/${discordId}`);
+  const result = await response.json();
+  return result.survey;
+};

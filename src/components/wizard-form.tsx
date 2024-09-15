@@ -9,12 +9,13 @@ import { useForm } from "react-hook-form";
 import { Form } from "./ui/form";
 import FormCol from "./form-col";
 import clsx from "clsx";
-import { SurveyProps } from "@/lib/type";
 import { useRouter } from "next/navigation";
 import Loading from "react-loading";
 import { useTranslations } from "next-intl";
+import { getSurvey, Survey } from "@/lib/get-data";
+import { useQuery } from "@tanstack/react-query";
 
-export const DEFAULT_FORM_DATA: SurveyProps = {
+export const DEFAULT_FORM_DATA: Survey = {
   discordNick: "",
   inGameNick: "",
   discordId: "",
@@ -29,6 +30,21 @@ export const DEFAULT_FORM_DATA: SurveyProps = {
     golden: goldenUnits.map((unit) => ({ id: unit.id, value: "0" })),
   },
 };
+interface Unit {
+  id: number;
+  value: string;
+}
+const createNewUnits = (
+  existingUnits: Unit[],
+  diff: number,
+  baseId: number
+): Unit[] => {
+  const newUnits: Unit[] = [];
+  for (let i = 0; i < diff; i++) {
+    newUnits.push({ id: baseId + i + 1, value: "0" });
+  }
+  return [...existingUnits, ...newUnits];
+};
 
 export default function WizardForm({
   user_id,
@@ -37,83 +53,67 @@ export default function WizardForm({
   user_id: string;
   avatar?: string;
 }) {
+  const { data: profileData, isLoading: profileIsLoading } = useQuery({
+    queryKey: ["profile", user_id],
+    queryFn: () => getSurvey(user_id),
+    enabled: !!user_id,
+  });
+
   const t = useTranslations("AddForm");
   const router = useRouter();
   const [step, setStep] = useState(1);
-  const [unitForm, setUnitForm] = useState<SurveyProps>(DEFAULT_FORM_DATA);
-  const [loading, setLoading] = useState(false);
-
-  interface Unit {
-    id: number;
-    value: string;
-  }
-
-  const low_units_diff = lowUnits.length - unitForm.units.low.length;
-  const heroic_units_diff = heroicUnits.length - unitForm.units.heroic.length;
-  const golden_units_diff = goldenUnits.length - unitForm.units.golden.length;
   const no_new_units = 0;
-  const createNewUnits = (
-    existingUnits: Unit[],
-    diff: number,
-    baseId: number
-  ): Unit[] => {
-    const newUnits: Unit[] = [];
-    for (let i = 0; i < diff; i++) {
-      newUnits.push({ id: baseId + i + 1, value: "0" });
-    }
-    return [...existingUnits, ...newUnits];
-  };
+  const low_units_diff = profileData
+    ? lowUnits.length - profileData.units.low.length
+    : 0;
+  const heroic_units_diff = profileData
+    ? heroicUnits.length - profileData.units.heroic.length
+    : 0;
+  const golden_units_diff = profileData
+    ? goldenUnits.length - profileData.units.golden.length
+    : 0;
   const form = useForm({
     values: {
-      ...unitForm,
+      ...profileData,
+      discordNick: profileData?.discordNick ?? "",
+      inGameNick: profileData?.inGameNick ?? "",
+      discordId: profileData?.discordId ?? "",
+      characterLevel: profileData?.characterLevel ?? "",
+      avatar: profileData?.avatar ?? "",
+      house: profileData?.house ?? "",
+      artyAmount: profileData?.artyAmount ?? "none",
+      weapons:
+        profileData?.weapons ??
+        weapons.map(() => ({ value: false, leadership: 0, pref: 0 })),
       units: {
         low:
           low_units_diff > no_new_units
             ? createNewUnits(
-                unitForm.units.low,
+                profileData?.units.low ?? [],
                 low_units_diff,
-                unitForm.units.low.length
+                profileData?.units.low.length ?? 0
               )
-            : unitForm.units.low,
+            : profileData?.units.low ?? [],
         heroic:
           heroic_units_diff > no_new_units
             ? createNewUnits(
-                unitForm.units.heroic,
+                profileData?.units.heroic ?? [],
                 heroic_units_diff,
-                unitForm.units.heroic.length
+                profileData?.units.heroic.length ?? 0
               )
-            : unitForm.units.heroic,
+            : profileData?.units.heroic ?? [],
         golden:
           golden_units_diff > no_new_units
             ? createNewUnits(
-                unitForm.units.golden,
+                profileData?.units.golden ?? [],
                 golden_units_diff,
-                unitForm.units.golden.length
+                profileData?.units.golden.length ?? 0
               )
-            : unitForm.units.golden,
+            : profileData?.units.golden ?? [],
       },
     },
   });
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(`/api/survey/${user_id}`);
-      const data = await response.json();
-      setUnitForm(
-        data.survey === null
-          ? { ...DEFAULT_FORM_DATA, discordId: user_id }
-          : data.survey
-      );
-    } catch (error) {
-      console.error("Error fetching:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
-  const onSubmit = async (values: SurveyProps) => {
+  const onSubmit = async (values: Survey) => {
     const data = {
       ...values,
       discordId: user_id,
@@ -141,12 +141,20 @@ export default function WizardForm({
     }
     router.push(`/profile`);
   };
-  if (loading)
+  if (profileIsLoading)
     return (
       <div className="flex justify-center items-center h-screen">
         <Loading color="#94a3b8" />
       </div>
     );
+  if (!profileData) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Fill form first
+      </div>
+    );
+  }
+
   return (
     <Form {...form}>
       <form

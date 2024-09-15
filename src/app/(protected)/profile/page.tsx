@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { goldenUnits } from "@/assets/golden-units-data";
@@ -12,7 +12,6 @@ import {
   Table,
 } from "@/components/ui/table";
 import { weapons } from "@/assets/weapons";
-import { SurveyProps } from "@/lib/type";
 import { useSession } from "next-auth/react";
 import Loading from "react-loading";
 import { ownedUnits } from "@/lib/utils";
@@ -24,35 +23,32 @@ import clsx from "clsx";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
-import { useRolesContext } from "@/components/providers/globalData";
+import { getRoles, getSurvey, Survey } from "@/lib/get-data";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Component() {
   const { data: user_data } = useSession();
-  const [profile, setProfile] = useState<SurveyProps>();
-  const [pending, setPending] = useState(false);
   const [housePending, setHousePending] = useState(false);
   const t = useTranslations("BuildTeam");
-  const houseLeader = useRolesContext()
+  const { data: rolesData, isLoading: rolesIsLoading } = useQuery({
+    queryKey: ["rolesList"],
+    queryFn: getRoles,
+  });
+
+  const houseLeader = rolesData
     ?.filter((e) => e.role === "HouseLeader")
     .some((role) => role.discordId === user_data?.user.id);
 
-  const fetchData = async () => {
-    setPending(true);
-    try {
-      const response = await fetch(`/api/survey/${user_data?.user.id}`);
-      const data = await response.json();
-      setProfile(data.survey);
-      if (data.survey === null) {
-        setPending(false);
-      }
-    } catch (error) {
-      console.error("Error fetching:", error);
-    } finally {
-      setPending(false);
-    }
-  };
+  const { data: profileData, isLoading: profileIsLoading } = useQuery({
+    queryKey: ["profile", user_data?.user.id],
+    queryFn: () =>
+      user_data?.user.id
+        ? getSurvey(user_data.user.id)
+        : Promise.reject("User ID is undefined"),
+    enabled: !!user_data?.user.id,
+  });
 
-  const onDelete = async (values: SurveyProps) => {
+  const onDelete = async (values: Survey) => {
     const accept = confirm(
       "Are you sure you want to delete this player from your house?"
     );
@@ -84,7 +80,6 @@ export default function Component() {
         } else {
           const responseData = await response.json();
           toast.success(`You left ${values.house}`);
-          fetchData();
           console.log("Success:", responseData);
         }
       } catch (error) {
@@ -95,11 +90,7 @@ export default function Component() {
     }
   };
 
-  useEffect(() => {
-    if (!!user_data) fetchData();
-  }, [!!user_data]);
-
-  if (pending || !user_data) {
+  if (profileIsLoading || rolesIsLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Loading color="#94a3b8" />
@@ -107,7 +98,7 @@ export default function Component() {
     );
   }
 
-  if (!profile) {
+  if (!profileData) {
     return (
       <div className="flex flex-col items-center">
         <div className="text-center py-12 text-2xl font-extrabold">
@@ -123,13 +114,13 @@ export default function Component() {
     );
   }
 
-  const golden = ownedUnits(goldenUnits, profile.units.golden);
-  const heroic = ownedUnits(heroicUnits, profile.units.heroic);
-  const blue = ownedUnits(blueUnits, profile.units.low);
-  const green = ownedUnits(greenUnits, profile.units.low);
-  const grey = ownedUnits(greyUnits, profile.units.low);
+  const golden = ownedUnits(goldenUnits, profileData.units.golden);
+  const heroic = ownedUnits(heroicUnits, profileData.units.heroic);
+  const blue = ownedUnits(blueUnits, profileData.units.low);
+  const green = ownedUnits(greenUnits, profileData.units.low);
+  const grey = ownedUnits(greyUnits, profileData.units.low);
   const weapons_list = weapons.map((weapon) => {
-    const matchingWeapon = profile.weapons.find(
+    const matchingWeapon = profileData.weapons.find(
       (w, index) => index + 1 === weapon.id
     );
     return { ...weapon, matchingWeapon };
@@ -147,21 +138,22 @@ export default function Component() {
           </Avatar>
           <div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              <span>{profile.inGameNick}</span>(
-              <span className="text-red-600">{profile.characterLevel}</span>)
+              <span>{profileData.inGameNick}</span>(
+              <span className="text-red-600">{profileData.characterLevel}</span>
+              )
             </h2>
             <div className="text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1">
-              {profile.discordNick}
-              {profile.house !== "none" ? (
+              {profileData.discordNick}
+              {profileData.house !== "none" ? (
                 <div className="flex items-center">
-                  <span>{"from " + profile.house}</span>
+                  <span>{"from " + profileData.house}</span>
                   {houseLeader ? null : housePending ? (
                     <span>
                       <Loading color="#94a3b8" className="" />
                     </span>
                   ) : (
                     <Button
-                      onClick={() => onDelete(profile)}
+                      onClick={() => onDelete(profileData)}
                       variant="ghost"
                       className="text-destructive"
                       title="Leave House"
