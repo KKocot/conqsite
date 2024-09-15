@@ -23,13 +23,13 @@ export default function Navbar() {
       </Link>
       <div className="flex items-center gap-6">
         <Link href="/policy" className="text-white">
-          Privacy Policy
+          {t("privacy_policy")}
         </Link>
         <Link href="/tos" className="text-white">
-          Terms of Service
+          {t("terms_of_service")}
         </Link>
         <Link href="/docs" className="text-white">
-          Documentation
+          {t("documentation")}
         </Link>
         {data ? (
           <DropdownMenu>

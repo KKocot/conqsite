@@ -5,12 +5,14 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface HouseFormProps {
   data: HouseDetails;
 }
 
 const HouseDetailsForm = ({ data }: HouseFormProps) => {
+  const t = useTranslations("SettingsPage");
   const [houseDetails, setHouseDetails] = useState<HouseDetails>(data);
   const saveDetails = async () => {
     try {
@@ -24,13 +26,13 @@ const HouseDetailsForm = ({ data }: HouseFormProps) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error("Error occurred:", errorData);
+        console.error(t("error_occurred"), errorData);
       } else {
-        console.log("Success:", await response.json());
-        toast.success("House details saved");
+        console.log(t("success"), await response.json());
+        toast.success(t("house_details_saved"));
       }
     } catch (error) {
-      console.error("Error adding:", error);
+      console.error(t("error_adding"), error);
     }
   };
 
@@ -43,7 +45,7 @@ const HouseDetailsForm = ({ data }: HouseFormProps) => {
   return (
     <div className="p-4 flex flex-col gap-4">
       <div>
-        <Label>House Name</Label>
+        <Label>{t("house_name")}</Label>
         <Input
           value={houseDetails.name}
           onChange={(e) =>
@@ -53,7 +55,7 @@ const HouseDetailsForm = ({ data }: HouseFormProps) => {
         />
       </div>
       <div>
-        <Label>House Description</Label>
+        <Label>{t("house_description")}</Label>
         <Textarea
           value={houseDetails.description}
           onChange={(e) =>
@@ -63,10 +65,12 @@ const HouseDetailsForm = ({ data }: HouseFormProps) => {
             }))
           }
         />
-        {validation.descriptionTooLong ? <p>Description is too long</p> : null}
+        {validation.descriptionTooLong ? (
+          <p>{t("description_too_long")}</p>
+        ) : null}
       </div>
       <div>
-        <Label>Country</Label>
+        <Label>{t("country")}</Label>
         <Input
           value={houseDetails.country}
           onChange={(e) =>
@@ -75,7 +79,7 @@ const HouseDetailsForm = ({ data }: HouseFormProps) => {
         />
       </div>
       <div>
-        <Label>Discord Link</Label>
+        <Label>{t("discord_link")}</Label>
         <Input
           value={houseDetails.discordLink}
           onChange={(e) =>
@@ -85,10 +89,12 @@ const HouseDetailsForm = ({ data }: HouseFormProps) => {
             }))
           }
         />
-        {validation.wrongDiscordLink ? <p>Discord link is incorrect</p> : null}
+        {validation.wrongDiscordLink ? (
+          <p>{t("discord_link_incorrect")}</p>
+        ) : null}
       </div>
       <div>
-        <Label>Avatar</Label>
+        <Label>{t("avatar")}</Label>
         <Input
           value={houseDetails.avatar}
           onChange={(e) =>
@@ -97,7 +103,7 @@ const HouseDetailsForm = ({ data }: HouseFormProps) => {
         />
       </div>
       <div>
-        <Label>Server</Label>
+        <Label>{t("server")}</Label>
         <Input
           value={houseDetails.server}
           onChange={(e) =>
@@ -115,7 +121,7 @@ const HouseDetailsForm = ({ data }: HouseFormProps) => {
         className="w-fit self-center"
         onClick={saveDetails}
       >
-        Save Details
+        {t("save_details")}
       </Button>
     </div>
   );

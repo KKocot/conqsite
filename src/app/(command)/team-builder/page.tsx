@@ -102,7 +102,7 @@ const Page: React.FC = () => {
       console.error("Error fetching settings:", error);
       return (
         <div className="flex justify-center items-center h-screen">
-          Finish settings first
+          {t("finish_settings_first")}
         </div>
       );
     } finally {
@@ -169,8 +169,6 @@ const Page: React.FC = () => {
     fetchSettings(commander_house.house);
     fetchLineup(commander_house.house);
     fetchSurveys(commander_house.house);
-
-    console.log(pending);
   }, [Boolean(commander_house), pending]);
 
   const handleEdit = (

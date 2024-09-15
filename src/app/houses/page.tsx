@@ -2,11 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import { HouseDetails } from "@/lib/get-data";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const HousesPage = () => {
+  const t = useTranslations("HousePage");
   const [houses, setHouses] = useState<HouseDetails[]>([]);
   const fetchHouses = async () => {
     try {
@@ -22,7 +24,7 @@ const HousesPage = () => {
   }, []);
   return (
     <div className="flex flex-col items-center">
-      <h1 className="m-10">Houses</h1>
+      <h1 className="m-10">{t("houses")}</h1>
       <ul className="flex gap-12 flex-wrap m-12 justify-center">
         {houses.map((house) => (
           <li
@@ -46,7 +48,7 @@ const HousesPage = () => {
                   variant="tab"
                   className="w-full text-black dark:text-white hover:text-white"
                 >
-                  Join Discord
+                  {t("join_discord")}
                 </Button>
               </Link>
               <Button
@@ -56,7 +58,7 @@ const HousesPage = () => {
                   toast.error("Not working yet");
                 }}
               >
-                Join to House
+                {t("join_to_house")}
               </Button>
             </div>
           </li>

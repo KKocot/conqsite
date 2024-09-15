@@ -3,11 +3,13 @@ import { Button } from "@/components/ui/button";
 import { getHouseDetails, getSurvey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import Loading from "react-loading";
 
 const HousePage = () => {
   const { data: user_data } = useSession();
+  const t = useTranslations("HousePage");
   const { data: surveyData, isLoading: surveyIsLoading } = useQuery({
     queryKey: ["house", user_data?.user.id],
     queryFn: () => getSurvey(user_data?.user.id ?? ""),
@@ -42,16 +44,16 @@ const HousePage = () => {
             </Link>
           </div>
           <div className="w-5/6 ">
-            <div>Next TW Preview</div>
+            <div>{t("next_tw_preview")}</div>
           </div>
         </div>
       ) : (
         <div className="flex justify-evenly p-4">
           <Link href="/houses">
-            <Button>Join House</Button>
+            <Button>{t("join_house")}</Button>
           </Link>
           <Button>
-            <Link href="/create-house">Create House</Link>
+            <Link href="/create-house">{t("create_house")}</Link>
           </Button>
         </div>
       )}

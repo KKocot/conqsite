@@ -11,6 +11,7 @@ import { Input } from "./ui/input";
 import { toast } from "react-toastify";
 import { HouseSettings } from "@/lib/get-data";
 import { FC, useState } from "react";
+import { useTranslations } from "next-intl";
 
 const validate = (data: HouseSettings) => {
   if (
@@ -40,6 +41,7 @@ interface DataFormProps {
 }
 
 const DataForm: FC<DataFormProps> = ({ data }) => {
+  const t = useTranslations("SettingsPage");
   const [houseSettings, setHouseSettings] = useState<HouseSettings>(data);
   const check = validate(houseSettings);
   const uniqueNames = areAllNamesUnique(houseSettings);
@@ -59,13 +61,13 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error("Error occurred:", errorData);
+        console.error(t("error_occurred"), errorData);
       } else {
-        toast.success("House settings saved");
-        console.log("Success:", await response.json());
+        toast.success(t("house_settings_saved"));
+        console.log(t("success"), await response.json());
       }
     } catch (error) {
-      console.error("Error adding:", error);
+      console.error(t("error_adding"), error);
     }
   };
 
@@ -75,30 +77,26 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
         <TableHeader>
           <TableRow>
             <TableHead className="font-extrabold text-xl text-primary">
-              Name
+              {t("name")}
             </TableHead>
             <TableHead className="font-extrabold text-xl text-primary">
-              Description
+              {t("description")}
             </TableHead>
             <TableHead className="font-extrabold text-xl text-primary">
-              Name
+              {t("name")}
             </TableHead>
             <TableHead className="font-extrabold text-xl text-primary">
-              ID
+              {t("id")}
             </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           <TableRow>
-            <TableCell>House</TableCell>
-            <TableCell>
-              We need to know what is your House Discord. Make sure Konquerus is
-              on your discord. By this ID we know on what serwer Konquerus
-              should work. If you want change house name, type to support.
-            </TableCell>
+            <TableCell>{t("house")}</TableCell>
+            <TableCell>{t("house_description")}</TableCell>
             <TableCell>
               <Input
-                placeholder="House"
+                placeholder={t("house")}
                 value={houseSettings.house.name}
                 onChange={(e) =>
                   setHouseSettings((prev) => ({
@@ -111,7 +109,7 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
             </TableCell>
             <TableCell>
               <Input
-                placeholder="Discord"
+                placeholder={t("discord")}
                 type="number"
                 value={houseSettings.house.id}
                 onChange={(e) =>
@@ -124,14 +122,11 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>Member</TableCell>
-            <TableCell>
-              What is your Discord member role name and his DiscordID. By this
-              ID Konquerus know who is member of your house.
-            </TableCell>
+            <TableCell>{t("member")}</TableCell>
+            <TableCell>{t("member_description")}</TableCell>
             <TableCell>
               <Input
-                placeholder="Role"
+                placeholder={t("role")}
                 value={houseSettings.member.name}
                 onChange={(e) =>
                   setHouseSettings((prev) => ({
@@ -143,7 +138,7 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
             </TableCell>
             <TableCell>
               <Input
-                placeholder="Role"
+                placeholder={t("role")}
                 type="number"
                 value={houseSettings.member.id}
                 onChange={(e) =>
@@ -156,16 +151,12 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>Logs</TableCell>
-            <TableCell>
-              Channels or channel to see logs about actions on discord and
-              attendance on TW after event. You can use same channel or even
-              channel Tread
-            </TableCell>
+            <TableCell>{t("logs")}</TableCell>
+            <TableCell>{t("logs_description")}</TableCell>
             <TableCell></TableCell>
             <TableCell>
               <Input
-                placeholder="Logs channel"
+                placeholder={t("logs_channel")}
                 type="number"
                 className="mb-6"
                 value={houseSettings.logs.logs}
@@ -180,7 +171,7 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
                 }
               />
               <Input
-                placeholder="Attendance channel"
+                placeholder={t("attendance_channel")}
                 type="number"
                 value={houseSettings.logs.attendance}
                 onChange={(e) =>
@@ -193,14 +184,12 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>Tw Zone</TableCell>
-            <TableCell>
-              We need to know if you play TW on main DC server or difren one.
-            </TableCell>
+            <TableCell>{t("tw_zone")}</TableCell>
+            <TableCell>{t("tw_zone_description")}</TableCell>
             <TableCell></TableCell>
             <TableCell>
               <Input
-                placeholder="Server"
+                placeholder={t("server")}
                 className="mb-6"
                 type="number"
                 value={houseSettings.tw.server}
@@ -212,7 +201,7 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
                 }
               />
               <Input
-                placeholder="Role"
+                placeholder={t("role")}
                 value={houseSettings.tw.member}
                 type="number"
                 onChange={(e) =>
@@ -226,14 +215,11 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
           </TableRow>
           {houseSettings.lineup.map((element, i) => (
             <TableRow key={i}>
-              <TableCell>{`Lineup ${i + 1}`}</TableCell>
-              <TableCell>
-                Bot need to know how to split your house to lineups if you have
-                more them one raid
-              </TableCell>
+              <TableCell>{`${t("lineup")} ${i + 1}`}</TableCell>
+              <TableCell>{t("lineup_description")}</TableCell>
               <TableCell>
                 <Input
-                  placeholder="Role"
+                  placeholder={t("role")}
                   className="mb-6"
                   value={element.name}
                   onChange={(e) =>
@@ -258,7 +244,7 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
                         }))
                       }
                     >
-                      Delete Lineup
+                      {t("delete_lineup")}
                     </Button>
                   )}
                   {houseSettings.lineup.length !== i + 1 ? null : (
@@ -273,7 +259,7 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
                         }))
                       }
                     >
-                      Add Lineup
+                      {t("add_lineup")}
                     </Button>
                   )}
                 </div>
@@ -282,7 +268,7 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
                 <Input
                   className="mb-6"
                   type="number"
-                  placeholder="Channel"
+                  placeholder={t("channel")}
                   value={element.id}
                   onChange={(e) =>
                     setHouseSettings((prev) => ({
@@ -294,7 +280,7 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
                   }
                 />
                 <Input
-                  placeholder="Role"
+                  placeholder={t("role")}
                   type="number"
                   value={element.roleId}
                   onChange={(e) =>
@@ -318,11 +304,11 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
         onClick={saveSettings}
         className="w-fit self-center"
       >
-        Save Settings
+        {t("save_settings")}
       </Button>
       {!uniqueNames ? (
         <div className="bg-red-500 text-white p-2 rounded-md mt-4 w-fit self-center">
-          Lineups names must be unique
+          {t("unique_lineup_names")}
         </div>
       ) : null}
     </div>

@@ -10,7 +10,16 @@
     "logout": "Déconnexion",
     "light": "Clair",
     "dark": "Sombre",
-    "system": "Système"
+    "system": "Système",
+    "member_menu": "Menu des Membres",
+    "house": "Maison",
+    "all_houses": "Toutes les Maisons",
+    "high_command_menu": "Menu du Haut Commandement",
+    "house_leader_menu": "Menu du Chef de Maison",
+    "settings": "Paramètres",
+    "privacy_policy": "Politique de Confidentialité",
+    "terms_of_service": "Conditions d'Utilisation",
+    "documentation": "Documentation"
   },
   "AddForm": {
     "you_have_no_access": "Vous n'avez pas accès",
@@ -87,6 +96,165 @@
     "a_lot_artillery": "A beaucoup d'artillerie",
     "select_template": "Sélectionner le modèle",
     "save_template_to_db": "Enregistrer le modèle sur le serveur",
-    "group": "Groupe"
+    "group": "Groupe",
+    "update_form_first": "Mettre à jour le formulaire d'abord",
+    "update_form": "Mettre à jour le formulaire",
+    "are_u_sure": "Êtes-vous sûr de vouloir supprimer ce joueur de votre maison ?",
+    "from": "de ",
+    "finish_settings_first": "Terminez les paramètres d'abord"
+  },
+  "HousePage": {
+    "next_tw_preview": "Aperçu du prochain TW",
+    "join_house": "Rejoindre la Maison",
+    "create_house": "Créer une Maison",
+    "house_name": "Nom de la Maison",
+    "house_name_is_not_available": "Nom de la Maison non disponible",
+    "house_description": "Description de la Maison",
+    "description_is_too_long": "La description est trop longue",
+    "country": "Pays",
+    "discord_link": "Lien Discord",
+    "discord_link_is_incorrect": "Le lien Discord est incorrect",
+    "avatar": "Avatar",
+    "server": "Serveur",
+    "houses": "Maisons",
+    "join_discord": "Rejoindre Discord",
+    "join_to_house": "Rejoindre la Maison"
+  },
+  "SettingsPage": {
+    "settings_page": "Page de Paramètres",
+    "nick_placeholder": "Pseudo",
+    "discord_id_placeholder": "ID Discord",
+    "role_placeholder": "Choisissez un rôle",
+    "high_command": "Haut Commandement",
+    "right_hand": "Main Droite",
+    "add_to_list": "Ajouter à la Liste",
+    "error_occurred": "Une erreur s'est produite:",
+    "success": "Succès:",
+    "error_adding": "Erreur lors de l'ajout:",
+    "nick": "Pseudo",
+    "role": "Rôle",
+    "delete": "Supprimer",
+    "name": "Nom",
+    "description": "Description",
+    "id": "ID",
+    "house": "Maison",
+    "house_description": "Nous devons savoir quel est votre Discord de Maison. Assurez-vous que Konquerus est sur votre serveur Discord. Grâce à cet ID, nous savons sur quel serveur Konquerus doit fonctionner. Si vous souhaitez changer le nom de la maison, contactez le support.",
+    "discord": "Discord",
+    "member": "Membre",
+    "member_description": "Quel est le nom du rôle de membre Discord et son DiscordID? Grâce à cet ID, Konquerus sait qui est membre de votre maison.",
+    "logs": "Journaux",
+    "logs_description": "Canaux ou canal pour voir les journaux sur les actions sur Discord et la présence sur TW après l'événement. Vous pouvez utiliser le même canal ou même un fil de discussion.",
+    "logs_channel": "Canal de Journaux",
+    "attendance_channel": "Canal de Présence",
+    "tw_zone": "Zone TW",
+    "tw_zone_description": "Nous devons savoir si vous jouez à TW sur le serveur DC principal ou un autre.",
+    "server": "Serveur",
+    "lineup": "Composition",
+    "lineup_description": "Le bot doit savoir comment diviser votre maison en compositions si vous avez plus d'un raid.",
+    "delete_lineup": "Supprimer la Composition",
+    "add_lineup": "Ajouter une Composition",
+    "channel": "Canal",
+    "save_settings": "Enregistrer les Paramètres",
+    "unique_lineup_names": "Les noms des compositions doivent être uniques",
+    "house_settings_saved": "Paramètres de la Maison enregistrés",
+    "house_name": "Nom de la Maison",
+    "description_too_long": "La description est trop longue",
+    "country": "Pays",
+    "discord_link": "Lien Discord",
+    "discord_link_incorrect": "Le lien Discord est incorrect",
+    "avatar": "Avatar",
+    "save_details": "Enregistrer les Détails",
+    "house_details_saved": "Détails de la Maison enregistrés"
+  },
+  "DocsPage": {
+    "documentation": {
+      "title": "Documentation"
+    },
+    "guide": {
+      "title": "Guide étape par étape",
+      "step1": {
+        "title": "Accédez à l'onglet Maison",
+        "description": "Accédez à l'onglet \"Maison\" dans l'application."
+      },
+      "step2": {
+        "title": "Créer un onglet Maison",
+        "description": "Cliquez sur l'onglet \"Créer Maison\"."
+      },
+      "step3": {
+        "title": "Remplir le formulaire",
+        "form": {
+          "houseName": {
+            "title": "Nom de la Maison :",
+            "description": "Doit être unique. Pas plus de 15 caractères."
+          },
+          "houseDescription": {
+            "title": "Description de la Maison :",
+            "description": "Pas plus de 250 caractères."
+          },
+          "country": {
+            "title": "Pays :",
+            "description": "Sélectionnez le pays dans la liste déroulante."
+          },
+          "discord": {
+            "title": "Discord :",
+            "description": "Assurez-vous que le lien est permanent."
+          },
+          "avatar": {
+            "title": "Avatar :",
+            "description": "Utilisez un service d'hébergement d'images comme imgur.com. Collez le lien de l'image. La taille de l'image doit être de 180x180 pixels."
+          },
+          "server": {
+            "title": "Serveur :",
+            "description": "Remplissez le formulaire de paramètres du serveur."
+          }
+        }
+      },
+      "step4": {
+        "title": "Remplir le formulaire des paramètres",
+        "form": {
+          "serverDiscordId": {
+            "title": "ID du serveur Discord :",
+            "description": "Entrez l'ID du serveur Discord."
+          },
+          "memberRole": {
+            "title": "Nom et ID du rôle de membre :",
+            "description": "Fournissez le nom et l'ID du rôle de membre."
+          },
+          "logsChannels": {
+            "title": "Canaux ou canal de logs :",
+            "description": "Spécifiez les canaux de logs ou un canal unique."
+          },
+          "twZone": {
+            "title": "Zone TW :",
+            "description": "Entrez l'ID du serveur Discord pour la zone TW. Fournissez l'ID du rôle de membre."
+          },
+          "lineups": {
+            "title": "Alignements :",
+            "lineupName": {
+              "title": "Nom de l'alignement :",
+              "description": "Doit être unique."
+            },
+            "channelWithBot": {
+              "title": "Canal avec le bot pour s'inscrire :",
+              "description": "Spécifiez le canal."
+            },
+            "roleId": {
+              "title": "ID du rôle pour cet alignement :",
+              "description": "Fournissez l'ID du rôle."
+            }
+          }
+        }
+      },
+      "step5": {
+        "title": "Invitez le bot @Konqueruś",
+        "description": "Invitez le ",
+        "botName": "Konqueruś"
+      },
+      "step6": {
+        "title": "Vérifiez les paramètres de la Maison",
+        "description": "Utilisez la commande pour vérifier les paramètres de votre Maison sur le site Web. Allez sur ",
+        "command": "et cliquez sur le bouton pour vérifier."
+      }
+    }
   }
 }

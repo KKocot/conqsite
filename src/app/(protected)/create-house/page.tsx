@@ -6,11 +6,12 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { DEFAULT_FORM_DATA } from "@/components/wizard-form";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Loading from "react-loading";
 import { useRouter } from "next/navigation";
 import { getHousesDetails, getSurvey, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 
 export interface HouseProps {
   name: string;
@@ -23,6 +24,7 @@ export interface HouseProps {
 
 const CreateHousePage = () => {
   const { data: user } = useSession();
+  const t = useTranslations("HousePage");
   const [house, setHouse] = useState<HouseProps>({
     name: "",
     description: "",
@@ -133,9 +135,9 @@ const CreateHousePage = () => {
 
   return (
     <div className="p-4 flex flex-col gap-4">
-      <h1>Create House</h1>
+      <h1>{t("create_house")}</h1>
       <div>
-        <Label>House Name</Label>
+        <Label>{t("house_name")}</Label>
         <Input
           value={house.name}
           onChange={(e) =>
@@ -143,21 +145,23 @@ const CreateHousePage = () => {
           }
         />
         {validation.isHouseNameAvailable ? (
-          <p>House name is not available</p>
+          <p>{t("house_name_is_not_available")}</p>
         ) : null}
       </div>
       <div>
-        <Label>House Description</Label>
+        <Label>{t("house_description")}</Label>
         <Textarea
           value={house.description}
           onChange={(e) =>
             setHouse((prev) => ({ ...prev, description: e.target.value }))
           }
         />
-        {validation.descriptionTooLong ? <p>Description is too long</p> : null}
+        {validation.descriptionTooLong ? (
+          <p>{t("description_is_too_long")}</p>
+        ) : null}
       </div>
       <div>
-        <Label>Country</Label>
+        <Label>{t("country")}</Label>
         <Input
           value={house.country}
           onChange={(e) =>
@@ -166,17 +170,19 @@ const CreateHousePage = () => {
         />
       </div>
       <div>
-        <Label>Discord Link</Label>
+        <Label>{t("discord_link")}</Label>
         <Input
           value={house.discordLink}
           onChange={(e) =>
             setHouse((prev) => ({ ...prev, discordLink: e.target.value }))
           }
         />
-        {validation.wrongDiscordLink ? <p>Discord link is incorrect</p> : null}
+        {validation.wrongDiscordLink ? (
+          <p>{t("discord_link_is_incorrect")}</p>
+        ) : null}
       </div>
       <div>
-        <Label>Avatar</Label>
+        <Label>{t("avatar")}</Label>
         <Input
           value={house.avatar}
           onChange={(e) =>
@@ -185,7 +191,7 @@ const CreateHousePage = () => {
         />
       </div>
       <div>
-        <Label>Server</Label>
+        <Label>{t("server")}</Label>
         <Input
           value={house.server}
           onChange={(e) =>
@@ -204,7 +210,7 @@ const CreateHousePage = () => {
         className="m-6"
         onClick={() => handleAllActions()}
       >
-        Create House
+        {t("create_house")}
       </Button>
     </div>
   );

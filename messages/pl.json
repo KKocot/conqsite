@@ -10,7 +10,16 @@
     "logout": "Wyloguj się",
     "light": "Jasny",
     "dark": "Ciemny",
-    "system": "System"
+    "system": "System",
+    "member_menu": "Menu Członka",
+    "house": "Dom",
+    "all_houses": "Wszystkie Domy",
+    "high_command_menu": "Menu Dowództwa",
+    "house_leader_menu": "Menu Lidera Domu",
+    "settings": "Ustawienia",
+    "privacy_policy": "Polityka Prywatności",
+    "terms_of_service": "Warunki Usługi",
+    "documentation": "Dokumentacja"
   },
   "AddForm": {
     "you_have_no_access": "Nie masz dostępu",
@@ -87,6 +96,165 @@
     "a_lot_artillery": "Ma dużo artylerii",
     "select_template": "Wybierz szablon",
     "save_template_to_db": "Zapisz szablon na serwerze",
-    "group": "Grupa"
+    "group": "Grupa",
+    "update_form_first": "Najpierw zaktualizuj formularz",
+    "update_form": "Zaktualizuj formularz",
+    "are_u_sure": "Czy na pewno chcesz usunąć tego gracza z domu?",
+    "from": "z ",
+    "finish_settings_first": "Najpierw dokończ ustawienia"
+  },
+  "HousePage": {
+    "next_tw_preview": "Podgląd następnego TW",
+    "join_house": "Dołącz do Rodu",
+    "create_house": "Utwórz Ród",
+    "house_name": "Nazwa Rodu",
+    "house_name_is_not_available": "Nazwa Rodu jest niedostępna",
+    "house_description": "Opis Rodu",
+    "description_is_too_long": "Opis jest za długi",
+    "country": "Kraj",
+    "discord_link": "Link Discord",
+    "discord_link_is_incorrect": "Link Discord jest nieprawidłowy",
+    "avatar": "Awatar",
+    "server": "Serwer",
+    "houses": "Domy",
+    "join_discord": "Dołącz do Discord",
+    "join_to_house": "Dołącz do Rodu"
+  },
+  "SettingsPage": {
+    "settings_page": "Strona Ustawień",
+    "nick_placeholder": "Nick",
+    "discord_id_placeholder": "Discord ID",
+    "role_placeholder": "Wybierz rolę",
+    "high_command": "Wysokie Dowództwo",
+    "right_hand": "Prawa Ręka",
+    "add_to_list": "Dodaj do Listy",
+    "error_occurred": "Wystąpił błąd:",
+    "success": "Sukces:",
+    "error_adding": "Błąd dodawania:",
+    "nick": "Nick",
+    "role": "Rola",
+    "delete": "Usuń",
+    "name": "Imię",
+    "description": "Opis",
+    "id": "ID",
+    "house": "Dom",
+    "house_description": "Musimy wiedzieć, jaki jest twój Discord Domu. Upewnij się, że Konquerus jest na twoim serwerze Discord. Dzięki temu ID wiemy, na jakim serwerze powinien działać Konquerus. Jeśli chcesz zmienić nazwę domu, napisz do wsparcia.",
+    "discord": "Discord",
+    "member": "Członek",
+    "member_description": "Jaka jest nazwa roli członka Discord i jego DiscordID? Dzięki temu ID Konquerus wie, kto jest członkiem twojego domu.",
+    "logs": "Logi",
+    "logs_description": "Kanały lub kanał do przeglądania logów dotyczących działań na Discordzie i obecności na TW po wydarzeniu. Możesz użyć tego samego kanału lub nawet wątku na kanale.",
+    "logs_channel": "Kanał logów",
+    "attendance_channel": "Kanał obecności",
+    "tw_zone": "Strefa TW",
+    "tw_zone_description": "Musimy wiedzieć, czy grasz w TW na głównym serwerze DC, czy na innym.",
+    "server": "Serwer",
+    "lineup": "Zestawienie",
+    "lineup_description": "Bot musi wiedzieć, jak podzielić twój dom na zestawienia, jeśli masz więcej niż jeden najazd.",
+    "delete_lineup": "Usuń zestawienie",
+    "add_lineup": "Dodaj zestawienie",
+    "channel": "Kanał",
+    "save_settings": "Zapisz ustawienia",
+    "unique_lineup_names": "Nazwy zestawień muszą być unikalne",
+    "house_settings_saved": "Ustawienia domu zapisane",
+    "house_name": "Nazwa domu",
+    "description_too_long": "Opis jest za długi",
+    "country": "Kraj",
+    "discord_link": "Link Discord",
+    "discord_link_incorrect": "Link Discord jest nieprawidłowy",
+    "avatar": "Awatar",
+    "save_details": "Zapisz szczegóły",
+    "house_details_saved": "Szczegóły domu zapisane"
+  },
+  "DocsPage": {
+    "documentation": {
+      "title": "Dokumentacja"
+    },
+    "guide": {
+      "title": "Przewodnik Krok po Kroku jak zacząć",
+      "step1": {
+        "title": "Przejdź do zakładki Ród",
+        "description": "Przejdź do zakładki \"Ród\" w aplikacji."
+      },
+      "step2": {
+        "title": "Utwórz zakładkę Ród",
+        "description": "Kliknij zakładkę \"Utwórz Ród\"."
+      },
+      "step3": {
+        "title": "Wypełnij formularz",
+        "form": {
+          "houseName": {
+            "title": "Nazwa Rodu:",
+            "description": "Musi być unikalna. Nie więcej niż 15 znaków."
+          },
+          "houseDescription": {
+            "title": "Opis Rodu:",
+            "description": "Nie więcej niż 250 znaków."
+          },
+          "country": {
+            "title": "Kraj:",
+            "description": "Wybierz kraj lub kraje."
+          },
+          "discord": {
+            "title": "Discord:",
+            "description": "Upewnij się, że link jest trwały."
+          },
+          "avatar": {
+            "title": "Awatar:",
+            "description": "Użyj usługi hostingowej obrazów, np. imgur.com. Wklej link do obrazu. Rozmiar obrazu powinien wynosić 180x180 pikseli."
+          },
+          "server": {
+            "title": "Serwer:",
+            "description": "Napisz na jakim serwerze gracie."
+          }
+        }
+      },
+      "step4": {
+        "title": "Wypełnij formularz ustawień",
+        "form": {
+          "serverDiscordId": {
+            "title": "ID Serwera Discord:",
+            "description": "Wprowadź ID serwera Discord."
+          },
+          "memberRole": {
+            "title": "Nazwa i ID Roli Członka:",
+            "description": "Podaj nazwę i ID roli członka."
+          },
+          "logsChannels": {
+            "title": "Kanały Logów lub Kanał:",
+            "description": "Podaj kanały logów lub jeden kanał."
+          },
+          "twZone": {
+            "title": "Strefa TW:",
+            "description": "Podaj ID Serwera Discord dla strefy TW. Podaj ID roli członka."
+          },
+          "lineups": {
+            "title": "Składy:",
+            "lineupName": {
+              "title": "Nazwa Składu:",
+              "description": "Powinna być unikalna."
+            },
+            "channelWithBot": {
+              "title": "Kanał z Botem do Rejestracji:",
+              "description": "Podaj kanał."
+            },
+            "roleId": {
+              "title": "ID Roli dla tego Składu:",
+              "description": "Podaj ID roli."
+            }
+          }
+        }
+      },
+      "step5": {
+        "title": "Zaproś Bota @Konqueruś",
+        "description": "Zaproś ",
+        "botName": "Konqueruś"
+      },
+      "step6": {
+        "title": "Zweryfikuj Ustawienia Domu",
+        "description": "Użyj polecenia, aby zweryfikować ustawienia domu na stronie internetowej. Przejdź do ",
+        "command": "i kliknij przycisk, aby zweryfikować."
+      }
+    }
   }
 }

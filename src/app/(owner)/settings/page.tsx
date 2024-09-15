@@ -7,9 +7,11 @@ import DataForm from "@/components/house-settings-table";
 import { getHouseDetails, getHouseSettings, getRoles } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import Loading from "react-loading";
 
 const SettingsPage = () => {
+  const t = useTranslations("SettingsPage");
   const { data: commander } = useSession();
   const { data: rolesData, isLoading: rolesIsLoading } = useQuery({
     queryKey: ["rolesList"],
@@ -71,7 +73,7 @@ const SettingsPage = () => {
 
   return (
     <div className="p-12">
-      <h1 className="text-center text-3xl">Settings Page</h1>
+      <h1 className="text-center text-3xl">{t("settings_page")}</h1>
       <div className="flex gap-6 flex-col">
         <div>
           <UserForm house={house} />

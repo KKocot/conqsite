@@ -49,9 +49,7 @@ export default function Component() {
   });
 
   const onDelete = async (values: Survey) => {
-    const accept = confirm(
-      "Are you sure you want to delete this player from your house?"
-    );
+    const accept = confirm(t("are_u_sure"));
     if (accept) {
       setHousePending(true);
       const data = {
@@ -102,13 +100,13 @@ export default function Component() {
     return (
       <div className="flex flex-col items-center">
         <div className="text-center py-12 text-2xl font-extrabold">
-          Update form first
+          {t("update_form_first")}
         </div>
         <Link
           href="/update-form"
           className="block w-fit text-center text-destructive p-4 hover:text-destructive-foreground"
         >
-          Update Form
+          {t("update_form")}
         </Link>
       </div>
     );
@@ -146,7 +144,7 @@ export default function Component() {
               {profileData.discordNick}
               {profileData.house !== "none" ? (
                 <div className="flex items-center">
-                  <span>{"from " + profileData.house}</span>
+                  <span>{t("from") + profileData.house}</span>
                   {houseLeader ? null : housePending ? (
                     <span>
                       <Loading color="#94a3b8" className="" />
