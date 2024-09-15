@@ -41,8 +41,8 @@ interface DataFormProps {
 
 const DataForm: FC<DataFormProps> = ({ data }) => {
   const [houseSettings, setHouseSettings] = useState<HouseSettings>(data);
-  const check = validate(data);
-  const uniqueNames = areAllNamesUnique(data);
+  const check = validate(houseSettings);
+  const uniqueNames = areAllNamesUnique(houseSettings);
 
   const saveSettings = async () => {
     try {
