@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ArtilleryProps, SheetTypes, SurveyProps } from "@/lib/type";
+import { ArtilleryProps, SheetTypes } from "@/lib/type";
 import { getCloserDay } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import React, { use, useEffect, useMemo, useState } from "react";
@@ -22,7 +22,7 @@ import UnitsFilter from "@/components/units-filter";
 import RaidsFilter from "@/components/raids-filter";
 import StorageTemplate from "@/components/storage-template";
 import { useRolesContext } from "@/components/providers/globalData";
-import { NextResponse } from "next/server";
+import { Survey } from "@/lib/get-data";
 
 const next_tw = getCloserDay();
 
@@ -49,7 +49,7 @@ const DEFAULT_CARD = {
   ],
 };
 
-function getLineup(surveys: SurveyProps[] | undefined, lineup: string[]) {
+function getLineup(surveys: Survey[] | undefined, lineup: string[]) {
   const data = surveys?.filter((survey) => lineup.includes(survey.discordId));
   return data;
 }
@@ -68,11 +68,11 @@ const Page: React.FC = () => {
   const { data: commander } = useSession();
   const t = useTranslations("BuildTeam");
   const [signup, setSignup] = useState<LineupData | null>(null);
-  const [surveys, setSurveys] = useState<SurveyProps[]>();
-  const [userList, setUserList] = useState<SurveyProps[]>([]);
+  const [surveys, setSurveys] = useState<Survey[]>();
+  const [userList, setUserList] = useState<Survey[]>([]);
   const [loading, setLoading] = useState(false);
   const [sheetData, setSheetData] = useState<SheetTypes[]>([]);
-  const [allPlayers, setAllPlayers] = useState<SurveyProps[]>([]);
+  const [allPlayers, setAllPlayers] = useState<Survey[]>([]);
   const [lineup, setLineup] = useState<string[]>([]);
   const [showPreview, setShowPreview] = useState(false);
   const [houseId, setHouseId] = useState<number | null>(null);

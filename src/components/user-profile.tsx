@@ -6,12 +6,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { SurveyProps } from "@/lib/type";
 import ProfileData from "./profile-data";
 import { ReactNode } from "react";
 import { Avatar } from "@radix-ui/react-avatar";
 import { AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
+import { Survey } from "@/lib/get-data";
 
 export function UserProfile({
   player,
@@ -19,10 +19,10 @@ export function UserProfile({
   canDelete,
   handleDelete,
 }: {
-  player: SurveyProps;
+  player: Survey;
   children: ReactNode;
   canDelete?: boolean;
-  handleDelete?: (e: SurveyProps) => void;
+  handleDelete?: (e: Survey) => void;
 }) {
   return (
     <Dialog>

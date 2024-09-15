@@ -46,3 +46,26 @@ export const getHouseSettings = async (
     house: { name: house, id: result.house.id },
   };
 };
+
+export interface Survey {
+  _id?: string;
+  discordNick: string;
+  inGameNick: string;
+  discordId: string;
+  characterLevel: string;
+  avatar?: string;
+  house: string;
+  artyAmount: "none" | "some" | "average" | "aLot";
+  weapons: { value: boolean; leadership: number; pref?: number }[];
+  units: {
+    low: { id: number; value: string }[];
+    heroic: { id: number; value: string }[];
+    golden: { id: number; value: string }[];
+  };
+}
+
+export const getSurveys = async (house: string): Promise<Survey[]> => {
+  const response = await fetch(`/api/survey?house=${house}`);
+  const result = await response.json();
+  return result.surveys;
+};

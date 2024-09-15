@@ -4,17 +4,9 @@ import UserForm from "@/components/high-role-form";
 import RolesTable from "@/components/high-role-table";
 import HouseDetailsForm from "@/components/house-details";
 import DataForm from "@/components/house-settings-table";
-import {
-  getHousesDetails,
-  getHouseSettings,
-  getRoles,
-  HouseDetails,
-  HouseSettings,
-  Roles,
-} from "@/lib/get-data";
+import { getHousesDetails, getHouseSettings, getRoles } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
 import Loading from "react-loading";
 
 const SettingsPage = () => {
@@ -26,26 +18,27 @@ const SettingsPage = () => {
   const house =
     rolesData?.find((e) => e.discordId === commander?.user.id)?.house || "";
 
-  const { data: houseDetails, isLoading: houseDetailsIsLoading } = useQuery({
-    queryKey: ["houseDetails"],
-    queryFn: () => getHousesDetails(house),
-    enabled: !!house,
-  });
+  const { data: houseDetailsData, isLoading: houseDetailsIsLoading } = useQuery(
+    {
+      queryKey: ["houseDetails"],
+      queryFn: () => getHousesDetails(house),
+      enabled: !!house,
+    }
+  );
 
-  const { data: houseSettings, isLoading: houseSettingsIsLoading } = useQuery({
-    queryKey: ["houseSettings"],
-    queryFn: () => getHouseSettings(house),
-    enabled: !!house,
-  });
+  const { data: houseSettingsData, isLoading: houseSettingsIsLoading } =
+    useQuery({
+      queryKey: ["houseSettings"],
+      queryFn: () => getHouseSettings(house),
+      enabled: !!house,
+    });
 
   if (
     rolesIsLoading ||
     !rolesData ||
     houseDetailsIsLoading ||
-    !houseDetails
-    // ||
-    // houseSettingsIsLoading ||
-    // !houseSettings
+    !houseDetailsData ||
+    houseSettingsIsLoading
   ) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -87,7 +80,7 @@ const SettingsPage = () => {
         {
           <DataForm
             data={
-              houseSettings ?? {
+              houseSettingsData ?? {
                 house: { name: house, id: "" },
                 member: { name: "", id: "" },
                 lineup: [{ name: "", id: "", roleId: "" }],
@@ -98,7 +91,7 @@ const SettingsPage = () => {
           />
         }
 
-        <HouseDetailsForm data={houseDetails} />
+        <HouseDetailsForm data={houseDetailsData} />
       </div>
     </div>
   );

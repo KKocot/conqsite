@@ -4,59 +4,32 @@ import { useRolesContext } from "@/components/providers/globalData";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { UserProfile } from "@/components/user-profile";
-import { SurveyProps } from "@/lib/type";
+import { getRoles, getSurveys, Survey } from "@/lib/get-data";
+import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useSession } from "next-auth/react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Loading from "react-loading";
 import { toast } from "react-toastify";
 
 const MyHousePage = () => {
   const { data: commander } = useSession();
-  const [loading, setLoading] = useState(false);
-  const [surveys, setSurveys] = useState<SurveyProps[]>();
   const [inputQuery, setInputQuery] = useState<string>("");
-  const command_list = useRolesContext();
-  const commander_house =
-    commander && commander.user.id
-      ? command_list.find((e) => e.discordId === commander.user.id)
-      : "";
 
-  const highestRoles = command_list
-    .filter((e) => e.role === "HouseLeader" || e.role === "RightHand")
-    .some((e) => e.discordId === commander?.user.id);
-  const fetchSurveys = async (house: string) => {
-    setLoading(true);
-    try {
-      const response = await fetch(`/api/survey?house=${house}`);
-      const data = await response.json();
-      setSurveys(data.surveys);
-    } catch (error) {
-      console.error("Error fetching:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  const filtredSurveys = useMemo(
-    () =>
-      surveys
-        ?.sort((a, b) => Number(a.characterLevel) - Number(b.characterLevel))
-        .reverse()
-        .filter((value) => {
-          const searchWord = inputQuery.toLowerCase();
-          const countryName = value.inGameNick.toLowerCase();
-          if (countryName.includes(searchWord)) {
-            return true;
-          }
-          return false;
-        }),
-    [inputQuery, JSON.stringify(surveys)]
-  );
-  useEffect(() => {
-    if (commander_house) fetchSurveys(commander_house.house);
-  }, [commander?.user.id, commander_house]);
+  const { data: rolesData, isLoading: rolesIsLoading } = useQuery({
+    queryKey: ["rolesList"],
+    queryFn: getRoles,
+  });
+  const house =
+    rolesData?.find((e) => e.discordId === commander?.user.id)?.house || "";
 
-  if (loading) {
+  const { data: surveysData, isLoading: surveysIsLoading } = useQuery({
+    queryKey: ["surveysList"],
+    queryFn: () => getSurveys(house),
+    enabled: !!house,
+  });
+
+  if (rolesIsLoading || !rolesData || surveysIsLoading || !surveysData) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Loading color="#94a3b8" />
@@ -64,7 +37,27 @@ const MyHousePage = () => {
     );
   }
 
-  const onDelete = async (values: SurveyProps) => {
+  const commander_house =
+    commander && commander.user.id
+      ? rolesData.find((e) => e.discordId === commander.user.id)
+      : "";
+  const highestRoles = rolesData
+    .filter((e) => e.role === "HouseLeader" || e.role === "RightHand")
+    .some((e) => e.discordId === commander?.user.id);
+
+  const filtredSurveys = surveysData
+    ?.sort((a, b) => Number(a.characterLevel) - Number(b.characterLevel))
+    .reverse()
+    .filter((value) => {
+      const searchWord = inputQuery.toLowerCase();
+      const countryName = value.inGameNick.toLowerCase();
+      if (countryName.includes(searchWord)) {
+        return true;
+      }
+      return false;
+    });
+
+  const onDelete = async (values: Survey) => {
     const accept = confirm(
       "Are you sure you want to delete this player from your house?"
     );
@@ -88,7 +81,6 @@ const MyHousePage = () => {
         } else {
           const responseData = await response.json();
           toast.success("Player removed from your house");
-          if (commander_house) fetchSurveys(commander_house.house);
           console.log("Success:", responseData);
         }
       } catch (error) {

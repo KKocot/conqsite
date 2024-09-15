@@ -1,7 +1,6 @@
 import { goldenUnits } from "@/assets/golden-units-data";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
-import { SurveyProps } from "@/lib/type";
 import { ownedUnits } from "@/lib/utils";
 import {
   TableHeader,
@@ -14,8 +13,9 @@ import List from "./unit-list";
 import { weapons } from "@/assets/weapons";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
+import { Survey } from "@/lib/get-data";
 
-const ProfileData = ({ profile }: { profile: SurveyProps }) => {
+const ProfileData = ({ profile }: { profile: Survey }) => {
   const t = useTranslations("BuildTeam");
   const golden = ownedUnits(goldenUnits, profile.units.golden);
   const heroic = ownedUnits(heroicUnits, profile.units.heroic);
