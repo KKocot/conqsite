@@ -1,71 +1,47 @@
 "use client";
 
-import { Role } from "@/components/providers/globalData";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { DEFAULT_FORM_DATA } from "@/components/wizard-form";
-import { Survey } from "@/lib/get-data";
-import { useEffect, useState } from "react";
+import { getRoleById, Survey } from "@/lib/get-data";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 const AdminPage = () => {
-  const [surveyData, setSurveyData] = useState<Survey>(DEFAULT_FORM_DATA);
-  const [rolesData, setRolesData] = useState<Role>({
-    _id: "",
-    discordId: "",
-    house: "",
-    role: "",
-    discordNick: "",
+  const { data: roleData, isLoading: roleIsLoading } = useQuery({
+    queryKey: ["rolesList", "303156898532818944"],
+    queryFn: () => getRoleById("303156898532818944"),
   });
-  const [pending, setPending] = useState(false);
-
-  const fetchAdminData = async () => {
-    setPending(true);
-    try {
-      const surveyResponse = await fetch("/api/survey/303156898532818944");
-      const rolesResponse = await fetch("/api/roles?id=303156898532818944");
-      const survetResult = await surveyResponse.json();
-      const rolesResult = await rolesResponse.json();
-      setSurveyData(survetResult.survey);
-      setRolesData(rolesResult.roles);
-    } catch (error) {
-      console.error("Error fetching:", error);
-    }
-    {
-      setPending(false);
-    }
-  };
+  const { data: surveyData, isLoading: surveyIsLoading } = useQuery({
+    queryKey: ["surveyList", "303156898532818944"],
+    queryFn: () => getRoleById("303156898532818944"),
+  });
+  const [house, setHouse] = useState<string>("");
 
   const saveAdminData = async () => {
     try {
       await fetch("/api/survey", {
         method: "POST",
-        body: JSON.stringify(surveyData),
+        body: JSON.stringify({ ...surveyData, house: house }),
       });
       await fetch("/api/roles", {
         method: "POST",
-        body: JSON.stringify(rolesData),
+        body: JSON.stringify({ ...roleData, house: house }),
       });
     } catch (error) {
       console.error("Error saving:", error);
-    } finally {
-      console.info(surveyData);
-      console.table(rolesData);
     }
   };
-  useEffect(() => {
-    fetchAdminData();
-  }, []);
-  if (pending) {
+
+  if (roleIsLoading || surveyIsLoading) {
     return <div className="text-center mt-12">Loading...</div>;
   }
   return (
     <div>
       <Input
         className="w-1/2"
-        value={surveyData?.house}
+        value={house}
         onChange={(e) => {
-          setRolesData((prev) => ({ ...prev, house: e.target.value }));
-          setSurveyData((prev) => ({ ...prev, house: e.target.value }));
+          setHouse(e.target.value);
         }}
       />
       <Button onClick={saveAdminData}>Save</Button>

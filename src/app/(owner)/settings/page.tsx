@@ -4,7 +4,7 @@ import UserForm from "@/components/high-role-form";
 import RolesTable from "@/components/high-role-table";
 import HouseDetailsForm from "@/components/house-details";
 import DataForm from "@/components/house-settings-table";
-import { getHousesDetails, getHouseSettings, getRoles } from "@/lib/get-data";
+import { getHouseDetails, getHouseSettings, getRoles } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import Loading from "react-loading";
@@ -21,7 +21,7 @@ const SettingsPage = () => {
   const { data: houseDetailsData, isLoading: houseDetailsIsLoading } = useQuery(
     {
       queryKey: ["houseDetails"],
-      queryFn: () => getHousesDetails(house),
+      queryFn: () => getHouseDetails(house),
       enabled: !!house,
     }
   );

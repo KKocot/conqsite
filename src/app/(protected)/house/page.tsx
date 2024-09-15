@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { getHousesDetails, getSurvey } from "@/lib/get-data";
+import { getHouseDetails, getSurvey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -16,7 +16,7 @@ const HousePage = () => {
 
   const { data: houseData, isLoading: houseIsLoading } = useQuery({
     queryKey: ["house", surveyData?.house],
-    queryFn: () => getHousesDetails(surveyData?.house ?? ""),
+    queryFn: () => getHouseDetails(surveyData?.house ?? ""),
     enabled: !!surveyData?.house,
   });
 

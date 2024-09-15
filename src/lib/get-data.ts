@@ -10,7 +10,11 @@ export const getRoles = async (): Promise<Roles[]> => {
   const result = await response.json();
   return result.roles;
 };
-
+export const getRoleById = async (id: string): Promise<Roles> => {
+  const response = await fetch(`/api/roles?id=${id}`);
+  const result = await response.json();
+  return result.role;
+};
 export interface HouseDetails {
   name: string;
   description: string;
@@ -20,10 +24,13 @@ export interface HouseDetails {
   server: string;
 }
 
-export const getHousesDetails = async (
-  house: string
-): Promise<HouseDetails> => {
+export const getHouseDetails = async (house: string): Promise<HouseDetails> => {
   const response = await fetch(`/api/house?name=${house}`);
+  const result = await response.json();
+  return result;
+};
+export const getHousesDetails = async (): Promise<HouseDetails> => {
+  const response = await fetch(`/api/house`);
   const result = await response.json();
   return result;
 };
