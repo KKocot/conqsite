@@ -106,6 +106,7 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
                     house: { name: e.target.value, id: prev.house.id },
                   }))
                 }
+                disabled={true}
               />
             </TableCell>
             <TableCell>

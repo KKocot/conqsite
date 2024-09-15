@@ -40,10 +40,12 @@ const SettingsPage = () => {
 
   if (
     rolesIsLoading ||
+    !rolesData ||
     houseDetailsIsLoading ||
-    !houseDetails ||
-    houseSettingsIsLoading ||
-    !houseSettings
+    !houseDetails
+    // ||
+    // houseSettingsIsLoading ||
+    // !houseSettings
   ) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -80,15 +82,22 @@ const SettingsPage = () => {
       <div className="flex gap-6 flex-col">
         <div>
           <UserForm house={house} />
-          {rolesData ? (
-            <RolesTable
-              rolesList={rolesData}
-              house={house}
-              onDelete={onDelete}
-            />
-          ) : null}
+          <RolesTable rolesList={rolesData} house={house} onDelete={onDelete} />
         </div>
-        <DataForm data={houseSettings} />
+        {
+          <DataForm
+            data={
+              houseSettings ?? {
+                house: { name: house, id: "" },
+                member: { name: "", id: "" },
+                lineup: [{ name: "", id: "", roleId: "" }],
+                logs: { logs: "", attendance: "" },
+                tw: { server: "", member: "" },
+              }
+            }
+          />
+        }
+
         <HouseDetailsForm data={houseDetails} />
       </div>
     </div>
