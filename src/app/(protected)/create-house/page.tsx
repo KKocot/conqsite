@@ -9,7 +9,8 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Loading from "react-loading";
 import { useRouter } from "next/navigation";
-import { Survey } from "@/lib/get-data";
+import { getHousesDetails, getSurvey, Survey } from "@/lib/get-data";
+import { useQuery } from "@tanstack/react-query";
 
 export interface HouseProps {
   name: string;
@@ -30,12 +31,19 @@ const CreateHousePage = () => {
     avatar: "",
     server: "",
   });
-  const [houses, setHouses] = useState<HouseProps[]>([]);
-  const [pending, setPending] = useState(false);
-  const [profile, setProfile] = useState<Survey>();
   const router = useRouter();
-
-  const unavailableHouseNames = [...houses.map((house) => house.name), "none"];
+  const { data: surveyData, isLoading: surveyIsLoading } = useQuery({
+    queryKey: ["profile", user?.user.id],
+    queryFn: () => getSurvey(user?.user.id ?? ""),
+    enabled: !!user?.user.id,
+  });
+  const { data: housesData, isLoading: housesIsLoading } = useQuery({
+    queryKey: ["houses"],
+    queryFn: getHousesDetails,
+  });
+  const unavailableHouseNames = housesData
+    ? [...housesData.map((house) => house.name), "none"]
+    : ["none"];
 
   const validation = {
     isHouseNameAvailable: unavailableHouseNames.includes(house.name),
@@ -43,37 +51,13 @@ const CreateHousePage = () => {
     wrongDiscordLink:
       house.discordLink.length > 0 && !house.discordLink.includes("discord.gg"),
   };
-  const fetchData = async () => {
-    setPending(true);
-    try {
-      const [housesResponse, surveyResponse] = await Promise.all([
-        fetch("/api/house"),
-        fetch(`/api/survey/${user?.user.id}`),
-      ]);
-
-      const housesData = await housesResponse.json();
-      const surveyData = await surveyResponse.json();
-
-      setHouses(housesData);
-      setProfile(surveyData.survey);
-    } catch (error) {
-      console.error("Error fetching:", error);
-    } finally {
-      setPending(false);
-    }
-  };
-
-  useEffect(() => {
-    if (!!user) fetchData();
-  }, [!!user]);
 
   const handleAllActions = async () => {
-    setPending(true);
-    const surveyData = profile === null ? DEFAULT_FORM_DATA : profile;
+    const survey = surveyData ? DEFAULT_FORM_DATA : surveyData;
     const data = {
-      ...surveyData,
+      ...survey,
       discordNick: user?.user.name,
-      characterLevel: surveyData?.characterLevel ?? "0",
+      characterLevel: survey?.characterLevel ?? "0",
       discordId: user?.user.id,
       avatar: user?.user.image ?? "",
       house: house.name,
@@ -136,12 +120,11 @@ const CreateHousePage = () => {
     } catch (error) {
       console.error("Error occurred:", error);
     } finally {
-      setPending(false);
       router.push(`/house`);
     }
   };
 
-  if (pending) {
+  if (surveyIsLoading || housesIsLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Loading color="#94a3b8" />

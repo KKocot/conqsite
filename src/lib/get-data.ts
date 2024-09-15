@@ -29,7 +29,7 @@ export const getHouseDetails = async (house: string): Promise<HouseDetails> => {
   const result = await response.json();
   return result;
 };
-export const getHousesDetails = async (): Promise<HouseDetails> => {
+export const getHousesDetails = async (): Promise<HouseDetails[]> => {
   const response = await fetch(`/api/house`);
   const result = await response.json();
   return result;
