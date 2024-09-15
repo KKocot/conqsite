@@ -1,10 +1,4 @@
-import {
-  ArtilleryProps,
-  SheetTypes,
-  SurveyProps,
-  Unit,
-  WeaponsTypes,
-} from "@/lib/type";
+import { ArtilleryProps, SheetTypes, Unit, WeaponsTypes } from "@/lib/type";
 import { Autocompleter } from "./autocompleter";
 import { Textarea } from "./ui/textarea";
 import { useEffect, useMemo, useState } from "react";
@@ -20,6 +14,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useTranslations } from "next-intl";
+import { Survey } from "@/lib/get-data";
 
 const colors = [
   "-red-700",
@@ -60,7 +55,7 @@ const Item = ({
   onEdit,
 }: {
   units: Unit[];
-  users: SurveyProps[];
+  users: Survey[];
   weapons: WeaponsTypes[];
   index: number;
   data: SheetTypes;
@@ -78,7 +73,7 @@ const Item = ({
 }) => {
   const t = useTranslations("BuildTeam");
   const users_list = users.map((user) => user.inGameNick);
-  const [user, setUser] = useState<SurveyProps | undefined>();
+  const [user, setUser] = useState<Survey | undefined>();
   const user_artillery = getArtyAmount(user?.artyAmount, t);
   function findUserByNick(nickname: string) {
     return users.find(
@@ -107,7 +102,7 @@ const Item = ({
 
   function mapUnitsByEra(
     units: Unit[],
-    userUnits?: SurveyProps,
+    userUnits?: Survey,
     era: string | string[] = "low"
   ) {
     const isEraArray = Array.isArray(era);

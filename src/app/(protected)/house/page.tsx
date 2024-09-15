@@ -1,50 +1,26 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { getHousesDetails, getSurvey } from "@/lib/get-data";
+import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import Loading from "react-loading";
 
-interface HouseProps {
-  name: string;
-  description: string;
-  country: string;
-  discordLink: string;
-  avatar: string;
-  server: string;
-}
 const HousePage = () => {
   const { data: user_data } = useSession();
-  const [house, setHouse] = useState<HouseProps>();
-  const [pending, setPending] = useState(false);
+  const { data: surveyData, isLoading: surveyIsLoading } = useQuery({
+    queryKey: ["house", user_data?.user.id],
+    queryFn: () => getSurvey(user_data?.user.id ?? ""),
+    enabled: !!user_data?.user.id,
+  });
 
-  const fetchData = async () => {
-    setPending(true);
-    try {
-      // Fetch survey data
-      const surveyResponse = await fetch(`/api/survey/${user_data?.user.id}`);
-      const surveyData = await surveyResponse.json();
+  const { data: houseData, isLoading: houseIsLoading } = useQuery({
+    queryKey: ["house", surveyData?.house],
+    queryFn: () => getHousesDetails(surveyData?.house ?? ""),
+    enabled: !!surveyData?.house,
+  });
 
-      // Fetch house data if survey data is successfully fetched
-      if (surveyData.survey) {
-        const houseResponse = await fetch(
-          `/api/house?name=${surveyData.survey.house}`
-        );
-        const houseData = await houseResponse.json();
-        setHouse(houseData);
-      }
-    } catch (error) {
-      console.error("Error fetching:", error);
-    } finally {
-      setPending(false);
-    }
-  };
-
-  useEffect(() => {
-    if (!!user_data) fetchData();
-  }, [!!user_data]);
-
-  if (pending)
+  if (surveyIsLoading || houseIsLoading)
     return (
       <div className="flex justify-center items-center h-screen">
         <Loading color="#94a3b8" />
@@ -53,15 +29,15 @@ const HousePage = () => {
 
   return (
     <div>
-      {house ? (
+      {houseData ? (
         <div className="flex min-h-screen">
           <div className="flex flex-col items-center w-1/6 gap-2 shadow-lg shadow-primary-foreground min-h-screen">
-            <h1 className="text-4xl font-bold">{house.name}</h1>
-            <img src={house.avatar} alt="House Avatar" />
-            <div>{house.description}</div>
-            <div>{house.country}</div>
-            <div>{house.server}</div>
-            <Link target="_blank" href={house.discordLink}>
+            <h1 className="text-4xl font-bold">{houseData.name}</h1>
+            <img src={houseData.avatar} alt="House Avatar" />
+            <div>{houseData.description}</div>
+            <div>{houseData.country}</div>
+            <div>{houseData.server}</div>
+            <Link target="_blank" href={houseData.discordLink}>
               <Button>Discord</Button>
             </Link>
           </div>

@@ -1,5 +1,5 @@
 import { MoveRight } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import StepGeneral from "./step-general";
 import { lowUnits } from "@/assets/low-units-data";
 import { weapons } from "@/assets/weapons";
@@ -30,21 +30,6 @@ export const DEFAULT_FORM_DATA: Survey = {
     golden: goldenUnits.map((unit) => ({ id: unit.id, value: "0" })),
   },
 };
-interface Unit {
-  id: number;
-  value: string;
-}
-const createNewUnits = (
-  existingUnits: Unit[],
-  diff: number,
-  baseId: number
-): Unit[] => {
-  const newUnits: Unit[] = [];
-  for (let i = 0; i < diff; i++) {
-    newUnits.push({ id: baseId + i + 1, value: "0" });
-  }
-  return [...existingUnits, ...newUnits];
-};
 
 export default function WizardForm({
   user_id,
@@ -53,66 +38,69 @@ export default function WizardForm({
   user_id: string;
   avatar?: string;
 }) {
+  const t = useTranslations("AddForm");
+  const router = useRouter();
+  const [step, setStep] = useState(1);
   const { data: profileData, isLoading: profileIsLoading } = useQuery({
     queryKey: ["profile", user_id],
     queryFn: () => getSurvey(user_id),
     enabled: !!user_id,
   });
 
-  const t = useTranslations("AddForm");
-  const router = useRouter();
-  const [step, setStep] = useState(1);
+  const unitForm = profileData ?? DEFAULT_FORM_DATA;
+
+  interface Unit {
+    id: number;
+    value: string;
+  }
+
+  const low_units_diff = lowUnits.length - unitForm.units.low.length;
+  const heroic_units_diff = heroicUnits.length - unitForm.units.heroic.length;
+  const golden_units_diff = goldenUnits.length - unitForm.units.golden.length;
   const no_new_units = 0;
-  const low_units_diff = profileData
-    ? lowUnits.length - profileData.units.low.length
-    : 0;
-  const heroic_units_diff = profileData
-    ? heroicUnits.length - profileData.units.heroic.length
-    : 0;
-  const golden_units_diff = profileData
-    ? goldenUnits.length - profileData.units.golden.length
-    : 0;
+  const createNewUnits = (
+    existingUnits: Unit[],
+    diff: number,
+    baseId: number
+  ): Unit[] => {
+    const newUnits: Unit[] = [];
+    for (let i = 0; i < diff; i++) {
+      newUnits.push({ id: baseId + i + 1, value: "0" });
+    }
+    return [...existingUnits, ...newUnits];
+  };
   const form = useForm({
     values: {
-      ...profileData,
-      discordNick: profileData?.discordNick ?? "",
-      inGameNick: profileData?.inGameNick ?? "",
-      discordId: profileData?.discordId ?? "",
-      characterLevel: profileData?.characterLevel ?? "",
-      avatar: profileData?.avatar ?? "",
-      house: profileData?.house ?? "",
-      artyAmount: profileData?.artyAmount ?? "none",
-      weapons:
-        profileData?.weapons ??
-        weapons.map(() => ({ value: false, leadership: 0, pref: 0 })),
+      ...unitForm,
       units: {
         low:
           low_units_diff > no_new_units
             ? createNewUnits(
-                profileData?.units.low ?? [],
+                unitForm.units.low,
                 low_units_diff,
-                profileData?.units.low.length ?? 0
+                unitForm.units.low.length
               )
-            : profileData?.units.low ?? [],
+            : unitForm.units.low,
         heroic:
           heroic_units_diff > no_new_units
             ? createNewUnits(
-                profileData?.units.heroic ?? [],
+                unitForm.units.heroic,
                 heroic_units_diff,
-                profileData?.units.heroic.length ?? 0
+                unitForm.units.heroic.length
               )
-            : profileData?.units.heroic ?? [],
+            : unitForm.units.heroic,
         golden:
           golden_units_diff > no_new_units
             ? createNewUnits(
-                profileData?.units.golden ?? [],
+                unitForm.units.golden,
                 golden_units_diff,
-                profileData?.units.golden.length ?? 0
+                unitForm.units.golden.length
               )
-            : profileData?.units.golden ?? [],
+            : unitForm.units.golden,
       },
     },
   });
+
   const onSubmit = async (values: Survey) => {
     const data = {
       ...values,
@@ -147,14 +135,6 @@ export default function WizardForm({
         <Loading color="#94a3b8" />
       </div>
     );
-  if (!profileData) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        Fill form first
-      </div>
-    );
-  }
-
   return (
     <Form {...form}>
       <form

@@ -7,8 +7,9 @@ import {
 } from "@/components/ui/command";
 import { useEffect, useRef, useState } from "react";
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
-import { SurveyProps, Unit, WeaponsTypes } from "@/lib/type";
+import { Unit, WeaponsTypes } from "@/lib/type";
 import clsx from "clsx";
+import { Survey } from "@/lib/get-data";
 
 export function Autocompleter({
   value,
@@ -24,7 +25,7 @@ export function Autocompleter({
   units?: Unit[];
   users?: string[];
   weapons?: WeaponsTypes[];
-  user?: SurveyProps;
+  user?: Survey;
   placeholder: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,7 +57,7 @@ export function Autocompleter({
   }, []);
   const unit = units?.find((unit) => unit.name === value);
   const weapon = weapons?.find((weapon) => weapon.name === value);
-  function findUserPrefences(user?: SurveyProps, unit?: Unit) {
+  function findUserPrefences(user?: Survey, unit?: Unit) {
     switch (unit?.era) {
       case "golden":
         return user?.units.golden.find((u) => u.id === unit?.id);

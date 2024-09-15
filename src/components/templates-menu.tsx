@@ -9,11 +9,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { SheetTypes, SurveyProps } from "@/lib/type";
+import { SheetTypes } from "@/lib/type";
 import { useTranslations } from "next-intl";
 import { useRolesContext } from "./providers/globalData";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
+import { Survey } from "@/lib/get-data";
 
 const TemplateMenu = ({
   userHouse,
@@ -24,7 +25,7 @@ const TemplateMenu = ({
   userHouse: string;
   data: SheetTypes[];
   setData: (data: SheetTypes[]) => void;
-  players: SurveyProps[];
+  players: Survey[];
 }) => {
   const user = useSession();
   const roles = useRolesContext();

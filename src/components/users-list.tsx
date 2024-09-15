@@ -1,14 +1,14 @@
 import clsx from "clsx";
 import { Badge } from "./ui/badge";
 import { UserProfile } from "./user-profile";
-import { SurveyProps } from "@/lib/type";
+import { Survey } from "@/lib/get-data";
 
 const UsersList = ({
   players,
   allPlayers,
 }: {
-  players: SurveyProps[];
-  allPlayers: SurveyProps[];
+  players: Survey[];
+  allPlayers: Survey[];
 }) => {
   return (
     <div className="flex flex-wrap gap-2 p-4">

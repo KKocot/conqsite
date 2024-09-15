@@ -5,11 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { DEFAULT_FORM_DATA } from "@/components/wizard-form";
-import { SurveyProps } from "@/lib/type";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Loading from "react-loading";
 import { useRouter } from "next/navigation";
+import { Survey } from "@/lib/get-data";
 
 export interface HouseProps {
   name: string;
@@ -32,7 +32,7 @@ const CreateHousePage = () => {
   });
   const [houses, setHouses] = useState<HouseProps[]>([]);
   const [pending, setPending] = useState(false);
-  const [profile, setProfile] = useState<SurveyProps>();
+  const [profile, setProfile] = useState<Survey>();
   const router = useRouter();
 
   const unavailableHouseNames = [...houses.map((house) => house.name), "none"];

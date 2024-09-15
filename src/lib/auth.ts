@@ -1,5 +1,5 @@
 import { AuthOptions } from "next-auth";
-import DiscordProvider, { DiscordProfile } from "next-auth/providers/discord";
+import DiscordProvider from "next-auth/providers/discord";
 import { DefaultSession } from "next-auth";
 import connectMongoDB from "./mongodb";
 

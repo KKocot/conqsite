@@ -1,5 +1,4 @@
 import { ChevronDown, SlidersHorizontal } from "lucide-react";
-import CheckboxItem from "./sheet-form-filter";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { useTranslations } from "next-intl";

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArtilleryProps, SheetTypes } from "@/lib/type";
 import { getCloserDay } from "@/lib/utils";
 import { useSession } from "next-auth/react";
-import React, { use, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Loading from "react-loading";
 import clsx from "clsx";
 import { weapons } from "@/assets/weapons";

@@ -1,6 +1,5 @@
 "use client";
 
-import { useRolesContext } from "@/components/providers/globalData";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { UserProfile } from "@/components/user-profile";
@@ -8,7 +7,7 @@ import { getRoles, getSurveys, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useSession } from "next-auth/react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Loading from "react-loading";
 import { toast } from "react-toastify";
 
