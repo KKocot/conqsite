@@ -51,9 +51,8 @@ const CreateHousePage = () => {
     wrongDiscordLink:
       house.discordLink.length > 0 && !house.discordLink.includes("discord.gg"),
   };
-
   const handleAllActions = async () => {
-    const survey = surveyData ? DEFAULT_FORM_DATA : surveyData;
+    const survey = surveyData ?? DEFAULT_FORM_DATA;
     const data = {
       ...survey,
       discordNick: user?.user.name,
