@@ -36,7 +36,8 @@ export const getHousesDetails = async (): Promise<HouseDetails[]> => {
 };
 
 export interface HouseSettings {
-  house: { name: string; id: string };
+  name: string;
+  id: string;
   member: { name: string; id: string };
   lineup: { name: string; id: string; roleId: string }[];
   logs: { logs: string; attendance: string };
@@ -44,14 +45,12 @@ export interface HouseSettings {
 }
 
 export const getHouseSettings = async (
-  house: string
+  name: string
 ): Promise<HouseSettings> => {
-  const response = await fetch(`/api/houseSettings?house=${house}`);
+  const response = await fetch(`/api/houseSettings?name=${name}`);
   const result = await response.json();
-  return {
-    ...result,
-    house: { name: house, id: result.house.id },
-  };
+  console.log(result);
+  return result;
 };
 
 export interface Survey {

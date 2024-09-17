@@ -1,10 +1,5 @@
 import { z } from "zod";
 
-const HouseSchema = z.object({
-  name: z.string(),
-  id: z.string(),
-});
-
 const MemberSchema = z.object({
   name: z.string(),
   id: z.string(),
@@ -27,12 +22,12 @@ const TwSchema = z.object({
 });
 
 const putHouseSettingsSchema = z.object({
-  house: HouseSchema,
+  name: z.string(),
+  id: z.string(),
   member: MemberSchema,
   lineup: z.array(LineupSchema),
   logs: LogsSchema,
   tw: TwSchema,
-  id: z.string(),
 });
 
 export default putHouseSettingsSchema;

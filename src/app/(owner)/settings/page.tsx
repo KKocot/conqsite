@@ -83,7 +83,8 @@ const SettingsPage = () => {
           <DataForm
             data={
               houseSettingsData ?? {
-                house: { name: house, id: "" },
+                name: house,
+                id: "",
                 member: { name: "", id: "" },
                 lineup: [{ name: "", id: "", roleId: "" }],
                 logs: { logs: "", attendance: "" },

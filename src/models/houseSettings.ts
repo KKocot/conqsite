@@ -1,11 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 
-// Create Mongoose schemas
-const HouseSchema: Schema = new Schema({
-  name: String,
-  id: String,
-});
-
 const MemberSchema: Schema = new Schema({
   name: String,
   id: String,
@@ -28,8 +22,8 @@ const TWSchema: Schema = new Schema({
 });
 
 const HouseSettingsShema: Schema = new Schema({
+  name: String,
   id: String,
-  house: HouseSchema,
   member: MemberSchema,
   lineup: [LineupSchema],
   logs: LogsSchema,

@@ -15,8 +15,8 @@ import { useTranslations } from "next-intl";
 
 const validate = (data: HouseSettings) => {
   if (
-    !data.house.name ||
-    !data.house.id ||
+    !data.name ||
+    !data.id ||
     !data.member.name ||
     !data.member.id ||
     !data.logs.logs ||
@@ -49,12 +49,11 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
   const saveSettings = async () => {
     try {
       const response = await fetch(
-        `/api/houseSettings?house=${houseSettings.house.name}`,
+        `/api/houseSettings?name=${houseSettings.name}`,
         {
           method: "POST",
           body: JSON.stringify({
             ...houseSettings,
-            id: houseSettings.house.name,
           }),
           headers: {
             "Content-Type": "application/json",
@@ -100,11 +99,11 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
             <TableCell>
               <Input
                 placeholder={t("house")}
-                value={houseSettings.house.name}
+                value={houseSettings.name}
                 onChange={(e) =>
                   setHouseSettings((prev) => ({
                     ...prev,
-                    house: { name: e.target.value, id: prev.house.id },
+                    name: e.target.value,
                   }))
                 }
                 disabled={true}
@@ -114,11 +113,11 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
               <Input
                 placeholder={t("discord")}
                 type="number"
-                value={houseSettings.house.id}
+                value={houseSettings.id}
                 onChange={(e) =>
                   setHouseSettings((prev) => ({
                     ...prev,
-                    house: { name: prev.house.name, id: e.target.value },
+                    id: e.target.value,
                   }))
                 }
               />

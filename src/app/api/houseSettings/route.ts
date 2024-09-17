@@ -11,21 +11,21 @@ import Roles from "@/models/roles";
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
   const { searchParams } = new URL(request.url);
-  const house = searchParams.get("house");
+  const name = searchParams.get("name");
 
   try {
     await connectMongoDB();
     const data = putHouseSettingsSchema.parse(await request.json());
-    const roles = await Roles.find({ house: house });
-    const userRoles = roles
-      .filter((e) => e.role === "RightHand" || e.role === "HouseLeader")
-      .some((role) => role.discordId === session?.user?.id);
+    // const roles = await Roles.find({ house: name });
+    // const userRoles = roles
+    //   .filter((e) => e.role === "RightHand" || e.role === "HouseLeader")
+    //   .some((role) => role.discordId === session?.user?.id);
 
     // Allow access only to high roles
     // if (!userRoles) return new Response("401");
 
     const houseSettingsExists = await HouseSettings.findOne({
-      id: house,
+      name: name,
     });
     let houseSettings;
     if (houseSettingsExists) {
@@ -51,22 +51,30 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const house = searchParams.get("house");
-  const discordKey = headers().get("discord-key");
-  const session = await getServerSession(authOptions);
+  const id = searchParams.get("id");
+  const name = searchParams.get("name");
+  // const discordKey = headers().get("discord-key");
+  // const session = await getServerSession(authOptions);
 
   try {
     await connectMongoDB();
-    const roles = await Roles.find({ house: house });
-    const userRoles = roles.some(
-      (role) => role.discordId === session?.user?.id
-    );
+    // const roles = await Roles.find({ house: house });
+    // const userRoles = roles.some(
+    //   (role) => role.discordId === session?.user?.id
+    // );
     // if (!userRoles || (discordKey && discordKey === process.env.BOT_KEY))
     //   return new Response("401");
-
-    const houseSettings = await HouseSettings.findOne({
-      id: house,
-    });
+    let houseSettings;
+    if (id) {
+      houseSettings = await HouseSettings.findOne({
+        id: id,
+      });
+    }
+    if (name) {
+      houseSettings = await HouseSettings.findOne({
+        name: name,
+      });
+    }
     return new Response(JSON.stringify(houseSettings), { status: 200 });
   } catch (error) {
     if (error instanceof ZodError)
