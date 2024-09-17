@@ -52,7 +52,10 @@ const DataForm: FC<DataFormProps> = ({ data }) => {
         `/api/houseSettings?house=${houseSettings.house.name}`,
         {
           method: "POST",
-          body: JSON.stringify({ ...data, id: houseSettings.house.name }),
+          body: JSON.stringify({
+            ...houseSettings,
+            id: houseSettings.house.name,
+          }),
           headers: {
             "Content-Type": "application/json",
           },
