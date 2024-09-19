@@ -255,6 +255,35 @@
         "description": "Ev ayarlarını web sitesinden doğrulamak için komutu kullanın. Şuraya gidin ",
         "command": "ve doğrulamak için düğmeye tıklayın."
       }
+    },
+    "guide_2": {
+      "title": "Konquerus Bot Kullanım Kılavuzu",
+      "slash_command": "Slash Komutu, Discord sohbetinde / yazılarak kullanılır.",
+      "menu_eng": "Menu_eng",
+      "menu_eng_description": "Botu kontrol etmek için butonlar oluşturur. Discord sunucusunda yönetici yetkileri veya en azından ConqSite'de RightHand rütbesi gerektirir.",
+      "send_presence": "Send the presence: TW'deki yoklama listelerinden oyuncuları ConqSite'deki oluşturucuya gönderir.",
+      "quick_add": "Quick add: ConqSite'a manuel olarak bir oyuncuyu beyaz listeye ekler.",
+      "delete_player": "Delete player: Bir oyuncuyu ConqSite beyaz listesinden manuel olarak çıkarır.",
+      "add_all": "Add all: Sunucudaki tüm oyuncuları ConqSite'a ekler (kurulum sırasında yalnızca bir kez kullanılması önerilir).",
+      "verification": "Verification: ConqSite ayarlarında belirtilen kimliklerin doğru olup olmadığını kontrol eder.",
+      "functions": "Fonksiyonlar",
+      "functions_description": "Konquerus botu, Discord sunucusunda rollerin ve ConqSite'deki yoklama listelerinin otomatik yönetimini sağlar.",
+      "example_functions": "Örnek fonksiyonlar:",
+      "auto_roles": "ConqSite beyaz listesine otomatik rol ekleme/kaldırma.",
+      "check_logs": "TW etkinlikleri için kanal kayıtlarını ve oyuncu listelerini kontrol etme.",
+      "create_presence_lists": "Ses kanallarından yoklama listeleri oluşturma.",
+      "warthog": "Warthog",
+      "warthog_description": "Bir kullanıcıyı yukarıdan aşağıya tüm ses kanallarında gezdiren bir işlev.",
+      "warthog_example": "Örnek kullanım: bir oyuncuyu moderasyon amacıyla farklı kanallar arasında gezdirmek.",
+      "installation_instructions": "Kurulum Talimatları",
+      "installation_steps": "Botu kullanmaya başlamak için şu adımları izleyin:",
+      "step1": "ConqSite'de bir house oluşturun.",
+      "step2": "Konqueruś botunu Discord sunucunuza ekleyin.",
+      "step3": "ConqSite'deki ayarlara gidin ve ilgili kimlikleri ayarlayın: House, Member, Logs, TW Zone, Lineups.",
+      "step4": "Discord'da /menu_eng komutunu kullanın ve Doğrulama düğmesine basın.",
+      "polish_version_functions": "Sadece Polonya sürümünde mevcut işlevler:",
+      "create_event_groups": "Baskın kampı gibi etkinlikler için gruplar oluşturma.",
+      "auto_verification": "Ses kanallarında otomatik yoklama doğrulama."
     }
   }
 }

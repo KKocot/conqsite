@@ -255,6 +255,35 @@
         "description": "Usa el comando para verificar las configuraciones de tu casa desde el sitio web. Navega a ",
         "command": "y haz clic en el botón para verificar."
       }
+    },
+    "guide_2": {
+      "title": "Instrucciones para el uso del Bot Konquerus",
+      "slash_command": "El comando Slash se usa escribiendo / en el chat de Discord.",
+      "menu_eng": "Menu_eng",
+      "menu_eng_description": "Crea botones para manejar el bot. Se necesita permisos de administrador en el servidor de Discord o al menos el rango RightHand en ConqSite.",
+      "send_presence": "Send the presence: envía jugadores de las listas de asistencia en TW al constructor en ConqSite.",
+      "quick_add": "Quick add: añadir manualmente un jugador a la whitelist en ConqSite.",
+      "delete_player": "Delete player: eliminar manualmente un jugador de la whitelist en ConqSite.",
+      "add_all": "Add all: añade todos los jugadores del servidor a ConqSite (recomendado usar solo una vez al configurar).",
+      "verification": "Verification: verifica si los ID configurados en ConqSite son correctos.",
+      "functions": "Funciones",
+      "functions_description": "El bot Konquerus permite la gestión automática de roles en el servidor de Discord y listas de asistencia en ConqSite.",
+      "example_functions": "Funciones de ejemplo:",
+      "auto_roles": "Añadir/eliminar roles automáticamente en la whitelist de ConqSite.",
+      "check_logs": "Revisar los registros de canales y listas de jugadores para eventos de TW.",
+      "create_presence_lists": "Crear listas de presencia desde canales de voz.",
+      "warthog": "Warthog",
+      "warthog_description": "Función que mueve a un usuario a través de todos los canales de voz de arriba a abajo.",
+      "warthog_example": "Ejemplo de uso: para mover a un jugador entre canales con fines de moderación.",
+      "installation_instructions": "Instrucciones de instalación",
+      "installation_steps": "Para empezar a usar el bot, sigue estos pasos:",
+      "step1": "Crea un House en el sitio ConqSite.",
+      "step2": "Añade el bot Konqueruś a tu servidor de Discord.",
+      "step3": "Ve a los ajustes en ConqSite y establece las ID correspondientes: House, Member, Logs, TW Zone, Lineups.",
+      "step4": "Usa el comando /menu_eng en Discord y presiona el botón de Verification.",
+      "polish_version_functions": "Funciones disponibles solo en la versión polaca:",
+      "create_event_groups": "Crear grupos para eventos como campamentos de incursión.",
+      "auto_verification": "Verificación automática de la presencia en canales de voz."
     }
   }
 }

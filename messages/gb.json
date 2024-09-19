@@ -255,6 +255,35 @@
         "description": "Use the command to verify your House settings from the website. Navigate to ",
         "command": "and click the button to verify."
       }
+    },
+    "guide_2": {
+      "title": "Konquerus Bot User Guide",
+      "slash_command": "Slash Command is used by typing / in the Discord chat.",
+      "menu_eng": "Menu_eng",
+      "menu_eng_description": "Creates buttons to control the bot. Requires admin rights on the Discord server or at least the RightHand rank on ConqSite.",
+      "send_presence": "Send the presence: sends players from attendance lists at TW to the builder on ConqSite.",
+      "quick_add": "Quick add: manually add a player to the whitelist on ConqSite.",
+      "delete_player": "Delete player: manually remove a player from the whitelist on ConqSite.",
+      "add_all": "Add all: adds all players from the server to ConqSite (recommended to use only once during setup).",
+      "verification": "Verification: checks if the IDs set in the ConqSite settings are correct.",
+      "functions": "Functions",
+      "functions_description": "The Konquerus bot allows for automatic management of roles on the Discord server and attendance lists on ConqSite.",
+      "example_functions": "Example functions:",
+      "auto_roles": "Automatically add/remove roles to/from the whitelist on ConqSite.",
+      "check_logs": "Check channel logs and player lists for TW events.",
+      "create_presence_lists": "Create attendance lists from voice channels.",
+      "warthog": "Warthog",
+      "warthog_description": "Function that moves a user through all voice channels from top to bottom.",
+      "warthog_example": "Example usage: to move a player through channels for moderation purposes.",
+      "installation_instructions": "Installation instructions",
+      "installation_steps": "To start using the bot, follow these steps:",
+      "step1": "Create a house on ConqSite.",
+      "step2": "Add the Konqueruś bot to your Discord server.",
+      "step3": "Go to settings on ConqSite and set the appropriate IDs: House, Member, Logs, TW Zone, Lineups.",
+      "step4": "On Discord, use the /menu_eng command and press the Verification button.",
+      "polish_version_functions": "Functions available only in the Polish version:",
+      "create_event_groups": "Create groups for events such as raid camps.",
+      "auto_verification": "Automatically verify presence in voice channels."
     }
   }
 }

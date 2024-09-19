@@ -255,6 +255,35 @@
         "description": "Użyj polecenia, aby zweryfikować ustawienia domu na stronie internetowej. Przejdź do ",
         "command": "i kliknij przycisk, aby zweryfikować."
       }
+    },
+    "guide_2": {
+      "title": "Instrukcja obsługi Bota Konquerus",
+      "slash_command": "Slash Commend używamy poprzez wpisanie / na discordowym chat'cie.",
+      "menu_eng": "Menu_eng",
+      "menu_eng_description": "Tworzy przyciski do obsługi bota. Potrzeba uprawnień admina na serwerze Discord albo przynajmniej rangi RightHand na ConqSite.",
+      "send_presence": "Send the presence: przesyła graczy z list obecności na TW do buildera na ConqSite.",
+      "quick_add": "Quick add: ręczne dodanie gracza do whitelist na ConqSite.",
+      "delete_player": "Delete player: ręczne usunięcie gracza z whitelist na ConqSite.",
+      "add_all": "Add all: dodanie wszystkich graczy z serwera na stronę ConqSite (zalecane użycie tylko raz przy konfiguracji).",
+      "verification": "Verification: sprawdzenie, czy podane id w ustawieniach na ConqSite są poprawne.",
+      "functions": "Funkcje",
+      "functions_description": "Bota Konquerus umożliwia automatyczne zarządzanie rolami na serwerze Discord oraz listami obecności na ConqSite.",
+      "example_functions": "Przykładowe funkcje:",
+      "auto_roles": "Automatyczne dodawanie/usuwanie ról do whitelist na ConqSite.",
+      "check_logs": "Sprawdzanie logów kanałów oraz list graczy na wydarzenia TW.",
+      "create_presence_lists": "Tworzenie list obecności z kanałów głosowych.",
+      "warthog": "Warthog",
+      "warthog_description": "Funkcja, która przerzuca danego użytkownika po wszystkich kanałach głosowych od góry w dół.",
+      "warthog_example": "Przykładowe użycie: np. aby przenieść gracza przez różne kanały w celach moderacyjnych.",
+      "installation_instructions": "Instrukcja instalacji",
+      "installation_steps": "Aby rozpocząć korzystanie z bota, wykonaj następujące kroki:",
+      "step1": "Utwórz house na stronie ConqSite.",
+      "step2": "Dodaj Bota Konqueruś na swój serwer Discord.",
+      "step3": "Przejdź do ustawień na ConqSite i ustaw odpowiednie ID: House, Member, Logs, TW Zone, Lineups.",
+      "step4": "Na Discordzie użyj komendy /menu_eng i przyciśnij przycisk Verification.",
+      "polish_version_functions": "Funkcje dostępne tylko w polskiej wersji:",
+      "create_event_groups": "Tworzenie grup do eventów, takich jak raid camp.",
+      "auto_verification": "Automatyczna weryfikacja obecności na kanałach głosowych."
     }
   }
 }
