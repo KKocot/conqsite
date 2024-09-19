@@ -58,3 +58,26 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
+export async function DELETE(request: Request) {
+  const discordKey = request.headers.get("discord-key");
+
+  // Allow access only to the Discord Bot
+  if (!discordKey || discordKey !== process.env.BOT_KEY)
+    return new Response("401");
+
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
+
+  if (!id) {
+    return NextResponse.json({ message: "ID is required" }, { status: 400 });
+  }
+
+  try {
+    await connectMongoDB();
+    await Survey.findByIdAndDelete(id);
+    return NextResponse.json({ message: "Survey deleted" }, { status: 200 });
+  } catch (error) {
+    if (error instanceof Error)
+      return NextResponse.json({ message: error.message }, { status: 500 });
+  }
+}
