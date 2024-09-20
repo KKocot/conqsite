@@ -121,6 +121,7 @@
     "join_to_house": "Unirse a la Casa"
   },
   "SettingsPage": {
+    "house_description_title": "Descripción de la Casa",
     "settings_page": "Página de Configuración",
     "nick_placeholder": "Apodo",
     "discord_id_placeholder": "ID de Discord",
