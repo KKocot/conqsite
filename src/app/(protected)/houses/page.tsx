@@ -28,10 +28,10 @@ const HousesPage = () => {
   return (
     <div className="flex flex-col items-center container">
       <h1 className="m-10">{t("houses")}</h1>
-      <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 m-12 justify-center">
+      <ul className="flex flex-wrap  gap-4 m-12 justify-around">
         {houses.map((house) => (
           <li
-            className="border border-sky-500 grid  rounded-sm overflow-hidden"
+            className="shadow-primary/50 hover:shadow-primary/50 shadow hover:shadow-lg transition-all grid  rounded-sm overflow-hidden basis-72"
             key={house.name}
           >
             <div className="relative w-full h-auto aspect-square">
