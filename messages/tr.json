@@ -1,7 +1,4 @@
 {
-  "shared": {
-    "language": "{locale, select, gb {English} pl {Polski} fr {Français} de {German} tr {Türkçe} es {Español} other {Unknown}}"
-  },
   "HomePage": {
     "title": "Merhaba",
     "my_profile": "Profilim",
