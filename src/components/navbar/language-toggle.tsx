@@ -8,6 +8,7 @@ import ReactCountryFlag from "react-country-flag";
 import { useLocale, useTranslations } from "next-intl";
 import { setUserLocale } from "@/lib/locale";
 import { locales } from "@/i18n";
+import { Button } from "../ui/button";
 
 const LanguageToggle = () => {
   const locale = useLocale();
@@ -15,8 +16,10 @@ const LanguageToggle = () => {
 
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger className="size-8 rounded-full bg-background items-center flex justify-center">
-        <ReactCountryFlag countryCode={locale} svg title={locale} />
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="icon-sm" className="rounded-full">
+          <ReactCountryFlag countryCode={locale} svg title={locale} />
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {locales.map((language) => (

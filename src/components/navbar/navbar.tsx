@@ -11,11 +11,9 @@ import { ProtectedLinks } from "./protected-links";
 
 export default function Navbar() {
   return (
-    <nav className="flex items-center bg-primary px-8 py-1">
-      <Link className="text-white font-bold flex items-center gap-2" href={"/"}>
-        <div className="size-10 relative">
-          <Image src="/logo.png" alt="logo" fill />
-        </div>
+    <nav className="flex items-center border-b-2 border-primary backdrop-blur px-8 py-1 sticky top-0 z-10">
+      <Link className="size-10 relative" href={"/"}>
+        <Image src="/logo.png" alt="logo" fill />
       </Link>
       <ProtectedLinks />
       <div className="flex items-center gap-2 ml-auto">
