@@ -138,6 +138,7 @@
     "description": "Açıklama",
     "id": "ID",
     "house": "Ev",
+    "house_description_title": "Ev Açıklaması",
     "house_description": "Ev Discord'unuzun ne olduğunu bilmemiz gerekiyor. Konquerus'un Discord'unuzda olduğundan emin olun. Bu ID sayesinde, Konquerus'un hangi sunucuda çalışması gerektiğini biliyoruz. Ev adını değiştirmek isterseniz, destekle iletişime geçin.",
     "discord": "Discord",
     "member": "Üye",

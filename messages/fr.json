@@ -121,6 +121,7 @@
     "join_to_house": "Rejoindre la Maison"
   },
   "SettingsPage": {
+    "house_description_title": "Description de la Maison",
     "settings_page": "Page de Paramètres",
     "nick_placeholder": "Pseudo",
     "discord_id_placeholder": "ID Discord",

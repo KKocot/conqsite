@@ -55,7 +55,7 @@ const HouseDetailsForm = ({ data }: HouseFormProps) => {
         />
       </div>
       <div>
-        <Label>{t("house_description")}</Label>
+        <Label>{t("house_description_title")}</Label>
         <Textarea
           value={houseDetails.description}
           onChange={(e) =>
