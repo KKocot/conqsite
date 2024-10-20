@@ -269,4 +269,14 @@ export const goldenUnits = [
     era: "golden",
     icon: "/golden-icons/Soneczna_falanga_icon.webp",
   },
+  {
+    id: 28,
+    name: "Lionroar Crew",
+    src: "/golden-units/armaty.png",
+    leadership: 310,
+    masteryPoints: false,
+    value: 9,
+    era: "golden",
+    icon: "/golden-icons/New_gold_unit.webp",
+  },
 ];
