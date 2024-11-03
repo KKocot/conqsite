@@ -118,7 +118,8 @@
     "server": "Serwer",
     "houses": "Domy",
     "join_discord": "Dołącz do Discord",
-    "join_to_house": "Dołącz do Rodu"
+    "join_to_house": "Dołącz do Rodu",
+    "house_description_title": "Opis Rodu"
   },
   "SettingsPage": {
     "house_description_title": "Opis Rodu",

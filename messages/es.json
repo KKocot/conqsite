@@ -118,7 +118,8 @@
     "server": "Servidor",
     "houses": "Casas",
     "join_discord": "Unirse a Discord",
-    "join_to_house": "Unirse a la Casa"
+    "join_to_house": "Unirse a la Casa",
+    "house_description_title": "Descripción de la Casa"
   },
   "SettingsPage": {
     "house_description_title": "Descripción de la Casa",

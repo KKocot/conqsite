@@ -118,7 +118,8 @@
     "server": "Sunucu",
     "houses": "Evler",
     "join_discord": "Discord'a Katıl",
-    "join_to_house": "Eve Katıl"
+    "join_to_house": "Eve Katıl",
+    "house_description_title": "Ev Açıklaması"
   },
   "SettingsPage": {
     "settings_page": "Ayarlar Sayfası",

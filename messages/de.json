@@ -118,7 +118,8 @@
     "server": "Server",
     "houses": "Häuser",
     "join_discord": "Discord beitreten",
-    "join_to_house": "Haus beitreten"
+    "join_to_house": "Haus beitreten",
+    "house_description_title": "Hausbeschreibung"
   },
   "SettingsPage": {
     "house_description_title": "Hausbeschreibung",
