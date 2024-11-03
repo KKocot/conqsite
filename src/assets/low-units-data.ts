@@ -619,6 +619,16 @@ export const lowUnits = [
     era: "blue",
     icon: "/low-tiers-icons/Psiloi_Slingers_icon.png",
   },
+  {
+    id: 63,
+    name: "Reitar Pistoleers",
+    src: "/low-tiers-units/pistolety.webp",
+    leadership: 180,
+    masteryPoints: false,
+    value: 8,
+    era: "blue",
+    icon: "/low-tiers-icons/new_blue_unit.webp",
+  },
 ];
 
 export const blueUnits = lowUnits.filter((unit) => unit.era === "blue");

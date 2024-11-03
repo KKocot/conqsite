@@ -12,7 +12,7 @@ export async function POST(request: Request) {
   try {
     await connectMongoDB();
     const data = putUserStatsSchema.parse(await request.json());
-    const userStatsExists = await UserStats.findOne({ id });
+    const userStatsExists = await UserStats.findOne({ id: data.id });
     let userStats;
     if (userStatsExists) {
       userStats = await UserStats.findByIdAndUpdate(userStatsExists._id, data, {

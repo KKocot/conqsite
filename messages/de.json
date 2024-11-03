@@ -121,6 +121,7 @@
     "join_to_house": "Haus beitreten"
   },
   "SettingsPage": {
+    "house_description_title": "Hausbeschreibung",
     "settings_page": "Einstellungsseite",
     "nick_placeholder": "Spitzname",
     "discord_id_placeholder": "Discord ID",

@@ -149,7 +149,7 @@ const CreateHousePage = () => {
         ) : null}
       </div>
       <div>
-        <Label>{t("house_description")}</Label>
+        <Label>{t("house_description_title")}</Label>
         <Textarea
           value={house.description}
           onChange={(e) =>

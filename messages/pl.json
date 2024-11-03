@@ -121,6 +121,7 @@
     "join_to_house": "Dołącz do Rodu"
   },
   "SettingsPage": {
+    "house_description_title": "Opis Rodu",
     "settings_page": "Strona Ustawień",
     "nick_placeholder": "Nick",
     "discord_id_placeholder": "Discord ID",

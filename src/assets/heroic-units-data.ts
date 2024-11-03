@@ -379,4 +379,14 @@ export const heroicUnits = [
     era: "heroic",
     icon: "/heroic-icons/Kawaleria_towarzyszaca_icon.webp",
   },
+  {
+    id: 39,
+    name: "Swinefeathers",
+    src: "/heroic-units/piostelty_t4.webp",
+    leadership: 235,
+    masteryPoints: false,
+    value: 8,
+    era: "heroic",
+    icon: "/heroic-icons/New_purple_unit.webp",
+  },
 ];
