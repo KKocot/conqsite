@@ -299,12 +299,15 @@ const StepGeneral = ({
         <Button
           type="button"
           onClick={() => moveToStep(prev_step)}
-          className="w-1/2"
+          className="w-1/2 bg-accent text-background text-md font-bold hover:text-accent"
         >
           {t("previous")}
         </Button>
 
-        <Button type="submit" className="w-1/2">
+        <Button
+          type="submit"
+          className="w-1/2 bg-accent text-background text-md font-bold hover:text-accent"
+        >
           {t("submit")}
         </Button>
       </div>

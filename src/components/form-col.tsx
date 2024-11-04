@@ -56,9 +56,9 @@ const FormCol = ({
         </div>
       ))}
       <Button
-        className="sticky bottom-0 w-full bg-gray-300 dark:bg-slate-800 font-bold text-xl items-center"
+        className="sticky bottom-0 w-full"
         type="button"
-        variant="secondary"
+        variant="custom"
         onClick={() => setShowMore((prev) => !prev)}
       >
         {showMore ? t("show_meta_only") : t("show_all")}
@@ -69,6 +69,7 @@ const FormCol = ({
           onClick={() => moveToStep(step - 1)}
           disabled={step === 1}
           className="w-1/2"
+          variant="custom"
         >
           {t("previous")}
         </Button>
@@ -77,6 +78,7 @@ const FormCol = ({
           type="button"
           onClick={() => moveToStep(step + 1)}
           className="w-1/2"
+          variant="custom"
         >
           {t("next")}
         </Button>

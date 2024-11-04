@@ -17,7 +17,7 @@ import { Castle, Crown, Menu, SquareUserRound } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { rolesQueryOptions } from "../../queries/roles.query";
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 
 export const ProtectedLinks = () => {
   const { data: commanders = [] } = useQuery(rolesQueryOptions());
@@ -66,27 +66,11 @@ const DesktopMenu: FC<ProtectedMenuProps> = ({
               {t("member_menu")}
             </NavigationMenuTrigger>
             <NavigationMenuContent>
-              <div className="grid w-max">
-                <Link href="/profile" legacyBehavior passHref>
-                  <NavigationMenuLink className="w-full px-4 py-2 hover:bg-accent">
-                    {t("my_profile")}
-                  </NavigationMenuLink>
-                </Link>
-                <Link href="/update-form" legacyBehavior passHref>
-                  <NavigationMenuLink className="w-full px-4 py-2 hover:bg-accent">
-                    {t("update_form")}
-                  </NavigationMenuLink>
-                </Link>
-                <Link href="/house" legacyBehavior passHref>
-                  <NavigationMenuLink className="w-full px-4 py-2 hover:bg-accent">
-                    {t("house")}
-                  </NavigationMenuLink>
-                </Link>
-                <Link href="/houses" legacyBehavior passHref>
-                  <NavigationMenuLink className="w-full px-4 py-2 hover:bg-accent">
-                    {t("all_houses")}
-                  </NavigationMenuLink>
-                </Link>
+              <div className="grid min-w-48 w-max">
+                <MenuLink href="/profile">{t("my_profile")}</MenuLink>
+                <MenuLink href="/update-form">{t("update_form")}</MenuLink>
+                <MenuLink href="/house">{t("house")}</MenuLink>
+                <MenuLink href="/houses">{t("all_houses")}</MenuLink>
               </div>
             </NavigationMenuContent>
           </NavigationMenuItem>
@@ -105,18 +89,10 @@ const DesktopMenu: FC<ProtectedMenuProps> = ({
                 <Castle className="size-5" />
                 {t("high_command_menu")}
               </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <div className="grid w-max">
-                  <Link href="/team-builder" legacyBehavior passHref>
-                    <NavigationMenuLink className="w-full px-4 py-2 hover:bg-accent">
-                      {t("build_team")}
-                    </NavigationMenuLink>
-                  </Link>
-                  <Link href="/my-house" legacyBehavior passHref>
-                    <NavigationMenuLink className="w-full px-4 py-2 hover:bg-accent">
-                      {t("my_house")}
-                    </NavigationMenuLink>
-                  </Link>
+              <NavigationMenuContent className="h-fit">
+                <div className="grid min-w-48 w-max">
+                  <MenuLink href="/team-builder">{t("build_team")}</MenuLink>
+                  <MenuLink href="/my-house">{t("my_house")}</MenuLink>
                 </div>
               </NavigationMenuContent>
             </NavigationMenuItem>
@@ -126,18 +102,14 @@ const DesktopMenu: FC<ProtectedMenuProps> = ({
       {isHouseLeader ? (
         <NavigationMenu delayDuration={0} className="hidden md:block">
           <NavigationMenuList>
-            <NavigationMenuItem className="w-max">
+            <NavigationMenuItem className="w-full">
               <NavigationMenuTrigger className={"rounded-l-none"}>
                 <Crown className="size-5" />
                 {t("house_leader_menu")}
               </NavigationMenuTrigger>
               <NavigationMenuContent>
-                <div className="grid w-max">
-                  <Link href="/settings" legacyBehavior passHref>
-                    <NavigationMenuLink className="w-full px-4 py-2 hover:bg-accent">
-                      {t("settings")}
-                    </NavigationMenuLink>
-                  </Link>
+                <div className="grid min-w-48 w-max">
+                  <MenuLink href="/settings">{t("settings")}</MenuLink>
                 </div>
               </NavigationMenuContent>
             </NavigationMenuItem>
@@ -164,22 +136,22 @@ const MobileMenu: FC<ProtectedMenuProps> = ({ isCommander, isHouseLeader }) => {
                 {t("member_menu")}
               </div>
               <Link href="/profile" legacyBehavior passHref>
-                <NavigationMenuLink className="w-full px-4 py-2 hover:bg-accent">
+                <NavigationMenuLink className="w-full px-4 py-2">
                   {t("my_profile")}
                 </NavigationMenuLink>
               </Link>
               <Link href="/update-form" legacyBehavior passHref>
-                <NavigationMenuLink className="w-full px-4 py-2 hover:bg-accent">
+                <NavigationMenuLink className="w-full px-4 py-2">
                   {t("update_form")}
                 </NavigationMenuLink>
               </Link>
               <Link href="/house" legacyBehavior passHref>
-                <NavigationMenuLink className="w-full px-4 py-2 hover:bg-accent">
+                <NavigationMenuLink className="w-full px-4 py-2">
                   {t("house")}
                 </NavigationMenuLink>
               </Link>
               <Link href="/houses" legacyBehavior passHref>
-                <NavigationMenuLink className="w-full px-4 py-2 hover:bg-accent">
+                <NavigationMenuLink className="w-full px-4 py-2">
                   {t("all_houses")}
                 </NavigationMenuLink>
               </Link>
@@ -191,12 +163,12 @@ const MobileMenu: FC<ProtectedMenuProps> = ({ isCommander, isHouseLeader }) => {
                   {t("high_command_menu")}
                 </div>
                 <Link href="/team-builder" legacyBehavior passHref>
-                  <NavigationMenuLink className="w-full px-4 py-2 hover:bg-accent">
+                  <NavigationMenuLink className="w-full px-4 py-2">
                     {t("build_team")}
                   </NavigationMenuLink>
                 </Link>
                 <Link href="/my-house" legacyBehavior passHref>
-                  <NavigationMenuLink className="w-full px-4 py-2 hover:bg-accent">
+                  <NavigationMenuLink className="w-full px-4 py-2">
                     {t("my_house")}
                   </NavigationMenuLink>
                 </Link>
@@ -208,16 +180,28 @@ const MobileMenu: FC<ProtectedMenuProps> = ({ isCommander, isHouseLeader }) => {
                   <Castle className="size-5" />
                   {t("house_leader_menu")}
                 </div>
-                <Link href="/settings" legacyBehavior passHref>
-                  <NavigationMenuLink className="w-full px-4 py-2 hover:bg-accent">
-                    {t("settings")}
-                  </NavigationMenuLink>
-                </Link>
+                <MenuLink href="/settings">{t("settings")}</MenuLink>
               </div>
             ) : null}
           </NavigationMenuContent>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
+  );
+};
+
+const MenuLink = ({
+  href,
+  children,
+}: {
+  href: string;
+  children: ReactNode;
+}) => {
+  return (
+    <Link href={href} legacyBehavior passHref>
+      <NavigationMenuLink className="w-full px-4 py-2 hover:text-accent hover:border-accent border-t-2 border-l-2 border-solid border-background bg-background">
+        {children}
+      </NavigationMenuLink>
+    </Link>
   );
 };

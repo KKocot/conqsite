@@ -27,17 +27,20 @@ const HousesPage = () => {
   }, []);
   return (
     <div className="flex flex-col items-center container">
-      <h1 className="m-10">{t("houses")}</h1>
-      <ul className="flex flex-wrap  gap-4 m-12 justify-around">
+      <ul className="flex flex-wrap gap-4 m-12 justify-around">
         {houses.map((house) => (
           <li
-            className="shadow-primary/50 hover:shadow-primary/50 shadow hover:shadow-lg transition-all grid  rounded-sm overflow-hidden basis-72"
+            className="shadow-background/50 w-[362px] hover:shadow-background/50 shadow hover:shadow-lg transition-all grid  rounded-sm overflow-hidden bg-background"
             key={house.name}
           >
             <div className="relative w-full h-auto aspect-square">
-              <Image fill src={house.avatar} alt="House Avatar" />
-              <div className="absolute top-2 -right-16 rotate-45 h-10 w-40 bg-primary"></div>
-              <div className="absolute text-white top-3 right-2 text-sm  text-center">
+              <img
+                src={house.avatar}
+                alt="House Avatar"
+                className="w-[362px] h-[362px]"
+              />
+              <div className="absolute top-2 -right-16 rotate-45 h-10 w-40 bg-accent"></div>
+              <div className="absolute top-3 right-2 text-sm  text-center text-background font-bold">
                 {house.server}
               </div>
             </div>
@@ -50,11 +53,11 @@ const HousesPage = () => {
                 <p className="text-sm">{house.description}</p>
               </div>
             </div>
-            <div className="flex">
+            <div className="flex mt-2">
               <Button
-                variant="tab"
-                className="w-full gap-1 text-black dark:text-white hover:text-white"
+                className="w-full gap-1 border-r-2"
                 asChild
+                variant="custom"
               >
                 <Link
                   className="w-full"
@@ -66,8 +69,8 @@ const HousesPage = () => {
               </Button>
 
               <Button
-                variant="tab"
-                className="w-full gap-1 text-black dark:text-white hover:text-white"
+                variant="custom"
+                className="w-full gap-1 border-l-2"
                 onClick={() => {
                   toast.error("Not working yet");
                 }}

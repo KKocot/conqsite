@@ -40,7 +40,7 @@ const HousePage = () => {
             <div>{houseData.country}</div>
             <div>{houseData.server}</div>
             <Link target="_blank" href={houseData.discordLink}>
-              <Button>Discord</Button>
+              <Button variant="custom">Discord</Button>
             </Link>
           </div>
           <div className="w-5/6 ">
