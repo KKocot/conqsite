@@ -102,7 +102,7 @@ const DesktopMenu: FC<ProtectedMenuProps> = ({
                   "rounded-r-none": isHouseLeader,
                 })}
               >
-                <Crown className="size-5" />
+                <Castle className="size-5" />
                 {t("high_command_menu")}
               </NavigationMenuTrigger>
               <NavigationMenuContent>
@@ -128,7 +128,7 @@ const DesktopMenu: FC<ProtectedMenuProps> = ({
           <NavigationMenuList>
             <NavigationMenuItem className="w-max">
               <NavigationMenuTrigger className={"rounded-l-none"}>
-                <Castle className="size-5" />
+                <Crown className="size-5" />
                 {t("house_leader_menu")}
               </NavigationMenuTrigger>
               <NavigationMenuContent>
