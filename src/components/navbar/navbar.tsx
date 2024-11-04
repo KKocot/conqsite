@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-
 import { ModeToggle } from "./theme-menu";
 import LanguageToggle from "./language-toggle";
 import Image from "next/image";
