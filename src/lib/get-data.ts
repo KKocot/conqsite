@@ -1,3 +1,5 @@
+import { getCloserDay } from "./utils";
+
 export interface Roles {
   _id?: string;
   discordId: string;
@@ -76,4 +78,23 @@ export const getSurvey = async (discordId: string): Promise<Survey> => {
   const response = await fetch(`/api/survey/${discordId}`);
   const result = await response.json();
   return result.survey;
+};
+
+interface Signup {
+  name: string;
+  signup: string[];
+}
+
+interface LineupData {
+  date: string;
+  house: string;
+  lineup: Signup[];
+}
+export const getNextTWLineups = async (house: string): Promise<LineupData> => {
+  const next_tw = getCloserDay();
+  const response = await fetch(
+    `/api/attendance?house=${house}&date=${next_tw}`
+  );
+  const result = await response.json();
+  return result.attendance[0];
 };

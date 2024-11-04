@@ -12,10 +12,10 @@
     "dark": "Ciemny",
     "system": "System",
     "member_menu": "Menu Członka",
-    "house": "Dom",
-    "all_houses": "Wszystkie Domy",
+    "house": "Ród",
+    "all_houses": "Wszystkie Rody",
     "high_command_menu": "Menu Dowództwa",
-    "house_leader_menu": "Menu Lidera Domu",
+    "house_leader_menu": "Menu Lidera Rodu",
     "settings": "Ustawienia",
     "privacy_policy": "Polityka Prywatności",
     "terms_of_service": "Warunki Usługi",
@@ -55,6 +55,9 @@
   },
   "BuildTeam": {
     "load_data": "Załaduj dane",
+    "clean_list": "Wyczyść listę",
+    "actions": "Akcje",
+    "upload_all": "Prześlij WSZYSTKO",
     "preview": "Podgląd",
     "editor": "Edytor",
     "save_template": "Zapisz Szablon",
@@ -99,7 +102,7 @@
     "group": "Grupa",
     "update_form_first": "Najpierw zaktualizuj formularz",
     "update_form": "Zaktualizuj formularz",
-    "are_u_sure": "Czy na pewno chcesz usunąć tego gracza z domu?",
+    "are_u_sure": "Czy na pewno chcesz usunąć tego gracza z rodu?",
     "from": "z ",
     "finish_settings_first": "Najpierw dokończ ustawienia"
   },
@@ -116,7 +119,7 @@
     "discord_link_is_incorrect": "Link Discord jest nieprawidłowy",
     "avatar": "Awatar",
     "server": "Serwer",
-    "houses": "Domy",
+    "houses": "Rody",
     "join_discord": "Dołącz do Discord",
     "join_to_house": "Dołącz do Rodu",
     "house_description_title": "Opis Rodu"
@@ -139,11 +142,11 @@
     "name": "Imię",
     "description": "Opis",
     "id": "ID",
-    "house": "Dom",
-    "house_description": "Musimy wiedzieć, jaki jest twój Discord Domu. Upewnij się, że Konquerus jest na twoim serwerze Discord. Dzięki temu ID wiemy, na jakim serwerze powinien działać Konquerus. Jeśli chcesz zmienić nazwę domu, napisz do wsparcia.",
+    "house": "Ród",
+    "house_description": "Musimy wiedzieć, jaki jest twój Discord Rodu. Upewnij się, że Konquerus jest na twoim serwerze Discord. Dzięki temu ID wiemy, na jakim serwerze powinien działać Konquerus. Jeśli chcesz zmienić nazwę rodu, napisz do wsparcia.",
     "discord": "Discord",
     "member": "Członek",
-    "member_description": "Jaka jest nazwa roli członka Discord i jego DiscordID? Dzięki temu ID Konquerus wie, kto jest członkiem twojego domu.",
+    "member_description": "Jaka jest nazwa roli członka Discord i jego DiscordID? Dzięki temu ID Konquerus wie, kto jest członkiem twojego rodu.",
     "logs": "Logi",
     "logs_description": "Kanały lub kanał do przeglądania logów dotyczących działań na Discordzie i obecności na TW po wydarzeniu. Możesz użyć tego samego kanału lub nawet wątku na kanale.",
     "logs_channel": "Kanał logów",
@@ -152,21 +155,21 @@
     "tw_zone_description": "Musimy wiedzieć, czy grasz w TW na głównym serwerze DC, czy na innym.",
     "server": "Serwer",
     "lineup": "Zestawienie",
-    "lineup_description": "Bot musi wiedzieć, jak podzielić twój dom na zestawienia, jeśli masz więcej niż jeden najazd.",
+    "lineup_description": "Bot musi wiedzieć, jak podzielić twój ród na zestawienia, jeśli masz więcej niż jeden najazd.",
     "delete_lineup": "Usuń zestawienie",
     "add_lineup": "Dodaj zestawienie",
     "channel": "Kanał",
     "save_settings": "Zapisz ustawienia",
     "unique_lineup_names": "Nazwy zestawień muszą być unikalne",
-    "house_settings_saved": "Ustawienia domu zapisane",
-    "house_name": "Nazwa domu",
+    "house_settings_saved": "Ustawienia rodu zapisane",
+    "house_name": "Nazwa rodu",
     "description_too_long": "Opis jest za długi",
     "country": "Kraj",
     "discord_link": "Link Discord",
     "discord_link_incorrect": "Link Discord jest nieprawidłowy",
     "avatar": "Awatar",
     "save_details": "Zapisz szczegóły",
-    "house_details_saved": "Szczegóły domu zapisane"
+    "house_details_saved": "Szczegóły rodu zapisane"
   },
   "DocsPage": {
     "documentation": {
@@ -253,8 +256,8 @@
         "botName": "Konqueruś"
       },
       "step6": {
-        "title": "Zweryfikuj Ustawienia Domu",
-        "description": "Użyj polecenia, aby zweryfikować ustawienia domu na stronie internetowej. Przejdź do ",
+        "title": "Zweryfikuj Ustawienia Rodu",
+        "description": "Użyj polecenia, aby zweryfikować ustawienia rodu na stronie internetowej. Przejdź do ",
         "command": "i kliknij przycisk, aby zweryfikować."
       }
     },

@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArtilleryProps, SheetTypes } from "@/lib/type";
-import { getCloserDay } from "@/lib/utils";
+import { getCloserDay, getLineup } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useMemo, useState } from "react";
 import Loading from "react-loading";
@@ -21,63 +21,24 @@ import TemplateMenu from "@/components/templates-menu";
 import UnitsFilter from "@/components/units-filter";
 import RaidsFilter from "@/components/raids-filter";
 import StorageTemplate from "@/components/storage-template";
-import { Survey } from "@/lib/get-data";
+import {
+  getHouseDetails,
+  getNextTWLineups,
+  getSurveys,
+  Survey,
+} from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { rolesQueryOptions } from "@/queries/roles.query";
-
-const next_tw = getCloserDay();
-
-const DEFAULT_CARD = {
-  username: "",
-  unit1: "",
-  unit2: "",
-  unit3: "",
-  weapon: "",
-  description: "",
-  color: "slate",
-  artillery: [
-    { id: 1, check: false },
-    { id: 2, check: false },
-    { id: 3, check: false },
-    { id: 4, check: false },
-    { id: 5, check: false },
-    { id: 6, check: false },
-    { id: 7, check: false },
-    { id: 8, check: false },
-    { id: 9, check: false },
-    { id: 10, check: false },
-    { id: 11, check: false },
-  ],
-};
-
-function getLineup(surveys: Survey[] | undefined, lineup: string[]) {
-  const data = surveys?.filter((survey) => lineup.includes(survey.discordId));
-  return data;
-}
-interface Signup {
-  name: string;
-  signup: string[];
-}
-
-interface LineupData {
-  date: string;
-  house: string;
-  lineup: Signup[];
-}
+import { DEFAULT_CARD } from "@/lib/defaults";
 
 const Page: React.FC = () => {
   const { data: commander } = useSession();
   const t = useTranslations("BuildTeam");
-  const [signup, setSignup] = useState<LineupData | null>(null);
-  const [surveys, setSurveys] = useState<Survey[]>();
   const [userList, setUserList] = useState<Survey[]>([]);
-  const [loading, setLoading] = useState(false);
   const [sheetData, setSheetData] = useState<SheetTypes[]>([]);
   const [allPlayers, setAllPlayers] = useState<Survey[]>([]);
   const [lineup, setLineup] = useState<string[]>([]);
   const [showPreview, setShowPreview] = useState(false);
-  const [houseId, setHouseId] = useState<number | null>(null);
-  const [pending, setPending] = useState(false);
   const [filterUnits, setFilterUnits] = useState({
     rustic_checked: true,
     chivalric_checked: true,
@@ -92,53 +53,24 @@ const Page: React.FC = () => {
   const commander_house =
     commander && commander.user.id
       ? command_list.find((e) => e.discordId === commander.user.id)
-      : "";
+      : undefined;
 
-  const fetchSettings = async (house: string) => {
-    setLoading(true);
-    try {
-      const response = await fetch(`/api/houseSettings?house=${house}`);
-      const result = await response.json();
-      setHouseId(result.house.id);
-    } catch (error) {
-      console.error("Error fetching settings:", error);
-      return (
-        <div className="flex justify-center items-center h-screen">
-          {t("finish_settings_first")}
-        </div>
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchLineup = async (house: string) => {
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `/api/attendance?house=${house}&date=${next_tw}`
-      );
-      const data = await response.json();
-      setSignup(data.attendance[0]);
-    } catch (error) {
-      console.error("Error fetching:", error);
-    } finally {
-      setTimeout(() => setLoading(false), 1000);
-    }
-  };
-  const fetchSurveys = async (house: string) => {
-    setLoading(true);
-    try {
-      const response = await fetch(`/api/survey?house=${house}`);
-      const data = await response.json();
-      setSurveys(data.surveys);
-    } catch (error) {
-      console.error("Error fetching:", error);
-    } finally {
-      setTimeout(() => setLoading(false), 1000);
-    }
-  };
-
+  const { data: houseData, isLoading: houseIsLoading } = useQuery({
+    queryKey: ["house", commander_house],
+    queryFn: () => getHouseDetails(commander_house?.house ?? ""),
+    enabled: !!commander_house,
+  });
+  const { data: signupData, isLoading: lineupIsLoading } = useQuery({
+    queryKey: ["lineup", houseData],
+    queryFn: () => getNextTWLineups(houseData?.name ?? ""),
+    enabled: !!houseData,
+  });
+  const { data: surveysData, isLoading: surveysIsLoading } = useQuery({
+    queryKey: ["surveysList"],
+    queryFn: () => getSurveys(commander_house?.house ?? ""),
+    enabled: !!commander_house?.house,
+  });
+  console.log(allPlayers);
   const units = useMemo(() => {
     const golden_era = filterUnits.golden_checked ? goldenUnits : [];
     const heroic_era = filterUnits.heroic_checked ? heroicUnits : [];
@@ -162,16 +94,10 @@ const Page: React.FC = () => {
     filterUnits.rustic_checked,
     filterUnits.other_checked,
   ]);
-  useEffect(() => {
-    setAllPlayers(getLineup(surveys, lineup) ?? []);
-  }, [lineup.length]);
 
   useEffect(() => {
-    if (!commander_house) return;
-    fetchSettings(commander_house.house);
-    fetchLineup(commander_house.house);
-    fetchSurveys(commander_house.house);
-  }, [Boolean(commander_house), pending]);
+    setAllPlayers(getLineup(surveysData, lineup) ?? []);
+  }, [lineup.length]);
 
   const handleEdit = (
     index: number,
@@ -216,7 +142,7 @@ const Page: React.FC = () => {
       }
       return prev;
     });
-  }, [allPlayers.length, surveys]);
+  }, [allPlayers.length, surveysData]);
   useEffect(() => {
     setUserList(
       allPlayers.filter(
@@ -229,13 +155,15 @@ const Page: React.FC = () => {
       )
     );
   }, [JSON.stringify(sheetData)]);
-  if (loading) {
+
+  if (houseIsLoading || lineupIsLoading || surveysIsLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Loading color="#94a3b8" />
       </div>
     );
   }
+
   return (
     <div className="flex justify-center flex-col items-center">
       <div className="flex items-center justify-around bg-indigo-950 w-3/4">
@@ -254,9 +182,12 @@ const Page: React.FC = () => {
         />
         <div className="flex gap-4">
           <UnitsFilter filters={filterUnits} setFilter={setFilterUnits} />
-          {signup?.lineup ? (
-            <RaidsFilter lineups={signup.lineup} setLineup={setLineup} />
-          ) : null}
+          <RaidsFilter
+            lineups={signupData?.lineup}
+            setLineup={setLineup}
+            setAllPlayers={setAllPlayers}
+            surveys={surveysData}
+          />
         </div>
       </div>
       <TemplateMenu

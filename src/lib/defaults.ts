@@ -1,0 +1,22 @@
+export const DEFAULT_CARD = {
+  username: "",
+  unit1: "",
+  unit2: "",
+  unit3: "",
+  weapon: "",
+  description: "",
+  color: "slate",
+  artillery: [
+    { id: 1, check: false },
+    { id: 2, check: false },
+    { id: 3, check: false },
+    { id: 4, check: false },
+    { id: 5, check: false },
+    { id: 6, check: false },
+    { id: 7, check: false },
+    { id: 8, check: false },
+    { id: 9, check: false },
+    { id: 10, check: false },
+    { id: 11, check: false },
+  ],
+};

@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Unit } from "./type";
 import { useTranslations } from "next-intl";
+import { Survey } from "./get-data";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -70,4 +71,9 @@ export function ownedUnits(
     return { ...unit, matchingGolden };
   });
   return mergedGoldenUnits;
+}
+
+export function getLineup(surveys: Survey[] | undefined, lineup: string[]) {
+  const data = surveys?.filter((survey) => lineup.includes(survey.discordId));
+  return data;
 }

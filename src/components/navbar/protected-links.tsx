@@ -199,7 +199,7 @@ const MenuLink = ({
 }) => {
   return (
     <Link href={href} legacyBehavior passHref>
-      <NavigationMenuLink className="w-full px-4 py-2 hover:text-accent hover:border-accent border-t-2 border-l-2 border-solid border-background bg-background">
+      <NavigationMenuLink className="w-full px-4 py-2 hover:text-accent bg-background">
         {children}
       </NavigationMenuLink>
     </Link>

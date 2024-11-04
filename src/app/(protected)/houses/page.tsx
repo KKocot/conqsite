@@ -1,33 +1,31 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { HouseDetails } from "@/lib/get-data";
+import { getHousesDetails, HouseDetails } from "@/lib/get-data";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { SiDiscord } from "@icons-pack/react-simple-icons";
 import { Castle } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "react-loading";
 
 const HousesPage = () => {
   const t = useTranslations("HousePage");
-  const [houses, setHouses] = useState<HouseDetails[]>([]);
-  const fetchHouses = async () => {
-    try {
-      const response = await fetch("/api/house");
-      const data = await response.json();
-      setHouses(data);
-    } catch (error) {
-      console.error("Error fetching:", error);
-    }
-  };
-  useEffect(() => {
-    fetchHouses();
-  }, []);
+  const { data, isLoading } = useQuery({
+    queryKey: ["houses"],
+    queryFn: getHousesDetails,
+  });
+  if (isLoading || !data)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loading color="#94a3b8" />
+      </div>
+    );
   return (
     <div className="flex flex-col items-center container">
       <ul className="flex flex-wrap gap-4 m-12 justify-around">
-        {houses.map((house) => (
+        {data.map((house) => (
           <li
             className="shadow-background/50 w-[362px] hover:shadow-background/50 shadow hover:shadow-lg transition-all grid  rounded-sm overflow-hidden bg-background"
             key={house.name}

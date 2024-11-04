@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { useTranslations } from "next-intl";
 import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Survey } from "@/queries/profile.query";
 
 interface Signup {
   name: string;
@@ -10,11 +11,18 @@ interface Signup {
 }
 
 interface RaidsFilterProps {
-  lineups: Signup[];
+  lineups?: Signup[];
   setLineup: Dispatch<SetStateAction<string[]>>;
+  surveys?: Survey[];
+  setAllPlayers: Dispatch<SetStateAction<Survey[]>>;
 }
 
-const RaidsFilter: FC<RaidsFilterProps> = ({ lineups, setLineup }) => {
+const RaidsFilter: FC<RaidsFilterProps> = ({
+  lineups,
+  setLineup,
+  surveys,
+  setAllPlayers,
+}) => {
   const [loadedLineup, setLoadedLineup] = useState<string[]>([]);
   const t = useTranslations("BuildTeam");
   const addLineup = (lineup: Signup) => {
@@ -36,21 +44,41 @@ const RaidsFilter: FC<RaidsFilterProps> = ({ lineups, setLineup }) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="gap-4 flex flex-col w-fit">
-        {lineups.map((e) => (
-          <Button
-            className="w-fit"
-            variant="tab"
-            key={e.name}
-            onClick={() =>
-              loadedLineup.includes(e.name) ? removeLineup(e) : addLineup(e)
-            }
-          >
-            {loadedLineup.includes(e.name)
-              ? "Remove Lineup: "
-              : "Load Lineup: "}
-            {e.name}
-          </Button>
-        ))}
+        {lineups
+          ? lineups.map((e) => (
+              <Button
+                className="w-full justify-start"
+                variant="tab"
+                key={e.name}
+                onClick={() =>
+                  loadedLineup.includes(e.name) ? removeLineup(e) : addLineup(e)
+                }
+              >
+                {loadedLineup.includes(e.name)
+                  ? "Remove Lineup: "
+                  : "Load Lineup: "}
+                {e.name}
+              </Button>
+            ))
+          : null}
+        {surveys ? (
+          <>
+            <Button
+              onClick={() => setAllPlayers(surveys)}
+              variant="tab"
+              className="justify-start"
+            >
+              {t("upload_all")}
+            </Button>
+            <Button
+              onClick={() => setAllPlayers(surveys)}
+              variant="tab"
+              className="justify-start"
+            >
+              {t("clean_list")}
+            </Button>
+          </>
+        ) : null}
       </PopoverContent>
     </Popover>
   );
