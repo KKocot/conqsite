@@ -21,8 +21,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
-import { HouseDetails } from "@/lib/get-data";
+import { getHousesDetails } from "@/lib/get-data";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "react-loading";
 
 const StepGeneral = ({
   form,
@@ -31,22 +32,19 @@ const StepGeneral = ({
   form: any;
   moveToStep: (e: number) => void;
 }) => {
-  const [houses, setHouses] = useState<HouseDetails[]>([]);
-  const fetchHouses = async () => {
-    try {
-      const response = await fetch("/api/house");
-      const data = await response.json();
-      setHouses(data);
-    } catch (error) {
-      console.error("Error fetching:", error);
-    }
-  };
-  useEffect(() => {
-    fetchHouses();
-  }, []);
+  const { data, isLoading } = useQuery({
+    queryKey: ["houses"],
+    queryFn: getHousesDetails,
+  });
 
   const t = useTranslations("AddForm");
   const prev_step = 3;
+  if (isLoading || !data)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loading color="#94a3b8" />
+      </div>
+    );
   return (
     <div className="flex flex-col sm:shadow-gray-600 dark:sm:shadow-slate-900 sm:shadow-lg p-4 gap-4">
       <div className="flex flex-col sm:flex-row justify-start p-4 gap-4">
@@ -105,7 +103,7 @@ const StepGeneral = ({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {houses.map((e) => (
+                    {data.map((e) => (
                       <SelectItem value={e.name} key={e.name}>
                         {e.name} - {e.server}
                       </SelectItem>

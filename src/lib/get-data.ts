@@ -1,3 +1,4 @@
+import { SheetTypes } from "./type";
 import { getCloserDay } from "./utils";
 
 export interface Roles {
@@ -97,4 +98,19 @@ export const getNextTWLineups = async (house: string): Promise<LineupData> => {
   );
   const result = await response.json();
   return result.attendance[0];
+};
+
+interface Template {
+  _id: string;
+  house: string;
+  templateName: string;
+  sheet: SheetTypes[];
+}
+
+export const getTemplates = async (
+  house: string
+): Promise<Template[] | undefined> => {
+  const response = await fetch(`/api/template?house=${house}`);
+  const result = await response.json();
+  return result.templates;
 };
