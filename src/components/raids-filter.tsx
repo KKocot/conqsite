@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { useTranslations } from "next-intl";
 import { Dispatch, FC, SetStateAction, useState } from "react";
-import { Survey } from "@/queries/profile.query";
+import { Survey } from "@/lib/get-data";
 
 interface Signup {
   name: string;
@@ -71,7 +71,7 @@ const RaidsFilter: FC<RaidsFilterProps> = ({
               {t("upload_all")}
             </Button>
             <Button
-              onClick={() => setAllPlayers(surveys)}
+              onClick={() => setAllPlayers([])}
               variant="tab"
               className="justify-start"
             >

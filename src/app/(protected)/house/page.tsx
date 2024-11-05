@@ -15,33 +15,32 @@ const HousePage = () => {
     queryFn: () => getSurvey(user_data?.user.id ?? ""),
     enabled: !!user_data?.user.id,
   });
+  // const { data: houseData, isLoading: houseIsLoading } = useQuery({
+  //   queryKey: ["house", surveyData?.house],
+  //   queryFn: () => getHouseDetails(more_houses? surveyData?.house ),
+  //   enabled: !!surveyData?.house,
+  // });
 
-  const { data: houseData, isLoading: houseIsLoading } = useQuery({
-    queryKey: ["house", surveyData?.house],
-    queryFn: () => getHouseDetails(surveyData?.house ?? ""),
-    enabled: !!surveyData?.house,
-  });
-
-  if (surveyIsLoading || houseIsLoading)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Loading color="#94a3b8" />
-      </div>
-    );
+  if (surveyIsLoading)
+    if (surveyIsLoading)
+      return (
+        <div className="flex justify-center items-center h-screen">
+          <Loading color="#94a3b8" />
+        </div>
+      );
 
   return (
     <div>
-      {houseData ? (
+      {surveyData ? (
         <div className="flex min-h-screen">
           <div className="flex flex-col items-center w-1/6 gap-2 shadow-lg shadow-primary-foreground min-h-screen">
-            <h1 className="text-4xl font-bold">{houseData.name}</h1>
-            <img src={houseData.avatar} alt="House Avatar" />
-            <div>{houseData.description}</div>
-            <div>{houseData.country}</div>
-            <div>{houseData.server}</div>
-            <Link target="_blank" href={houseData.discordLink}>
-              <Button variant="custom">Discord</Button>
-            </Link>
+            <ul className="flex flex-col items-center gap-2 m-4">
+              {Array.isArray(surveyData.house) ? (
+                surveyData.house.map((e) => <li key={e}>{e}</li>)
+              ) : (
+                <li>{surveyData.house}</li>
+              )}
+            </ul>
           </div>
           <div className="w-5/6 ">
             <div>{t("next_tw_preview")}</div>

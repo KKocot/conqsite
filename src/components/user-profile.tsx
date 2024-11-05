@@ -10,19 +10,14 @@ import ProfileData from "./profile-data";
 import { ReactNode } from "react";
 import { Avatar } from "@radix-ui/react-avatar";
 import { AvatarImage } from "./ui/avatar";
-import { Button } from "./ui/button";
 import { Survey } from "@/lib/get-data";
 
 export function UserProfile({
   player,
   children,
-  canDelete,
-  handleDelete,
 }: {
   player: Survey;
   children: ReactNode;
-  canDelete?: boolean;
-  handleDelete?: (e: Survey) => void;
 }) {
   return (
     <Dialog>
@@ -38,24 +33,7 @@ export function UserProfile({
               />
             </Avatar>
           ) : null}
-          <div>
-            <DialogTitle>
-              {player.inGameNick}
-              <span className="text-red-500">
-                ({player.characterLevel})
-              </span>{" "}
-              {handleDelete && canDelete ? (
-                <Button
-                  variant="destructive"
-                  onClick={() => handleDelete(player)}
-                  className="rounded-full"
-                >
-                  Remove
-                </Button>
-              ) : null}
-            </DialogTitle>
-            <DialogDescription>{player.discordNick}</DialogDescription>
-          </div>
+          <div>{player.discordNick}</div>
         </DialogHeader>
         <ProfileData profile={player} />
       </DialogContent>

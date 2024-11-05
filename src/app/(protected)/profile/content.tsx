@@ -23,10 +23,10 @@ import clsx from "clsx";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
-import { getSurvey, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { rolesQueryOptions } from "@/queries/roles.query";
 import { profileQueryOptions } from "@/queries/profile.query";
+import { Survey } from "@/lib/get-data";
 
 export default function Content() {
   const { data: user_data } = useSession();
@@ -139,10 +139,16 @@ export default function Content() {
             </h2>
             <div className="text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1">
               {profileData.discordNick}
-              {profileData.house !== "none" ? (
-                <div className="flex items-center">
-                  <span>{t("from") + profileData.house}</span>
-                  {houseLeader ? null : housePending ? (
+              <div className="flex items-center">
+                <div>
+                  {t("from")}
+                  {profileData.house.map((e, i) => (
+                    <span key={e}>
+                      {i + 1 === profileData.house.length ? e : e + ","}{" "}
+                    </span>
+                  ))}
+                </div>
+                {/* {houseLeader ? null : housePending ? (
                     <span>
                       <Loading color="#94a3b8" className="" />
                     </span>
@@ -155,9 +161,8 @@ export default function Content() {
                     >
                       X
                     </Button>
-                  )}
-                </div>
-              ) : null}
+                  )} */}
+              </div>
             </div>
           </div>
           <ul className="flex gap-8 flex-wrap">

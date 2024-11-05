@@ -59,7 +59,7 @@ export interface Survey {
   discordId: string;
   characterLevel: string;
   avatar?: string;
-  house: string;
+  house: string[] | string;
   artyAmount: "none" | "some" | "average" | "aLot";
   weapons: { value: boolean; leadership: number; pref?: number }[];
   units: {

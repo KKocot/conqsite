@@ -11,7 +11,7 @@ const surveySchema = z.object({
   characterLevel: z.string(),
   discordId: z.string(),
   discordNick: z.string(),
-  house: z.string(),
+  house: z.array(z.string()),
   inGameNick: z.string(),
   role: z.string().optional(),
   weapons: z

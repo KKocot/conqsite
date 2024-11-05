@@ -87,37 +87,9 @@ const StepGeneral = ({
           />
           <FormField
             control={form.control}
-            name="house"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("house")}</FormLabel>
-                <Select
-                  disabled={true}
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  required
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select your house" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {data.map((e) => (
-                      <SelectItem value={e.name} key={e.name}>
-                        {e.name} - {e.server}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="artyAmount"
             render={({ field }) => (
-              <FormItem className="space-y-4">
+              <FormItem>
                 <FormLabel className="font-bold text-md">
                   {t("amount_of_artillery")}
                 </FormLabel>
@@ -188,6 +160,20 @@ const StepGeneral = ({
                   </FormItem>
                 </RadioGroup>
               </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="house"
+            render={({ field }) => (
+              <div className="mt-2">
+                <h1 className="font-bold">{t("house")}</h1>
+                <ul>
+                  {field.value.map((e: string) => (
+                    <li key={e}>- {e} </li>
+                  ))}
+                </ul>
+              </div>
             )}
           />
         </div>
