@@ -50,15 +50,10 @@ const Content: React.FC<PageProps> = ({ house }) => {
     meta_units_only: true,
   });
 
-  const { data: houseData, isLoading: houseIsLoading } = useQuery({
-    queryKey: ["house", house],
-    queryFn: () => getHouseDetails(house),
-    enabled: !!house,
-  });
   const { data: signupData, isLoading: lineupIsLoading } = useQuery({
-    queryKey: ["lineup", houseData],
-    queryFn: () => getNextTWLineups(houseData?.name ?? ""),
-    enabled: !!houseData,
+    queryKey: ["lineup", house],
+    queryFn: () => getNextTWLineups(house),
+    enabled: !!house,
   });
   const { data: surveysData, isLoading: surveysIsLoading } = useQuery({
     queryKey: ["surveysList"],
@@ -150,7 +145,7 @@ const Content: React.FC<PageProps> = ({ house }) => {
     );
   }, [JSON.stringify(sheetData)]);
 
-  if (houseIsLoading || lineupIsLoading || surveysIsLoading) {
+  if (lineupIsLoading || surveysIsLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Loading color="#94a3b8" />
