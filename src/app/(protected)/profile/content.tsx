@@ -21,16 +21,12 @@ import { Avatar } from "@radix-ui/react-avatar";
 import { useTranslations } from "next-intl";
 import clsx from "clsx";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import { rolesQueryOptions } from "@/queries/roles.query";
 import { profileQueryOptions } from "@/queries/profile.query";
-import { Survey } from "@/lib/get-data";
 
 export default function Content() {
   const { data: user_data } = useSession();
-  const [housePending, setHousePending] = useState(false);
   const t = useTranslations("BuildTeam");
   const { data: rolesData, isLoading: rolesIsLoading } = useQuery(
     rolesQueryOptions()
@@ -44,46 +40,6 @@ export default function Content() {
     ...profileQueryOptions(user_data!.user.id),
     enabled: !!user_data?.user.id,
   });
-
-  const onDelete = async (values: Survey) => {
-    const accept = confirm(t("are_u_sure"));
-    if (accept) {
-      setHousePending(true);
-      const data = {
-        ...values,
-        house: "none",
-      };
-      try {
-        const response = await fetch("/api/survey", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-        const responseRoles = await fetch(
-          `/api/roles?id=${user_data?.user.id}`,
-          {
-            method: "DELETE",
-          }
-        );
-
-        if (!response.ok || !responseRoles.ok) {
-          const errorRoles = await responseRoles.json();
-          const errorData = await response.json();
-          console.error("Error occurred:", errorData, errorRoles);
-        } else {
-          const responseData = await response.json();
-          toast.success(`You left ${values.house}`);
-          console.log("Success:", responseData);
-        }
-      } catch (error) {
-        console.error("Error occurred:", error);
-      } finally {
-        setHousePending(false);
-      }
-    }
-  };
 
   if (profileIsLoading || rolesIsLoading) {
     return (

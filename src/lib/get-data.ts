@@ -48,7 +48,6 @@ export const getHouseSettings = async (
 ): Promise<HouseSettings> => {
   const response = await fetch(`/api/houseSettings?name=${name}`);
   const result = await response.json();
-  console.log(result);
   return result;
 };
 
