@@ -28,7 +28,8 @@ const Page: React.FC = () => {
     <div>
       {!load || !date || !house ? (
         <>
-          <div className="gap-4 flex justify-around items-center flex-col h-full">
+          <div className="gap-4 flex pt-16 items-center flex-col h-full">
+            <p>Get data from selected house and date</p>{" "}
             <div className="flex justify-around w-full">
               <div className="gap-4 flex flex-col items-center ">
                 <h1 className="text-2xl font-blod">Choose a house</h1>
@@ -80,3 +81,4 @@ const Page: React.FC = () => {
 };
 
 export default Page;
+// TODO translation

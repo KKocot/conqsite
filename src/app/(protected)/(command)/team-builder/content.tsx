@@ -161,6 +161,7 @@ const Content: React.FC<PageProps> = ({ house, nextTW }) => {
           {showPreview ? t("editor") : t("preview")}
         </Button>
         <StorageTemplate
+          house={house}
           data={sheetData}
           setData={setSheetData}
           playersNum={allPlayers.length}

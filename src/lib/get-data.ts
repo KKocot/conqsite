@@ -112,3 +112,25 @@ export const getTemplates = async (
   const result = await response.json();
   return result.templates;
 };
+
+interface PublicLineup {
+  house: string;
+  name: string;
+  date: string;
+  sheet: SheetTypes[];
+}
+export const getPublicLineup = async (
+  house: string,
+  date: string
+): Promise<PublicLineup[]> => {
+  const response = await fetch(`/api/publicLineup?house=${house}&date=${date}`);
+  const result = await response.json();
+  return result.publicLineup;
+};
+export const getPublicLineupDates = async (
+  house: string
+): Promise<string[]> => {
+  const response = await fetch(`/api/publicLineup?house=${house}`);
+  const result = await response.json();
+  return result;
+};

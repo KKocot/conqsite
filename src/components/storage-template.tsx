@@ -6,11 +6,13 @@ import { useTranslations } from "next-intl";
 import { Dispatch, FC } from "react";
 import { toast } from "react-toastify";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { PublicDialog } from "./public-dialog";
 
 interface ChildComponentProps {
   data: SheetTypes[];
   setData: Dispatch<React.SetStateAction<SheetTypes[]>>;
   playersNum: number;
+  house: string;
 }
 
 const DEFAULT_CARD = {
@@ -40,6 +42,7 @@ const StorageTemplate: FC<ChildComponentProps> = ({
   data,
   setData,
   playersNum,
+  house,
 }) => {
   const t = useTranslations("BuildTeam");
   const [storage, setStorage] = useLocalStorage<SheetTypes[]>(`sheetData`, []);
@@ -53,6 +56,10 @@ const StorageTemplate: FC<ChildComponentProps> = ({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="gap-4 flex flex-col w-fit">
+        <PublicDialog data={data} house={house}>
+          <Button variant="tab">Public Lineup</Button>
+          {/*TODO */}
+        </PublicDialog>
         <Button
           onClick={() => {
             setStorage(data);
