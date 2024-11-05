@@ -75,3 +75,28 @@ export async function GET(request: Request) {
       return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const house = searchParams.get("house");
+  const date = searchParams.get("date");
+  const name = searchParams.get("name");
+
+  const session = await getServerSession(authOptions);
+
+  try {
+    await connectMongoDB();
+    if (!session) return new Response("401");
+    await PublicLineup.findOneAndDelete({
+      house: house,
+      date: date,
+      name: name,
+    });
+    return NextResponse.json({ message: "Sheet deleted" }, { status: 200 });
+  } catch (error) {
+    if (error instanceof ZodError)
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    if (error instanceof Error)
+      return NextResponse.json({ message: error.message }, { status: 500 });
+  }
+}

@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { rolesQueryOptions } from "@/queries/roles.query";
 
 function getUniqueValues(arr: string[]): string[] {
   return arr.filter((value, index) => arr.indexOf(value) === index);
@@ -40,6 +41,10 @@ const HousePage = () => {
     queryFn: () => getPublicLineupDates(house ?? ""),
     enabled: !!house,
   });
+  const { data: command_list = [] } = useQuery(rolesQueryOptions());
+  const allowed_to_delete = command_list.some(
+    (e) => e.discordId === user_data?.user.id
+  );
   const values = useMemo(() => getUniqueValues(datesData ?? []), [datesData]);
   if (surveyIsLoading) {
     return (
@@ -102,7 +107,11 @@ const HousePage = () => {
           <div className="flex flex-col items-center justify-center p-4">
             <h1 className="text-4xl font-bold">{house}</h1>
             {!house || !date ? null : (
-              <Content house={house} date={date.toISOString().split("T")[0]} />
+              <Content
+                canDelete={allowed_to_delete}
+                house={house}
+                date={date.toISOString().split("T")[0]}
+              />
             )}
           </div>
         </div>
