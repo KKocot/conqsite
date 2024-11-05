@@ -1,5 +1,4 @@
 import { SheetTypes } from "./type";
-import { getCloserDay } from "./utils";
 
 export interface Roles {
   _id?: string;
@@ -90,11 +89,11 @@ interface LineupData {
   house: string;
   lineup: Signup[];
 }
-export const getNextTWLineups = async (house: string): Promise<LineupData> => {
-  const next_tw = getCloserDay();
-  const response = await fetch(
-    `/api/attendance?house=${house}&date=${next_tw}`
-  );
+export const getNextTWLineups = async (
+  house: string,
+  nextTW: string
+): Promise<LineupData> => {
+  const response = await fetch(`/api/attendance?house=${house}&date=${nextTW}`);
   const result = await response.json();
   return result.attendance[0];
 };

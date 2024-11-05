@@ -34,7 +34,7 @@ export function getNextDay(dayOfWeek: string) {
   const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed, so add 1
   const date = String(today.getDate()).padStart(2, "0");
 
-  return `${year}-${month}-${date}`;
+  return new Date(`${year}-${month}-${date}`);
 }
 export function getCloserDay() {
   const nextTuesday = getNextDay("Tuesday");

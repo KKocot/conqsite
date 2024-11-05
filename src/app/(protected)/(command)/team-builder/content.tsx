@@ -20,20 +20,16 @@ import TemplateMenu from "@/components/templates-menu";
 import UnitsFilter from "@/components/units-filter";
 import RaidsFilter from "@/components/raids-filter";
 import StorageTemplate from "@/components/storage-template";
-import {
-  getHouseDetails,
-  getNextTWLineups,
-  getSurveys,
-  Survey,
-} from "@/lib/get-data";
+import { getNextTWLineups, getSurveys, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { DEFAULT_CARD } from "@/lib/defaults";
 
 interface PageProps {
   house: string;
+  nextTW: string;
 }
 
-const Content: React.FC<PageProps> = ({ house }) => {
+const Content: React.FC<PageProps> = ({ house, nextTW }) => {
   const t = useTranslations("BuildTeam");
   const [userList, setUserList] = useState<Survey[]>([]);
   const [sheetData, setSheetData] = useState<SheetTypes[]>([]);
@@ -52,7 +48,7 @@ const Content: React.FC<PageProps> = ({ house }) => {
 
   const { data: signupData, isLoading: lineupIsLoading } = useQuery({
     queryKey: ["lineup", house],
-    queryFn: () => getNextTWLineups(house),
+    queryFn: () => getNextTWLineups(house, nextTW),
     enabled: !!house,
   });
   const { data: surveysData, isLoading: surveysIsLoading } = useQuery({
