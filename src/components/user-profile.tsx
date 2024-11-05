@@ -33,7 +33,13 @@ export function UserProfile({
               />
             </Avatar>
           ) : null}
-          <div>{player.discordNick}</div>
+          <div>
+            <DialogTitle>
+              {player.inGameNick}
+              <span className="text-red-500">({player.characterLevel})</span>
+            </DialogTitle>
+            <DialogDescription>{player.discordNick}</DialogDescription>
+          </div>
         </DialogHeader>
         <ProfileData profile={player} />
       </DialogContent>
