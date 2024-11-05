@@ -21,16 +21,12 @@ import { Avatar } from "@radix-ui/react-avatar";
 import { useTranslations } from "next-intl";
 import clsx from "clsx";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { toast } from "react-toastify";
-import { getSurvey, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { rolesQueryOptions } from "@/queries/roles.query";
 import { profileQueryOptions } from "@/queries/profile.query";
 
 export default function Content() {
   const { data: user_data } = useSession();
-  const [housePending, setHousePending] = useState(false);
   const t = useTranslations("BuildTeam");
   const { data: rolesData, isLoading: rolesIsLoading } = useQuery(
     rolesQueryOptions()
@@ -44,46 +40,6 @@ export default function Content() {
     ...profileQueryOptions(user_data!.user.id),
     enabled: !!user_data?.user.id,
   });
-
-  const onDelete = async (values: Survey) => {
-    const accept = confirm(t("are_u_sure"));
-    if (accept) {
-      setHousePending(true);
-      const data = {
-        ...values,
-        house: "none",
-      };
-      try {
-        const response = await fetch("/api/survey", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-        const responseRoles = await fetch(
-          `/api/roles?id=${user_data?.user.id}`,
-          {
-            method: "DELETE",
-          }
-        );
-
-        if (!response.ok || !responseRoles.ok) {
-          const errorRoles = await responseRoles.json();
-          const errorData = await response.json();
-          console.error("Error occurred:", errorData, errorRoles);
-        } else {
-          const responseData = await response.json();
-          toast.success(`You left ${values.house}`);
-          console.log("Success:", responseData);
-        }
-      } catch (error) {
-        console.error("Error occurred:", error);
-      } finally {
-        setHousePending(false);
-      }
-    }
-  };
 
   if (profileIsLoading || rolesIsLoading) {
     return (
@@ -139,10 +95,16 @@ export default function Content() {
             </h2>
             <div className="text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1">
               {profileData.discordNick}
-              {profileData.house !== "none" ? (
-                <div className="flex items-center">
-                  <span>{t("from") + profileData.house}</span>
-                  {houseLeader ? null : housePending ? (
+              <div className="flex items-center">
+                <div>
+                  {t("from")}
+                  {profileData.house.map((e, i) => (
+                    <span key={e}>
+                      {i + 1 === profileData.house.length ? e : e + ","}{" "}
+                    </span>
+                  ))}
+                </div>
+                {/* {houseLeader ? null : housePending ? (
                     <span>
                       <Loading color="#94a3b8" className="" />
                     </span>
@@ -155,9 +117,8 @@ export default function Content() {
                     >
                       X
                     </Button>
-                  )}
-                </div>
-              ) : null}
+                  )} */}
+              </div>
             </div>
           </div>
           <ul className="flex gap-8 flex-wrap">

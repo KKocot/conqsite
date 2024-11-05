@@ -1,43 +1,43 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { HouseDetails } from "@/lib/get-data";
+import { getHousesDetails, HouseDetails } from "@/lib/get-data";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { SiDiscord } from "@icons-pack/react-simple-icons";
 import { Castle } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "react-loading";
 
 const HousesPage = () => {
   const t = useTranslations("HousePage");
-  const [houses, setHouses] = useState<HouseDetails[]>([]);
-  const fetchHouses = async () => {
-    try {
-      const response = await fetch("/api/house");
-      const data = await response.json();
-      setHouses(data);
-    } catch (error) {
-      console.error("Error fetching:", error);
-    }
-  };
-  useEffect(() => {
-    fetchHouses();
-  }, []);
+  const { data, isLoading } = useQuery({
+    queryKey: ["houses"],
+    queryFn: getHousesDetails,
+  });
+  if (isLoading || !data)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loading color="#94a3b8" />
+      </div>
+    );
   return (
     <div className="flex flex-col items-center container">
-      <h1 className="m-10">{t("houses")}</h1>
-      <ul className="flex flex-wrap  gap-4 m-12 justify-around">
-        {houses.map((house) => (
+      <ul className="flex flex-wrap gap-4 m-12 justify-around">
+        {data.map((house) => (
           <li
-            className="shadow-primary/50 hover:shadow-primary/50 shadow hover:shadow-lg transition-all grid  rounded-sm overflow-hidden basis-72"
+            className="shadow-background/50 w-[362px] hover:shadow-background/50 shadow hover:shadow-lg transition-all grid  rounded-sm overflow-hidden bg-background"
             key={house.name}
           >
             <div className="relative w-full h-auto aspect-square">
-              <Image fill src={house.avatar} alt="House Avatar" />
-              <div className="absolute top-2 -right-16 rotate-45 h-10 w-40 bg-primary"></div>
-              <div className="absolute text-white top-3 right-2 text-sm  text-center">
+              <img
+                src={house.avatar}
+                alt="House Avatar"
+                className="w-[362px] h-[362px]"
+              />
+              <div className="absolute top-2 -right-16 rotate-45 h-10 w-40 bg-accent"></div>
+              <div className="absolute top-3 right-2 text-sm  text-center text-background font-bold">
                 {house.server}
               </div>
             </div>
@@ -50,11 +50,11 @@ const HousesPage = () => {
                 <p className="text-sm">{house.description}</p>
               </div>
             </div>
-            <div className="flex">
+            <div className="flex mt-2">
               <Button
-                variant="tab"
-                className="w-full gap-1 text-black dark:text-white hover:text-white"
+                className="w-full gap-1 border-r-2"
                 asChild
+                variant="custom"
               >
                 <Link
                   className="w-full"
@@ -66,8 +66,8 @@ const HousesPage = () => {
               </Button>
 
               <Button
-                variant="tab"
-                className="w-full gap-1 text-black dark:text-white hover:text-white"
+                variant="custom"
+                className="w-full gap-1 border-l-2"
                 onClick={() => {
                   toast.error("Not working yet");
                 }}

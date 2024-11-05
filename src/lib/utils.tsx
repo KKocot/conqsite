@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Unit } from "./type";
 import { useTranslations } from "next-intl";
+import { Survey } from "./get-data";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -33,7 +34,7 @@ export function getNextDay(dayOfWeek: string) {
   const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed, so add 1
   const date = String(today.getDate()).padStart(2, "0");
 
-  return `${year}-${month}-${date}`;
+  return new Date(`${year}-${month}-${date}`);
 }
 export function getCloserDay() {
   const nextTuesday = getNextDay("Tuesday");
@@ -70,4 +71,9 @@ export function ownedUnits(
     return { ...unit, matchingGolden };
   });
   return mergedGoldenUnits;
+}
+
+export function getLineup(surveys: Survey[] | undefined, lineup: string[]) {
+  const data = surveys?.filter((survey) => lineup.includes(survey.discordId));
+  return data;
 }

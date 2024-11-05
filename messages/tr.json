@@ -54,6 +54,9 @@
     "preferences": "Tercihler"
   },
   "BuildTeam": {
+    "clean_list": "Listeyi temizle",
+    "actions": "Eylemler",
+    "upload_all": "TÜMÜNÜ Yükle",
     "load_data": "Veri yükle",
     "preview": "Önizleme",
     "editor": "Editör",

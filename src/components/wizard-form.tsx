@@ -142,12 +142,12 @@ export default function WizardForm({
         className="flex flex-col items-center p-4 gap-6"
       >
         <h1 className="text-3xl font-bold">{t("form")}</h1>
-        <ul className="flex gap-4 text-primary">
+        <ul className="flex gap-4 text-accent">
           {Array.from({ length: 4 }).map((_, i) => (
             <li key={i} className="flex items-center gap-4">
               <div
                 className={clsx("rounded-full", {
-                  "border-4 border-primary font-bold": step === i + 1,
+                  "border-4 border-accent font-bold": step === i + 1,
                 })}
               >
                 <Item
@@ -210,7 +210,7 @@ const Item = ({
     <div
       title={tooltip}
       onClick={() => moveToStep(page)}
-      className="border-2 rounded-full w-10 h-10 flex items-center justify-center cursor-pointer text-primary border-primary"
+      className="border-2 rounded-full w-10 h-10 flex items-center justify-center cursor-pointer text-accent border-accent"
     >
       {page}
     </div>

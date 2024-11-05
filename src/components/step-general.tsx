@@ -21,8 +21,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
-import { HouseDetails } from "@/lib/get-data";
+import { getHousesDetails } from "@/lib/get-data";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "react-loading";
 
 const StepGeneral = ({
   form,
@@ -31,22 +32,19 @@ const StepGeneral = ({
   form: any;
   moveToStep: (e: number) => void;
 }) => {
-  const [houses, setHouses] = useState<HouseDetails[]>([]);
-  const fetchHouses = async () => {
-    try {
-      const response = await fetch("/api/house");
-      const data = await response.json();
-      setHouses(data);
-    } catch (error) {
-      console.error("Error fetching:", error);
-    }
-  };
-  useEffect(() => {
-    fetchHouses();
-  }, []);
+  const { data, isLoading } = useQuery({
+    queryKey: ["houses"],
+    queryFn: getHousesDetails,
+  });
 
   const t = useTranslations("AddForm");
   const prev_step = 3;
+  if (isLoading || !data)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loading color="#94a3b8" />
+      </div>
+    );
   return (
     <div className="flex flex-col sm:shadow-gray-600 dark:sm:shadow-slate-900 sm:shadow-lg p-4 gap-4">
       <div className="flex flex-col sm:flex-row justify-start p-4 gap-4">
@@ -89,37 +87,9 @@ const StepGeneral = ({
           />
           <FormField
             control={form.control}
-            name="house"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("house")}</FormLabel>
-                <Select
-                  disabled={true}
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  required
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select your house" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {houses.map((e) => (
-                      <SelectItem value={e.name} key={e.name}>
-                        {e.name} - {e.server}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="artyAmount"
             render={({ field }) => (
-              <FormItem className="space-y-4">
+              <FormItem>
                 <FormLabel className="font-bold text-md">
                   {t("amount_of_artillery")}
                 </FormLabel>
@@ -190,6 +160,20 @@ const StepGeneral = ({
                   </FormItem>
                 </RadioGroup>
               </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="house"
+            render={({ field }) => (
+              <div className="mt-2">
+                <h1 className="font-bold">{t("house")}</h1>
+                <ul>
+                  {field.value.map((e: string) => (
+                    <li key={e}>- {e} </li>
+                  ))}
+                </ul>
+              </div>
             )}
           />
         </div>
@@ -299,12 +283,15 @@ const StepGeneral = ({
         <Button
           type="button"
           onClick={() => moveToStep(prev_step)}
-          className="w-1/2"
+          className="w-1/2 bg-accent text-background text-md font-bold hover:text-accent"
         >
           {t("previous")}
         </Button>
 
-        <Button type="submit" className="w-1/2">
+        <Button
+          type="submit"
+          className="w-1/2 bg-accent text-background text-md font-bold hover:text-accent"
+        >
           {t("submit")}
         </Button>
       </div>

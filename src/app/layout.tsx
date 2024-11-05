@@ -7,12 +7,7 @@ import { getLocale, getMessages } from "next-intl/server";
 
 import { Providers } from "./providers";
 import { NextIntlClientProvider } from "next-intl";
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-  UseQueryOptions,
-} from "@tanstack/react-query";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { rolesQueryOptions } from "@/queries/roles.query";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";

@@ -54,6 +54,9 @@
     "preferences": "Präferenzen"
   },
   "BuildTeam": {
+    "clean_list": "Liste leeren",
+    "actions": "Aktionen",
+    "upload_all": "Alles hochladen",
     "load_data": "Daten laden",
     "preview": "Vorschau",
     "editor": "Editor",

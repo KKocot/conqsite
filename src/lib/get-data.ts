@@ -1,3 +1,5 @@
+import { SheetTypes } from "./type";
+
 export interface Roles {
   _id?: string;
   discordId: string;
@@ -45,7 +47,6 @@ export const getHouseSettings = async (
 ): Promise<HouseSettings> => {
   const response = await fetch(`/api/houseSettings?name=${name}`);
   const result = await response.json();
-  console.log(result);
   return result;
 };
 
@@ -56,7 +57,7 @@ export interface Survey {
   discordId: string;
   characterLevel: string;
   avatar?: string;
-  house: string;
+  house: string[] | string;
   artyAmount: "none" | "some" | "average" | "aLot";
   weapons: { value: boolean; leadership: number; pref?: number }[];
   units: {
@@ -76,4 +77,60 @@ export const getSurvey = async (discordId: string): Promise<Survey> => {
   const response = await fetch(`/api/survey/${discordId}`);
   const result = await response.json();
   return result.survey;
+};
+
+interface Signup {
+  name: string;
+  signup: string[];
+}
+
+interface LineupData {
+  date: string;
+  house: string;
+  lineup: Signup[];
+}
+export const getNextTWLineups = async (
+  house: string,
+  nextTW: string
+): Promise<LineupData> => {
+  const response = await fetch(`/api/attendance?house=${house}&date=${nextTW}`);
+  const result = await response.json();
+  return result.attendance[0];
+};
+
+interface Template {
+  _id: string;
+  house: string;
+  templateName: string;
+  sheet: SheetTypes[];
+}
+
+export const getTemplates = async (
+  house: string
+): Promise<Template[] | undefined> => {
+  const response = await fetch(`/api/template?house=${house}`);
+  const result = await response.json();
+  return result.templates;
+};
+
+interface PublicLineup {
+  house: string;
+  name: string;
+  date: string;
+  sheet: SheetTypes[];
+}
+export const getPublicLineup = async (
+  house: string,
+  date: string
+): Promise<PublicLineup[]> => {
+  const response = await fetch(`/api/publicLineup?house=${house}&date=${date}`);
+  const result = await response.json();
+  return result.publicLineup;
+};
+export const getPublicLineupDates = async (
+  house: string
+): Promise<string[]> => {
+  const response = await fetch(`/api/publicLineup?house=${house}`);
+  const result = await response.json();
+  return result;
 };

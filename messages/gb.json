@@ -57,6 +57,9 @@
     "preferences": "Preferences"
   },
   "BuildTeam": {
+    "clean_list": "Clean list",
+    "actions": "Actions",
+    "upload_all": "Upload ALL",
     "load_data": "Load data",
     "preview": "Preview",
     "editor": "Editor",
