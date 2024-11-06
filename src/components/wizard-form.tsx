@@ -21,7 +21,7 @@ export const DEFAULT_FORM_DATA: Survey = {
   discordId: "",
   characterLevel: "",
   avatar: "",
-  house: "",
+  house: [],
   artyAmount: "none",
   weapons: weapons.map(() => ({ value: false, leadership: 0, pref: 0 })),
   units: {
@@ -106,7 +106,6 @@ export default function WizardForm({
       ...values,
       discordId: user_id,
       avatar: avatar,
-      house: values.house === "" ? "none" : values.house,
     };
     try {
       const response = await fetch("/api/survey", {
