@@ -53,8 +53,16 @@ const HousePage = () => {
       </div>
     );
   }
-
   if (!surveyData) {
+    return (
+      <div className="flex justify-evenly p-4">
+        <Button>
+          <Link href="/update-form">Update Form</Link>
+        </Button>
+      </div>
+    );
+  }
+  if (surveyData.house.length === 0) {
     return (
       <div className="flex justify-evenly p-4">
         <Link href="/houses">
