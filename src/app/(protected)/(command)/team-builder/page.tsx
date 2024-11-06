@@ -74,7 +74,10 @@ const Page: React.FC = () => {
           </div>
         </>
       ) : (
-        <Content house={house} nextTW={date.toISOString().split("T")[0]} />
+        <Content
+          house={house}
+          nextTW={`${date?.getDate()}-${date?.getMonth()}-${date?.getFullYear()}`}
+        />
       )}
     </div>
   );

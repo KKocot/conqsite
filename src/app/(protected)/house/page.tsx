@@ -118,7 +118,7 @@ const HousePage = () => {
               <Content
                 canDelete={allowed_to_delete}
                 house={house}
-                date={date.toISOString().split("T")[0]}
+                date={`${date?.getDate()}-${date?.getMonth()}-${date?.getFullYear()}`}
               />
             )}
           </div>
