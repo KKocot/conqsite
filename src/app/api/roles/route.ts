@@ -6,16 +6,21 @@ import { ZodError } from "zod";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { headers } from "next/headers";
+import { botAllowed, highestRolesAllowed } from "@/lib/endpoints-protections";
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
+  const discordKey = headers().get("discord-key");
+  const envKey = process.env.BOT_KEY;
 
   try {
     await connectMongoDB();
     const data = putRolestSchema.parse(await request.json());
+    const roles = await Roles.find();
 
-    // Allow access only to all users
-    if (!session) return new Response("401");
+    const highestRolesAccess = highestRolesAllowed(roles, session, data.house);
+    if (!(highestRolesAccess || (discordKey && botAllowed(discordKey, envKey))))
+      return new Response("401");
     const existingRole = await Roles.findOne({
       discordId: data.discordId,
     });
@@ -39,7 +44,6 @@ export async function POST(request: Request) {
 }
 
 export async function GET(request: Request) {
-  const session = await getServerSession(authOptions);
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
   try {
@@ -60,20 +64,24 @@ export async function GET(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-  const discordKey = headers().get("discord-key");
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
+  const discordKey = headers().get("discord-key");
+  const envKey = process.env.BOT_KEY;
+  const session = await getServerSession(authOptions);
+
   try {
     await connectMongoDB();
-    const session = await getServerSession(authOptions);
-    const roles = await Roles.findOneAndDelete({ discordId: id });
-    const houseRoles = await Roles.find({ house: roles.house });
-    const userRoles = houseRoles.some(
+    const rolesLisy = await Roles.find();
+    const house = rolesLisy.find(
       (role) => role.discordId === session?.user?.id
-    );
-    // Allow access only to high command roles and Discord Bot
-    if (!session || (discordKey && discordKey === process.env.BOT_KEY))
+    )?.house;
+    const highestRolesAccess = highestRolesAllowed(rolesLisy, session, house);
+
+    if (!(highestRolesAccess || (discordKey && botAllowed(discordKey, envKey))))
       return new Response("401");
+
+    const roles = await Roles.findOneAndDelete({ discordId: id });
     return NextResponse.json({ roles });
   } catch (error) {
     if (error instanceof ZodError)

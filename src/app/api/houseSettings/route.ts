@@ -7,23 +7,24 @@ import { headers } from "next/headers";
 import HouseSettings from "@/models/houseSettings";
 import putHouseSettingsSchema from "./shema";
 import Roles from "@/models/roles";
+import { botAllowed, highestRolesAllowed } from "@/lib/endpoints-protections";
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
   const { searchParams } = new URL(request.url);
   const name = searchParams.get("name");
+  const discordKey = headers().get("discord-key");
+  const envKey = process.env.BOT_KEY;
 
   try {
     await connectMongoDB();
+    const roles = await Roles.find({ house: name });
+
+    const highestRolesAccess = highestRolesAllowed(roles, session, name);
+    if (!(highestRolesAccess || (discordKey && botAllowed(discordKey, envKey))))
+      return new Response("401");
+
     const data = putHouseSettingsSchema.parse(await request.json());
-    // const roles = await Roles.find({ house: name });
-    // const userRoles = roles
-    //   .filter((e) => e.role === "RightHand" || e.role === "HouseLeader")
-    //   .some((role) => role.discordId === session?.user?.id);
-
-    // Allow access only to high roles
-    // if (!userRoles) return new Response("401");
-
     const houseSettingsExists = await HouseSettings.findOne({
       name: name,
     });
@@ -50,20 +51,22 @@ export async function POST(request: Request) {
 }
 
 export async function GET(request: Request) {
+  const session = await getServerSession(authOptions);
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
   const name = searchParams.get("name");
-  // const discordKey = headers().get("discord-key");
-  // const session = await getServerSession(authOptions);
 
   try {
     await connectMongoDB();
-    // const roles = await Roles.find({ house: house });
-    // const userRoles = roles.some(
-    //   (role) => role.discordId === session?.user?.id
-    // );
-    // if (!userRoles || (discordKey && discordKey === process.env.BOT_KEY))
-    //   return new Response("401");
+    const roles = await Roles.find({ house: name });
+
+    const discordKey = headers().get("discord-key");
+    const envKey = process.env.BOT_KEY;
+    const highestRolesAccess = highestRolesAllowed(roles, session, name);
+
+    if (!(highestRolesAccess || (discordKey && botAllowed(discordKey, envKey))))
+      return new Response("401");
+
     let houseSettings;
     if (id) {
       houseSettings = await HouseSettings.findOne({

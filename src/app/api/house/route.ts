@@ -5,16 +5,25 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { putHouseSchema } from "./shema";
+import Roles from "@/models/roles";
+import { highestRolesAllowed } from "@/lib/endpoints-protections";
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
-  if (!session) return new Response("401");
+  const { searchParams } = new URL(request.url);
+  const house = searchParams.get("name");
   try {
     await connectMongoDB();
+    if (!session) return new Response("401");
+    const roles = await Roles.find({ house: house });
+    const highestRolesAccess = highestRolesAllowed(roles, session, house);
+
     const data = putHouseSchema.parse(await request.json());
     const existingHouse = await House.findOne({ name: data.name });
+
     let publicHouse;
-    if (existingHouse) {
+
+    if (existingHouse && highestRolesAccess) {
       publicHouse = await House.findByIdAndUpdate(existingHouse._id, data, {
         new: true,
       });
