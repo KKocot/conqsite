@@ -134,3 +134,15 @@ export const getPublicLineupDates = async (
   const result = await response.json();
   return result;
 };
+
+interface UsersStats {
+  id: string;
+  house: string;
+  attendance: string[];
+}
+
+export const getUserStats = async (id: string): Promise<UsersStats> => {
+  const response = await fetch(`/api/userStats?id=${id}`);
+  const result = await response.json();
+  return result;
+};
