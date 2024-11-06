@@ -53,8 +53,16 @@ const HousePage = () => {
       </div>
     );
   }
-
   if (!surveyData) {
+    return (
+      <div className="flex justify-evenly p-4">
+        <Button>
+          <Link href="/update-form">Update Form</Link>
+        </Button>
+      </div>
+    );
+  }
+  if (surveyData.house.length === 0) {
     return (
       <div className="flex justify-evenly p-4">
         <Link href="/houses">
@@ -90,7 +98,7 @@ const HousePage = () => {
                 className="mt-2 p-2 border rounded"
               >
                 <SelectValue
-                  placeholder={date?.toISOString().split("T")[0] ?? ""}
+                  placeholder={`${date?.getDate()}-${date?.getMonth()}-${date?.getFullYear()}`}
                 />
               </SelectTrigger>
               <SelectContent>
@@ -110,7 +118,7 @@ const HousePage = () => {
               <Content
                 canDelete={allowed_to_delete}
                 house={house}
-                date={date.toISOString().split("T")[0]}
+                date={`${date?.getDate()}-${date?.getMonth()}-${date?.getFullYear()}`}
               />
             )}
           </div>

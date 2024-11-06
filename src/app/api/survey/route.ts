@@ -6,11 +6,7 @@ import { ZodError } from "zod";
 import { headers } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import {
-  botAllowed,
-  highCommandAllowed,
-  highestRolesAllowed,
-} from "@/lib/endpoints-protections";
+import { botAllowed, highCommandAllowed } from "@/lib/endpoints-protections";
 import Roles from "@/models/roles";
 
 export async function POST(request: Request) {
@@ -20,23 +16,11 @@ export async function POST(request: Request) {
 
   try {
     await connectMongoDB();
-    const roles = await Roles.find();
-    const roleHouse = roles.find((role) => role.discordId === session?.user.id);
     const data = putSurveySchema.parse(await request.json());
     const existingSurvey = await Survey.findOne({ discordId: data.discordId });
-    const highestRolesAccess = highestRolesAllowed(
-      roles,
-      session,
-      roleHouse.house
-    );
+
     const userAccount = data.discordId === session?.user.id;
-    if (
-      !(
-        highestRolesAccess ||
-        userAccount ||
-        (discordKey && botAllowed(discordKey, envKey))
-      )
-    )
+    if (!(userAccount || (discordKey && botAllowed(discordKey, envKey))))
       return new Response("401");
     let survey;
     if (existingSurvey) {
@@ -49,10 +33,12 @@ export async function POST(request: Request) {
 
     return NextResponse.json(survey, { status: 201 });
   } catch (error) {
-    if (error instanceof ZodError)
+    if (error instanceof ZodError) {
       return NextResponse.json({ message: error.message }, { status: 400 });
-    if (error instanceof Error)
+    }
+    if (error instanceof Error) {
       return NextResponse.json({ message: error.message }, { status: 500 });
+    }
   }
 }
 

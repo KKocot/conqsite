@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { goldenUnits } from "@/assets/golden-units-data";
@@ -22,26 +21,31 @@ import { useTranslations } from "next-intl";
 import clsx from "clsx";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { rolesQueryOptions } from "@/queries/roles.query";
 import { profileQueryOptions } from "@/queries/profile.query";
-
+import { getUserStats } from "@/lib/get-data";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 export default function Content() {
   const { data: user_data } = useSession();
   const t = useTranslations("BuildTeam");
-  const { data: rolesData, isLoading: rolesIsLoading } = useQuery(
-    rolesQueryOptions()
-  );
-
-  const houseLeader = rolesData
-    ?.filter((e) => e.role === "HouseLeader")
-    .some((role) => role.discordId === user_data?.user.id);
 
   const { data: profileData, isLoading: profileIsLoading } = useQuery({
     ...profileQueryOptions(user_data!.user.id),
     enabled: !!user_data?.user.id,
   });
 
-  if (profileIsLoading || rolesIsLoading) {
+  const { data: statsData, isLoading: statsIsLoading } = useQuery({
+    queryKey: ["userStats", user_data!.user.id],
+    queryFn: () => getUserStats(user_data!.user.id),
+    enabled: !!user_data?.user.id,
+  });
+
+  if (profileIsLoading || statsIsLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Loading color="#94a3b8" />
@@ -96,30 +100,38 @@ export default function Content() {
             <div className="text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1">
               {profileData.discordNick}
               <div className="flex items-center">
-                <div>
-                  {t("from")}
-                  {profileData.house.map((e, i) => (
-                    <span key={e}>
-                      {i + 1 === profileData.house.length ? e : e + ","}{" "}
-                    </span>
-                  ))}
-                </div>
-                {/* {houseLeader ? null : housePending ? (
-                    <span>
-                      <Loading color="#94a3b8" className="" />
-                    </span>
-                  ) : (
-                    <Button
-                      onClick={() => onDelete(profileData)}
-                      variant="ghost"
-                      className="text-destructive"
-                      title="Leave House"
-                    >
-                      X
-                    </Button>
-                  )} */}
+                {profileData.house.length > 1 ? (
+                  <div>
+                    {t("from")}
+                    {profileData.house.map((e, i) => (
+                      <span key={e}>
+                        {i + 1 === profileData.house.length ? e : e + ","}{" "}
+                      </span>
+                    ))}
+                  </div>
+                ) : null}
               </div>
             </div>
+            {statsData && statsData.attendance.length > 1 ? (
+              <div>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button variant="outline">Show my TW attendance</Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <ul>
+                        {statsData.attendance.map((e) => (
+                          <li key={e} className="text-xl">
+                            {e}
+                          </li>
+                        ))}
+                      </ul>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            ) : null}
           </div>
           <ul className="flex gap-8 flex-wrap">
             {weapons_list.map((e) =>
@@ -205,3 +217,6 @@ export default function Content() {
     </div>
   );
 }
+// TODO translation
+// TOTO Create information about season: data to date, dates of drills
+// TODO Sort stats by season

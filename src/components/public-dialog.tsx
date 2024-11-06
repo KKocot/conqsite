@@ -37,7 +37,7 @@ export function PublicDialog({
         body: JSON.stringify({
           name: publicationName,
           house: house,
-          date: date?.toISOString().split("T")[0],
+          date: `${date?.getDate()}-${date?.getMonth()}-${date?.getFullYear()}`,
           sheet: data,
         }),
       });

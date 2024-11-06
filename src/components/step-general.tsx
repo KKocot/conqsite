@@ -13,13 +13,6 @@ import {
 } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
 import { Label } from "./ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useTranslations } from "next-intl";
 import { getHousesDetails } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
@@ -80,7 +73,13 @@ const StepGeneral = ({
               <FormItem>
                 <FormLabel className="font-bold">{t("hero_level")}</FormLabel>
                 <FormControl>
-                  <Input {...field} min={1} type="number" />
+                  <Input
+                    {...field}
+                    min={1}
+                    max={10000}
+                    type="number"
+                    required
+                  />
                 </FormControl>
               </FormItem>
             )}
@@ -167,12 +166,16 @@ const StepGeneral = ({
             name="house"
             render={({ field }) => (
               <div className="mt-2">
-                <h1 className="font-bold">{t("house")}</h1>
-                <ul>
-                  {field.value.map((e: string) => (
-                    <li key={e}>- {e} </li>
-                  ))}
-                </ul>
+                {field.value ? (
+                  <>
+                    <h1 className="font-bold">{t("house")}</h1>
+                    <ul>
+                      {field.value.map((e: string) => (
+                        <li key={e}>- {e} </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
               </div>
             )}
           />

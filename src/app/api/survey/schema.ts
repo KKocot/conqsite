@@ -5,7 +5,7 @@ export const putSurveySchema = z.object({
   inGameNick: z.string(),
   characterLevel: z.string(),
   avatar: z.string().optional(),
-  house: z.array(z.string()),
+  house: z.array(z.string()).optional(),
   artyAmount: z.enum(["none", "some", "average", "aLot"]),
   weapons: z.array(
     z.object({
