@@ -6,6 +6,10 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { putTemplateSchema } from "./schema";
 import Roles from "@/models/roles";
+import {
+  highCommandAllowed,
+  highestRolesAllowed,
+} from "@/lib/endpoints-protections";
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
@@ -13,13 +17,9 @@ export async function POST(request: Request) {
     await connectMongoDB();
     const data = putTemplateSchema.parse(await request.json());
     const roles = await Roles.find({ house: data.house });
+    const highCommandAccess = highCommandAllowed(roles, session, data.house);
 
-    const userRoles = roles.some(
-      (role) => role.discordId === session?.user?.id
-    );
-
-    // Allow access only to high roles
-    if (!userRoles) return new Response("401");
+    if (!highCommandAccess) return new Response("401");
 
     const existingTemplate = await Template.findOne({
       templateName: data.templateName,
@@ -51,12 +51,9 @@ export async function GET(request: Request) {
   try {
     await connectMongoDB();
     const roles = await Roles.find({ house: query });
-    const userRoles = roles.some(
-      (role) => role.discordId === session?.user?.id
-    );
+    const highCommandAccess = highCommandAllowed(roles, session, query);
 
-    // Allow access only to high roles
-    if (!userRoles) return new Response("401");
+    if (!highCommandAccess) return new Response("401");
 
     const templates = await Template.find({ house: query });
     return NextResponse.json({ templates });
@@ -82,12 +79,14 @@ export async function DELETE(request: NextRequest) {
     await connectMongoDB();
     const template = await Template.findById(id);
     const roles = await Roles.find({ house: template.house });
-    const userRoles = roles
-      .filter((e) => e.role === "RightHand" || e.role === "HouseLeader")
-      .some((role) => role.discordId === session?.user?.id);
 
-    // Allow access only to house leaders and right hands
-    if (!userRoles) return new Response("401");
+    const highestRolesAccess = highestRolesAllowed(
+      roles,
+      session,
+      template.house
+    );
+
+    if (!highestRolesAccess) return new Response("401");
 
     await Template.findByIdAndDelete(id);
     return NextResponse.json({ message: "Template deleted" }, { status: 200 });

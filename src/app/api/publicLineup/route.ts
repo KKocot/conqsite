@@ -5,16 +5,23 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { putPublicLineupSchema } from "./schema";
 import PublicLineup from "@/models/publicLineup";
-import { log } from "console";
+import {
+  highCommandAllowed,
+  houseUserAllowed,
+} from "@/lib/endpoints-protections";
+import Roles from "@/models/roles";
+import Survey from "@/models/surveys";
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
+
   try {
     await connectMongoDB();
     const data = putPublicLineupSchema.parse(await request.json());
+    const roles = await Roles.find({ house: data.house });
 
-    // Allow access only users
-    if (!session) return new Response("401");
+    const highCommandAccess = highCommandAllowed(roles, session, data.house);
+    if (!highCommandAccess) return new Response("401");
 
     const existingPublicLineup = await PublicLineup.findOne({
       house: data.house,
@@ -52,8 +59,10 @@ export async function GET(request: Request) {
 
   try {
     await connectMongoDB();
-    // Allow access only to high roles
-    if (!session) return new Response("401");
+    const survey = await Survey.findOne({ discordId: session?.user.id });
+    const houseUserAccess = houseUserAllowed(survey, house);
+    if (!houseUserAccess) return new Response("401");
+
     if (house && date) {
       const publicLineup = await PublicLineup.find({
         house: house,
@@ -81,12 +90,14 @@ export async function DELETE(request: NextRequest) {
   const house = searchParams.get("house");
   const date = searchParams.get("date");
   const name = searchParams.get("name");
-
   const session = await getServerSession(authOptions);
 
   try {
     await connectMongoDB();
-    if (!session) return new Response("401");
+    const roles = await Roles.find({ house: house });
+    const highCommandsAccess = highCommandAllowed(roles, session, house);
+    if (!highCommandsAccess) return new Response("401");
+
     await PublicLineup.findOneAndDelete({
       house: house,
       date: date,
