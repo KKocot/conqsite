@@ -90,7 +90,7 @@ const HousePage = () => {
                 className="mt-2 p-2 border rounded"
               >
                 <SelectValue
-                  placeholder={date?.toISOString().split("T")[0] ?? ""}
+                  placeholder={`${date?.getDate()}-${date?.getMonth()}-${date?.getFullYear()}`}
                 />
               </SelectTrigger>
               <SelectContent>

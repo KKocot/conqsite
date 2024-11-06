@@ -58,7 +58,6 @@ const StorageTemplate: FC<ChildComponentProps> = ({
       <PopoverContent className="gap-4 flex flex-col w-fit">
         <PublicDialog data={data} house={house}>
           <Button variant="tab">Public Lineup</Button>
-          {/*TODO */}
         </PublicDialog>
         <Button
           onClick={() => {
@@ -100,3 +99,4 @@ const StorageTemplate: FC<ChildComponentProps> = ({
   );
 };
 export default StorageTemplate;
+// TODO translation
