@@ -53,7 +53,7 @@ export async function GET(request: Request) {
   try {
     await connectMongoDB();
     if (id) {
-      const roles = await Roles.findOne({ discordId: id });
+      const roles = await Roles.find({ discordId: id });
       return NextResponse.json({ roles });
     } else {
       const roles = await Roles.find();
