@@ -149,15 +149,7 @@ const Content: React.FC<PageProps> = ({ house, nextTW }) => {
       </div>
     );
   }
-  if (!signupData) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Button variant="custom">
-          <Link href="/settings">Finish House Settings first</Link>
-        </Button>
-      </div>
-    );
-  }
+
   return (
     <div className="flex justify-center flex-col items-center">
       <div className="flex items-center justify-around bg-indigo-950 w-3/4">

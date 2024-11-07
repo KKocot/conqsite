@@ -113,7 +113,7 @@ export const getTemplates = async (
   return result.templates;
 };
 
-interface PublicLineup {
+export interface PublicLineup {
   house: string;
   name: string;
   date: string;

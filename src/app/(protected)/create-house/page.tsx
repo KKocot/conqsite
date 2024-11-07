@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import Loading from "react-loading";
 import { useRouter } from "next/navigation";
-import { getHousesDetails, getSurvey, Survey } from "@/lib/get-data";
+import { getHousesDetails, getSurvey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import {
@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { servers } from "@/lib/utils";
 export interface HouseProps {
   name: string;
   description: string;
@@ -28,8 +29,6 @@ export interface HouseProps {
   avatar: string;
   server: string;
 }
-
-export const servers = ["EU1", "EU2", "EU3", "EU4", "CBL", "NA1", "NA2"];
 
 const CreateHousePage = () => {
   const { data: user } = useSession();

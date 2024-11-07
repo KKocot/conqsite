@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { servers } from "@/app/(protected)/create-house/page";
+import { servers } from "@/lib/utils";
 interface HouseFormProps {
   data: HouseDetails;
 }

@@ -13,11 +13,19 @@ import { weapons } from "@/assets/weapons";
 import { Button } from "./ui/button";
 import { Fragment, useState } from "react";
 import { useTranslations } from "next-intl";
+import { OctagonAlert } from "lucide-react";
 
-const Preview = ({ data, units }: { data: SheetTypes[]; units: Unit[] }) => {
+const Preview = ({
+  data,
+  units,
+  username,
+}: {
+  data: SheetTypes[];
+  units: Unit[];
+  username?: string;
+}) => {
   const [show, setShow] = useState<boolean>(true);
   const t = useTranslations("BuildTeam");
-
   return (
     <div>
       <div className="flex justify-around">
@@ -62,7 +70,21 @@ const Preview = ({ data, units }: { data: SheetTypes[]; units: Unit[] }) => {
                   className={`text-white font-extrabold bg-gradient-to-r to-slate-950 to-20% border-2 border-stale-400 from${e.color}`}
                 >
                   <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
-                    {index + 1 + ". " + e.username}
+                    <span className="flex items-center gap-2">
+                      {"Saydovur" === e.username ? (
+                        <span title="Its You">
+                          {/* TODO translation */}
+                          <OctagonAlert />
+                        </span>
+                      ) : null}
+                      {index + 1 + ". " + e.username}
+                      {"Saydovur" === e.username ? (
+                        <span title="Its You">
+                          {/* TODO translation */}
+                          <OctagonAlert />
+                        </span>
+                      ) : null}
+                    </span>
                   </TableCell>
                   <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
                     <div className="flex items-center gap-2">
