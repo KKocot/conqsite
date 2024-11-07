@@ -6,7 +6,15 @@ import { Textarea } from "./ui/textarea";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { servers } from "@/app/(protected)/create-house/page";
 interface HouseFormProps {
   data: HouseDetails;
 }
@@ -104,12 +112,25 @@ const HouseDetailsForm = ({ data }: HouseFormProps) => {
       </div>
       <div>
         <Label>{t("server")}</Label>
-        <Input
+        <Select
           value={houseDetails.server}
-          onChange={(e) =>
-            setHouseDetails((prev) => ({ ...prev, server: e.target.value }))
+          onValueChange={(e) =>
+            setHouseDetails((prev) => ({ ...prev, server: e }))
           }
-        />
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select a server" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {servers.map((e) => (
+                <SelectItem key={e} value={e}>
+                  {e}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </div>
       <Button
         disabled={

@@ -23,6 +23,7 @@ import StorageTemplate from "@/components/storage-template";
 import { getNextTWLineups, getSurveys, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { DEFAULT_CARD } from "@/lib/defaults";
+import Link from "next/link";
 
 interface PageProps {
   house: string;
@@ -148,7 +149,15 @@ const Content: React.FC<PageProps> = ({ house, nextTW }) => {
       </div>
     );
   }
-
+  if (!signupData) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Button variant="custom">
+          <Link href="/settings">Finish House Settings first</Link>
+        </Button>
+      </div>
+    );
+  }
   return (
     <div className="flex justify-center flex-col items-center">
       <div className="flex items-center justify-around bg-indigo-950 w-3/4">
@@ -216,3 +225,4 @@ const Content: React.FC<PageProps> = ({ house, nextTW }) => {
 };
 
 export default Content;
+// TODO translation

@@ -29,7 +29,7 @@ export interface HouseProps {
   server: string;
 }
 
-const servers = ["EU1", "EU2", "EU3", "EU4", "CBL", "NA1", "NA2"];
+export const servers = ["EU1", "EU2", "EU3", "EU4", "CBL", "NA1", "NA2"];
 
 const CreateHousePage = () => {
   const { data: user } = useSession();
