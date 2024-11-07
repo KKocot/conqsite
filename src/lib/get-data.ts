@@ -8,10 +8,10 @@ export interface Roles {
   discordNick: string;
 }
 
-export const getRoleById = async (id: string): Promise<Roles> => {
+export const getRoleById = async (id: string): Promise<Roles[]> => {
   const response = await fetch(`/api/roles?id=${id}`);
   const result = await response.json();
-  return result.role;
+  return result.roles;
 };
 export interface HouseDetails {
   name: string;
@@ -113,7 +113,7 @@ export const getTemplates = async (
   return result.templates;
 };
 
-interface PublicLineup {
+export interface PublicLineup {
   house: string;
   name: string;
   date: string;

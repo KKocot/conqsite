@@ -100,7 +100,7 @@ export default function Content() {
             <div className="text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1">
               {profileData.discordNick}
               <div className="flex items-center">
-                {profileData.house.length > 1 ? (
+                {profileData.house.length > 0 ? (
                   <div>
                     {t("from")}
                     {profileData.house.map((e, i) => (
@@ -112,7 +112,7 @@ export default function Content() {
                 ) : null}
               </div>
             </div>
-            {statsData && statsData.attendance.length > 1 ? (
+            {statsData && statsData.attendance.length > 0 ? (
               <div>
                 <TooltipProvider>
                   <Tooltip>

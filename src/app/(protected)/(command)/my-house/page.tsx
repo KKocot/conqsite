@@ -11,10 +11,14 @@ const Page: React.FC = () => {
   const { data: command_list = [] } = useQuery(rolesQueryOptions());
   const [house, setHouse] = useState<string | undefined>(undefined);
   const houses = command_list.filter((e) => e.discordId === commander?.user.id);
-
+  console.log(houses);
+  const defaultHouse = houses.length === 1 ? houses[0].house : undefined;
+  console.log(defaultHouse);
   return (
     <div>
-      {!house ? (
+      {defaultHouse ? (
+        <Content house={defaultHouse} />
+      ) : !house ? (
         <div className="gap-4 flex mt-40 flex-col items-center h-screen">
           <h1 className="text-2xl font-blod">Choose a house</h1>
           <div className="flex gap-4">

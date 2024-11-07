@@ -77,3 +77,23 @@ export function getLineup(surveys: Survey[] | undefined, lineup: string[]) {
   const data = surveys?.filter((survey) => lineup.includes(survey.discordId));
   return data;
 }
+
+export const servers = [
+  "EU1",
+  "EU2",
+  "EU3",
+  "EU4",
+  "APAC7",
+  "APAC1",
+  "APAC2",
+  "APAC6",
+  "APAC3",
+  "APAC5",
+  "APAC4",
+  "AM1",
+  "MENA",
+];
+
+export function getUniqueValues(arr: string[]): string[] {
+  return arr.filter((value, index) => arr.indexOf(value) === index);
+}

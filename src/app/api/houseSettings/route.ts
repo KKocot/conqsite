@@ -69,7 +69,7 @@ export async function GET(request: Request) {
 
     let houseSettings;
     if (id) {
-      houseSettings = await HouseSettings.findOne({
+      houseSettings = await HouseSettings.find({
         id: id,
       });
     }

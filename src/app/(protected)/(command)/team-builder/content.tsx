@@ -23,6 +23,7 @@ import StorageTemplate from "@/components/storage-template";
 import { getNextTWLineups, getSurveys, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { DEFAULT_CARD } from "@/lib/defaults";
+import Link from "next/link";
 
 interface PageProps {
   house: string;
@@ -216,3 +217,4 @@ const Content: React.FC<PageProps> = ({ house, nextTW }) => {
 };
 
 export default Content;
+// TODO translation
