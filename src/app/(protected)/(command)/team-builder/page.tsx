@@ -18,10 +18,10 @@ import { getCloserDay } from "@/lib/utils";
 const Page: React.FC = () => {
   const { data: commander } = useSession();
   const { data: command_list = [] } = useQuery(rolesQueryOptions());
-  const [house, setHouse] = useState<string | undefined>(undefined);
+  const houses = command_list.filter((e) => e.discordId === commander?.user.id);
+  const [house, setHouse] = useState<string | undefined>(houses[0]?.house);
   const [date, setDate] = React.useState<Date | undefined>(new Date());
   const [load, setLoad] = useState(false);
-  const houses = command_list.filter((e) => e.discordId === commander?.user.id);
   const next_tw = getCloserDay();
 
   return (
@@ -29,7 +29,7 @@ const Page: React.FC = () => {
       {!load || !date || !house ? (
         <>
           <div className="gap-4 flex pt-16 items-center flex-col h-full">
-            <p>Get data from selected house and date</p>{" "}
+            <p>Get data from selected house and date</p>
             <div className="flex justify-around w-full">
               <div className="gap-4 flex flex-col items-center ">
                 <h1 className="text-2xl font-blod">Choose a house</h1>

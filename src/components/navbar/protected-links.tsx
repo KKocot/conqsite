@@ -71,6 +71,7 @@ const DesktopMenu: FC<ProtectedMenuProps> = ({
                 <MenuLink href="/update-form">{t("update_form")}</MenuLink>
                 <MenuLink href="/house">{t("house")}</MenuLink>
                 <MenuLink href="/houses">{t("all_houses")}</MenuLink>
+                <MenuLink href="/create-house">Create House</MenuLink>
               </div>
             </NavigationMenuContent>
           </NavigationMenuItem>
@@ -205,3 +206,5 @@ const MenuLink = ({
     </Link>
   );
 };
+
+// TODO translate
