@@ -22,6 +22,7 @@ export async function POST(request: Request) {
     const userAccount = data.discordId === session?.user.id;
     if (!(userAccount || (discordKey && botAllowed(discordKey, envKey))))
       return new Response("401");
+
     let survey;
     if (existingSurvey) {
       survey = await Survey.findByIdAndUpdate(existingSurvey._id, data, {

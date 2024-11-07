@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { getHousesDetails, HouseDetails } from "@/lib/get-data";
+import { getHousesDetails } from "@/lib/get-data";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { toast } from "react-toastify";

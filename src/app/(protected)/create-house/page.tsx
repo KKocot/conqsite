@@ -61,7 +61,9 @@ const CreateHousePage = () => {
       characterLevel: survey?.characterLevel ?? "0",
       discordId: user?.user.id,
       avatar: user?.user.image ?? "",
-      house: house.name,
+      house: Array.isArray(survey.house)
+        ? [...survey.house, house.name]
+        : [survey.house === "none" ? null : survey.house, house.name],
     };
     try {
       // Submit survey data
@@ -82,7 +84,7 @@ const CreateHousePage = () => {
       }
 
       // Add role
-      response = await fetch("/api/roles", {
+      response = await fetch(`/api/roles?house=${house.name}`, {
         method: "POST",
         body: JSON.stringify({
           discordNick: user?.user.name,
@@ -216,3 +218,4 @@ const CreateHousePage = () => {
   );
 };
 export default CreateHousePage;
+// TODO create validation

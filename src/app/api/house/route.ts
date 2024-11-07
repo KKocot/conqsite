@@ -58,3 +58,4 @@ export async function GET(request: Request) {
       return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
+// TODO create endpoint to get houses names
