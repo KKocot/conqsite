@@ -38,7 +38,7 @@ const PreviewContainer: FC<PreviewContainerProps> = ({
     <div className="flex gap-4 p-12">
       {data.map((e) =>
         deleteSheetMutation.isPending ? (
-          <Loading color="#94a3b8" />
+          <Loading color="#94a3b8" key={e.name} />
         ) : e.name === lineup ? (
           <div key={e.name}>
             <div className="flex items-center gap-5">
