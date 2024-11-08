@@ -13,7 +13,7 @@ import { SheetTypes } from "@/lib/type";
 import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
-import { Survey } from "@/lib/get-data";
+import { getTemplates, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { rolesQueryOptions } from "../queries/roles.query";
 
@@ -35,26 +35,13 @@ const TemplateMenu = ({
     .filter((e) => e.role === "HouseLeader" || e.role === "RightHand")
     .some((e) => e.discordId === user.data?.user?.id);
   const t = useTranslations("BuildTeam");
-  const [templates, setTemplates] = useState<
-    | {
-        _id: string;
-        house: string;
-        templateName: string;
-        sheet: SheetTypes[];
-      }[]
-    | undefined
-  >(undefined);
   const [templateName, setTemplateName] = useState("");
 
-  const fetchTemplate = async (house: string) => {
-    try {
-      const response = await fetch(`/api/template?house=${house}`);
-      const data = await response.json();
-      setTemplates(data.templates);
-    } catch (error) {
-      console.error("Error fetching:", error);
-    }
-  };
+  const { data: templatesData, isLoading } = useQuery({
+    queryKey: ["templateList", userHouse],
+    queryFn: () => getTemplates(userHouse),
+  });
+
   const onSubmit = async (values: any) => {
     try {
       const response = await fetch("/api/template", {
@@ -75,7 +62,6 @@ const TemplateMenu = ({
         console.error("Error occurred:", errorData);
       } else {
         const responseData = await response.json();
-        fetchTemplate(userHouse);
         toast.success("Template Saved", {
           data: {
             title: "Template Saved in Database",
@@ -87,9 +73,6 @@ const TemplateMenu = ({
       console.error("Error occurred:", error);
     }
   };
-  useEffect(() => {
-    fetchTemplate(userHouse);
-  }, [userHouse]);
 
   return (
     <div className="flex justify-center items-center gap-4 bg-indigo-950 p-1">
@@ -115,8 +98,8 @@ const TemplateMenu = ({
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            {templates
-              ? templates.map((e) => (
+            {templatesData
+              ? templatesData.map((e) => (
                   <div
                     className="cursor-pointer p-2 flex justify-between items-center"
                     key={e.templateName}
@@ -157,7 +140,6 @@ const TemplateMenu = ({
                               } else {
                                 const responseData = await response.json();
                                 console.log("Success:", responseData);
-                                fetchTemplate(userHouse);
                                 setTemplateName("");
                                 toast.error("Template Deleted");
                               }

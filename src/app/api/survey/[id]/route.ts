@@ -5,6 +5,7 @@ import { ZodError } from "zod";
 import { headers } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { botAllowed } from "@/lib/endpoints-protections";
 
 export async function GET(
   _request: Request,
@@ -12,14 +13,14 @@ export async function GET(
 ) {
   const session = await getServerSession(authOptions);
   const discordKey = headers().get("discord-key");
-  // Allow access to all logged in users
-  if (!(session || (discordKey && discordKey === process.env.BOT_KEY))) {
-    return new Response("401");
-  }
-
+  const envKey = process.env.BOT_KEY;
   try {
     await connectMongoDB();
     const survey = await Survey.findOne({ discordId: id });
+    const userAccess = survey?.discordId === session?.user.id;
+    if (!(userAccess || (discordKey && botAllowed(discordKey, envKey))))
+      return new Response("401");
+
     return NextResponse.json({ survey }, { status: 200 });
   } catch (error) {
     if (error instanceof ZodError)

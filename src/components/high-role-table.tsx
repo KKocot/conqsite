@@ -71,7 +71,7 @@ const ItemsList: React.FC<ItemsListProps> = ({ roles, role, handleDelete }) => {
         ?.filter((e) => e.role === role)
         .map((role) => (
           <TableRow
-            key={role._id}
+            key={role.discordId + role.role + role._id}
             className={clsx({
               "bg-yellow-500 text-secondary dark:hover:text-white text-black":
                 role.role === "HouseLeader",

@@ -20,7 +20,7 @@ const CheckboxItem = ({
       />
       <label
         htmlFor={label}
-        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-primary-foreground"
       >
         {label}
       </label>

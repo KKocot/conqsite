@@ -57,6 +57,9 @@
     "preferences": "Preferences"
   },
   "BuildTeam": {
+    "clean_list": "Clean list",
+    "actions": "Actions",
+    "upload_all": "Upload ALL",
     "load_data": "Load data",
     "preview": "Preview",
     "editor": "Editor",
@@ -121,7 +124,8 @@
     "server": "Server",
     "houses": "Houses",
     "join_discord": "Join Discord",
-    "join_to_house": "Join to House"
+    "join_to_house": "Join to House",
+    "house_description_title": "House Description"
   },
   "SettingsPage": {
     "house_description_title": "House Description",

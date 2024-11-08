@@ -4,68 +4,65 @@
 
 @layer base {
   :root {
-    --gradient: #114357;
-    --background: 209 98.35% 98.4%;
-    --foreground: 209 6.7% 0.8%;
+    --background: 0, 0%, 90%; /* Light background */
+    --foreground: 0, 0%, 10%; /* Dark foreground text */
 
-    --muted: 209 6.7% 92%;
-    --muted-foreground: 209 3.35% 42%;
+    --muted: 0, 0%, 90%; /* Light muted background */
+    --muted-foreground: 0, 0%, 20%; /* Dark text on muted */
 
-    --popover: 209 43.099999999999994% 100%;
-    --popover-foreground: 209 6.7% 1%;
+    --popover: 0, 0%, 95%; /* Popover background */
+    --popover-foreground: 0, 0%, 10%; /* Dark text for popovers */
 
-    --card: 209 43.099999999999994% 100%;
-    --card-foreground: 209 6.7% 1%;
+    --card: 0, 0%, 95%; /* Card background */
+    --card-foreground: 0, 0%, 10%; /* Card foreground text */
 
-    --border: 209 11.7% 89.8%;
-    --input: 209 11.7% 89.8%;
+    --border: 0, 0%, 80%; /* Light border color */
+    --input: 0, 0%, 90%; /* Input background */
 
-    --primary: 209 67% 20%;
-    --primary-foreground: 209 1.34% 92%;
+    --primary: 215, 70%, 44%; /* Primary color */
+    --primary-foreground: 0, 0%, 97%; /* Light text on primary */
 
-    --secondary: 209 18.76% 100%;
-    --secondary-foreground: 209 5.0200000000000005% 12%;
+    --secondary: 215, 70%, 44%; /* Secondary color */
+    --secondary-foreground: 0, 0%, 97%; /* Light text on secondary */
 
-    --accent: 209 18.76% 100%;
-    --accent-foreground: 209 5.0200000000000005% 12%;
+    --accent: 37, 100%, 45%; /* Darker accent for light theme */
+    --accent-foreground: 0, 0%, 10%; /* Dark text on accent */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0, 62.8%, 30.6%; /* Destructive action color */
+    --destructive-foreground: 0, 0%, 97%; /* Light text on destructive */
 
-    --ring: 209 67% 20%;
-
-    --radius: 0.5rem;
+    --ring: 215, 70%, 44%; /* Ring color */
   }
 
   .dark {
-    --background: 215 53.3% 3.52%;
-    --foreground: 215 8.2% 97.2%;
+    --background: 0, 0%, 11%; /* #1c1c1c */
+    --foreground: 0, 0%, 97%; /* Light foreground text for contrast */
 
-    --muted: 215 41% 13.2%;
-    --muted-foreground: 215 8.2% 54.4%;
+    --muted: 215, 10%, 20%; /* Dark muted */
+    --muted-foreground: 215, 10%, 80%; /* Light text on muted background */
 
-    --popover: 215 48.6% 5.72%;
-    --popover-foreground: 215 8.2% 97.2%;
+    --popover: 215, 10%, 13%; /* Popover background */
+    --popover-foreground: 0, 0%, 97%; /* Light text for popovers */
 
-    --card: 215 48.6% 5.72%;
-    --card-foreground: 215 8.2% 97.2%;
+    --card: 215, 10%, 13%; /* Card background */
+    --card-foreground: 0, 0%, 97%; /* Card foreground text */
 
-    --border: 215 41% 13.2%;
-    --input: 215 41% 13.2%;
+    --border: 215, 10%, 20%; /* Darker border color */
+    --input: 215, 10%, 20%; /* Input background color */
 
-    --primary: 215 82% 44%;
-    --primary-foreground: 215 8.2% 97.2%;
+    --primary: 215, 70%, 44%; /* Primary color */
+    --primary-foreground: 0, 0%, 97%; /* Light text on primary */
 
-    --secondary: 215 41% 13.2%;
-    --secondary-foreground: 215 8.2% 97.2%;
+    --secondary: 215, 10%, 20%; /* Secondary color */
+    --secondary-foreground: 0, 0%, 97%; /* Light text on secondary */
 
-    --accent: 215 41% 13.2%;
-    --accent-foreground: 215 8.2% 97.2%;
+    --accent: 37, 100%, 81%; /* #ffdd9e converted to HSL */
+    --accent-foreground: 215, 10%, 20%; /* Dark text on accent */
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 215 8.2% 97.2%;
+    --destructive: 0, 62.8%, 30.6%; /* Destructive action color */
+    --destructive-foreground: 0, 0%, 97%; /* Light text on destructive */
 
-    --ring: 215 82% 94%;
+    --ring: 215, 70%, 94%; /* Ring color */
   }
 }
 

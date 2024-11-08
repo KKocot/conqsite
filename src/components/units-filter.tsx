@@ -32,7 +32,7 @@ const UnitsFilter: FC<ChildComponentProps> = ({ filters, setFilter }) => {
           <ChevronDown />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="gap-4 flex flex-col">
+      <PopoverContent className="gap-4 flex flex-col p-2">
         <CheckboxItem
           checked={filters.meta_units_only}
           label={t("meta_units_only")}

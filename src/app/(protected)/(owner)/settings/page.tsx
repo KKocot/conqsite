@@ -1,103 +1,53 @@
 "use client";
 
-import UserForm from "@/components/high-role-form";
-import RolesTable from "@/components/high-role-table";
-import HouseDetailsForm from "@/components/house-details";
-import DataForm from "@/components/house-settings-table";
-import { getHouseDetails, getHouseSettings } from "@/lib/get-data";
-import { rolesQueryOptions } from "@/queries/roles.query";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import Loading from "react-loading";
+import Content from "./content";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { getRoleById } from "@/lib/get-data";
 
-const SettingsPage = () => {
+const Page = () => {
   const t = useTranslations("SettingsPage");
   const { data: commander } = useSession();
-  const { data: rolesData, isLoading: rolesIsLoading } = useQuery(
-    rolesQueryOptions()
-  );
-  const house =
-    rolesData?.find((e) => e.discordId === commander?.user.id)?.house || "";
-
-  const { data: houseDetailsData, isLoading: houseDetailsIsLoading } = useQuery(
-    {
-      queryKey: ["houseDetails"],
-      queryFn: () => getHouseDetails(house),
-      enabled: !!house,
-    }
-  );
-
-  const { data: houseSettingsData, isLoading: houseSettingsIsLoading } =
-    useQuery({
-      queryKey: ["houseSettings"],
-      queryFn: () => getHouseSettings(house),
-      enabled: !!house,
-    });
-
-  if (
-    rolesIsLoading ||
-    !rolesData ||
-    houseDetailsIsLoading ||
-    !houseDetailsData ||
-    houseSettingsIsLoading
-  ) {
+  const [house, setHouse] = useState<string | undefined>(undefined);
+  const { data: command_list, isLoading: command_listIsLoading } = useQuery({
+    queryKey: ["command_list", commander?.user.id],
+    queryFn: () => getRoleById(commander?.user.id ?? ""),
+    enabled: !!commander?.user.id,
+  });
+  if (!command_list || command_listIsLoading)
     return (
       <div className="flex justify-center items-center h-screen">
         <Loading color="#94a3b8" />
       </div>
     );
-  }
-
-  const onDelete = async (discordId: string) => {
-    const confirmed = confirm(
-      "Are you sure you want to delete this player from his role?"
-    );
-    if (confirmed) {
-      try {
-        const response = await fetch(`/api/roles?id=${discordId}`, {
-          method: "DELETE",
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          console.error("Error occurred:", errorData);
-        } else {
-          console.log("Success:", await response.json());
-        }
-      } catch (error) {
-        console.error("Error deleting:", error);
-      }
-    }
-  };
+  const houses = command_list.filter((e) => e.discordId === commander?.user.id);
+  const defaultHouse = houses.length === 1 ? houses[0].house : undefined;
 
   return (
-    <div className="p-12">
-      <h1 className="text-center text-3xl">{t("settings_page")}</h1>
-      <div className="flex gap-6 flex-col">
-        <div>
-          <UserForm house={house} />
-          <RolesTable rolesList={rolesData} house={house} onDelete={onDelete} />
+    <div>
+      {defaultHouse ? (
+        <Content house={defaultHouse} />
+      ) : !house ? (
+        <div className="gap-4 flex mt-40 flex-col items-center h-screen">
+          <h1 className="text-2xl font-blod">Choose a house</h1>
+          <div className="flex gap-4">
+            {houses.map((e) => (
+              <Button key={e.house} onClick={() => setHouse(e.house)}>
+                {e.house}
+              </Button>
+            ))}
+          </div>
         </div>
-        {
-          <DataForm
-            data={
-              houseSettingsData ?? {
-                name: house,
-                id: "",
-                member: { name: "", id: "" },
-                lineup: [{ name: "", id: "", roleId: "" }],
-                logs: { logs: "", attendance: "" },
-                tw: { server: "", member: "" },
-              }
-            }
-          />
-        }
-
-        <HouseDetailsForm data={houseDetailsData} />
-      </div>
+      ) : (
+        <Content house={house} />
+      )}
     </div>
   );
 };
 
-export default SettingsPage;
+export default Page;
+// TODO tranlate

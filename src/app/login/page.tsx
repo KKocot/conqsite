@@ -16,7 +16,7 @@ export default function Home() {
       <div className="absolute -z-10 inset-0 sm:relative lg:col-span-2 flex justify-center">
         <div className="relative h-full w-auto aspect-square">
           <Image
-            src={"/hero.png"}
+            src={"/logov2_ver1.png"}
             alt="hero-preview"
             fill
             className="object-contain"

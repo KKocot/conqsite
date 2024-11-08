@@ -9,10 +9,18 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import Loading from "react-loading";
 import { useRouter } from "next/navigation";
-import { getHousesDetails, getSurvey, Survey } from "@/lib/get-data";
+import { getHousesDetails, getSurvey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { servers } from "@/lib/utils";
 export interface HouseProps {
   name: string;
   description: string;
@@ -52,6 +60,8 @@ const CreateHousePage = () => {
     descriptionTooLong: house.description.length > 250,
     wrongDiscordLink:
       house.discordLink.length > 0 && !house.discordLink.includes("discord.gg"),
+    countryTooLong: house.country.length > 20,
+    serverRequired: !house.server,
   };
   const handleAllActions = async () => {
     const survey = surveyData ?? DEFAULT_FORM_DATA;
@@ -60,8 +70,10 @@ const CreateHousePage = () => {
       discordNick: user?.user.name,
       characterLevel: survey?.characterLevel ?? "0",
       discordId: user?.user.id,
-      avatar: user?.user.image ?? "",
-      house: house.name,
+      avatar: survey.avatar === "" ? user?.user.image : survey.avatar,
+      house: Array.isArray(survey.house)
+        ? [...survey.house, house.name]
+        : [survey.house === "none" ? null : survey.house, house.name],
     };
     try {
       // Submit survey data
@@ -82,7 +94,7 @@ const CreateHousePage = () => {
       }
 
       // Add role
-      response = await fetch("/api/roles", {
+      response = await fetch(`/api/roles?house=${house.name}`, {
         method: "POST",
         body: JSON.stringify({
           discordNick: user?.user.name,
@@ -168,6 +180,7 @@ const CreateHousePage = () => {
             setHouse((prev) => ({ ...prev, country: e.target.value }))
           }
         />
+        {validation.countryTooLong ? <p>Too long message</p> : null}
       </div>
       <div>
         <Label>{t("discord_link")}</Label>
@@ -190,20 +203,35 @@ const CreateHousePage = () => {
           }
         />
       </div>
+
       <div>
         <Label>{t("server")}</Label>
-        <Input
+        <Select
           value={house.server}
-          onChange={(e) =>
-            setHouse((prev) => ({ ...prev, server: e.target.value }))
-          }
-        />
+          onValueChange={(e) => setHouse((prev) => ({ ...prev, server: e }))}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select a server" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {servers.map((e) => (
+                <SelectItem key={e} value={e}>
+                  {e}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        {validation.serverRequired ? <p>Pick server</p> : null}
       </div>
       <Button
         disabled={
           validation.isHouseNameAvailable ||
           validation.descriptionTooLong ||
           validation.wrongDiscordLink ||
+          validation.countryTooLong ||
+          validation.serverRequired ||
           !house.name ||
           !house.server
         }
@@ -216,3 +244,4 @@ const CreateHousePage = () => {
   );
 };
 export default CreateHousePage;
+// TODO translate

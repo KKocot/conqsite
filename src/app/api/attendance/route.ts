@@ -7,15 +7,16 @@ import { authOptions } from "@/lib/auth";
 import Roles from "@/models/roles";
 import { ZodError } from "zod";
 import { headers } from "next/headers";
+import { botAllowed, highCommandAllowed } from "@/lib/endpoints-protections";
 
 export async function POST(request: Request) {
-  try {
-    const discordKey = headers().get("discord-key");
-    //Allow access only to the Discord Bot
-    if (!discordKey || discordKey !== process.env.BOT_KEY)
-      return new Response("401");
+  const discordKey = headers().get("discord-key");
+  const envKey = process.env.BOT_KEY;
+  const botAccess = discordKey ? botAllowed(discordKey, envKey) : false;
 
+  try {
     await connectMongoDB();
+    if (!botAccess) return new Response("401");
     const data = attendanceSchema.parse(await request.json());
     const existingAttendance = await Attendance.findOne({
       date: data.date,
@@ -53,12 +54,9 @@ export async function GET(request: Request) {
   try {
     await connectMongoDB();
     const roles = await Roles.find({ house: house });
-    const userRoles = roles.some(
-      (role) => role.discordId === session?.user?.id
-    );
 
-    // Allow access only to high roles
-    if (!userRoles) return new Response("401");
+    const highCommandAccess = highCommandAllowed(roles, session, house);
+    if (!highCommandAccess) return new Response("401");
 
     const attendance = await Attendance.find({
       house: house,

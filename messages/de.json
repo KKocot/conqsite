@@ -54,6 +54,9 @@
     "preferences": "Präferenzen"
   },
   "BuildTeam": {
+    "clean_list": "Liste leeren",
+    "actions": "Aktionen",
+    "upload_all": "Alles hochladen",
     "load_data": "Daten laden",
     "preview": "Vorschau",
     "editor": "Editor",
@@ -118,7 +121,8 @@
     "server": "Server",
     "houses": "Häuser",
     "join_discord": "Discord beitreten",
-    "join_to_house": "Haus beitreten"
+    "join_to_house": "Haus beitreten",
+    "house_description_title": "Hausbeschreibung"
   },
   "SettingsPage": {
     "house_description_title": "Hausbeschreibung",

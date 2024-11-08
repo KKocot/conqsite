@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 export const Footer = () => {
   const t = useTranslations("HomePage");
   return (
-    <div className="flex justify-end">
+    <div className="flex justify-end z-10">
       <Button asChild variant={"link"}>
         <Link href="/policy">{t("privacy_policy")}</Link>
       </Button>

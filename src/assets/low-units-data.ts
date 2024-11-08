@@ -415,7 +415,7 @@ export const lowUnits = [
     src: "/low-tiers-units/ratt_mar_pre.png",
     leadership: 175,
     masteryPoints: true,
-    value: 8,
+    value: 9,
     era: "blue",
     icon: "/low-tiers-icons/Rattan_Marksmen.webp",
   },

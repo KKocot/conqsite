@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { goldenUnits } from "@/assets/golden-units-data";
@@ -21,71 +20,32 @@ import { Avatar } from "@radix-ui/react-avatar";
 import { useTranslations } from "next-intl";
 import clsx from "clsx";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { toast } from "react-toastify";
-import { getSurvey, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
-import { rolesQueryOptions } from "@/queries/roles.query";
 import { profileQueryOptions } from "@/queries/profile.query";
-
+import { getUserStats } from "@/lib/get-data";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 export default function Content() {
   const { data: user_data } = useSession();
-  const [housePending, setHousePending] = useState(false);
   const t = useTranslations("BuildTeam");
-  const { data: rolesData, isLoading: rolesIsLoading } = useQuery(
-    rolesQueryOptions()
-  );
-
-  const houseLeader = rolesData
-    ?.filter((e) => e.role === "HouseLeader")
-    .some((role) => role.discordId === user_data?.user.id);
 
   const { data: profileData, isLoading: profileIsLoading } = useQuery({
     ...profileQueryOptions(user_data!.user.id),
     enabled: !!user_data?.user.id,
   });
 
-  const onDelete = async (values: Survey) => {
-    const accept = confirm(t("are_u_sure"));
-    if (accept) {
-      setHousePending(true);
-      const data = {
-        ...values,
-        house: "none",
-      };
-      try {
-        const response = await fetch("/api/survey", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-        const responseRoles = await fetch(
-          `/api/roles?id=${user_data?.user.id}`,
-          {
-            method: "DELETE",
-          }
-        );
+  const { data: statsData, isLoading: statsIsLoading } = useQuery({
+    queryKey: ["userStats", user_data!.user.id],
+    queryFn: () => getUserStats(user_data!.user.id),
+    enabled: !!user_data?.user.id,
+  });
 
-        if (!response.ok || !responseRoles.ok) {
-          const errorRoles = await responseRoles.json();
-          const errorData = await response.json();
-          console.error("Error occurred:", errorData, errorRoles);
-        } else {
-          const responseData = await response.json();
-          toast.success(`You left ${values.house}`);
-          console.log("Success:", responseData);
-        }
-      } catch (error) {
-        console.error("Error occurred:", error);
-      } finally {
-        setHousePending(false);
-      }
-    }
-  };
-
-  if (profileIsLoading || rolesIsLoading) {
+  if (profileIsLoading || statsIsLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Loading color="#94a3b8" />
@@ -139,26 +99,39 @@ export default function Content() {
             </h2>
             <div className="text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1">
               {profileData.discordNick}
-              {profileData.house !== "none" ? (
-                <div className="flex items-center">
-                  <span>{t("from") + profileData.house}</span>
-                  {houseLeader ? null : housePending ? (
-                    <span>
-                      <Loading color="#94a3b8" className="" />
-                    </span>
-                  ) : (
-                    <Button
-                      onClick={() => onDelete(profileData)}
-                      variant="ghost"
-                      className="text-destructive"
-                      title="Leave House"
-                    >
-                      X
-                    </Button>
-                  )}
-                </div>
-              ) : null}
+              <div className="flex items-center">
+                {profileData.house.length > 0 ? (
+                  <div>
+                    {t("from")}
+                    {profileData.house.map((e, i) => (
+                      <span key={e}>
+                        {i + 1 === profileData.house.length ? e : e + ","}{" "}
+                      </span>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
             </div>
+            {statsData && statsData.attendance.length > 0 ? (
+              <div>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button variant="outline">Show my TW attendance</Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <ul>
+                        {statsData.attendance.map((e) => (
+                          <li key={e} className="text-xl">
+                            {e}
+                          </li>
+                        ))}
+                      </ul>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            ) : null}
           </div>
           <ul className="flex gap-8 flex-wrap">
             {weapons_list.map((e) =>
@@ -244,3 +217,6 @@ export default function Content() {
     </div>
   );
 }
+// TODO translation
+// TOTO Create information about season: data to date, dates of drills
+// TODO Sort stats by season

@@ -14,6 +14,7 @@ import Loading from "react-loading";
 import { useTranslations } from "next-intl";
 import { getSurvey, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
+import useSubmitSurvey from "./hooks/use-submit-survey";
 
 export const DEFAULT_FORM_DATA: Survey = {
   discordNick: "",
@@ -21,7 +22,7 @@ export const DEFAULT_FORM_DATA: Survey = {
   discordId: "",
   characterLevel: "",
   avatar: "",
-  house: "",
+  house: [],
   artyAmount: "none",
   weapons: weapons.map(() => ({ value: false, leadership: 0, pref: 0 })),
   units: {
@@ -101,35 +102,12 @@ export default function WizardForm({
     },
   });
 
-  const onSubmit = async (values: Survey) => {
-    const data = {
-      ...values,
-      discordId: user_id,
-      avatar: avatar,
-      house: values.house === "" ? "none" : values.house,
-    };
-    try {
-      const response = await fetch("/api/survey", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+  const submitMutation = useSubmitSurvey();
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Error occurred:", errorData);
-      } else {
-        const responseData = await response.json();
-        console.log("Success:", responseData);
-      }
-    } catch (error) {
-      console.error("Error occurred:", error);
-    }
-    router.push(`/profile`);
+  const onSubmit = (values: Survey) => {
+    submitMutation.mutate({ values, user_id, avatar: avatar || "" });
   };
-  if (profileIsLoading)
+  if (profileIsLoading || submitMutation.isPending)
     return (
       <div className="flex justify-center items-center h-screen">
         <Loading color="#94a3b8" />
@@ -142,12 +120,12 @@ export default function WizardForm({
         className="flex flex-col items-center p-4 gap-6"
       >
         <h1 className="text-3xl font-bold">{t("form")}</h1>
-        <ul className="flex gap-4 text-primary">
+        <ul className="flex gap-4 text-accent">
           {Array.from({ length: 4 }).map((_, i) => (
             <li key={i} className="flex items-center gap-4">
               <div
                 className={clsx("rounded-full", {
-                  "border-4 border-primary font-bold": step === i + 1,
+                  "border-4 border-accent font-bold": step === i + 1,
                 })}
               >
                 <Item
@@ -210,7 +188,7 @@ const Item = ({
     <div
       title={tooltip}
       onClick={() => moveToStep(page)}
-      className="border-2 rounded-full w-10 h-10 flex items-center justify-center cursor-pointer text-primary border-primary"
+      className="border-2 rounded-full w-10 h-10 flex items-center justify-center cursor-pointer text-accent border-accent"
     >
       {page}
     </div>
