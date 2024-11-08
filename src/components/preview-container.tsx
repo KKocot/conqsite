@@ -62,7 +62,7 @@ const PreviewContainer: FC<PreviewContainerProps> = ({
                 </Button>
               ) : null}
             </div>
-            <Preview data={e.sheet} units={units} />
+            <Preview data={e.sheet} units={units} username={username} />
           </div>
         ) : null
       )}
