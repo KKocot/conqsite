@@ -1,3 +1,5 @@
+import { Unit } from "@/lib/type";
+
 export const lowUnits = [
   {
     id: 1,
@@ -629,7 +631,7 @@ export const lowUnits = [
     era: "blue",
     icon: "/low-tiers-icons/new_blue_unit.webp",
   },
-];
+] satisfies Unit[];
 
 export const blueUnits = lowUnits.filter((unit) => unit.era === "blue");
 export const greenUnits = lowUnits.filter((unit) => unit.era === "green");

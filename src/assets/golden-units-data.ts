@@ -1,3 +1,5 @@
+import { Unit } from "@/lib/type";
+
 export const goldenUnits = [
   {
     id: 1,
@@ -279,4 +281,4 @@ export const goldenUnits = [
     era: "golden",
     icon: "/golden-icons/New_gold_unit.webp",
   },
-];
+] satisfies Unit[];

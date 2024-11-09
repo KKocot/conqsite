@@ -1,3 +1,5 @@
+import { WeaponsTypes } from "@/lib/type";
+
 export const weapons = [
   {
     id: 1,
@@ -64,4 +66,4 @@ export const weapons = [
     name: "Shortsword",
     src: "/weapons/Short_sword.png",
   },
-];
+] satisfies WeaponsTypes[];

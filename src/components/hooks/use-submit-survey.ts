@@ -38,9 +38,9 @@ const useSubmitSurvey = () => {
       return response.json();
     },
     onSuccess: (data) => {
-      const { id } = data;
+      const { discordId } = data;
       console.log("Success:", data);
-      queryClient.invalidateQueries({ queryKey: ["profile", id] });
+      queryClient.invalidateQueries({ queryKey: ["profile", discordId] });
       router.push(`/profile`);
     },
     onError: (error: Error) => {

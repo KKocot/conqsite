@@ -20,3 +20,4 @@ export const DEFAULT_CARD = {
     { id: 11, check: false },
   ],
 };
+export type EntryData = typeof DEFAULT_CARD;

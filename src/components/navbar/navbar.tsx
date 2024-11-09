@@ -15,11 +15,12 @@ export default function Navbar() {
         <Image src="/logo.png" alt="logo" fill />
       </Link>
       <ProtectedLinks />
-      <div className="flex items-center gap-2 ml-auto">
+      <div className="flex items-center gap-2 ml-auto text-sm">
         <a href="https://ko-fi.com/K3K713SMAY" target="_blank">
-          <img
-            height="36"
-            style={{ border: "0px", height: "36px" }}
+          <Image
+            height={32}
+            width={120}
+            style={{ borderRadius: "9999px", fontSize: "0.875rem" }}
             src="https://storage.ko-fi.com/cdn/kofi6.png?v=6"
             alt="Buy Me a Coffee at ko-fi.com"
           />

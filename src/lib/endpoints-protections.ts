@@ -1,4 +1,4 @@
-import { Survey } from "@/queries/profile.query";
+import { Survey } from "@/features/surveys/api/schema";
 import { Role } from "@/queries/roles.query";
 import { Session } from "next-auth";
 

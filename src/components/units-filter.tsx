@@ -5,22 +5,25 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { useTranslations } from "next-intl";
 import { Dispatch, FC } from "react";
 
-type FilterUnits = {
-  meta_units_only: boolean;
-  golden_checked: boolean;
-  heroic_checked: boolean;
-  silver_checked: boolean;
-  chivalric_checked: boolean;
-  rustic_checked: boolean;
-  other_checked: boolean;
+export type UnitsFilterData = {
+  golden: boolean;
+  heroic: boolean;
+  blue: boolean;
+  green: boolean;
+  grey: boolean;
+  other: boolean;
+  meta: boolean;
 };
 
 interface ChildComponentProps {
-  filters: FilterUnits;
-  setFilter: Dispatch<React.SetStateAction<FilterUnits>>;
+  filters: UnitsFilterData;
+  setFilter: Dispatch<React.SetStateAction<UnitsFilterData>>;
 }
 
-const UnitsFilter: FC<ChildComponentProps> = ({ filters, setFilter }) => {
+export const UnitsFilter: FC<ChildComponentProps> = ({
+  filters,
+  setFilter,
+}) => {
   const t = useTranslations("BuildTeam");
 
   return (
@@ -34,72 +37,72 @@ const UnitsFilter: FC<ChildComponentProps> = ({ filters, setFilter }) => {
       </PopoverTrigger>
       <PopoverContent className="gap-4 flex flex-col p-2">
         <CheckboxItem
-          checked={filters.meta_units_only}
+          checked={filters.meta}
           label={t("meta_units_only")}
           onChange={() =>
             setFilter((prev) => ({
               ...prev,
-              meta_units_only: !prev.meta_units_only,
+              meta: !prev.meta,
             }))
           }
         />
         <CheckboxItem
-          checked={filters.golden_checked}
+          checked={filters.golden}
           label={t("golden_era")}
           onChange={() =>
             setFilter((prev) => ({
               ...prev,
-              golden_checked: !prev.golden_checked,
+              golden: !prev.golden,
             }))
           }
         />
         <CheckboxItem
-          checked={filters.heroic_checked}
+          checked={filters.heroic}
           label={t("heroic_era")}
           onChange={() =>
             setFilter((prev) => ({
               ...prev,
-              heroic_checked: !prev.heroic_checked,
+              heroic: !prev.heroic,
             }))
           }
         />
         <CheckboxItem
-          checked={filters.silver_checked}
+          checked={filters.blue}
           label={t("silver_era")}
           onChange={() =>
             setFilter((prev) => ({
               ...prev,
-              silver_checked: !prev.silver_checked,
+              blue: !prev.blue,
             }))
           }
         />
         <CheckboxItem
-          checked={filters.chivalric_checked}
+          checked={filters.green}
           label={t("knight_era")}
           onChange={() =>
             setFilter((prev) => ({
               ...prev,
-              chivalric_checked: !prev.chivalric_checked,
+              green: !prev.green,
             }))
           }
         />
         <CheckboxItem
-          checked={filters.rustic_checked}
+          checked={filters.grey}
           label={t("feudal__and_rustical_era")}
           onChange={() =>
             setFilter((prev) => ({
               ...prev,
-              rustic_checked: !prev.rustic_checked,
+              grey: !prev.grey,
             }))
           }
         />
         <CheckboxItem
-          checked={filters.other_checked}
+          checked={filters.other}
           label={t("general")}
           onChange={() =>
             setFilter((prev) => ({
               ...prev,
-              other_checked: !prev.other_checked,
+              other: !prev.other,
             }))
           }
         />
@@ -107,5 +110,3 @@ const UnitsFilter: FC<ChildComponentProps> = ({ filters, setFilter }) => {
     </Popover>
   );
 };
-
-export default UnitsFilter;

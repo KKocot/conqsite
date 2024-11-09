@@ -1,3 +1,5 @@
+import { Unit } from "@/lib/type";
+
 export const heroicUnits = [
   {
     id: 1,
@@ -389,4 +391,4 @@ export const heroicUnits = [
     era: "heroic",
     icon: "/heroic-icons/New_purple_unit.webp",
   },
-];
+] satisfies Unit[];

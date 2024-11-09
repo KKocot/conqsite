@@ -8,7 +8,7 @@ export interface ItemProps {
 }
 
 export interface Unit {
-  era: string;
+  era: "golden" | "heroic" | "blue" | "green" | "grey" | "other";
   icon: string;
   id: number;
   leadership: number;
@@ -17,6 +17,11 @@ export interface Unit {
   src: string;
   value: number;
   pref?: string;
+}
+export interface Artillery {
+  name: string;
+  src: string;
+  id: number;
 }
 export interface SheetTypes {
   username: string;

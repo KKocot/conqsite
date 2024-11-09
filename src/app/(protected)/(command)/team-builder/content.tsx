@@ -3,11 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { ArtilleryProps, SheetTypes } from "@/lib/type";
 import { getLineup } from "@/lib/utils";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Loading from "react-loading";
 import clsx from "clsx";
 import { weapons } from "@/assets/weapons";
-import Item from "@/components/sheet-form-item";
+import { TeamEntry } from "@/components/sheet-form-item";
 import { goldenUnits } from "@/assets/golden-units-data";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
@@ -17,13 +17,13 @@ import { useTranslations } from "next-intl";
 import { ScanEye } from "lucide-react";
 import UsersList from "@/components/users-list";
 import TemplateMenu from "@/components/templates-menu";
-import UnitsFilter from "@/components/units-filter";
+import { UnitsFilterData, UnitsFilter } from "@/components/units-filter";
 import RaidsFilter from "@/components/raids-filter";
 import StorageTemplate from "@/components/storage-template";
-import { getNextTWLineups, getSurveys, Survey } from "@/lib/get-data";
+import { getNextTWLineups, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
-import { DEFAULT_CARD } from "@/lib/defaults";
-import Link from "next/link";
+import { DEFAULT_CARD, EntryData } from "@/lib/defaults";
+import { getSurveysOptions } from "@/features/surveys/api/queries";
 
 interface PageProps {
   house: string;
@@ -37,14 +37,14 @@ const Content: React.FC<PageProps> = ({ house, nextTW }) => {
   const [allPlayers, setAllPlayers] = useState<Survey[]>([]);
   const [lineup, setLineup] = useState<string[]>([]);
   const [showPreview, setShowPreview] = useState(false);
-  const [filterUnits, setFilterUnits] = useState({
-    rustic_checked: true,
-    chivalric_checked: true,
-    silver_checked: true,
-    heroic_checked: true,
-    golden_checked: true,
-    other_checked: true,
-    meta_units_only: true,
+  const [filterUnits, setFilterUnits] = useState<UnitsFilterData>({
+    golden: true,
+    heroic: true,
+    blue: true, //silver
+    green: true, //chivalric
+    grey: true, //rustic
+    other: true,
+    meta: true,
   });
 
   const { data: signupData, isLoading: lineupIsLoading } = useQuery({
@@ -53,67 +53,44 @@ const Content: React.FC<PageProps> = ({ house, nextTW }) => {
     enabled: !!house,
   });
   const { data: surveysData, isLoading: surveysIsLoading } = useQuery({
-    queryKey: ["surveysList"],
-    queryFn: () => getSurveys(house),
+    ...getSurveysOptions(house),
     enabled: !!house,
   });
   const units = useMemo(() => {
-    const golden_era = filterUnits.golden_checked ? goldenUnits : [];
-    const heroic_era = filterUnits.heroic_checked ? heroicUnits : [];
-    const silver_era = filterUnits.silver_checked ? blueUnits : [];
-    const chivalric_era = filterUnits.chivalric_checked ? greenUnits : [];
-    const rustic_era = filterUnits.rustic_checked ? greyUnits : [];
-    const others_unit = filterUnits.other_checked ? others : [];
     return [
-      ...golden_era,
-      ...heroic_era,
-      ...silver_era,
-      ...chivalric_era,
-      ...rustic_era,
-      ...others_unit,
-    ];
-  }, [
-    filterUnits.golden_checked,
-    filterUnits.heroic_checked,
-    filterUnits.silver_checked,
-    filterUnits.chivalric_checked,
-    filterUnits.rustic_checked,
-    filterUnits.other_checked,
-  ]);
+      ...goldenUnits,
+      ...heroicUnits,
+      ...blueUnits,
+      ...greenUnits,
+      ...greyUnits,
+      ...others,
+    ].filter((u) => {
+      const { meta, ...filters } = filterUnits;
+      return (
+        Object.entries(filters)
+          .filter(([_key, value]) => value)
+          .map(([key]) => key)
+          .includes(u.era) && (meta ? u.value > 7 : true)
+      );
+    });
+  }, [filterUnits]);
 
   useEffect(() => {
     setAllPlayers(getLineup(surveysData, lineup) ?? []);
   }, [lineup.length]);
 
-  const handleEdit = (
-    index: number,
-    username: string,
-    unit1: string,
-    unit2: string,
-    unit3: string,
-    weapon: string,
-    description: string,
-    color: string,
-    artillery: ArtilleryProps[]
-  ) => {
+  const handleEdit = useCallback((index: number, data: Partial<EntryData>) => {
     setSheetData((prev) =>
       prev.map((item, i) =>
         i === index
           ? {
               ...item,
-              username: username,
-              unit1: unit1,
-              unit2: unit2,
-              unit3: unit3,
-              weapon: weapon,
-              description: description,
-              color: color,
-              artillery: artillery,
+              ...data,
             }
           : item
       )
     );
-  };
+  }, []);
   useEffect(() => {
     setSheetData((prev) => {
       const requiredLength = allPlayers.length + 10;
@@ -129,7 +106,10 @@ const Content: React.FC<PageProps> = ({ house, nextTW }) => {
       return prev;
     });
   }, [allPlayers.length, surveysData]);
+
+  //TODO: this use efffect is slowing down rerendering find solution in future
   useEffect(() => {
+    console.log(allPlayers);
     setUserList(
       allPlayers.filter(
         (user) =>
@@ -140,7 +120,7 @@ const Content: React.FC<PageProps> = ({ house, nextTW }) => {
           )
       )
     );
-  }, [JSON.stringify(sheetData)]);
+  }, [sheetData]);
 
   if (lineupIsLoading || surveysIsLoading) {
     return (
@@ -191,18 +171,14 @@ const Content: React.FC<PageProps> = ({ house, nextTW }) => {
           <span className="text-blue-500">{t("maxed")}</span>
           <span className="text-green-500">{t("i_have")}</span>
         </div>
-        <ul className="grid grid-cols-5 gap-8">
+        <ul className="grid grid-cols-5 gap-2 gap-y-6 row w-max mx-auto">
           {sheetData.map((e, index) => (
-            <Item
+            <TeamEntry
               users={userList}
               weapons={weapons}
               key={index}
               index={index}
-              units={
-                filterUnits.meta_units_only
-                  ? units.filter((e) => e.value > 7)
-                  : units
-              }
+              units={units}
               data={e}
               onEdit={handleEdit}
             />

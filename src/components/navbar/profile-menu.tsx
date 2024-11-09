@@ -21,10 +21,10 @@ export const ProfileMenu = () => {
         onClick={() =>
           signIn("discord", { callbackUrl: window.location.origin })
         }
-        className="gap-1"
+        className="gap-1 rounded-full h-8"
       >
         {t("login")}
-        <SiDiscord />
+        <SiDiscord className="size-4" />
       </Button>
     );
   return (

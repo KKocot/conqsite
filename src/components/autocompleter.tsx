@@ -10,7 +10,16 @@ import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 import { Unit, WeaponsTypes } from "@/lib/type";
 import clsx from "clsx";
 import { Survey } from "@/lib/get-data";
-
+function findUserPrefences(user?: Survey, unit?: Unit) {
+  switch (unit?.era) {
+    case "golden":
+      return user?.units.golden.find((u) => u.id === unit?.id);
+    case "heroic":
+      return user?.units.heroic.find((u) => u.id === unit?.id);
+    default:
+      return user?.units.low.find((u) => u.id === unit?.id);
+  }
+}
 export function Autocompleter({
   value,
   onChange,
@@ -57,16 +66,7 @@ export function Autocompleter({
   }, []);
   const unit = units?.find((unit) => unit.name === value);
   const weapon = weapons?.find((weapon) => weapon.name === value);
-  function findUserPrefences(user?: Survey, unit?: Unit) {
-    switch (unit?.era) {
-      case "golden":
-        return user?.units.golden.find((u) => u.id === unit?.id);
-      case "heroic":
-        return user?.units.heroic.find((u) => u.id === unit?.id);
-      default:
-        return user?.units.low.find((u) => u.id === unit?.id);
-    }
-  }
+
   const user_preferences = findUserPrefences(user, unit);
   return (
     <Command className="w-full border h-fit" ref={autocompleteRef}>

@@ -21,7 +21,6 @@ import { useTranslations } from "next-intl";
 import clsx from "clsx";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { profileQueryOptions } from "@/queries/profile.query";
 import { getUserStats } from "@/lib/get-data";
 import {
   Tooltip,
@@ -30,12 +29,13 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
+import { getSurveyOptions } from "@/features/surveys/api/queries";
 export default function Content() {
   const { data: user_data } = useSession();
   const t = useTranslations("BuildTeam");
 
   const { data: profileData, isLoading: profileIsLoading } = useQuery({
-    ...profileQueryOptions(user_data!.user.id),
+    ...getSurveyOptions(user_data!.user.id),
     enabled: !!user_data?.user.id,
   });
 

@@ -1,3 +1,5 @@
+import { Unit } from "@/lib/type";
+
 export const others = [
   {
     era: "other",
@@ -39,4 +41,4 @@ export const others = [
     src: "",
     value: 10,
   },
-];
+] satisfies Unit[];

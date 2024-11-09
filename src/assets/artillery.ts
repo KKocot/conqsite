@@ -1,3 +1,5 @@
+import { Artillery } from "@/lib/type";
+
 export const artillery = [
   {
     name: "Bombard",
@@ -54,4 +56,4 @@ export const artillery = [
     src: "/artillery/tower.webp",
     id: 11,
   },
-];
+] satisfies Artillery[];
