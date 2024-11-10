@@ -14,6 +14,7 @@ import Loading from "react-loading";
 import { useTranslations } from "next-intl";
 import { getSurvey, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
+import useSubmitSurvey from "./hooks/use-submit-survey";
 
 export const DEFAULT_FORM_DATA: Survey = {
   discordNick: "",
@@ -101,34 +102,12 @@ export default function WizardForm({
     },
   });
 
-  const onSubmit = async (values: Survey) => {
-    const data = {
-      ...values,
-      discordId: user_id,
-      avatar: avatar,
-    };
-    try {
-      const response = await fetch("/api/survey", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+  const submitMutation = useSubmitSurvey();
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Error occurred:", errorData);
-      } else {
-        const responseData = await response.json();
-        console.log("Success:", responseData);
-      }
-    } catch (error) {
-      console.error("Error occurred:", error);
-    }
-    router.push(`/profile`);
+  const onSubmit = (values: Survey) => {
+    submitMutation.mutate({ values, user_id, avatar: avatar || "" });
   };
-  if (profileIsLoading)
+  if (profileIsLoading || submitMutation.isPending)
     return (
       <div className="flex justify-center items-center h-screen">
         <Loading color="#94a3b8" />

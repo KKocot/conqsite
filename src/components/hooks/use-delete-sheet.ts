@@ -10,11 +10,11 @@ interface ErrorData {
   message?: string;
 }
 
-const useDeleteSheet = ({ house, date, name }: DeleteSheetParams) => {
+const useDeleteSheet = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async () => {
+    mutationFn: async ({ house, date, name }: DeleteSheetParams) => {
       const response = await fetch(
         `/api/publicLineup?house=${house}&date=${date}&name=${name}`,
         {
@@ -29,8 +29,10 @@ const useDeleteSheet = ({ house, date, name }: DeleteSheetParams) => {
 
       return response.json();
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      const { house, date } = data;
       queryClient.invalidateQueries({ queryKey: ["lineup", house, date] });
+      queryClient.invalidateQueries({ queryKey: ["lineup dates", house] });
     },
     onError: (error: Error) => {
       console.error("Error deleting:", error.message);

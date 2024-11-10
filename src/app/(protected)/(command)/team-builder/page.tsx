@@ -23,7 +23,6 @@ const Page: React.FC = () => {
   const [date, setDate] = React.useState<Date | undefined>(new Date());
   const [load, setLoad] = useState(false);
   const next_tw = getCloserDay();
-
   return (
     <div>
       {!load || !date || !house ? (
@@ -76,7 +75,9 @@ const Page: React.FC = () => {
       ) : (
         <Content
           house={house}
-          nextTW={`${date?.getDate()}-${date?.getMonth()}-${date?.getFullYear()}`}
+          nextTW={`${date?.getFullYear()}-${String(
+            Number(date?.getMonth()) + 1
+          ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`}
         />
       )}
     </div>
