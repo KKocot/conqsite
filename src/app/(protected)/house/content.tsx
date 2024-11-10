@@ -40,7 +40,10 @@ const Content: FC<ContentProps> = ({ house, canDelete }) => {
     enabled: !!house,
   });
   const [date, setDate] = useState<string>(
-    `${today?.getDate()}-${today?.getMonth()}-${today?.getFullYear()}`
+    `${today?.getFullYear()}-${String(Number(today?.getMonth()) + 1).padStart(
+      2,
+      "0"
+    )}-${String(today.getDate()).padStart(2, "0")}`
   );
   const { data: lineupData, isLoading: lineupIsLoading } = useQuery({
     queryKey: ["lineup", house, date],
