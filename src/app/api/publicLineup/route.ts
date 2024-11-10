@@ -103,7 +103,10 @@ export async function DELETE(request: NextRequest) {
       date: date,
       name: name,
     });
-    return NextResponse.json({ message: "Sheet deleted" }, { status: 200 });
+    return NextResponse.json(
+      { house, date, message: "Sheet deleted" },
+      { status: 200 }
+    );
   } catch (error) {
     if (error instanceof ZodError)
       return NextResponse.json({ message: error.message }, { status: 400 });

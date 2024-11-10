@@ -2,20 +2,18 @@ import { Survey } from "@/lib/get-data";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
+interface SubmitSurveyParams {
+  values: Survey;
+  user_id: string;
+  avatar: string;
+}
+
 const useSubmitSurvey = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({
-      values,
-      user_id,
-      avatar,
-    }: {
-      values: Survey;
-      user_id: string;
-      avatar: string;
-    }) => {
+    mutationFn: async ({ values, user_id, avatar }: SubmitSurveyParams) => {
       const data = {
         ...values,
         discordId: user_id,
@@ -38,9 +36,8 @@ const useSubmitSurvey = () => {
       return response.json();
     },
     onSuccess: (data) => {
-      const { id } = data;
-      console.log("Success:", data);
-      queryClient.invalidateQueries({ queryKey: ["profile", id] });
+      const { discordId } = data;
+      queryClient.invalidateQueries({ queryKey: ["profile", discordId] });
       router.push(`/profile`);
     },
     onError: (error: Error) => {
