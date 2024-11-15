@@ -36,7 +36,7 @@ export default function Home() {
                     params.get("callbackUrl") ?? window.location.origin,
                 })
               }
-              className="text-xl gap-2"
+              className="text-xl gap-2 rounded-xl"
             >
               <SiDiscord />
               {t("login")}
