@@ -70,6 +70,7 @@ const UserForm: React.FC<UserForm> = ({ house }) => {
           className="w-[120px]"
           placeholder={t("discord_id_placeholder")}
           value={user.discordId}
+          type="number"
           onChange={(e) =>
             setUser((prev) => ({ ...prev, discordId: e.target.value }))
           }

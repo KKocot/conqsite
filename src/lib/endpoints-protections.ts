@@ -43,3 +43,10 @@ export const houseUserAllowed = (
   if (!survey || !house) return false;
   return survey.house.includes(house);
 };
+
+// Admin access
+const adminsId = ["373563828513931266", "303156898532818944"];
+export const adminAllowed = (session: Session | null) => {
+  if (!session) return false;
+  return adminsId.includes(session.user.id);
+};

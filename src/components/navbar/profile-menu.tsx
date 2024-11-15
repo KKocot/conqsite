@@ -21,7 +21,7 @@ export const ProfileMenu = () => {
         onClick={() =>
           signIn("discord", { callbackUrl: window.location.origin })
         }
-        className="gap-1"
+        className="gap-1 rounded-xl h-9"
       >
         {t("login")}
         <SiDiscord />
