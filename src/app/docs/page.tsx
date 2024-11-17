@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Link2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -9,7 +8,9 @@ const DocsPage: React.FC = () => {
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">{t("documentation.title")}</h1>
       <div className="container mx-auto p-6 shadow-lg">
-        <h2 className="text-2xl font-bold mb-6">Flow for "Create House":</h2>
+        <h2 className="text-2xl font-bold mb-6">
+          Flow for &quot;Create House&quot;:
+        </h2>
         <ul className="list-decimal ml-6">
           <li>
             Fill form with units first. Go to{" "}
