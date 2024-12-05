@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { getRoleById, Survey } from "@/lib/get-data";
+import { getBotSettings, getRoleById, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import Loading from "react-loading";
@@ -40,6 +40,15 @@ const AdminPage = () => {
       </div>
     );
   }
+  const botSettings = {
+    guild_id: 1232957904597024882,
+    member_id: 373563828513931266,
+    member: 1236647699831586838,
+    logs: 1250376514042593322,
+    attendance: 1250376514042593322,
+    tw_server: 1232957904597024882,
+    tw_member: 1236647699831586838,
+  };
   return (
     <div>
       <Input
@@ -50,6 +59,21 @@ const AdminPage = () => {
         }}
       />
       <Button onClick={saveAdminData}>Save</Button>
+      <Button
+        onClick={() =>
+          getBotSettings(
+            "1232957904597024882",
+            "373563828513931266",
+            "1236647699831586838",
+            "1250376514042593322",
+            "1250376514042593322",
+            "1232957904597024882",
+            "1236647699831586838"
+          )
+        }
+      >
+        Data
+      </Button>
     </div>
   );
 };

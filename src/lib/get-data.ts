@@ -146,3 +146,23 @@ export const getUserStats = async (id: string): Promise<UsersStats> => {
   const result = await response.json();
   return result;
 };
+
+interface BotSettings {
+  status: string;
+}
+
+export const getBotSettings = async (
+  guild_id: string,
+  member_id: string,
+  member: string,
+  logs: string,
+  attendance: string,
+  tw_server: string,
+  tw_member: string
+): Promise<BotSettings> => {
+  const response = await fetch(
+    `/api/bot/settingsVerification?guild_id=${guild_id}&member_id=${member_id}&member=${member}&logs=${logs}&attendance=${attendance}&tw_server=${tw_server}&tw_member=${tw_member}`
+  );
+  const result = await response.json();
+  return result;
+};
