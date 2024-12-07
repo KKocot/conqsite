@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Unit } from "@/lib/type";
 import { getUnit } from "@/lib/utils";
+import { CirclePlus } from "lucide-react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 
 const Page = () => {
@@ -65,8 +67,14 @@ const Page = () => {
             <img src={found_unit.src} alt={found_unit.name} className="h-64" />
             <p>{found_unit.description}</p>
             <div className="w-96 h-64 overflow-y-scroll">
+              <div className="w-full bg-background p-2 flex justify-between">
+                <h2>Community build</h2>
+                <Link href={`${unit}/builder`}>
+                  <CirclePlus />
+                </Link>
+              </div>
               {[...Array(5)].map((_, index) => (
-                <Card key={index} className="p-2 my-2">
+                <Card key={index} className="p-2 mb-2">
                   <div>
                     <CardTitle className="text-xl">Build by User</CardTitle>
                   </div>
@@ -77,6 +85,7 @@ const Page = () => {
               ))}
             </div>
           </div>
+          <img src={found_unit.tree?.img} alt={found_unit.name} />
 
           <div>
             <h2 className="text-2xl font-semibold mb-4">Skills</h2>

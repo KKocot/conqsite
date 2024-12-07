@@ -4,7 +4,6 @@ import Link from "next/link";
 import { ModeToggle } from "./theme-menu";
 import LanguageToggle from "./language-toggle";
 import Image from "next/image";
-
 import { ProfileMenu } from "./profile-menu";
 import { ProtectedLinks } from "./protected-links";
 
