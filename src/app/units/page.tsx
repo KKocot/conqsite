@@ -8,8 +8,8 @@ const Page = () => {
   const units = [goldenUnits, heroicUnits, blueUnits, greenUnits, greyUnits];
   return (
     <div className="flex container">
-      {units.map((unit) => (
-        <List units={unit} />
+      {units.map((unit, index) => (
+        <List key={index} units={unit} />
       ))}
     </div>
   );
