@@ -8,6 +8,49 @@ export const goldenUnits = [
     value: 10,
     era: "golden",
     icon: "/golden-icons/Siphonarioi.webp",
+    type: ["ranged", "special"],
+    description: "description",
+    season: { number: 7, name: "Season of fire" },
+    formation: [
+      {
+        name: "Line",
+        img: "https://conqhub.com/images/formations/line-single-horizontal.png",
+        description: "description",
+      },
+      {
+        name: "Cross Formation",
+        img: "https://conqhub.com/images/formations/cross-formation.png",
+        description: "description",
+      },
+    ],
+    skills: [
+      {
+        name: "Firestorm",
+        description:
+          "The unit sprays a longer blast of hellfire that will set the enemy on fire for some time.",
+        image: "https://conqhub.com/images/orders/firestorm.png",
+      },
+      {
+        name: "Scorched Earth",
+        description:
+          "The unit sprays a quick burst of hellfire. Hellfire will continue to burn on the ground for an extended period of time, inflicting lots of burning damage to enemies passing through.",
+        image: "https://conqhub.com/images/orders/scorched-earth.png",
+      },
+    ],
+    dedicatedDoctrins: [
+      {
+        name: "Siphonarioi Hellfire Doctrine",
+        img: "https://conqhub.com/images/doctrines/epic/siphonarioi-doctrine-ii.png",
+      },
+      {
+        name: "Siphonarioi Flamethrower Doctrine",
+        img: "https://conqhub.com/images/doctrines/rare/siphonarioi-doctrine-i.png",
+      },
+    ],
+    kits: {
+      name: "Siphonarioi Kit",
+      img: "https://conqhub.com/images/supply-dump/kits/sipho_kit.png",
+    },
   },
   {
     id: 2,

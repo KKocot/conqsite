@@ -80,20 +80,18 @@ const Content: FC<ContentProps> = ({ house }) => {
           <UserForm house={house} />
           <RolesTable rolesList={rolesData} house={house} onDelete={onDelete} />
         </div>
-        {
-          <DataForm
-            data={
-              houseSettingsData ?? {
-                name: house,
-                id: "",
-                member: { name: "", id: "" },
-                lineup: [{ name: "", id: "", roleId: "" }],
-                logs: { logs: "", attendance: "" },
-                tw: { server: "", member: "" },
-              }
+        <DataForm
+          data={
+            houseSettingsData ?? {
+              name: house,
+              id: "",
+              member: { name: "", id: "" },
+              lineup: [{ name: "", id: "", roleId: "" }],
+              logs: { logs: "", attendance: "" },
+              tw: { server: "", member: "" },
             }
-          />
-        }
+          }
+        />
 
         <HouseDetailsForm data={houseDetailsData} />
       </div>
