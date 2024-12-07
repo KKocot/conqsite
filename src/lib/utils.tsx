@@ -3,6 +3,9 @@ import { twMerge } from "tailwind-merge";
 import { Unit } from "./type";
 import { useTranslations } from "next-intl";
 import { Survey } from "./get-data";
+import { goldenUnits } from "@/assets/golden-units-data";
+import { heroicUnits } from "@/assets/heroic-units-data";
+import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -96,4 +99,35 @@ export const servers = [
 
 export function getUniqueValues(arr: string[]): string[] {
   return arr.filter((value, index) => arr.indexOf(value) === index);
+}
+
+export function getUnit(
+  unitName: string,
+  era: "golden" | "heroic" | "green" | "blue" | "grey"
+) {
+  const cleanUnitName = unitName?.replace(/-/g, " ");
+  switch (era) {
+    case "golden":
+      return goldenUnits.find(
+        (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
+      );
+    case "heroic":
+      return heroicUnits.find(
+        (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
+      );
+    case "green":
+      return greenUnits.find(
+        (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
+      );
+    case "blue":
+      return blueUnits.find(
+        (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
+      );
+    case "grey":
+      return greyUnits.find(
+        (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
+      );
+    default:
+      return null;
+  }
 }
