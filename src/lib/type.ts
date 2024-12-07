@@ -6,7 +6,14 @@ export interface ItemProps {
   lineup_4: string[];
   lineup_5: string[];
 }
-
+type Tree = {
+  name: string;
+  description: string;
+  img: string;
+  prev: number | null;
+  id: number;
+  value: number;
+};
 export interface Unit {
   era: string;
   icon: string;
@@ -19,10 +26,15 @@ export interface Unit {
   pref?: string;
   type?: string[];
   description?: string;
+  tree?: {
+    img: string;
+    structure: Tree[];
+    type: number;
+  };
   season?: { number: number; name: string };
   formation?: { name: string; img: string; description: string }[];
   skills?: { name: string; description: string; image: string }[];
-  dedicatedDoctrins?: { name: string; img: string }[];
+  dedicatedDoctrins?: { name: string; img: string; description: string }[];
   kits?: { name: string; img: string };
 }
 export interface SheetTypes {

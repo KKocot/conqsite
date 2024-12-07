@@ -105,7 +105,7 @@ export function getUnit(
   unitName: string,
   era: "golden" | "heroic" | "green" | "blue" | "grey"
 ) {
-  const cleanUnitName = unitName?.replace(/-/g, " ");
+  const cleanUnitName = unitName?.replace(/_/g, " ");
   switch (era) {
     case "golden":
       return goldenUnits.find(

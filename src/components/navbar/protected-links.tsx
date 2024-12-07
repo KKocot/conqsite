@@ -72,6 +72,7 @@ const DesktopMenu: FC<ProtectedMenuProps> = ({
                 <MenuLink href="/house">{t("house")}</MenuLink>
                 <MenuLink href="/houses">{t("all_houses")}</MenuLink>
                 <MenuLink href="/create-house">Create House</MenuLink>
+                <MenuLink href="/units">Units</MenuLink>
               </div>
             </NavigationMenuContent>
           </NavigationMenuItem>

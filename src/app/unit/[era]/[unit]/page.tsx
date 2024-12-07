@@ -4,15 +4,20 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Unit } from "@/lib/type";
 import { getUnit } from "@/lib/utils";
+import { CirclePlus } from "lucide-react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 
 const Page = () => {
-  const { era, unit } = useParams();
-  const found_unit: Unit | null =
-    getUnit(
-      unit.toString(),
-      era.toString() as "golden" | "heroic" | "green" | "blue" | "grey"
-    ) ?? null;
+  const params = useParams();
+  const unit = params.unit.toString();
+  const era = params.era.toString() as
+    | "golden"
+    | "heroic"
+    | "green"
+    | "blue"
+    | "grey";
+  const found_unit: Unit | null = getUnit(unit, era) ?? null;
   if (!found_unit) {
     return <div>Unit not found</div>;
   }
@@ -58,12 +63,18 @@ const Page = () => {
             </div>
           </div>
 
-          <div className="flex gap-5 w-full">
-            <img src={found_unit.src} alt={found_unit.name} />
-            <p className="text-sm w-56">{found_unit.description}</p>
-            <div className="w-full">
-              {[...Array(2)].map((_, index) => (
-                <Card key={index} className="p-2 my-2 h-1/2">
+          <div className="flex justify-between w-full">
+            <img src={found_unit.src} alt={found_unit.name} className="h-64" />
+            <p>{found_unit.description}</p>
+            <div className="w-96 h-64 overflow-y-scroll">
+              <div className="w-full bg-background p-2 flex justify-between">
+                <h2>Community build</h2>
+                <Link href={`${unit}/builder`}>
+                  <CirclePlus />
+                </Link>
+              </div>
+              {[...Array(5)].map((_, index) => (
+                <Card key={index} className="p-2 mb-2">
                   <div>
                     <CardTitle className="text-xl">Build by User</CardTitle>
                   </div>
@@ -74,6 +85,7 @@ const Page = () => {
               ))}
             </div>
           </div>
+          <img src={found_unit.tree?.img} alt={found_unit.name} />
 
           <div>
             <h2 className="text-2xl font-semibold mb-4">Skills</h2>
@@ -99,7 +111,7 @@ const Page = () => {
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold mb-4">Skills</h2>
+            <h2 className="text-2xl font-semibold mb-4">Formations</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {!found_unit?.formation
                 ? null
@@ -132,6 +144,7 @@ const Page = () => {
                     <img
                       src={doctrine.img}
                       alt={doctrine.name}
+                      title={doctrine.description}
                       className="w-full h-24 object-contain mb-2"
                     />
                     <p className="text-sm font-medium">{doctrine.name}</p>

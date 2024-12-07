@@ -11,7 +11,7 @@ export const heroicUnits = [
   },
   {
     id: 2,
-    name: "Axe Riders",
+    name: "Axe Raiders",
     src: "/heroic-units/axe_raiders_thumb.png",
     leadership: 0,
     masteryPoints: false,
