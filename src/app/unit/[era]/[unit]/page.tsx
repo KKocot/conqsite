@@ -58,12 +58,12 @@ const Page = () => {
             </div>
           </div>
 
-          <div className="flex gap-5 w-full">
-            <img src={found_unit.src} alt={found_unit.name} />
-            <p className="text-sm w-56">{found_unit.description}</p>
-            <div className="w-full">
-              {[...Array(2)].map((_, index) => (
-                <Card key={index} className="p-2 my-2 h-1/2">
+          <div className="flex justify-between w-full">
+            <img src={found_unit.src} alt={found_unit.name} className="h-64" />
+            <p>{found_unit.description}</p>
+            <div className="w-96 h-64 overflow-y-scroll">
+              {[...Array(5)].map((_, index) => (
+                <Card key={index} className="p-2 my-2">
                   <div>
                     <CardTitle className="text-xl">Build by User</CardTitle>
                   </div>
@@ -99,7 +99,7 @@ const Page = () => {
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold mb-4">Skills</h2>
+            <h2 className="text-2xl font-semibold mb-4">Formations</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {!found_unit?.formation
                 ? null
@@ -132,6 +132,7 @@ const Page = () => {
                     <img
                       src={doctrine.img}
                       alt={doctrine.name}
+                      title={doctrine.description}
                       className="w-full h-24 object-contain mb-2"
                     />
                     <p className="text-sm font-medium">{doctrine.name}</p>

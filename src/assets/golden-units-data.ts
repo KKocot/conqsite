@@ -41,10 +41,12 @@ export const goldenUnits = [
       {
         name: "Siphonarioi Hellfire Doctrine",
         img: "https://conqhub.com/images/doctrines/epic/siphonarioi-doctrine-ii.png",
+        description: "description",
       },
       {
         name: "Siphonarioi Flamethrower Doctrine",
         img: "https://conqhub.com/images/doctrines/rare/siphonarioi-doctrine-i.png",
+        description: "description",
       },
     ],
     kits: {
