@@ -29,7 +29,6 @@ export interface Unit {
   tree?: {
     img: string;
     structure: Tree[];
-    type: number;
   };
   season?: { number: number; name: string };
   formation?: { name: string; img: string; description: string }[];
