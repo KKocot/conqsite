@@ -8,7 +8,7 @@ import { FC, useMemo, useState } from "react";
 import { goldenUnits } from "@/assets/golden-units-data";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
-import { getCloserDay, getUniqueValues } from "@/lib/utils";
+import { getUniqueValues } from "@/lib/utils";
 import PreviewContainer from "@/components/preview-container";
 import {
   Select,
@@ -50,7 +50,10 @@ const Content: FC<ContentProps> = ({ house, canDelete }) => {
     queryFn: () => getPublicLineup(house, date),
     enabled: !!house,
   });
-  const values = useMemo(() => getUniqueValues(datesData ?? []), [datesData]);
+  const values = useMemo(
+    () => getUniqueValues(datesData ?? []),
+    [JSON.stringify(datesData)]
+  );
   const [lineup, setLineup] = useState<string>("");
 
   const units = [
