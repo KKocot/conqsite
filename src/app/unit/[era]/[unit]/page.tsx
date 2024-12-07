@@ -7,12 +7,15 @@ import { getUnit } from "@/lib/utils";
 import { useParams } from "next/navigation";
 
 const Page = () => {
-  const { era, unit } = useParams();
-  const found_unit: Unit | null =
-    getUnit(
-      unit.toString(),
-      era.toString() as "golden" | "heroic" | "green" | "blue" | "grey"
-    ) ?? null;
+  const params = useParams();
+  const unit = params.unit.toString();
+  const era = params.era.toString() as
+    | "golden"
+    | "heroic"
+    | "green"
+    | "blue"
+    | "grey";
+  const found_unit: Unit | null = getUnit(unit, era) ?? null;
   if (!found_unit) {
     return <div>Unit not found</div>;
   }

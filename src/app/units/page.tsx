@@ -3,6 +3,7 @@ import { heroicUnits } from "@/assets/heroic-units-data";
 import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Unit } from "@/lib/type";
+import clsx from "clsx";
 import Link from "next/link";
 
 const Page = () => {
@@ -20,7 +21,18 @@ export default Page;
 const List = ({ units }: { units: Unit[] }) => {
   return (
     <Card>
-      <CardHeader>
+      <CardHeader
+        className={clsx({
+          "bg-gradient-to-l from-yellow-300 to-yellow-800":
+            units[0].era === "golden",
+          "bg-gradient-to-l from-violet-300 to-violet-800":
+            units[0].era === "heroic",
+          "bg-gradient-to-l from-green-300 to-green-800":
+            units[0].era === "green",
+          "bg-gradient-to-l from-blue-300 to-blue-800": units[0].era === "blue",
+          "bg-gradient-to-l from-gray-300 to-gray-800": units[0].era === "grey",
+        })}
+      >
         <CardTitle>{`${
           units[0].era.charAt(0).toUpperCase() + units[0].era.slice(1)
         } Units`}</CardTitle>
