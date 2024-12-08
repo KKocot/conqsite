@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useMemo, FC, useCallback } from "react";
 import { Badge } from "./ui/badge";
 import Image from "next/image";
 import { Button } from "./ui/button";
@@ -22,120 +22,140 @@ interface TreeProps {
   unitlvl: number;
   mode: "edit" | "view";
 }
+const generateTree = (nodes: TreeNode[]) => {
+  const root = nodes.find((d) => d.prev === null);
+  if (!root) return null;
+  const mapWithChildren = (node: TreeNode): TreeNode => {
+    const children = nodes.filter((d) => d.prev === node.id);
+    if (children.length === 0) return node;
+    return { ...node, children: children.map(mapWithChildren) };
+  };
+  return mapWithChildren(root);
+};
 
 const Tree = ({ nodes, unitlvl, mode }: TreeProps) => {
-  const [values, setValues] = useState<
-    {
-      id: number;
-      max: number;
-      current: number;
-    }[]
-  >([]);
+  const [values, setValues] = useState<Map<number, number>>(
+    new Map(nodes.map((node) => [node.id, 0]))
+  );
+  const nodesMap = useMemo(
+    () => new Map(nodes.map((node) => [node.id, node])),
+    [nodes]
+  );
 
-  useEffect(() => {
-    const initialValues = nodes.map((node) => ({
-      id: node.id,
-      max: node.value,
-      current: 0,
-    }));
-    setValues(initialValues);
-  }, [nodes]);
+  const tree = useMemo(() => generateTree(nodes), [nodes]);
 
-  const handleBadgeClick = (id: number) => {
-    setValues((prevValues) =>
-      prevValues.map((value) =>
-        value.id === id
-          ? { ...value, current: Math.min(value.current + 1, value.max) }
-          : value
-      )
-    );
-  };
+  const sumOfPoints = Array.from(values).reduce(
+    (sum, [_id, value]) => sum + value,
+    0
+  );
+
+  const handleBadgeClick = useCallback((id: number) => {
+    setValues((prevValues) => {
+      const valuesMap = new Map(prevValues);
+      const value = valuesMap.get(id);
+      if (value !== undefined) valuesMap.set(id, value + 1);
+
+      return valuesMap;
+    });
+  }, []);
+
   const handleReset = () => {
-    setValues((prevValues) =>
-      prevValues.map((value) => ({ ...value, current: 0 }))
-    );
+    setValues(new Map(nodes.map((node) => [node.id, 0])));
   };
-  const buildTree = (data: TreeNode[]): TreeNode[] => {
-    const nodeMap = new Map<number, TreeNode>();
-    const roots: TreeNode[] = [];
-
-    data.forEach((node) => {
-      node.children = [];
-      nodeMap.set(node.id, node);
-    });
-
-    data.forEach((node) => {
-      if (node.prev === null) {
-        roots.push(node);
-      } else {
-        const parent = nodeMap.get(node.prev);
-        parent?.children?.push(node);
-      }
-    });
-
-    return roots;
-  };
-  const sumOfPoints = values.reduce((sum, value) => sum + value.current, 0);
-  const renderTree = (nodes: TreeNode[]) => {
-    return (
-      <ul>
-        {nodes.map((node) => {
-          const value = values.find((v) => v.id === node.id);
-          const prevNode = node.prev
-            ? values.find((v) => v.id === node.prev)
-            : null;
-          const isDisabled =
-            (prevNode && prevNode.current < prevNode.max) ||
-            sumOfPoints === unitlvl ||
-            mode === "view";
-          return (
-            <li key={node.id} className="flex items-center">
-              <div className="flex flex-col h-24 w-12 m-2 items-center">
-                <Image
-                  src={node.img}
-                  alt={node.name}
-                  width={48}
-                  height={48}
-                  title={node.name}
-                  className="cursor-pointer"
-                  onClick={() => !isDisabled && handleBadgeClick(node.id)}
-                />
-                <Badge
-                  variant="tree"
-                  className={clsx({
-                    "opacity-50 cursor-not-allowed": isDisabled,
-                    "bg-primary": value?.current === value?.max,
-                  })}
-                >
-                  {`${value?.current ?? 0}/${node.value}`}
-                </Badge>
-              </div>
-              {node.children &&
-                node.children.length > 0 &&
-                renderTree(node.children)}
-            </li>
-          );
-        })}
-      </ul>
-    );
-  };
-
-  const treeData = buildTree(nodes);
 
   return (
     <div className="flex flex-col">
-      {renderTree(treeData)}
+      {tree && (
+        <RenderTree
+          nodes={[tree]}
+          values={values}
+          nodesMap={nodesMap}
+          onSkillUpdate={handleBadgeClick}
+          disabled={sumOfPoints === unitlvl || mode === "view"}
+        />
+      )}
       <div className="flex flex-col w-16 self-end">
-        <div className=" flex flex-col items-center gap-2">
-          <Label>Points</Label>
-          <Badge variant="tree">{`${sumOfPoints}/${unitlvl}`}</Badge>
-        </div>
-        <Button variant="destructive" onClick={handleReset}>
-          Reset
-        </Button>
+        {mode === "view" ? null : (
+          <>
+            <div className=" flex flex-col items-center gap-2">
+              <Label>Points</Label>
+              <Badge variant="tree">{`${sumOfPoints}/${unitlvl}`}</Badge>
+            </div>
+
+            <Button variant="destructive" onClick={handleReset}>
+              Reset
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );
 };
 
 export default Tree;
+
+const RenderTree: FC<{
+  nodes?: TreeNode[];
+  values: Map<number, number>;
+  nodesMap: Map<number, TreeNode>;
+  disabled: boolean;
+  onSkillUpdate: (nodeId: number) => void;
+}> = (props) => {
+  const { nodes = [], ...rest } = props;
+  if (nodes.length === 0) return null;
+  return (
+    <ul>
+      {nodes.map((node) => {
+        return (
+          <li key={node.id} className="flex items-center">
+            <SkillButton {...rest} node={node} />
+            <RenderTree {...props} nodes={node.children} />
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
+
+const SkillButton: FC<{
+  node: TreeNode;
+  values: Map<number, number>;
+  nodesMap: Map<number, TreeNode>;
+  disabled: boolean;
+  onSkillUpdate: (nodeId: number) => void;
+}> = ({ node, values, nodesMap, disabled, onSkillUpdate }) => {
+  const value = values.get(node.id)!;
+  const prevValue = values.get(node.prev ?? -1);
+  const prevNode = nodesMap.get(node.prev ?? -1);
+  const isDisabled =
+    (prevValue !== undefined &&
+      prevNode !== undefined &&
+      prevValue < prevNode.value) ||
+    value === node.value;
+  return (
+    <button
+      type="button"
+      className="flex flex-col h-24 w-12 m-2 items-center select-none"
+      disabled={isDisabled || disabled}
+      onClick={() => onSkillUpdate(node.id)}
+    >
+      <Image
+        src={node.img}
+        alt={node.name}
+        width={48}
+        height={48}
+        title={node.name}
+        className="cursor-pointer"
+      />
+      <Badge
+        variant="tree"
+        className={clsx({
+          "opacity-50 cursor-not-allowed": isDisabled || disabled,
+          "bg-primary": value === node?.value,
+        })}
+      >
+        {`${value ?? 0}/${node.value}`}
+      </Badge>
+    </button>
+  );
+};
