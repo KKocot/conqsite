@@ -2,8 +2,10 @@
 import { useDrag, useDrop, DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { doctrines } from "@/assets/doctrines";
+import { Control, useForm, UseFormSetValue } from "react-hook-form";
+import { UnitData } from "@/app/unit/[era]/[unit]/builder/page";
 
 const ItemTypes = {
   DOCTRINE: "doctrine",
@@ -77,19 +79,21 @@ const DoctrineSlot = ({ slot, onDrop }: DoctrineSlotProps) => {
   );
 };
 
-const DoctrinedBuilder = () => {
-  const [doctrineSlot, setDoctrineSlot] = useState([
-    { id: 1, name: "", img: "" },
-    { id: 2, name: "", img: "" },
-    { id: 3, name: "", img: "" },
-    { id: 4, name: "", img: "" },
-    { id: 5, name: "", img: "" },
-  ]);
-
+const DoctrinedBuilder = ({
+  setValue,
+  doctrineSlot: initialDoctrineSlot,
+}: {
+  setValue: UseFormSetValue<UnitData>;
+  doctrineSlot: { id: number; name: string; img: string }[];
+}) => {
+  const [doctrineSlot, setDoctrineSlot] = useState(initialDoctrineSlot);
   interface DroppedItem {
     name: string;
     img: string;
   }
+  useEffect(() => {
+    setValue("doctrines", doctrineSlot);
+  }, [doctrineSlot]);
 
   const handleDrop = (id: number, item: DroppedItem) => {
     setDoctrineSlot((prevSlots) =>

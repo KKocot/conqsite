@@ -9,7 +9,6 @@ import { useForm } from "react-hook-form";
 import { Form } from "./ui/form";
 import FormCol from "./form-col";
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
 import Loading from "react-loading";
 import { useTranslations } from "next-intl";
 import { getSurvey, Survey } from "@/lib/get-data";
@@ -40,7 +39,6 @@ export default function WizardForm({
   avatar?: string;
 }) {
   const t = useTranslations("AddForm");
-  const router = useRouter();
   const [step, setStep] = useState(1);
   const { data: profileData, isLoading: profileIsLoading } = useQuery({
     queryKey: ["profile", user_id],

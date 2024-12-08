@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useMemo, FC, useCallback } from "react";
+import { useState, useMemo, FC, useCallback, useEffect } from "react";
 import { Badge } from "./ui/badge";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import clsx from "clsx";
 import { Label } from "./ui/label";
+import { Control, UseFormSetValue } from "react-hook-form";
+import { UnitData } from "@/app/unit/[era]/[unit]/builder/page";
 
 type TreeNode = {
   id: number;
@@ -21,6 +23,7 @@ interface TreeProps {
   nodes: TreeNode[];
   unitlvl: number;
   mode: "edit" | "view";
+  setValues: UseFormSetValue<UnitData>;
 }
 const generateTree = (nodes: TreeNode[]) => {
   const root = nodes.find((d) => d.prev === null);
@@ -33,8 +36,8 @@ const generateTree = (nodes: TreeNode[]) => {
   return mapWithChildren(root);
 };
 
-const Tree = ({ nodes, unitlvl, mode }: TreeProps) => {
-  const [values, setValues] = useState<Map<number, number>>(
+const Tree = ({ nodes, unitlvl, mode, setValues }: TreeProps) => {
+  const [value, setValue] = useState<Map<number, number>>(
     new Map(nodes.map((node) => [node.id, 0]))
   );
   const nodesMap = useMemo(
@@ -44,13 +47,15 @@ const Tree = ({ nodes, unitlvl, mode }: TreeProps) => {
 
   const tree = useMemo(() => generateTree(nodes), [nodes]);
 
-  const sumOfPoints = Array.from(values).reduce(
+  const sumOfPoints = Array.from(value).reduce(
     (sum, [_id, value]) => sum + value,
     0
   );
 
   const handleBadgeClick = useCallback((id: number) => {
-    setValues((prevValues) => {
+    setValues("tree.structure", value);
+
+    setValue((prevValues) => {
       const valuesMap = new Map(prevValues);
       const value = valuesMap.get(id);
       if (value !== undefined) valuesMap.set(id, value + 1);
@@ -60,7 +65,7 @@ const Tree = ({ nodes, unitlvl, mode }: TreeProps) => {
   }, []);
 
   const handleReset = () => {
-    setValues(new Map(nodes.map((node) => [node.id, 0])));
+    setValue(new Map(nodes.map((node) => [node.id, 0])));
   };
 
   return (
@@ -68,7 +73,7 @@ const Tree = ({ nodes, unitlvl, mode }: TreeProps) => {
       {tree && (
         <RenderTree
           nodes={[tree]}
-          values={values}
+          values={value}
           nodesMap={nodesMap}
           onSkillUpdate={handleBadgeClick}
           disabled={sumOfPoints === unitlvl || mode === "view"}

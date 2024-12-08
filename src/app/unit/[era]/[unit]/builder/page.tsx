@@ -10,6 +10,37 @@ import { getUnit } from "@/lib/utils";
 import { useParams } from "next/navigation";
 import Tree from "@/components/tree";
 import DoctrinedBuilder from "@/components/doctrines-builder";
+import { useForm } from "react-hook-form";
+import { Form, FormField, FormItem } from "@/components/ui/form";
+type doctrine = { id: number; name: string; img: string };
+export interface UnitData {
+  title: string;
+  id: string;
+  unit: string;
+  ytlink: string;
+  description: string;
+  tree: { structure: Map<number, number>; maxlvl: number };
+  doctrines: doctrine[];
+}
+
+const DEFAULT_UNIT_DATA: UnitData = {
+  title: "",
+  id: "",
+  unit: "",
+  ytlink: "",
+  description: "",
+  tree: {
+    structure: new Map<number, number>(),
+    maxlvl: 0,
+  },
+  doctrines: [
+    { id: 1, name: "", img: "" },
+    { id: 2, name: "", img: "" },
+    { id: 3, name: "", img: "" },
+    { id: 4, name: "", img: "" },
+    { id: 5, name: "", img: "" },
+  ],
+};
 
 const Page = () => {
   const params = useParams();
@@ -24,6 +55,15 @@ const Page = () => {
   if (!found_unit) {
     return <div>Unit not found</div>;
   }
+  const form = useForm({
+    values: {
+      ...DEFAULT_UNIT_DATA,
+      unit: found_unit.name,
+      tree: { ...DEFAULT_UNIT_DATA.tree, maxlvl: found_unit.tree?.maxlvl || 0 },
+    },
+  });
+  const values = form.getValues();
+  console.log(form.watch());
   return (
     <div className="container mx-auto py-8">
       <Card className="w-full max-w-4xl mx-auto">
@@ -40,27 +80,52 @@ const Page = () => {
           </div>
         </CardHeader>
         <CardContent className="grid gap-6">
-          <form className="flex flex-col gap-6">
-            <div>
-              <Label htmlFor="title">Title</Label>
-              <Input id="title" />
-            </div>
-            <div>
-              <Label htmlFor="ytlink">Youtube Link</Label>
-              <Input id="ytlink" type="url" />
-            </div>
-            <div>
-              <Label htmlFor="description">Description</Label>
-              <Textarea id="description" />
-            </div>
-            <Tree
-              nodes={found_unit.tree?.structure || []}
-              unitlvl={found_unit?.tree?.maxlvl || 0}
-              mode="edit"
-            />
-            <DoctrinedBuilder />
-            <Button type="submit">Submit</Button>
-          </form>
+          <Form {...form}>
+            <form className="flex flex-col gap-6">
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="title">Title</Label>
+                    <Input id="title" {...field} />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="ytlink"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="ytlink">Youtube Link</Label>
+                    <Input id="ytlink" type="url" {...field} />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="description">Description</Label>
+                    <Textarea id="description" {...field} />
+                  </FormItem>
+                )}
+              />
+
+              <Tree
+                nodes={found_unit.tree?.structure || []}
+                unitlvl={found_unit?.tree?.maxlvl || 0}
+                mode="edit"
+                setValues={form.setValue}
+              />
+              <DoctrinedBuilder
+                setValue={form.setValue}
+                doctrineSlot={values.doctrines}
+              />
+              <Button type="submit">Submit</Button>
+            </form>
+          </Form>
         </CardContent>
       </Card>
     </div>
