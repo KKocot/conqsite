@@ -72,6 +72,7 @@ const Tree = ({ nodes, unitlvl, mode }: TreeProps) => {
           nodesMap={nodesMap}
           onSkillUpdate={handleBadgeClick}
           disabled={sumOfPoints === unitlvl || mode === "view"}
+          mode={mode}
         />
       )}
       <div className="flex flex-col w-16 self-end">
@@ -100,15 +101,16 @@ const RenderTree: FC<{
   nodesMap: Map<number, TreeNode>;
   disabled: boolean;
   onSkillUpdate: (nodeId: number) => void;
+  mode: "edit" | "view";
 }> = (props) => {
-  const { nodes = [], ...rest } = props;
+  const { nodes = [], mode, ...rest } = props;
   if (nodes.length === 0) return null;
   return (
     <ul>
       {nodes.map((node) => {
         return (
           <li key={node.id} className="flex items-center">
-            <SkillButton {...rest} node={node} />
+            <SkillButton {...rest} node={node} mode={mode} />
             <RenderTree {...props} nodes={node.children} />
           </li>
         );
@@ -123,7 +125,8 @@ const SkillButton: FC<{
   nodesMap: Map<number, TreeNode>;
   disabled: boolean;
   onSkillUpdate: (nodeId: number) => void;
-}> = ({ node, values, nodesMap, disabled, onSkillUpdate }) => {
+  mode: "edit" | "view";
+}> = ({ node, values, nodesMap, disabled, onSkillUpdate, mode }) => {
   const value = values.get(node.id)!;
   const prevValue = values.get(node.prev ?? -1);
   const prevNode = nodesMap.get(node.prev ?? -1);
@@ -154,7 +157,7 @@ const SkillButton: FC<{
           "bg-primary": value === node?.value,
         })}
       >
-        {`${value ?? 0}/${node.value}`}
+        {mode === "view" ? node.value : `${value ?? 0}/${node.value}`}
       </Badge>
     </button>
   );
