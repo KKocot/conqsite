@@ -15,11 +15,12 @@ export const goldenUnits: Unit[] = [
     season: { number: 7, name: "Season of fire" },
     tree: {
       img: "https://conqhub.com/images/units/siphonarioi/barc-narf-gua-vet-expan.png",
+      maxlvl: 30,
       structure: [
         {
           name: "first",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/hp.png",
           prev: null,
           id: 1,
           value: 1,
@@ -28,7 +29,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "second",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/clock.png",
           prev: 1,
           id: 2,
           value: 3,
@@ -36,7 +37,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "third",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/fire_up.png",
           prev: 2,
           id: 3,
           value: 3,
@@ -44,7 +45,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "fourth",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/aura_man.png",
           prev: 3,
           id: 4,
           value: 1,
@@ -52,7 +53,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "fifth",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/ammo.png",
           prev: 4,
           id: 5,
           value: 3,
@@ -60,7 +61,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "sixth",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/fire_up.png",
           prev: 5,
           id: 6,
           value: 3,
@@ -68,7 +69,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "seventh",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/clock.png",
           prev: 6,
           id: 7,
           value: 3,
@@ -76,7 +77,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "eighth",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/fire_up.png",
           prev: 7,
           id: 8,
           value: 1,
@@ -84,7 +85,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "ninth",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/clock.png",
           prev: 8,
           id: 9,
           value: 3,
@@ -92,7 +93,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "tenth",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/fire_up.png",
           prev: 9,
           id: 10,
           value: 1,
@@ -100,7 +101,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "eleventh",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/ammo.png",
           prev: 1,
           id: 11,
           value: 1,
@@ -108,7 +109,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "twelfth",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/def_slashing.png",
           prev: 11,
           id: 12,
           value: 3,
@@ -116,7 +117,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "thirteenth",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/def_slashing.png",
           prev: 12,
           id: 13,
           value: 3,
@@ -124,7 +125,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "fourteenth",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/fire.png",
           prev: 13,
           id: 14,
           value: 2,
@@ -132,7 +133,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "fifteenth",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/fire_hand.png",
           prev: 14,
           id: 15,
           value: 3,
@@ -140,7 +141,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "sixteenth",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/fire.png",
           prev: 15,
           id: 16,
           value: 1,
@@ -148,7 +149,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "seventeenth",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/shield_with_arrow_down.png",
           prev: 16,
           id: 17,
           value: 2,
@@ -156,7 +157,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "eighteenth",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/aura_man.png",
           prev: 17,
           id: 18,
           value: 2,
@@ -164,7 +165,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "nineteenth",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/fire_up.png",
           prev: 18,
           id: 19,
           value: 3,
@@ -172,7 +173,7 @@ export const goldenUnits: Unit[] = [
         {
           name: "twentieth",
           description: "description",
-          img: "/unit.jpg",
+          img: "/doctrines/armored_man.png",
           prev: 19,
           id: 20,
           value: 1,

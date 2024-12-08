@@ -27,6 +27,7 @@ export interface Unit {
   type?: string[];
   description?: string;
   tree?: {
+    maxlvl: number;
     img: string;
     structure: Tree[];
   };
