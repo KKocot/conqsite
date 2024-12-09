@@ -52,21 +52,21 @@ const Page = () => {
     | "blue"
     | "grey";
   const found_unit: Unit | null = getUnit(unit, era) ?? null;
-  if (!found_unit) {
-    return <div>Unit not found</div>;
-  }
   const form = useForm({
     values: {
       ...DEFAULT_UNIT_DATA,
-      unit: found_unit.name,
+      unit: found_unit?.name || "",
       tree: {
         structure: new Map<number, number>(
-          new Map(found_unit.tree?.structure.map((node) => [node.id, 0]))
+          new Map(found_unit?.tree?.structure.map((node) => [node.id, 0]) || [])
         ),
-        maxlvl: found_unit.tree?.maxlvl || 0,
+        maxlvl: found_unit?.tree?.maxlvl || 0,
       },
     },
   });
+  if (!found_unit) {
+    return <div>Unit not found</div>;
+  }
   const values = form.getValues();
   return (
     <div className="container mx-auto py-8">
@@ -121,7 +121,6 @@ const Page = () => {
                 nodes={found_unit.tree?.structure || []}
                 unitlvl={found_unit?.tree?.maxlvl || 0}
                 mode="edit"
-                setValues={form.setValue}
               />
               <DoctrinedBuilder
                 setValue={form.setValue}

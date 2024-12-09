@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import clsx from "clsx";
 import { Label } from "./ui/label";
-import { Control, UseFormSetValue } from "react-hook-form";
+import { UseFormSetValue } from "react-hook-form";
 import { UnitData } from "@/app/unit/[era]/[unit]/builder/page";
 
 type TreeNode = {
@@ -23,7 +23,6 @@ interface TreeProps {
   nodes: TreeNode[];
   unitlvl: number;
   mode: "edit" | "view";
-  setValues: UseFormSetValue<UnitData>;
 }
 const generateTree = (nodes: TreeNode[]) => {
   const root = nodes.find((d) => d.prev === null);
@@ -36,7 +35,7 @@ const generateTree = (nodes: TreeNode[]) => {
   return mapWithChildren(root);
 };
 
-const Tree = ({ nodes, unitlvl, mode, setValues }: TreeProps) => {
+const Tree = ({ nodes, unitlvl, mode }: TreeProps) => {
   const [value, setValue] = useState<Map<number, number>>(
     new Map(nodes.map((node) => [node.id, 0]))
   );
@@ -53,8 +52,6 @@ const Tree = ({ nodes, unitlvl, mode, setValues }: TreeProps) => {
   );
 
   const handleBadgeClick = useCallback((id: number) => {
-    setValues("tree.structure", value);
-
     setValue((prevValues) => {
       const valuesMap = new Map(prevValues);
       const value = valuesMap.get(id);
