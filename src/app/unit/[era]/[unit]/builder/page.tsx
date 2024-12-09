@@ -59,11 +59,15 @@ const Page = () => {
     values: {
       ...DEFAULT_UNIT_DATA,
       unit: found_unit.name,
-      tree: { ...DEFAULT_UNIT_DATA.tree, maxlvl: found_unit.tree?.maxlvl || 0 },
+      tree: {
+        structure: new Map<number, number>(
+          new Map(found_unit.tree?.structure.map((node) => [node.id, 0]))
+        ),
+        maxlvl: found_unit.tree?.maxlvl || 0,
+      },
     },
   });
   const values = form.getValues();
-  console.log(form.watch());
   return (
     <div className="container mx-auto py-8">
       <Card className="w-full max-w-4xl mx-auto">
