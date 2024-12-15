@@ -1,6 +1,5 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,7 +8,39 @@ import { Textarea } from "@/components/ui/textarea";
 import { Unit } from "@/lib/type";
 import { getUnit } from "@/lib/utils";
 import { useParams } from "next/navigation";
-import Image from "next/image";
+import Tree from "@/components/tree";
+import DoctrinedBuilder from "@/components/doctrines-builder";
+import { useForm } from "react-hook-form";
+import { Form, FormField, FormItem } from "@/components/ui/form";
+type doctrine = { id: number; name: string; img: string };
+export interface UnitData {
+  title: string;
+  id: string;
+  unit: string;
+  ytlink: string;
+  description: string;
+  tree: { structure: Map<number, number>; maxlvl: number };
+  doctrines: doctrine[];
+}
+
+const DEFAULT_UNIT_DATA: UnitData = {
+  title: "",
+  id: "",
+  unit: "",
+  ytlink: "",
+  description: "",
+  tree: {
+    structure: new Map<number, number>(),
+    maxlvl: 0,
+  },
+  doctrines: [
+    { id: 1, name: "", img: "" },
+    { id: 2, name: "", img: "" },
+    { id: 3, name: "", img: "" },
+    { id: 4, name: "", img: "" },
+    { id: 5, name: "", img: "" },
+  ],
+};
 
 const Page = () => {
   const params = useParams();
@@ -21,9 +52,22 @@ const Page = () => {
     | "blue"
     | "grey";
   const found_unit: Unit | null = getUnit(unit, era) ?? null;
+  const form = useForm({
+    values: {
+      ...DEFAULT_UNIT_DATA,
+      unit: found_unit?.name || "",
+      tree: {
+        structure: new Map<number, number>(
+          new Map(found_unit?.tree?.structure.map((node) => [node.id, 0]) || [])
+        ),
+        maxlvl: found_unit?.tree?.maxlvl || 0,
+      },
+    },
+  });
   if (!found_unit) {
     return <div>Unit not found</div>;
   }
+  const values = form.getValues();
   return (
     <div className="container mx-auto py-8">
       <Card className="w-full max-w-4xl mx-auto">
@@ -40,96 +84,54 @@ const Page = () => {
           </div>
         </CardHeader>
         <CardContent className="grid gap-6">
-          <form className="flex flex-col gap-6">
-            <div>
-              <Label htmlFor="title">Title</Label>
-              <Input id="title" />
-            </div>
-            <div>
-              <Label htmlFor="ytlink">Youtube Link</Label>
-              <Input id="ytlink" type="url" />
-            </div>
-            <div>
-              <Label htmlFor="description">Description</Label>
-              <Textarea id="description" />
-            </div>
-            <Tree nodes={found_unit.tree?.structure || []} />
-            <img src={found_unit.tree?.img} alt={found_unit.name} />
-            <Button type="submit">Submit</Button>
-          </form>
+          <Form {...form}>
+            <form className="flex flex-col gap-6">
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="title">Title</Label>
+                    <Input id="title" {...field} />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="ytlink"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="ytlink">Youtube Link</Label>
+                    <Input id="ytlink" type="url" {...field} />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="description">Description</Label>
+                    <Textarea id="description" {...field} />
+                  </FormItem>
+                )}
+              />
+
+              <Tree
+                nodes={found_unit.tree?.structure || []}
+                unitlvl={found_unit?.tree?.maxlvl || 0}
+                mode="edit"
+              />
+              <DoctrinedBuilder
+                setValue={form.setValue}
+                doctrineSlot={values.doctrines}
+              />
+              <Button type="submit">Submit</Button>
+            </form>
+          </Form>
         </CardContent>
       </Card>
     </div>
   );
 };
 export default Page;
-
-type TreeNode = {
-  id: number;
-  name: string;
-  description: string;
-  img: string;
-  prev: number | null;
-  value: number;
-  children?: TreeNode[];
-};
-
-interface TreeProps {
-  nodes: TreeNode[];
-}
-
-const Tree = ({ nodes }: TreeProps) => {
-  // Helper function to build the tree structure from flat data
-  const buildTree = (data: TreeNode[]): TreeNode[] => {
-    const nodeMap = new Map<number, TreeNode>();
-    const roots: TreeNode[] = [];
-
-    // Create a map of all nodes by ID
-    data.forEach((node) => {
-      node.children = []; // Initialize children as an empty array
-      nodeMap.set(node.id, node);
-    });
-
-    // Build the tree structure
-    data.forEach((node) => {
-      if (node.prev === null) {
-        // Root nodes have no parent
-        roots.push(node);
-      } else {
-        // Attach node to its parent's children array
-        const parent = nodeMap.get(node.prev);
-        parent?.children?.push(node);
-      }
-    });
-
-    return roots;
-  };
-
-  const renderTree = (nodes: TreeNode[]) => {
-    return (
-      <ul>
-        {nodes.map((node) => (
-          <li key={node.id} className="flex items-center">
-            <div className="flex flex-col h-24 w-16 items-center">
-              <Image
-                src={node.img}
-                alt={node.name}
-                width={48}
-                height={48}
-                title={node.name}
-              />
-              <Badge className="w-fit">{`0/${node.value}`}</Badge>
-            </div>
-            {node.children &&
-              node.children.length > 0 &&
-              renderTree(node.children)}
-          </li>
-        ))}
-      </ul>
-    );
-  };
-
-  const treeData = buildTree(nodes);
-
-  return <div>{renderTree(treeData)}</div>;
-};

@@ -1,5 +1,6 @@
 "use client";
 
+import Tree from "@/components/tree";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Unit } from "@/lib/type";
@@ -85,8 +86,13 @@ const Page = () => {
               ))}
             </div>
           </div>
-          <img src={found_unit.tree?.img} alt={found_unit.name} />
-
+          <div className="flex justify-center py-4">
+            <Tree
+              nodes={found_unit.tree?.structure || []}
+              unitlvl={found_unit?.tree?.maxlvl || 0}
+              mode="view"
+            />
+          </div>
           <div>
             <h2 className="text-2xl font-semibold mb-4">Skills</h2>
             <div className="grid gap-4 sm:grid-cols-2">

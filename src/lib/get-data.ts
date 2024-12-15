@@ -166,3 +166,22 @@ export const getBotSettings = async (
   const result = await response.json();
   return result;
 };
+
+export interface DiscordProps {
+  status: "ok" | "error";
+  error: string;
+  roles: { id: number; label: string }[];
+  channels: { id: number; label: string }[];
+  twRoles: { id: number; label: string }[] | null;
+}
+export const getDiscordData = async (
+  member_id: string,
+  values: { guild_id: string; tw_discord: string; anotherDC: boolean }
+): Promise<DiscordProps> => {
+  const tw_server = values.anotherDC ? values.tw_discord : values.guild_id;
+  const response = await fetch(
+    `/api/discord-data?guild_id=${values.guild_id}&member_id=${member_id}&tw_server=${tw_server}`
+  );
+  const result = await response.json();
+  return result;
+};
