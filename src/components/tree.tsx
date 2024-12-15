@@ -6,8 +6,6 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import clsx from "clsx";
 import { Label } from "./ui/label";
-import { UseFormSetValue } from "react-hook-form";
-import { UnitData } from "@/app/unit/[era]/[unit]/builder/page";
 
 type TreeNode = {
   id: number;
