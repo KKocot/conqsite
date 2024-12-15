@@ -22,7 +22,7 @@ const HousesPage = () => {
     <div className="flex flex-col items-center container">
       <ul className="flex flex-wrap gap-4 m-12 justify-around">
         {data.map((house) => (
-          <HouseCard house={house} />
+          <HouseCard key={house.name} house={house} />
         ))}
       </ul>
     </div>
