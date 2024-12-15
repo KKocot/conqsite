@@ -1,4 +1,8 @@
-import { DiscordProps } from "@/lib/get-data";
+import {
+  DiscordProps,
+  DiscordUsersProps,
+  getDiscordUsers,
+} from "@/lib/get-data";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
@@ -34,18 +38,34 @@ const CreateHouseConfig = ({
   handleStep,
   values,
   setValues,
+  creatorId,
+  handleDiscordUsers,
+  discordServer,
 }: {
   data: DiscordProps;
   handleStep: (e: number) => void;
   values: ConfigProps;
   setValues: Dispatch<SetStateAction<ConfigProps>>;
+  creatorId: string;
+  handleDiscordUsers: (e: DiscordUsersProps) => void;
+  discordServer: string;
 }) => {
   const t = useTranslations("SettingsPage");
-
   const onSubmit = async () => {
-    handleStep(3);
-  };
+    const usersData: DiscordUsersProps = await getDiscordUsers(
+      discordServer,
+      creatorId,
+      "1270370512173928538" // values.member TODO swap
+    );
 
+    handleDiscordUsers(usersData);
+    if (data.status === "ok") {
+      handleStep(3);
+    }
+    if (data.status === "error") {
+      alert(data.error);
+    }
+  };
   return (
     <div>
       <Card>

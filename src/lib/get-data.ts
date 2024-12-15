@@ -185,3 +185,21 @@ export const getDiscordData = async (
   const result = await response.json();
   return result;
 };
+
+export interface DiscordUsersProps {
+  status: "ok" | "error";
+  error: string;
+  users: { id: string; username: string }[];
+}
+
+export const getDiscordUsers = async (
+  guild_id: string,
+  member_id: string,
+  member_role: string
+): Promise<DiscordUsersProps> => {
+  const response = await fetch(
+    `/api/discord-data/userlist?guild_id=${guild_id}&member_id=${member_id}&member_role=${member_role}`
+  );
+  const result = await response.json();
+  return result;
+};
