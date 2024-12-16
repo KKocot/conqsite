@@ -10,7 +10,6 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import { Dispatch, SetStateAction, useState } from "react";
-import { useSession } from "next-auth/react";
 import { DiscordProps, getDiscordData } from "@/lib/get-data";
 import { GeneralDataProps } from "@/app/(protected)/create-house/content";
 

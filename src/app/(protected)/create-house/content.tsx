@@ -15,6 +15,14 @@ export interface CommandersProps {
   highcommand: { id: string; username: string }[];
   righthand: { id: string; username: string }[];
 }
+export interface HouseProps {
+  name: string;
+  description: string;
+  country: string;
+  discordLink: string;
+  avatar: string;
+  server: string;
+}
 const Content = () => {
   const user = useSession();
   const [step, setStep] = useState(1);
@@ -34,6 +42,14 @@ const Content = () => {
   const [selectedUsers, setSelectedUsers] = useState<CommandersProps>({
     highcommand: [],
     righthand: [],
+  });
+  const [house, setHouse] = useState<HouseProps>({
+    name: "",
+    description: "",
+    country: "",
+    discordLink: "",
+    avatar: "",
+    server: "",
   });
   return (
     <div className="container pt-8">
@@ -62,7 +78,11 @@ const Content = () => {
           setValues={setSelectedUsers}
         />
       ) : step === 4 ? (
-        <CreateHouseCard />
+        <CreateHouseCard
+          values={house}
+          setValues={setHouse}
+          handleStep={setStep}
+        />
       ) : null}
     </div>
   );

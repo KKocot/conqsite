@@ -55,7 +55,7 @@ const CreateHouseConfig = ({
     const usersData: DiscordUsersProps = await getDiscordUsers(
       discordServer,
       creatorId,
-      "1270370512173928538" // values.member TODO swap
+      values.member
     );
 
     handleDiscordUsers(usersData);
@@ -280,7 +280,7 @@ const Item = ({
   value,
 }: {
   label: string;
-  value: { id: number; label: string }[];
+  value: { id: string; label: string }[];
 }) => {
   return (
     <>

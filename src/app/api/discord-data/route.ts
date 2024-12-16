@@ -11,7 +11,7 @@ export async function GET(request: Request) {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    console.log(response);
+    console.log(data);
     return new Response(JSON.stringify(data), { status: 200 });
   } catch (error) {
     if (error instanceof ZodError)

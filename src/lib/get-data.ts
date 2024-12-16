@@ -170,9 +170,9 @@ export const getBotSettings = async (
 export interface DiscordProps {
   status: "ok" | "error";
   error: string;
-  roles: { id: number; label: string }[];
-  channels: { id: number; label: string }[];
-  twRoles: { id: number; label: string }[] | null;
+  roles: { id: string; label: string }[];
+  channels: { id: string; label: string }[];
+  twRoles: { id: string; label: string }[] | null;
 }
 export const getDiscordData = async (
   member_id: string,
