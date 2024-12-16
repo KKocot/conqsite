@@ -170,9 +170,9 @@ export const getBotSettings = async (
 export interface DiscordProps {
   status: "ok" | "error";
   error: string;
-  roles: { id: number; label: string }[];
-  channels: { id: number; label: string }[];
-  twRoles: { id: number; label: string }[] | null;
+  roles: { id: string; label: string }[];
+  channels: { id: string; label: string }[];
+  twRoles: { id: string; label: string }[] | null;
 }
 export const getDiscordData = async (
   member_id: string,
@@ -181,6 +181,24 @@ export const getDiscordData = async (
   const tw_server = values.anotherDC ? values.tw_discord : values.guild_id;
   const response = await fetch(
     `/api/discord-data?guild_id=${values.guild_id}&member_id=${member_id}&tw_server=${tw_server}`
+  );
+  const result = await response.json();
+  return result;
+};
+
+export interface DiscordUsersProps {
+  status: "ok" | "error";
+  error: string;
+  users: { id: string; username: string }[];
+}
+
+export const getDiscordUsers = async (
+  guild_id: string,
+  member_id: string,
+  member_role: string
+): Promise<DiscordUsersProps> => {
+  const response = await fetch(
+    `/api/discord-data/userlist?guild_id=${guild_id}&member_id=${member_id}&member_role=${member_role}`
   );
   const result = await response.json();
   return result;

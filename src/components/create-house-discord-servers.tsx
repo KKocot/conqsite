@@ -10,8 +10,8 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import { Dispatch, SetStateAction, useState } from "react";
-import { useSession } from "next-auth/react";
 import { DiscordProps, getDiscordData } from "@/lib/get-data";
+import { GeneralDataProps } from "@/app/(protected)/create-house/content";
 
 export interface CreateHouse {
   guild_id: string;
@@ -20,26 +20,27 @@ export interface CreateHouse {
 }
 
 const CreateHouseDiscordServers = ({
+  creatorId,
   handleDiscord,
   handleStep,
+  handlerGeneral,
 }: {
+  creatorId: string;
   handleDiscord: Dispatch<SetStateAction<DiscordProps | null>>;
   handleStep: Dispatch<SetStateAction<number>>;
+  handlerGeneral: Dispatch<SetStateAction<GeneralDataProps>>;
 }) => {
-  const user = useSession();
   const [values, setValues] = useState<CreateHouse>({
     guild_id: "",
     tw_discord: "",
     anotherDC: false,
   });
   const onSubmit = async () => {
-    const data: DiscordProps = await getDiscordData(
-      user.data?.user.id as string,
-      values
-    );
+    const data: DiscordProps = await getDiscordData(creatorId, values);
     handleDiscord(data);
     if (data.status === "ok") {
       handleStep(2);
+      handlerGeneral((prev) => ({ ...prev, guild_id: values.guild_id }));
     }
     if (data.status === "error") {
       alert(data.error);
@@ -52,7 +53,7 @@ const CreateHouseDiscordServers = ({
       </CardHeader>
       <CardContent className="flex flex-col w-full">
         <Separator />
-        <div className="flex p-12 justify-around">
+        <div className="flex p-12 justify-around gap-4">
           <div>
             <div>Give us your house Discord ID</div>
             <div className="flex gap-2">

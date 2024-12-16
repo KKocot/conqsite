@@ -5,13 +5,12 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const guild_id = searchParams.get("guild_id");
   const member_id = searchParams.get("member_id");
-  const tw_server = searchParams.get("tw_server");
+  const member_role = searchParams.get("member_role");
 
-  const url = `http://bot.host2play.com:2005/api/server_verification?guild_id=${guild_id}&member_id=${member_id}&tw_server=${tw_server}`;
+  const url = `http://bot.host2play.com:2005/api/users?guild_id=${guild_id}&member_id=${member_id}&member_role=${member_role}`;
   try {
     const response = await fetch(url);
     const data = await response.json();
-    console.log(data);
     return new Response(JSON.stringify(data), { status: 200 });
   } catch (error) {
     if (error instanceof ZodError)
