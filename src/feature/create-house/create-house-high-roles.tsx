@@ -1,14 +1,19 @@
 "use client";
 
-import { Dispatch, SetStateAction, useState } from "react";
-import { Button } from "./ui/button";
-import { Card, CardContent, CardHeader } from "./ui/card";
-import { Separator } from "./ui/separator";
-import { Select, SelectContent, SelectItem, SelectTrigger } from "./ui/select";
+import { Dispatch, SetStateAction } from "react";
+import { Button } from "../../components/ui/button";
+import { Card, CardContent, CardHeader } from "../../components/ui/card";
+import { Separator } from "../../components/ui/separator";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "../../components/ui/select";
 import { SelectGroup, SelectValue } from "@radix-ui/react-select";
-import { Badge } from "./ui/badge";
+import { Badge } from "../../components/ui/badge";
 import { DiscordUsersProps } from "@/lib/get-data";
-import { CommandersProps } from "@/app/(protected)/create-house/content";
+import { ConfigProps } from "@/app/(protected)/create-house/content";
 
 const CreateHouseHighRoles = ({
   handleStep,
@@ -18,8 +23,8 @@ const CreateHouseHighRoles = ({
 }: {
   handleStep: (e: number) => void;
   discordUsers: DiscordUsersProps;
-  values: CommandersProps;
-  setValues: Dispatch<SetStateAction<CommandersProps>>;
+  values: ConfigProps;
+  setValues: Dispatch<SetStateAction<ConfigProps>>;
 }) => {
   return (
     <Card>
@@ -49,7 +54,7 @@ const CreateHouseHighRoles = ({
         </div>
         <Separator />
         <h2 className="text-center text-lg font-bold p-6">
-          From commanders choose your Right Hand
+          Choose your Right Hand
         </h2>
         <div className="grid grid-cols-3 gap-4 p-6">
           <Select

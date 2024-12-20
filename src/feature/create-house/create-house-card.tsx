@@ -1,12 +1,12 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Button } from "./ui/button";
-import { Card, CardContent, CardHeader } from "./ui/card";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import { Separator } from "./ui/separator";
-import { Textarea } from "./ui/textarea";
+import { Button } from "../../components/ui/button";
+import { Card, CardContent, CardHeader } from "../../components/ui/card";
+import { Input } from "../../components/ui/input";
+import { Label } from "../../components/ui/label";
+import { Separator } from "../../components/ui/separator";
+import { Textarea } from "../../components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -14,29 +14,31 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-import HouseCard from "./house-card";
+} from "../../components/ui/select";
+import HouseCard from "../../components/house-card";
 import { servers } from "@/lib/utils";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip";
+} from "../../components/ui/tooltip";
 import { Info } from "lucide-react";
-import { HouseProps } from "@/app/(protected)/create-house/content";
 import { Dispatch, SetStateAction } from "react";
 import { getHousesDetails } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
+import { ConfigProps } from "@/app/(protected)/create-house/content";
 
 const CreateHouseCard = ({
   values,
   setValues,
   handleStep,
+  onSubmit,
 }: {
-  values: HouseProps;
-  setValues: Dispatch<SetStateAction<HouseProps>>;
+  values: ConfigProps;
+  setValues: Dispatch<SetStateAction<ConfigProps>>;
   handleStep: (e: number) => void;
+  onSubmit: () => void;
 }) => {
   const t = useTranslations("HousePage");
   const { data: housesData } = useQuery({
@@ -203,6 +205,7 @@ const CreateHouseCard = ({
             }
             className="self-end"
             variant="custom"
+            onClick={onSubmit}
           >
             Next
           </Button>

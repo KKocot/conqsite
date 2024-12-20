@@ -3,9 +3,9 @@ import {
   DiscordUsersProps,
   getDiscordUsers,
 } from "@/lib/get-data";
-import { Card, CardContent, CardHeader } from "./ui/card";
-import { Separator } from "./ui/separator";
-import { Button } from "./ui/button";
+import { Card, CardContent, CardHeader } from "../../components/ui/card";
+import { Separator } from "../../components/ui/separator";
+import { Button } from "../../components/ui/button";
 import { Dispatch, SetStateAction, useState } from "react";
 import {
   Table,
@@ -14,7 +14,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./ui/table";
+} from "../../components/ui/table";
 import { useTranslations } from "next-intl";
 import {
   Select,
@@ -23,15 +23,12 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-import { Label } from "./ui/label";
-
-export interface ConfigProps {
-  member: string;
-  logs: string;
-  tw_member: string;
-  lineup: { channelID: string; roleID: string }[];
-}
+} from "../../components/ui/select";
+import { Label } from "../../components/ui/label";
+import {
+  ConfigProps,
+  DiscordDataProps,
+} from "@/app/(protected)/create-house/content";
 
 const CreateHouseConfig = ({
   data,
@@ -47,7 +44,7 @@ const CreateHouseConfig = ({
   values: ConfigProps;
   setValues: Dispatch<SetStateAction<ConfigProps>>;
   creatorId: string;
-  handleDiscordUsers: (e: DiscordUsersProps) => void;
+  handleDiscordUsers: Dispatch<SetStateAction<DiscordDataProps>>;
   discordServer: string;
 }) => {
   const t = useTranslations("SettingsPage");
@@ -58,7 +55,7 @@ const CreateHouseConfig = ({
       values.member
     );
 
-    handleDiscordUsers(usersData);
+    handleDiscordUsers((prev) => ({ ...prev, users: usersData }));
     if (data.status === "ok") {
       handleStep(3);
     }
@@ -188,7 +185,16 @@ const CreateHouseConfig = ({
                           setValues((prev) => ({
                             ...prev,
                             lineup: prev.lineup.map((e, index) =>
-                              index === i ? { ...e, roleID: value } : e
+                              index === i
+                                ? {
+                                    ...e,
+                                    roleID: value,
+                                    name:
+                                      data.roles.find(
+                                        (role) => role.id === value
+                                      )?.label || "None",
+                                  }
+                                : e
                             ),
                           }))
                         }
@@ -236,7 +242,7 @@ const CreateHouseConfig = ({
                               ...prev,
                               lineup: [
                                 ...prev.lineup,
-                                { channelID: "", roleID: "" },
+                                { channelID: "", roleID: "", name: "" },
                               ],
                             }))
                           }

@@ -1,17 +1,20 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Separator } from "./ui/separator";
+import { Separator } from "../../components/ui/separator";
 import { Info, Link2 } from "lucide-react";
-import { Tooltip, TooltipProvider } from "./ui/tooltip";
+import { Tooltip, TooltipProvider } from "../../components/ui/tooltip";
 import { TooltipContent, TooltipTrigger } from "@radix-ui/react-tooltip";
 import Image from "next/image";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
+import { Label } from "../../components/ui/label";
+import { Input } from "../../components/ui/input";
 import Link from "next/link";
-import { Button } from "./ui/button";
-import { Checkbox } from "./ui/checkbox";
+import { Button } from "../../components/ui/button";
+import { Checkbox } from "../../components/ui/checkbox";
 import { Dispatch, SetStateAction, useState } from "react";
 import { DiscordProps, getDiscordData } from "@/lib/get-data";
-import { GeneralDataProps } from "@/app/(protected)/create-house/content";
+import {
+  ConfigProps,
+  DiscordDataProps,
+} from "@/app/(protected)/create-house/content";
 
 export interface CreateHouse {
   guild_id: string;
@@ -26,9 +29,9 @@ const CreateHouseDiscordServers = ({
   handlerGeneral,
 }: {
   creatorId: string;
-  handleDiscord: Dispatch<SetStateAction<DiscordProps | null>>;
+  handleDiscord: Dispatch<SetStateAction<DiscordDataProps>>;
   handleStep: Dispatch<SetStateAction<number>>;
-  handlerGeneral: Dispatch<SetStateAction<GeneralDataProps>>;
+  handlerGeneral: Dispatch<SetStateAction<ConfigProps>>;
 }) => {
   const [values, setValues] = useState<CreateHouse>({
     guild_id: "",
@@ -37,7 +40,7 @@ const CreateHouseDiscordServers = ({
   });
   const onSubmit = async () => {
     const data: DiscordProps = await getDiscordData(creatorId, values);
-    handleDiscord(data);
+    handleDiscord((prev) => ({ ...prev, lists: data }));
     if (data.status === "ok") {
       handleStep(2);
       handlerGeneral((prev) => ({ ...prev, guild_id: values.guild_id }));

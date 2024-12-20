@@ -9,9 +9,9 @@ export async function GET(request: Request) {
 
   const url = `http://bot.host2play.com:2005/api/users?guild_id=${guild_id}&member_id=${member_id}&member_role=${member_role}`;
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { cache: "no-store" });
     const data = await response.json();
-    return new Response(JSON.stringify(data), { status: 200 });
+    return Response.json(data);
   } catch (error) {
     if (error instanceof ZodError)
       return NextResponse.json({ message: error.message }, { status: 400 });
