@@ -37,7 +37,7 @@ const List = ({ units }: { units: Unit[] }) => {
           units[0].era.charAt(0).toUpperCase() + units[0].era.slice(1)
         } Units`}</CardTitle>
       </CardHeader>
-      <CardContent className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <CardContent className="grid grid-cols-1 sm:grid-cols-2 pt-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {units.map((unit) => (
           <div key={unit.id}>
             <Link

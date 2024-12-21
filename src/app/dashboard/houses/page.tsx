@@ -14,7 +14,7 @@ const HousesPage = () => {
   });
   if (isLoading || !data)
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center w-full h-screen">
         <Loading color="#94a3b8" />
       </div>
     );

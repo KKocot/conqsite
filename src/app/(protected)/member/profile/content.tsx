@@ -47,7 +47,7 @@ export default function Content() {
 
   if (profileIsLoading || statsIsLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex w-full justify-center items-center h-screen">
         <Loading color="#94a3b8" />
       </div>
     );

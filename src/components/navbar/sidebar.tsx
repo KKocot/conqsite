@@ -112,22 +112,22 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
   };
   const membersLinks = {
     title: "Member",
-    url: "/member-menu",
+    url: "/member",
     icon: SquareUserRound,
     items: [
       {
         title: "My Profile",
-        url: "/member-menu/profile",
+        url: "/member/profile",
         disabled: !profile,
       },
       {
         title: "Update Survey",
-        url: "/member-menu/update-form",
+        url: "/member/update-form",
         disabled: false,
       },
       {
         title: "Create House",
-        url: "/house/create-house",
+        url: "/member/create-house",
       },
     ],
   };
@@ -138,17 +138,17 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
     items: [
       {
         title: "Lineups",
-        url: `/house/${house}/lineups`,
+        url: `/lineups/${house}`,
         visibleTo: true,
       },
       {
         title: "My House",
-        url: `/house/${house}/my-house`,
+        url: `/my-house/${house}`,
         visibleTo: true,
       },
       {
         title: "Build Team",
-        url: `/house/${house}/team-builder`,
+        url: `/team-builder/${house}`,
         visibleTo: commanders.some(
           (e) => e.discordId === data?.user.id && e.house === house
         ),

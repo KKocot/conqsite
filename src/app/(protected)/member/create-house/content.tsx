@@ -31,7 +31,7 @@ export interface DiscordDataProps {
 
 const Content = ({ username }: { username: string }) => {
   const router = useRouter();
-  const [step, setStep] = useState(4);
+  const [step, setStep] = useState(1);
   const [discordData, setDiscordData] = useState<DiscordDataProps>({
     lists: null,
     users: null,

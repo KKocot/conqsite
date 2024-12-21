@@ -14,7 +14,7 @@ import { DiscordProps, getDiscordData } from "@/lib/get-data";
 import {
   ConfigProps,
   DiscordDataProps,
-} from "@/app/(protected)/create-house/content";
+} from "@/app/(protected)/member/create-house/content";
 
 export interface CreateHouse {
   guild_id: string;

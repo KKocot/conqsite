@@ -13,7 +13,7 @@ import {
 import { SelectGroup, SelectValue } from "@radix-ui/react-select";
 import { Badge } from "../../components/ui/badge";
 import { DiscordUsersProps } from "@/lib/get-data";
-import { ConfigProps } from "@/app/(protected)/create-house/content";
+import { ConfigProps } from "@/app/(protected)/member/create-house/content";
 
 const CreateHouseHighRoles = ({
   handleStep,

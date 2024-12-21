@@ -107,7 +107,7 @@ export default function WizardForm({
   };
   if (profileIsLoading || submitMutation.isPending)
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen w-full">
         <Loading color="#94a3b8" />
       </div>
     );

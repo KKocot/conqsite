@@ -7,7 +7,12 @@ import WizardForm from "@/components/wizard-form";
 
 const Page: React.FC = () => {
   const { data } = useSession();
-  if (!data) return <ReactLoading type="spinningBubbles" color="#fff" />;
+  if (!data)
+    return (
+      <div className="flex w-full justify-center items-center h-screen">
+        <ReactLoading type="spinningBubbles" color="#fff" />
+      </div>
+    );
   return <WizardForm user_id={data.user.id} avatar={data.user.image ?? ""} />;
 };
 export default Page;

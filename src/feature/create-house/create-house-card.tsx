@@ -27,7 +27,7 @@ import { Info } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 import { getHousesDetails } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
-import { ConfigProps } from "@/app/(protected)/create-house/content";
+import { ConfigProps } from "@/app/(protected)/member/create-house/content";
 
 const CreateHouseCard = ({
   values,

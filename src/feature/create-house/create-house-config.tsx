@@ -28,7 +28,7 @@ import { Label } from "../../components/ui/label";
 import {
   ConfigProps,
   DiscordDataProps,
-} from "@/app/(protected)/create-house/content";
+} from "@/app/(protected)/member/create-house/content";
 
 const CreateHouseConfig = ({
   data,
