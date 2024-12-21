@@ -29,7 +29,7 @@ const surveySchema = z.object({
 });
 export type Survey = z.infer<typeof surveySchema>;
 
-export const profileQueryOptions = (discordId: string) =>
+export const profileQueryOptions = (discordId?: string | null) =>
   queryOptions({
     queryKey: ["profile", discordId] as QueryKey,
     queryFn: async () => {

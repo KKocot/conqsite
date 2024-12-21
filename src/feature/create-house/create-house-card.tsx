@@ -207,7 +207,7 @@ const CreateHouseCard = ({
             variant="custom"
             onClick={onSubmit}
           >
-            Next
+            Create House and add all your Members
           </Button>
         </div>
       </CardContent>
