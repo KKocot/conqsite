@@ -7,6 +7,7 @@ import { getSurveys, Survey } from "@/lib/get-data";
 import { rolesQueryOptions } from "@/queries/roles.query";
 import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
+import Image from "next/image";
 import { FC, useState } from "react";
 import Loading from "react-loading";
 
@@ -47,7 +48,7 @@ const Content: FC<ContentProps> = ({ house }) => {
       return false;
     });
   return (
-    <div>
+    <div className="w-full">
       <h1 className="text-5xl font-bold text-center py-10">{house}</h1>
       <div className="flex justify-center">
         <Input
@@ -76,10 +77,12 @@ const Content: FC<ContentProps> = ({ house }) => {
                 )}
               >
                 {e.avatar ? (
-                  <img
+                  <Image
+                    width={32}
+                    height={32}
                     src={e.avatar}
                     alt={e.inGameNick}
-                    className="w-8 h-8 mr-1 rounded-full"
+                    className="mr-1 rounded-full"
                   />
                 ) : null}
                 {e.inGameNick}

@@ -13,6 +13,13 @@ export const getRoleById = async (id: string): Promise<Roles[]> => {
   const result = await response.json();
   return result.roles;
 };
+
+export const getHighRoles = async (house: string): Promise<Roles[]> => {
+  const response = await fetch(`/api/roles?house=${house}`);
+  const result = await response.json();
+  return result.roles;
+};
+
 export interface HouseDetails {
   name: string;
   description: string;
@@ -135,9 +142,10 @@ export const getPublicLineupDates = async (
   return result;
 };
 
-interface UsersStats {
+export interface UsersStats {
+  nick: string;
   id: string;
-  house: string;
+  house: string[];
   attendance: string[];
 }
 
@@ -200,6 +208,40 @@ export const getDiscordUsers = async (
   const response = await fetch(
     `/api/discord-data/userlist?guild_id=${guild_id}&member_id=${member_id}&member_role=${member_role}`
   );
+  const result = await response.json();
+  return result;
+};
+
+export const getAddAll = async (house: string): Promise<{ status: string }> => {
+  const response = await fetch(`/api/discord-data/addAll?house=${house}`);
+  const result = await response.json();
+  return result;
+};
+
+export interface SeasonProps {
+  season: string;
+  startDate: string;
+  endDate: string;
+  drillModes: string[];
+}
+export const getSeasons = async (): Promise<SeasonProps[]> => {
+  const response = await fetch(`/api/seasons`);
+  const result = await response.json();
+  return result.seasons;
+};
+
+export interface UnitData {
+  title: string;
+  id: string;
+  unit: string;
+  ytlink: string;
+  description: string;
+  tree: { structure: Map<number, number>; maxlvl: number };
+  doctrines: { id: number; name: string; img: string }[];
+}
+
+export const getUnitPosts = async (unit: string): Promise<UnitData[]> => {
+  const response = await fetch(`/api/unitPost?unit=${unit}`);
   const result = await response.json();
   return result;
 };

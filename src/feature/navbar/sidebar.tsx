@@ -36,18 +36,22 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+} from "../../components/ui/dropdown-menu";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "../ui/collapsible";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+} from "../../components/ui/collapsible";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "../../components/ui/avatar";
 import LanguageToggle from "./language-toggle";
 import { ModeToggle } from "./theme-menu";
 import { signIn, signOut, useSession } from "next-auth/react";
 import clsx from "clsx";
-import { Button } from "../ui/button";
+import { Button } from "../../components/ui/button";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { rolesQueryOptions } from "@/queries/roles.query";
@@ -121,6 +125,11 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         disabled: !profile,
       },
       {
+        title: "My Stats",
+        url: "/member/stats",
+        disabled: !profile,
+      },
+      {
         title: "Update Survey",
         url: "/member/update-form",
         disabled: false,
@@ -154,8 +163,15 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         ),
       },
       {
+        title: "House Stats",
+        url: `/stats/${house}`,
+        visibleTo: commanders.some(
+          (e) => e.discordId === data?.user.id && e.house === house
+        ),
+      },
+      {
         title: "High Roles",
-        url: "/settings/high-roles",
+        url: `/settings/high-roles/${house}`,
         visibleTo: commanders.some(
           (e) =>
             e.discordId === data?.user.id &&
@@ -165,7 +181,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
       },
       {
         title: "Bot Config",
-        url: "/settings/bot-config",
+        url: `/settings/bot-config/${house}`,
         visibleTo: commanders.some(
           (e) =>
             e.discordId === data?.user.id &&
@@ -175,7 +191,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
       },
       {
         title: "House Card",
-        url: "/settings/house-card",
+        url: `/settings/house-card/${house}`,
         visibleTo: commanders.some(
           (e) =>
             e.discordId === data?.user.id &&
@@ -228,7 +244,7 @@ export default CustomSidebarProvider;
 const MobileTrigger = () => {
   const { isMobile } = useSidebar();
   return (
-    <div className="fixed top-0 left-0 z-50">
+    <div className="fixed top-0 left-0 z-20">
       <SidebarTrigger
         className={clsx({
           hidden: !isMobile,

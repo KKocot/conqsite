@@ -12,7 +12,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getQueryClient } from "@/lib/react-query";
 import { Footer } from "@/components/footer";
-import AppSidebar from "@/components/navbar/sidebar";
+import AppSidebar from "@/feature/navbar/sidebar";
 
 export const metadata: Metadata = {
   title: "House management app",

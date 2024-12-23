@@ -2,7 +2,7 @@ import CreateHouseDiscordServers from "@/feature/create-house/create-house-disco
 import CreateHouseHighRoles from "@/feature/create-house/create-house-high-roles";
 import CreateHouseCard from "@/feature/create-house/create-house-card";
 import CreateHouseConfig from "@/feature/create-house/create-house-config";
-import { DiscordProps, DiscordUsersProps } from "@/lib/get-data";
+import { DiscordProps, DiscordUsersProps, getAddAll } from "@/lib/get-data";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -72,11 +72,11 @@ const Content = ({ username }: { username: string }) => {
         console.error("error_occurred", errorData);
       } else {
         console.log("success", await response.json());
+        getAddAll(configValues.name);
       }
     } catch (error) {
       console.error("error_adding", error);
     } finally {
-      // add all
       router.push("/");
     }
   };
@@ -84,6 +84,7 @@ const Content = ({ username }: { username: string }) => {
     <div className="container pt-8">
       {step === 1 ? (
         <CreateHouseDiscordServers
+          type="create"
           creatorId={username}
           handleStep={(e) => setStep(e)}
           handleDiscord={setDiscordData}
@@ -91,6 +92,7 @@ const Content = ({ username }: { username: string }) => {
         />
       ) : step === 2 && discordData.lists ? (
         <CreateHouseConfig
+          type="create"
           data={discordData.lists}
           handleStep={(e) => setStep(e)}
           values={configValues}
@@ -101,6 +103,7 @@ const Content = ({ username }: { username: string }) => {
         />
       ) : step === 3 && discordData.users ? (
         <CreateHouseHighRoles
+          type="create"
           handleStep={(e) => setStep(e)}
           discordUsers={discordData.users}
           values={configValues}
@@ -108,6 +111,7 @@ const Content = ({ username }: { username: string }) => {
         />
       ) : step === 4 ? (
         <CreateHouseCard
+          type="create"
           onSubmit={onSubmit}
           values={configValues}
           setValues={setConfigValues}

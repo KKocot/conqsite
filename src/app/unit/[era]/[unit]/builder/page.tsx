@@ -12,16 +12,8 @@ import Tree from "@/components/tree";
 import DoctrinedBuilder from "@/components/doctrines-builder";
 import { useForm } from "react-hook-form";
 import { Form, FormField, FormItem } from "@/components/ui/form";
-type doctrine = { id: number; name: string; img: string };
-export interface UnitData {
-  title: string;
-  id: string;
-  unit: string;
-  ytlink: string;
-  description: string;
-  tree: { structure: Map<number, number>; maxlvl: number };
-  doctrines: doctrine[];
-}
+import Image from "next/image";
+import { UnitData } from "@/lib/get-data";
 
 const DEFAULT_UNIT_DATA: UnitData = {
   title: "",
@@ -64,19 +56,38 @@ const Page = () => {
       },
     },
   });
+  const onSubmit = async () => {
+    const data = form.getValues();
+    const response = await fetch("/api/userPost", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (response.ok) {
+      console.log("Post successful");
+    } else {
+      console.error("Post failed");
+    }
+  };
+
   if (!found_unit) {
     return <div>Unit not found</div>;
   }
   const values = form.getValues();
+  console.log(values);
   return (
     <div className="container mx-auto py-8">
       <Card className="w-full max-w-4xl mx-auto">
         <CardHeader>
           <div className="flex items-center gap-4">
-            <img
+            <Image
+              height={64}
+              width={64}
               src={found_unit.icon}
               alt={found_unit.name}
-              className="w-16 h-16 object-contain"
+              className="object-contain"
             />
             <CardTitle className="text-3xl sm:text-4xl lg:text-5xl">
               {found_unit.name}
@@ -85,14 +96,17 @@ const Page = () => {
         </CardHeader>
         <CardContent className="grid gap-6">
           <Form {...form}>
-            <form className="flex flex-col gap-6">
+            <form
+              className="flex flex-col gap-6"
+              onSubmit={form.handleSubmit(onSubmit)}
+            >
               <FormField
                 control={form.control}
                 name="title"
                 render={({ field }) => (
                   <FormItem>
                     <Label htmlFor="title">Title</Label>
-                    <Input id="title" {...field} />
+                    <Input id="title" {...field} required />
                   </FormItem>
                 )}
               />
@@ -126,7 +140,9 @@ const Page = () => {
                 setValue={form.setValue}
                 doctrineSlot={values.doctrines}
               />
-              <Button type="submit">Submit</Button>
+              <Button type="submit" variant="custom">
+                Submit
+              </Button>
             </form>
           </Form>
         </CardContent>

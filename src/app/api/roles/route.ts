@@ -50,10 +50,15 @@ export async function POST(request: Request) {
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
+  const house = searchParams.get("house");
   try {
     await connectMongoDB();
     if (id) {
       const roles = await Roles.find({ discordId: id });
+      return NextResponse.json({ roles });
+    }
+    if (house) {
+      const roles = await Roles.find({ house: house });
       return NextResponse.json({ roles });
     } else {
       const roles = await Roles.find();
@@ -70,16 +75,14 @@ export async function GET(request: Request) {
 export async function DELETE(request: Request) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
+  const house = searchParams.get("house");
   const discordKey = headers().get("discord-key");
   const envKey = process.env.BOT_KEY;
   const session = await getServerSession(authOptions);
-
   try {
     await connectMongoDB();
     const rolesLisy = await Roles.find();
-    const house = rolesLisy.find(
-      (role) => role.discordId === session?.user?.id
-    )?.house;
+
     const highestRolesAccess = highestRolesAllowed(rolesLisy, session, house);
 
     if (!(highestRolesAccess || (discordKey && botAllowed(discordKey, envKey))))

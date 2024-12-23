@@ -12,20 +12,40 @@ import {
 } from "../../components/ui/select";
 import { SelectGroup, SelectValue } from "@radix-ui/react-select";
 import { Badge } from "../../components/ui/badge";
-import { DiscordUsersProps } from "@/lib/get-data";
+import { DiscordUsersProps, Roles } from "@/lib/get-data";
 import { ConfigProps } from "@/app/(protected)/member/create-house/content";
+import { HighRolesValues } from "@/app/(protected)/(owner)/settings/high-roles/[param]/content";
 
-const CreateHouseHighRoles = ({
-  handleStep,
-  discordUsers,
-  values,
-  setValues,
-}: {
+interface CreateHouseHighRolesProps {
+  type: "create";
   handleStep: (e: number) => void;
   discordUsers: DiscordUsersProps;
   values: ConfigProps;
   setValues: Dispatch<SetStateAction<ConfigProps>>;
-}) => {
+  onAdd?: never;
+  onDelete?: never;
+}
+
+interface EditHouseHighRolesProps {
+  type: "edit";
+  handleStep?: never;
+  discordUsers: DiscordUsersProps;
+  values: HighRolesValues;
+  setValues?: never;
+  onAdd: (e: Roles) => void;
+  onDelete: (userId: string, house: string) => void;
+}
+
+const CreateHouseHighRoles = ({
+  type,
+  handleStep,
+  discordUsers,
+  values,
+  setValues,
+  onAdd,
+  onDelete,
+}: CreateHouseHighRolesProps | EditHouseHighRolesProps) => {
+  const house = type === "edit" ? values.houseLeader[0].house : "";
   return (
     <Card>
       <CardHeader className="text-center text-2xl font-bold">
@@ -36,11 +56,26 @@ const CreateHouseHighRoles = ({
         <h2 className="text-center text-lg font-bold p-6">House Leader</h2>
         <div className="grid grid-cols-3 gap-4 p-6">
           <div />
-          <Badge className="text-base h-8 flex justify-between">
-            <div />
-            <p>You</p>
-            <div />
-          </Badge>
+          {type === "edit" ? (
+            <div className="grid grid-cols-1 gap-5">
+              {values.houseLeader.map((user) => (
+                <Badge
+                  key={user.discordId}
+                  className="text-base h-8 flex justify-between"
+                >
+                  <div />
+                  <p>{user.discordNick}</p>
+                  <div />
+                </Badge>
+              ))}
+            </div>
+          ) : (
+            <Badge className="text-base h-8 flex justify-between">
+              <div />
+              <p>You</p>
+              <div />
+            </Badge>
+          )}
           <Card className="py-4">
             <CardHeader className="pt-1">Permissions:</CardHeader>
             <CardContent>
@@ -59,18 +94,27 @@ const CreateHouseHighRoles = ({
         <div className="grid grid-cols-3 gap-4 p-6">
           <Select
             disabled={values.righthand.length >= 1}
-            onValueChange={(e) =>
-              setValues((prev) => {
-                const user = discordUsers.users.find((user) => user.id === e);
-                if (user) {
-                  return {
-                    ...prev,
-                    righthand: [...prev.righthand, user],
-                  };
-                }
-                return prev;
-              })
-            }
+            onValueChange={(e) => {
+              const user = discordUsers.users.find((user) => user.id === e);
+              if (type === "edit") {
+                onAdd({
+                  discordId: user?.id ?? "",
+                  house: house,
+                  role: "RightHand",
+                  discordNick: user?.username ?? "",
+                });
+              } else {
+                setValues((prev) => {
+                  if (user) {
+                    return {
+                      ...prev,
+                      righthand: [...prev.righthand, user],
+                    };
+                  }
+                  return prev;
+                });
+              }
+            }}
           >
             <SelectTrigger>
               <SelectValue placeholder="Choose Right Hand" />
@@ -82,9 +126,13 @@ const CreateHouseHighRoles = ({
                     key={i + "righthand"}
                     value={e.id}
                     disabled={
-                      !![...values.highcommand, ...values.righthand].find(
-                        (user) => user.id === e.id
-                      )
+                      type === "edit"
+                        ? !![...values.highcommand, ...values.righthand].find(
+                            (user) => user.discordId === e.id
+                          )
+                        : !![...values.highcommand, ...values.righthand].find(
+                            (user) => user.id === e.id
+                          )
                     }
                   >
                     {e.username}
@@ -94,28 +142,44 @@ const CreateHouseHighRoles = ({
             </SelectContent>
           </Select>
           <div className="grid grid-cols-1 gap-5">
-            {values.righthand.map((user) => (
-              <Badge
-                key={user.id}
-                className="text-base h-8 flex justify-between"
-              >
-                <div />
-                <p>{user.username}</p>
-                <Button
-                  className="h-7"
-                  onClick={() =>
-                    setValues((prev) => ({
-                      ...prev,
-                      righthand: prev.righthand.filter(
-                        (selectedUser) => selectedUser.id !== user.id
-                      ),
-                    }))
-                  }
-                >
-                  X
-                </Button>
-              </Badge>
-            ))}
+            {type === "edit"
+              ? values.righthand.map((user) => (
+                  <Badge
+                    key={user.discordId}
+                    className="text-base h-8 flex justify-between"
+                  >
+                    <div className="w-5" />
+                    <p>{user.discordNick}</p>
+                    <Button
+                      className="h-7"
+                      onClick={() => onDelete(user.discordId, user.house)}
+                    >
+                      X
+                    </Button>
+                  </Badge>
+                ))
+              : values.righthand.map((user) => (
+                  <Badge
+                    key={user.id}
+                    className="text-base h-8 flex justify-between"
+                  >
+                    <div className="w-5" />
+                    <p>{user.username}</p>
+                    <Button
+                      className="h-7"
+                      onClick={() =>
+                        setValues((prev) => ({
+                          ...prev,
+                          righthand: prev.righthand.filter(
+                            (selectedUser) => selectedUser.id !== user.id
+                          ),
+                        }))
+                      }
+                    >
+                      X
+                    </Button>
+                  </Badge>
+                ))}
           </div>
           <Card className="py-4">
             <CardHeader className="pt-1">Permissions:</CardHeader>
@@ -136,18 +200,27 @@ const CreateHouseHighRoles = ({
         <div className="grid grid-cols-3 gap-4 p-6">
           <Select
             disabled={values.highcommand.length >= 3}
-            onValueChange={(e) =>
-              setValues((prev) => {
-                const user = discordUsers.users.find((user) => user.id === e);
-                if (user) {
-                  return {
-                    ...prev,
-                    highcommand: [...prev.highcommand, user],
-                  };
-                }
-                return prev;
-              })
-            }
+            onValueChange={(e) => {
+              const user = discordUsers.users.find((user) => user.id === e);
+              if (type === "edit") {
+                onAdd({
+                  discordId: user?.id ?? "",
+                  house: house,
+                  role: "HighCommand",
+                  discordNick: user?.username ?? "",
+                });
+              } else {
+                setValues((prev) => {
+                  if (user) {
+                    return {
+                      ...prev,
+                      highcommand: [...prev.highcommand, user],
+                    };
+                  }
+                  return prev;
+                });
+              }
+            }}
           >
             <SelectTrigger>
               <SelectValue placeholder="Choose Commanders" />
@@ -159,9 +232,13 @@ const CreateHouseHighRoles = ({
                     key={i + "command"}
                     value={e.id}
                     disabled={
-                      !![...values.highcommand, ...values.righthand].find(
-                        (user) => user.id === e.id
-                      )
+                      type === "edit"
+                        ? !![...values.highcommand, ...values.righthand].find(
+                            (user) => user.discordId === e.id
+                          )
+                        : !![...values.highcommand, ...values.righthand].find(
+                            (user) => user.id === e.id
+                          )
                     }
                   >
                     {e.username}
@@ -171,28 +248,44 @@ const CreateHouseHighRoles = ({
             </SelectContent>
           </Select>
           <div className="flex flex-col gap-5 h-36">
-            {values.highcommand.map((user) => (
-              <Badge
-                key={user.id}
-                className="text-base h-8 flex justify-between"
-              >
-                <div />
-                <p>{user.username}</p>
-                <Button
-                  className="h-7"
-                  onClick={() =>
-                    setValues((prev) => ({
-                      ...prev,
-                      highcommand: prev.highcommand.filter(
-                        (selectedUser) => selectedUser.id !== user.id
-                      ),
-                    }))
-                  }
-                >
-                  X
-                </Button>
-              </Badge>
-            ))}
+            {type === "edit"
+              ? values.highcommand.map((user) => (
+                  <Badge
+                    key={user.discordId}
+                    className="text-base h-8 flex justify-between"
+                  >
+                    <div />
+                    <p>{user.discordNick}</p>
+                    <Button
+                      className="h-7"
+                      onClick={() => onDelete(user.discordId, user.house)}
+                    >
+                      X
+                    </Button>
+                  </Badge>
+                ))
+              : values.highcommand.map((user) => (
+                  <Badge
+                    key={user.id}
+                    className="text-base h-8 flex justify-between"
+                  >
+                    <div />
+                    <p>{user.username}</p>
+                    <Button
+                      className="h-7"
+                      onClick={() =>
+                        setValues((prev) => ({
+                          ...prev,
+                          highcommand: prev.highcommand.filter(
+                            (selectedUser) => selectedUser.id !== user.id
+                          ),
+                        }))
+                      }
+                    >
+                      X
+                    </Button>
+                  </Badge>
+                ))}
           </div>
           <Card className="py-4">
             <CardHeader className="pt-1">Permissions:</CardHeader>
@@ -203,18 +296,20 @@ const CreateHouseHighRoles = ({
           </Card>
         </div>
 
-        <div className="flex justify-between w-full">
-          <Button variant="custom" onClick={() => handleStep(2)}>
-            Previes
-          </Button>
-          <Button
-            className="self-end"
-            variant="custom"
-            onClick={() => handleStep(4)}
-          >
-            Next
-          </Button>
-        </div>
+        {type === "edit" ? null : (
+          <div className="flex justify-between w-full">
+            <Button variant="custom" onClick={() => handleStep(2)}>
+              Previes
+            </Button>
+            <Button
+              className="self-end"
+              variant="custom"
+              onClick={() => handleStep(4)}
+            >
+              Next
+            </Button>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

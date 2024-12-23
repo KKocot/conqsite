@@ -9,7 +9,13 @@ export async function GET(request: Request) {
 
   const url = `http://bot.host2play.com:2005/api/users?guild_id=${guild_id}&member_id=${member_id}&member_role=${member_role}`;
   try {
-    const response = await fetch(url, { cache: "no-store" });
+    const response = await fetch(url, {
+      cache: "no-store",
+      headers: {
+        Authorization: `${process.env.BOT_KEY}`,
+        "Content-Type": "application/json",
+      },
+    });
     const data = await response.json();
     return Response.json(data);
   } catch (error) {

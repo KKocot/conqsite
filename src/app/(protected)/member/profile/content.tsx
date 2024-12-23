@@ -22,14 +22,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { profileQueryOptions } from "@/queries/profile.query";
-import { getUserStats } from "@/lib/get-data";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
-import { TooltipProvider } from "@radix-ui/react-tooltip";
+import Image from "next/image";
 export default function Content() {
   const { data: user_data } = useSession();
   const t = useTranslations("BuildTeam");
@@ -39,13 +32,7 @@ export default function Content() {
     enabled: !!user_data?.user.id,
   });
 
-  const { data: statsData, isLoading: statsIsLoading } = useQuery({
-    queryKey: ["userStats", user_data!.user.id],
-    queryFn: () => getUserStats(user_data!.user.id),
-    enabled: !!user_data?.user.id,
-  });
-
-  if (profileIsLoading || statsIsLoading) {
+  if (profileIsLoading) {
     return (
       <div className="flex w-full justify-center items-center h-screen">
         <Loading color="#94a3b8" />
@@ -112,26 +99,6 @@ export default function Content() {
                 ) : null}
               </div>
             </div>
-            {statsData && statsData.attendance.length > 0 ? (
-              <div>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button variant="outline">Show my TW attendance</Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <ul>
-                        {statsData.attendance.map((e) => (
-                          <li key={e} className="text-xl">
-                            {e}
-                          </li>
-                        ))}
-                      </ul>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-            ) : null}
           </div>
           <ul className="flex gap-8 flex-wrap">
             {weapons_list.map((e) =>
@@ -146,7 +113,13 @@ export default function Content() {
                   })}
                   title={t("leadership") + ": " + e.matchingWeapon.leadership}
                 >
-                  <img src={e.src} className="rounded-full w-12 h-12" />
+                  <Image
+                    height={48}
+                    width={48}
+                    src={e.src}
+                    alt={e.name}
+                    className="rounded-full"
+                  />
                   <span className="text-sm">{e.name}</span>
                 </li>
               ) : null

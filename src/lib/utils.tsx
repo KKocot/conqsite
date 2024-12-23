@@ -131,3 +131,25 @@ export function getUnit(
       return null;
   }
 }
+
+export const createDateArray = (start: string, end: string): string[] => {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  const dateArray: string[] = [];
+
+  let currentDate = startDate;
+  while (currentDate <= endDate) {
+    const day = currentDate.getDay();
+    if (day === 2 || day === 6) {
+      // 2 is Tuesday, 6 is Saturday
+      const year = currentDate.getFullYear();
+      const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed, so add 1
+      const date = String(currentDate.getDate()).padStart(2, "0");
+      const formattedDate = `${year}-${month}-${date}`;
+      dateArray.push(formattedDate);
+    }
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return dateArray;
+};

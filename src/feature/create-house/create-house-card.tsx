@@ -25,21 +25,33 @@ import {
 } from "../../components/ui/tooltip";
 import { Info } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
-import { getHousesDetails } from "@/lib/get-data";
+import { getHousesDetails, HouseDetails } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { ConfigProps } from "@/app/(protected)/member/create-house/content";
+import clsx from "clsx";
 
-const CreateHouseCard = ({
-  values,
-  setValues,
-  handleStep,
-  onSubmit,
-}: {
+interface CreateProps {
+  type: "create";
   values: ConfigProps;
   setValues: Dispatch<SetStateAction<ConfigProps>>;
   handleStep: (e: number) => void;
   onSubmit: () => void;
-}) => {
+}
+interface EditProps {
+  type: "edit";
+  values: HouseDetails;
+  setValues: Dispatch<SetStateAction<HouseDetails>>;
+  handleStep?: never;
+  onSubmit: () => void;
+}
+
+const CreateHouseCard = ({
+  type,
+  values,
+  setValues,
+  handleStep,
+  onSubmit,
+}: CreateProps | EditProps) => {
   const t = useTranslations("HousePage");
   const { data: housesData } = useQuery({
     queryKey: ["houses"],
@@ -77,9 +89,14 @@ const CreateHouseCard = ({
               <Input
                 id="housename"
                 value={values.name}
-                onChange={(e) =>
-                  setValues((prev) => ({ ...prev, name: e.target.value }))
-                }
+                onChange={(e) => {
+                  if (type === "edit") {
+                    setValues((prev) => ({ ...prev, name: e.target.value }));
+                  } else {
+                    setValues((prev) => ({ ...prev, name: e.target.value }));
+                  }
+                }}
+                disabled={type === "edit"}
               />
             </div>
             <div>
@@ -90,12 +107,19 @@ const CreateHouseCard = ({
               <Textarea
                 id="housedescription"
                 value={values.description}
-                onChange={(e) =>
-                  setValues((prev) => ({
-                    ...prev,
-                    description: e.target.value,
-                  }))
-                }
+                onChange={(e) => {
+                  if (type === "edit") {
+                    setValues((prev) => ({
+                      ...prev,
+                      description: e.target.value,
+                    }));
+                  } else {
+                    setValues((prev) => ({
+                      ...prev,
+                      description: e.target.value,
+                    }));
+                  }
+                }}
               />
             </div>
             <div>
@@ -106,9 +130,13 @@ const CreateHouseCard = ({
               <Input
                 id="country"
                 value={values.country}
-                onChange={(e) =>
-                  setValues((prev) => ({ ...prev, country: e.target.value }))
-                }
+                onChange={(e) => {
+                  if (type === "edit") {
+                    setValues((prev) => ({ ...prev, country: e.target.value }));
+                  } else {
+                    setValues((prev) => ({ ...prev, country: e.target.value }));
+                  }
+                }}
               />
             </div>
             <div>
@@ -119,12 +147,19 @@ const CreateHouseCard = ({
               <Input
                 id="discordlink"
                 value={values.discordLink}
-                onChange={(e) =>
-                  setValues((prev) => ({
-                    ...prev,
-                    discordLink: e.target.value,
-                  }))
-                }
+                onChange={(e) => {
+                  if (type === "edit") {
+                    setValues((prev) => ({
+                      ...prev,
+                      discordLink: e.target.value,
+                    }));
+                  } else {
+                    setValues((prev) => ({
+                      ...prev,
+                      discordLink: e.target.value,
+                    }));
+                  }
+                }}
               />
             </div>
             <div>
@@ -135,9 +170,13 @@ const CreateHouseCard = ({
               <Input
                 id="houseimage"
                 value={values.avatar}
-                onChange={(e) =>
-                  setValues((prev) => ({ ...prev, avatar: e.target.value }))
-                }
+                onChange={(e) => {
+                  if (type === "edit") {
+                    setValues((prev) => ({ ...prev, avatar: e.target.value }));
+                  } else {
+                    setValues((prev) => ({ ...prev, avatar: e.target.value }));
+                  }
+                }}
               />
             </div>
 
@@ -148,9 +187,13 @@ const CreateHouseCard = ({
               </Label>
               <Select
                 value={values.server}
-                onValueChange={(e) =>
-                  setValues((prev) => ({ ...prev, server: e }))
-                }
+                onValueChange={(e) => {
+                  if (type === "edit") {
+                    setValues((prev) => ({ ...prev, server: e }));
+                  } else {
+                    setValues((prev) => ({ ...prev, server: e }));
+                  }
+                }}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select a server" />
@@ -171,11 +214,18 @@ const CreateHouseCard = ({
             <HouseCard house={values} />
           </div>
         </div>
-        <div className="flex justify-between w-full">
-          <Button variant="custom" onClick={() => handleStep(3)}>
-            Previes
-          </Button>
-          {validation.isHouseNameAvailable ? (
+        <div
+          className={clsx("flex w-full", {
+            "justify-between": type === "create",
+            "justify-end": type === "edit",
+          })}
+        >
+          {type === "edit" ? null : (
+            <Button variant="custom" onClick={() => handleStep(3)}>
+              Previes
+            </Button>
+          )}
+          {validation.isHouseNameAvailable && type !== "edit" ? (
             <p className="text-red-500">House Name is already taken</p>
           ) : validation.nameTooLong ? (
             <p className="text-red-500">House Name is too long</p>
@@ -196,18 +246,19 @@ const CreateHouseCard = ({
               !values.discordLink ||
               !values.avatar ||
               !values.server ||
-              validation.isHouseNameAvailable ||
+              (validation.isHouseNameAvailable && type !== "edit") ||
               validation.nameTooLong ||
               validation.descriptionTooLong ||
               validation.wrongDiscordLink ||
               validation.countryTooLong ||
               validation.serverRequired
             }
-            className="self-end"
             variant="custom"
             onClick={onSubmit}
           >
-            Create House and add all your Members
+            {type === "edit"
+              ? "Edit card"
+              : "Create House and add all your Members"}
           </Button>
         </div>
       </CardContent>

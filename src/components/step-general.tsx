@@ -17,6 +17,7 @@ import { useTranslations } from "next-intl";
 import { getHousesDetails } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "react-loading";
+import Image from "next/image";
 
 const StepGeneral = ({
   form,
@@ -75,7 +76,7 @@ const StepGeneral = ({
                 <FormControl>
                   <Input
                     {...field}
-                    min={1}
+                    min={2}
                     max={10000}
                     type="number"
                     required
@@ -203,7 +204,9 @@ const StepGeneral = ({
                 key={i}
                 className="flex flex-col items-center whitespace-nowrap gap-2 h-[200px]"
               >
-                <img
+                <Image
+                  height={80}
+                  width={80}
                   title={weapons[i].name}
                   src={weapons[i].src}
                   alt={weapons[i].name}
@@ -215,7 +218,7 @@ const StepGeneral = ({
                     }
                   }}
                   className={clsx(
-                    "h-20 w-20 rounded-full p-2 mx-6 cursor-pointer hover:shadow-md transition duration-300 ease-in-out transform hover:scale-110 hover:bg-gray-300",
+                    "rounded-full p-2 mx-6 cursor-pointer hover:shadow-md transition duration-300 ease-in-out transform hover:scale-110 hover:bg-gray-300",
                     { "bg-red-700 hover:bg-red-900": e.value }
                   )}
                 />

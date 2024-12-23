@@ -3,11 +3,9 @@ import { ZodError } from "zod";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const guild_id = searchParams.get("guild_id");
-  const member_id = searchParams.get("member_id");
-  const tw_server = searchParams.get("tw_server");
+  const house = searchParams.get("house");
 
-  const url = `http://bot.host2play.com:2005/api/server_verification?guild_id=${guild_id}&member_id=${member_id}&tw_server=${tw_server}`;
+  const url = `http://bot.host2play.com:2005/api/add_all?house=${house}`;
   try {
     const response = await fetch(url, {
       cache: "no-store",

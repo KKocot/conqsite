@@ -8,7 +8,7 @@ import ReactCountryFlag from "react-country-flag";
 import { useLocale, useTranslations } from "next-intl";
 import { setUserLocale } from "@/lib/locale";
 import { locales } from "@/i18n";
-import { Button } from "../ui/button";
+import { Button } from "../../components/ui/button";
 
 const LanguageToggle = () => {
   const locale = useLocale();

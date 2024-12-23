@@ -1,56 +1,56 @@
+import Image from "next/image";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
+import { ExternalLink } from "lucide-react";
 import Link from "next/link";
-import { toast } from "react-toastify";
-import { SiDiscord } from "@icons-pack/react-simple-icons";
-import { Castle } from "lucide-react";
-import { HouseDetails } from "@/lib/get-data";
 
-const HouseCard = ({ house }: { house: HouseDetails }) => {
-  const t = useTranslations("HousePage");
+interface HouseDetails {
+  name: string;
+  description: string;
+  country: string;
+  discordLink: string;
+  avatar: string;
+  server: string;
+}
+
+export default function HouseCard({ house }: { house: HouseDetails }) {
   return (
-    <li
-      className="shadow-background/50 w-[362px] hover:shadow-background/50 shadow hover:shadow-lg transition-all grid  rounded-sm overflow-hidden bg-background"
-      key={house.name}
-    >
-      <div className="relative w-full h-auto aspect-square">
-        <img
+    <Card className="w-[362px] overflow-hidden flex flex-col">
+      <div className="relative w-full h-[362px]">
+        <Image
           src={house.avatar}
-          alt="House Avatar"
-          className="w-[362px] h-[362px]"
+          alt={`${house.name} avatar`}
+          layout="fill"
+          objectFit="cover"
         />
-        <div className="absolute top-2 -right-16 rotate-45 h-10 w-44 bg-accent"></div>
-        <div className="absolute top-3 right-2 text-sm  text-center text-background font-bold">
-          {house.server}
-        </div>
       </div>
-      <div className="px-2">
-        <div className="flex justify-between items-center">
-          <h2 className="text-xl pt-2">{house.name}</h2>
-          <p className="text-sm">{house.country}</p>
-        </div>
-        <div className="flex justify-between items-center">
-          <p className="text-sm">{house.description}</p>
-        </div>
-      </div>
-      <div className="flex mt-2">
-        <Button className="w-full gap-1 border-r-2" asChild variant="custom">
-          <Link className="w-full" target="_blank" href={house.discordLink}>
-            <SiDiscord className="size-4" /> {t("join_discord")}
+      <CardHeader className="pt-2 ">
+        <CardTitle className="text-xl font-bold">{house.name}</CardTitle>
+        <p className="text-sm text-muted-foreground">
+          <span title="Server">{house.server}</span> {house.country}
+        </p>
+      </CardHeader>
+      <CardContent className="flex-grow">
+        <p className="text-sm mb-2">{house.description}</p>
+      </CardContent>
+      <CardFooter>
+        <Button asChild className="w-full" variant="custom">
+          <Link
+            href={house.discordLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center"
+          >
+            Join Discord <ExternalLink className="ml-2 h-4 w-4" />
           </Link>
         </Button>
-
-        <Button
-          variant="custom"
-          className="w-full gap-1 border-l-2"
-          onClick={() => {
-            toast.error("Not working yet");
-          }}
-        >
-          {t("join_to_house")} <Castle className="size-4" />
-        </Button>
-      </div>
-    </li>
+      </CardFooter>
+    </Card>
   );
-};
-export default HouseCard;
+}

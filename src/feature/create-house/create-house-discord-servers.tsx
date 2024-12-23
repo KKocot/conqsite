@@ -15,35 +15,54 @@ import {
   ConfigProps,
   DiscordDataProps,
 } from "@/app/(protected)/member/create-house/content";
+import { EditConfigProps } from "@/app/(protected)/(owner)/settings/bot-config/[param]/content";
 
 export interface CreateHouse {
   guild_id: string;
   tw_discord: string;
   anotherDC: boolean;
 }
-
-const CreateHouseDiscordServers = ({
-  creatorId,
-  handleDiscord,
-  handleStep,
-  handlerGeneral,
-}: {
+interface CreateProps {
+  type: "create";
   creatorId: string;
   handleDiscord: Dispatch<SetStateAction<DiscordDataProps>>;
   handleStep: Dispatch<SetStateAction<number>>;
   handlerGeneral: Dispatch<SetStateAction<ConfigProps>>;
-}) => {
+  configValues?: never;
+}
+
+interface EditProps {
+  type: "edit";
+  creatorId: string;
+  handleDiscord: Dispatch<SetStateAction<DiscordDataProps>>;
+  handleStep: Dispatch<SetStateAction<number>>;
+  handlerGeneral: Dispatch<SetStateAction<EditConfigProps>>;
+  configValues: EditConfigProps;
+}
+const CreateHouseDiscordServers = ({
+  type,
+  creatorId,
+  handleDiscord,
+  handleStep,
+  handlerGeneral,
+  configValues,
+}: CreateProps | EditProps) => {
   const [values, setValues] = useState<CreateHouse>({
-    guild_id: "",
-    tw_discord: "",
-    anotherDC: false,
+    guild_id: configValues?.guild_id ?? "",
+    tw_discord: configValues?.tw_discord ?? "",
+    anotherDC:
+      configValues?.tw_discord === configValues?.guild_id ? false : true,
   });
   const onSubmit = async () => {
     const data: DiscordProps = await getDiscordData(creatorId, values);
     handleDiscord((prev) => ({ ...prev, lists: data }));
     if (data.status === "ok") {
       handleStep(2);
-      handlerGeneral((prev) => ({ ...prev, guild_id: values.guild_id }));
+      if (type === "edit") {
+        handlerGeneral((prev) => ({ ...prev, guild_id: values.guild_id }));
+      } else {
+        handlerGeneral((prev) => ({ ...prev, guild_id: values.guild_id }));
+      }
     }
     if (data.status === "error") {
       alert(data.error);
@@ -66,7 +85,7 @@ const CreateHouseDiscordServers = ({
                   <TooltipTrigger>
                     <Info />
                   </TooltipTrigger>
-                  <TooltipContent className="bg-background">
+                  <TooltipContent className="bg-background z-50">
                     <div className="flex">
                       <div className="flex flex-col items-center">
                         <p>Go to your Discord User Settings</p>

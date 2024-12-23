@@ -29,16 +29,10 @@ import {
   ConfigProps,
   DiscordDataProps,
 } from "@/app/(protected)/member/create-house/content";
+import { EditConfigProps } from "@/app/(protected)/(owner)/settings/bot-config/[param]/content";
 
-const CreateHouseConfig = ({
-  data,
-  handleStep,
-  values,
-  setValues,
-  creatorId,
-  handleDiscordUsers,
-  discordServer,
-}: {
+interface CreateConfig {
+  type: "create";
   data: DiscordProps;
   handleStep: (e: number) => void;
   values: ConfigProps;
@@ -46,7 +40,31 @@ const CreateHouseConfig = ({
   creatorId: string;
   handleDiscordUsers: Dispatch<SetStateAction<DiscordDataProps>>;
   discordServer: string;
-}) => {
+  onUpdate?: never;
+}
+
+interface EditConfig {
+  type: "edit";
+  data: DiscordProps;
+  handleStep: (e: number) => void;
+  values: EditConfigProps;
+  setValues: Dispatch<SetStateAction<EditConfigProps>>;
+  creatorId: string;
+  handleDiscordUsers: Dispatch<SetStateAction<DiscordDataProps>>;
+  discordServer: string;
+  onUpdate: () => void;
+}
+const CreateHouseConfig = ({
+  type,
+  data,
+  handleStep,
+  values,
+  setValues,
+  creatorId,
+  handleDiscordUsers,
+  discordServer,
+  onUpdate,
+}: CreateConfig | EditConfig) => {
   const t = useTranslations("SettingsPage");
   const onSubmit = async () => {
     const usersData: DiscordUsersProps = await getDiscordUsers(
@@ -54,7 +72,6 @@ const CreateHouseConfig = ({
       creatorId,
       values.member
     );
-
     handleDiscordUsers((prev) => ({ ...prev, users: usersData }));
     if (data.status === "ok") {
       handleStep(3);
@@ -63,6 +80,7 @@ const CreateHouseConfig = ({
       alert(data.error);
     }
   };
+
   return (
     <div>
       <Card>
@@ -95,9 +113,16 @@ const CreateHouseConfig = ({
                 <TableCell>
                   <Select
                     value={values.member}
-                    onValueChange={(e) =>
-                      setValues((prev) => ({ ...prev, member: e }))
-                    }
+                    onValueChange={(e) => {
+                      if (type === "edit") {
+                        setValues((prev) => ({ ...prev, member: e }));
+                      } else {
+                        setValues((prev) => ({
+                          ...prev,
+                          member: e,
+                        }));
+                      }
+                    }}
                   >
                     <Item label="Member" value={data.roles} />
                   </Select>
@@ -112,9 +137,16 @@ const CreateHouseConfig = ({
                 <TableCell>
                   <Select
                     value={values.logs}
-                    onValueChange={(e) =>
-                      setValues((prev) => ({ ...prev, logs: e }))
-                    }
+                    onValueChange={(e) => {
+                      if (type === "edit") {
+                        setValues((prev) => ({ ...prev, logs: e }));
+                      } else {
+                        setValues((prev) => ({
+                          ...prev,
+                          logs: e,
+                        }));
+                      }
+                    }}
                   >
                     <Item label="Logs" value={data.channels} />
                   </Select>
@@ -130,9 +162,16 @@ const CreateHouseConfig = ({
                   <TableCell>
                     <Select
                       value={values.tw_member}
-                      onValueChange={(e) =>
-                        setValues((prev) => ({ ...prev, tw_member: e }))
-                      }
+                      onValueChange={(e) => {
+                        if (type === "edit") {
+                          setValues((prev) => ({ ...prev, tw_member: e }));
+                        } else {
+                          setValues((prev) => ({
+                            ...prev,
+                            tw_member: e,
+                          }));
+                        }
+                      }}
                     >
                       <Item
                         label="Common role on TW discord"
@@ -151,14 +190,23 @@ const CreateHouseConfig = ({
                       <Label>{t("channel")}</Label>
                       <Select
                         value={element.channelID}
-                        onValueChange={(value) =>
-                          setValues((prev) => ({
-                            ...prev,
-                            lineup: prev.lineup.map((e, index) =>
-                              index === i ? { ...e, channelID: value } : e
-                            ),
-                          }))
-                        }
+                        onValueChange={(value) => {
+                          if (type === "edit") {
+                            setValues((prev) => ({
+                              ...prev,
+                              lineup: prev.lineup.map((e, index) =>
+                                index === i ? { ...e, channelID: value } : e
+                              ),
+                            }));
+                          } else {
+                            setValues((prev) => ({
+                              ...prev,
+                              lineup: prev.lineup.map((e, index) =>
+                                index === i ? { ...e, channelID: value } : e
+                              ),
+                            }));
+                          }
+                        }}
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Pick sign up bot channel" />
@@ -181,23 +229,41 @@ const CreateHouseConfig = ({
                       <Label>{t("role")}</Label>
                       <Select
                         value={element.roleID}
-                        onValueChange={(value) =>
-                          setValues((prev) => ({
-                            ...prev,
-                            lineup: prev.lineup.map((e, index) =>
-                              index === i
-                                ? {
-                                    ...e,
-                                    roleID: value,
-                                    name:
-                                      data.roles.find(
-                                        (role) => role.id === value
-                                      )?.label || "None",
-                                  }
-                                : e
-                            ),
-                          }))
-                        }
+                        onValueChange={(value) => {
+                          if (type === "edit") {
+                            setValues((prev) => ({
+                              ...prev,
+                              lineup: prev.lineup.map((e, index) =>
+                                index === i
+                                  ? {
+                                      ...e,
+                                      roleID: value,
+                                      name:
+                                        data.roles.find(
+                                          (role) => role.id === value
+                                        )?.label || "None",
+                                    }
+                                  : e
+                              ),
+                            }));
+                          } else {
+                            setValues((prev) => ({
+                              ...prev,
+                              lineup: prev.lineup.map((e, index) =>
+                                index === i
+                                  ? {
+                                      ...e,
+                                      roleID: value,
+                                      name:
+                                        data.roles.find(
+                                          (role) => role.id === value
+                                        )?.label || "None",
+                                    }
+                                  : e
+                              ),
+                            }));
+                          }
+                        }}
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Pick Lineup Role" />
@@ -222,14 +288,23 @@ const CreateHouseConfig = ({
                       ) : (
                         <Button
                           variant="destructive"
-                          onClick={() =>
-                            setValues((prev) => ({
-                              ...prev,
-                              lineup: prev.lineup.filter(
-                                (_, index) => index !== i
-                              ),
-                            }))
-                          }
+                          onClick={() => {
+                            if (type === "edit") {
+                              setValues((prev) => ({
+                                ...prev,
+                                lineup: prev.lineup.filter(
+                                  (_, index) => index !== i
+                                ),
+                              }));
+                            } else {
+                              setValues((prev) => ({
+                                ...prev,
+                                lineup: prev.lineup.filter(
+                                  (_, index) => index !== i
+                                ),
+                              }));
+                            }
+                          }}
                         >
                           {t("delete_lineup")}
                         </Button>
@@ -237,15 +312,25 @@ const CreateHouseConfig = ({
                       {values.lineup.length !== i + 1 ? null : (
                         <Button
                           className="self-end justify-self-end"
-                          onClick={() =>
-                            setValues((prev) => ({
-                              ...prev,
-                              lineup: [
-                                ...prev.lineup,
-                                { channelID: "", roleID: "", name: "" },
-                              ],
-                            }))
-                          }
+                          onClick={() => {
+                            if (type === "edit") {
+                              setValues((prev) => ({
+                                ...prev,
+                                lineup: [
+                                  ...prev.lineup,
+                                  { channelID: "", roleID: "", name: "" },
+                                ],
+                              }));
+                            } else {
+                              setValues((prev) => ({
+                                ...prev,
+                                lineup: [
+                                  ...prev.lineup,
+                                  { channelID: "", roleID: "", name: "" },
+                                ],
+                              }));
+                            }
+                          }}
                         >
                           {t("add_lineup")}
                         </Button>
@@ -256,24 +341,49 @@ const CreateHouseConfig = ({
               ))}
             </TableBody>
           </Table>
-          <div className="flex justify-between w-full">
-            <Button variant="custom" onClick={() => handleStep(1)}>
-              Previes
-            </Button>
-            <Button
-              disabled={
-                (data.twRoles !== null && values.tw_member === "") ||
-                values.member === "" ||
-                values.logs === "" ||
-                values.lineup.some((e) => e.channelID === "" || e.roleID === "")
-              }
-              className="self-end"
-              variant="custom"
-              onClick={onSubmit}
-            >
-              Next
-            </Button>
-          </div>
+          {type === "edit" ? (
+            <div className="flex justify-between w-full">
+              <Button variant="custom" onClick={() => handleStep(1)}>
+                Previes
+              </Button>
+              <Button
+                disabled={
+                  (data.twRoles !== null && values.tw_member === "") ||
+                  values.member === "" ||
+                  values.logs === "" ||
+                  values.lineup.some(
+                    (e) => e.channelID === "" || e.roleID === ""
+                  )
+                }
+                className="self-end"
+                variant="custom"
+                onClick={onUpdate}
+              >
+                Update Config
+              </Button>
+            </div>
+          ) : (
+            <div className="flex justify-between w-full">
+              <Button variant="custom" onClick={() => handleStep(1)}>
+                Previes
+              </Button>
+              <Button
+                disabled={
+                  (data.twRoles !== null && values.tw_member === "") ||
+                  values.member === "" ||
+                  values.logs === "" ||
+                  values.lineup.some(
+                    (e) => e.channelID === "" || e.roleID === ""
+                  )
+                }
+                className="self-end"
+                variant="custom"
+                onClick={onSubmit}
+              >
+                Next
+              </Button>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
