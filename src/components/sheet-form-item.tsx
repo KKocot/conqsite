@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/accordion";
 import { useTranslations } from "next-intl";
 import { Survey } from "@/lib/get-data";
+import Image from "next/image";
 function findUserByNick(users: Survey[], nickname: string) {
   return users.find(
     (user) => user.discordNick === nickname || user.inGameNick === nickname
@@ -285,9 +286,11 @@ const Item = ({
             <AccordionContent>
               <div className="flex flex-wrap gap-2 justify-center">
                 {artillery.map((e) => (
-                  <img
+                  <Image
+                    height={40}
+                    width={40}
                     className={clsx(
-                      "h-10 w-10 rounded-full mt-2 p-1 cursor-pointer hover:shadow-md transition duration-300 ease-in-out transform hover:scale-110 hover:bg-gray-300",
+                      "rounded-full mt-2 p-1 cursor-pointer hover:shadow-md transition duration-300 ease-in-out transform hover:scale-110 hover:bg-gray-300",
                       {
                         "bg-emerald-700 hover:bg-emerald-900":
                           data.artillery.find((a) => a.id === e.id)?.check,

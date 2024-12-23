@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/navbar/navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getLocale, getMessages } from "next-intl/server";
@@ -13,6 +12,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getQueryClient } from "@/lib/react-query";
 import { Footer } from "@/components/footer";
+import AppSidebar from "@/feature/navbar/sidebar";
 
 export const metadata: Metadata = {
   title: "House management app",
@@ -39,10 +39,8 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <Providers session={session}>
             <HydrationBoundary state={dehydrate(queryClient)}>
-              <Navbar />
-              {children}
+              <AppSidebar>{children}</AppSidebar>
               <ToastContainer theme="colored" autoClose={2000} />
-              <Footer />
             </HydrationBoundary>
           </Providers>
         </NextIntlClientProvider>

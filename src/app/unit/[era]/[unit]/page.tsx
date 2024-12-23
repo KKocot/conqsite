@@ -3,9 +3,12 @@
 import Tree from "@/components/tree";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getUnitPosts } from "@/lib/get-data";
 import { Unit } from "@/lib/type";
 import { getUnit } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
 import { CirclePlus } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
@@ -19,6 +22,10 @@ const Page = () => {
     | "blue"
     | "grey";
   const found_unit: Unit | null = getUnit(unit, era) ?? null;
+  const { data, isLoading } = useQuery({
+    queryKey: ["unitPost", unit],
+    queryFn: () => getUnitPosts(unit),
+  });
   if (!found_unit) {
     return <div>Unit not found</div>;
   }
@@ -27,10 +34,12 @@ const Page = () => {
       <Card className="w-full max-w-4xl mx-auto">
         <CardHeader>
           <div className="flex items-center gap-4">
-            <img
+            <Image
+              height={64}
+              width={64}
               src={found_unit.icon}
               alt={found_unit.name}
-              className="w-16 h-16 object-contain"
+              className="object-contain"
             />
             <CardTitle className="text-3xl sm:text-4xl lg:text-5xl">
               {found_unit.name}
@@ -67,23 +76,31 @@ const Page = () => {
           <div className="flex justify-between w-full">
             <img src={found_unit.src} alt={found_unit.name} className="h-64" />
             <p>{found_unit.description}</p>
-            <div className="w-96 h-64 overflow-y-scroll">
+            <div className="w-[750px] h-64 overflow-y-scroll">
               <div className="w-full bg-background p-2 flex justify-between">
                 <h2>Community build</h2>
                 <Link href={`${unit}/builder`}>
                   <CirclePlus />
                 </Link>
               </div>
-              {[...Array(5)].map((_, index) => (
-                <Card key={index} className="p-2 mb-2">
-                  <div>
-                    <CardTitle className="text-xl">Build by User</CardTitle>
-                  </div>
-                  <div>
-                    <div>Build </div>
-                  </div>
-                </Card>
-              ))}
+              {isLoading ? (
+                <div>Loading...</div>
+              ) : data && data.length !== 0 ? (
+                data.map((post) => (
+                  <Card key={post.id} className="p-2 mb-2">
+                    <Link href={`${post.unit}/${post.id}`}>
+                      <div>
+                        <CardTitle className="text-xl">{post.title}</CardTitle>
+                      </div>
+                      <div>
+                        <div>{post.description}</div>
+                      </div>
+                    </Link>
+                  </Card>
+                ))
+              ) : (
+                <div>No post found</div>
+              )}
             </div>
           </div>
           <div className="flex justify-center py-4">

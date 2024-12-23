@@ -1,11 +1,12 @@
 "use client";
+
 import { useDrag, useDrop, DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { doctrines } from "@/assets/doctrines";
-import { Control, useForm, UseFormSetValue } from "react-hook-form";
-import { UnitData } from "@/app/unit/[era]/[unit]/builder/page";
+import { UseFormSetValue } from "react-hook-form";
+import { UnitData } from "@/lib/get-data";
 
 const ItemTypes = {
   DOCTRINE: "doctrine",

@@ -14,6 +14,7 @@ import { weapons } from "@/assets/weapons";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { Survey } from "@/lib/get-data";
+import Image from "next/image";
 
 const ProfileData = ({ profile }: { profile: Survey }) => {
   const t = useTranslations("BuildTeam");
@@ -38,10 +39,12 @@ const ProfileData = ({ profile }: { profile: Survey }) => {
               className="flex flex-col items-center w-18"
               title={t("leadership") + ": " + e.matchingWeapon.leadership}
             >
-              <img
+              <Image
+                height={48}
+                width={48}
                 src={e.src}
                 alt={e.name}
-                className="rounded-full w-12 h-12"
+                className="rounded-full"
               />
               <span
                 className={clsx("text-sm", {

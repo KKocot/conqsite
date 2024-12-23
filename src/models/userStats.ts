@@ -2,7 +2,8 @@ import mongoose, { Schema } from "mongoose";
 
 const userStatsSchema: Schema = new Schema({
   id: String,
-  house: String,
+  nick: String,
+  house: [String],
   attendance: [String],
 });
 
