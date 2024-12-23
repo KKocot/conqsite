@@ -77,7 +77,9 @@ export interface Survey {
 export const getSurveys = async (house: string): Promise<Survey[]> => {
   const response = await fetch(`/api/survey?house=${house}`);
   const result = await response.json();
-  return result.surveys;
+  return result.surveys.filter(
+    (e: Survey) => e.discordId !== "303156898532818944"
+  );
 };
 
 export const getSurvey = async (discordId: string): Promise<Survey> => {
