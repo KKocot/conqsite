@@ -247,3 +247,16 @@ export const getUnitPosts = async (unit: string): Promise<UnitData[]> => {
   const result = await response.json();
   return result;
 };
+
+export interface HouseAssets {
+  name: string;
+  premium: boolean;
+  sharedList: boolean;
+  signupBot: "raidhelper" | "apollo" | "konquerus";
+}
+
+export const getHouseAssets = async (house: string): Promise<HouseAssets> => {
+  const response = await fetch(`/api/houseAssets?name=${house}`);
+  const result = await response.json();
+  return result.houseAssets;
+};
