@@ -4,7 +4,7 @@ const HouseAssetsSchema = new Schema({
   name: String,
   premium: Boolean,
   sharedList: Boolean,
-  signupBot: { enum: ["raidhelper", "apollo", "konquerus"] },
+  signupBot: String,
 });
 
 const HouseAssets =

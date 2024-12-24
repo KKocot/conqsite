@@ -39,7 +39,6 @@ const Content: FC<ContentProps> = ({
       }
       return false;
     });
-  console.log(houseAssets);
   return (
     <div className="w-full">
       {rolesData

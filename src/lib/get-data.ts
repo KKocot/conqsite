@@ -252,7 +252,7 @@ export interface HouseAssets {
   name: string;
   premium: boolean;
   sharedList: boolean;
-  signupBot: "raidhelper" | "apollo" | "konquerus";
+  signupBot: string;
 }
 
 export const getHouseAssets = async (house: string): Promise<HouseAssets> => {
