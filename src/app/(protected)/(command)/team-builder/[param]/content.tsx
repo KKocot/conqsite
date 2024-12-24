@@ -27,15 +27,21 @@ import { DEFAULT_CARD } from "@/lib/defaults";
 interface PageProps {
   house: string;
   nextTW: string;
+  surveysData: Survey[];
 }
 
-const Content: React.FC<PageProps> = ({ house, nextTW }) => {
+const Content: React.FC<PageProps> = ({ house, nextTW, surveysData }) => {
+  // const { data: signupData, isLoading: lineupIsLoading } = useQuery({
+  //   queryKey: ["lineup", house],
+  //   queryFn: () => getNextTWLineups(house, nextTW),
+  //   enabled: !!house,
+  // });
   const t = useTranslations("BuildTeam");
-  const [userList, setUserList] = useState<Survey[]>([]);
-  const [sheetData, setSheetData] = useState<SheetTypes[]>([]);
-  const [allPlayers, setAllPlayers] = useState<Survey[]>([]);
-  const [lineup, setLineup] = useState<string[]>([]);
   const [showPreview, setShowPreview] = useState(false);
+  const [userList, setUserList] = useState<Survey[]>(surveysData);
+  const [sheetData, setSheetData] = useState<SheetTypes[]>(
+    Array(10).fill(DEFAULT_CARD)
+  );
   const [filterUnits, setFilterUnits] = useState({
     rustic_checked: true,
     chivalric_checked: true,
@@ -44,17 +50,6 @@ const Content: React.FC<PageProps> = ({ house, nextTW }) => {
     golden_checked: true,
     other_checked: true,
     meta_units_only: true,
-  });
-
-  const { data: signupData, isLoading: lineupIsLoading } = useQuery({
-    queryKey: ["lineup", house],
-    queryFn: () => getNextTWLineups(house, nextTW),
-    enabled: !!house,
-  });
-  const { data: surveysData, isLoading: surveysIsLoading } = useQuery({
-    queryKey: ["surveysList"],
-    queryFn: () => getSurveys(house),
-    enabled: !!house,
   });
   const units = useMemo(() => {
     const golden_era = filterUnits.golden_checked ? goldenUnits : [];
@@ -79,11 +74,6 @@ const Content: React.FC<PageProps> = ({ house, nextTW }) => {
     filterUnits.rustic_checked,
     filterUnits.other_checked,
   ]);
-
-  useEffect(() => {
-    setAllPlayers(getLineup(surveysData, lineup) ?? []);
-  }, [lineup.length]);
-
   const handleEdit = (
     index: number,
     username: string,
@@ -113,77 +103,12 @@ const Content: React.FC<PageProps> = ({ house, nextTW }) => {
       )
     );
   };
-  useEffect(() => {
-    setSheetData((prev) => {
-      const requiredLength = allPlayers.length + 10;
-      if (prev.length < requiredLength) {
-        const newCards = Array.from(
-          { length: requiredLength - prev.length },
-          () => DEFAULT_CARD
-        );
-        return [...prev, ...newCards];
-      } else if (prev.length > requiredLength) {
-        return prev.slice(0, requiredLength);
-      }
-      return prev;
-    });
-  }, [allPlayers.length, surveysData]);
-  useEffect(() => {
-    setUserList(
-      allPlayers.filter(
-        (user) =>
-          !sheetData.some(
-            (input) =>
-              user.inGameNick.toLocaleLowerCase() ===
-              input.username.toLocaleLowerCase()
-          )
-      )
-    );
-  }, [JSON.stringify(sheetData)]);
-
-  if (lineupIsLoading || surveysIsLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Loading color="#94a3b8" />
-      </div>
-    );
-  }
+  const usedUsersList = sheetData.map((e) => e.username);
 
   return (
     <div className="flex justify-center flex-col items-center">
-      <div className="flex items-center justify-around bg-indigo-950 w-3/4">
-        <Button
-          onClick={() => setShowPreview(!showPreview)}
-          variant="tab"
-          className="rounded-none"
-        >
-          <ScanEye className="h-5 w-5" />
-          {showPreview ? t("editor") : t("preview")}
-        </Button>
-        <StorageTemplate
-          house={house}
-          data={sheetData}
-          setData={setSheetData}
-          playersNum={allPlayers.length}
-        />
-        <div className="flex gap-4">
-          <UnitsFilter filters={filterUnits} setFilter={setFilterUnits} />
-          <RaidsFilter
-            lineups={signupData?.lineup}
-            setLineup={setLineup}
-            setAllPlayers={setAllPlayers}
-            surveys={surveysData}
-          />
-        </div>
-      </div>
-      <TemplateMenu
-        userHouse={house}
-        data={sheetData}
-        setData={setSheetData}
-        players={allPlayers}
-      />
       <div className={clsx("flex flex-col gap-5 p-2", { hidden: showPreview })}>
-        <UsersList players={allPlayers} allPlayers={userList} />
+        <UsersList usedPlayers={usedUsersList} allPlayers={userList} />
         <div className="flex justify-center gap-2">
           <span className="text-yellow-500">{t("maxed_and_preffer")}</span>
           <span className="text-purple-500">{t("preffer")}</span>
@@ -204,9 +129,17 @@ const Content: React.FC<PageProps> = ({ house, nextTW }) => {
               }
               data={e}
               onEdit={handleEdit}
+              usedUsers={usedUsersList}
             />
           ))}
         </ul>
+        <Button
+          onClick={() =>
+            setSheetData((prev) => [...prev, ...Array(5).fill(DEFAULT_CARD)])
+          }
+        >
+          + 5
+        </Button>
       </div>
       <div className={clsx({ hidden: !showPreview })}>
         <Preview data={sheetData} units={units} />

@@ -6,12 +6,25 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { getCloserDay } from "@/lib/utils";
 import { useParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { getSurveys } from "@/lib/get-data";
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 
 const Page: React.FC = () => {
   const { param: house }: { param: string } = useParams();
   const [date, setDate] = React.useState<Date | undefined>(new Date());
   const [load, setLoad] = useState(false);
   const next_tw = getCloserDay();
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["surveysList", house],
+    queryFn: () => getSurveys(house),
+    enabled: !!house,
+  });
+  if (isLoading) return <LoadingComponent />;
+  if (!data) return <NoData />;
+
   return (
     <div className="w-full">
       {!load || !date ? (
@@ -44,6 +57,7 @@ const Page: React.FC = () => {
       ) : (
         <Content
           house={house}
+          surveysData={data}
           nextTW={`${date?.getFullYear()}-${String(
             Number(date?.getMonth()) + 1
           ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`}

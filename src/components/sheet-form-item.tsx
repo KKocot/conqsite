@@ -58,6 +58,7 @@ const Item = ({
   weapons,
   index,
   data,
+  usedUsers,
   onEdit,
 }: {
   units: Unit[];
@@ -65,6 +66,7 @@ const Item = ({
   weapons: WeaponsTypes[];
   index: number;
   data: SheetTypes;
+  usedUsers: string[];
   onEdit: (
     index: number,
     username: string,
@@ -78,7 +80,9 @@ const Item = ({
   ) => void;
 }) => {
   const t = useTranslations("BuildTeam");
-  const users_list = users.map((user) => user.inGameNick);
+  const users_list = users
+    .map((user) => user.inGameNick)
+    .filter((e) => usedUsers.indexOf(e) === -1);
   const [user, setUser] = useState<Survey | undefined>();
   const user_artillery = useArtyAmount(user?.artyAmount);
 
