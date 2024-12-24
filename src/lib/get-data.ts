@@ -77,7 +77,9 @@ export interface Survey {
 export const getSurveys = async (house: string): Promise<Survey[]> => {
   const response = await fetch(`/api/survey?house=${house}`);
   const result = await response.json();
-  return result.surveys;
+  return result.surveys.filter(
+    (e: Survey) => e.discordId !== "303156898532818944"
+  );
 };
 
 export const getSurvey = async (discordId: string): Promise<Survey> => {
@@ -151,6 +153,12 @@ export interface UsersStats {
 
 export const getUserStats = async (id: string): Promise<UsersStats> => {
   const response = await fetch(`/api/userStats?id=${id}`);
+  const result = await response.json();
+  return result;
+};
+
+export const getHouseStats = async (house: string): Promise<UsersStats[]> => {
+  const response = await fetch(`/api/userStats?house=${house}`);
   const result = await response.json();
   return result;
 };
@@ -244,4 +252,17 @@ export const getUnitPosts = async (unit: string): Promise<UnitData[]> => {
   const response = await fetch(`/api/unitPost?unit=${unit}`);
   const result = await response.json();
   return result;
+};
+
+export interface HouseAssets {
+  name: string;
+  premium: boolean;
+  sharedList: boolean;
+  signupBot: string;
+}
+
+export const getHouseAssets = async (house: string): Promise<HouseAssets> => {
+  const response = await fetch(`/api/houseAssets?name=${house}`);
+  const result = await response.json();
+  return result.houseAssets;
 };

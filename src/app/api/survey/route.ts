@@ -6,7 +6,11 @@ import { ZodError } from "zod";
 import { headers } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { botAllowed, highCommandAllowed } from "@/lib/endpoints-protections";
+import {
+  botAllowed,
+  highCommandAllowed,
+  houseUserAllowed,
+} from "@/lib/endpoints-protections";
 import Roles from "@/models/roles";
 
 export async function POST(request: Request) {
@@ -53,9 +57,9 @@ export async function GET(request: Request) {
 
   try {
     await connectMongoDB();
-    const roles = await Roles.find({ house: query });
-    const highCommandAccess = highCommandAllowed(roles, session, query);
-    if (!(highCommandAccess || (discordKey && botAllowed(discordKey, envKey))))
+    const survey = await Survey.findOne({ discordId: session?.user.id });
+    const membersAllowed = houseUserAllowed(survey, query ?? "");
+    if (!(membersAllowed || (discordKey && botAllowed(discordKey, envKey))))
       return new Response("401");
     const surveys = await Survey.find({ house: query });
     return NextResponse.json({ surveys });

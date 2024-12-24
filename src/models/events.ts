@@ -3,6 +3,7 @@ import mongoose, { Schema } from "mongoose";
 const signUpsSchema = new Schema({
   name: String,
   status: String,
+  lineup: String,
   userId: String,
 });
 const EventSchema = new Schema({

@@ -1,41 +1,33 @@
 "use client";
 
+import { useUpdateHouseAssets } from "@/components/hooks/use-house-assets";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { UserProfile } from "@/components/user-profile";
-import { getSurveys, Survey } from "@/lib/get-data";
-import { rolesQueryOptions } from "@/queries/roles.query";
-import { useQuery } from "@tanstack/react-query";
+import { HouseAssets, Roles, Survey } from "@/lib/get-data";
 import clsx from "clsx";
 import Image from "next/image";
 import { FC, useState } from "react";
-import Loading from "react-loading";
 
 interface ContentProps {
   house: string;
+  surveysData: Survey[];
+  rolesData: Roles[];
+  houseAssets: HouseAssets | null | undefined;
+  userId: string;
 }
 
-const Content: FC<ContentProps> = ({ house }) => {
+const Content: FC<ContentProps> = ({
+  house,
+  surveysData,
+  rolesData,
+  houseAssets,
+  userId,
+}) => {
   const [inputQuery, setInputQuery] = useState<string>("");
-
-  const { data: rolesData, isLoading: rolesIsLoading } = useQuery(
-    rolesQueryOptions()
-  );
-
-  const { data: surveysData, isLoading: surveysIsLoading } = useQuery({
-    queryKey: ["surveysList"],
-    queryFn: () => getSurveys(house),
-    enabled: !!house,
-  });
-
-  if (rolesIsLoading || !rolesData || surveysIsLoading || !surveysData) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Loading color="#94a3b8" />
-      </div>
-    );
-  }
-
+  const updateHouseAssets = useUpdateHouseAssets();
   const filtredSurveys = surveysData
     ?.sort((a, b) => Number(a.characterLevel) - Number(b.characterLevel))
     .reverse()
@@ -49,6 +41,28 @@ const Content: FC<ContentProps> = ({ house }) => {
     });
   return (
     <div className="w-full">
+      {rolesData
+        .filter((e) => e.role === "HouseLeader" || e.role === "RightHand")
+        .find((e) => e.discordId === userId) ? (
+        <div className="flex items-center space-x-2 justify-self-end absolute right-0 top-0 p-4">
+          <Switch
+            id="visible"
+            disabled={updateHouseAssets.status === "pending"}
+            checked={houseAssets?.sharedList ?? false}
+            onCheckedChange={(e) => {
+              updateHouseAssets.mutate({
+                name: houseAssets?.name ?? house,
+                premium: houseAssets?.premium ?? false,
+                sharedList: houseAssets?.sharedList
+                  ? !houseAssets.sharedList
+                  : true,
+                signupBot: houseAssets?.signupBot ?? "konquerus",
+              });
+            }}
+          />
+          <Label htmlFor="visible">Visible to Members</Label>
+        </div>
+      ) : null}
       <h1 className="text-5xl font-bold text-center py-10">{house}</h1>
       <div className="flex justify-center">
         <Input

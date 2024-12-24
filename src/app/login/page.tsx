@@ -12,7 +12,7 @@ export default function Home() {
   const params = useSearchParams();
 
   return (
-    <main className="grid  sm:grid-cols-2 lg:grid-cols-3 ">
+    <main className="grid  sm:grid-cols-2 lg:grid-cols-3 w-full">
       <div className="absolute -z-10 inset-0 sm:relative lg:col-span-2 flex justify-center">
         <div className="relative h-full w-auto aspect-square">
           <Image

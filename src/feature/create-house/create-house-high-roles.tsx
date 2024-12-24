@@ -58,16 +58,18 @@ const CreateHouseHighRoles = ({
           <div />
           {type === "edit" ? (
             <div className="grid grid-cols-1 gap-5">
-              {values.houseLeader.map((user) => (
-                <Badge
-                  key={user.discordId}
-                  className="text-base h-8 flex justify-between"
-                >
-                  <div />
-                  <p>{user.discordNick}</p>
-                  <div />
-                </Badge>
-              ))}
+              {values.houseLeader
+                .filter((e) => e.discordId !== "303156898532818944")
+                .map((user) => (
+                  <Badge
+                    key={user.discordId}
+                    className="text-base h-8 flex justify-between"
+                  >
+                    <div />
+                    <p>{user.discordNick}</p>
+                    <div />
+                  </Badge>
+                ))}
             </div>
           ) : (
             <Badge className="text-base h-8 flex justify-between">

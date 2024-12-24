@@ -3,6 +3,7 @@ import { z } from "zod";
 const signUpSchema = z.object({
   name: z.string(),
   status: z.string(),
+  lineup: z.string(),
   userId: z.string(),
 });
 
