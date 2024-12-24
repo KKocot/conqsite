@@ -13,18 +13,18 @@ import { getNextTWLineups, LineupData, Survey } from "@/lib/get-data";
 import { getCloserDay } from "@/lib/utils";
 import { Bot } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
 
 const LineupLoader = ({
   setUserList,
   surveysData,
+  house,
 }: {
   setUserList: Dispatch<SetStateAction<Survey[]>>;
   surveysData: Survey[];
+  house: string;
 }) => {
   const t = useTranslations("BuildTeam");
-  const { param: house }: { param: string } = useParams();
   const [date, setDate] = useState<Date | undefined>(new Date());
   const next_tw = getCloserDay();
   const [data, setData] = useState<LineupData | undefined>(undefined);

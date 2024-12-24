@@ -20,12 +20,14 @@ import Filters from "@/feature/team-builder/filters";
 import Templates from "@/feature/team-builder/templates";
 import LineupLoader from "@/feature/team-builder/lineupLoader";
 import { PublicDialog } from "@/feature/team-builder/public-dialog";
+import { useParams } from "next/navigation";
 
 interface PageProps {
   surveysData: Survey[];
 }
 
 const Content: React.FC<PageProps> = ({ surveysData }) => {
+  const { param: house }: { param: string } = useParams();
   const t = useTranslations("BuildTeam");
   const [showPreview, setShowPreview] = useState(false);
   const [userList, setUserList] = useState<Survey[]>(surveysData);
@@ -135,9 +137,17 @@ const Content: React.FC<PageProps> = ({ surveysData }) => {
         <Preview data={sheetData} units={units} />
       </div>
       <nav className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 rounded-full bg-background p-1 shadow-lg">
-        <PublicDialog data={[]} house={""} />
-        <Templates />
-        <LineupLoader setUserList={setUserList} surveysData={surveysData} />
+        <PublicDialog data={[]} house={house} />
+        <Templates
+          house={house}
+          setSheetData={setSheetData}
+          sheetData={sheetData}
+        />
+        <LineupLoader
+          setUserList={setUserList}
+          surveysData={surveysData}
+          house={house}
+        />
         <Filters filters={filterUnits} setFilter={setFilterUnits} />
         <Button
           variant="ghost"

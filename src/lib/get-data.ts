@@ -107,8 +107,8 @@ export const getNextTWLineups = async (
   return result.attendance[0];
 };
 
-interface Template {
-  _id: string;
+export interface Template {
+  _id?: string;
   house: string;
   templateName: string;
   sheet: SheetTypes[];

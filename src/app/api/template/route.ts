@@ -23,6 +23,7 @@ export async function POST(request: Request) {
 
     const existingTemplate = await Template.findOne({
       templateName: data.templateName,
+      house: data.house,
     });
 
     let template;
@@ -89,7 +90,10 @@ export async function DELETE(request: NextRequest) {
     if (!highestRolesAccess) return new Response("401");
 
     await Template.findByIdAndDelete(id);
-    return NextResponse.json({ message: "Template deleted" }, { status: 200 });
+    return NextResponse.json(
+      { template, message: "Template deleted" },
+      { status: 200 }
+    );
   } catch (error) {
     if (error instanceof ZodError)
       return NextResponse.json({ message: error.message }, { status: 400 });
