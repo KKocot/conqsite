@@ -22,17 +22,10 @@ import LineupLoader from "@/feature/team-builder/lineupLoader";
 import { PublicDialog } from "@/feature/team-builder/public-dialog";
 
 interface PageProps {
-  house: string;
-  nextTW: string;
   surveysData: Survey[];
 }
 
-const Content: React.FC<PageProps> = ({ house, nextTW, surveysData }) => {
-  // const { data: signupData, isLoading: lineupIsLoading } = useQuery({
-  //   queryKey: ["lineup", house],
-  //   queryFn: () => getNextTWLineups(house, nextTW),
-  //   enabled: !!house,
-  // });
+const Content: React.FC<PageProps> = ({ surveysData }) => {
   const t = useTranslations("BuildTeam");
   const [showPreview, setShowPreview] = useState(false);
   const [userList, setUserList] = useState<Survey[]>(surveysData);
@@ -144,7 +137,7 @@ const Content: React.FC<PageProps> = ({ house, nextTW, surveysData }) => {
       <nav className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 rounded-full bg-background p-1 shadow-lg">
         <PublicDialog data={[]} house={""} />
         <Templates />
-        <LineupLoader />
+        <LineupLoader setUserList={setUserList} surveysData={surveysData} />
         <Filters filters={filterUnits} setFilter={setFilterUnits} />
         <Button
           variant="ghost"

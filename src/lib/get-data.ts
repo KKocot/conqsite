@@ -93,7 +93,7 @@ interface Signup {
   signup: string[];
 }
 
-interface LineupData {
+export interface LineupData {
   date: string;
   house: string;
   lineup: Signup[];
