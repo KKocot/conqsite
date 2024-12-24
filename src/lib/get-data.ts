@@ -157,6 +157,12 @@ export const getUserStats = async (id: string): Promise<UsersStats> => {
   return result;
 };
 
+export const getHouseStats = async (house: string): Promise<UsersStats[]> => {
+  const response = await fetch(`/api/userStats?house=${house}`);
+  const result = await response.json();
+  return result;
+};
+
 interface BotSettings {
   status: string;
 }
