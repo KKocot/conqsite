@@ -58,9 +58,7 @@ const Content = ({
                     List of Drillmodes
                   </TableHead>
                   <TableHead className="text-center">List of TW</TableHead>
-                  <TableHead className="text-center">
-                    Attendance Dates List
-                  </TableHead>
+
                   <TableHead className="text-center">Attendance in %</TableHead>
                 </TableRow>
               </TableHeader>
@@ -116,7 +114,7 @@ const SeasonTable = ({
         </TableCell>
         <TableCell className="text-center">
           {listOfTW.length > 0 ? (
-            <div className="grid grid-cols-2 gap-2">
+            <div className="flex-grow flex flex-wrap gap-2">
               {listOfTW.map((date) => (
                 <div
                   className={clsx("w-24", {
@@ -131,11 +129,6 @@ const SeasonTable = ({
           ) : (
             <div>TW no started yet</div>
           )}
-        </TableCell>
-        <TableCell className="text-center">
-          {cleandAttendanceDates.length > 0
-            ? cleandAttendanceDates.map((e) => <div key={e}>{e}</div>)
-            : "No data"}
         </TableCell>
         <TableCell className="text-center">{attendancePercentage}%</TableCell>
       </TableRow>
