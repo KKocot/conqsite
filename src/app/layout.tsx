@@ -11,7 +11,6 @@ import { rolesQueryOptions } from "@/queries/roles.query";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getQueryClient } from "@/lib/react-query";
-import { Footer } from "@/components/footer";
 import AppSidebar from "@/feature/navbar/sidebar";
 
 export const metadata: Metadata = {

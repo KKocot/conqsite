@@ -2,12 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import { ArtilleryProps, SheetTypes } from "@/lib/type";
-import { getLineup } from "@/lib/utils";
-import React, { useEffect, useMemo, useState } from "react";
-import Loading from "react-loading";
+import React, { useMemo, useState } from "react";
 import clsx from "clsx";
 import { weapons } from "@/assets/weapons";
-import Item from "@/components/sheet-form-item";
+import Item from "@/feature/team-builder/sheet-form-item";
 import { goldenUnits } from "@/assets/golden-units-data";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
@@ -15,14 +13,13 @@ import { others } from "@/assets/other-units-data";
 import Preview from "@/components/preview";
 import { useTranslations } from "next-intl";
 import { ScanEye } from "lucide-react";
-import UsersList from "@/components/users-list";
-import TemplateMenu from "@/components/templates-menu";
-import UnitsFilter from "@/components/units-filter";
-import RaidsFilter from "@/components/raids-filter";
-import StorageTemplate from "@/components/storage-template";
-import { getNextTWLineups, getSurveys, Survey } from "@/lib/get-data";
-import { useQuery } from "@tanstack/react-query";
+import UsersList from "@/feature/team-builder/users-list";
+import { Survey } from "@/lib/get-data";
 import { DEFAULT_CARD } from "@/lib/defaults";
+import Filters from "@/feature/team-builder/filters";
+import Templates from "@/feature/team-builder/templates";
+import LineupLoader from "@/feature/team-builder/lineupLoader";
+import { PublicDialog } from "@/feature/team-builder/public-dialog";
 
 interface PageProps {
   house: string;
@@ -144,6 +141,20 @@ const Content: React.FC<PageProps> = ({ house, nextTW, surveysData }) => {
       <div className={clsx({ hidden: !showPreview })}>
         <Preview data={sheetData} units={units} />
       </div>
+      <nav className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 rounded-full bg-background p-1 shadow-lg">
+        <PublicDialog data={[]} house={""} />
+        <Templates />
+        <LineupLoader />
+        <Filters filters={filterUnits} setFilter={setFilterUnits} />
+        <Button
+          variant="ghost"
+          size="icon"
+          className="rounded-full"
+          onClick={() => setShowPreview((prev) => !prev)}
+        >
+          <ScanEye className="h-5 w-5" />
+        </Button>
+      </nav>
     </div>
   );
 };

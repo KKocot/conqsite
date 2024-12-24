@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import { Badge } from "./ui/badge";
-import { UserProfile } from "./user-profile";
+import { Badge } from "../../components/ui/badge";
+import { UserProfile } from "../../components/user-profile";
 import { Survey } from "@/lib/get-data";
 
 const UsersList = ({

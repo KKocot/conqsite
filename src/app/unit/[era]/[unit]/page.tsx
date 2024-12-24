@@ -1,8 +1,8 @@
 "use client";
 
-import Tree from "@/components/tree";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Tree from "@/feature/unit-builder/tree";
 import { getUnitPosts } from "@/lib/get-data";
 import { Unit } from "@/lib/type";
 import { getUnit } from "@/lib/utils";

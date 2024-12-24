@@ -1,6 +1,8 @@
+"use client";
+
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
+import { TableCell } from "@/components/ui/table";
 import clsx from "clsx";
-import { TableCell } from "./ui/table";
 import { useTranslations } from "next-intl";
 
 interface Unit {

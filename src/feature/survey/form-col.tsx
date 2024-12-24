@@ -1,6 +1,6 @@
 import { useState } from "react";
 import clsx from "clsx";
-import { Button } from "./ui/button";
+import { Button } from "../../components/ui/button";
 import RadioComponent from "./radio-component";
 import { useTranslations } from "next-intl";
 

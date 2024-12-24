@@ -1,11 +1,11 @@
 import { ArtilleryProps, SheetTypes, Unit, WeaponsTypes } from "@/lib/type";
 import { Autocompleter } from "./autocompleter";
-import { Textarea } from "./ui/textarea";
+import { Textarea } from "../../components/ui/textarea";
 import { useEffect, useMemo, useState } from "react";
 import { useArtyAmount } from "@/lib/utils";
 import { PackageOpen } from "lucide-react";
 import clsx from "clsx";
-import { Button } from "./ui/button";
+import { Button } from "../../components/ui/button";
 import { artillery } from "@/assets/artillery";
 import {
   Accordion,

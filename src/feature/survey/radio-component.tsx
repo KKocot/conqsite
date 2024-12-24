@@ -1,6 +1,11 @@
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "../../components/ui/radio-group";
 import { FC } from "react";
-import { FormControl, FormField, FormItem, FormLabel } from "./ui/form";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "../../components/ui/form";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
 
