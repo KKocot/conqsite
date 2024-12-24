@@ -14,7 +14,6 @@ import { weapons } from "@/assets/weapons";
 import { useSession } from "next-auth/react";
 import Loading from "react-loading";
 import { ownedUnits } from "@/lib/utils";
-import List from "@/components/unit-list";
 import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Avatar } from "@radix-ui/react-avatar";
 import { useTranslations } from "next-intl";
@@ -23,6 +22,7 @@ import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { profileQueryOptions } from "@/queries/profile.query";
 import Image from "next/image";
+import List from "@/feature/unit-builder/unit-list";
 export default function Content() {
   const { data: user_data } = useSession();
   const t = useTranslations("BuildTeam");
@@ -190,6 +190,3 @@ export default function Content() {
     </div>
   );
 }
-// TODO translation
-// TOTO Create information about season: data to date, dates of drills
-// TODO Sort stats by season

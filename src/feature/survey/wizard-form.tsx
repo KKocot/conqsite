@@ -6,14 +6,14 @@ import { weapons } from "@/assets/weapons";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { goldenUnits } from "@/assets/golden-units-data";
 import { useForm } from "react-hook-form";
-import { Form } from "./ui/form";
+import { Form } from "../../components/ui/form";
 import FormCol from "./form-col";
 import clsx from "clsx";
 import Loading from "react-loading";
 import { useTranslations } from "next-intl";
 import { getSurvey, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
-import useSubmitSurvey from "./hooks/use-submit-survey";
+import useSubmitSurvey from "../../components/hooks/use-submit-survey";
 
 export const DEFAULT_FORM_DATA: Survey = {
   discordNick: "",

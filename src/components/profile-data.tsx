@@ -9,12 +9,12 @@ import {
   TableBody,
   Table,
 } from "@/components/ui/table";
-import List from "./unit-list";
 import { weapons } from "@/assets/weapons";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { Survey } from "@/lib/get-data";
 import Image from "next/image";
+import List from "@/feature/unit-builder/unit-list";
 
 const ProfileData = ({ profile }: { profile: Survey }) => {
   const t = useTranslations("BuildTeam");

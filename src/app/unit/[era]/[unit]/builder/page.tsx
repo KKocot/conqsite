@@ -8,12 +8,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Unit } from "@/lib/type";
 import { getUnit } from "@/lib/utils";
 import { useParams } from "next/navigation";
-import Tree from "@/components/tree";
-import DoctrinedBuilder from "@/components/doctrines-builder";
+import DoctrinedBuilder from "@/feature/unit-builder/doctrines-builder";
 import { useForm } from "react-hook-form";
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import Image from "next/image";
 import { UnitData } from "@/lib/get-data";
+import Tree from "@/feature/unit-builder/tree";
 
 const DEFAULT_UNIT_DATA: UnitData = {
   title: "",

@@ -1,9 +1,18 @@
-import { ChevronDown, SlidersHorizontal } from "lucide-react";
-import CheckboxItem from "./sheet-form-filter";
-import { Button } from "./ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+"use client";
+
+import CheckboxItem from "@/feature/team-builder/sheet-form-filter";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Filter } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Dispatch, FC } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 type FilterUnits = {
   meta_units_only: boolean;
@@ -17,22 +26,24 @@ type FilterUnits = {
 
 interface ChildComponentProps {
   filters: FilterUnits;
-  setFilter: Dispatch<React.SetStateAction<FilterUnits>>;
+  setFilter: Dispatch<SetStateAction<FilterUnits>>;
 }
 
-const UnitsFilter: FC<ChildComponentProps> = ({ filters, setFilter }) => {
+const Filters = ({ filters, setFilter }: ChildComponentProps) => {
   const t = useTranslations("BuildTeam");
 
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="tab">
-          <SlidersHorizontal className="w-5 h-5" />
-          {t("units")}
-          <ChevronDown />
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="ghost" size="icon" className="rounded-full">
+          <Filter className="h-5 w-5" />
         </Button>
-      </PopoverTrigger>
-      <PopoverContent className="gap-4 flex flex-col p-2">
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Filters</DialogTitle>
+        </DialogHeader>
+
         <CheckboxItem
           checked={filters.meta_units_only}
           label={t("meta_units_only")}
@@ -103,9 +114,9 @@ const UnitsFilter: FC<ChildComponentProps> = ({ filters, setFilter }) => {
             }))
           }
         />
-      </PopoverContent>
-    </Popover>
+      </DialogContent>
+    </Dialog>
   );
 };
 
-export default UnitsFilter;
+export default Filters;

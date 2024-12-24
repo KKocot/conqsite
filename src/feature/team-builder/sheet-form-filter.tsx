@@ -1,4 +1,6 @@
-import { Checkbox } from "./ui/checkbox";
+"use client";
+
+import { Checkbox } from "../../components/ui/checkbox";
 
 const CheckboxItem = ({
   label,

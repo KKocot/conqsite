@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useMemo, FC, useCallback, useEffect } from "react";
-import { Badge } from "./ui/badge";
 import Image from "next/image";
-import { Button } from "./ui/button";
 import clsx from "clsx";
-import { Label } from "./ui/label";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 type TreeNode = {
   id: number;

@@ -1,9 +1,14 @@
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Input } from "../../components/ui/input";
+import { Button } from "../../components/ui/button";
+import { RadioGroup, RadioGroupItem } from "../../components/ui/radio-group";
 import clsx from "clsx";
 import { Controller } from "react-hook-form";
-import { FormControl, FormField, FormItem, FormLabel } from "./ui/form";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "../../components/ui/form";
 import { weapons } from "@/assets/weapons";
 import {
   Tooltip,
@@ -12,7 +17,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
-import { Label } from "./ui/label";
+import { Label } from "../../components/ui/label";
 import { useTranslations } from "next-intl";
 import { getHousesDetails } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";

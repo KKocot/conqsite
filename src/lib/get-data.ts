@@ -93,7 +93,7 @@ interface Signup {
   signup: string[];
 }
 
-interface LineupData {
+export interface LineupData {
   date: string;
   house: string;
   lineup: Signup[];
@@ -107,8 +107,8 @@ export const getNextTWLineups = async (
   return result.attendance[0];
 };
 
-interface Template {
-  _id: string;
+export interface Template {
+  _id?: string;
   house: string;
   templateName: string;
   sheet: SheetTypes[];
