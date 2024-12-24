@@ -60,8 +60,8 @@ const Page = () => {
           </SheetHeader>
           <div className="p-4 flex flex-col gap-4">
             {uniqueDates.map((e) => (
-              <SheetClose asChild>
-                <Button onClick={() => setDate(e)} variant="custom" key={e}>
+              <SheetClose asChild key={e}>
+                <Button onClick={() => setDate(e)} variant="custom">
                   {e}
                 </Button>
               </SheetClose>

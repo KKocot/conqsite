@@ -42,7 +42,7 @@ const Content = ({
               </TableRow>
             </TableHeader>
             {data.map((user) => (
-              <SeasonTable item={e} userStats={user} />
+              <SeasonTable key={user.id} item={e} userStats={user} />
             ))}
           </Table>
         </TabsContent>
@@ -99,7 +99,9 @@ const SeasonTable = ({
           {attendancePercentage}%
         </TableCell>
         {cleandAttendanceDates.map((e) => (
-          <TableCell className="text-center p-1">{e}</TableCell>
+          <TableCell key={e} className="text-center p-1">
+            {e}
+          </TableCell>
         ))}
       </TableRow>
     </TableBody>

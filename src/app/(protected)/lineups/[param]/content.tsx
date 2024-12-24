@@ -28,11 +28,17 @@ const Content = ({
     <Tabs defaultValue={data[0].name} className="w-full flex flex-col">
       <TabsList>
         {data.map((e) => (
-          <TabsTrigger value={e.name}>{e.name}</TabsTrigger>
+          <TabsTrigger key={e.name + "triggers"} value={e.name}>
+            {e.name}
+          </TabsTrigger>
         ))}
       </TabsList>
       {data.map((e) => (
-        <TabsContent value={e.name} className="flex self-center">
+        <TabsContent
+          key={e.name + "content"}
+          value={e.name}
+          className="flex self-center"
+        >
           <Preview data={e.sheet} units={units} />
         </TabsContent>
       ))}
