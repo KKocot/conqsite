@@ -35,8 +35,13 @@ export async function GET(request: Request) {
   const name = searchParams.get("name");
   try {
     await connectMongoDB();
-    const houseAssets = await HouseAssets.findOne({ name: name });
-    return NextResponse.json({ houseAssets });
+    if (name) {
+      const houseAssets = await HouseAssets.findOne({ name: name });
+      return NextResponse.json({ houseAssets });
+    } else {
+      const housesAssets = await HouseAssets.find();
+      return NextResponse.json({ housesAssets });
+    }
   } catch (error) {
     if (error instanceof ZodError)
       return NextResponse.json({ message: error.message }, { status: 400 });

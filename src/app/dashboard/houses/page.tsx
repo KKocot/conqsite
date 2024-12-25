@@ -1,10 +1,11 @@
 "use client";
 
-import { getHousesDetails } from "@/lib/get-data";
+import { getHousesAssets, getHousesDetails } from "@/lib/get-data";
 import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
-import Loading from "react-loading";
 import HouseCard from "@/components/house-card";
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 
 const HousesPage = () => {
   const t = useTranslations("HousePage");
@@ -12,17 +13,17 @@ const HousesPage = () => {
     queryKey: ["houses"],
     queryFn: getHousesDetails,
   });
-  if (isLoading || !data)
-    return (
-      <div className="flex justify-center items-center w-full h-screen">
-        <Loading color="#94a3b8" />
-      </div>
-    );
+  const { data: assetsData, isLoading: assetsLoading } = useQuery({
+    queryKey: ["housesAssets"],
+    queryFn: getHousesAssets,
+  });
+  if (isLoading || assetsLoading) return <LoadingComponent />;
+  if (!data || !assetsData) return <NoData />;
   return (
     <div className="flex flex-col items-center container">
       <ul className="flex flex-wrap gap-4 m-12 justify-around">
         {data.map((house) => (
-          <HouseCard key={house.name} house={house} />
+          <HouseCard key={house.name} house={house} assetsData={assetsData} />
         ))}
       </ul>
     </div>

@@ -266,3 +266,9 @@ export const getHouseAssets = async (house: string): Promise<HouseAssets> => {
   const result = await response.json();
   return result.houseAssets;
 };
+
+export const getHousesAssets = async (): Promise<HouseAssets[]> => {
+  const response = await fetch(`/api/houseAssets`);
+  const result = await response.json();
+  return result.housesAssets;
+};
