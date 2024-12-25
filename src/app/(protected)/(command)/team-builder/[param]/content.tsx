@@ -11,7 +11,6 @@ import { heroicUnits } from "@/assets/heroic-units-data";
 import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
 import { others } from "@/assets/other-units-data";
 import Preview from "@/components/preview";
-import { useTranslations } from "next-intl";
 import { ScanEye } from "lucide-react";
 import UsersList from "@/feature/team-builder/users-list";
 import { Survey } from "@/lib/get-data";
@@ -28,7 +27,6 @@ interface PageProps {
 
 const Content: React.FC<PageProps> = ({ surveysData }) => {
   const { param: house }: { param: string } = useParams();
-  const t = useTranslations("BuildTeam");
   const [showPreview, setShowPreview] = useState(false);
   const [userList, setUserList] = useState<Survey[]>(surveysData);
   const [sheetData, setSheetData] = useState<SheetTypes[]>(
@@ -101,12 +99,7 @@ const Content: React.FC<PageProps> = ({ surveysData }) => {
     <div className="flex justify-center flex-col items-center">
       <div className={clsx("flex flex-col gap-5 p-2", { hidden: showPreview })}>
         <UsersList usedPlayers={usedUsersList} allPlayers={userList} />
-        <div className="flex justify-center gap-2">
-          <span className="text-yellow-500">{t("maxed_and_preffer")}</span>
-          <span className="text-purple-500">{t("preffer")}</span>
-          <span className="text-blue-500">{t("maxed")}</span>
-          <span className="text-green-500">{t("i_have")}</span>
-        </div>
+
         <ul className="grid grid-cols-5 gap-8">
           {sheetData.map((e, index) => (
             <Item
