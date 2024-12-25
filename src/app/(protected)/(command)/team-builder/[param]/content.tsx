@@ -13,22 +13,26 @@ import { others } from "@/assets/other-units-data";
 import Preview from "@/components/preview";
 import { ScanEye } from "lucide-react";
 import UsersList from "@/feature/team-builder/users-list";
-import { Survey } from "@/lib/get-data";
+import { HouseAssets, Survey } from "@/lib/get-data";
 import { DEFAULT_CARD } from "@/lib/defaults";
 import Filters from "@/feature/team-builder/filters";
 import Templates from "@/feature/team-builder/templates";
 import LineupLoader from "@/feature/team-builder/lineupLoader";
 import { PublicDialog } from "@/feature/team-builder/public-dialog";
 import { useParams } from "next/navigation";
+import ItemRow from "@/feature/team-builder/sheet-form-item-row";
+import { Switch } from "@/components/ui/switch";
 
 interface PageProps {
   surveysData: Survey[];
+  assets?: HouseAssets;
 }
 
-const Content: React.FC<PageProps> = ({ surveysData }) => {
+const Content: React.FC<PageProps> = ({ surveysData, assets }) => {
   const { param: house }: { param: string } = useParams();
   const [showPreview, setShowPreview] = useState(false);
   const [userList, setUserList] = useState<Survey[]>(surveysData);
+  const [row, setRow] = useState(false);
   const [sheetData, setSheetData] = useState<SheetTypes[]>(
     Array(10).fill(DEFAULT_CARD)
   );
@@ -99,25 +103,45 @@ const Content: React.FC<PageProps> = ({ surveysData }) => {
     <div className="flex justify-center flex-col items-center">
       <div className={clsx("flex flex-col gap-5 p-2", { hidden: showPreview })}>
         <UsersList usedPlayers={usedUsersList} allPlayers={userList} />
-
-        <ul className="grid grid-cols-5 gap-8">
-          {sheetData.map((e, index) => (
-            <Item
-              users={userList}
-              weapons={weapons}
-              key={index}
-              index={index}
-              units={
-                filterUnits.meta_units_only
-                  ? units.filter((e) => e.value > 7)
-                  : units
-              }
-              data={e}
-              onEdit={handleEdit}
-              usedUsers={usedUsersList}
-            />
-          ))}
-        </ul>
+        {row ? (
+          <ul className="">
+            {sheetData.map((e, index) => (
+              <ItemRow
+                users={userList}
+                weapons={weapons}
+                key={index}
+                index={index}
+                units={
+                  filterUnits.meta_units_only
+                    ? units.filter((e) => e.value > 7)
+                    : units
+                }
+                data={e}
+                onEdit={handleEdit}
+                usedUsers={usedUsersList}
+              />
+            ))}
+          </ul>
+        ) : (
+          <ul className="grid grid-cols-5 gap-4">
+            {sheetData.map((e, index) => (
+              <Item
+                users={userList}
+                weapons={weapons}
+                key={index}
+                index={index}
+                units={
+                  filterUnits.meta_units_only
+                    ? units.filter((e) => e.value > 7)
+                    : units
+                }
+                data={e}
+                onEdit={handleEdit}
+                usedUsers={usedUsersList}
+              />
+            ))}
+          </ul>
+        )}
         <Button
           onClick={() =>
             setSheetData((prev) => [...prev, ...Array(5).fill(DEFAULT_CARD)])
@@ -129,9 +153,10 @@ const Content: React.FC<PageProps> = ({ surveysData }) => {
       <div className={clsx({ hidden: !showPreview })}>
         <Preview data={sheetData} units={units} />
       </div>
-      <nav className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 rounded-full bg-background p-1 shadow-lg">
+      <nav className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 rounded-full bg-background px-1 py-2 shadow-lg">
         <PublicDialog data={[]} house={house} />
         <Templates
+          assets={assets}
           house={house}
           setSheetData={setSheetData}
           sheetData={sheetData}
@@ -150,6 +175,7 @@ const Content: React.FC<PageProps> = ({ surveysData }) => {
         >
           <ScanEye className="h-5 w-5" />
         </Button>
+        <Switch checked={row} onCheckedChange={(checked) => setRow(checked)} />
       </nav>
     </div>
   );

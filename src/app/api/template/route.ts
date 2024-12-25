@@ -81,13 +81,9 @@ export async function DELETE(request: NextRequest) {
     const template = await Template.findById(id);
     const roles = await Roles.find({ house: template.house });
 
-    const highestRolesAccess = highestRolesAllowed(
-      roles,
-      session,
-      template.house
-    );
+    const highRolesAccess = highCommandAllowed(roles, session, template.house);
 
-    if (!highestRolesAccess) return new Response("401");
+    if (!highRolesAccess) return new Response("401");
 
     await Template.findByIdAndDelete(id);
     return NextResponse.json(
