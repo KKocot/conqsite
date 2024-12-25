@@ -22,7 +22,7 @@ const Preview = ({
 }: {
   data: SheetTypes[];
   units: Unit[];
-  username?: string;
+  username?: string | null;
 }) => {
   const [show, setShow] = useState<boolean>(true);
   const t = useTranslations("BuildTeam");

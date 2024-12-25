@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { getTemplates } from "@/lib/get-data";
+import { getTemplates, HouseAssets } from "@/lib/get-data";
 import { SheetTypes } from "@/lib/type";
 import { useQuery } from "@tanstack/react-query";
 import { NotepadTextDashed } from "lucide-react";
@@ -24,10 +24,12 @@ const Templates = ({
   house,
   setSheetData,
   sheetData,
+  assets,
 }: {
   house: string;
   setSheetData: Dispatch<SetStateAction<SheetTypes[]>>;
   sheetData: SheetTypes[];
+  assets?: HouseAssets;
 }) => {
   const { data, isLoading } = useQuery({
     queryKey: ["templateList", house],
@@ -36,6 +38,7 @@ const Templates = ({
   const [templateName, setTemplateName] = useState("");
   const deleteTemplate = useDeleteTemplate();
   const addTemplate = useAddTemplate();
+  const existingTemplate = data?.find((e) => e.templateName === templateName);
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -43,7 +46,7 @@ const Templates = ({
           <NotepadTextDashed className="h-5 w-5" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="overflow-y-scroll h-full">
+      <DialogContent className="overflow-y-scroll">
         <DialogHeader>
           <DialogTitle>Templates</DialogTitle>
         </DialogHeader>
@@ -55,8 +58,13 @@ const Templates = ({
               onChange={(e) => setTemplateName(e.target.value)}
             />
             <Button
+              size="sm"
               variant="custom"
               className="absolute right-1 top-1/2 -translate-y-1/2"
+              disabled={
+                !existingTemplate &&
+                (data?.length ?? 0) >= (assets?.premium ? 10 : 5)
+              }
               onClick={() =>
                 addTemplate.mutate({
                   house: house,
@@ -65,9 +73,7 @@ const Templates = ({
                 })
               }
             >
-              {data?.find((e) => e.templateName === templateName)
-                ? "Update"
-                : "Add"}
+              {existingTemplate ? "Update" : "Add"}
             </Button>
           </div>
           {isLoading ? (

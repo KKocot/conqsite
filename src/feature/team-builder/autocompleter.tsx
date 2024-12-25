@@ -94,10 +94,10 @@ export function Autocompleter({
         {unit ? (
           <span
             className={clsx("p-1", {
-              "bg-yellow-800": user_preferences?.value === "4",
-              "bg-purple-800": user_preferences?.value === "3",
-              "bg-blue-800": user_preferences?.value === "2",
-              "bg-green-800": user_preferences?.value === "1",
+              "bg-yellow-800 text-white": user_preferences?.value === "4",
+              "bg-purple-800 text-white": user_preferences?.value === "3",
+              "bg-blue-800 text-white": user_preferences?.value === "2",
+              "bg-green-800 text-white": user_preferences?.value === "1",
             })}
           >
             {unit.leadership}
@@ -130,7 +130,7 @@ export function Autocompleter({
                       onClick={() => {
                         onChange(item), setIsOpen(false);
                       }}
-                      className="w-56 px-2 py-1 even:bg-black"
+                      className="w-56 px-2 py-1"
                       title={item}
                     >
                       <span>{item}</span>
@@ -149,7 +149,7 @@ export function Autocompleter({
                       onClick={() => {
                         onChange(item.name), setIsOpen(false);
                       }}
-                      className="w-56 px-2 py-1 even:bg-black flex items-center gap-2"
+                      className="w-56 px-2 py-1 flex items-center gap-2"
                       title={item.name}
                     >
                       <Avatar className="h-8 w-8" title={item.name}>
@@ -184,7 +184,7 @@ const renderCommandItem = (
         setIsOpen(false);
       }}
       className={clsx(
-        "w-56 px-2 py-1 flex items-center gap-2 hover:bg-slate-600 dark:bg-slate-800 bg-slate-300",
+        "w-56 px-2 py-1 flex items-center gap-2 hover:text-white hover:dark:bg-slate-900 hover:bg-slate-600 dark:bg-slate-800 bg-slate-300",
         {
           "to-40% bg-gradient-to-r from-yellow-700 dark:to-slate-800 to-slate-300 hover:to-yellow-700":
             item.pref === "4",

@@ -88,6 +88,24 @@ const PolicyPage: React.FC = () => {
         complaint with a Data Protection Authority regarding our collection and
         use of your personal data.
       </p>
+      <h2 className="text-2xl font-semibold mb-4">Cookies</h2>
+      <p className="mb-4">
+        Our website collecting in cookies to keep user session.
+      </p>
+      <p>Data in cookies:</p>
+      <ul className="list-disc list-inside mb-4">
+        <li>Discord ID</li>
+        <li>Discord username</li>
+        <li>Discord avatar</li>
+        <li>Email</li>
+      </ul>
+      <h2 className="text-2xl font-semibold mb-4">
+        Changes to our privacy policy
+      </h2>
+      <p className="mb-4">
+        We regularly review our privacy policy and place any updates on our
+        website. This privacy policy was last updated on August 22, 2024.
+      </p>
       <h2 className="text-2xl font-semibold mb-4">Contact</h2>
       <p className="mb-4">
         If you have any questions about this privacy policy or wish to make a
@@ -98,13 +116,6 @@ const PolicyPage: React.FC = () => {
         <a href="https://discord.gg/PM5vvAUmkj" className="text-blue-500">
           https://discord.gg/PM5vvAUmkj
         </a>
-      </p>
-      <h2 className="text-2xl font-semibold mb-4">
-        Changes to our privacy policy
-      </h2>
-      <p className="mb-4">
-        We regularly review our privacy policy and place any updates on our
-        website. This privacy policy was last updated on August 22, 2024.
       </p>
     </div>
   );

@@ -85,12 +85,12 @@ const LineupLoader = ({
                   {e.name}
                 </Button>
               ))}
-              <Button onClick={() => setUserList(surveysData)}>
-                Upload all players
-              </Button>
             </div>
           </div>
         ) : null}
+        <Button onClick={() => setUserList(surveysData)}>
+          Upload all players
+        </Button>
       </DialogContent>
     </Dialog>
   );

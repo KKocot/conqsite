@@ -2,10 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import LoadingComponent from "@/feature/ifs/loading";
 import { getBotSettings, getRoleById, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import Loading from "react-loading";
 
 const AdminPage = () => {
   const { data: roleData, isLoading: roleIsLoading } = useQuery({
@@ -34,11 +34,7 @@ const AdminPage = () => {
   };
 
   if (roleIsLoading || surveyIsLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Loading color="#94a3b8" />
-      </div>
-    );
+    return <LoadingComponent />;
   }
   const botSettings = {
     guild_id: 1232957904597024882,

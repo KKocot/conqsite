@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/table";
 import { weapons } from "@/assets/weapons";
 import { useSession } from "next-auth/react";
-import Loading from "react-loading";
 import { ownedUnits } from "@/lib/utils";
 import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Avatar } from "@radix-ui/react-avatar";
@@ -23,6 +22,7 @@ import { useQuery } from "@tanstack/react-query";
 import { profileQueryOptions } from "@/queries/profile.query";
 import Image from "next/image";
 import List from "@/feature/unit-builder/unit-list";
+import LoadingComponent from "@/feature/ifs/loading";
 export default function Content() {
   const { data: user_data } = useSession();
   const t = useTranslations("BuildTeam");
@@ -32,13 +32,7 @@ export default function Content() {
     enabled: !!user_data?.user.id,
   });
 
-  if (profileIsLoading) {
-    return (
-      <div className="flex w-full justify-center items-center h-screen">
-        <Loading color="#94a3b8" />
-      </div>
-    );
-  }
+  if (profileIsLoading) return <LoadingComponent />;
 
   if (!profileData) {
     return (

@@ -9,6 +9,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
+import { HouseAssets } from "@/lib/get-data";
+import clsx from "clsx";
 
 interface HouseDetails {
   name: string;
@@ -19,9 +21,20 @@ interface HouseDetails {
   server: string;
 }
 
-export default function HouseCard({ house }: { house: HouseDetails }) {
+export default function HouseCard({
+  house,
+  assetsData,
+}: {
+  house: HouseDetails;
+  assetsData?: HouseAssets[];
+}) {
+  const houseAssets = assetsData?.find((asset) => asset.name === house.name);
   return (
-    <Card className="w-[362px] overflow-hidden flex flex-col">
+    <Card
+      className={clsx("w-[362px] overflow-hidden flex flex-col", {
+        "border-4 border-accent": houseAssets?.premium,
+      })}
+    >
       <div className="relative w-full h-[362px]">
         <Image
           src={house.avatar}
@@ -31,7 +44,13 @@ export default function HouseCard({ house }: { house: HouseDetails }) {
         />
       </div>
       <CardHeader className="pt-2 ">
-        <CardTitle className="text-xl font-bold">{house.name}</CardTitle>
+        <CardTitle
+          className={clsx("text-xl font-bold", {
+            "text-accent": houseAssets?.premium,
+          })}
+        >
+          {house.name}
+        </CardTitle>
         <p className="text-sm text-muted-foreground">
           <span title="Server">{house.server}</span> {house.country}
         </p>

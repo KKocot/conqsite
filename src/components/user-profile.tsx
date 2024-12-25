@@ -9,8 +9,9 @@ import {
 import ProfileData from "./profile-data";
 import { ReactNode } from "react";
 import { Avatar } from "@radix-ui/react-avatar";
-import { AvatarImage } from "./ui/avatar";
+import { AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Survey } from "@/lib/get-data";
+import Image from "next/image";
 
 export function UserProfile({
   player,
@@ -31,6 +32,15 @@ export function UserProfile({
                 className="rounded-full"
                 src={player.avatar}
               />
+              <AvatarFallback>
+                <Image
+                  width={64}
+                  height={64}
+                  src="/logo.png"
+                  alt="logo"
+                  className="rounded-none"
+                />
+              </AvatarFallback>
             </Avatar>
           ) : null}
           <div>

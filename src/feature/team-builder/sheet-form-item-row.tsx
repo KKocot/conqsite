@@ -16,6 +16,8 @@ import {
 import { useTranslations } from "next-intl";
 import { Survey } from "@/lib/get-data";
 import Image from "next/image";
+import { Popover, PopoverContent } from "@/components/ui/popover";
+import { PopoverTrigger } from "@radix-ui/react-popover";
 function findUserByNick(users: Survey[], nickname: string) {
   return users.find(
     (user) => user.discordNick === nickname || user.inGameNick === nickname
@@ -138,7 +140,7 @@ const Item = ({
   return (
     <li
       className={clsx(
-        `grid grid-cols-14 border-4 p-1 rounded-2xl gap-2 w-52 mx-auto border${data.color}`,
+        `flex border-4 p-1 rounded-2xl gap-1 items-center mx-auto border${data.color}`,
         {
           "bg-slate-300 dark:bg-slate-900": !user?.inGameNick,
         }
@@ -261,7 +263,9 @@ const Item = ({
           }
         />
       </span>
-      <span>{t("leadership_cost") + (leadership ? leadership : 0)}</span>
+      <span className="w-24 text-center">{`Cost: ${
+        leadership ? leadership : 0
+      }`}</span>
 
       <span>
         <Autocompleter
@@ -284,69 +288,69 @@ const Item = ({
         />
       </span>
       <span>
-        <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
-            <AccordionTrigger>{t("artillery")}</AccordionTrigger>
-            <AccordionContent>
-              <div className="flex flex-wrap gap-2 justify-center">
-                {artillery.map((e) => (
-                  <Image
-                    height={40}
-                    width={40}
-                    className={clsx(
-                      "rounded-full mt-2 p-1 cursor-pointer hover:shadow-md transition duration-300 ease-in-out transform hover:scale-110 hover:bg-gray-300",
-                      {
-                        "bg-emerald-700 hover:bg-emerald-900":
-                          data.artillery.find((a) => a.id === e.id)?.check,
-                      }
-                    )}
-                    key={e.id}
-                    title={e.name}
-                    alt={e.name}
-                    src={e.src}
-                    onClick={() => {
-                      const artilleryIndex = data.artillery.findIndex(
-                        (art) => art.id === e.id
-                      );
+        <Popover>
+          <PopoverTrigger>
+            <Button>{t("artillery")}</Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <div className="flex flex-wrap gap-2 justify-center">
+              {artillery.map((e) => (
+                <Image
+                  height={40}
+                  width={40}
+                  className={clsx(
+                    "rounded-full mt-2 p-1 cursor-pointer hover:shadow-md transition duration-300 ease-in-out transform hover:scale-110 hover:bg-gray-300",
+                    {
+                      "bg-emerald-700 hover:bg-emerald-900":
+                        data.artillery.find((a) => a.id === e.id)?.check,
+                    }
+                  )}
+                  key={e.id}
+                  title={e.name}
+                  alt={e.name}
+                  src={e.src}
+                  onClick={() => {
+                    const artilleryIndex = data.artillery.findIndex(
+                      (art) => art.id === e.id
+                    );
 
-                      let updatedArtillery;
-                      if (artilleryIndex !== -1) {
-                        updatedArtillery = data.artillery.map((art, index) =>
-                          index === artilleryIndex
-                            ? { ...art, check: !art.check }
-                            : art
-                        );
-                      } else {
-                        updatedArtillery = [
-                          ...data.artillery,
-                          { id: e.id, check: true },
-                        ];
-                      }
-                      onEdit(
-                        index,
-                        data.username,
-                        data.unit1,
-                        data.unit2,
-                        data.unit3,
-                        data.weapon,
-                        data.description,
-                        data.color,
-                        updatedArtillery
+                    let updatedArtillery;
+                    if (artilleryIndex !== -1) {
+                      updatedArtillery = data.artillery.map((art, index) =>
+                        index === artilleryIndex
+                          ? { ...art, check: !art.check }
+                          : art
                       );
-                    }}
-                  />
-                ))}
-                <span
-                  title={user_artillery.title}
-                  className="flex flex-col items-center mt-2"
-                >
-                  <PackageOpen className="h-5" />
-                  <span className="text-xs">{user_artillery.label}</span>
-                </span>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+                    } else {
+                      updatedArtillery = [
+                        ...data.artillery,
+                        { id: e.id, check: true },
+                      ];
+                    }
+                    onEdit(
+                      index,
+                      data.username,
+                      data.unit1,
+                      data.unit2,
+                      data.unit3,
+                      data.weapon,
+                      data.description,
+                      data.color,
+                      updatedArtillery
+                    );
+                  }}
+                />
+              ))}
+              <span
+                title={user_artillery.title}
+                className="flex flex-col items-center mt-2"
+              >
+                <PackageOpen className="h-5" />
+                <span className="text-xs">{user_artillery.label}</span>
+              </span>
+            </div>
+          </PopoverContent>
+        </Popover>
       </span>
       <span>
         <Textarea

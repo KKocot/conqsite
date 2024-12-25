@@ -9,11 +9,11 @@ import { useForm } from "react-hook-form";
 import { Form } from "../../components/ui/form";
 import FormCol from "./form-col";
 import clsx from "clsx";
-import Loading from "react-loading";
 import { useTranslations } from "next-intl";
 import { getSurvey, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import useSubmitSurvey from "../../components/hooks/use-submit-survey";
+import LoadingComponent from "../ifs/loading";
 
 export const DEFAULT_FORM_DATA: Survey = {
   discordNick: "",
@@ -105,12 +105,7 @@ export default function WizardForm({
   const onSubmit = (values: Survey) => {
     submitMutation.mutate({ values, user_id, avatar: avatar || "" });
   };
-  if (profileIsLoading || submitMutation.isPending)
-    return (
-      <div className="flex justify-center items-center h-screen w-full">
-        <Loading color="#94a3b8" />
-      </div>
-    );
+  if (profileIsLoading || submitMutation.isPending) return <LoadingComponent />;
   return (
     <Form {...form}>
       <form

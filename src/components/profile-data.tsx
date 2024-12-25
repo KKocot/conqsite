@@ -78,36 +78,13 @@ const ProfileData = ({ profile }: { profile: Survey }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <List units={golden} value="4" />
-            <List units={golden} value="3" />
-            <List units={golden} value="2" />
-            <List units={golden} value="1" />
-          </TableRow>
-          <TableRow>
-            <List units={heroic} value="4" />
-            <List units={heroic} value="3" />
-            <List units={heroic} value="2" />
-            <List units={heroic} value="1" />
-          </TableRow>
-          <TableRow>
-            <List units={blue} value="4" />
-            <List units={blue} value="3" />
-            <List units={blue} value="2" />
-            <List units={blue} value="1" />
-          </TableRow>
-          <TableRow>
-            <List units={green} value="4" />
-            <List units={green} value="3" />
-            <List units={green} value="2" />
-            <List units={green} value="1" />
-          </TableRow>
-          <TableRow>
-            <List units={grey} value="4" />
-            <List units={grey} value="3" />
-            <List units={grey} value="2" />
-            <List units={grey} value="1" />
-          </TableRow>
+          {[golden, heroic, blue, green, grey].map((units, index) => (
+            <TableRow key={index}>
+              {[4, 3, 2, 1].map((value) => (
+                <List key={value} units={units} value={value.toString()} />
+              ))}
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </>
