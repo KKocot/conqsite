@@ -196,7 +196,7 @@ const CreateHouseHighRoles = ({
         </div>
         <Separator />
         <h2 className="text-center text-lg font-bold p-6">
-          Choose your 3 commanders
+          Choose your 3 Commanders
         </h2>
         <p></p>
         <div className="grid grid-cols-3 gap-4 p-6">
