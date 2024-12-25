@@ -140,8 +140,11 @@ export const getPublicLineupDates = async (
   house: string
 ): Promise<string[]> => {
   const response = await fetch(`/api/publicLineup?house=${house}`);
-  const result = await response.json();
-  return result;
+  const result: string[] = await response.json();
+  const uniqueDates = Array.from(new Set(result)).sort(
+    (a, b) => new Date(b).getTime() - new Date(a).getTime()
+  );
+  return uniqueDates;
 };
 
 export interface UsersStats {

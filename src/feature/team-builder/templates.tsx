@@ -58,6 +58,7 @@ const Templates = ({
               onChange={(e) => setTemplateName(e.target.value)}
             />
             <Button
+              size="sm"
               variant="custom"
               className="absolute right-1 top-1/2 -translate-y-1/2"
               disabled={

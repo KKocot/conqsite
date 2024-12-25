@@ -26,9 +26,14 @@ import { Switch } from "@/components/ui/switch";
 interface PageProps {
   surveysData: Survey[];
   assets?: HouseAssets;
+  publicLineupsDates?: string[];
 }
 
-const Content: React.FC<PageProps> = ({ surveysData, assets }) => {
+const Content: React.FC<PageProps> = ({
+  surveysData,
+  assets,
+  publicLineupsDates,
+}) => {
   const { param: house }: { param: string } = useParams();
   const [showPreview, setShowPreview] = useState(false);
   const [userList, setUserList] = useState<Survey[]>(surveysData);
@@ -154,7 +159,12 @@ const Content: React.FC<PageProps> = ({ surveysData, assets }) => {
         <Preview data={sheetData} units={units} />
       </div>
       <nav className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 rounded-full bg-background px-1 py-2 shadow-lg">
-        <PublicDialog data={[]} house={house} />
+        <PublicDialog
+          data={sheetData}
+          house={house}
+          setSheetData={setSheetData}
+          dates={publicLineupsDates}
+        />
         <Templates
           assets={assets}
           house={house}

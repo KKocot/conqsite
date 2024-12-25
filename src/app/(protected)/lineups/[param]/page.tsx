@@ -15,8 +15,6 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -30,10 +28,8 @@ const Page = () => {
     enabled: !!house,
   });
   const [date, setDate] = useState<string>("");
-  const uniqueDates = Array.from(new Set(data)).sort(
-    (a, b) => new Date(b).getTime() - new Date(a).getTime()
-  );
-  const latestDate = uniqueDates[uniqueDates.length - 1];
+
+  const latestDate = data ? data[0] : "";
   useEffect(() => {
     if (latestDate) setDate(latestDate);
   }, [latestDate]);
@@ -59,7 +55,7 @@ const Page = () => {
             <SheetTitle>Change date</SheetTitle>
           </SheetHeader>
           <div className="p-4 flex flex-col gap-4">
-            {uniqueDates.map((e) => (
+            {data.map((e) => (
               <SheetClose asChild key={e}>
                 <Button onClick={() => setDate(e)} variant="custom">
                   {e}

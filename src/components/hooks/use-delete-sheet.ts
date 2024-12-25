@@ -32,6 +32,7 @@ const useDeleteSheet = () => {
     onSuccess: (data) => {
       const { house, date } = data;
       queryClient.invalidateQueries({ queryKey: ["lineup", house, date] });
+      queryClient.invalidateQueries({ queryKey: ["lineupsDates", house] });
       queryClient.invalidateQueries({ queryKey: ["lineup dates", house] });
     },
     onError: (error: Error) => {
