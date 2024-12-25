@@ -138,7 +138,7 @@ const Item = ({
   return (
     <li
       className={clsx(
-        `grid grid-cols-14 border-4 p-2 rounded-2xl gap-2 w-56 mx-auto border${data.color}`,
+        `grid grid-cols-14 border-4 p-1 rounded-2xl gap-2 w-52 mx-auto border${data.color}`,
         {
           "bg-slate-300 dark:bg-slate-900": !user?.inGameNick,
         }
