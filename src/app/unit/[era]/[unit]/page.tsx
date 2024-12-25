@@ -2,6 +2,8 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 import Tree from "@/feature/unit-builder/tree";
 import { getUnitPosts } from "@/lib/get-data";
 import { Unit } from "@/lib/type";
@@ -84,7 +86,7 @@ const Page = () => {
                 </Link>
               </div>
               {isLoading ? (
-                <div>Loading...</div>
+                <LoadingComponent />
               ) : data && data.length !== 0 ? (
                 data.map((post) => (
                   <Card key={post.id} className="p-2 mb-2">
@@ -99,7 +101,7 @@ const Page = () => {
                   </Card>
                 ))
               ) : (
-                <div>No post found</div>
+                <NoData />
               )}
             </div>
           </div>

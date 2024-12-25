@@ -5,8 +5,9 @@ import Content from "./content";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getHighRoles, getHouseAssets, getSurveys } from "@/lib/get-data";
-import Loading from "react-loading";
 import { useSession } from "next-auth/react";
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 
 const Page: React.FC = () => {
   const { param: house }: { param: string } = useParams();
@@ -29,20 +30,9 @@ const Page: React.FC = () => {
     enabled: !!house,
   });
 
-  if (rolesIsLoading || surveysIsLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen w-full">
-        <Loading color="#94a3b8" />
-      </div>
-    );
-  }
-  if (!surveysData || !rolesData) {
-    return (
-      <div className="flex justify-center items-center h-screen w-full">
-        error
-      </div>
-    );
-  }
+  if (rolesIsLoading || surveysIsLoading) return <LoadingComponent />;
+  if (!surveysData || !rolesData) return <NoData />;
+
   return assetsData?.sharedList ||
     !!rolesData.find((e) => e.discordId === user?.user.id) ? (
     <Content

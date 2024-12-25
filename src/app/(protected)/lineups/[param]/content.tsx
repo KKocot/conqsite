@@ -7,6 +7,7 @@ import NoData from "@/feature/ifs/no-data";
 import { getPublicLineup } from "@/lib/get-data";
 import { Unit } from "@/lib/type";
 import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 
 const Content = ({
   date,
@@ -17,6 +18,7 @@ const Content = ({
   house: string;
   units: Unit[];
 }) => {
+  const { data: user } = useSession();
   const { data, isLoading } = useQuery({
     queryKey: ["lineups", house, date],
     queryFn: () => getPublicLineup(house, date),
@@ -39,7 +41,7 @@ const Content = ({
           value={e.name}
           className="flex self-center"
         >
-          <Preview data={e.sheet} units={units} />
+          <Preview data={e.sheet} units={units} username={user?.user.name} />
         </TabsContent>
       ))}
     </Tabs>

@@ -21,8 +21,8 @@ import { Label } from "../../components/ui/label";
 import { useTranslations } from "next-intl";
 import { getHousesDetails } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
-import Loading from "react-loading";
 import Image from "next/image";
+import LoadingComponent from "../ifs/loading";
 
 const StepGeneral = ({
   form,
@@ -38,12 +38,7 @@ const StepGeneral = ({
 
   const t = useTranslations("AddForm");
   const prev_step = 3;
-  if (isLoading || !data)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Loading color="#94a3b8" />
-      </div>
-    );
+  if (isLoading || !data) return <LoadingComponent />;
   return (
     <div className="flex flex-col sm:shadow-gray-600 dark:sm:shadow-slate-900 sm:shadow-lg p-4 gap-4">
       <div className="flex flex-col sm:flex-row justify-start p-4 gap-4">
