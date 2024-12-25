@@ -8,7 +8,8 @@ import { useParams } from "next/navigation";
 import Content from "./content";
 
 const Page = () => {
-  const { param: house }: { param: string } = useParams();
+  const { param }: { param: string } = useParams();
+  const house = param.replaceAll("%20", " ");
   const { data, isLoading } = useQuery({
     queryKey: ["house", house],
     queryFn: () => getHouseStats(house),

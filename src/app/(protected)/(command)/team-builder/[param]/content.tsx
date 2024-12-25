@@ -34,7 +34,8 @@ const Content: React.FC<PageProps> = ({
   assets,
   publicLineupsDates,
 }) => {
-  const { param: house }: { param: string } = useParams();
+  const { param }: { param: string } = useParams();
+  const house = param.replaceAll("%20", " ");
   const [showPreview, setShowPreview] = useState(false);
   const [userList, setUserList] = useState<Survey[]>(surveysData);
   const [row, setRow] = useState(false);

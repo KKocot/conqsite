@@ -13,7 +13,8 @@ import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 
 const Page: React.FC = () => {
-  const { param: house }: { param: string } = useParams();
+  const { param }: { param: string } = useParams();
+  const house = param.replaceAll("%20", " ");
 
   const { data, isLoading } = useQuery({
     queryKey: ["surveysList", house],

@@ -21,7 +21,8 @@ import {
 } from "@/components/ui/sheet";
 
 const Page = () => {
-  const { param: house }: { param: string } = useParams();
+  const { param }: { param: string } = useParams();
+  const house = param.replaceAll("%20", " ");
   const { data, isLoading } = useQuery({
     queryKey: ["lineupsDates", house],
     queryFn: () => getPublicLineupDates(house),
