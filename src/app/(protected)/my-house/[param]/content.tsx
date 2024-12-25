@@ -1,6 +1,7 @@
 "use client";
 
 import { useUpdateHouseAssets } from "@/components/hooks/use-house-assets";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -91,13 +92,17 @@ const Content: FC<ContentProps> = ({
                 )}
               >
                 {e.avatar ? (
-                  <Image
-                    width={32}
-                    height={32}
-                    src={e.avatar}
-                    alt={e.inGameNick}
-                    className="mr-1 rounded-full"
-                  />
+                  <Avatar className="w-8 h-8 mr-1 rounded-full">
+                    <AvatarImage alt={e.discordNick} src={e.avatar} />
+                    <AvatarFallback className="rounded-none">
+                      <Image
+                        width={32}
+                        height={32}
+                        src="/logo.png"
+                        alt="logo"
+                      />
+                    </AvatarFallback>
+                  </Avatar>
                 ) : null}
                 {e.inGameNick}
               </Badge>
