@@ -1536,7 +1536,7 @@ export const rareDoctrines: Doctrine[] = [
   },
   {
     name: "Shenji Doctrine III",
-    img: "/doctrines/shenji-doctrine-iIi.png",
+    img: "/doctrines/shenji-doctrine-iii.png",
     forUnit: ["Shenji Grenadiers"],
     dedicated: "unit",
     stats: "Increases unit's supply of grenades by 25%.",

@@ -120,8 +120,8 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         ),
       },
       {
-        title: "Bot Controler",
-        url: `/bot-controler/${house}`,
+        title: "Bot Controller",
+        url: `/bot-controller/${house}`,
         visibleTo: commanders.some(
           (e) => e.discordId === data?.user.id && e.house === house
         ),
