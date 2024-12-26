@@ -34,8 +34,8 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const house_name = searchParams.get("house-name ");
-  const date = searchParams.get("next-date-event ");
+  const house_name = searchParams.get("house-name");
+  const date = searchParams.get("next-date-event");
   const event_template_id = searchParams.get("event-id");
 
   try {
@@ -62,7 +62,7 @@ export async function GET(request: Request) {
 
 export async function DELETE(request: Request) {
   const { searchParams } = new URL(request.url);
-  const next_date_event = searchParams.get("next-date-event ");
+  const next_date_event = searchParams.get("next-date-event");
   const event_id = searchParams.get("event-id");
 
   try {
