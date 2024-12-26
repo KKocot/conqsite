@@ -4,7 +4,7 @@ import { ZodError } from "zod";
 import { EventControllerSchema } from "./schema";
 import EventController from "@/models/eventController";
 
-export async function POST(request: NextResponse) {
+export async function POST(request: Request) {
   try {
     await connectMongoDB();
     const data = EventControllerSchema.parse(await request.json());
@@ -32,7 +32,7 @@ export async function POST(request: NextResponse) {
   }
 }
 
-export async function GET(request: NextResponse) {
+export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const house_name = searchParams.get("house-name ");
   const next_date_event = searchParams.get("next-date-event ");
@@ -59,7 +59,7 @@ export async function GET(request: NextResponse) {
   }
 }
 
-export async function DELETE(request: NextResponse) {
+export async function DELETE(request: Request) {
   const { searchParams } = new URL(request.url);
   const next_date_event = searchParams.get("next-date-event ");
   const event_id = searchParams.get("event-id");
