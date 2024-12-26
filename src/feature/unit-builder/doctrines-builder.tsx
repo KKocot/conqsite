@@ -4,9 +4,9 @@ import { useDrag, useDrop, DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { doctrines } from "@/assets/doctrines";
 import { UseFormSetValue } from "react-hook-form";
 import { UnitData } from "@/lib/get-data";
+import { epicDoctrines } from "@/assets/doctrines";
 
 const ItemTypes = {
   DOCTRINE: "doctrine",
@@ -108,7 +108,7 @@ const DoctrinedBuilder = ({
     <DndProvider backend={HTML5Backend}>
       <div className="py-10 h-full flex flex-col gap-12">
         <div className="flex gap-5 flex-wrap">
-          {doctrines.map((doctrine) => (
+          {epicDoctrines.map((doctrine) => (
             <Doctrine key={doctrine.name} doctrine={doctrine} />
           ))}
         </div>
