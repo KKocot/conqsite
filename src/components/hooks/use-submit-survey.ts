@@ -38,7 +38,7 @@ const useSubmitSurvey = () => {
     onSuccess: (data) => {
       const { discordId } = data;
       queryClient.invalidateQueries({ queryKey: ["profile", discordId] });
-      router.push(`/profile`);
+      router.push(`/member/profile`);
     },
     onError: (error: Error) => {
       console.error("Error occurred:", error.message);

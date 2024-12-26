@@ -389,4 +389,14 @@ export const heroicUnits = [
     era: "heroic",
     icon: "/heroic-icons/New_purple_unit.webp",
   },
+  {
+    id: 40,
+    name: "Laconic Javelins",
+    src: "/heroic-units/T4_new.png",
+    leadership: 235,
+    masteryPoints: false,
+    value: 8,
+    era: "heroic",
+    icon: "/logo.png",
+  },
 ];
