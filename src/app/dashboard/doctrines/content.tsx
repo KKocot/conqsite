@@ -24,19 +24,21 @@ const Content = () => {
   return (
     <Tabs defaultValue="all">
       <TabsList className="flex justify-between w-full">
-        <TabsTrigger value="all">General Doctrines </TabsTrigger>
-        <TabsTrigger value="group">Dedicated for groups</TabsTrigger>
-        <TabsTrigger value="unit">Dedicated Units</TabsTrigger>
+        {["all", "group", "unit"].map((value) => (
+          <TabsTrigger key={value} value={value}>
+            {value === "all" ? "General Doctrines" : `Dedicated for ${value}s`}
+          </TabsTrigger>
+        ))}
       </TabsList>
-      <TabsContent value="all">
-        <DoctrinesList doctrines={dedicatedForAll} />
-      </TabsContent>
-      <TabsContent value="group">
-        <DoctrinesList doctrines={dedicatedForGruops} />
-      </TabsContent>
-      <TabsContent value="unit">
-        <DoctrinesList doctrines={dedicatedForUnits} />
-      </TabsContent>
+      {[
+        { value: "all", doctrines: dedicatedForAll },
+        { value: "group", doctrines: dedicatedForGruops },
+        { value: "unit", doctrines: dedicatedForUnits },
+      ].map(({ value, doctrines }) => (
+        <TabsContent key={value} value={value}>
+          <DoctrinesList doctrines={doctrines} />
+        </TabsContent>
+      ))}
     </Tabs>
   );
 };
@@ -46,7 +48,7 @@ const DoctrinesList = ({ doctrines }: { doctrines: Doctrine[] }) => {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {doctrines.map((doctrine) => (
-        <DoctrinesLisItem doctrine={doctrine} />
+        <DoctrinesLisItem key={doctrine.name} doctrine={doctrine} />
       ))}
     </div>
   );
