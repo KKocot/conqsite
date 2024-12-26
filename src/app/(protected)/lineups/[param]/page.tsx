@@ -19,6 +19,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { others } from "@/assets/other-units-data";
 
 const Page = () => {
   const { param }: { param: string } = useParams();
@@ -42,6 +43,7 @@ const Page = () => {
     ...blueUnits,
     ...greenUnits,
     ...greyUnits,
+    ...others,
   ];
 
   return (
