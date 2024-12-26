@@ -629,6 +629,16 @@ export const lowUnits = [
     era: "blue",
     icon: "/low-tiers-icons/new_blue_unit.webp",
   },
+  {
+    id: 64,
+    name: "Helot Auxiliaries",
+    src: "/low-tiers-units/t3_new.png",
+    leadership: 180,
+    masteryPoints: false,
+    value: 8,
+    era: "blue",
+    icon: "/logo.png",
+  },
 ];
 
 export const blueUnits = lowUnits.filter((unit) => unit.era === "blue");
