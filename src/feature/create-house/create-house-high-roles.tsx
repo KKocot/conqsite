@@ -24,6 +24,7 @@ interface CreateHouseHighRolesProps {
   setValues: Dispatch<SetStateAction<ConfigProps>>;
   onAdd?: never;
   onDelete?: never;
+  premium?: never;
 }
 
 interface EditHouseHighRolesProps {
@@ -34,6 +35,7 @@ interface EditHouseHighRolesProps {
   setValues?: never;
   onAdd: (e: Roles) => void;
   onDelete: (userId: string, house: string) => void;
+  premium: boolean;
 }
 
 const CreateHouseHighRoles = ({
@@ -44,6 +46,7 @@ const CreateHouseHighRoles = ({
   setValues,
   onAdd,
   onDelete,
+  premium,
 }: CreateHouseHighRolesProps | EditHouseHighRolesProps) => {
   const house = type === "edit" ? values.houseLeader[0].house : "";
   return (
@@ -95,7 +98,7 @@ const CreateHouseHighRoles = ({
         </h2>
         <div className="grid grid-cols-3 gap-4 p-6">
           <Select
-            disabled={values.righthand.length >= 1}
+            disabled={values.righthand.length >= (premium ? 2 : 1)}
             onValueChange={(e) => {
               const user = discordUsers.users.find((user) => user.id === e);
               if (type === "edit") {
@@ -201,7 +204,7 @@ const CreateHouseHighRoles = ({
         <p></p>
         <div className="grid grid-cols-3 gap-4 p-6">
           <Select
-            disabled={values.highcommand.length >= 3}
+            disabled={values.highcommand.length >= (premium ? 6 : 3)}
             onValueChange={(e) => {
               const user = discordUsers.users.find((user) => user.id === e);
               if (type === "edit") {

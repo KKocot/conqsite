@@ -106,7 +106,7 @@ const Content: React.FC<PageProps> = ({
   const usedUsersList = sheetData.map((e) => e.username);
 
   return (
-    <div className="flex justify-center flex-col items-center">
+    <div className="flex justify-center flex-col items-center overflow-x-hidden">
       <div className={clsx("flex flex-col gap-5 p-2", { hidden: showPreview })}>
         <UsersList usedPlayers={usedUsersList} allPlayers={userList} />
         {row ? (

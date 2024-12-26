@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   getDiscordUsers,
   getHighRoles,
+  getHouseAssets,
   getHouseSettings,
 } from "@/lib/get-data";
 import { useSession } from "next-auth/react";
@@ -14,14 +15,15 @@ import NoData from "@/feature/ifs/no-data";
 
 const Page = () => {
   const { param }: { param: string } = useParams();
+  const house = param.replaceAll("%20", " ");
   const { data: user } = useSession();
   const { data, isLoading } = useQuery({
-    queryKey: ["houseSettings", param],
-    queryFn: () => getHouseSettings(param),
-    enabled: !!param,
+    queryKey: ["houseSettings", house],
+    queryFn: () => getHouseSettings(house),
+    enabled: !!house,
   });
   const { data: highRolesData, isLoading: highRolesLoading } = useQuery({
-    queryKey: ["highRoles", param],
+    queryKey: ["highRoles", house],
     queryFn: () =>
       getDiscordUsers(
         data?.id ?? "",
@@ -31,9 +33,14 @@ const Page = () => {
     enabled: !!data,
   });
   const { data: highRolesList, isLoading: highRolesListLoading } = useQuery({
-    queryKey: ["highRolesList", param],
-    queryFn: () => getHighRoles(param),
-    enabled: !!param,
+    queryKey: ["highRolesList", house],
+    queryFn: () => getHighRoles(house),
+    enabled: !!house,
+  });
+  const { data: assets } = useQuery({
+    queryKey: ["houseAssets", house],
+    queryFn: () => getHouseAssets(house),
+    enabled: !!house,
   });
   if (isLoading || highRolesLoading || highRolesListLoading) {
     return <LoadingComponent />;

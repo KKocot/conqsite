@@ -8,12 +8,12 @@ import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 
 const Page = () => {
-  const { param } = useParams();
-  const houseName = param.toString();
+  const { param }: { param: string } = useParams();
+  const house = param.replaceAll("%20", " ");
   const { data, isLoading } = useQuery({
     queryKey: ["house", param],
-    queryFn: () => getHouseDetails(houseName),
-    enabled: !!houseName,
+    queryFn: () => getHouseDetails(house),
+    enabled: !!house,
   });
 
   if (isLoading) return <LoadingComponent />;
