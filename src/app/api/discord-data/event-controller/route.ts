@@ -74,7 +74,7 @@ export async function DELETE(request: Request) {
     });
 
     return NextResponse.json(
-      { event, message: "Sheet deleted" },
+      { event, message: "Event deleted" },
       { status: 200 }
     );
   } catch (error) {
