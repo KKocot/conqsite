@@ -14,6 +14,7 @@ import { getSurvey, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import useSubmitSurvey from "../../components/hooks/use-submit-survey";
 import LoadingComponent from "../ifs/loading";
+import { createNewUnits, createNewWeapons } from "@/lib/utils";
 
 export const DEFAULT_FORM_DATA: Survey = {
   discordNick: "",
@@ -48,29 +49,20 @@ export default function WizardForm({
 
   const unitForm = profileData ?? DEFAULT_FORM_DATA;
 
-  interface Unit {
-    id: number;
-    value: string;
-  }
-
   const low_units_diff = lowUnits.length - unitForm.units.low.length;
   const heroic_units_diff = heroicUnits.length - unitForm.units.heroic.length;
   const golden_units_diff = goldenUnits.length - unitForm.units.golden.length;
   const no_new_units = 0;
-  const createNewUnits = (
-    existingUnits: Unit[],
-    diff: number,
-    baseId: number
-  ): Unit[] => {
-    const newUnits: Unit[] = [];
-    for (let i = 0; i < diff; i++) {
-      newUnits.push({ id: baseId + i + 1, value: "0" });
-    }
-    return [...existingUnits, ...newUnits];
-  };
+  const weapons_diff = weapons.length - unitForm.weapons.length;
+  const no_new_weapons = 0;
+
   const form = useForm({
     values: {
       ...unitForm,
+      weapons:
+        weapons_diff > no_new_weapons
+          ? createNewWeapons(unitForm.weapons, weapons_diff)
+          : unitForm.weapons,
       units: {
         low:
           low_units_diff > no_new_units
@@ -110,7 +102,7 @@ export default function WizardForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col items-center p-4 gap-6"
+        className="flex flex-col items-center p-4 gap-6 w-full"
       >
         <h1 className="text-3xl font-bold">{t("form")}</h1>
         <ul className="flex gap-4 text-accent">

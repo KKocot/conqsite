@@ -1,4 +1,10 @@
-export const weapons = [
+export interface Weapon {
+  id: number;
+  name: string;
+  src: string;
+}
+
+export const weapons: Weapon[] = [
   {
     id: 1,
     name: "Bow",
@@ -63,5 +69,10 @@ export const weapons = [
     id: 13,
     name: "Shortsword",
     src: "/weapons/Short_sword.png",
+  },
+  {
+    id: 14,
+    name: "Spear and Shield",
+    src: "/weapons/New_class.png",
   },
 ];

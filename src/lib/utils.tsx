@@ -153,3 +153,35 @@ export const createDateArray = (start: string, end: string): string[] => {
 
   return dateArray;
 };
+interface NewUnit {
+  id: number;
+  value: string;
+}
+
+interface NewWeapon {
+  value: boolean;
+  leadership: number;
+  pref?: number;
+}
+
+export const createNewUnits = (
+  existingUnits: NewUnit[],
+  diff: number,
+  baseId: number
+): NewUnit[] => {
+  const newUnits: NewUnit[] = [];
+  for (let i = 0; i < diff; i++) {
+    newUnits.push({ id: baseId + i + 1, value: "0" });
+  }
+  return [...existingUnits, ...newUnits];
+};
+export const createNewWeapons = (
+  existingWeapons: NewWeapon[],
+  diff: number
+) => {
+  const newWeapons = [];
+  for (let i = 0; i < diff; i++) {
+    newWeapons.push({ value: false, leadership: 0, pref: 0 });
+  }
+  return [...existingWeapons, ...newWeapons];
+};
