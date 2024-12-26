@@ -47,7 +47,7 @@ function NavUser({
                   alt={name ?? "avatar"}
                 />
                 <AvatarFallback className="rounded-lg">
-                  <Image height={32} width={32} src="/logo" alt="Logo" />
+                  <Image height={32} width={32} src="/logo.png" alt="Logo" />
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -71,7 +71,7 @@ function NavUser({
                     alt={name ?? "avatar"}
                   />
                   <AvatarFallback className="rounded-lg">
-                    <Image height={32} width={32} src="/logo" alt="Logo" />
+                    <Image height={32} width={32} src="/logo.png" alt="Logo" />
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
