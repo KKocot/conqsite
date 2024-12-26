@@ -35,8 +35,8 @@ export async function POST(request: Request) {
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const house_name = searchParams.get("house-name ");
-  const next_date_event = searchParams.get("next-date-event ");
-  const event_id = searchParams.get("event-id");
+  const date = searchParams.get("next-date-event ");
+  const event_template_id = searchParams.get("event-id");
 
   try {
     await connectMongoDB();
@@ -44,11 +44,12 @@ export async function GET(request: Request) {
       const event = await EventController.find({ house_name });
       return new NextResponse(JSON.stringify(event), { status: 200 });
     }
-    if (next_date_event && event_id) {
-      const event = await EventController.findOne({
-        date: next_date_event,
-        event_template_id: event_id,
-      });
+    if (date) {
+      const event = await EventController.findOne({ date });
+      return new NextResponse(JSON.stringify(event), { status: 200 });
+    }
+    if (event_template_id) {
+      const event = await EventController.findOne({ event_template_id });
       return new NextResponse(JSON.stringify(event), { status: 200 });
     }
   } catch (error) {
