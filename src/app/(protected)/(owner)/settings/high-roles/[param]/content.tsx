@@ -2,7 +2,7 @@
 
 import { useAddRole, useDeleteRole } from "@/components/hooks/use-update-roles";
 import CreateHouseHighRoles from "@/feature/create-house/create-house-high-roles";
-import { DiscordUsersProps, Roles } from "@/lib/get-data";
+import { DiscordUsersProps, HouseAssets, Roles } from "@/lib/get-data";
 
 export interface HighRolesValues {
   highcommand: Roles[];
@@ -13,9 +13,11 @@ export interface HighRolesValues {
 const Content = ({
   members,
   highRoles,
+  assets,
 }: {
   members: DiscordUsersProps;
   highRoles: Roles[];
+  assets?: HouseAssets;
 }) => {
   const values: HighRolesValues = {
     highcommand: highRoles.filter((role) => role.role === "HighCommand"),
@@ -32,6 +34,7 @@ const Content = ({
         values={values}
         onDelete={(discordId, house) => deleteRole.mutate({ discordId, house })}
         onAdd={(user) => addRole.mutate(user)}
+        premium={assets?.premium ?? false}
       />
     </div>
   );

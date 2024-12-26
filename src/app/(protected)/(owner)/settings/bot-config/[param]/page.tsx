@@ -10,11 +10,12 @@ import NoData from "@/feature/ifs/no-data";
 
 const Page = () => {
   const { param }: { param: string } = useParams();
+  const house = param.replaceAll("%20", " ");
   const { data: user } = useSession();
   const { data, isLoading } = useQuery({
-    queryKey: ["houseConfig", param],
-    queryFn: () => getHouseSettings(param),
-    enabled: !!param,
+    queryKey: ["houseConfig", house],
+    queryFn: () => getHouseSettings(house),
+    enabled: !!house,
   });
 
   if (isLoading || !user) return <LoadingComponent />;
