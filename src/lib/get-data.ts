@@ -275,3 +275,28 @@ export const getHousesAssets = async (): Promise<HouseAssets[]> => {
   const result = await response.json();
   return result.housesAssets;
 };
+
+export interface CyclicalEvents {
+  _id?: string;
+  event_template_id: string;
+  date: string;
+  time: string;
+  interval: "TW" | "Never" | number;
+  activity_time: number;
+  title: string;
+  description: string;
+  guild_id: string;
+  house_name: string;
+  channel_id: string;
+  role_id: string;
+}
+
+export const getCyclicalEvents = async (
+  house: string
+): Promise<CyclicalEvents[]> => {
+  const response = await fetch(
+    `/api/discord-data/event-controller?house-name=${house}`
+  );
+  const result = await response.json();
+  return result;
+};
