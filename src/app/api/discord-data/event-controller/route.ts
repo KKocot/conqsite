@@ -9,7 +9,7 @@ export async function POST(request: Request) {
     await connectMongoDB();
     const data = EventControllerSchema.parse(await request.json());
     const existingEventController = await EventController.findOne({
-      eventId: data.title,
+      eventId: data.event_template_id,
     });
     let eventController;
     if (existingEventController) {
@@ -45,7 +45,7 @@ export async function GET(request: Request) {
       return new NextResponse(JSON.stringify(event), { status: 200 });
     }
     if (date) {
-      const event = await EventController.findOne({ date });
+      const event = await EventController.find({ date });
       return new NextResponse(JSON.stringify(event), { status: 200 });
     }
     if (event_template_id) {
@@ -69,7 +69,6 @@ export async function DELETE(request: Request) {
     await connectMongoDB();
 
     const event = await EventController.findOneAndDelete({
-      date: next_date_event,
       event_template_id: event_id,
     });
 
