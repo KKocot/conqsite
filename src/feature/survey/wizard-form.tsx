@@ -12,7 +12,7 @@ import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { getSurvey, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
-import useSubmitSurvey from "../../components/hooks/use-submit-survey";
+import useSubmitSurveyMutation from "../../components/hooks/use-survey-mutation";
 import LoadingComponent from "../ifs/loading";
 import { createNewUnits, createNewWeapons } from "@/lib/utils";
 
@@ -92,7 +92,7 @@ export default function WizardForm({
     },
   });
 
-  const submitMutation = useSubmitSurvey();
+  const submitMutation = useSubmitSurveyMutation();
 
   const onSubmit = (values: Survey) => {
     submitMutation.mutate({ values, user_id, avatar: avatar || "" });

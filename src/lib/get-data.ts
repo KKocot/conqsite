@@ -300,3 +300,16 @@ export const getCyclicalEvents = async (
   const result = await response.json();
   return result;
 };
+
+export interface AuthorityToken {
+  id: string;
+  name: string;
+  image: string;
+  token: string;
+}
+
+export const getBotToken = async (token: string): Promise<AuthorityToken> => {
+  const response = await fetch(`/api/authority?token=${token}`);
+  const result = await response.json();
+  return result;
+};

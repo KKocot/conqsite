@@ -1,7 +1,7 @@
 import { PublicLineup } from "@/lib/get-data";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useAddLineup = () => {
+export const useAddLineupMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({

@@ -1,6 +1,6 @@
 "use client";
 
-import { useUpdateHouseAssets } from "@/components/hooks/use-house-assets";
+import { useUpdateAssetsMutation } from "@/components/hooks/use-assets-mutation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -28,7 +28,7 @@ const Content: FC<ContentProps> = ({
   userId,
 }) => {
   const [inputQuery, setInputQuery] = useState<string>("");
-  const updateHouseAssets = useUpdateHouseAssets();
+  const updateHouseAssets = useUpdateAssetsMutation();
   const filtredSurveys = surveysData
     ?.sort((a, b) => Number(a.characterLevel) - Number(b.characterLevel))
     .reverse()

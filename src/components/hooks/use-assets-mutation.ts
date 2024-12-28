@@ -1,7 +1,7 @@
 import { HouseAssets } from "@/lib/get-data";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useUpdateHouseAssets = () => {
+export const useUpdateAssetsMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({

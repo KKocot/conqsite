@@ -16,9 +16,9 @@ import { Dispatch, SetStateAction, useState } from "react";
 import LoadingComponent from "../ifs/loading";
 import { Input } from "@/components/ui/input";
 import {
-  useAddTemplate,
-  useDeleteTemplate,
-} from "@/components/hooks/use-update-templates";
+  useAddTemplateMutation,
+  useDeleteTemplateMutation,
+} from "@/components/hooks/use-templates-mutation";
 
 const Templates = ({
   house,
@@ -36,8 +36,8 @@ const Templates = ({
     queryFn: () => getTemplates(house),
   });
   const [templateName, setTemplateName] = useState("");
-  const deleteTemplate = useDeleteTemplate();
-  const addTemplate = useAddTemplate();
+  const deleteTemplate = useDeleteTemplateMutation();
+  const addTemplate = useAddTemplateMutation();
   const existingTemplate = data?.find((e) => e.templateName === templateName);
   return (
     <Dialog>

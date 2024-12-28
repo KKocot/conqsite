@@ -2,14 +2,38 @@ import { AuthOptions } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import { DefaultSession } from "next-auth";
 import connectMongoDB from "./mongodb";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions: AuthOptions = {
   pages: {
     signIn: "/login",
     newUser: "/",
   },
-  // Configure one or more authentication providers
+
   providers: [
+    CredentialsProvider({
+      name: "credentials",
+      credentials: {
+        id: { label: "ID", type: "text" },
+        name: { label: "Name", type: "text" },
+        image: { label: "Image", type: "text" },
+      },
+      async authorize(credentials) {
+        if (!credentials?.id) {
+          return null;
+        }
+        try {
+          return {
+            id: credentials.id,
+            name: credentials.name,
+            image: credentials.image,
+          };
+        } catch (err) {
+          console.log(err);
+          return null;
+        }
+      },
+    }),
     DiscordProvider({
       clientId: process.env.DISCORD_CLIENT_ID!,
       clientSecret: process.env.DISCORD_CLIENT_SECRET!,
