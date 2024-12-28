@@ -3,8 +3,6 @@ import putUnitPostSchema from "./schema";
 import UnitPost from "@/models/unit-post";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 
 export async function POST(request: Request) {
   try {
@@ -29,10 +27,8 @@ export async function POST(request: Request) {
 }
 
 export async function GET(request: Request) {
-  const session = await getServerSession(authOptions);
   const { searchParams } = new URL(request.url);
   const unit = searchParams.get("unit");
-  if (!session) return new Response("401");
   try {
     await connectMongoDB();
     const userPost = await UnitPost.find({ unit: unit });
