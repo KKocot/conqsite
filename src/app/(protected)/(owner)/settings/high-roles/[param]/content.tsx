@@ -1,6 +1,9 @@
 "use client";
 
-import { useAddRole, useDeleteRole } from "@/components/hooks/use-update-roles";
+import {
+  useAddRoleMutation,
+  useDeleteRoleMutation,
+} from "@/components/hooks/use-roles-mutation";
 import CreateHouseHighRoles from "@/feature/create-house/create-house-high-roles";
 import { DiscordUsersProps, HouseAssets, Roles } from "@/lib/get-data";
 
@@ -24,8 +27,8 @@ const Content = ({
     righthand: highRoles.filter((role) => role.role === "RightHand"),
     houseLeader: highRoles.filter((role) => role.role === "HouseLeader"),
   };
-  const addRole = useAddRole();
-  const deleteRole = useDeleteRole();
+  const addRole = useAddRoleMutation();
+  const deleteRole = useDeleteRoleMutation();
   return (
     <div className="flex flex-col gap-6 container">
       <CreateHouseHighRoles

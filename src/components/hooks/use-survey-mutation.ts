@@ -8,7 +8,7 @@ interface SubmitSurveyParams {
   avatar: string;
 }
 
-const useSubmitSurvey = () => {
+const useSubmitSurveyMutation = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -46,4 +46,4 @@ const useSubmitSurvey = () => {
   });
 };
 
-export default useSubmitSurvey;
+export default useSubmitSurveyMutation;

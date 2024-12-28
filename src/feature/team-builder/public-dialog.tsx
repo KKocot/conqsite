@@ -15,8 +15,8 @@ import { Send } from "lucide-react";
 import { getPublicLineup, PublicLineup } from "@/lib/get-data";
 import { Popover, PopoverTrigger } from "@/components/ui/popover";
 import { PopoverContent } from "@radix-ui/react-popover";
-import { useAddLineup } from "@/components/hooks/use-update-lineups";
-import useDeleteSheet from "@/components/hooks/use-delete-sheet";
+import { useAddLineupMutation } from "@/components/hooks/use-lineups-mutation";
+import useDeleteSheetMutation from "@/components/hooks/use-sheet-mutation";
 import { toast } from "react-toastify";
 
 export function PublicDialog({
@@ -34,8 +34,8 @@ export function PublicDialog({
   const [date, setDate] = useState<string>(dates ? dates[0] : "");
   const [publicLineup, setPublicLineup] = useState<PublicLineup[]>([]);
 
-  const deleteSheetMutation = useDeleteSheet();
-  const updateLineup = useAddLineup();
+  const deleteSheetMutation = useDeleteSheetMutation();
+  const updateLineup = useAddLineupMutation();
   const onDateChange = async (date: string) => {
     try {
       const response = await getPublicLineup(house, date);

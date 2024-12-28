@@ -14,6 +14,7 @@ import { Button } from "./ui/button";
 import { Fragment, useState } from "react";
 import { useTranslations } from "next-intl";
 import { OctagonAlert } from "lucide-react";
+import Link from "next/link";
 
 const Preview = ({
   data,
@@ -71,17 +72,10 @@ const Preview = ({
                 >
                   <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
                     <span className="flex items-center gap-2">
-                      {username === e.username ? (
-                        <span title="Its You">
-                          {/* TODO translation */}
-                          <OctagonAlert />
-                        </span>
-                      ) : null}
                       {index + 1 + ". " + e.username}
                       {username === e.username ? (
                         <span title="Its You">
-                          {/* TODO translation */}
-                          <OctagonAlert />
+                          <OctagonAlert className="animate-ping" />
                         </span>
                       ) : null}
                     </span>
@@ -89,7 +83,14 @@ const Preview = ({
                   <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8" title={unit1?.name}>
-                        <AvatarImage alt={unit1?.name} src={unit1?.icon} />
+                        <Link
+                          href={`/unit/${unit1?.era}/${unit1?.name
+                            .replaceAll(" ", "_")
+                            .toLocaleLowerCase()}`}
+                          target="_blank"
+                        >
+                          <AvatarImage alt={unit1?.name} src={unit1?.icon} />
+                        </Link>
                       </Avatar>
                       {show ? <span>{unit1?.name}</span> : null}
                     </div>
@@ -97,7 +98,14 @@ const Preview = ({
                   <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8" title={unit2?.name}>
-                        <AvatarImage alt={unit2?.name} src={unit2?.icon} />
+                        <Link
+                          href={`/unit/${unit2?.era}/${unit2?.name
+                            .replaceAll(" ", "_")
+                            .toLocaleLowerCase()}`}
+                          target="_blank"
+                        >
+                          <AvatarImage alt={unit2?.name} src={unit2?.icon} />
+                        </Link>
                       </Avatar>
                       {show ? <span>{unit2?.name}</span> : null}
                     </div>
@@ -105,7 +113,14 @@ const Preview = ({
                   <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8" title={unit3?.name}>
-                        <AvatarImage alt={unit3?.name} src={unit3?.icon} />
+                        <Link
+                          href={`/unit/${unit3?.era}/${unit3?.name
+                            .replaceAll(" ", "_")
+                            .toLocaleLowerCase()}`}
+                          target="_blank"
+                        >
+                          <AvatarImage alt={unit3?.name} src={unit3?.icon} />
+                        </Link>
                       </Avatar>
                       {show ? <span>{unit3?.name}</span> : null}
                     </div>

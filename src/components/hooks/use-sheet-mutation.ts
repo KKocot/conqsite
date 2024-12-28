@@ -10,7 +10,7 @@ interface ErrorData {
   message?: string;
 }
 
-const useDeleteSheet = () => {
+const useDeleteSheetMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -41,4 +41,4 @@ const useDeleteSheet = () => {
   });
 };
 
-export default useDeleteSheet;
+export default useDeleteSheetMutation;
