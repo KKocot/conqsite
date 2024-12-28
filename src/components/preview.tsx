@@ -71,17 +71,11 @@ const Preview = ({
                 >
                   <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
                     <span className="flex items-center gap-2">
-                      {username === e.username ? (
-                        <span title="Its You">
-                          {/* TODO translation */}
-                          <OctagonAlert />
-                        </span>
-                      ) : null}
                       {index + 1 + ". " + e.username}
                       {username === e.username ? (
                         <span title="Its You">
                           {/* TODO translation */}
-                          <OctagonAlert />
+                          <OctagonAlert className="animate-ping" />
                         </span>
                       ) : null}
                     </span>
