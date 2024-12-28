@@ -147,7 +147,7 @@ const Item = ({
       <span className="flex flex-wrap gap-2">
         {user
           ? weapons.map((weapon, index) =>
-              user.weapons[index].value ? (
+              user?.weapons?.at(index)?.value ? (
                 <span
                   key={weapon.id}
                   className="flex flex-col items-center justify-around"
