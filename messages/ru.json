@@ -40,5 +40,10 @@
     "silver_era": "Серебряная эпоха",
     "knight_era": "Эпоха рыцарей",
     "feudal_and_rustical_era": "Феодальная и Сельская эпоха"
+  },
+  "Doctrines": {
+    "general_doctrines": "Общие доктрины",
+    "dedicated_for_groups": "Посвящено группам",
+    "dedicated_for_units": "Посвящено подразделениям"
   }
 }

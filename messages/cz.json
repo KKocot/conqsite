@@ -40,5 +40,10 @@
     "silver_era": "Stříbrná éra",
     "knight_era": "Rytířská éra",
     "feudal_and_rustical_era": "Feudální a Rustikální éra"
+  },
+  "Doctrines": {
+    "general_doctrines": "Obecné doktríny",
+    "dedicated_for_groups": "Určeno pro skupiny",
+    "dedicated_for_units": "Určeno pro jednotky"
   }
 }

@@ -40,5 +40,10 @@
     "silver_era": "Silbernes Zeitalter",
     "knight_era": "Ritterzeit",
     "feudal_and_rustical_era": "Feudale und Rustikale Ära"
+  },
+  "Doctrines": {
+    "general_doctrines": "Allgemeine Doktrinen",
+    "dedicated_for_groups": "Für Gruppen bestimmt",
+    "dedicated_for_units": "Für Einheiten bestimmt"
   }
 }

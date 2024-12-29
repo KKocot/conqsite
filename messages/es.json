@@ -40,5 +40,10 @@
     "silver_era": "Era Plateada",
     "knight_era": "Era de los Caballeros",
     "feudal_and_rustical_era": "Era Feudal y Rústica"
+  },
+  "Doctrines": {
+    "general_doctrines": "Doctrinas Generales",
+    "dedicated_for_groups": "Dedicado a Grupos",
+    "dedicated_for_units": "Dedicado a Unidades"
   }
 }

@@ -40,5 +40,10 @@
     "silver_era": "Gümüş Çağ",
     "knight_era": "Şövalye Çağı",
     "feudal_and_rustical_era": "Feodal ve Kırsal Çağ"
+  },
+  "Doctrines": {
+    "general_doctrines": "Genel Doktrinler",
+    "dedicated_for_groups": "Gruplar için Ayrılmış",
+    "dedicated_for_units": "Birimler için Ayrılmış"
   }
 }

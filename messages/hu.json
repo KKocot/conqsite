@@ -40,5 +40,10 @@
     "silver_era": "Ezüstkor",
     "knight_era": "Lovagi kor",
     "feudal_and_rustical_era": "Feudális és Paraszti kor"
+  },
+  "Doctrines": {
+    "general_doctrines": "Általános doktrínák",
+    "dedicated_for_groups": "Csoportok számára",
+    "dedicated_for_units": "Egységek számára"
   }
 }

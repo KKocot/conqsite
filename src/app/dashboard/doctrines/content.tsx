@@ -9,6 +9,7 @@ import {
 import { Tabs, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 import { TabsList } from "@radix-ui/react-tabs";
 import DoctrinesList from "@/feature/doctrines/doctrines-list";
+import { useTranslations } from "next-intl";
 
 const group = [
   ...epicDoctrines,
@@ -18,6 +19,7 @@ const group = [
 ];
 
 const Content = () => {
+  const t = useTranslations("Doctrines");
   const dedicatedForAll = group.filter(
     (doctrine) => doctrine.dedicated === "all"
   );
@@ -33,7 +35,11 @@ const Content = () => {
       <TabsList className="flex justify-between w-full">
         {["all", "group", "unit"].map((value) => (
           <TabsTrigger key={value} value={value}>
-            {value === "all" ? "General Doctrines" : `Dedicated for ${value}s`}
+            {value === "all"
+              ? t("general_doctrines")
+              : value === "group"
+              ? t("dedicated_for_groups")
+              : t("dedicated_for_units")}
           </TabsTrigger>
         ))}
       </TabsList>
