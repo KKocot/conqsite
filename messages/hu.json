@@ -45,5 +45,15 @@
     "general_doctrines": "Általános doktrínák",
     "dedicated_for_groups": "Csoportok számára",
     "dedicated_for_units": "Egységek számára"
+  },
+  "MyProfile": {
+    "houses": "Házak",
+    "max_and_preffer": "Maximális és Preferált",
+    "preffer": "Preferált",
+    "maxed": "Maximális",
+    "i_have": "Van",
+    "i_dont_have": "Nincs",
+    "meta": "Meta egység",
+    "leadership": "Vezetés"
   }
 }

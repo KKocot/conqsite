@@ -17,7 +17,6 @@ import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Avatar } from "@radix-ui/react-avatar";
 import { useTranslations } from "next-intl";
 import clsx from "clsx";
-import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { profileQueryOptions } from "@/queries/profile.query";
 import Image from "next/image";
@@ -26,7 +25,7 @@ import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 export default function Content() {
   const { data: user_data } = useSession();
-  const t = useTranslations("BuildTeam");
+  const t = useTranslations("MyProfile");
 
   const { data: profileData, isLoading: profileIsLoading } = useQuery({
     ...profileQueryOptions(user_data!.user.id),
@@ -67,18 +66,19 @@ export default function Content() {
             </h2>
             <div className="text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1">
               {profileData.discordNick}
-              <div className="flex items-center">
-                {profileData.house.length > 0 ? (
-                  <div>
-                    {t("from")}
-                    {profileData.house.map((e, i) => (
-                      <span key={e}>
-                        {i + 1 === profileData.house.length ? e : e + ","}{" "}
-                      </span>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
+            </div>
+            <div className="flex items-center">
+              {profileData.house.length > 0 ? (
+                <div>
+                  {t("houses")}
+                  {": "}
+                  {profileData.house.map((e, i) => (
+                    <span key={e}>
+                      {i + 1 === profileData.house.length ? e : e + ","}{" "}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
             </div>
           </div>
           <ul className="flex gap-8 flex-wrap">
@@ -112,7 +112,7 @@ export default function Content() {
             <TableHeader>
               <TableRow>
                 <TableHead className="text-center px-1 text-yellow-500">
-                  {t("maxed_and_preffer")}
+                  {t("max_and_preffer")}
                 </TableHead>
                 <TableHead className="text-center px-1 text-purple-500">
                   {t("preffer")}

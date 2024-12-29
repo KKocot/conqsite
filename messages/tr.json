@@ -45,5 +45,15 @@
     "general_doctrines": "Genel Doktrinler",
     "dedicated_for_groups": "Gruplar için Ayrılmış",
     "dedicated_for_units": "Birimler için Ayrılmış"
+  },
+  "MyProfile": {
+    "houses": "Evler",
+    "max_and_preffer": "Maksimum ve Tercih Edilen",
+    "preffer": "Tercih Edilen",
+    "maxed": "Maksimum",
+    "i_have": "Sahibim",
+    "i_dont_have": "Sahip değilim",
+    "meta": "Meta birim",
+    "leadership": "Liderlik"
   }
 }

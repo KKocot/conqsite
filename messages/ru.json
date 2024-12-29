@@ -45,5 +45,15 @@
     "general_doctrines": "Общие доктрины",
     "dedicated_for_groups": "Посвящено группам",
     "dedicated_for_units": "Посвящено подразделениям"
+  },
+  "MyProfile": {
+    "houses": "Дома",
+    "max_and_preffer": "Максимальное и Предпочитаемое",
+    "preffer": "Предпочитаемое",
+    "maxed": "Максимальное",
+    "i_have": "У меня есть",
+    "i_dont_have": "У меня нет",
+    "meta": "Мета-юнит",
+    "leadership": "Лидерство"
   }
 }

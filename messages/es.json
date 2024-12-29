@@ -45,5 +45,15 @@
     "general_doctrines": "Doctrinas Generales",
     "dedicated_for_groups": "Dedicado a Grupos",
     "dedicated_for_units": "Dedicado a Unidades"
+  },
+  "MyProfile": {
+    "houses": "Casas",
+    "max_and_preffer": "Máximo y Preferido",
+    "preffer": "Preferido",
+    "maxed": "Máximo",
+    "i_have": "Yo tengo",
+    "i_dont_have": "No tengo",
+    "meta": "Unidad Meta",
+    "leadership": "Liderazgo"
   }
 }

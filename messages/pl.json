@@ -45,5 +45,15 @@
     "general_doctrines": "Doktryny Ogólne",
     "dedicated_for_groups": "Przeznaczone dla Grup",
     "dedicated_for_units": "Przeznaczone dla Jednostek"
+  },
+  "MyProfile": {
+    "houses": "Domy",
+    "max_and_preffer": "Maksymalnie i Preferowane",
+    "preffer": "Preferowane",
+    "maxed": "Maksymalne",
+    "i_have": "Mam",
+    "i_dont_have": "Nie mam",
+    "meta": "Jednostka Meta",
+    "leadership": "Dowodzenie"
   }
 }

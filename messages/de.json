@@ -45,5 +45,15 @@
     "general_doctrines": "Allgemeine Doktrinen",
     "dedicated_for_groups": "Für Gruppen bestimmt",
     "dedicated_for_units": "Für Einheiten bestimmt"
+  },
+  "MyProfile": {
+    "houses": "Häuser",
+    "max_and_preffer": "Maximiert und Bevorzugt",
+    "preffer": "Bevorzugt",
+    "maxed": "Maximiert",
+    "i_have": "Ich habe",
+    "i_dont_have": "Ich habe nicht",
+    "meta": "Meta-Einheit",
+    "leadership": "Führung"
   }
 }
