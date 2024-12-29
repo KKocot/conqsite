@@ -1,4 +1,13 @@
 {
+  "Login": {
+    "login_to_access_your_profile": "Zaloguj się, aby uzyskać dostęp do swojego profilu",
+    "login": "Zaloguj się"
+  },
+  "Authority": {
+    "hello": "Witaj ",
+    "you_are_about_to_login": "Zaraz autoryzujesz dostęp do konta o ID ",
+    "authorize": "Autoryzuj"
+  },
   "Navigation": {
     "dashboard": {
       "dashboard": "Panel główny",

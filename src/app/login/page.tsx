@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 
 export default function Home() {
-  const t = useTranslations("HomePage");
+  const t = useTranslations("Login");
   const params = useSearchParams();
 
   return (

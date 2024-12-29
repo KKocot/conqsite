@@ -1,4 +1,13 @@
 {
+  "Login": {
+    "login_to_access_your_profile": "Войдите, чтобы получить доступ к вашему профилю",
+    "login": "Войти"
+  },
+  "Authority": {
+    "hello": "Здравствуйте ",
+    "you_are_about_to_login": "Вы собираетесь авторизовать доступ к аккаунту с ID ",
+    "authorize": "Авторизовать"
+  },
   "Navigation": {
     "dashboard": {
       "dashboard": "Панель управления",

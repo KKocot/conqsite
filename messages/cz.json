@@ -1,4 +1,13 @@
 {
+  "Login": {
+    "login_to_access_your_profile": "Přihlaste se pro přístup k vašemu profilu",
+    "login": "Přihlásit se"
+  },
+  "Authority": {
+    "hello": "Ahoj ",
+    "you_are_about_to_login": "Chystáte se autorizovat přístup k účtu s ID ",
+    "authorize": "Autorizovat"
+  },
   "Navigation": {
     "dashboard": {
       "dashboard": "Přístrojová deska",

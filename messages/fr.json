@@ -1,4 +1,13 @@
 {
+  "Login": {
+    "login_to_access_your_profile": "Connectez-vous pour accéder à votre profil",
+    "login": "Se connecter"
+  },
+  "Authority": {
+    "hello": "Bonjour ",
+    "you_are_about_to_login": "Vous êtes sur le point d'autoriser l'accès au compte avec l'ID ",
+    "authorize": "Autoriser"
+  },
   "Navigation": {
     "dashboard": {
       "dashboard": "Tableau de bord",

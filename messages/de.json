@@ -1,4 +1,13 @@
 {
+  "Login": {
+    "login_to_access_your_profile": "Melden Sie sich an, um auf Ihr Profil zuzugreifen",
+    "login": "Anmelden"
+  },
+  "Authority": {
+    "hello": "Hallo ",
+    "you_are_about_to_login": "Sie sind dabei, den Zugriff auf das Konto mit der ID zu autorisieren ",
+    "authorize": "Autorisieren"
+  },
   "Navigation": {
     "dashboard": {
       "dashboard": "Dashboard",

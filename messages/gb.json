@@ -2,6 +2,15 @@
   "shared": {
     "language": "{locale, select, gb {English} pl {Polski} fr {Français} de {German} tr {Türkçe} es {Español} cz {čeština} hu {български} ru {Русский} other {Unknown}}"
   },
+  "Login": {
+    "login_to_access_your_profile": "Login to access your profile",
+    "login": "Login"
+  },
+  "Authority": {
+    "hello": "Hello ",
+    "you_are_about_to_login": "You are about to authorize access to account with id ",
+    "authorize": "Authorize"
+  },
   "Navigation": {
     "dashboard": {
       "dashboard": "Dashboard",

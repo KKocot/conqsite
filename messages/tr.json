@@ -1,4 +1,13 @@
 {
+  "Login": {
+    "login_to_access_your_profile": "Profilinize erişmek için giriş yapın",
+    "login": "Giriş yap"
+  },
+  "Authority": {
+    "hello": "Merhaba ",
+    "you_are_about_to_login": "Hesaba giriş yapmak üzere, ID'si ",
+    "authorize": "Yetkilendir"
+  },
   "Navigation": {
     "dashboard": {
       "dashboard": "Gösterge Paneli",

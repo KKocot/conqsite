@@ -1,4 +1,13 @@
 {
+  "Login": {
+    "login_to_access_your_profile": "Jelentkezzen be a profil eléréséhez",
+    "login": "Bejelentkezés"
+  },
+  "Authority": {
+    "hello": "Helló ",
+    "you_are_about_to_login": "Éppen most engedélyezed a hozzáférést a következő fiókhoz az ID-val ",
+    "authorize": "Engedélyezés"
+  },
   "Navigation": {
     "dashboard": {
       "dashboard": "Irányítópult",

@@ -9,17 +9,19 @@ import {
 } from "@/components/ui/card";
 import { AuthorityToken } from "@/lib/get-data";
 import { signIn } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
 const Content = ({ data }: { data: AuthorityToken }) => {
+  const t = useTranslations("Authority");
   const deleteAuthorityToken = useDeleteAuthorityMutation();
   return (
     <div className="flex justify-center items-center h-screen w-full">
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <span>Hello</span>
+            <span>{t("hello")}</span>
             <Image
               height={32}
               width={32}
@@ -30,7 +32,8 @@ const Content = ({ data }: { data: AuthorityToken }) => {
             <span>{data.name}</span>
           </CardTitle>
           <CardDescription>
-            {`You are about to authorize access to account with id ${data.id}`}
+            {t("you_are_about_to_login")}
+            {data.id}
           </CardDescription>
         </CardHeader>
         <CardContent className="flex justify-end">
@@ -46,7 +49,7 @@ const Content = ({ data }: { data: AuthorityToken }) => {
             }}
             variant="custom"
           >
-            Authorize
+            {t("authorize")}
           </Button>
         </CardContent>
       </Card>
