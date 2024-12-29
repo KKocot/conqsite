@@ -23,6 +23,7 @@ import { profileQueryOptions } from "@/queries/profile.query";
 import Image from "next/image";
 import List from "@/feature/unit-builder/unit-list";
 import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 export default function Content() {
   const { data: user_data } = useSession();
   const t = useTranslations("BuildTeam");
@@ -34,21 +35,7 @@ export default function Content() {
 
   if (profileIsLoading) return <LoadingComponent />;
 
-  if (!profileData) {
-    return (
-      <div className="flex flex-col items-center">
-        <div className="text-center py-12 text-2xl font-extrabold">
-          {t("update_form_first")}
-        </div>
-        <Link
-          href="/update-form"
-          className="block w-fit text-center text-destructive p-4 hover:text-destructive-foreground"
-        >
-          {t("update_form")}
-        </Link>
-      </div>
-    );
-  }
+  if (!profileData) return <NoData />;
 
   const golden = ownedUnits(goldenUnits, profileData.units.golden);
   const heroic = ownedUnits(heroicUnits, profileData.units.heroic);

@@ -397,6 +397,6 @@ export const heroicUnits = [
     masteryPoints: false,
     value: 8,
     era: "heroic",
-    icon: "/logo.png",
+    icon: "/heroic-icons/t4image.png",
   },
 ];
