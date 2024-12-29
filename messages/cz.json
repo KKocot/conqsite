@@ -268,6 +268,16 @@
       "knight_era": "Rytířská éra",
       "feudal__and_rustical_era": "Feudální a rustikální éra",
       "general": "Obecné"
+    },
+    "artillery": {
+      "not_at_all": "Vůbec ne",
+      "no_artillery": "Žádná artilerie",
+      "some_artillery": "Nějaká artilerie",
+      "average_artillery": "Průměrná artilerie",
+      "some": "Něco",
+      "average": "Průměrně",
+      "a_lot_artillery": "Hodně artilerie",
+      "a_lot": "Hodně"
     }
   },
   "HouseStats": {

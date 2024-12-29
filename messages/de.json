@@ -268,6 +268,16 @@
       "knight_era": "Ritter-Ära",
       "feudal__and_rustical_era": "Feudal- und rustikale Ära",
       "general": "Allgemein"
+    },
+    "artillery": {
+      "not_at_all": "Überhaupt nicht",
+      "no_artillery": "Keine Artillerie",
+      "some_artillery": "Einige Artillerie",
+      "average_artillery": "Durchschnittliche Artillerie",
+      "some": "Einige",
+      "average": "Durchschnittlich",
+      "a_lot_artillery": "Viel Artillerie",
+      "a_lot": "Viel"
     }
   },
   "HouseStats": {

@@ -49,7 +49,7 @@ export function getCloserDay() {
 export function useArtyAmount(
   amount: "none" | "some" | "average" | "aLot" | undefined
 ) {
-  const t = useTranslations("BuildTeam");
+  const t = useTranslations("BuildTeam.artillery");
 
   switch (amount) {
     case "none":
