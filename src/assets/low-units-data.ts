@@ -637,7 +637,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 8,
     era: "blue",
-    icon: "/logo.png",
+    icon: "/low-tiers-icons/t3image.png",
   },
 ];
 
