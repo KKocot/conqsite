@@ -20,8 +20,10 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { others } from "@/assets/other-units-data";
+import { useTranslations } from "next-intl";
 
 const Page = () => {
+  const t = useTranslations("Lineups");
   const { param }: { param: string } = useParams();
   const house = param.replaceAll("%20", " ");
   const { data, isLoading } = useQuery({
@@ -55,7 +57,7 @@ const Page = () => {
         </SheetTrigger>
         <SheetContent className="overflow-y-auto">
           <SheetHeader>
-            <SheetTitle>Change date</SheetTitle>
+            <SheetTitle>{t("change_data")}</SheetTitle>
           </SheetHeader>
           <div className="p-4 flex flex-col gap-4">
             {data.map((e) => (

@@ -178,5 +178,19 @@
       "error_five": "Název Země je příliš dlouhý",
       "error_six": "Server je povinný"
     }
+  },
+  "Lineups": {
+    "change_data": "Verileri Değiştir",
+    "hide_name": "Adı Gizle",
+    "show_name": "Adı Göster",
+    "username": "Kullanıcı Adı",
+    "1st_unit": "Birinci Birim",
+    "2nd_unit": "İkinci Birim",
+    "3rd_unit": "Üçüncü Birim",
+    "weapon": "Silah",
+    "artillery": "Topçu",
+    "description": "Açıklama",
+    "group": "Grup",
+    "you": "Sen"
   }
 }

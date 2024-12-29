@@ -178,5 +178,19 @@
       "error_five": "Le nom du pays est trop long",
       "error_six": "Le serveur est requis"
     }
+  },
+  "Lineups": {
+    "change_data": "Modifier les données",
+    "hide_name": "Cacher le nom",
+    "show_name": "Afficher le nom",
+    "username": "Nom d'utilisateur",
+    "1st_unit": "Première unité",
+    "2nd_unit": "Deuxième unité",
+    "3rd_unit": "Troisième unité",
+    "weapon": "Arme",
+    "artillery": "Artillerie",
+    "description": "Description",
+    "group": "Groupe",
+    "you": "Vous"
   }
 }

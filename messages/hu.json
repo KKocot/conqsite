@@ -178,5 +178,19 @@
       "error_five": "Az ország neve túl hosszú",
       "error_six": "A szerver kötelező"
     }
+  },
+  "Lineups": {
+    "change_data": "Adatok módosítása",
+    "hide_name": "Név elrejtése",
+    "show_name": "Név megjelenítése",
+    "username": "Felhasználónév",
+    "1st_unit": "Első egység",
+    "2nd_unit": "Második egység",
+    "3rd_unit": "Harmadik egység",
+    "weapon": "Fegyver",
+    "artillery": "Tüzérség",
+    "description": "Leírás",
+    "group": "Csoport",
+    "you": "Te"
   }
 }

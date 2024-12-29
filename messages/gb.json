@@ -181,5 +181,19 @@
       "error_five": "Country name is too long",
       "error_six": "Server is required"
     }
+  },
+  "Lineups": {
+    "change_data": "Change Data",
+    "hide_name": "Hide Name",
+    "show_name": "Show Name",
+    "username": "Username",
+    "1st_unit": "First Unit",
+    "2nd_unit": "Second Unit",
+    "3rd_unit": "Third Unit",
+    "weapon": "Weapon",
+    "artillery": "Artillery",
+    "description": "Description",
+    "group": "Group",
+    "you": "You"
   }
 }

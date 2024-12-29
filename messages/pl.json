@@ -178,5 +178,19 @@
       "error_five": "Nazwa kraju jest za długa",
       "error_six": "Serwer jest wymagany"
     }
+  },
+  "Lineups": {
+    "change_data": "Zmień dane",
+    "hide_name": "Ukryj nazwisko",
+    "show_name": "Pokaż nazwisko",
+    "username": "Nazwa użytkownika",
+    "1st_unit": "Pierwsza jednostka",
+    "2nd_unit": "Druga jednostka",
+    "3rd_unit": "Trzecia jednostka",
+    "weapon": "Broń",
+    "artillery": "Artyleria",
+    "description": "Opis",
+    "group": "Grupa",
+    "you": "Ty"
   }
 }

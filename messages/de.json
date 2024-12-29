@@ -178,5 +178,19 @@
       "error_five": "Landname ist zu lang",
       "error_six": "Server ist erforderlich"
     }
+  },
+  "Lineups": {
+    "change_data": "Daten ändern",
+    "hide_name": "Name verbergen",
+    "show_name": "Name anzeigen",
+    "username": "Benutzername",
+    "1st_unit": "Erste Einheit",
+    "2nd_unit": "Zweite Einheit",
+    "3rd_unit": "Dritte Einheit",
+    "weapon": "Waffe",
+    "artillery": "Artillerie",
+    "description": "Beschreibung",
+    "group": "Gruppe",
+    "you": "Du"
   }
 }

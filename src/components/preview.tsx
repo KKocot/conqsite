@@ -26,12 +26,12 @@ const Preview = ({
   username?: string | null;
 }) => {
   const [show, setShow] = useState<boolean>(true);
-  const t = useTranslations("BuildTeam");
+  const t = useTranslations("Lineups");
   return (
     <div>
       <div className="flex justify-around">
         <Button onClick={() => setShow((prev) => !prev)} variant="tab">
-          {show ? t("hide_names") : t("show_names")}
+          {show ? t("hide_name") : t("show_name")}
         </Button>
       </div>
       <Table className="my-12">
@@ -74,7 +74,7 @@ const Preview = ({
                     <span className="flex items-center gap-2">
                       {index + 1 + ". " + e.username}
                       {username === e.username ? (
-                        <span title="Its You">
+                        <span title={t("you")}>
                           <OctagonAlert className="animate-ping" />
                         </span>
                       ) : null}

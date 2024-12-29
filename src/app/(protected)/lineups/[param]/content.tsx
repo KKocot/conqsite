@@ -25,7 +25,7 @@ const Content = ({
     enabled: !!house,
   });
   const { data: survey, isLoading: surveyLoading } = useQuery({
-    queryKey: ["lineups", house, date],
+    queryKey: ["survey", user?.user.id],
     queryFn: () => getSurvey(user?.user.id ?? ""),
     enabled: !!house,
   });
