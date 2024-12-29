@@ -30,5 +30,8 @@
       "login": "Вход",
       "logout": "Выход"
     }
+  },
+  "ListOfHouses": {
+    "join_discord": "Присоединиться к Discord"
   }
 }

@@ -30,5 +30,8 @@
       "login": "Přihlášení",
       "logout": "Odhlášení"
     }
+  },
+  "ListOfHouses": {
+    "join_discord": "Připojit se k Discordu"
   }
 }

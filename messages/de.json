@@ -31,6 +31,10 @@
       "logout": "Abmelden"
     }
   },
+  "ListOfHouses": {
+    "join_discord": "Discord beitreten"
+  },
+
   "HomePage": {
     "title": "Hallo",
     "my_profile": "Mein Profil",

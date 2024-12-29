@@ -31,6 +31,10 @@
       "logout": "Déconnexion"
     }
   },
+  "ListOfHouses": {
+    "join_discord": "Rejoindre Discord"
+  },
+
   "HomePage": {
     "title": "Bonjour",
     "my_profile": "Mon Profil",

@@ -31,6 +31,9 @@
       "logout": "Çıkış Yap"
     }
   },
+  "ListOfHouses": {
+    "join_discord": "Discord'a Katıl"
+  },
 
   "HomePage": {
     "title": "Merhaba",

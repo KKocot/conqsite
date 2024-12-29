@@ -30,5 +30,8 @@
       "login": "Bejelentkezés",
       "logout": "Kijelentkezés"
     }
+  },
+  "ListOfHouses": {
+    "join_discord": "Csatlakozás a Discordhoz"
   }
 }
