@@ -2,7 +2,17 @@ import { getRequestConfig } from "next-intl/server";
 import { getUserLocale } from "./lib/locale";
 import { assign } from "radash";
 
-export const locales = ["gb", "pl", "fr", "de", "tr", "es"] as const;
+export const locales = [
+  "gb",
+  "pl",
+  "fr",
+  "de",
+  "tr",
+  "es",
+  "cz",
+  "hu",
+  "ru",
+] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "gb";
 

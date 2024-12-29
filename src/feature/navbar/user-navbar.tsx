@@ -23,6 +23,7 @@ import { signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 function NavUser({
   name,
@@ -32,6 +33,7 @@ function NavUser({
   avatar?: string | null;
 }) {
   const { isMobile } = useSidebar();
+  const t = useTranslations("Navigation");
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -89,7 +91,8 @@ function NavUser({
                 className="flex gap-1"
                 onClick={() => signOut()}
               >
-                <LogOut /> Logout
+                <LogOut />
+                {t("auth.logout")}
               </Button>
             </DropdownMenuGroup>
           </DropdownMenuContent>

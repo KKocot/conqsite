@@ -1,6 +1,38 @@
 {
   "shared": {
-    "language": "{locale, select, gb {English} pl {Polski} fr {Français} de {German} tr {Türkçe} es {Español} other {Unknown}}"
+    "language": "{locale, select, gb {English} pl {Polski} fr {Français} de {German} tr {Türkçe} es {Español} cz {čeština} hu {български} ru {Русский} other {Unknown}}"
+  },
+  "Navigation": {
+    "dashboard": {
+      "dashboard": "Dashboard",
+      "list_of_house": "List of House",
+      "units": "Units",
+      "doctrines": "Doctrines",
+      "privacy_policy": "Privacy Policy",
+      "terms_of_service": "Terms of Service",
+      "documentation": "Documentation"
+    },
+    "member": {
+      "member": "Member",
+      "my_profile": "My Profile",
+      "my_stats": "My Stats",
+      "update_form": "Update Form",
+      "create_house": "Create House"
+    },
+    "house": {
+      "lineups": "Lineups",
+      "my_house": "My House",
+      "build_team": "Build Team",
+      "house_stats": "House Stats",
+      "bot_controller": "Bot Controller",
+      "high_roles": "High Roles",
+      "bot_config": "Bot Config",
+      "house_card": "House Card"
+    },
+    "auth": {
+      "login": "Login",
+      "logout": "Logout"
+    }
   },
   "HomePage": {
     "title": "Hello",

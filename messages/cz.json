@@ -1,0 +1,34 @@
+{
+  "Navigation": {
+    "dashboard": {
+      "dashboard": "Přístrojová deska",
+      "list_of_house": "Seznam domů",
+      "units": "Jednotky",
+      "doctrines": "Doktríny",
+      "privacy_policy": "Zásady ochrany osobních údajů",
+      "terms_of_service": "Podmínky služby",
+      "documentation": "Dokumentace"
+    },
+    "member": {
+      "member": "Člen",
+      "my_profile": "Můj profil",
+      "my_stats": "Moje statistiky",
+      "update_form": "Aktualizovat formulář",
+      "create_house": "Vytvořit dům"
+    },
+    "house": {
+      "lineups": "Sestavy",
+      "my_house": "Můj dům",
+      "build_team": "Vytvořit tým",
+      "house_stats": "Statistiky domu",
+      "bot_controller": "Řízení bota",
+      "high_roles": "Vysoké role",
+      "bot_config": "Nastavení bota",
+      "house_card": "Karta domu"
+    },
+    "auth": {
+      "login": "Přihlášení",
+      "logout": "Odhlášení"
+    }
+  }
+}

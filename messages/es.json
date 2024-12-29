@@ -1,4 +1,36 @@
 {
+  "Navigation": {
+    "dashboard": {
+      "dashboard": "Tablero",
+      "list_of_house": "Lista de Casas",
+      "units": "Unidades",
+      "doctrines": "Doctrinas",
+      "privacy_policy": "Política de Privacidad",
+      "terms_of_service": "Términos del Servicio",
+      "documentation": "Documentación"
+    },
+    "member": {
+      "member": "Miembro",
+      "my_profile": "Mi Perfil",
+      "my_stats": "Mis Estadísticas",
+      "update_form": "Actualizar Formulario",
+      "create_house": "Crear Casa"
+    },
+    "house": {
+      "lineups": "Alineaciones",
+      "my_house": "Mi Casa",
+      "build_team": "Crear Equipo",
+      "house_stats": "Estadísticas de la Casa",
+      "bot_controller": "Controlador de Bot",
+      "high_roles": "Roles Altos",
+      "bot_config": "Configuración de Bot",
+      "house_card": "Tarjeta de la Casa"
+    },
+    "auth": {
+      "login": "Iniciar sesión",
+      "logout": "Cerrar sesión"
+    }
+  },
   "HomePage": {
     "title": "Hola",
     "my_profile": "Mi Perfil",

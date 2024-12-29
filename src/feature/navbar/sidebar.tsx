@@ -20,72 +20,74 @@ import SupportButton from "./support-button";
 import MobileTrigger from "./mobile-trigger";
 import NavUser from "./user-navbar";
 import ResposiveSidebar from "./responsive-navbar";
+import { useTranslations } from "next-intl";
 
 const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
   const { data: commanders = [] } = useQuery(rolesQueryOptions());
   const { data } = useSession();
+  const t = useTranslations("Navigation");
   const { data: profile, isLoading } = useQuery(
     profileQueryOptions(data?.user.id)
   );
   const openLinks = {
-    title: "Dashboard",
+    title: t("dashboard.dashboard"),
     url: "/dashboard",
     icon: Frame,
     items: [
       {
-        title: "List of Houses",
+        title: t("dashboard.list_of_house"),
         url: "/dashboard/houses",
         disabled: false,
       },
       {
-        title: "Units",
+        title: t("dashboard.units"),
         url: "/dashboard/units",
         disabled: false,
       },
       {
-        title: "Doctrines",
+        title: t("dashboard.doctrines"),
         url: "/dashboard/doctrines",
         disabled: false,
       },
       {
-        title: "Privacy Policy",
+        title: t("dashboard.privacy_policy"),
         url: "/dashboard/policy",
         disabled: false,
       },
       {
-        title: "Terms of Service",
+        title: t("dashboard.terms_of_service"),
         url: "/dashboard/tos",
         disabled: false,
       },
       {
-        title: "Documentation",
+        title: t("dashboard.documentation"),
         url: "/dashboard/docs",
         disabled: false,
       },
     ],
   };
   const membersLinks = {
-    title: "Member",
+    title: t("member.member"),
     url: "/member",
     icon: SquareUserRound,
     items: [
       {
-        title: "My Profile",
+        title: t("member.my_profile"),
         url: "/member/profile",
         disabled: !profile,
       },
       {
-        title: "My Stats",
+        title: t("member.my_stats"),
         url: "/member/stats",
         disabled: !profile,
       },
       {
-        title: "Update Survey",
+        title: t("member.update_form"),
         url: "/member/update-form",
         disabled: false,
       },
       {
-        title: "Create House",
+        title: t("member.create_house"),
         url: "/member/create-house",
       },
     ],
@@ -96,38 +98,38 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
     icon: Castle,
     items: [
       {
-        title: "Lineups",
+        title: t("house.lineups"),
         url: `/lineups/${house}`,
         visibleTo: true,
       },
       {
-        title: "My House",
+        title: t("house.my_house"),
         url: `/my-house/${house}`,
         visibleTo: true,
       },
       {
-        title: "Build Team",
+        title: t("house.build_team"),
         url: `/team-builder/${house}`,
         visibleTo: commanders.some(
           (e) => e.discordId === data?.user.id && e.house === house
         ),
       },
       {
-        title: "House Stats",
+        title: t("house.house_stats"),
         url: `/stats/${house}`,
         visibleTo: commanders.some(
           (e) => e.discordId === data?.user.id && e.house === house
         ),
       },
       {
-        title: "Bot Controller",
+        title: t("house.bot_controller"),
         url: `/bot-controller/${house}`,
         visibleTo: commanders.some(
           (e) => e.discordId === data?.user.id && e.house === house
         ),
       },
       {
-        title: "High Roles",
+        title: t("house.high_roles"),
         url: `/settings/high-roles/${house}`,
         visibleTo: commanders.some(
           (e) =>
@@ -137,7 +139,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         ),
       },
       {
-        title: "Bot Config",
+        title: t("house.bot_config"),
         url: `/settings/bot-config/${house}`,
         visibleTo: commanders.some(
           (e) =>
@@ -147,7 +149,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         ),
       },
       {
-        title: "House Card",
+        title: t("house.house_card"),
         url: `/settings/house-card/${house}`,
         visibleTo: commanders.some(
           (e) =>
@@ -185,7 +187,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
                 }
                 className="gap-1 rounded-xl h-9"
               >
-                Login
+                {t("auth.login")}
                 <SiDiscord />
               </Button>
             </div>

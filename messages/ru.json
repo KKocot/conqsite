@@ -1,0 +1,34 @@
+{
+  "Navigation": {
+    "dashboard": {
+      "dashboard": "Панель управления",
+      "list_of_house": "Список домов",
+      "units": "Подразделения",
+      "doctrines": "Доктрины",
+      "privacy_policy": "Политика конфиденциальности",
+      "terms_of_service": "Условия обслуживания",
+      "documentation": "Документация"
+    },
+    "member": {
+      "member": "Член",
+      "my_profile": "Мой профиль",
+      "my_stats": "Моя статистика",
+      "update_form": "Обновить форму",
+      "create_house": "Создать дом"
+    },
+    "house": {
+      "lineups": "Составы",
+      "my_house": "Мой дом",
+      "build_team": "Создать команду",
+      "house_stats": "Статистика дома",
+      "bot_controller": "Контроллер бота",
+      "high_roles": "Высокие роли",
+      "bot_config": "Настройки бота",
+      "house_card": "Карточка дома"
+    },
+    "auth": {
+      "login": "Вход",
+      "logout": "Выход"
+    }
+  }
+}

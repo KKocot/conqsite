@@ -1,0 +1,34 @@
+{
+  "Navigation": {
+    "dashboard": {
+      "dashboard": "Irányítópult",
+      "list_of_house": "Házak listája",
+      "units": "Egységek",
+      "doctrines": "Doktrínák",
+      "privacy_policy": "Adatvédelmi irányelvek",
+      "terms_of_service": "Szolgáltatási feltételek",
+      "documentation": "Dokumentáció"
+    },
+    "member": {
+      "member": "Tag",
+      "my_profile": "Profilom",
+      "my_stats": "Statisztikáim",
+      "update_form": "Űrlap frissítése",
+      "create_house": "Ház létrehozása"
+    },
+    "house": {
+      "lineups": "Felállások",
+      "my_house": "Házam",
+      "build_team": "Csapat építése",
+      "house_stats": "Ház statisztikák",
+      "bot_controller": "Bot vezérlő",
+      "high_roles": "Magas szerepkörök",
+      "bot_config": "Bot beállítások",
+      "house_card": "Ház kártya"
+    },
+    "auth": {
+      "login": "Bejelentkezés",
+      "logout": "Kijelentkezés"
+    }
+  }
+}

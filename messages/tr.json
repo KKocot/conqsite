@@ -1,4 +1,37 @@
 {
+  "Navigation": {
+    "dashboard": {
+      "dashboard": "Gösterge Paneli",
+      "list_of_house": "Ev Listesi",
+      "units": "Birimler",
+      "doctrines": "Doktrinler",
+      "privacy_policy": "Gizlilik Politikası",
+      "terms_of_service": "Hizmet Şartları",
+      "documentation": "Dokümantasyon"
+    },
+    "member": {
+      "member": "Üye",
+      "my_profile": "Profilim",
+      "my_stats": "İstatistiklerim",
+      "update_form": "Formu Güncelle",
+      "create_house": "Ev Oluştur"
+    },
+    "house": {
+      "lineups": "Kadrolar",
+      "my_house": "Evim",
+      "build_team": "Takım Oluştur",
+      "house_stats": "Ev İstatistikleri",
+      "bot_controller": "Bot Kontrolü",
+      "high_roles": "Üst Roller",
+      "bot_config": "Bot Yapılandırması",
+      "house_card": "Ev Kartı"
+    },
+    "auth": {
+      "login": "Giriş Yap",
+      "logout": "Çıkış Yap"
+    }
+  },
+
   "HomePage": {
     "title": "Merhaba",
     "my_profile": "Profilim",
