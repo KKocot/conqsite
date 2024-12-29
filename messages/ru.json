@@ -55,5 +55,13 @@
     "i_dont_have": "У меня нет",
     "meta": "Мета-юнит",
     "leadership": "Лидерство"
+  },
+  "MyStats": {
+    "season_start": "Начало сезона",
+    "season_end": "Конец сезона",
+    "list_of_drillmodes": "Список режимов тренировки",
+    "list_of_tw": "Список TW",
+    "attendance_in_percent": "Посещаемость в %",
+    "tw_not_started": "TW еще не началось"
   }
 }

@@ -55,5 +55,13 @@
     "i_dont_have": "Sahip değilim",
     "meta": "Meta birim",
     "leadership": "Liderlik"
+  },
+  "MyStats": {
+    "season_start": "Sezon Başlangıcı",
+    "season_end": "Sezon Sonu",
+    "list_of_drillmodes": "Alıştırma Modları Listesi",
+    "list_of_tw": "TW Listesi",
+    "attendance_in_percent": "Katılım %",
+    "tw_not_started": "TW henüz başlamadı"
   }
 }

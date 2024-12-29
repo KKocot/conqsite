@@ -58,5 +58,13 @@
     "i_dont_have": "I don't have",
     "meta": "Meta unit",
     "leadership": "Leadership"
+  },
+  "MyStats": {
+    "season_start": "Season Start",
+    "season_end": "Season End",
+    "list_of_drillmodes": "List of Drillmodes",
+    "list_of_tw": "List of TW",
+    "attendance_in_percent": "Attendance in %",
+    "tw_not_started": "TW not started yet"
   }
 }

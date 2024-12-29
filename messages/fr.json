@@ -55,5 +55,13 @@
     "i_dont_have": "Je n'ai pas",
     "meta": "Unité Meta",
     "leadership": "Leadership"
+  },
+  "MyStats": {
+    "season_start": "Début de la Saison",
+    "season_end": "Fin de la Saison",
+    "list_of_drillmodes": "Liste des Modes d'Entraînement",
+    "list_of_tw": "Liste des TW",
+    "attendance_in_percent": "Présence en %",
+    "tw_not_started": "TW n'a pas encore commencé"
   }
 }
