@@ -81,7 +81,7 @@ const Item = ({
     altillery: ArtilleryProps[]
   ) => void;
 }) => {
-  const t = useTranslations("BuildTeam");
+  const t = useTranslations("BuildTeam.card");
   const users_list = users
     .map((user) => user.inGameNick)
     .filter((e) => usedUsers.indexOf(e) === -1);
@@ -263,7 +263,7 @@ const Item = ({
           }
         />
       </span>
-      <span className="w-24 text-center">{`Cost: ${
+      <span className="w-24 text-center">{`${t("cost")} ${
         leadership ? leadership : 0
       }`}</span>
 

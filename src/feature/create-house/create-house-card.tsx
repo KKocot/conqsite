@@ -52,7 +52,7 @@ const CreateHouseCard = ({
   handleStep,
   onSubmit,
 }: CreateProps | EditProps) => {
-  const t = useTranslations("HousePage");
+  const t = useTranslations("Settings");
   const { data: housesData } = useQuery({
     queryKey: ["houses"],
     queryFn: getHousesDetails,
@@ -75,7 +75,7 @@ const CreateHouseCard = ({
   return (
     <Card>
       <CardHeader className="text-center text-2xl font-bold">
-        House Card Details
+        {t("house_card.house_card")}
       </CardHeader>
       <CardContent className="flex flex-col w-full">
         <Separator />
@@ -83,8 +83,8 @@ const CreateHouseCard = ({
           <div className="flex flex-col w-1/2">
             <div>
               <Label htmlFor="housename">
-                {t("house_name")}
-                <InfoTooltip info="House Name should be unique and not longer them 20 character" />
+                {t("house_card.name")}
+                <InfoTooltip info={t("house_card.name_info")} />
               </Label>
               <Input
                 id="housename"
@@ -101,8 +101,8 @@ const CreateHouseCard = ({
             </div>
             <div>
               <Label htmlFor="housedescription">
-                {t("house_description_title")}
-                <InfoTooltip info="House Description is required, not offensive to others and not longer them 45 characters" />
+                {t("house_card.description")}
+                <InfoTooltip info={t("house_card.description_info")} />
               </Label>
               <Textarea
                 id="housedescription"
@@ -124,8 +124,8 @@ const CreateHouseCard = ({
             </div>
             <div>
               <Label htmlFor="country">
-                {t("country")}
-                <InfoTooltip info="Country e.g. 'Poland', 'UK' or maybe 'International'" />
+                {t("house_card.country")}
+                <InfoTooltip info={t("house_card.country_info")} />
               </Label>
               <Input
                 id="country"
@@ -141,8 +141,8 @@ const CreateHouseCard = ({
             </div>
             <div>
               <Label htmlFor="discordlink">
-                {t("discord_link")}
-                <InfoTooltip info="Discord Link for your house discord server" />
+                {t("house_card.link")}
+                <InfoTooltip info={t("house_card.link_info")} />
               </Label>
               <Input
                 id="discordlink"
@@ -164,8 +164,8 @@ const CreateHouseCard = ({
             </div>
             <div>
               <Label htmlFor="houseimage">
-                {t("avatar")}
-                <InfoTooltip info="Image url address. I recommend to use free imagehoster like https://imgur.com/ to upload your house Image. DONT use url from discord images, cause  will disappear after a few  days." />
+                {t("house_card.logo")}
+                <InfoTooltip info={t("house_card.logo_info")} />
               </Label>
               <Input
                 id="houseimage"
@@ -182,8 +182,8 @@ const CreateHouseCard = ({
 
             <div>
               <Label htmlFor="servers">
-                {t("server")}
-                <InfoTooltip info="Where users can find your house" />
+                {t("house_card.server")}
+                <InfoTooltip info={t("house_card.server_info")} />
               </Label>
               <Select
                 value={values.server}
@@ -196,7 +196,7 @@ const CreateHouseCard = ({
                 }}
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select a server" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -222,21 +222,21 @@ const CreateHouseCard = ({
         >
           {type === "edit" ? null : (
             <Button variant="custom" onClick={() => handleStep(3)}>
-              Previes
+              {t("previous")}
             </Button>
           )}
           {validation.isHouseNameAvailable && type !== "edit" ? (
-            <p className="text-red-500">House Name is already taken</p>
+            <p className="text-red-500">{t("house_card.error_one")}</p>
           ) : validation.nameTooLong ? (
-            <p className="text-red-500">House Name is too long</p>
+            <p className="text-red-500">{t("house_card.error_two")}</p>
           ) : validation.descriptionTooLong ? (
-            <p className="text-red-500">Description is too long</p>
+            <p className="text-red-500">{t("house_card.error_three")}</p>
           ) : validation.wrongDiscordLink ? (
-            <p className="text-red-500">Discord link is invalid</p>
+            <p className="text-red-500">{t("house_card.error_four")}</p>
           ) : validation.countryTooLong ? (
-            <p className="text-red-500">Country name is too long</p>
+            <p className="text-red-500">{t("house_card.error_five")}</p>
           ) : validation.serverRequired ? (
-            <p className="text-red-500">Server is required</p>
+            <p className="text-red-500">{t("house_card.error_six")}</p>
           ) : null}
           <Button
             disabled={
@@ -257,8 +257,8 @@ const CreateHouseCard = ({
             onClick={onSubmit}
           >
             {type === "edit"
-              ? "Edit card"
-              : "Create House and add all your Members"}
+              ? t("house_card.edit_card")
+              : t("house_card.submit")}
           </Button>
         </div>
       </CardContent>

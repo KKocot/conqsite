@@ -1,0 +1,287 @@
+{
+  "Login": {
+    "login_to_access_your_profile": "Войдите, чтобы получить доступ к вашему профилю",
+    "login": "Войти"
+  },
+  "Authority": {
+    "hello": "Здравствуйте ",
+    "you_are_about_to_login": "Вы собираетесь авторизовать доступ к аккаунту с ID ",
+    "authorize": "Авторизовать"
+  },
+  "Navigation": {
+    "dashboard": {
+      "dashboard": "Панель управления",
+      "list_of_house": "Список домов",
+      "units": "Подразделения",
+      "doctrines": "Доктрины",
+      "privacy_policy": "Политика конфиденциальности",
+      "terms_of_service": "Условия обслуживания",
+      "documentation": "Документация"
+    },
+    "member": {
+      "member": "Член",
+      "my_profile": "Мой профиль",
+      "my_stats": "Моя статистика",
+      "update_form": "Обновить форму",
+      "create_house": "Создать дом"
+    },
+    "house": {
+      "lineups": "Составы",
+      "my_house": "Мой дом",
+      "build_team": "Создать команду",
+      "house_stats": "Статистика дома",
+      "bot_controller": "Контроллер бота",
+      "high_roles": "Высокие роли",
+      "bot_config": "Настройки бота",
+      "house_card": "Карточка дома"
+    },
+    "auth": {
+      "login": "Вход",
+      "logout": "Выход"
+    }
+  },
+  "ListOfHouses": {
+    "join_discord": "Присоединиться к Discord"
+  },
+  "Units": {
+    "golden_era": "Золотая эпоха",
+    "heroic_era": "Героическая эпоха",
+    "silver_era": "Серебряная эпоха",
+    "knight_era": "Эпоха рыцарей",
+    "feudal_and_rustical_era": "Феодальная и Сельская эпоха"
+  },
+  "Doctrines": {
+    "general_doctrines": "Общие доктрины",
+    "dedicated_for_groups": "Посвящено группам",
+    "dedicated_for_units": "Посвящено подразделениям"
+  },
+  "MyProfile": {
+    "houses": "Дома",
+    "max_and_preffer": "Максимальное и Предпочитаемое",
+    "preffer": "Предпочитаемое",
+    "maxed": "Максимальное",
+    "i_have": "У меня есть",
+    "i_dont_have": "У меня нет",
+    "meta": "Мета-юнит",
+    "leadership": "Лидерство"
+  },
+  "MyStats": {
+    "season_start": "Начало сезона",
+    "season_end": "Конец сезона",
+    "list_of_drillmodes": "Список режимов тренировки",
+    "list_of_tw": "Список TW",
+    "attendance_in_percent": "Посещаемость в %",
+    "tw_not_started": "TW еще не началось"
+  },
+  "AddForm": {
+    "you_have_no_access": "У вас нет доступа",
+    "form": "Форма",
+    "low_eras": "Низкие эры",
+    "heroic_eras": "Героические эры",
+    "golden_era": "Золотая эра",
+    "general": "Общие",
+    "i_dont_have": "У меня нет",
+    "i_have": "У меня есть",
+    "maxed": "Максимально",
+    "preffer": "Предпочитаю",
+    "maxed_and_preffer": "Максимально и Предпочитаю",
+    "show_meta_only": "Показывать только мета-юниты",
+    "show_all": "Показывать все юниты",
+    "previous": "Предыдущий",
+    "next": "Следующий",
+    "submit": "Отправить",
+    "discord_nick": "Ник в Discord",
+    "nick_in_game": "Ник в игре",
+    "hero_level": "Уровень героя",
+    "house": "Дом",
+    "amount_of_artillery": "Количество артиллерии",
+    "not_at_all": "Совсем нет",
+    "some": "Немного",
+    "average": "Средне",
+    "a_lot": "Много",
+    "weapons": "Оружие",
+    "i_preffer": "Я предпочитаю",
+    "not_preffer": "Могу взять, но не предпочитаю",
+    "leadership": "Лидерство",
+    "preferences": "Предпочтения"
+  },
+  "Settings": {
+    "previous": "Предыдущий",
+    "next": "Следующий",
+    "verification": {
+      "discord_verification": "Верификация Discord",
+      "house_id": "Укажите ваш Discord ID дома",
+      "get_id": "Как найти Discord ID",
+      "discord_id": "Discord ID",
+      "tooltip_one": "Перейдите в настройки пользователя на Discord",
+      "tooltip_two": "Перейдите в раздел «Дополнительно» и включите Режим разработчика",
+      "tooltip_three": "Щелкните правой кнопкой мыши на сервере и выберите «Копировать ID сервера»",
+      "tw_discord_id": "TW Discord ID",
+      "point_one": "- Убедитесь, что ",
+      "point_two": " находится на вашем Discord и имеет высокую роль, чтобы видеть все роли и каналы",
+      "point_three": "- Убедитесь, что у вас есть роль администратора на этом Discord",
+      "point_four": "- Konquerus может отслеживать посещаемость вашего дома, сканируя весь Discord и записывая три раза (в начале, через 30 минут и в конце), чтобы сохранить это для вас. Если ваш дом использует другой Discord для TW, отметьте флажок, убедитесь, что вы администратор на этом сервере, и ",
+      "point_five": " тоже находится на этом сервере."
+    },
+    "config": {
+      "config": "Конфигурация Konquerys",
+      "type": "Тип",
+      "description": "Описание",
+      "list": "Список",
+      "member_role": "Роль участника",
+      "member_role_description": "Выберите роль обычного участника на Discord, чтобы бот знал, кого нужно добавить в ваш дом.",
+      "member_pleaceholder": "Участник",
+      "logs_channel": "Канал логов",
+      "logs_channel_description": "Konquerus нужен канал, чтобы сообщать вам, кто присоединился или покинул ваш дом.",
+      "logs_pleaceholder": "Логи",
+      "tw_role": "Роль TW",
+      "tw_role_description": "Konquerus должен знать роль на Discord канале TW, чтобы",
+      "tw_pleaceholder": "Обычная роль на канале TW",
+      "lineup": "Состав",
+      "lineup_description": "Бот должен знать, как разделить ваш дом на составы, если у вас несколько рейдов.",
+      "channel_label": "Канал",
+      "channel_pleaceholder": "Выберите канал бота для регистрации",
+      "role_label": "Роль",
+      "role_pleaceholder": "Выберите роль состава",
+      "add_lineup": "Добавить состав",
+      "remove_lineup": "Удалить состав",
+      "update_config": "Обновить конфигурацию"
+    },
+    "high_roles": {
+      "pick_your_commanders": "Выберите своих командиров",
+      "house_leader": "Лидер дома",
+      "choose_your_right_hand": "Выберите свою правую руку",
+      "choose_your_commanders": "Выберите своих 3 командиров",
+      "choose_right_hand_placeholder": "Выберите правую руку",
+      "choose_commanders_placeholder": "Выберите командиров",
+      "permissions": "Разрешения:",
+      "build_team": "Создание команд",
+      "publishing_lineups": "Публикация составов",
+      "manage_all_roles": "Управление всеми ролями",
+      "manage_house_info": "Управление информацией о доме",
+      "manage_house_config": "Управление конфигурацией дома",
+      "manage_commands": "Управление ролями команд",
+      "you": "Вы"
+    },
+    "house_card": {
+      "house_card": "Детали карточки дома",
+      "name": "Название дома",
+      "name_info": "Название дома должно быть уникальным и не длиннее 20 символов",
+      "description": "Описание дома",
+      "description_info": "Описание дома обязательно, не должно быть оскорбительным и не длиннее 45 символов",
+      "country": "Страна",
+      "country_info": "Страна, например, 'Россия', 'США' или 'Международный'",
+      "link": "Ссылка на Discord",
+      "link_info": "Ссылка на сервер Discord вашего дома",
+      "logo": "Логотип дома",
+      "logo_info": "URL изображения. Рекомендуется использовать бесплатные хостинги изображений, такие как https://imgur.com/ для загрузки изображения вашего дома. НЕ используйте URL-адреса изображений Discord, так как они исчезнут через несколько дней.",
+      "server": "Сервер",
+      "server_info": "Где пользователи могут найти ваш дом",
+      "join_discord": "Присоединиться к Discord",
+      "edit_card": "Редактировать карточку",
+      "submit": "Создать дом и добавить всех ваших участников",
+      "error_one": "Название дома уже занято",
+      "error_two": "Название дома слишком длинное",
+      "error_three": "Описание слишком длинное",
+      "error_four": "Неверная ссылка на Discord",
+      "error_five": "Название страны слишком длинное",
+      "error_six": "Сервер обязателен"
+    }
+  },
+  "Lineups": {
+    "change_data": "Изменить данные",
+    "hide_name": "Скрыть имя",
+    "show_name": "Показать имя",
+    "username": "Имя пользователя",
+    "1st_unit": "Первая единица",
+    "2nd_unit": "Вторая единица",
+    "3rd_unit": "Третья единица",
+    "weapon": "Оружие",
+    "artillery": "Артиллерия",
+    "description": "Описание",
+    "group": "Группа",
+    "you": "Вы"
+  },
+  "MyHouse": {
+    "visible": "Видно для членов",
+    "blocked": "Заблокировано для членов"
+  },
+  "BuildTeam": {
+    "maxed_and_preffer": "Максимизировано и предпочитаемо",
+    "preffer": "Предпочитаемо",
+    "maxed": "Максимизировано",
+    "i_have": "У меня есть",
+    "card": {
+      "username": "Имя пользователя",
+      "1st_unit": "1-й юнит",
+      "2nd_unit": "2-й юнит",
+      "3rd_unit": "3-й юнит",
+      "weapon": "Оружие",
+      "cost": "Стоимость:",
+      "artillery": "Артиллерия",
+      "description": "Описание"
+    },
+    "public": {
+      "public": "Публично",
+      "no_lineups": "Нет составов",
+      "lineups_from": "Составы от ",
+      "lineup_name": "Название состава",
+      "add": "Добавить",
+      "delete": "Удалить",
+      "load": "Загрузить",
+      "update": "Обновить",
+      "lineup_added": "Состав добавлен",
+      "lineup_deleted": "Состав удален",
+      "lineup_updated": "Состав обновлен",
+      "lineup_loaded": "Состав загружен",
+      "date_loaded": "Дата загрузки",
+      "are_you_sure": "Вы уверены, что хотите удалить этот лист?"
+    },
+    "templates": {
+      "templates": "Шаблоны",
+      "no_templates": "Нет шаблонов",
+      "template_name": "Название шаблона",
+      "add": "Добавить",
+      "delete": "Удалить",
+      "load": "Загрузить",
+      "update": "Обновить",
+      "template_added": "Шаблон добавлен",
+      "template_deleted": "Шаблон удален",
+      "template_updated": "Шаблон обновлен",
+      "template_loaded": "Шаблон загружен"
+    },
+    "bot": {
+      "load_list": "Загрузить список с Discord",
+      "choose_date": "Выберите дату",
+      "next_tw": "Следующее TW",
+      "load_attendance": "Загрузить посещаемость из бота Discord",
+      "upload": "Загрузить",
+      "upload_all": "Загрузить всех игроков",
+      "pick_lineup": "Выберите состав"
+    },
+    "filters": {
+      "filters": "Фильтры",
+      "meta_units_only": "Только мета-юниты",
+      "golden_era": "Золотой век",
+      "heroic_era": "Героический век",
+      "silver_era": "Серебряный век",
+      "knight_era": "Рыцарский век",
+      "feudal__and_rustical_era": "Феодальная и рустикальная эпоха",
+      "general": "Общие"
+    },
+    "artillery": {
+      "not_at_all": "Совсем нет",
+      "no_artillery": "Нет артиллерии",
+      "some_artillery": "Немного артиллерии",
+      "average_artillery": "Средняя артиллерия",
+      "some": "Некоторые",
+      "average": "Среднее",
+      "a_lot_artillery": "Много артиллерии",
+      "a_lot": "Много"
+    }
+  },
+  "HouseStats": {
+    "username": "Имя пользователя",
+    "attendance_in_percent": "Посещаемость в %"
+  }
+}

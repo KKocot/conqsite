@@ -19,6 +19,8 @@ import {
   useAddTemplateMutation,
   useDeleteTemplateMutation,
 } from "@/components/hooks/use-templates-mutation";
+import { useTranslations } from "next-intl";
+import { toast } from "react-toastify";
 
 const Templates = ({
   house,
@@ -31,6 +33,7 @@ const Templates = ({
   sheetData: SheetTypes[];
   assets?: HouseAssets;
 }) => {
+  const t = useTranslations("BuildTeam.templates");
   const { data, isLoading } = useQuery({
     queryKey: ["templateList", house],
     queryFn: () => getTemplates(house),
@@ -48,12 +51,12 @@ const Templates = ({
       </DialogTrigger>
       <DialogContent className="overflow-y-scroll">
         <DialogHeader>
-          <DialogTitle>Templates</DialogTitle>
+          <DialogTitle>{t("templates")}</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-2">
           <div className="relative w-full">
             <Input
-              placeholder="Template Name"
+              placeholder={t("template_name")}
               value={templateName}
               onChange={(e) => setTemplateName(e.target.value)}
             />
@@ -65,21 +68,24 @@ const Templates = ({
                 !existingTemplate &&
                 (data?.length ?? 0) >= (assets?.premium ? 10 : 5)
               }
-              onClick={() =>
+              onClick={() => {
                 addTemplate.mutate({
                   house: house,
                   templateName: templateName,
                   sheet: sheetData,
-                })
-              }
+                });
+                existingTemplate
+                  ? toast.success(t("template_updated"))
+                  : toast.success(t("template_added"));
+              }}
             >
-              {existingTemplate ? "Update" : "Add"}
+              {existingTemplate ? t("update") : t("add")}
             </Button>
           </div>
           {isLoading ? (
             <LoadingComponent />
           ) : !data ? (
-            <div>No Data</div>
+            <div>{t("no_templates")}</div>
           ) : (
             data.map((template) => (
               <div
@@ -93,17 +99,19 @@ const Templates = ({
                     onClick={() => {
                       setSheetData(template.sheet);
                       setTemplateName(template.templateName);
+                      toast.success(t("template_loaded"));
                     }}
                   >
-                    Load
+                    {t("load")}
                   </Button>
                   <Button
                     variant="destructive"
-                    onClick={() =>
-                      deleteTemplate.mutate({ id: template?._id ?? "" })
-                    }
+                    onClick={() => {
+                      deleteTemplate.mutate({ id: template?._id ?? "" });
+                      toast.success(t("template_deleted"));
+                    }}
                   >
-                    Delete
+                    {t("delete")}
                   </Button>
                 </div>
               </div>

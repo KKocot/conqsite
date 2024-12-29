@@ -11,6 +11,7 @@ import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { HouseAssets } from "@/lib/get-data";
 import clsx from "clsx";
+import { useTranslations } from "next-intl";
 
 interface HouseDetails {
   name: string;
@@ -29,6 +30,7 @@ export default function HouseCard({
   assetsData?: HouseAssets[];
 }) {
   const houseAssets = assetsData?.find((asset) => asset.name === house.name);
+  const t = useTranslations("ListOfHouses");
   return (
     <Card
       className={clsx("w-[362px] overflow-hidden flex flex-col", {
@@ -66,7 +68,7 @@ export default function HouseCard({
             rel="noopener noreferrer"
             className="flex items-center justify-center"
           >
-            Join Discord <ExternalLink className="ml-2 h-4 w-4" />
+            {t("join_discord")} <ExternalLink className="ml-2 h-4 w-4" />
           </Link>
         </Button>
       </CardFooter>

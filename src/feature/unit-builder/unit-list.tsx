@@ -18,7 +18,7 @@ interface Unit {
 }
 
 const List = ({ units, value }: { units: Unit[]; value: string }) => {
-  const t = useTranslations("BuildTeam");
+  const t = useTranslations("MyProfile");
   return (
     <TableCell>
       <div className="flex flex-wrap gap-2 justify-center">
@@ -26,8 +26,8 @@ const List = ({ units, value }: { units: Unit[]; value: string }) => {
           unit.matchingGolden?.value === value ? (
             <span key={unit.id} className="w-fit">
               {unit.value >= 9 ? (
-                <div className="group relative w-fit" title={t("meta_unit")}>
-                  <div className="absolute bottom-auto left-2 md:left-5 right-auto md:top-2 z-50 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 scale-x-100 whitespace-nowrap rounded-full bg-red-600 px-1.5 py-1 text-center text-xs font-bold leading-none text-white">
+                <div className="group relative w-fit" title={t("meta")}>
+                  <div className="absolute cursor-help bottom-auto left-2 md:left-5 right-auto md:top-2 z-50 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 scale-x-100 whitespace-nowrap rounded-full bg-red-600 px-1.5 py-1 text-center text-xs font-bold leading-none text-white">
                     M
                   </div>
                 </div>

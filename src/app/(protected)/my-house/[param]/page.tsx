@@ -8,9 +8,11 @@ import { getHighRoles, getHouseAssets, getSurveys } from "@/lib/get-data";
 import { useSession } from "next-auth/react";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
+import { useTranslations } from "next-intl";
 
 const Page: React.FC = () => {
   const { param }: { param: string } = useParams();
+  const t = useTranslations("MyHouse");
   const house = param.replaceAll("%20", " ");
   const { data: user } = useSession();
   const { data: surveysData, isLoading: surveysIsLoading } = useQuery({
@@ -45,7 +47,7 @@ const Page: React.FC = () => {
     />
   ) : (
     <div className="flex justify-center items-center h-screen w-full">
-      Blocked for members
+      {t("blocked")}
     </div>
   );
 };

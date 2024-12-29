@@ -15,6 +15,7 @@ import { Badge } from "../../components/ui/badge";
 import { DiscordUsersProps, Roles } from "@/lib/get-data";
 import { ConfigProps } from "@/app/(protected)/member/create-house/content";
 import { HighRolesValues } from "@/app/(protected)/(owner)/settings/high-roles/[param]/content";
+import { useTranslations } from "next-intl";
 
 interface CreateHouseHighRolesProps {
   type: "create";
@@ -49,14 +50,17 @@ const CreateHouseHighRoles = ({
   premium,
 }: CreateHouseHighRolesProps | EditHouseHighRolesProps) => {
   const house = type === "edit" ? values.houseLeader[0].house : "";
+  const t = useTranslations("Settings");
   return (
     <Card>
       <CardHeader className="text-center text-2xl font-bold">
-        Pick Your Commanders
+        {t("high_roles.manage_commands")}
       </CardHeader>
       <CardContent className="flex flex-col w-full">
         <Separator />
-        <h2 className="text-center text-lg font-bold p-6">House Leader</h2>
+        <h2 className="text-center text-lg font-bold p-6">
+          {t("high_roles.house_leader")}
+        </h2>
         <div className="grid grid-cols-3 gap-4 p-6">
           <div />
           {type === "edit" ? (
@@ -77,24 +81,26 @@ const CreateHouseHighRoles = ({
           ) : (
             <Badge className="text-base h-8 flex justify-between">
               <div />
-              <p>You</p>
+              <p>{t("high_roles.you")}</p>
               <div />
             </Badge>
           )}
           <Card className="py-4">
-            <CardHeader className="pt-1">Permissions:</CardHeader>
+            <CardHeader className="pt-1">
+              {t("high_roles.permissions")}
+            </CardHeader>
             <CardContent>
-              <li>Build Teams</li>
-              <li>Publishing Lineups</li>
-              <li>Manage all roles</li>
-              <li>Manage house info</li>
-              <li>Manage house config</li>
+              <li>{t("high_roles.build_team")}</li>
+              <li>{t("high_roles.publishing_lineups")}</li>
+              <li>{t("high_roles.manage_all_roles")}</li>
+              <li>{t("high_roles.manage_house_info")}</li>
+              <li>{t("high_roles.manage_house_config")}</li>
             </CardContent>
           </Card>
         </div>
         <Separator />
         <h2 className="text-center text-lg font-bold p-6">
-          Choose your Right Hand
+          {t("high_roles.choose_your_right_hand")}
         </h2>
         <div className="grid grid-cols-3 gap-4 p-6">
           <Select
@@ -122,7 +128,9 @@ const CreateHouseHighRoles = ({
             }}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Choose Right Hand" />
+              <SelectValue
+                placeholder={t("high_roles.choose_right_hand_placeholder")}
+              />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
@@ -187,19 +195,21 @@ const CreateHouseHighRoles = ({
                 ))}
           </div>
           <Card className="py-4">
-            <CardHeader className="pt-1">Permissions:</CardHeader>
+            <CardHeader className="pt-1">
+              {t("high_roles.permissions")}
+            </CardHeader>
             <CardContent>
-              <li>Build Teams</li>
-              <li>Publishing Lineups</li>
-              <li>Manage command roles</li>
-              <li>Manage house info</li>
-              <li>Manage house config</li>
+              <li>{t("high_roles.build_team")}</li>
+              <li>{t("high_roles.publishing_lineups")}</li>
+              <li>{t("high_roles.manage_commands")}</li>
+              <li>{t("high_roles.manage_house_info")}</li>
+              <li>{t("high_roles.manage_house_config")}</li>
             </CardContent>
           </Card>
         </div>
         <Separator />
         <h2 className="text-center text-lg font-bold p-6">
-          Choose your 3 Commanders
+          {t("high_roles.choose_your_commanders")}
         </h2>
         <p></p>
         <div className="grid grid-cols-3 gap-4 p-6">
@@ -228,7 +238,9 @@ const CreateHouseHighRoles = ({
             }}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Choose Commanders" />
+              <SelectValue
+                placeholder={t("high_roles.choose_commanders_placeholder")}
+              />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
@@ -293,10 +305,12 @@ const CreateHouseHighRoles = ({
                 ))}
           </div>
           <Card className="py-4">
-            <CardHeader className="pt-1">Permissions:</CardHeader>
+            <CardHeader className="pt-1">
+              {t("high_roles.permissions")}
+            </CardHeader>
             <CardContent>
-              <li>Build Teams</li>
-              <li>Publishing Lineups</li>
+              <li>{t("high_roles.build_team")}</li>
+              <li>{t("high_roles.publishing_lineups")}</li>
             </CardContent>
           </Card>
         </div>
@@ -304,14 +318,14 @@ const CreateHouseHighRoles = ({
         {type === "edit" ? null : (
           <div className="flex justify-between w-full">
             <Button variant="custom" onClick={() => handleStep(2)}>
-              Previes
+              {t("previous")}
             </Button>
             <Button
               className="self-end"
               variant="custom"
               onClick={() => handleStep(4)}
             >
-              Next
+              {t("next")}
             </Button>
           </div>
         )}

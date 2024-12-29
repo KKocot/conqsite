@@ -1,25 +1,77 @@
 {
-  "HomePage": {
-    "title": "Witaj",
-    "my_profile": "Mój Profil",
-    "update_form": "Zaktualizuj Formularz",
-    "build_team": "Zbuduj Zespół",
-    "my_house": "Mój Ród",
+  "Login": {
     "login_to_access_your_profile": "Zaloguj się, aby uzyskać dostęp do swojego profilu",
-    "login": "Zaloguj się",
-    "logout": "Wyloguj się",
-    "light": "Jasny",
-    "dark": "Ciemny",
-    "system": "System",
-    "member_menu": "Menu Członka",
-    "house": "Ród",
-    "all_houses": "Wszystkie Rody",
-    "high_command_menu": "Menu Dowództwa",
-    "house_leader_menu": "Menu Lidera Rodu",
-    "settings": "Ustawienia",
-    "privacy_policy": "Polityka Prywatności",
-    "terms_of_service": "Warunki Usługi",
-    "documentation": "Dokumentacja"
+    "login": "Zaloguj się"
+  },
+  "Authority": {
+    "hello": "Witaj ",
+    "you_are_about_to_login": "Zaraz autoryzujesz dostęp do konta o ID ",
+    "authorize": "Autoryzuj"
+  },
+  "Navigation": {
+    "dashboard": {
+      "dashboard": "Panel główny",
+      "list_of_house": "Lista Domów",
+      "units": "Jednostki",
+      "doctrines": "Doktryny",
+      "privacy_policy": "Polityka Prywatności",
+      "terms_of_service": "Warunki Usługi",
+      "documentation": "Dokumentacja"
+    },
+    "member": {
+      "member": "Członek",
+      "my_profile": "Mój Profil",
+      "my_stats": "Moje Statystyki",
+      "update_form": "Aktualizuj Formularz",
+      "create_house": "Utwórz Dom"
+    },
+    "house": {
+      "lineups": "Ustawienia",
+      "my_house": "Mój Dom",
+      "build_team": "Zbuduj Zespół",
+      "house_stats": "Statystyki Domu",
+      "bot_controller": "Sterownik Bota",
+      "high_roles": "Wysokie Role",
+      "bot_config": "Konfiguracja Bota",
+      "house_card": "Karta Domu"
+    },
+    "auth": {
+      "login": "Zaloguj się",
+      "logout": "Wyloguj się"
+    }
+  },
+  "ListOfHouses": {
+    "join_discord": "Dołącz do Discorda"
+  },
+  "Units": {
+    "golden_era": "Złota Era",
+    "heroic_era": "Heroiczna Era",
+    "silver_era": "Srebrna Era",
+    "knight_era": "Rycerska Era",
+    "feudal_and_rustical_era": "Feudalna i Rustykalna Era"
+  },
+  "Doctrines": {
+    "general_doctrines": "Doktryny Ogólne",
+    "dedicated_for_groups": "Przeznaczone dla Grup",
+    "dedicated_for_units": "Przeznaczone dla Jednostek"
+  },
+  "MyProfile": {
+    "houses": "Domy",
+    "max_and_preffer": "Maksymalnie i Preferowane",
+    "preffer": "Preferowane",
+    "maxed": "Maksymalne",
+    "i_have": "Mam",
+    "i_dont_have": "Nie mam",
+    "meta": "Jednostka Meta",
+    "leadership": "Dowodzenie"
+  },
+  "MyStats": {
+    "season_start": "Początek Sezonu",
+    "season_end": "Koniec Sezonu",
+    "list_of_drillmodes": "Lista Trybów Ćwiczeń",
+    "list_of_tw": "Lista TW",
+    "attendance_in_percent": "Frekwencja w %",
+    "tw_not_started": "TW jeszcze się nie rozpoczęło"
   },
   "AddForm": {
     "you_have_no_access": "Nie masz dostępu",
@@ -30,19 +82,19 @@
     "general": "Ogólne",
     "i_dont_have": "Nie mam",
     "i_have": "Mam",
-    "maxed": "Maksymalny",
-    "preffer": "Preferowany",
-    "maxed_and_preffer": "Maksymalny i Preferowany",
+    "maxed": "Maksymalne",
+    "preffer": "Preferowane",
+    "maxed_and_preffer": "Maksymalne i Preferowane",
     "show_meta_only": "Pokaż tylko jednostki meta",
     "show_all": "Pokaż wszystkie jednostki",
     "previous": "Poprzedni",
     "next": "Następny",
-    "submit": "Zatwierdź",
-    "discord_nick": "Nick na Discordzie",
-    "nick_in_game": "Nick w Grze",
+    "submit": "Wyślij",
+    "discord_nick": "Nick Discord",
+    "nick_in_game": "Nick w grze",
     "hero_level": "Poziom Bohatera",
-    "house": "Ród",
-    "amount_of_artillery": "Ilość Artylerii",
+    "house": "Dom",
+    "amount_of_artillery": "Liczba Artylerii",
     "not_at_all": "Wcale",
     "some": "Trochę",
     "average": "Średnio",
@@ -50,245 +102,186 @@
     "weapons": "Broń",
     "i_preffer": "Preferuję",
     "not_preffer": "Mogę wziąć, ale wolę nie",
-    "leadership": "Przywództwo",
+    "leadership": "Dowodzenie",
     "preferences": "Preferencje"
   },
-  "BuildTeam": {
-    "load_data": "Załaduj dane",
-    "clean_list": "Wyczyść listę",
-    "actions": "Akcje",
-    "upload_all": "Prześlij WSZYSTKO",
-    "preview": "Podgląd",
-    "editor": "Edytor",
-    "save_template": "Zapisz Szablon",
-    "load_template": "Załaduj Szablon",
-    "clean_sheet": "Czysta karta",
-    "units": "Jednostki",
-    "lineups": "Składy",
-    "meta_units_only": "Tylko jednostki meta",
-    "golden_era": "Złota Era",
-    "heroic_era": "Heroiczna Era",
-    "silver_era": "Srebrna Era",
-    "knight_era": "Era Rycerzy",
-    "feudal__and_rustical_era": "Era Feudalna i Rustykalna",
-    "general": "Ogólne",
-    "maxed_and_preffer": "Maksymalny i Preferowany",
-    "preffer": "Preferowany",
-    "maxed": "Maksymalny",
-    "i_have": "Mam",
-    "i_dont_have": "Nie mam",
-    "username": "Nazwa Użytkownika",
-    "1st_unit": "1. Jednostka",
-    "2nd_unit": "2. Jednostka",
-    "3rd_unit": "3. Jednostka",
-    "leadership_cost": "Koszt Przywództwa: ",
-    "leadership": "Dowodzenie",
+  "Settings": {
+    "previous": "Poprzedni",
+    "next": "Następny",
+    "verification": {
+      "discord_verification": "Weryfikacja Discord",
+      "house_id": "Podaj ID swojego domu na Discordzie",
+      "get_id": "Jak znaleźć ID na Discordzie",
+      "discord_id": "ID Discord",
+      "tooltip_one": "Przejdź do ustawień użytkownika na Discordzie",
+      "tooltip_two": "Przejdź do zaawansowanych ustawień i włącz tryb deweloperski",
+      "tooltip_three": "Kliknij prawym przyciskiem na serwerze i wybierz 'Kopiuj ID serwera'",
+      "tw_discord_id": "ID Discord TW",
+      "point_one": "- Upewnij się, że ",
+      "point_two": " jest na twoim Discordzie i ma wysoką rangę, aby widzieć wszystkie role i kanały",
+      "point_three": "- Upewnij się, że masz rolę administratora na tym Discordzie",
+      "point_four": "- Konquerus może śledzić frekwencję twojego domu, skanując Discorda i zapisując trzy razy (na początku, po 30 minutach i na końcu) oraz zapisując to dla ciebie. Jeśli twój dom używa innego Discorda do TW, zaznacz pole wyboru, upewnij się, że jesteś administratorem na tym serwerze, i ",
+      "point_five": " również znajduje się na tym serwerze."
+    },
+    "config": {
+      "config": "Konfiguracja Konquerys",
+      "type": "Typ",
+      "description": "Opis",
+      "list": "Lista",
+      "member_role": "Rola członka",
+      "member_role_description": "Wybierz zwykłą rolę członka na Discordzie, aby bot wiedział, kogo dodać do twojego domu.",
+      "member_pleaceholder": "Członek",
+      "logs_channel": "Kanał logów",
+      "logs_channel_description": "Konquerus potrzebuje kanału, aby komunikować ci, kto dołączył lub opuścił twój dom.",
+      "logs_pleaceholder": "Logi",
+      "tw_role": "Rola TW",
+      "tw_role_description": "Konquerus musi znać rolę na Discordzie TW, aby",
+      "tw_pleaceholder": "Zwykła rola na kanale TW",
+      "lineup": "Skład",
+      "lineup_description": "Bot musi wiedzieć, jak podzielić twój dom na składy, jeśli masz więcej niż jedną rajdę.",
+      "channel_label": "Kanał",
+      "channel_pleaceholder": "Wybierz kanał bota rejestracyjnego",
+      "role_label": "Rola",
+      "role_pleaceholder": "Wybierz rolę składu",
+      "add_lineup": "Dodaj skład",
+      "remove_lineup": "Usuń skład",
+      "update_config": "Zaktualizuj konfigurację"
+    },
+    "high_roles": {
+      "pick_your_commanders": "Wybierz swoich dowódców",
+      "house_leader": "Lider domu",
+      "choose_your_right_hand": "Wybierz swoją prawą rękę",
+      "choose_your_commanders": "Wybierz swoich 3 dowódców",
+      "choose_right_hand_placeholder": "Wybierz prawą rękę",
+      "choose_commanders_placeholder": "Wybierz dowódców",
+      "permissions": "Uprawnienia:",
+      "build_team": "Budowanie drużyn",
+      "publishing_lineups": "Publikowanie składów",
+      "manage_all_roles": "Zarządzanie wszystkimi rolami",
+      "manage_house_info": "Zarządzanie informacjami o domu",
+      "manage_house_config": "Zarządzanie konfiguracją domu",
+      "manage_commands": "Zarządzanie rolami poleceń",
+      "you": "Ty"
+    },
+    "house_card": {
+      "house_card": "Szczegóły karty domu",
+      "name": "Nazwa domu",
+      "name_info": "Nazwa domu powinna być unikalna i nie dłuższa niż 20 znaków",
+      "description": "Opis domu",
+      "description_info": "Opis domu jest wymagany, nie może być obraźliwy dla innych i nie może być dłuższy niż 45 znaków",
+      "country": "Kraj",
+      "country_info": "Kraj np. 'Polska', 'UK' lub 'Międzynarodowy'",
+      "link": "Link Discord",
+      "link_info": "Link do serwera Discord twojego domu",
+      "logo": "Logo domu",
+      "logo_info": "Adres URL obrazu. Zalecam użycie darmowego hostingu obrazów, takiego jak https://imgur.com/ do przesyłania obrazu twojego domu. NIE używaj URL-ów z obrazów Discorda, ponieważ znikną one po kilku dniach.",
+      "server": "Serwer",
+      "server_info": "Gdzie użytkownicy mogą znaleźć twój dom",
+      "join_discord": "Dołącz do Discorda",
+      "edit_card": "Edytuj kartę",
+      "submit": "Utwórz dom i dodaj wszystkich swoich członków",
+      "error_one": "Nazwa domu jest już zajęta",
+      "error_two": "Nazwa domu jest za długa",
+      "error_three": "Opis jest za długi",
+      "error_four": "Link Discorda jest nieprawidłowy",
+      "error_five": "Nazwa kraju jest za długa",
+      "error_six": "Serwer jest wymagany"
+    }
+  },
+  "Lineups": {
+    "change_data": "Zmień dane",
+    "hide_name": "Ukryj nazwisko",
+    "show_name": "Pokaż nazwisko",
+    "username": "Nazwa użytkownika",
+    "1st_unit": "Pierwsza jednostka",
+    "2nd_unit": "Druga jednostka",
+    "3rd_unit": "Trzecia jednostka",
     "weapon": "Broń",
     "artillery": "Artyleria",
     "description": "Opis",
-    "hide_names": "Ukryj nazwy",
-    "show_names": "Pokaż nazwy",
-    "meta_unit": "Jednostka Meta",
-    "not_at_all": "Wcale",
-    "some": "Trochę",
-    "average": "Średnio",
-    "a_lot": "Dużo",
-    "no_artillery": "Nie ma artylerii",
-    "some_artillery": "Ma trochę artylerii",
-    "average_artillery": "Ma średnią ilość artylerii",
-    "a_lot_artillery": "Ma dużo artylerii",
-    "select_template": "Wybierz szablon",
-    "save_template_to_db": "Zapisz szablon na serwerze",
     "group": "Grupa",
-    "update_form_first": "Najpierw zaktualizuj formularz",
-    "update_form": "Zaktualizuj formularz",
-    "are_u_sure": "Czy na pewno chcesz usunąć tego gracza z rodu?",
-    "from": "z ",
-    "finish_settings_first": "Najpierw dokończ ustawienia"
+    "you": "Ty"
   },
-  "HousePage": {
-    "next_tw_preview": "Podgląd następnego TW",
-    "join_house": "Dołącz do Rodu",
-    "create_house": "Utwórz Ród",
-    "house_name": "Nazwa Rodu",
-    "house_name_is_not_available": "Nazwa Rodu jest niedostępna",
-    "house_description": "Opis Rodu",
-    "description_is_too_long": "Opis jest za długi",
-    "country": "Kraj",
-    "discord_link": "Link Discord",
-    "discord_link_is_incorrect": "Link Discord jest nieprawidłowy",
-    "avatar": "Awatar",
-    "server": "Serwer",
-    "houses": "Rody",
-    "join_discord": "Dołącz do Discord",
-    "join_to_house": "Dołącz do Rodu",
-    "house_description_title": "Opis Rodu"
+  "MyHouse": {
+    "visible": "Widoczne dla członków",
+    "blocked": "Zablokowane dla członków"
   },
-  "SettingsPage": {
-    "house_description_title": "Opis Rodu",
-    "settings_page": "Strona Ustawień",
-    "nick_placeholder": "Nick",
-    "discord_id_placeholder": "Discord ID",
-    "role_placeholder": "Wybierz rolę",
-    "high_command": "Wysokie Dowództwo",
-    "right_hand": "Prawa Ręka",
-    "add_to_list": "Dodaj do Listy",
-    "error_occurred": "Wystąpił błąd:",
-    "success": "Sukces:",
-    "error_adding": "Błąd dodawania:",
-    "nick": "Nick",
-    "role": "Rola",
-    "delete": "Usuń",
-    "name": "Imię",
-    "description": "Opis",
-    "id": "ID",
-    "house": "Ród",
-    "house_description": "Musimy wiedzieć, jaki jest twój Discord Rodu. Upewnij się, że Konquerus jest na twoim serwerze Discord. Dzięki temu ID wiemy, na jakim serwerze powinien działać Konquerus. Jeśli chcesz zmienić nazwę rodu, napisz do wsparcia.",
-    "discord": "Discord",
-    "member": "Członek",
-    "member_description": "Jaka jest nazwa roli członka Discord i jego DiscordID? Dzięki temu ID Konquerus wie, kto jest członkiem twojego rodu.",
-    "logs": "Logi",
-    "logs_description": "Kanały lub kanał do przeglądania logów dotyczących działań na Discordzie i obecności na TW po wydarzeniu. Możesz użyć tego samego kanału lub nawet wątku na kanale.",
-    "logs_channel": "Kanał logów",
-    "attendance_channel": "Kanał obecności",
-    "tw_zone": "Strefa TW",
-    "tw_zone_description": "Musimy wiedzieć, czy grasz w TW na głównym serwerze DC, czy na innym.",
-    "server": "Serwer",
-    "lineup": "Zestawienie",
-    "lineup_description": "Bot musi wiedzieć, jak podzielić twój ród na zestawienia, jeśli masz więcej niż jeden najazd.",
-    "delete_lineup": "Usuń zestawienie",
-    "add_lineup": "Dodaj zestawienie",
-    "channel": "Kanał",
-    "save_settings": "Zapisz ustawienia",
-    "unique_lineup_names": "Nazwy zestawień muszą być unikalne",
-    "house_settings_saved": "Ustawienia rodu zapisane",
-    "house_name": "Nazwa rodu",
-    "description_too_long": "Opis jest za długi",
-    "country": "Kraj",
-    "discord_link": "Link Discord",
-    "discord_link_incorrect": "Link Discord jest nieprawidłowy",
-    "avatar": "Awatar",
-    "save_details": "Zapisz szczegóły",
-    "house_details_saved": "Szczegóły rodu zapisane"
-  },
-  "DocsPage": {
-    "documentation": {
-      "title": "Dokumentacja"
+  "BuildTeam": {
+    "maxed_and_preffer": "Maksymalne i Preferowane",
+    "preffer": "Preferowane",
+    "maxed": "Maksymalne",
+    "i_have": "Mam",
+    "card": {
+      "username": "Nazwa użytkownika",
+      "1st_unit": "1. jednostka",
+      "2nd_unit": "2. jednostka",
+      "3rd_unit": "3. jednostka",
+      "weapon": "Broń",
+      "cost": "Koszt:",
+      "artillery": "Artyleria",
+      "description": "Opis"
     },
-    "guide": {
-      "title": "Przewodnik Krok po Kroku jak zacząć",
-      "step1": {
-        "title": "Przejdź do zakładki Ród",
-        "description": "Przejdź do zakładki \"Ród\" w aplikacji."
-      },
-      "step2": {
-        "title": "Utwórz zakładkę Ród",
-        "description": "Kliknij zakładkę \"Utwórz Ród\"."
-      },
-      "step3": {
-        "title": "Wypełnij formularz",
-        "form": {
-          "houseName": {
-            "title": "Nazwa Rodu:",
-            "description": "Musi być unikalna. Nie więcej niż 15 znaków."
-          },
-          "houseDescription": {
-            "title": "Opis Rodu:",
-            "description": "Nie więcej niż 250 znaków."
-          },
-          "country": {
-            "title": "Kraj:",
-            "description": "Wybierz kraj lub kraje."
-          },
-          "discord": {
-            "title": "Discord:",
-            "description": "Upewnij się, że link jest trwały."
-          },
-          "avatar": {
-            "title": "Awatar:",
-            "description": "Użyj usługi hostingowej obrazów, np. imgur.com. Wklej link do obrazu. Rozmiar obrazu powinien wynosić 180x180 pikseli."
-          },
-          "server": {
-            "title": "Serwer:",
-            "description": "Napisz na jakim serwerze gracie."
-          }
-        }
-      },
-      "step4": {
-        "title": "Wypełnij formularz ustawień",
-        "form": {
-          "serverDiscordId": {
-            "title": "ID Serwera Discord:",
-            "description": "Wprowadź ID serwera Discord."
-          },
-          "memberRole": {
-            "title": "Nazwa i ID Roli Członka:",
-            "description": "Podaj nazwę i ID roli członka."
-          },
-          "logsChannels": {
-            "title": "Kanały Logów lub Kanał:",
-            "description": "Podaj kanały logów lub jeden kanał."
-          },
-          "twZone": {
-            "title": "Strefa TW:",
-            "description": "Podaj ID Serwera Discord dla strefy TW. Podaj ID roli członka."
-          },
-          "lineups": {
-            "title": "Składy:",
-            "lineupName": {
-              "title": "Nazwa Składu:",
-              "description": "Powinna być unikalna."
-            },
-            "channelWithBot": {
-              "title": "Kanał z Botem do Rejestracji:",
-              "description": "Podaj kanał."
-            },
-            "roleId": {
-              "title": "ID Roli dla tego Składu:",
-              "description": "Podaj ID roli."
-            }
-          }
-        }
-      },
-      "step5": {
-        "title": "Zaproś Bota @Konqueruś",
-        "description": "Zaproś ",
-        "botName": "Konqueruś"
-      },
-      "step6": {
-        "title": "Zweryfikuj Ustawienia Rodu",
-        "description": "Użyj polecenia, aby zweryfikować ustawienia rodu na stronie internetowej. Przejdź do ",
-        "command": "i kliknij przycisk, aby zweryfikować."
-      }
+    "public": {
+      "public": "Publiczne",
+      "no_lineups": "Brak ustawień",
+      "lineups_from": "Ustawienia od ",
+      "lineup_name": "Nazwa ustawienia",
+      "add": "Dodaj",
+      "delete": "Usuń",
+      "load": "Załaduj",
+      "update": "Aktualizuj",
+      "lineup_added": "Ustawienie dodane",
+      "lineup_deleted": "Ustawienie usunięte",
+      "lineup_updated": "Ustawienie zaktualizowane",
+      "lineup_loaded": "Ustawienie załadowane",
+      "date_loaded": "Data załadowania",
+      "are_you_sure": "Czy na pewno chcesz usunąć tę kartę?"
     },
-    "guide_2": {
-      "title": "Instrukcja obsługi Bota Konquerus",
-      "slash_command": "Slash Commend używamy poprzez wpisanie / na discordowym chat'cie.",
-      "menu_eng": "Menu_eng",
-      "menu_eng_description": "Tworzy przyciski do obsługi bota. Potrzeba uprawnień admina na serwerze Discord albo przynajmniej rangi RightHand na ConqSite.",
-      "send_presence": "Send the presence: przesyła graczy z list obecności na TW do buildera na ConqSite.",
-      "quick_add": "Quick add: ręczne dodanie gracza do whitelist na ConqSite.",
-      "delete_player": "Delete player: ręczne usunięcie gracza z whitelist na ConqSite.",
-      "add_all": "Add all: dodanie wszystkich graczy z serwera na stronę ConqSite (zalecane użycie tylko raz przy konfiguracji).",
-      "verification": "Verification: sprawdzenie, czy podane id w ustawieniach na ConqSite są poprawne.",
-      "functions": "Funkcje",
-      "functions_description": "Bota Konquerus umożliwia automatyczne zarządzanie rolami na serwerze Discord oraz listami obecności na ConqSite.",
-      "example_functions": "Przykładowe funkcje:",
-      "auto_roles": "Automatyczne dodawanie/usuwanie ról do whitelist na ConqSite.",
-      "check_logs": "Sprawdzanie logów kanałów oraz list graczy na wydarzenia TW.",
-      "create_presence_lists": "Tworzenie list obecności z kanałów głosowych.",
-      "warthog": "Warthog",
-      "warthog_description": "Funkcja, która przerzuca danego użytkownika po wszystkich kanałach głosowych od góry w dół.",
-      "warthog_example": "Przykładowe użycie: np. aby przenieść gracza przez różne kanały w celach moderacyjnych.",
-      "installation_instructions": "Instrukcja instalacji",
-      "installation_steps": "Aby rozpocząć korzystanie z bota, wykonaj następujące kroki:",
-      "step1": "Utwórz house na stronie ConqSite.",
-      "step2": "Dodaj Bota Konqueruś na swój serwer Discord.",
-      "step3": "Przejdź do ustawień na ConqSite i ustaw odpowiednie ID: House, Member, Logs, TW Zone, Lineups.",
-      "step4": "Na Discordzie użyj komendy /menu_eng i przyciśnij przycisk Verification.",
-      "polish_version_functions": "Funkcje dostępne tylko w polskiej wersji:",
-      "create_event_groups": "Tworzenie grup do eventów, takich jak raid camp.",
-      "auto_verification": "Automatyczna weryfikacja obecności na kanałach głosowych."
+    "templates": {
+      "templates": "Szablony",
+      "no_templates": "Brak szablonów",
+      "template_name": "Nazwa szablonu",
+      "add": "Dodaj",
+      "delete": "Usuń",
+      "load": "Załaduj",
+      "update": "Aktualizuj",
+      "template_added": "Szablon dodany",
+      "template_deleted": "Szablon usunięty",
+      "template_updated": "Szablon zaktualizowany",
+      "template_loaded": "Szablon załadowany"
+    },
+    "bot": {
+      "load_list": "Załaduj listę z Discorda",
+      "choose_date": "Wybierz datę",
+      "next_tw": "Następne TW",
+      "load_attendance": "Załaduj obecność z bota Discord",
+      "upload": "Prześlij",
+      "upload_all": "Prześlij wszystkich graczy",
+      "pick_lineup": "Wybierz ustawienie"
+    },
+    "filters": {
+      "filters": "Filtry",
+      "meta_units_only": "Tylko jednostki meta",
+      "golden_era": "Złota era",
+      "heroic_era": "Heroiczna era",
+      "silver_era": "Srebrna era",
+      "knight_era": "Era rycerska",
+      "feudal__and_rustical_era": "Era feudalna i rustykalna",
+      "general": "Ogólne"
+    },
+    "artillery": {
+      "not_at_all": "Wcale nie",
+      "no_artillery": "Brak artylerii",
+      "some_artillery": "Trochę artylerii",
+      "average_artillery": "Średnia artyleria",
+      "some": "Trochę",
+      "average": "Średnio",
+      "a_lot_artillery": "Dużo artylerii",
+      "a_lot": "Dużo"
     }
+  },
+  "HouseStats": {
+    "username": "Nazwa użytkownika",
+    "attendance_in_percent": "Obecność w %"
   }
 }

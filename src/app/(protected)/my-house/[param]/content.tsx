@@ -9,6 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { UserProfile } from "@/components/user-profile";
 import { HouseAssets, Roles, Survey } from "@/lib/get-data";
 import clsx from "clsx";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { FC, useState } from "react";
 
@@ -27,6 +28,7 @@ const Content: FC<ContentProps> = ({
   houseAssets,
   userId,
 }) => {
+  const t = useTranslations("MyHouse");
   const [inputQuery, setInputQuery] = useState<string>("");
   const updateHouseAssets = useUpdateAssetsMutation();
   const filtredSurveys = surveysData
@@ -61,7 +63,7 @@ const Content: FC<ContentProps> = ({
               });
             }}
           />
-          <Label htmlFor="visible">Visible to Members</Label>
+          <Label htmlFor="visible">{t("visible")}</Label>
         </div>
       ) : null}
       <h1 className="text-5xl font-bold text-center py-10">{house}</h1>

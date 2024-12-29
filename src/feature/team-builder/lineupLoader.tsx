@@ -24,7 +24,7 @@ const LineupLoader = ({
   surveysData: Survey[];
   house: string;
 }) => {
-  const t = useTranslations("BuildTeam");
+  const t = useTranslations("BuildTeam.bot");
   const [date, setDate] = useState<Date | undefined>(new Date());
   const next_tw = getCloserDay();
   const [data, setData] = useState<LineupData | undefined>(undefined);
@@ -47,14 +47,14 @@ const LineupLoader = ({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-center">Load list from bot</DialogTitle>
+          <DialogTitle className="text-center">{t("load_list")}</DialogTitle>
         </DialogHeader>
         <div className="flex justify-around w-full items-center flex-col">
           <div className="gap-4 flex flex-col items-center ">
             <div className="flex justify-between w-full">
-              <h1 className="text-2xl font-blod">Choose a date</h1>
+              <h1 className="text-2xl font-blod">{t("choose_date")}</h1>
               <Button onClick={() => setDate(next_tw)} variant="custom">
-                Next TW
+                {t("next_tw")}
               </Button>
             </div>
             <Calendar
@@ -65,13 +65,13 @@ const LineupLoader = ({
             />
           </div>
           <Button disabled={!date} variant="custom" onClick={onSubmit}>
-            Load attendance from Discord Bot
+            {t("load_attendance")}
           </Button>
         </div>
         {data ? (
           <div className="flex flex-col gap-4">
             <h1 className="text-xl font-bold text-center">{`Attendance loaded from ${data.date}`}</h1>
-            <h1 className="text-lg text-center">Pick lineup</h1>
+            <h1 className="text-lg text-center">{t("pick_lineup")}</h1>
             <div className="flex flex-col gap-4">
               {data.lineup.map((e) => (
                 <Button
@@ -89,7 +89,7 @@ const LineupLoader = ({
           </div>
         ) : null}
         <Button onClick={() => setUserList(surveysData)}>
-          Upload all players
+          {t("upload_all")}
         </Button>
       </DialogContent>
     </Dialog>

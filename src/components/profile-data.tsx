@@ -17,7 +17,7 @@ import Image from "next/image";
 import List from "@/feature/unit-builder/unit-list";
 
 const ProfileData = ({ profile }: { profile: Survey }) => {
-  const t = useTranslations("BuildTeam");
+  const t = useTranslations("MyProfile");
   const golden = ownedUnits(goldenUnits, profile.units.golden);
   const heroic = ownedUnits(heroicUnits, profile.units.heroic);
   const blue = ownedUnits(blueUnits, profile.units.low);
@@ -64,7 +64,7 @@ const ProfileData = ({ profile }: { profile: Survey }) => {
         <TableHeader>
           <TableRow>
             <TableHead className="text-center px-0 text-yellow-500">
-              {t("maxed_and_preffer")}
+              {t("max_and_preffer")}
             </TableHead>
             <TableHead className="text-center px-0 text-purple-500">
               {t("preffer")}

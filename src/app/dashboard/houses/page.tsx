@@ -1,14 +1,12 @@
 "use client";
 
 import { getHousesAssets, getHousesDetails } from "@/lib/get-data";
-import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
 import HouseCard from "@/components/house-card";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 
 const HousesPage = () => {
-  const t = useTranslations("HousePage");
   const { data, isLoading } = useQuery({
     queryKey: ["houses"],
     queryFn: getHousesDetails,

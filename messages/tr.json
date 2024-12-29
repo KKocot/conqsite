@@ -1,49 +1,101 @@
 {
-  "HomePage": {
-    "title": "Merhaba",
-    "my_profile": "Profilim",
-    "update_form": "Formu Güncelle",
-    "build_team": "Takım Kur",
-    "my_house": "Evim",
+  "Login": {
     "login_to_access_your_profile": "Profilinize erişmek için giriş yapın",
-    "login": "Giriş Yap",
-    "logout": "Çıkış Yap",
-    "light": "Aydınlık",
-    "dark": "Karanlık",
-    "system": "Sistem",
-    "member_menu": "Üye Menüsü",
-    "house": "Ev",
-    "all_houses": "Tüm Evler",
-    "high_command_menu": "Yüksek Komuta Menüsü",
-    "house_leader_menu": "Ev Lideri Menüsü",
-    "settings": "Ayarlar",
-    "privacy_policy": "Gizlilik Politikası",
-    "terms_of_service": "Hizmet Şartları",
-    "documentation": "Dokümantasyon"
+    "login": "Giriş yap"
+  },
+  "Authority": {
+    "hello": "Merhaba ",
+    "you_are_about_to_login": "Hesaba giriş yapmak üzere, ID'si ",
+    "authorize": "Yetkilendir"
+  },
+  "Navigation": {
+    "dashboard": {
+      "dashboard": "Gösterge Paneli",
+      "list_of_house": "Ev Listesi",
+      "units": "Birimler",
+      "doctrines": "Doktrinler",
+      "privacy_policy": "Gizlilik Politikası",
+      "terms_of_service": "Hizmet Şartları",
+      "documentation": "Dokümantasyon"
+    },
+    "member": {
+      "member": "Üye",
+      "my_profile": "Profilim",
+      "my_stats": "İstatistiklerim",
+      "update_form": "Formu Güncelle",
+      "create_house": "Ev Oluştur"
+    },
+    "house": {
+      "lineups": "Kadrolar",
+      "my_house": "Evim",
+      "build_team": "Takım Oluştur",
+      "house_stats": "Ev İstatistikleri",
+      "bot_controller": "Bot Kontrolü",
+      "high_roles": "Üst Roller",
+      "bot_config": "Bot Yapılandırması",
+      "house_card": "Ev Kartı"
+    },
+    "auth": {
+      "login": "Giriş Yap",
+      "logout": "Çıkış Yap"
+    }
+  },
+  "ListOfHouses": {
+    "join_discord": "Discord'a Katıl"
+  },
+  "Units": {
+    "golden_era": "Altın Çağ",
+    "heroic_era": "Kahramanlık Çağı",
+    "silver_era": "Gümüş Çağ",
+    "knight_era": "Şövalye Çağı",
+    "feudal_and_rustical_era": "Feodal ve Kırsal Çağ"
+  },
+  "Doctrines": {
+    "general_doctrines": "Genel Doktrinler",
+    "dedicated_for_groups": "Gruplar için Ayrılmış",
+    "dedicated_for_units": "Birimler için Ayrılmış"
+  },
+  "MyProfile": {
+    "houses": "Evler",
+    "max_and_preffer": "Maksimum ve Tercih Edilen",
+    "preffer": "Tercih Edilen",
+    "maxed": "Maksimum",
+    "i_have": "Sahibim",
+    "i_dont_have": "Sahip değilim",
+    "meta": "Meta birim",
+    "leadership": "Liderlik"
+  },
+  "MyStats": {
+    "season_start": "Sezon Başlangıcı",
+    "season_end": "Sezon Sonu",
+    "list_of_drillmodes": "Alıştırma Modları Listesi",
+    "list_of_tw": "TW Listesi",
+    "attendance_in_percent": "Katılım %",
+    "tw_not_started": "TW henüz başlamadı"
   },
   "AddForm": {
     "you_have_no_access": "Erişiminiz yok",
     "form": "Form",
     "low_eras": "Düşük Dönemler",
     "heroic_eras": "Kahramanlık Dönemleri",
-    "golden_era": "Altın Dönem",
+    "golden_era": "Altın Çağ",
     "general": "Genel",
     "i_dont_have": "Sahip değilim",
     "i_have": "Sahibim",
     "maxed": "Maksimum",
-    "preffer": "Tercih",
-    "maxed_and_preffer": "Maksimum ve Tercih",
-    "show_meta_only": "Yalnızca meta birimlerini göster",
+    "preffer": "Tercih edilen",
+    "maxed_and_preffer": "Maksimum ve Tercih Edilen",
+    "show_meta_only": "Sadece meta birimleri göster",
     "show_all": "Tüm birimleri göster",
     "previous": "Önceki",
     "next": "Sonraki",
     "submit": "Gönder",
-    "discord_nick": "Discord Nick",
-    "nick_in_game": "Oyundaki Nick",
+    "discord_nick": "Discord Takma Adı",
+    "nick_in_game": "Oyundaki Takma Ad",
     "hero_level": "Kahraman Seviyesi",
     "house": "Ev",
-    "amount_of_artillery": "Top Miktarı",
-    "not_at_all": "Hiç",
+    "amount_of_artillery": "Topçu Miktarı",
+    "not_at_all": "Hiç değil",
     "some": "Biraz",
     "average": "Ortalama",
     "a_lot": "Çok",
@@ -53,242 +105,183 @@
     "leadership": "Liderlik",
     "preferences": "Tercihler"
   },
-  "BuildTeam": {
-    "clean_list": "Listeyi temizle",
-    "actions": "Eylemler",
-    "upload_all": "TÜMÜNÜ Yükle",
-    "load_data": "Veri yükle",
-    "preview": "Önizleme",
-    "editor": "Editör",
-    "save_template": "Şablonu Kaydet",
-    "load_template": "Şablonu Yükle",
-    "clean_sheet": "Temiz Sayfa",
-    "units": "Birimler",
-    "lineups": "Dizilişler",
-    "meta_units_only": "Yalnızca meta birimleri",
-    "golden_era": "Altın Dönem",
-    "heroic_era": "Kahramanlık Dönemi",
-    "silver_era": "Gümüş Dönem",
-    "knight_era": "Şövalye Dönemi",
-    "feudal__and_rustical_era": "Feodal & Kırsal Dönem",
-    "general": "Genel",
-    "maxed_and_preffer": "Maksimum ve Tercih",
-    "preffer": "Tercih",
-    "maxed": "Maksimum",
-    "i_have": "Sahibim",
-    "i_dont_have": "Sahip değilim",
-    "username": "Kullanıcı Adı",
-    "1st_unit": "1. Birim",
-    "2nd_unit": "2. Birim",
-    "3rd_unit": "3. Birim",
-    "leadership_cost": "Liderlik Maliyeti: ",
-    "leadership": "Liderlik",
-    "weapon": "Silah",
-    "artillery": "Top",
-    "description": "Açıklama",
-    "hide_names": "İsimleri gizle",
-    "show_names": "İsimleri göster",
-    "meta_unit": "Meta Birim",
-    "not_at_all": "Hiç",
-    "some": "Biraz",
-    "average": "Ortalama",
-    "a_lot": "Çok",
-    "no_artillery": "Topçu yok",
-    "some_artillery": "Biraz topçu var",
-    "average_artillery": "Ortalama miktarda topçu var",
-    "a_lot_artillery": "Çok topçu var",
-    "select_template": "Şablon Seç",
-    "save_template_to_db": "Şablonu Sunucuya Kaydet",
-    "group": "Grup",
-    "update_form_first": "Önce formu güncelle",
-    "update_form": "Formu Güncelle",
-    "are_u_sure": "Bu oyuncuyu evinizden silmek istediğinizden emin misiniz?",
-    "from": "dan ",
-    "finish_settings_first": "Önce ayarları tamamlayın"
-  },
-  "HousePage": {
-    "next_tw_preview": "Sonraki TW Önizlemesi",
-    "join_house": "Eve Katıl",
-    "create_house": "Ev Oluştur",
-    "house_name": "Ev Adı",
-    "house_name_is_not_available": "Ev adı mevcut değil",
-    "house_description": "Ev Açıklaması",
-    "description_is_too_long": "Açıklama çok uzun",
-    "country": "Ülke",
-    "discord_link": "Discord Bağlantısı",
-    "discord_link_is_incorrect": "Discord bağlantısı yanlış",
-    "avatar": "Avatar",
-    "server": "Sunucu",
-    "houses": "Evler",
-    "join_discord": "Discord'a Katıl",
-    "join_to_house": "Eve Katıl",
-    "house_description_title": "Ev Açıklaması"
-  },
-  "SettingsPage": {
-    "settings_page": "Ayarlar Sayfası",
-    "nick_placeholder": "Takma Ad",
-    "discord_id_placeholder": "Discord ID",
-    "role_placeholder": "Bir rol seçin",
-    "high_command": "Yüksek Komuta",
-    "right_hand": "Sağ Kol",
-    "add_to_list": "Listeye Ekle",
-    "error_occurred": "Hata oluştu:",
-    "success": "Başarı:",
-    "error_adding": "Ekleme hatası:",
-    "nick": "Takma Ad",
-    "role": "Rol",
-    "delete": "Sil",
-    "name": "Ad",
-    "description": "Açıklama",
-    "id": "ID",
-    "house": "Ev",
-    "house_description_title": "Ev Açıklaması",
-    "house_description": "Ev Discord'unuzun ne olduğunu bilmemiz gerekiyor. Konquerus'un Discord'unuzda olduğundan emin olun. Bu ID sayesinde, Konquerus'un hangi sunucuda çalışması gerektiğini biliyoruz. Ev adını değiştirmek isterseniz, destekle iletişime geçin.",
-    "discord": "Discord",
-    "member": "Üye",
-    "member_description": "Discord üye rol adınız ve DiscordID'si nedir? Bu ID ile Konquerus, evinizin üyesinin kim olduğunu bilir.",
-    "logs": "Loglar",
-    "logs_description": "Discord'daki işlemler ve etkinlik sonrasında TW'ye katılım hakkında logları görmek için kanallar veya bir kanal. Aynı kanalı veya hatta kanal dizisini kullanabilirsiniz.",
-    "logs_channel": "Log kanalı",
-    "attendance_channel": "Katılım kanalı",
-    "tw_zone": "TW Bölgesi",
-    "tw_zone_description": "TW'yi ana DC sunucusunda mı yoksa başka bir sunucuda mı oynadığınızı bilmemiz gerekiyor.",
-    "server": "Sunucu",
-    "lineup": "Diziliş",
-    "lineup_description": "Birden fazla baskın varsa, bot evinizi dizilişlere nasıl böleceğini bilmelidir.",
-    "delete_lineup": "Dizilişi Sil",
-    "add_lineup": "Diziliş Ekle",
-    "channel": "Kanal",
-    "save_settings": "Ayarları Kaydet",
-    "unique_lineup_names": "Diziliş isimleri benzersiz olmalıdır",
-    "house_settings_saved": "Ev ayarları kaydedildi",
-    "house_name": "Ev Adı",
-    "description_too_long": "Açıklama çok uzun",
-    "country": "Ülke",
-    "discord_link": "Discord Bağlantısı",
-    "discord_link_incorrect": "Discord bağlantısı yanlış",
-    "avatar": "Avatar",
-    "save_details": "Ayrıntıları Kaydet",
-    "house_details_saved": "Ev ayrıntıları kaydedildi"
-  },
-  "DocsPage": {
-    "documentation": {
-      "title": "Dokümantasyon"
+  "Settings": {
+    "previous": "Önceki",
+    "next": "Sonraki",
+    "verification": {
+      "discord_verification": "Discord Doğrulaması",
+      "house_id": "Ev Discord ID'nizi verin",
+      "get_id": "Discord ID'sini nasıl bulurum",
+      "discord_id": "Discord ID",
+      "tooltip_one": "Discord Kullanıcı Ayarlarınıza gidin",
+      "tooltip_two": "Gelişmiş ayarlara gidin ve Geliştirici modunu açın",
+      "tooltip_three": "Sunucunun üzerine sağ tıklayın ve 'Sunucu ID'sini Kopyala' seçeneğine tıklayın",
+      "tw_discord_id": "TW Discord ID",
+      "point_one": "- Discord'unuzda ",
+      "point_two": " olduğundan ve tüm rollerin ve kanalların görünmesi için yüksek role sahip olduğunuzdan emin olun",
+      "point_three": "- O Discord'da yönetici rolünüz olduğundan emin olun",
+      "point_four": "- Konquerus, evinizin katılımını izleyebilir, tüm Discord'u tarayarak (başlangıçta, 30 dakika sonra ve sonunda) 3 kez kaydedebilir ve bunu sizin için kaydedebilir. Eğer eviniz farklı bir Discord kullanıyorsa, bu kutuyu işaretleyin, bu sunucuda yönetici olduğunuzdan emin olun ve ",
+      "point_five": " bu sunucuda da olmalıdır."
     },
-    "guide": {
-      "title": "Adım Adım Kılavuz",
-      "step1": {
-        "title": "Ev Sekmesine Git",
-        "description": "Uygulamada \"Ev\" sekmesine git."
-      },
-      "step2": {
-        "title": "Ev Sekmesi Oluştur",
-        "description": "\"Ev Oluştur\" sekmesine tıkla."
-      },
-      "step3": {
-        "title": "Formu Doldur",
-        "form": {
-          "houseName": {
-            "title": "Ev Adı:",
-            "description": "Benzersiz olmalı. En fazla 15 karakter."
-          },
-          "houseDescription": {
-            "title": "Ev Açıklaması:",
-            "description": "En fazla 250 karakter."
-          },
-          "country": {
-            "title": "Ülke:",
-            "description": "Açılır listeden ülkeyi seç."
-          },
-          "discord": {
-            "title": "Discord:",
-            "description": "Bağlantının kalıcı olduğundan emin ol."
-          },
-          "avatar": {
-            "title": "Avatar:",
-            "description": "imgur.com gibi bir resim barındırma hizmetini kullan. Resmin bağlantısını yapıştır. Görsel boyutu 180x180 piksel olmalı."
-          },
-          "server": {
-            "title": "Sunucu:",
-            "description": "Sunucu ayarları formunu doldur."
-          }
-        }
-      },
-      "step4": {
-        "title": "Ayarlar Formunu Doldur",
-        "form": {
-          "serverDiscordId": {
-            "title": "Sunucu Discord ID'si:",
-            "description": "Sunucunun Discord ID'sini gir."
-          },
-          "memberRole": {
-            "title": "Üye Rolü Adı ve ID'si:",
-            "description": "Üye rolünün adını ve ID'sini belirt."
-          },
-          "logsChannels": {
-            "title": "Kayıt Kanalları veya Kanal:",
-            "description": "Kayıt kanallarını veya tek bir kanalı belirt."
-          },
-          "twZone": {
-            "title": "TW Bölgesi:",
-            "description": "TW bölgesi için Sunucu Discord ID'sini gir. Üye rolü ID'sini belirt."
-          },
-          "lineups": {
-            "title": "Dizilimler:",
-            "lineupName": {
-              "title": "Dizilim Adı:",
-              "description": "Benzersiz olmalı."
-            },
-            "channelWithBot": {
-              "title": "Kayıt İçin Botlu Kanal:",
-              "description": "Kanalı belirt."
-            },
-            "roleId": {
-              "title": "O Dizilim İçin Rol ID'si:",
-              "description": "Rol ID'sini belirt."
-            }
-          }
-        }
-      },
-      "step5": {
-        "title": "@Konqueruś Botunu Davet Et",
-        "description": "Botu davet et ",
-        "botName": "Konqueruś"
-      },
-      "step6": {
-        "title": "Ev Ayarlarını Doğrula",
-        "description": "Ev ayarlarını web sitesinden doğrulamak için komutu kullanın. Şuraya gidin ",
-        "command": "ve doğrulamak için düğmeye tıklayın."
-      }
+    "config": {
+      "config": "Konquerys Yapılandırması",
+      "type": "Tür",
+      "description": "Açıklama",
+      "list": "Liste",
+      "member_role": "Üye Rolü",
+      "member_role_description": "Botun evinize kimlerin eklenmesi gerektiğini bilmesi için Discord'daki genel üye rolünü seçin.",
+      "member_pleaceholder": "Üye",
+      "logs_channel": "Loglar Kanalı",
+      "logs_channel_description": "Konquerus, evinize kimlerin katıldığını veya ayrıldığını bildirecek bir kanala ihtiyaç duyar.",
+      "logs_pleaceholder": "Loglar",
+      "tw_role": "TW Rolü",
+      "tw_role_description": "Konquerus'un TW Discord kanalındaki rolü bilmesi gerekir",
+      "tw_pleaceholder": "TW kanalındaki genel rol",
+      "lineup": "Kadrolar",
+      "lineup_description": "Bot, evinizi birden fazla baskınınız varsa kadrolara nasıl ayıracağını bilmelidir.",
+      "channel_label": "Kanal",
+      "channel_pleaceholder": "Kaydolma botu kanalını seçin",
+      "role_label": "Rol",
+      "role_pleaceholder": "Kadro rolünü seçin",
+      "add_lineup": "Kadroyu Ekle",
+      "remove_lineup": "Kadroyu Kaldır",
+      "update_config": "Yapılandırmayı Güncelle"
     },
-    "guide_2": {
-      "title": "Konquerus Bot Kullanım Kılavuzu",
-      "slash_command": "Slash Komutu, Discord sohbetinde / yazılarak kullanılır.",
-      "menu_eng": "Menu_eng",
-      "menu_eng_description": "Botu kontrol etmek için butonlar oluşturur. Discord sunucusunda yönetici yetkileri veya en azından ConqSite'de RightHand rütbesi gerektirir.",
-      "send_presence": "Send the presence: TW'deki yoklama listelerinden oyuncuları ConqSite'deki oluşturucuya gönderir.",
-      "quick_add": "Quick add: ConqSite'a manuel olarak bir oyuncuyu beyaz listeye ekler.",
-      "delete_player": "Delete player: Bir oyuncuyu ConqSite beyaz listesinden manuel olarak çıkarır.",
-      "add_all": "Add all: Sunucudaki tüm oyuncuları ConqSite'a ekler (kurulum sırasında yalnızca bir kez kullanılması önerilir).",
-      "verification": "Verification: ConqSite ayarlarında belirtilen kimliklerin doğru olup olmadığını kontrol eder.",
-      "functions": "Fonksiyonlar",
-      "functions_description": "Konquerus botu, Discord sunucusunda rollerin ve ConqSite'deki yoklama listelerinin otomatik yönetimini sağlar.",
-      "example_functions": "Örnek fonksiyonlar:",
-      "auto_roles": "ConqSite beyaz listesine otomatik rol ekleme/kaldırma.",
-      "check_logs": "TW etkinlikleri için kanal kayıtlarını ve oyuncu listelerini kontrol etme.",
-      "create_presence_lists": "Ses kanallarından yoklama listeleri oluşturma.",
-      "warthog": "Warthog",
-      "warthog_description": "Bir kullanıcıyı yukarıdan aşağıya tüm ses kanallarında gezdiren bir işlev.",
-      "warthog_example": "Örnek kullanım: bir oyuncuyu moderasyon amacıyla farklı kanallar arasında gezdirmek.",
-      "installation_instructions": "Kurulum Talimatları",
-      "installation_steps": "Botu kullanmaya başlamak için şu adımları izleyin:",
-      "step1": "ConqSite'de bir house oluşturun.",
-      "step2": "Konqueruś botunu Discord sunucunuza ekleyin.",
-      "step3": "ConqSite'deki ayarlara gidin ve ilgili kimlikleri ayarlayın: House, Member, Logs, TW Zone, Lineups.",
-      "step4": "Discord'da /menu_eng komutunu kullanın ve Doğrulama düğmesine basın.",
-      "polish_version_functions": "Sadece Polonya sürümünde mevcut işlevler:",
-      "create_event_groups": "Baskın kampı gibi etkinlikler için gruplar oluşturma.",
-      "auto_verification": "Ses kanallarında otomatik yoklama doğrulama."
+    "high_roles": {
+      "pick_your_commanders": "Komutanlarınızı Seçin",
+      "house_leader": "Ev Lideri",
+      "choose_your_right_hand": "Sağ Kolunuzu Seçin",
+      "choose_your_commanders": "3 Komutanınızı Seçin",
+      "choose_right_hand_placeholder": "Sağ Kol Seçin",
+      "choose_commanders_placeholder": "Komutanları Seçin",
+      "permissions": "İzinler:",
+      "build_team": "Takım Kurma",
+      "publishing_lineups": "Kadroları Yayınlama",
+      "manage_all_roles": "Tüm Rolleri Yönetme",
+      "manage_house_info": "Ev Bilgilerini Yönetme",
+      "manage_house_config": "Ev Yapılandırmasını Yönetme",
+      "manage_commands": "Komut Rolleri Yönetme",
+      "you": "Siz"
+    },
+    "house_card": {
+      "house_card": "Ev Kartı Detayları",
+      "name": "Ev Adı",
+      "name_info": "Ev adı benzersiz olmalı ve 20 karakteri geçmemelidir",
+      "description": "Ev Açıklaması",
+      "description_info": "Ev açıklaması zorunludur, başkalarına hakaret etmeyen ve 45 karakterden uzun olmayan bir açıklama olmalıdır",
+      "country": "Ülke",
+      "country_info": "Ülke örneğin 'Türkiye', 'ABD' veya 'Uluslararası' olabilir",
+      "link": "Discord Linki",
+      "link_info": "Ev Discord sunucunuz için Discord linki",
+      "logo": "Ev Logosu",
+      "logo_info": "Resim URL'si. Ev görüntünüzü yüklemek için https://imgur.com/ gibi ücretsiz bir resim barındırma hizmeti kullanmanızı öneririm. Discord görüntü URL'lerini kullanmayın çünkü birkaç gün sonra kaybolurlar.",
+      "server": "Sunucu",
+      "server_info": "Kullanıcıların evinizi bulabileceği yer",
+      "join_discord": "Discord'a Katıl",
+      "edit_card": "Kartı Düzenle",
+      "submit": "Ev Oluştur ve Tüm Üyelerinizi Ekleyin",
+      "error_one": "Ev Adı Zaten Alınmış",
+      "error_two": "Ev Adı Çok Uzun",
+      "error_three": "Açıklama Çok Uzun",
+      "error_four": "Discord linki geçersiz",
+      "error_five": "Ülke adı çok uzun",
+      "error_six": "Sunucu zorunludur"
     }
+  },
+  "Lineups": {
+    "change_data": "Verileri Değiştir",
+    "hide_name": "Adı Gizle",
+    "show_name": "Adı Göster",
+    "username": "Kullanıcı Adı",
+    "1st_unit": "Birinci Birim",
+    "2nd_unit": "İkinci Birim",
+    "3rd_unit": "Üçüncü Birim",
+    "weapon": "Silah",
+    "artillery": "Topçu",
+    "description": "Açıklama",
+    "group": "Grup",
+    "you": "Sen"
+  },
+  "MyHouse": {
+    "visible": "Üyelere görünür",
+    "blocked": "Üyeler için engellendi"
+  },
+  "BuildTeam": {
+    "maxed_and_preffer": "Maksimum ve Tercih Edilen",
+    "preffer": "Tercih Edilen",
+    "maxed": "Maksimum",
+    "i_have": "Bende var",
+    "card": {
+      "username": "Kullanıcı adı",
+      "1st_unit": "1. birim",
+      "2nd_unit": "2. birim",
+      "3rd_unit": "3. birim",
+      "weapon": "Silah",
+      "cost": "Maliyet:",
+      "artillery": "Topçuluk",
+      "description": "Açıklama"
+    },
+    "public": {
+      "public": "Herkese açık",
+      "no_lineups": "Kadrolar yok",
+      "lineups_from": "Kadrolar buradan: ",
+      "lineup_name": "Kadronun adı",
+      "add": "Ekle",
+      "delete": "Sil",
+      "load": "Yükle",
+      "update": "Güncelle",
+      "lineup_added": "Kadro eklendi",
+      "lineup_deleted": "Kadro silindi",
+      "lineup_updated": "Kadrolar güncellendi",
+      "lineup_loaded": "Kadrolar yüklendi",
+      "date_loaded": "Yükleme tarihi",
+      "are_you_sure": "Bu listeyi silmek istediğinize emin misiniz?"
+    },
+    "templates": {
+      "templates": "Şablonlar",
+      "no_templates": "Şablon yok",
+      "template_name": "Şablon adı",
+      "add": "Ekle",
+      "delete": "Sil",
+      "load": "Yükle",
+      "update": "Güncelle",
+      "template_added": "Şablon eklendi",
+      "template_deleted": "Şablon silindi",
+      "template_updated": "Şablon güncellendi",
+      "template_loaded": "Şablon yüklendi"
+    },
+    "bot": {
+      "load_list": "Discord'dan liste yükle",
+      "choose_date": "Bir tarih seçin",
+      "next_tw": "Sonraki TW",
+      "load_attendance": "Discord Bot'undan katılımı yükle",
+      "upload": "Yükle",
+      "upload_all": "Tüm oyuncuları yükle",
+      "pick_lineup": "Kadroyu seç"
+    },
+    "filters": {
+      "filters": "Filtreler",
+      "meta_units_only": "Sadece meta birimler",
+      "golden_era": "Altın Çağ",
+      "heroic_era": "Kahramanlık Çağı",
+      "silver_era": "Gümüş Çağ",
+      "knight_era": "Şövalye Çağı",
+      "feudal__and_rustical_era": "Feodal ve Rustik Çağ",
+      "general": "Genel"
+    },
+    "artillery": {
+      "not_at_all": "Hiçbir şekilde",
+      "no_artillery": "Hiçbir topçu",
+      "some_artillery": "Bir miktar topçu",
+      "average_artillery": "Ortalama topçu",
+      "some": "Biraz",
+      "average": "Ortalama",
+      "a_lot_artillery": "Çok topçu",
+      "a_lot": "Çok"
+    }
+  },
+  "HouseStats": {
+    "username": "Kullanıcı adı",
+    "attendance_in_percent": "Katılım %"
   }
 }

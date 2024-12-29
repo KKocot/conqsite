@@ -1,0 +1,287 @@
+{
+  "Login": {
+    "login_to_access_your_profile": "Přihlaste se pro přístup k vašemu profilu",
+    "login": "Přihlásit se"
+  },
+  "Authority": {
+    "hello": "Ahoj ",
+    "you_are_about_to_login": "Chystáte se autorizovat přístup k účtu s ID ",
+    "authorize": "Autorizovat"
+  },
+  "Navigation": {
+    "dashboard": {
+      "dashboard": "Přístrojová deska",
+      "list_of_house": "Seznam domů",
+      "units": "Jednotky",
+      "doctrines": "Doktríny",
+      "privacy_policy": "Zásady ochrany osobních údajů",
+      "terms_of_service": "Podmínky služby",
+      "documentation": "Dokumentace"
+    },
+    "member": {
+      "member": "Člen",
+      "my_profile": "Můj profil",
+      "my_stats": "Moje statistiky",
+      "update_form": "Aktualizovat formulář",
+      "create_house": "Vytvořit dům"
+    },
+    "house": {
+      "lineups": "Sestavy",
+      "my_house": "Můj dům",
+      "build_team": "Vytvořit tým",
+      "house_stats": "Statistiky domu",
+      "bot_controller": "Řízení bota",
+      "high_roles": "Vysoké role",
+      "bot_config": "Nastavení bota",
+      "house_card": "Karta domu"
+    },
+    "auth": {
+      "login": "Přihlášení",
+      "logout": "Odhlášení"
+    }
+  },
+  "ListOfHouses": {
+    "join_discord": "Připojit se k Discordu"
+  },
+  "Units": {
+    "golden_era": "Zlatá éra",
+    "heroic_era": "Hrdinská éra",
+    "silver_era": "Stříbrná éra",
+    "knight_era": "Rytířská éra",
+    "feudal_and_rustical_era": "Feudální a Rustikální éra"
+  },
+  "Doctrines": {
+    "general_doctrines": "Obecné doktríny",
+    "dedicated_for_groups": "Určeno pro skupiny",
+    "dedicated_for_units": "Určeno pro jednotky"
+  },
+  "MyProfile": {
+    "houses": "Domy",
+    "max_and_preffer": "Maximální a Preferované",
+    "preffer": "Preferované",
+    "maxed": "Maximální",
+    "i_have": "Mám",
+    "i_dont_have": "Nemám",
+    "meta": "Meta jednotka",
+    "leadership": "Vedení"
+  },
+  "MyStats": {
+    "season_start": "Začátek sezóny",
+    "season_end": "Konec sezóny",
+    "list_of_drillmodes": "Seznam Drillmodů",
+    "list_of_tw": "Seznam TW",
+    "attendance_in_percent": "Docházka v %",
+    "tw_not_started": "TW ještě nezačalo"
+  },
+  "AddForm": {
+    "you_have_no_access": "Nemáte přístup",
+    "form": "Formulář",
+    "low_eras": "Nízké éry",
+    "heroic_eras": "Hrdinské éry",
+    "golden_era": "Zlatá éra",
+    "general": "Obecné",
+    "i_dont_have": "Nemám",
+    "i_have": "Mám",
+    "maxed": "Maximální",
+    "preffer": "Preferované",
+    "maxed_and_preffer": "Maximální a Preferované",
+    "show_meta_only": "Zobrazit pouze meta jednotky",
+    "show_all": "Zobrazit všechny jednotky",
+    "previous": "Předchozí",
+    "next": "Další",
+    "submit": "Odeslat",
+    "discord_nick": "Discord Nick",
+    "nick_in_game": "Herní Nick",
+    "hero_level": "Úroveň Hrdiny",
+    "house": "Dům",
+    "amount_of_artillery": "Množství Dělostřelectva",
+    "not_at_all": "Vůbec ne",
+    "some": "Trochu",
+    "average": "Průměrně",
+    "a_lot": "Hodně",
+    "weapons": "Zbraně",
+    "i_preffer": "Preferuji",
+    "not_preffer": "Mohu vzít, ale raději ne",
+    "leadership": "Vedení",
+    "preferences": "Preference"
+  },
+  "Settings": {
+    "previous": "Předchozí",
+    "next": "Další",
+    "verification": {
+      "discord_verification": "Discord Ověření",
+      "house_id": "Dejte nám Discord ID vašeho domu",
+      "get_id": "Jak najít Discord ID",
+      "discord_id": "Discord ID",
+      "tooltip_one": "Přejděte do Nastavení uživatele Discord",
+      "tooltip_two": "Přejděte na Rozšířené a zapněte Režim vývojáře",
+      "tooltip_three": "Klikněte pravým tlačítkem na server a zvolte Kopírovat ID serveru",
+      "tw_discord_id": "TW Discord ID",
+      "point_one": "- Ujistěte se, že ",
+      "point_two": " je na vašem Discordu a má vysokou roli, aby viděl všechny role a kanály",
+      "point_three": "- Ujistěte se, že máte roli správce na tomto Discordu",
+      "point_four": "- Konquerus může sledovat docházku vašeho domu skenováním celého Discordu a zaznamenávat ji třikrát (na začátku, po 30 minutách a na konci) a ukládat ji. Pokud váš dům používá jiný Discord pro TW, zaškrtněte políčko, ujistěte se, že jste správcem na tomto serveru a ",
+      "point_five": " je také na tomto serveru."
+    },
+    "config": {
+      "config": "Konquerys Nastavení",
+      "type": "Typ",
+      "description": "Popis",
+      "list": "Seznam",
+      "member_role": "Role Člena",
+      "member_role_description": "Vyberte běžnou roli člena Discordu, aby bot věděl, kdo by měl být přidán do vašeho domu.",
+      "member_pleaceholder": "Člen",
+      "logs_channel": "Kanál Protokolů",
+      "logs_channel_description": "Konquerus potřebuje kanál pro komunikaci, kdo se přidal nebo opustil váš dům.",
+      "logs_pleaceholder": "Protokoly",
+      "tw_role": "TW Role",
+      "tw_role_description": "Konquerus potřebuje znát běžnou roli na TW Discordu pro",
+      "tw_pleaceholder": "Běžná role na TW kanálu",
+      "lineup": "Sestava",
+      "lineup_description": "Bot potřebuje vědět, jak rozdělit váš dům do sestav, pokud máte více než jeden raid.",
+      "channel_label": "Kanál",
+      "channel_pleaceholder": "Vyberte kanál pro přihlášení bota",
+      "role_label": "Role",
+      "role_pleaceholder": "Vyberte roli Sestavy",
+      "add_lineup": "Přidat Sestavu",
+      "remove_lineup": "Odstranit Sestavu",
+      "update_config": "Aktualizovat Nastavení"
+    },
+    "high_roles": {
+      "pick_your_commanders": "Vyberte své Velitele",
+      "house_leader": "Vůdce Domu",
+      "choose_your_right_hand": "Vyberte si Pravou Ruku",
+      "choose_your_commanders": "Vyberte své 3 Velitele",
+      "choose_right_hand_placeholder": "Vyberte Pravou Ruku",
+      "choose_commanders_placeholder": "Vyberte Velitele",
+      "permissions": "Oprávnění:",
+      "build_team": "Sestavit Týmy",
+      "publishing_lineups": "Publikování Sestav",
+      "manage_all_roles": "Správa všech rolí",
+      "manage_house_info": "Správa informací o Domu",
+      "manage_house_config": "Správa nastavení Domu",
+      "manage_commands": "Správa příkazových rolí",
+      "you": "Vy"
+    },
+    "house_card": {
+      "house_card": "Detaily Karty Domu",
+      "name": "Název Domu",
+      "name_info": "Název Domu by měl být jedinečný a ne delší než 20 znaků",
+      "description": "Popis Domu",
+      "description_info": "Popis Domu je povinný, nesmí být urážlivý a ne delší než 45 znaků",
+      "country": "Země",
+      "country_info": "Země např. 'Česko', 'UK' nebo možná 'Mezinárodní'",
+      "link": "Discord Odkaz",
+      "link_info": "Discord Odkaz pro váš Discord server Domu",
+      "logo": "Logo Domu",
+      "logo_info": "URL adresa obrázku. Doporučuji použít bezplatného hostitele obrázků jako https://imgur.com/ k nahrání vašeho obrázku Domu. NEPOUŽÍVEJTE URL z Discord obrázků, protože zmizí po několika dnech.",
+      "server": "Server",
+      "server_info": "Kde uživatelé mohou najít váš dům",
+      "join_discord": "Připojit se k Discordu",
+      "edit_card": "Upravit Kartu",
+      "submit": "Vytvořit Dům a přidat všechny vaše Členy",
+      "error_one": "Název Domu je již obsazen",
+      "error_two": "Název Domu je příliš dlouhý",
+      "error_three": "Popis je příliš dlouhý",
+      "error_four": "Discord odkaz je neplatný",
+      "error_five": "Název Země je příliš dlouhý",
+      "error_six": "Server je povinný"
+    }
+  },
+  "Lineups": {
+    "change_data": "Verileri Değiştir",
+    "hide_name": "Adı Gizle",
+    "show_name": "Adı Göster",
+    "username": "Kullanıcı Adı",
+    "1st_unit": "Birinci Birim",
+    "2nd_unit": "İkinci Birim",
+    "3rd_unit": "Üçüncü Birim",
+    "weapon": "Silah",
+    "artillery": "Topçu",
+    "description": "Açıklama",
+    "group": "Grup",
+    "you": "Sen"
+  },
+  "MyHouse": {
+    "visible": "Viditelné pro členy",
+    "blocked": "Blokováno pro členy"
+  },
+  "BuildTeam": {
+    "maxed_and_preffer": "Maximalizováno a preferováno",
+    "preffer": "Preferováno",
+    "maxed": "Maximalizováno",
+    "i_have": "Mám",
+    "card": {
+      "username": "Uživatelské jméno",
+      "1st_unit": "1. jednotka",
+      "2nd_unit": "2. jednotka",
+      "3rd_unit": "3. jednotka",
+      "weapon": "Zbraň",
+      "cost": "Cena:",
+      "artillery": "Dělostřelectvo",
+      "description": "Popis"
+    },
+    "public": {
+      "public": "Veřejné",
+      "no_lineups": "Žádné sestavy",
+      "lineups_from": "Sestavy od ",
+      "lineup_name": "Název sestavy",
+      "add": "Přidat",
+      "delete": "Smazat",
+      "load": "Načíst",
+      "update": "Aktualizovat",
+      "lineup_added": "Sestava přidána",
+      "lineup_deleted": "Sestava smazána",
+      "lineup_updated": "Sestava aktualizována",
+      "lineup_loaded": "Sestava načtena",
+      "date_loaded": "Datum načtení",
+      "are_you_sure": "Opravdu chcete smazat tuto sestavu?"
+    },
+    "templates": {
+      "templates": "Šablony",
+      "no_templates": "Žádné šablony",
+      "template_name": "Název šablony",
+      "add": "Přidat",
+      "delete": "Smazat",
+      "load": "Načíst",
+      "update": "Aktualizovat",
+      "template_added": "Šablona přidána",
+      "template_deleted": "Šablona smazána",
+      "template_updated": "Šablona aktualizována",
+      "template_loaded": "Šablona načtena"
+    },
+    "bot": {
+      "load_list": "Načíst seznam z Discordu",
+      "choose_date": "Vyberte datum",
+      "next_tw": "Další TW",
+      "load_attendance": "Načíst účast z Discord Botu",
+      "upload": "Nahrát",
+      "upload_all": "Nahrát všechny hráče",
+      "pick_lineup": "Vyberte sestavu"
+    },
+    "filters": {
+      "filters": "Filtry",
+      "meta_units_only": "Pouze meta jednotky",
+      "golden_era": "Zlatá éra",
+      "heroic_era": "Hrdinská éra",
+      "silver_era": "Stříbrná éra",
+      "knight_era": "Rytířská éra",
+      "feudal__and_rustical_era": "Feudální a rustikální éra",
+      "general": "Obecné"
+    },
+    "artillery": {
+      "not_at_all": "Vůbec ne",
+      "no_artillery": "Žádná artilerie",
+      "some_artillery": "Nějaká artilerie",
+      "average_artillery": "Průměrná artilerie",
+      "some": "Něco",
+      "average": "Průměrně",
+      "a_lot_artillery": "Hodně artilerie",
+      "a_lot": "Hodně"
+    }
+  },
+  "HouseStats": {
+    "username": "Uživatelské jméno",
+    "attendance_in_percent": "Účast v %"
+  }
+}

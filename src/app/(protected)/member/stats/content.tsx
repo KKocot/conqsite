@@ -1,19 +1,11 @@
 "use client";
 
+import SeasonTable from "@/components/season-table";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SeasonProps, UsersStats } from "@/lib/get-data";
-import { createDateArray } from "@/lib/utils";
-import clsx from "clsx";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 const Content = ({
@@ -23,6 +15,7 @@ const Content = ({
   data: UsersStats;
   seasons: SeasonProps[];
 }) => {
+  const t = useTranslations("MyStats");
   const [date, setDate] = useState<Date[]>(
     data.attendance.map((e) => new Date(e))
   );
@@ -52,14 +45,22 @@ const Content = ({
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="text-center">Season Start</TableHead>
-                  <TableHead className="text-center">Season End</TableHead>
                   <TableHead className="text-center">
-                    List of Drillmodes
+                    {t("season_start")}
                   </TableHead>
-                  <TableHead className="text-center">List of TW</TableHead>
+                  <TableHead className="text-center">
+                    {t("season_end")}
+                  </TableHead>
+                  <TableHead className="text-center">
+                    {t("list_of_drillmodes")}
+                  </TableHead>
+                  <TableHead className="text-center">
+                    {t("list_of_tw")}
+                  </TableHead>
 
-                  <TableHead className="text-center">Attendance in %</TableHead>
+                  <TableHead className="text-center">
+                    {t("attendance_in_percent")}
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <SeasonTable item={e} userStats={data} />
@@ -71,67 +72,3 @@ const Content = ({
   );
 };
 export default Content;
-
-const SeasonTable = ({
-  item,
-  userStats,
-}: {
-  item: SeasonProps;
-  userStats: UsersStats;
-}) => {
-  const endDate =
-    new Date(item.endDate) > new Date() ? new Date() : new Date(item.endDate);
-
-  const listOfTW = createDateArray(
-    item.startDate,
-    endDate.toISOString().split("T")[0]
-  ).filter((date) => !item.drillModes.includes(date));
-
-  const cleandAttendanceDates = userStats.attendance.filter((date) => {
-    return (
-      new Date(date) >= new Date(item.startDate) &&
-      new Date(date) <= new Date(item.endDate) &&
-      !item.drillModes.includes(date)
-    );
-  });
-  const attendancePercentage =
-    listOfTW.length > 0
-      ? ((cleandAttendanceDates.length / listOfTW.length) * 100).toFixed(2)
-      : "0.00";
-  return (
-    <TableBody>
-      <TableRow>
-        <TableCell className="text-center">
-          <div className="flex self-end">{item.startDate}</div>
-        </TableCell>
-        <TableCell className="text-center">{item.endDate}</TableCell>
-        <TableCell className="text-center">
-          <div className="flex flex-col gap-2">
-            {item.drillModes.map((date) => (
-              <div key={date}>{date}</div>
-            ))}
-          </div>
-        </TableCell>
-        <TableCell className="text-center">
-          {listOfTW.length > 0 ? (
-            <div className="flex-grow flex flex-wrap gap-2">
-              {listOfTW.map((date) => (
-                <div
-                  className={clsx("w-24", {
-                    "text-green-500": cleandAttendanceDates.includes(date),
-                  })}
-                  key={date}
-                >
-                  {date}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div>TW no started yet</div>
-          )}
-        </TableCell>
-        <TableCell className="text-center">{attendancePercentage}%</TableCell>
-      </TableRow>
-    </TableBody>
-  );
-};
