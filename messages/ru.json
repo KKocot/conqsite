@@ -33,5 +33,12 @@
   },
   "ListOfHouses": {
     "join_discord": "Присоединиться к Discord"
+  },
+  "Units": {
+    "golden_era": "Золотая эпоха",
+    "heroic_era": "Героическая эпоха",
+    "silver_era": "Серебряная эпоха",
+    "knight_era": "Эпоха рыцарей",
+    "feudal_and_rustical_era": "Феодальная и Сельская эпоха"
   }
 }

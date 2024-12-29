@@ -33,5 +33,12 @@
   },
   "ListOfHouses": {
     "join_discord": "Csatlakozás a Discordhoz"
+  },
+  "Units": {
+    "golden_era": "Aranykor",
+    "heroic_era": "Hőskor",
+    "silver_era": "Ezüstkor",
+    "knight_era": "Lovagi kor",
+    "feudal_and_rustical_era": "Feudális és Paraszti kor"
   }
 }

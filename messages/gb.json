@@ -37,6 +37,14 @@
   "ListOfHouses": {
     "join_discord": "Join Discord"
   },
+  "Units": {
+    "golden_era": "Golden Era",
+    "heroic_era": "Heroic Era",
+    "silver_era": "Silver Era",
+    "knight_era": "Knight Era",
+    "feudal_and_rustical_era": "Feudal & Rustical Era"
+  },
+
   "HomePage": {
     "title": "Hello",
     "my_profile": "My Profile",

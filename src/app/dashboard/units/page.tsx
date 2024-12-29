@@ -4,6 +4,7 @@ import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Unit } from "@/lib/type";
 import clsx from "clsx";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 const Page = () => {
@@ -19,6 +20,27 @@ const Page = () => {
 export default Page;
 
 const List = ({ units }: { units: Unit[] }) => {
+  const t = useTranslations("Units");
+  let era;
+  switch (units[0].era) {
+    case "golden":
+      era = t("golden_era");
+      break;
+    case "heroic":
+      era = t("heroic_era");
+      break;
+    case "blue":
+      era = t("silver_era");
+      break;
+    case "green":
+      era = t("knight_era");
+      break;
+    case "grey":
+      era = t("feudal_and_rustical_era");
+      break;
+    default:
+      era = "";
+  }
   return (
     <Card>
       <CardHeader
@@ -33,9 +55,7 @@ const List = ({ units }: { units: Unit[] }) => {
           "bg-gradient-to-l from-gray-300 to-gray-800": units[0].era === "grey",
         })}
       >
-        <CardTitle>{`${
-          units[0].era.charAt(0).toUpperCase() + units[0].era.slice(1)
-        } Units`}</CardTitle>
+        <CardTitle>{era}</CardTitle>
       </CardHeader>
       <CardContent className="grid grid-cols-1 sm:grid-cols-2 pt-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {units.map((unit) => (

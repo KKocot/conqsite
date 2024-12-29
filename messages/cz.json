@@ -33,5 +33,12 @@
   },
   "ListOfHouses": {
     "join_discord": "Připojit se k Discordu"
+  },
+  "Units": {
+    "golden_era": "Zlatá éra",
+    "heroic_era": "Hrdinská éra",
+    "silver_era": "Stříbrná éra",
+    "knight_era": "Rytířská éra",
+    "feudal_and_rustical_era": "Feudální a Rustikální éra"
   }
 }
