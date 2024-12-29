@@ -196,5 +196,69 @@
   "MyHouse": {
     "visible": "Visible pour les membres",
     "blocked": "Bloqué pour les membres"
+  },
+  "BuildTeam": {
+    "maxed_and_preffer": "Maxé et Préféré",
+    "preffer": "Préféré",
+    "maxed": "Maxé",
+    "i_have": "J'ai",
+    "card": {
+      "username": "Nom d'utilisateur",
+      "1st_unit": "1ère unité",
+      "2nd_unit": "2ème unité",
+      "3rd_unit": "3ème unité",
+      "weapon": "Arme",
+      "cost": "Coût :",
+      "artillery": "Artillerie",
+      "description": "Description"
+    },
+    "public": {
+      "public": "Public",
+      "no_lineups": "Aucune formation",
+      "lineups_from": "Formations de ",
+      "lineup_name": "Nom de la formation",
+      "add": "Ajouter",
+      "delete": "Supprimer",
+      "load": "Charger",
+      "update": "Mettre à jour",
+      "lineup_added": "Formation ajoutée",
+      "lineup_deleted": "Formation supprimée",
+      "lineup_updated": "Formation mise à jour",
+      "lineup_loaded": "Formation chargée",
+      "date_loaded": "Date de chargement",
+      "are_you_sure": "Êtes-vous sûr de vouloir supprimer cette feuille ?"
+    },
+    "templates": {
+      "templates": "Modèles",
+      "no_templates": "Aucun modèle",
+      "template_name": "Nom du modèle",
+      "add": "Ajouter",
+      "delete": "Supprimer",
+      "load": "Charger",
+      "update": "Mettre à jour",
+      "template_added": "Modèle ajouté",
+      "template_deleted": "Modèle supprimé",
+      "template_updated": "Modèle mis à jour",
+      "template_loaded": "Modèle chargé"
+    },
+    "bot": {
+      "load_list": "Charger la liste depuis Discord",
+      "choose_date": "Choisir une date",
+      "next_tw": "Prochain TW",
+      "load_attendance": "Charger la présence depuis le bot Discord",
+      "upload": "Télécharger",
+      "upload_all": "Télécharger tous les joueurs",
+      "pick_lineup": "Choisir une formation"
+    },
+    "filters": {
+      "filters": "Filtres",
+      "meta_units_only": "Unités meta seulement",
+      "golden_era": "Ère dorée",
+      "heroic_era": "Ère héroïque",
+      "silver_era": "Ère argentée",
+      "knight_era": "Ère des chevaliers",
+      "feudal__and_rustical_era": "Ère féodale et rustique",
+      "general": "Général"
+    }
   }
 }

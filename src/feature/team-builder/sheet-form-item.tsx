@@ -79,7 +79,7 @@ const Item = ({
     altillery: ArtilleryProps[]
   ) => void;
 }) => {
-  const t = useTranslations("BuildTeam");
+  const t = useTranslations("BuildTeam.card");
   const users_list = users
     .map((user) => user.inGameNick)
     .filter((e) => usedUsers.indexOf(e) === -1);
@@ -261,7 +261,7 @@ const Item = ({
           }
         />
       </span>
-      <span>{t("leadership_cost") + (leadership ? leadership : 0)}</span>
+      <span>{t("cost") + " " + (leadership ? leadership : 0)}</span>
 
       <span>
         <Autocompleter

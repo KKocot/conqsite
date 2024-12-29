@@ -196,5 +196,69 @@
   "MyHouse": {
     "visible": "Visible para miembros",
     "blocked": "Bloqueado para miembros"
+  },
+  "BuildTeam": {
+    "maxed_and_preffer": "Maximizado y Preferido",
+    "preffer": "Preferido",
+    "maxed": "Maximizado",
+    "i_have": "Yo tengo",
+    "card": {
+      "username": "Nombre de usuario",
+      "1st_unit": "1ª Unidad",
+      "2nd_unit": "2ª Unidad",
+      "3rd_unit": "3ª Unidad",
+      "weapon": "Arma",
+      "cost": "Costo:",
+      "artillery": "Artillería",
+      "description": "Descripción"
+    },
+    "public": {
+      "public": "Público",
+      "no_lineups": "Sin formaciones",
+      "lineups_from": "Formaciones de ",
+      "lineup_name": "Nombre de la formación",
+      "add": "Añadir",
+      "delete": "Eliminar",
+      "load": "Cargar",
+      "update": "Actualizar",
+      "lineup_added": "Formación añadida",
+      "lineup_deleted": "Formación eliminada",
+      "lineup_updated": "Formación actualizada",
+      "lineup_loaded": "Formación cargada",
+      "date_loaded": "Fecha de carga",
+      "are_you_sure": "¿Estás seguro de que deseas eliminar esta hoja?"
+    },
+    "templates": {
+      "templates": "Plantillas",
+      "no_templates": "Sin plantillas",
+      "template_name": "Nombre de la plantilla",
+      "add": "Añadir",
+      "delete": "Eliminar",
+      "load": "Cargar",
+      "update": "Actualizar",
+      "template_added": "Plantilla añadida",
+      "template_deleted": "Plantilla eliminada",
+      "template_updated": "Plantilla actualizada",
+      "template_loaded": "Plantilla cargada"
+    },
+    "bot": {
+      "load_list": "Cargar lista desde Discord",
+      "choose_date": "Elegir una fecha",
+      "next_tw": "Próximo TW",
+      "load_attendance": "Cargar asistencia desde el bot de Discord",
+      "upload": "Subir",
+      "upload_all": "Subir todos los jugadores",
+      "pick_lineup": "Elegir formación"
+    },
+    "filters": {
+      "filters": "Filtros",
+      "meta_units_only": "Solo unidades meta",
+      "golden_era": "Era dorada",
+      "heroic_era": "Era heroica",
+      "silver_era": "Era plateada",
+      "knight_era": "Era de caballeros",
+      "feudal__and_rustical_era": "Era feudal y rústica",
+      "general": "General"
+    }
   }
 }

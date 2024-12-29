@@ -196,5 +196,69 @@
   "MyHouse": {
     "visible": "Видно для членов",
     "blocked": "Заблокировано для членов"
+  },
+  "BuildTeam": {
+    "maxed_and_preffer": "Максимизировано и предпочитаемо",
+    "preffer": "Предпочитаемо",
+    "maxed": "Максимизировано",
+    "i_have": "У меня есть",
+    "card": {
+      "username": "Имя пользователя",
+      "1st_unit": "1-й юнит",
+      "2nd_unit": "2-й юнит",
+      "3rd_unit": "3-й юнит",
+      "weapon": "Оружие",
+      "cost": "Стоимость:",
+      "artillery": "Артиллерия",
+      "description": "Описание"
+    },
+    "public": {
+      "public": "Публично",
+      "no_lineups": "Нет составов",
+      "lineups_from": "Составы от ",
+      "lineup_name": "Название состава",
+      "add": "Добавить",
+      "delete": "Удалить",
+      "load": "Загрузить",
+      "update": "Обновить",
+      "lineup_added": "Состав добавлен",
+      "lineup_deleted": "Состав удален",
+      "lineup_updated": "Состав обновлен",
+      "lineup_loaded": "Состав загружен",
+      "date_loaded": "Дата загрузки",
+      "are_you_sure": "Вы уверены, что хотите удалить этот лист?"
+    },
+    "templates": {
+      "templates": "Шаблоны",
+      "no_templates": "Нет шаблонов",
+      "template_name": "Название шаблона",
+      "add": "Добавить",
+      "delete": "Удалить",
+      "load": "Загрузить",
+      "update": "Обновить",
+      "template_added": "Шаблон добавлен",
+      "template_deleted": "Шаблон удален",
+      "template_updated": "Шаблон обновлен",
+      "template_loaded": "Шаблон загружен"
+    },
+    "bot": {
+      "load_list": "Загрузить список с Discord",
+      "choose_date": "Выберите дату",
+      "next_tw": "Следующее TW",
+      "load_attendance": "Загрузить посещаемость из бота Discord",
+      "upload": "Загрузить",
+      "upload_all": "Загрузить всех игроков",
+      "pick_lineup": "Выберите состав"
+    },
+    "filters": {
+      "filters": "Фильтры",
+      "meta_units_only": "Только мета-юниты",
+      "golden_era": "Золотой век",
+      "heroic_era": "Героический век",
+      "silver_era": "Серебряный век",
+      "knight_era": "Рыцарский век",
+      "feudal__and_rustical_era": "Феодальная и рустикальная эпоха",
+      "general": "Общие"
+    }
   }
 }

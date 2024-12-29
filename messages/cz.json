@@ -196,5 +196,69 @@
   "MyHouse": {
     "visible": "Viditelné pro členy",
     "blocked": "Blokováno pro členy"
+  },
+  "BuildTeam": {
+    "maxed_and_preffer": "Maximalizováno a preferováno",
+    "preffer": "Preferováno",
+    "maxed": "Maximalizováno",
+    "i_have": "Mám",
+    "card": {
+      "username": "Uživatelské jméno",
+      "1st_unit": "1. jednotka",
+      "2nd_unit": "2. jednotka",
+      "3rd_unit": "3. jednotka",
+      "weapon": "Zbraň",
+      "cost": "Cena:",
+      "artillery": "Dělostřelectvo",
+      "description": "Popis"
+    },
+    "public": {
+      "public": "Veřejné",
+      "no_lineups": "Žádné sestavy",
+      "lineups_from": "Sestavy od ",
+      "lineup_name": "Název sestavy",
+      "add": "Přidat",
+      "delete": "Smazat",
+      "load": "Načíst",
+      "update": "Aktualizovat",
+      "lineup_added": "Sestava přidána",
+      "lineup_deleted": "Sestava smazána",
+      "lineup_updated": "Sestava aktualizována",
+      "lineup_loaded": "Sestava načtena",
+      "date_loaded": "Datum načtení",
+      "are_you_sure": "Opravdu chcete smazat tuto sestavu?"
+    },
+    "templates": {
+      "templates": "Šablony",
+      "no_templates": "Žádné šablony",
+      "template_name": "Název šablony",
+      "add": "Přidat",
+      "delete": "Smazat",
+      "load": "Načíst",
+      "update": "Aktualizovat",
+      "template_added": "Šablona přidána",
+      "template_deleted": "Šablona smazána",
+      "template_updated": "Šablona aktualizována",
+      "template_loaded": "Šablona načtena"
+    },
+    "bot": {
+      "load_list": "Načíst seznam z Discordu",
+      "choose_date": "Vyberte datum",
+      "next_tw": "Další TW",
+      "load_attendance": "Načíst účast z Discord Botu",
+      "upload": "Nahrát",
+      "upload_all": "Nahrát všechny hráče",
+      "pick_lineup": "Vyberte sestavu"
+    },
+    "filters": {
+      "filters": "Filtry",
+      "meta_units_only": "Pouze meta jednotky",
+      "golden_era": "Zlatá éra",
+      "heroic_era": "Hrdinská éra",
+      "silver_era": "Stříbrná éra",
+      "knight_era": "Rytířská éra",
+      "feudal__and_rustical_era": "Feudální a rustikální éra",
+      "general": "Obecné"
+    }
   }
 }

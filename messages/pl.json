@@ -196,5 +196,69 @@
   "MyHouse": {
     "visible": "Widoczne dla członków",
     "blocked": "Zablokowane dla członków"
+  },
+  "BuildTeam": {
+    "maxed_and_preffer": "Maksymalne i Preferowane",
+    "preffer": "Preferowane",
+    "maxed": "Maksymalne",
+    "i_have": "Mam",
+    "card": {
+      "username": "Nazwa użytkownika",
+      "1st_unit": "1. jednostka",
+      "2nd_unit": "2. jednostka",
+      "3rd_unit": "3. jednostka",
+      "weapon": "Broń",
+      "cost": "Koszt:",
+      "artillery": "Artyleria",
+      "description": "Opis"
+    },
+    "public": {
+      "public": "Publiczne",
+      "no_lineups": "Brak ustawień",
+      "lineups_from": "Ustawienia od ",
+      "lineup_name": "Nazwa ustawienia",
+      "add": "Dodaj",
+      "delete": "Usuń",
+      "load": "Załaduj",
+      "update": "Aktualizuj",
+      "lineup_added": "Ustawienie dodane",
+      "lineup_deleted": "Ustawienie usunięte",
+      "lineup_updated": "Ustawienie zaktualizowane",
+      "lineup_loaded": "Ustawienie załadowane",
+      "date_loaded": "Data załadowania",
+      "are_you_sure": "Czy na pewno chcesz usunąć tę kartę?"
+    },
+    "templates": {
+      "templates": "Szablony",
+      "no_templates": "Brak szablonów",
+      "template_name": "Nazwa szablonu",
+      "add": "Dodaj",
+      "delete": "Usuń",
+      "load": "Załaduj",
+      "update": "Aktualizuj",
+      "template_added": "Szablon dodany",
+      "template_deleted": "Szablon usunięty",
+      "template_updated": "Szablon zaktualizowany",
+      "template_loaded": "Szablon załadowany"
+    },
+    "bot": {
+      "load_list": "Załaduj listę z Discorda",
+      "choose_date": "Wybierz datę",
+      "next_tw": "Następne TW",
+      "load_attendance": "Załaduj obecność z bota Discord",
+      "upload": "Prześlij",
+      "upload_all": "Prześlij wszystkich graczy",
+      "pick_lineup": "Wybierz ustawienie"
+    },
+    "filters": {
+      "filters": "Filtry",
+      "meta_units_only": "Tylko jednostki meta",
+      "golden_era": "Złota era",
+      "heroic_era": "Heroiczna era",
+      "silver_era": "Srebrna era",
+      "knight_era": "Era rycerska",
+      "feudal__and_rustical_era": "Era feudalna i rustykalna",
+      "general": "Ogólne"
+    }
   }
 }

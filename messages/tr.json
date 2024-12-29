@@ -196,5 +196,69 @@
   "MyHouse": {
     "visible": "Üyelere görünür",
     "blocked": "Üyeler için engellendi"
+  },
+  "BuildTeam": {
+    "maxed_and_preffer": "Maksimum ve Tercih Edilen",
+    "preffer": "Tercih Edilen",
+    "maxed": "Maksimum",
+    "i_have": "Bende var",
+    "card": {
+      "username": "Kullanıcı adı",
+      "1st_unit": "1. birim",
+      "2nd_unit": "2. birim",
+      "3rd_unit": "3. birim",
+      "weapon": "Silah",
+      "cost": "Maliyet:",
+      "artillery": "Topçuluk",
+      "description": "Açıklama"
+    },
+    "public": {
+      "public": "Herkese açık",
+      "no_lineups": "Kadrolar yok",
+      "lineups_from": "Kadrolar buradan: ",
+      "lineup_name": "Kadronun adı",
+      "add": "Ekle",
+      "delete": "Sil",
+      "load": "Yükle",
+      "update": "Güncelle",
+      "lineup_added": "Kadro eklendi",
+      "lineup_deleted": "Kadro silindi",
+      "lineup_updated": "Kadrolar güncellendi",
+      "lineup_loaded": "Kadrolar yüklendi",
+      "date_loaded": "Yükleme tarihi",
+      "are_you_sure": "Bu listeyi silmek istediğinize emin misiniz?"
+    },
+    "templates": {
+      "templates": "Şablonlar",
+      "no_templates": "Şablon yok",
+      "template_name": "Şablon adı",
+      "add": "Ekle",
+      "delete": "Sil",
+      "load": "Yükle",
+      "update": "Güncelle",
+      "template_added": "Şablon eklendi",
+      "template_deleted": "Şablon silindi",
+      "template_updated": "Şablon güncellendi",
+      "template_loaded": "Şablon yüklendi"
+    },
+    "bot": {
+      "load_list": "Discord'dan liste yükle",
+      "choose_date": "Bir tarih seçin",
+      "next_tw": "Sonraki TW",
+      "load_attendance": "Discord Bot'undan katılımı yükle",
+      "upload": "Yükle",
+      "upload_all": "Tüm oyuncuları yükle",
+      "pick_lineup": "Kadroyu seç"
+    },
+    "filters": {
+      "filters": "Filtreler",
+      "meta_units_only": "Sadece meta birimler",
+      "golden_era": "Altın Çağ",
+      "heroic_era": "Kahramanlık Çağı",
+      "silver_era": "Gümüş Çağ",
+      "knight_era": "Şövalye Çağı",
+      "feudal__and_rustical_era": "Feodal ve Rustik Çağ",
+      "general": "Genel"
+    }
   }
 }

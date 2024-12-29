@@ -196,5 +196,69 @@
   "MyHouse": {
     "visible": "Látható a tagok számára",
     "blocked": "Blokkolva a tagok számára"
+  },
+  "BuildTeam": {
+    "maxed_and_preffer": "Maximalizált és Preferált",
+    "preffer": "Preferált",
+    "maxed": "Maximalizált",
+    "i_have": "Nekem van",
+    "card": {
+      "username": "Felhasználónév",
+      "1st_unit": "1. egység",
+      "2nd_unit": "2. egység",
+      "3rd_unit": "3. egység",
+      "weapon": "Fegyver",
+      "cost": "Költség:",
+      "artillery": "Tüzérség",
+      "description": "Leírás"
+    },
+    "public": {
+      "public": "Nyilvános",
+      "no_lineups": "Nincsenek felállások",
+      "lineups_from": "Felállások innen: ",
+      "lineup_name": "Felállás neve",
+      "add": "Hozzáadás",
+      "delete": "Törlés",
+      "load": "Betöltés",
+      "update": "Frissítés",
+      "lineup_added": "Felállás hozzáadva",
+      "lineup_deleted": "Felállás törölve",
+      "lineup_updated": "Felállás frissítve",
+      "lineup_loaded": "Felállás betöltve",
+      "date_loaded": "Betöltés dátuma",
+      "are_you_sure": "Biztos, hogy törölni szeretnéd ezt a lapot?"
+    },
+    "templates": {
+      "templates": "Sablonok",
+      "no_templates": "Nincsenek sablonok",
+      "template_name": "Sablon neve",
+      "add": "Hozzáadás",
+      "delete": "Törlés",
+      "load": "Betöltés",
+      "update": "Frissítés",
+      "template_added": "Sablon hozzáadva",
+      "template_deleted": "Sablon törölve",
+      "template_updated": "Sablon frissítve",
+      "template_loaded": "Sablon betöltve"
+    },
+    "bot": {
+      "load_list": "Lista betöltése Discordról",
+      "choose_date": "Válassz dátumot",
+      "next_tw": "Következő TW",
+      "load_attendance": "Jelenlét betöltése Discord Botból",
+      "upload": "Feltöltés",
+      "upload_all": "Minden játékos feltöltése",
+      "pick_lineup": "Válassz felállást"
+    },
+    "filters": {
+      "filters": "Szűrők",
+      "meta_units_only": "Csak meta egységek",
+      "golden_era": "Aranykor",
+      "heroic_era": "Hős kor",
+      "silver_era": "Ezüst kor",
+      "knight_era": "Lovagi kor",
+      "feudal__and_rustical_era": "Feudális és rustikális kor",
+      "general": "Általános"
+    }
   }
 }

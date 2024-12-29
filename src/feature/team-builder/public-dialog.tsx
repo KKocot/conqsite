@@ -18,6 +18,7 @@ import { PopoverContent } from "@radix-ui/react-popover";
 import { useAddLineupMutation } from "@/components/hooks/use-lineups-mutation";
 import useDeleteSheetMutation from "@/components/hooks/use-sheet-mutation";
 import { toast } from "react-toastify";
+import { useTranslations } from "next-intl";
 
 export function PublicDialog({
   data,
@@ -30,6 +31,7 @@ export function PublicDialog({
   dates?: string[];
   setSheetData: Dispatch<SetStateAction<SheetTypes[]>>;
 }) {
+  const t = useTranslations("BuildTeam.public");
   const [publicationName, setPublicationName] = useState("");
   const [date, setDate] = useState<string>(dates ? dates[0] : "");
   const [publicLineup, setPublicLineup] = useState<PublicLineup[]>([]);
@@ -66,11 +68,11 @@ export function PublicDialog({
         <DialogHeader>
           <DialogTitle>
             <div className="flex items-center justify-between">
-              <h1>Public</h1>
+              <h1>{t("public")}</h1>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button size="sm" variant="custom">
-                    {date ?? "No Lineups"}
+                    {date ?? t("no_lineups")}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="z-50">
@@ -80,7 +82,10 @@ export function PublicDialog({
                           <Button
                             variant="custom"
                             key={e}
-                            onClick={() => setDate(e)}
+                            onClick={() => {
+                              setDate(e);
+                              toast.success(t("date_loaded"));
+                            }}
                           >
                             {e}
                           </Button>
@@ -94,7 +99,10 @@ export function PublicDialog({
         </DialogHeader>
         <div className="flex flex-col items-center gap-4">
           <div className="flex flex-col gap-2">
-            <h1>{`Lineups from ${date}`}</h1>
+            <h1>
+              {t("lineups_from")}
+              {date}
+            </h1>
             <div className="flex flex-col gap-2 w-64">
               {publicLineup.map((e) => (
                 <div key={e.name} className="flex items-center justify-between">
@@ -106,31 +114,27 @@ export function PublicDialog({
                       onClick={() => {
                         setPublicationName(e.name);
                         setSheetData(e.sheet);
-                        toast.success(`Loaded ${e.name}`);
+                        toast.success(t("lineup_loaded"));
                       }}
                     >
-                      Load
+                      {t("load")}
                     </Button>
                     <Button
                       variant="destructive"
                       size="xs"
                       onClick={() => {
-                        const confirmed = confirm(
-                          "Are you sure you want to delete this sheet?"
-                        );
+                        const confirmed = confirm(t("are_you_sure"));
                         if (confirmed) {
                           deleteSheetMutation.mutate({
                             house,
                             date: e.date,
                             name: e.name,
                           });
-                          toast.success(
-                            `Deleted ${e.name}, refresh page to see changes`
-                          );
+                          toast.success(t("lineup_deleted"));
                         }
                       }}
                     >
-                      Delete
+                      {t("delete")}
                     </Button>
                   </div>
                 </div>
@@ -139,12 +143,12 @@ export function PublicDialog({
           </div>
           <div className="w-full">
             <Label htmlFor="name" className="text-right">
-              Lineup Name
+              {t("lineup_name")}
             </Label>
             <div className="relative w-full">
               <Input
                 id="name"
-                placeholder="Lineup Name"
+                placeholder={t("lineup_name")}
                 value={publicationName}
                 onChange={(e) => setPublicationName(e.target.value)}
                 className="col-span-3"
@@ -162,13 +166,11 @@ export function PublicDialog({
                     sheet: data,
                   });
                   toast.success(
-                    existingLineup
-                      ? `Updated ${publicationName}`
-                      : `Added ${publicationName}`
+                    existingLineup ? t("lineup_updated") : t("lineup_added")
                   );
                 }}
               >
-                {existingLineup ? "Update" : "Send"}
+                {existingLineup ? t("update") : t("add")}
               </Button>
             </div>
           </div>

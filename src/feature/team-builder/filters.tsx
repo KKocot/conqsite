@@ -30,7 +30,7 @@ interface ChildComponentProps {
 }
 
 const Filters = ({ filters, setFilter }: ChildComponentProps) => {
-  const t = useTranslations("BuildTeam");
+  const t = useTranslations("BuildTeam.filters");
 
   return (
     <Dialog>
@@ -41,7 +41,7 @@ const Filters = ({ filters, setFilter }: ChildComponentProps) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Filters</DialogTitle>
+          <DialogTitle>{t("filters")}</DialogTitle>
         </DialogHeader>
 
         <CheckboxItem

@@ -196,5 +196,69 @@
   "MyHouse": {
     "visible": "Für Mitglieder sichtbar",
     "blocked": "Für Mitglieder blockiert"
+  },
+  "BuildTeam": {
+    "maxed_and_preffer": "Maximal und bevorzugt",
+    "preffer": "Bevorzugt",
+    "maxed": "Maximal",
+    "i_have": "Ich habe",
+    "card": {
+      "username": "Benutzername",
+      "1st_unit": "1. Einheit",
+      "2nd_unit": "2. Einheit",
+      "3rd_unit": "3. Einheit",
+      "weapon": "Waffe",
+      "cost": "Kosten:",
+      "artillery": "Artillerie",
+      "description": "Beschreibung"
+    },
+    "public": {
+      "public": "Öffentlich",
+      "no_lineups": "Keine Aufstellungen",
+      "lineups_from": "Aufstellungen von ",
+      "lineup_name": "Aufstellungsname",
+      "add": "Hinzufügen",
+      "delete": "Löschen",
+      "load": "Laden",
+      "update": "Aktualisieren",
+      "lineup_added": "Aufstellung hinzugefügt",
+      "lineup_deleted": "Aufstellung gelöscht",
+      "lineup_updated": "Aufstellung aktualisiert",
+      "lineup_loaded": "Aufstellung geladen",
+      "date_loaded": "Ladedatum",
+      "are_you_sure": "Bist du sicher, dass du dieses Sheet löschen möchtest?"
+    },
+    "templates": {
+      "templates": "Vorlagen",
+      "no_templates": "Keine Vorlagen",
+      "template_name": "Vorlagenname",
+      "add": "Hinzufügen",
+      "delete": "Löschen",
+      "load": "Laden",
+      "update": "Aktualisieren",
+      "template_added": "Vorlage hinzugefügt",
+      "template_deleted": "Vorlage gelöscht",
+      "template_updated": "Vorlage aktualisiert",
+      "template_loaded": "Vorlage geladen"
+    },
+    "bot": {
+      "load_list": "Liste aus Discord laden",
+      "choose_date": "Wählen Sie ein Datum",
+      "next_tw": "Nächstes TW",
+      "load_attendance": "Teilnahme aus Discord Bot laden",
+      "upload": "Hochladen",
+      "upload_all": "Alle Spieler hochladen",
+      "pick_lineup": "Wählen Sie eine Aufstellung"
+    },
+    "filters": {
+      "filters": "Filter",
+      "meta_units_only": "Nur Meta-Einheiten",
+      "golden_era": "Goldene Ära",
+      "heroic_era": "Heroische Ära",
+      "silver_era": "Silberne Ära",
+      "knight_era": "Ritter-Ära",
+      "feudal__and_rustical_era": "Feudal- und rustikale Ära",
+      "general": "Allgemein"
+    }
   }
 }
