@@ -164,7 +164,9 @@ const AddEventDialog = ({
               <SelectContent>
                 <SelectGroup>
                   {discordData.channels.map((e) => (
-                    <SelectItem value={e.id}>{e.label}</SelectItem>
+                    <SelectItem key={e.id} value={e.id}>
+                      {e.label}
+                    </SelectItem>
                   ))}
                 </SelectGroup>
               </SelectContent>
@@ -179,7 +181,9 @@ const AddEventDialog = ({
               <SelectContent>
                 <SelectGroup>
                   {discordData.roles.map((e) => (
-                    <SelectItem value={e.id}>{e.label}</SelectItem>
+                    <SelectItem key={e.id} value={e.id}>
+                      {e.label}
+                    </SelectItem>
                   ))}
                 </SelectGroup>
               </SelectContent>
