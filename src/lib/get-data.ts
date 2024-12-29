@@ -180,7 +180,7 @@ export const getBotSettings = async (
   tw_member: string
 ): Promise<BotSettings> => {
   const response = await fetch(
-    `/api/bot/settingsVerification?guild_id=${guild_id}&member_id=${member_id}&member=${member}&logs=${logs}&attendance=${attendance}&tw_server=${tw_server}&tw_member=${tw_member}`
+    `/api/discord-bot/settingsVerification?guild_id=${guild_id}&member_id=${member_id}&member=${member}&logs=${logs}&attendance=${attendance}&tw_server=${tw_server}&tw_member=${tw_member}`
   );
   const result = await response.json();
   return result;
@@ -199,7 +199,7 @@ export const getDiscordData = async (
 ): Promise<DiscordProps> => {
   const tw_server = values.anotherDC ? values.tw_discord : values.guild_id;
   const response = await fetch(
-    `/api/discord-data?guild_id=${values.guild_id}&member_id=${member_id}&tw_server=${tw_server}`
+    `/api/discord-bot/discord-data?guild_id=${values.guild_id}&member_id=${member_id}&tw_server=${tw_server}`
   );
   const result = await response.json();
   return result;
@@ -217,14 +217,14 @@ export const getDiscordUsers = async (
   member_role: string
 ): Promise<DiscordUsersProps> => {
   const response = await fetch(
-    `/api/discord-data/userlist?guild_id=${guild_id}&member_id=${member_id}&member_role=${member_role}`
+    `/api/discord-bot/userlist?guild_id=${guild_id}&member_id=${member_id}&member_role=${member_role}`
   );
   const result = await response.json();
   return result;
 };
 
 export const getAddAll = async (house: string): Promise<{ status: string }> => {
-  const response = await fetch(`/api/discord-data/addAll?house=${house}`);
+  const response = await fetch(`/api/discord-bot/addAll?house=${house}`);
   const result = await response.json();
   return result;
 };
@@ -295,7 +295,7 @@ export const getCyclicalEvents = async (
   house: string
 ): Promise<CyclicalEvents[]> => {
   const response = await fetch(
-    `/api/discord-data/event-controller?house-name=${house}`
+    `/api/discord-bot/event-controller?house-name=${house}`
   );
   const result = await response.json();
   return result;

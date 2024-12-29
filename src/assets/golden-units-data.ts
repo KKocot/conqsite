@@ -305,7 +305,7 @@ export const goldenUnits: Unit[] = [
     masteryPoints: false,
     value: 9,
     era: "golden",
-    icon: "/golden-icons/T5_new_unit.webp",
+    icon: "/golden-icons/T5_new_unit.png",
     type: ["melee"],
     description: "Spartans",
     season: {

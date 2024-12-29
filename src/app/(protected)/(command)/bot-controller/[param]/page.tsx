@@ -20,6 +20,7 @@ const Page = () => {
 
   if (isLoading) return <LoadingComponent />;
   if (!data || !user) return <NoData />;
+
   return <Content config={data} house={house} userId={user.user.id} />;
 };
 export default Page;

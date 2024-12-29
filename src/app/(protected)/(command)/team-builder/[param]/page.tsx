@@ -32,7 +32,7 @@ const Page: React.FC = () => {
     enabled: !!house,
   });
   useEffect(() => {
-    fetch(`/api/discord-data/uploadAttendance?house=${house}`);
+    fetch(`/api/discord-bot/uploadAttendance?house=${house}`);
   }, [house]);
   if (isLoading) return <LoadingComponent />;
   if (!data) return <NoData />;
