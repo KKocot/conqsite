@@ -260,5 +260,9 @@
       "feudal__and_rustical_era": "Era feudalna i rustykalna",
       "general": "Ogólne"
     }
+  },
+  "HouseStats": {
+    "username": "Nazwa użytkownika",
+    "attendance_in_percent": "Obecność w %"
   }
 }

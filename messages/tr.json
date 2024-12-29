@@ -260,5 +260,9 @@
       "feudal__and_rustical_era": "Feodal ve Rustik Çağ",
       "general": "Genel"
     }
+  },
+  "HouseStats": {
+    "username": "Kullanıcı adı",
+    "attendance_in_percent": "Katılım %"
   }
 }

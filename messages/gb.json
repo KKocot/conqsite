@@ -263,5 +263,9 @@
       "feudal__and_rustical_era": "Feudal & Rustical Era",
       "general": "General"
     }
+  },
+  "HouseStats": {
+    "username": "Username",
+    "attendance_in_percent": "Attendance in %"
   }
 }

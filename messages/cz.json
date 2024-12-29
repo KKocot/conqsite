@@ -260,5 +260,9 @@
       "feudal__and_rustical_era": "Feudální a rustikální éra",
       "general": "Obecné"
     }
+  },
+  "HouseStats": {
+    "username": "Uživatelské jméno",
+    "attendance_in_percent": "Účast v %"
   }
 }
