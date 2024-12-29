@@ -65,7 +65,7 @@ const CreateHouseConfig = ({
   discordServer,
   onUpdate,
 }: CreateConfig | EditConfig) => {
-  const t = useTranslations("SettingsPage");
+  const t = useTranslations("Settings");
   const onSubmit = async () => {
     const usersData: DiscordUsersProps = await getDiscordUsers(
       discordServer,
@@ -85,7 +85,7 @@ const CreateHouseConfig = ({
     <div>
       <Card>
         <CardHeader className="text-center text-2xl font-bold">
-          Konquerus Config
+          {t("config.config")}
         </CardHeader>
         <CardContent className="flex flex-col w-full">
           <Separator />
@@ -93,23 +93,20 @@ const CreateHouseConfig = ({
             <TableHeader>
               <TableRow>
                 <TableHead className="font-extrabold text-xl text-primary">
-                  {t("name")}
+                  {t("config.type")}
                 </TableHead>
                 <TableHead className="font-extrabold text-xl text-primary">
-                  {t("description")}
+                  {t("config.description")}
                 </TableHead>
                 <TableHead className="font-extrabold text-xl text-primary w-64">
-                  Lists
+                  {t("config.list")}
                 </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               <TableRow>
-                <TableCell>Member Role</TableCell>
-                <TableCell>
-                  Choose the common member discord role to let the bot know who
-                  should be added to your house.
-                </TableCell>
+                <TableCell>{t("config.member_role")}</TableCell>
+                <TableCell>{t("config.member_role_description")}</TableCell>
                 <TableCell>
                   <Select
                     value={values.member}
@@ -124,16 +121,16 @@ const CreateHouseConfig = ({
                       }
                     }}
                   >
-                    <Item label="Member" value={data.roles} />
+                    <Item
+                      label={t("config.member_pleaceholder")}
+                      value={data.roles}
+                    />
                   </Select>
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Logs Channel</TableCell>
-                <TableCell>
-                  Konquerus need a channel to communicate you who joined or
-                  leave your house.
-                </TableCell>
+                <TableCell>{t("config.logs_channel")}</TableCell>
+                <TableCell>{t("config.logs_channel_description")}</TableCell>
                 <TableCell>
                   <Select
                     value={values.logs}
@@ -148,17 +145,18 @@ const CreateHouseConfig = ({
                       }
                     }}
                   >
-                    <Item label="Logs" value={data.channels} />
+                    <Item
+                      label={t("config.logs_pleaceholder")}
+                      value={data.channels}
+                    />
                   </Select>
                 </TableCell>
               </TableRow>
 
               {data.twRoles ? (
                 <TableRow>
-                  <TableCell>TW Role</TableCell>
-                  <TableCell>
-                    Konquerus need to know the common role on the TW discord to
-                  </TableCell>
+                  <TableCell>{t("config.tw_role")}</TableCell>
+                  <TableCell>{t("config.tw_role_description")}</TableCell>
                   <TableCell>
                     <Select
                       value={values.tw_member}
@@ -174,7 +172,7 @@ const CreateHouseConfig = ({
                       }}
                     >
                       <Item
-                        label="Common role on TW discord"
+                        label={t("config.tw_pleaceholder")}
                         value={data.twRoles}
                       />
                     </Select>
@@ -183,11 +181,11 @@ const CreateHouseConfig = ({
               ) : null}
               {values.lineup.map((element, i) => (
                 <TableRow key={i}>
-                  <TableCell>{`${t("lineup")} ${i + 1}`}</TableCell>
-                  <TableCell>{t("lineup_description")}</TableCell>
+                  <TableCell>{`${t("config.lineup")} ${i + 1}`}</TableCell>
+                  <TableCell>{t("config.lineup_description")}</TableCell>
                   <TableCell className="flex flex-col gap-4">
                     <div>
-                      <Label>{t("channel")}</Label>
+                      <Label>{t("config.channel_label")}</Label>
                       <Select
                         value={element.channelID}
                         onValueChange={(value) => {
@@ -209,7 +207,9 @@ const CreateHouseConfig = ({
                         }}
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder="Pick sign up bot channel" />
+                          <SelectValue
+                            placeholder={t("config.channel_pleaceholder")}
+                          />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
@@ -226,7 +226,7 @@ const CreateHouseConfig = ({
                       </Select>
                     </div>
                     <div>
-                      <Label>{t("role")}</Label>
+                      <Label>{t("config.role_pleaceholder")}</Label>
                       <Select
                         value={element.roleID}
                         onValueChange={(value) => {
@@ -266,7 +266,9 @@ const CreateHouseConfig = ({
                         }}
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder="Pick Lineup Role" />
+                          <SelectValue
+                            placeholder={t("config.role_pleaceholder")}
+                          />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
@@ -306,7 +308,7 @@ const CreateHouseConfig = ({
                             }
                           }}
                         >
-                          {t("delete_lineup")}
+                          {t("config.remove_lineup")}
                         </Button>
                       )}
                       {values.lineup.length !== i + 1 ? null : (
@@ -332,7 +334,7 @@ const CreateHouseConfig = ({
                             }
                           }}
                         >
-                          {t("add_lineup")}
+                          {t("config.add_lineup")}
                         </Button>
                       )}
                     </div>
@@ -344,7 +346,7 @@ const CreateHouseConfig = ({
           {type === "edit" ? (
             <div className="flex justify-between w-full">
               <Button variant="custom" onClick={() => handleStep(1)}>
-                Previes
+                {t("previous")}
               </Button>
               <Button
                 disabled={
@@ -359,13 +361,13 @@ const CreateHouseConfig = ({
                 variant="custom"
                 onClick={onUpdate}
               >
-                Update Config
+                {t("config.update_config")}{" "}
               </Button>
             </div>
           ) : (
             <div className="flex justify-between w-full">
               <Button variant="custom" onClick={() => handleStep(1)}>
-                Previes
+                {t("previous")}
               </Button>
               <Button
                 disabled={
@@ -380,7 +382,7 @@ const CreateHouseConfig = ({
                 variant="custom"
                 onClick={onSubmit}
               >
-                Next
+                {t("next")}
               </Button>
             </div>
           )}

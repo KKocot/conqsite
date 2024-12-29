@@ -16,6 +16,7 @@ import {
   DiscordDataProps,
 } from "@/app/(protected)/member/create-house/content";
 import { EditConfigProps } from "@/app/(protected)/(owner)/settings/bot-config/[param]/content";
+import { useTranslations } from "next-intl";
 
 export interface CreateHouse {
   guild_id: string;
@@ -47,6 +48,7 @@ const CreateHouseDiscordServers = ({
   handlerGeneral,
   configValues,
 }: CreateProps | EditProps) => {
+  const t = useTranslations("Settings");
   const [values, setValues] = useState<CreateHouse>({
     guild_id: configValues?.guild_id ?? "",
     tw_discord: configValues?.tw_discord ?? "",
@@ -71,15 +73,15 @@ const CreateHouseDiscordServers = ({
   return (
     <Card>
       <CardHeader className="text-center text-2xl font-bold">
-        Discord Verification
+        {t("verification.discord_verification")}
       </CardHeader>
       <CardContent className="flex flex-col w-full">
         <Separator />
         <div className="flex p-12 justify-around gap-4">
           <div>
-            <div>Give us your house Discord ID</div>
+            <div>{t("verification.house_id")}</div>
             <div className="flex gap-2">
-              How to find Discord ID
+              {t("verification.get_id")}
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
@@ -88,7 +90,7 @@ const CreateHouseDiscordServers = ({
                   <TooltipContent className="bg-background z-50">
                     <div className="flex">
                       <div className="flex flex-col items-center">
-                        <p>Go to your Discord User Settings</p>
+                        <p>{t("verification.tooltip_one")}</p>
                         <Image
                           src="https://i.imgur.com/yT4pD80.png"
                           alt="user settings"
@@ -97,7 +99,7 @@ const CreateHouseDiscordServers = ({
                         />
                       </div>
                       <div className="flex flex-col items-center">
-                        <p>Go to Advanced and turn Developer mode on</p>
+                        <p>{t("verification.tooltip_two")}n</p>
                         <Image
                           src="https://i.imgur.com/vF0rX4b.png"
                           alt="advanced"
@@ -106,9 +108,7 @@ const CreateHouseDiscordServers = ({
                         />
                       </div>
                       <div className="flex flex-col items-center">
-                        <p>
-                          Right-click on the server and click Copy Server ID
-                        </p>
+                        <p>{t("verification.tooltip_three")}</p>
                         <Image
                           src="https://i.imgur.com/2O6V41u.png"
                           alt="copy server id"
@@ -122,7 +122,7 @@ const CreateHouseDiscordServers = ({
               </TooltipProvider>
             </div>
             <div>
-              - Make sure{" "}
+              {t("verification.point_one")}
               <Link
                 className="gap-1 text-red-600"
                 href="https://discord.com/oauth2/authorize?client_id=1002261855718342759&permissions=8&integration_type=0&scope=bot"
@@ -130,15 +130,12 @@ const CreateHouseDiscordServers = ({
               >
                 <Link2 className="inline-block" /> Konquerus
               </Link>{" "}
-              is on your Discord and got high role to see all roles and channels
+              {t("verification.point_two")}
             </div>
-            <div>- Make sure you have admin role on that Discord</div>
+            <div>{t("verification.point_three")}</div>
             <br />
             <div>
-              - Also Konquerus can track your house attendance by scaning all
-              discord and record 3 time(at start, after 30min and at the end)
-              and save it for you. If your house using different discord for TW,
-              click checkbox, make sure you are an admin on that server and{" "}
+              {t("verification.point_four")}
               <Link
                 className="gap-1 text-red-600 inline-block "
                 href="https://discord.com/oauth2/authorize?client_id=1002261855718342759&permissions=8&integration_type=0&scope=bot"
@@ -146,12 +143,12 @@ const CreateHouseDiscordServers = ({
               >
                 <Link2 className="inline-block" /> Konquerus
               </Link>{" "}
-              is on that server too.
+              {t("verification.point_five")}
             </div>
           </div>
           <div className="flex flex-col justify-between">
             <div>
-              <Label htmlFor="discordId">Discord ID</Label>
+              <Label htmlFor="discordId">{t("verification.discord_id")}</Label>
               <Input
                 id="discordId"
                 value={values.guild_id}
@@ -166,7 +163,9 @@ const CreateHouseDiscordServers = ({
             </div>
             {values.anotherDC ? (
               <div>
-                <Label htmlFor="twdiscordId">TW Discord ID</Label>
+                <Label htmlFor="twdiscordId">
+                  {t("verification.tw_discord_id")}
+                </Label>
                 <Input
                   id="twdiscordId"
                   value={values.tw_discord}
@@ -181,7 +180,9 @@ const CreateHouseDiscordServers = ({
               </div>
             ) : null}
             <div className="flex justify-between items-center">
-              <Label htmlFor="anotherDC">TW Discord ID</Label>
+              <Label htmlFor="anotherDC">
+                {t("verification.tw_discord_id")}
+              </Label>
               <Checkbox
                 id="anotherDC"
                 onClick={() =>
@@ -203,7 +204,7 @@ const CreateHouseDiscordServers = ({
           variant="custom"
           onClick={onSubmit}
         >
-          Next
+          {t("next")}
         </Button>
       </CardContent>
     </Card>
