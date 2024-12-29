@@ -192,5 +192,9 @@
     "description": "Leírás",
     "group": "Csoport",
     "you": "Te"
+  },
+  "MyHouse": {
+    "visible": "Látható a tagok számára",
+    "blocked": "Blokkolva a tagok számára"
   }
 }

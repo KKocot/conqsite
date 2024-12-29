@@ -192,5 +192,9 @@
     "description": "Açıklama",
     "group": "Grup",
     "you": "Sen"
+  },
+  "MyHouse": {
+    "visible": "Üyelere görünür",
+    "blocked": "Üyeler için engellendi"
   }
 }

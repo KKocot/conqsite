@@ -195,5 +195,9 @@
     "description": "Description",
     "group": "Group",
     "you": "You"
+  },
+  "MyHouse": {
+    "visible": "Visible to Members",
+    "blocked": "Blocked for members"
   }
 }

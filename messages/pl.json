@@ -192,5 +192,9 @@
     "description": "Opis",
     "group": "Grupa",
     "you": "Ty"
+  },
+  "MyHouse": {
+    "visible": "Widoczne dla członków",
+    "blocked": "Zablokowane dla członków"
   }
 }
