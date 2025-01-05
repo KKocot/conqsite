@@ -53,7 +53,10 @@ const CreateHouseDiscordServers = ({
     guild_id: configValues?.guild_id ?? "",
     tw_discord: configValues?.tw_discord ?? "",
     anotherDC:
-      configValues?.tw_discord === configValues?.guild_id ? false : true,
+      configValues?.tw_discord === configValues?.guild_id ||
+      configValues?.tw_discord === ""
+        ? false
+        : true,
   });
   const onSubmit = async () => {
     const data: DiscordProps = await getDiscordData(creatorId, values);
@@ -61,9 +64,17 @@ const CreateHouseDiscordServers = ({
     if (data.status === "ok") {
       handleStep(2);
       if (type === "edit") {
-        handlerGeneral((prev) => ({ ...prev, guild_id: values.guild_id }));
+        handlerGeneral((prev) => ({
+          ...prev,
+          guild_id: values.guild_id,
+          tw_discord: values.tw_discord,
+        }));
       } else {
-        handlerGeneral((prev) => ({ ...prev, guild_id: values.guild_id }));
+        handlerGeneral((prev) => ({
+          ...prev,
+          guild_id: values.guild_id,
+          tw_discord: values.tw_discord,
+        }));
       }
     }
     if (data.status === "error") {
@@ -185,6 +196,7 @@ const CreateHouseDiscordServers = ({
               </Label>
               <Checkbox
                 id="anotherDC"
+                checked={values.anotherDC}
                 onClick={() =>
                   setValues((prev) => ({
                     ...prev,

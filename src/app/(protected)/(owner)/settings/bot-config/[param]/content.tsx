@@ -31,7 +31,7 @@ const Content = ({
   const [values, setValues] = useState<EditConfigProps>({
     guild_id: data.id,
     tw_discord: data.tw.server,
-    member: data.tw.member,
+    member: data.member.id,
     logs: data.logs.attendance,
     tw_member: data.tw.member,
     lineup: data.lineup.map((item) => ({
@@ -84,7 +84,6 @@ const Content = ({
       console.error("error_occurred", error);
     }
   };
-
   return (
     <div className="flex flex-col gap-6 container">
       {step === 1 ? (
