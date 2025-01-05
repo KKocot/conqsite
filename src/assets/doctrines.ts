@@ -1225,6 +1225,93 @@ export const epicDoctrines: Doctrine[] = [
     stats:
       "Reduces enemy movement speed by 20% for 3 seconds. Increases rate of fire by 9%.",
   },
+  {
+    name: "Crescent Monks Medical Doctrine",
+    img: "/logo.png",
+    forUnit: ["Crescent Monks"],
+    dedicated: "unit",
+    stats:
+      "Deadly Epicycle's first hit will restore small amount of health on self.",
+  },
+  {
+    name: "Yanyuedao Resistance Doctrine",
+    img: "/logo.png",
+    forUnit: ["Yanyuedao"],
+    dedicated: "unit",
+    stats: "While using Mounting Dread, all damage taken is reduced by 15%.",
+  },
+  {
+    name: "Onna-musha Blood Doctrine",
+    img: "/logo.png",
+    forUnit: ["Onna-musha"],
+    dedicated: "unit",
+    stats: "Normal attacks apply a 15% health drain effect.",
+  },
+  {
+    name: "Samurai Assault Doctrine",
+    img: "/logo.png",
+    forUnit: ["Orochi Samurai"],
+    dedicated: "unit",
+    stats: "Increases Double Strike damage by 15%.",
+  },
+  {
+    name: "Kriegsbruders Battle Doctrine",
+    img: "/logo.png",
+    forUnit: ["Kriegsruders"],
+    dedicated: "unit",
+    stats: "Reduces Full Assault's cooldown by 5 seconds.",
+  },
+  {
+    name: "Zweihander Stamina Doctrine",
+    img: "/logo.png",
+    forUnit: ["Zweihanders"],
+    dedicated: "unit",
+    stats: "Each level reduces Knight's Gampit's cooldown by 4 seconds.",
+  },
+  {
+    name: "Perceval's Shield Doctrine",
+    img: "/logo.png",
+    forUnit: ["Perceval"],
+    dedicated: "unit",
+    stats: "Double the block breaking effect of Charge & Throw.",
+  },
+  {
+    name: "Queen's Knight Battle Doctrine",
+    img: "/logo.png",
+    forUnit: ["Queen's Knight"],
+    dedicated: "unit",
+    stats: "Block cannot be damaged within 2 seconds of using Run'Em Through.",
+  },
+  {
+    name: "Mansion Guard Medical Doctrine",
+    img: "/logo.png",
+    forUnit: ["Wuwei Mansion Guard"],
+    dedicated: "unit",
+    stats: "Using Brutal Sweep restores 10% maximum health.",
+  },
+  {
+    name: "Xuanjia Cavalry Damage Doctrine",
+    img: "/logo.png",
+    forUnit: ["Xuanjia Cavalry"],
+    dedicated: "unit",
+    stats: "Reduces damage taken by 8%",
+  },
+  {
+    name: "Conquest",
+    img: "/logo.png",
+    forUnit: ["Companion Cavalry"],
+    dedicated: "unit",
+    stats:
+      " Increases the movement speed of hero by 8% as well as piercing, slashing, and blunt damage by 100 for 18 seconds.",
+  },
+  {
+    name: "Overwhelm",
+    img: "/logo.png",
+    forUnit: ["Sunward Phalanx"],
+    dedicated: "unit",
+    stats:
+      "Unlocks : Divine Gaze, Creates semi-circular totem of 8 meters at distance of 50 meters in any direction. Enemies within ranfe gain a stack of Expose, sracking ip to 10 times, Stacks are lose after 5 seconds. The Sunward Phalanx deals 40$ increased damage aginst enemies with 5 stacks of Expose. Base cooldown: 50 seconds. Base duration: 15 seconds.",
+  },
 ];
 export const rareDoctrines: Doctrine[] = [
   {
@@ -1608,6 +1695,92 @@ export const rareDoctrines: Doctrine[] = [
     dedicated: "unit",
     stats:
       "Increases Hashashins piercing armor penetration by 70 points. Increases Hashashins slashing armor penetration by 70 points. Increases Hashashins blunt armor penetration by 70 points.",
+  },
+  {
+    name: "Wuxing Fire Doctrine",
+    img: "/logo.png",
+    forUnit: ["Wuxing"],
+    dedicated: "unit",
+    stats: "Increases Fiery Blast's burn damage by 100 points.",
+  },
+  {
+    name: "Yanyuedao Slashing Doctrine",
+    img: "/logo.png",
+    forUnit: ["Yanyuedao"],
+    dedicated: "unit",
+    stats: "Increases slashing damage by 100 points.",
+  },
+  {
+    name: "Ronin Tactical Doctrine",
+    img: "/logo.png",
+    forUnit: ["Ronin"],
+    dedicated: "unit",
+    stats: "Iaido Strike can damage an additional target.",
+  },
+  {
+    name: "Samurai Defence Doctrine",
+    img: "/logo.png",
+    forUnit: ["Orochi Samurai"],
+    dedicated: "unit",
+    stats: "Reduces ranged damage taken by 6%.",
+  },
+  {
+    name: "Schutzdieners Support Doctrine",
+    img: "/logo.png",
+    forUnit: ["Schutzdieners"],
+    dedicated: "unit",
+    stats:
+      "Increases all defences for allies that receive healing by 80 points.",
+  },
+  {
+    name: "Zweihander Marching Doctrine",
+    img: "/logo.png",
+    forUnit: ["Zweihanders"],
+    dedicated: "unit",
+    stats: "Increases movement speed by 6%.",
+  },
+  {
+    name: "Caradoc's Assault Doctrine",
+    img: "/logo.png",
+    forUnit: ["Caradoc"],
+    dedicated: "unit",
+    stats: "Increases piercing armour penetration by 10%.",
+  },
+  {
+    name: "Queen's Knight Shield Doctrine",
+    img: "/logo.png",
+    forUnit: ["Queen's Knight"],
+    dedicated: "unit",
+    stats: "Each level reduces damage taken when using Bash & Thrust by 18%.",
+  },
+  {
+    name: "Feathered Crossbowmen Attack Doctrine",
+    img: "/logo.png",
+    forUnit: ["Feathered Crossbowmen"],
+    dedicated: "unit",
+    stats: "Increases piercing and slashing damage by 60 points.",
+  },
+  {
+    name: "Xuanjia Cavalry Energy Doctrine",
+    img: "/logo.png",
+    forUnit: ["Xuanjia Cavalry"],
+    dedicated: "unit",
+    stats: "Reduces Disciplined Assault's cooldown by 4 seconds.",
+  },
+  {
+    name: "Apollo's Fury",
+    img: "/logo.png",
+    forUnit: ["Psiloi Slingers"],
+    dedicated: "unit",
+    stats: "SlingMaster has 50% increased chance to stun enemy units.",
+  },
+  {
+    name: "Storm Formation",
+    img: "/logo.png",
+    forUnit: ["Sunward Phalanx"],
+    dedicated: "unit",
+    stats:
+      "Divine Gaze applies Expose to enemy units. Uppon reaching 10 stacks, that enemy deals 30% reduced damage to the Pverwhelm attire to take effect.",
   },
 ];
 export const uncommonDoctrines: Doctrine[] = [
