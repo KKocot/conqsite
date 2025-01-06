@@ -1712,7 +1712,7 @@ export const rareDoctrines: Doctrine[] = [
   },
   {
     name: "Ronin Tactical Doctrine",
-    img: "/logo.png",
+    img: "/ronins.png",
     forUnit: ["Ronin"],
     dedicated: "unit",
     stats: "Iaido Strike can damage an additional target.",
@@ -1726,7 +1726,7 @@ export const rareDoctrines: Doctrine[] = [
   },
   {
     name: "Schutzdieners Support Doctrine",
-    img: "/logo.png",
+    img: "/schutzdieners.png",
     forUnit: ["Schutzdieners"],
     dedicated: "unit",
     stats:
