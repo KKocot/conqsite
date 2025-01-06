@@ -1,9 +1,9 @@
 "use client";
 
-import Preview from "@/components/preview";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
+import Preview from "@/feature/team-builder/preview";
 import { getPublicLineup, getSurvey } from "@/lib/get-data";
 import { Unit } from "@/lib/type";
 import { useQuery } from "@tanstack/react-query";

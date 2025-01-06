@@ -10,7 +10,6 @@ import { goldenUnits } from "@/assets/golden-units-data";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
 import { others } from "@/assets/other-units-data";
-import Preview from "@/components/preview";
 import { ScanEye } from "lucide-react";
 import UsersList from "@/feature/team-builder/users-list";
 import { HouseAssets, Survey } from "@/lib/get-data";
@@ -22,6 +21,7 @@ import { PublicDialog } from "@/feature/team-builder/public-dialog";
 import { useParams } from "next/navigation";
 import ItemRow from "@/feature/team-builder/sheet-form-item-row";
 import { Switch } from "@/components/ui/switch";
+import Preview from "@/feature/team-builder/preview";
 
 interface PageProps {
   surveysData: Survey[];

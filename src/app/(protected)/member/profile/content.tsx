@@ -50,36 +50,41 @@ export default function Content() {
   return (
     <div>
       <div className="p-2 sm:p-8">
-        <div className="flex items-center gap-10">
-          <Avatar className="w-16 h-16">
-            <AvatarImage
-              alt="avatar"
-              src={user_data?.user.image ?? "/placeholder-avatar.jpg"}
-            />
-            <AvatarFallback>KK</AvatarFallback>
-          </Avatar>
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              <span>{profileData.inGameNick}</span>(
-              <span className="text-red-600">{profileData.characterLevel}</span>
-              )
-            </h2>
-            <div className="text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1">
-              {profileData.discordNick}
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-4">
+            <Avatar>
+              <AvatarImage
+                className="w-16 h-16"
+                alt="avatar"
+                src={user_data?.user.image ?? "/placeholder-avatar.jpg"}
+              />
+              <AvatarFallback>KK</AvatarFallback>
+            </Avatar>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                <span>{profileData.inGameNick}</span>(
+                <span className="text-red-600">
+                  {profileData.characterLevel}
+                </span>
+                )
+              </h2>
+              <div className="text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1">
+                {profileData.discordNick}
+              </div>
             </div>
-            <div className="flex items-center">
-              {profileData.house.length > 0 ? (
-                <div>
-                  {t("houses")}
-                  {": "}
-                  {profileData.house.map((e, i) => (
-                    <span key={e}>
-                      {i + 1 === profileData.house.length ? e : e + ","}{" "}
-                    </span>
-                  ))}
-                </div>
-              ) : null}
-            </div>
+          </div>
+          <div className="flex items-center">
+            {profileData.house.length > 0 ? (
+              <div>
+                {t("houses")}
+                {": "}
+                {profileData.house.map((e, i) => (
+                  <span key={e}>
+                    {i + 1 === profileData.house.length ? e : e + ","}{" "}
+                  </span>
+                ))}
+              </div>
+            ) : null}
           </div>
           <ul className="flex gap-8 flex-wrap">
             {weapons_list.map((e) =>

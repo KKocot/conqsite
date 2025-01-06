@@ -1,6 +1,6 @@
 "use client";
 
-import SeasonTable from "@/components/season-table";
+import SeasonTable from "@/feature/stats/season-table";
 import { Calendar } from "@/components/ui/calendar";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

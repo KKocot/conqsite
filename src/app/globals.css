@@ -4,65 +4,81 @@
 
 @layer base {
   :root {
-    --background: 0, 0%, 90%; /* Light background */
-    --foreground: 0, 0%, 10%; /* Dark foreground text */
+    --background: 0 0% 90%; /* Light background */
+    --foreground: 0 0% 10%; /* Dark foreground text */
 
-    --muted: 0, 0%, 90%; /* Light muted background */
-    --muted-foreground: 0, 0%, 20%; /* Dark text on muted */
+    --muted: 0 0% 90%; /* Light muted background */
+    --muted-foreground: 0 0% 20%; /* Dark text on muted */
 
-    --popover: 0, 0%, 95%; /* Popover background */
-    --popover-foreground: 0, 0%, 10%; /* Dark text for popovers */
+    --popover: 0 0% 95%; /* Popover background */
+    --popover-foreground: 0 0% 10%; /* Dark text for popovers */
 
-    --card: 0, 0%, 95%; /* Card background */
-    --card-foreground: 0, 0%, 10%; /* Card foreground text */
+    --card: 0 0% 95%; /* Card background */
+    --card-foreground: 0 0% 10%; /* Card foreground text */
 
-    --border: 0, 0%, 80%; /* Light border color */
-    --input: 0, 0%, 90%; /* Input background */
+    --border: 0 0% 80%; /* Light border color */
+    --input: 0 0% 90%; /* Input background */
 
-    --primary: 215, 70%, 44%; /* Primary color */
-    --primary-foreground: 0, 0%, 97%; /* Light text on primary */
+    --primary: 215 70% 44%; /* Primary color */
+    --primary-foreground: 0 0% 97%; /* Light text on primary */
 
-    --secondary: 215, 70%, 44%; /* Secondary color */
-    --secondary-foreground: 0, 0%, 97%; /* Light text on secondary */
+    --secondary: 215 70% 44%; /* Secondary color */
+    --secondary-foreground: 0 0% 97%; /* Light text on secondary */
 
-    --accent: 37, 100%, 45%; /* Darker accent for light theme */
-    --accent-foreground: 0, 0%, 10%; /* Dark text on accent */
+    --accent: 37 100% 45%; /* Darker accent for light theme */
+    --accent-foreground: 0 0% 10%; /* Dark text on accent */
 
-    --destructive: 0, 62.8%, 30.6%; /* Destructive action color */
-    --destructive-foreground: 0, 0%, 97%; /* Light text on destructive */
+    --destructive: 0 62.8% 30.6%; /* Destructive action color */
+    --destructive-foreground: 0 0% 97%; /* Light text on destructive */
 
-    --ring: 215, 70%, 44%; /* Ring color */ --sidebar-background: 0 0% 98%; --sidebar-foreground: 240 5.3% 26.1%; --sidebar-primary: 240 5.9% 10%; --sidebar-primary-foreground: 0 0% 98%; --sidebar-accent: 240 4.8% 95.9%; --sidebar-accent-foreground: 240 5.9% 10%; --sidebar-border: 220 13% 91%; --sidebar-ring: 217.2 91.2% 59.8%;
+    --ring: 215 70% 44%; /* Ring color */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 0, 0%, 11%; /* #1c1c1c */
-    --foreground: 0, 0%, 97%; /* Light foreground text for contrast */
+    --background: 0 0% 11%; /* #1c1c1c */
+    --foreground: 0 0% 97%; /* Light foreground text for contrast */
 
-    --muted: 215, 10%, 20%; /* Dark muted */
-    --muted-foreground: 215, 10%, 80%; /* Light text on muted background */
+    --muted: 215 10% 20%; /* Dark muted */
+    --muted-foreground: 215 10% 80%; /* Light text on muted background */
 
-    --popover: 215, 10%, 13%; /* Popover background */
-    --popover-foreground: 0, 0%, 97%; /* Light text for popovers */
+    --popover: 215 10% 13%; /* Popover background */
+    --popover-foreground: 0 0% 97%; /* Light text for popovers */
 
-    --card: 215, 10%, 13%; /* Card background */
-    --card-foreground: 0, 0%, 97%; /* Card foreground text */
+    --card: 215 10% 13%; /* Card background */
+    --card-foreground: 0 0% 97%; /* Card foreground text */
 
-    --border: 215, 10%, 20%; /* Darker border color */
-    --input: 215, 10%, 20%; /* Input background color */
+    --border: 215 10% 20%; /* Darker border color */
+    --input: 215 10% 20%; /* Input background color */
 
-    --primary: 215, 70%, 44%; /* Primary color */
-    --primary-foreground: 0, 0%, 97%; /* Light text on primary */
+    --primary: 215 70% 44%; /* Primary color */
+    --primary-foreground: 0 0% 97%; /* Light text on primary */
 
-    --secondary: 215, 10%, 20%; /* Secondary color */
-    --secondary-foreground: 0, 0%, 97%; /* Light text on secondary */
+    --secondary: 215 10% 20%; /* Secondary color */
+    --secondary-foreground: 0 0% 97%; /* Light text on secondary */
 
-    --accent: 37, 100%, 81%; /* #ffdd9e converted to HSL */
-    --accent-foreground: 215, 10%, 20%; /* Dark text on accent */
+    --accent: 37 100% 81%; /* #ffdd9e converted to HSL */
+    --accent-foreground: 215 10% 20%; /* Dark text on accent */
 
-    --destructive: 0, 62.8%, 30.6%; /* Destructive action color */
-    --destructive-foreground: 0, 0%, 97%; /* Light text on destructive */
+    --destructive: 0 62.8% 30.6%; /* Destructive action color */
+    --destructive-foreground: 0 0% 97%; /* Light text on destructive */
 
-    --ring: 215, 70%, 94%; /* Ring color */ --sidebar-background: 240 5.9% 10%; --sidebar-foreground: 240 4.8% 95.9%; --sidebar-primary: 224.3 76.3% 48%; --sidebar-primary-foreground: 0 0% 100%; --sidebar-accent: 240 3.7% 15.9%; --sidebar-accent-foreground: 240 4.8% 95.9%; --sidebar-border: 240 3.7% 15.9%; --sidebar-ring: 217.2 91.2% 59.8%;
+    --ring: 215 70% 94%; /* Ring color */
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -71,15 +87,15 @@
     @apply border-border;
   }
   body {
-    --gradient-opacity: 0.25;
+    --gradient-opacity: 0.5;
     @apply bg-background text-foreground;
     background: linear-gradient(
       -45deg,
-      hsl(var(--primary) / var(--gradient-opacity)),
+      hsl(var(--accent) / var(--gradient-opacity)),
       hsl(var(--background) / var(--gradient-opacity)),
       hsl(var(--background) / var(--gradient-opacity)),
-      hsl(var(--primary) / var(--gradient-opacity)),
-      hsl(var(--accent) / var(--gradient-opacity))
+      hsl(var(--accent) / var(--gradient-opacity)),
+      hsl(var(--background) / var(--gradient-opacity))
     );
     background-size: 400% 400%;
 

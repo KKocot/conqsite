@@ -282,6 +282,10 @@
   },
   "HouseStats": {
     "username": "Uživatelské jméno",
-    "attendance_in_percent": "Účast v %"
+    "attendance_in_percent": "Docházka v %",
+    "season_start": "Začátek sezóny",
+    "season_end": "Konec sezóny",
+    "drillmodes": "Režimy cvičení",
+    "tw": "TW"
   }
 }

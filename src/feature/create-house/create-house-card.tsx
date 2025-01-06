@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../components/ui/select";
-import HouseCard from "../../components/house-card";
+import HouseCard from "./house-card";
 import { servers } from "@/lib/utils";
 import {
   Tooltip,

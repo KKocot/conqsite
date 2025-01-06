@@ -73,6 +73,6 @@ export const weapons: Weapon[] = [
   {
     id: 14,
     name: "Spear and Shield",
-    src: "/weapons/New_class.png",
+    src: "/weapons/New_class.webp",
   },
 ];

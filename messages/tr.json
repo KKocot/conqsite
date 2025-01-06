@@ -282,6 +282,10 @@
   },
   "HouseStats": {
     "username": "Kullanıcı adı",
-    "attendance_in_percent": "Katılım %"
+    "attendance_in_percent": "Devam oranı %",
+    "season_start": "Sezon başlangıcı",
+    "season_end": "Sezon sonu",
+    "drillmodes": "Alıştırma modları",
+    "tw": "TW"
   }
 }
