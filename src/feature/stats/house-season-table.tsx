@@ -39,10 +39,7 @@ const HouseSeasonTable = ({
       : "0.00";
 
   return (
-    <div className="flex items-center gap-2">
-      <span className="text-start">
-        <div>{userStats.nick ?? userStats.id}</div>
-      </span>
+    <div className="flex items-center gap-2 max-w-64">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
@@ -69,6 +66,9 @@ const HouseSeasonTable = ({
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
+      <span className="text-start">
+        <div>{userStats.nick ?? userStats.id}</div>
+      </span>
     </div>
   );
 };

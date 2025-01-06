@@ -67,7 +67,7 @@ const ResposiveSidebar = ({
             })}
           >
             <Link
-              href="/"
+              href="/home"
               className={clsx("font-extrabold text-2xl text-accent", {
                 hidden: !open,
               })}
@@ -96,7 +96,7 @@ const ResposiveSidebar = ({
                   </DropdownMenuLabel>
                   {openLinks.items.map((item) => (
                     <DropdownMenuItem asChild key={item.title}>
-                      <a href={item.url}>{item.title}</a>
+                      <Link href={item.url}>{item.title}</Link>
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
@@ -124,7 +124,7 @@ const ResposiveSidebar = ({
                     </DropdownMenuLabel>
                     {membersLinks.items.map((item) => (
                       <DropdownMenuItem asChild key={item.title}>
-                        <a href={item.url}>{item.title}</a>
+                        <Link href={item.url}>{item.title}</Link>
                       </DropdownMenuItem>
                     ))}
                   </DropdownMenuContent>
@@ -153,7 +153,7 @@ const ResposiveSidebar = ({
                     {e.items.map((item) =>
                       item.visibleTo === false ? null : (
                         <DropdownMenuItem asChild key={item.title}>
-                          <a href={item.url}>{item.title}</a>
+                          <Link href={item.url}>{item.title}</Link>
                         </DropdownMenuItem>
                       )
                     )}
@@ -175,7 +175,7 @@ const ResposiveSidebar = ({
             })}
           >
             <Link
-              href="/"
+              href="/home"
               className={clsx("font-extrabold text-2xl text-accent", {
                 hidden: !open,
               })}
@@ -200,9 +200,9 @@ const ResposiveSidebar = ({
                       {openLinks.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton asChild>
-                            <a href={subItem.url}>
+                            <Link href={subItem.url}>
                               <span>{subItem.title}</span>
-                            </a>
+                            </Link>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
                       ))}
@@ -232,9 +232,9 @@ const ResposiveSidebar = ({
                         {membersLinks.items?.map((subItem) => (
                           <SidebarMenuSubItem key={subItem.title}>
                             <SidebarMenuSubButton asChild>
-                              <a href={subItem.url}>
+                              <Link href={subItem.url}>
                                 <span>{subItem.title}</span>
-                              </a>
+                              </Link>
                             </SidebarMenuSubButton>
                           </SidebarMenuSubItem>
                         ))}
@@ -271,9 +271,9 @@ const ResposiveSidebar = ({
                                 subItem.visibleTo === false ? null : (
                                   <SidebarMenuSubItem key={subItem.title}>
                                     <SidebarMenuSubButton asChild>
-                                      <a href={subItem.url}>
+                                      <Link href={subItem.url}>
                                         <span>{subItem.title}</span>
-                                      </a>
+                                      </Link>
                                     </SidebarMenuSubButton>
                                   </SidebarMenuSubItem>
                                 )
