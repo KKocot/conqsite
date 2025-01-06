@@ -282,6 +282,10 @@
   },
   "HouseStats": {
     "username": "Felhasználónév",
-    "attendance_in_percent": "Részvétel %-ban"
+    "attendance_in_percent": "Jelenlét %-ban",
+    "season_start": "Szezon kezdete",
+    "season_end": "Szezon vége",
+    "drillmodes": "Gyakorló módok",
+    "tw": "TW"
   }
 }

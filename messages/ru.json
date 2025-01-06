@@ -282,6 +282,10 @@
   },
   "HouseStats": {
     "username": "Имя пользователя",
-    "attendance_in_percent": "Посещаемость в %"
+    "attendance_in_percent": "Посещаемость в %",
+    "season_start": "Начало сезона",
+    "season_end": "Конец сезона",
+    "drillmodes": "Режимы упражнений",
+    "tw": "TW"
   }
 }

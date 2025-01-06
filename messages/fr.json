@@ -282,6 +282,10 @@
   },
   "HouseStats": {
     "username": "Nom d'utilisateur",
-    "attendance_in_percent": "Assiduité en %"
+    "attendance_in_percent": "Présence en %",
+    "season_start": "Début de la saison",
+    "season_end": "Fin de la saison",
+    "drillmodes": "Modes d'entraînement",
+    "tw": "TW"
   }
 }

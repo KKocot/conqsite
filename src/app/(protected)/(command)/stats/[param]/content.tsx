@@ -1,10 +1,9 @@
 "use client";
 
-import HouseSeasonTable from "@/components/house-season-table";
-import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import HouseSeasonTable from "@/feature/stats/house-season-table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SeasonProps, UsersStats } from "@/lib/get-data";
-import { useTranslations } from "next-intl";
+import SeasonSimpleInfo from "@/feature/stats/season-simple-info";
 
 const Content = ({
   data,
@@ -13,7 +12,6 @@ const Content = ({
   data: UsersStats[];
   seasons: SeasonProps[];
 }) => {
-  const t = useTranslations("HouseStats");
   return (
     <Tabs
       defaultValue={seasons[seasons.length - 1].season}
@@ -27,18 +25,13 @@ const Content = ({
         ))}
       </TabsList>
       {seasons.map((e) => (
-        <TabsContent key={e.season} value={e.season}>
-          <Table className="w-fit">
-            <TableHeader>
-              <TableRow>
-                <TableHead>{t("username")}</TableHead>
-                <TableHead>{t("attendance_in_percent")}</TableHead>
-              </TableRow>
-            </TableHeader>
+        <TabsContent value={e.season} key={e.season}>
+          <SeasonSimpleInfo item={e} />
+          <div className="grid grid-cols-3 gap-4 p-4">
             {data.map((user) => (
               <HouseSeasonTable key={user.id} item={e} userStats={user} />
             ))}
-          </Table>
+          </div>
         </TabsContent>
       ))}
     </Tabs>

@@ -10,11 +10,11 @@ import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { artillery } from "@/assets/artillery";
 import { SheetTypes, Unit } from "@/lib/type";
 import { weapons } from "@/assets/weapons";
-import { Button } from "./ui/button";
 import { Fragment, useState } from "react";
 import { useTranslations } from "next-intl";
 import { OctagonAlert } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const Preview = ({
   data,
