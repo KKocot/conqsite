@@ -287,5 +287,9 @@
     "season_end": "Konec sezóny",
     "drillmodes": "Režimy cvičení",
     "tw": "TW"
+  },
+  "HouseCard": {
+    "house_leader": "Vůdce Domu",
+    "join_discord": "Připojit se k Discordu"
   }
 }

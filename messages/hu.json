@@ -287,5 +287,9 @@
     "season_end": "Szezon vége",
     "drillmodes": "Gyakorló módok",
     "tw": "TW"
+  },
+  "HouseCard": {
+    "house_leader": "Házvezető",
+    "join_discord": "Csatlakozz Discordhoz"
   }
 }

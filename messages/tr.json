@@ -287,5 +287,9 @@
     "season_end": "Sezon sonu",
     "drillmodes": "Alıştırma modları",
     "tw": "TW"
+  },
+  "HouseCard": {
+    "house_leader": "Ev Lideri",
+    "join_discord": "Discord'a Katıl"
   }
 }

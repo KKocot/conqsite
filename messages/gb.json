@@ -290,5 +290,9 @@
     "season_end": "Season End",
     "drillmodes": "Drillmodes",
     "tw": "TW"
+  },
+  "HouseCard": {
+    "house_leader": "House Leader",
+    "join_discord": "Join Discord"
   }
 }

@@ -287,5 +287,9 @@
     "season_end": "Koniec sezonu",
     "drillmodes": "Tryby ćwiczeń",
     "tw": "TW"
+  },
+  "HouseCard": {
+    "house_leader": "Lider Rodu",
+    "join_discord": "Dołącz do Discorda"
   }
 }
