@@ -28,9 +28,11 @@ const Content = ({
         <TabsContent value={e.season} key={e.season}>
           <SeasonSimpleInfo item={e} />
           <div className="grid grid-cols-3 gap-4 p-4">
-            {data.map((user) => (
-              <HouseSeasonTable key={user.id} item={e} userStats={user} />
-            ))}
+            {data
+              .sort((a, b) => b.attendance.length - a.attendance.length)
+              .map((user) => (
+                <HouseSeasonTable key={user.id} item={e} userStats={user} />
+              ))}
           </div>
         </TabsContent>
       ))}
