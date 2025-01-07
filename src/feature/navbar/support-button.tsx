@@ -2,6 +2,7 @@
 
 import { useSidebar } from "@/components/ui/sidebar";
 import clsx from "clsx";
+import Image from "next/image";
 
 const SupportButton = () => {
   const { open } = useSidebar();
@@ -13,8 +14,9 @@ const SupportButton = () => {
         hidden: !open,
       })}
     >
-      <img
-        className="h-8"
+      <Image
+        height={32}
+        width={150}
         src="https://storage.ko-fi.com/cdn/kofi6.png?v=6"
         alt="Buy Me a Coffee at ko-fi.com"
       />

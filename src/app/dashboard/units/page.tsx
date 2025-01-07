@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Unit } from "@/lib/type";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import Link from "next/link";
 
 const Page = () => {
@@ -66,7 +67,7 @@ const List = ({ units }: { units: Unit[] }) => {
                 .replaceAll(" ", "_")}`}
               className="flex items-center gap-2 p-2 hover:bg-background"
             >
-              <img src={unit.icon} alt={unit.name} className="w-12" />
+              <Image src={unit.icon} alt={unit.name} width={48} height={48} />
               <h1>{unit.name}</h1>
             </Link>
           </div>
