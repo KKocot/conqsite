@@ -16,6 +16,16 @@ import AppSidebar from "@/feature/navbar/sidebar";
 export const metadata: Metadata = {
   title: "House management app",
   description: "Counquerors Blade app to house management",
+  openGraph: {
+    images: [
+      {
+        url: "/logo.png",
+        width: 800,
+        height: 600,
+        alt: "House management app",
+      },
+    ],
+  },
 };
 
 export default async function RootLayout({

@@ -170,7 +170,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
             membersLinks={membersLinks}
             houseLinks={houseLinks ?? []}
             dataExists={!!data}
-            isLoading={isLoading}
+            isLoading={!!data ? isLoading : false}
           />
         </SidebarContent>
         <SidebarFooter>
