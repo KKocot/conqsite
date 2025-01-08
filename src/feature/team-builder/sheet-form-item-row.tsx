@@ -7,12 +7,6 @@ import { PackageOpen } from "lucide-react";
 import clsx from "clsx";
 import { Button } from "../../components/ui/button";
 import { artillery } from "@/assets/artillery";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { useTranslations } from "next-intl";
 import { Survey } from "@/lib/get-data";
 import Image from "next/image";

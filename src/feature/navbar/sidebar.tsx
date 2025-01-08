@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import {
   SidebarContent,
   SidebarFooter,
@@ -23,9 +23,6 @@ import ResposiveSidebar from "./responsive-navbar";
 import { useTranslations } from "next-intl";
 
 const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
-  useEffect(() => {
-    console.log("mount");
-  }, []);
   const { data: commanders = [] } = useQuery(rolesQueryOptions());
   const { data } = useSession();
   const t = useTranslations("Navigation");
