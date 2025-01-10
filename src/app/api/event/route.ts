@@ -9,6 +9,12 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import Roles from "@/models/roles";
 
+type Item = {
+  name: string;
+  status: string;
+  lineup: string;
+  userId: string;
+};
 export async function POST(request: Request) {
   const discordKey = headers().get("discord-key");
   const envKey = process.env.BOT_KEY;
@@ -18,13 +24,30 @@ export async function POST(request: Request) {
     await connectMongoDB();
     const data = putEventSchema.parse(await request.json());
     const existingEvent = await Event.findOne({
-      eventId: data.eventId,
+      event_template_id: data.event_template_id,
     });
     let event;
     if (existingEvent) {
-      event = await Event.findByIdAndUpdate(existingEvent._id, data, {
-        new: true,
-      });
+      const updatedSignUps = data.signUps.reduce(
+        (acc: Item[], signUp: Item) => {
+          const index: number = acc.findIndex(
+            (item: Item) => item.userId === signUp.userId
+          );
+          if (index !== -1) {
+            acc.splice(index, 1);
+          }
+          acc.push(signUp);
+          return acc;
+        },
+        []
+      );
+      event = await Event.findByIdAndUpdate(
+        existingEvent._id,
+        { ...data, signUps: updatedSignUps },
+        {
+          new: true,
+        }
+      );
     } else {
       event = await Event.create(data);
     }

@@ -19,9 +19,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import LanguageToggle from "./language-toggle";
 import { ModeToggle } from "./theme-menu";
 import { signOut } from "next-auth/react";
-
 import { Button } from "@/components/ui/button";
-
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 

@@ -9,7 +9,7 @@ export default async function Layout({
   children: React.ReactNode;
 }>) {
   const session = await getServerSession(authOptions);
-  if (!session) redirect("/login");
+  if (!session) redirect("/home");
 
   const origin = process.env.ORIGIN;
 
