@@ -1,15 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
 
-export async function POST(request: Request) {
-  const url = `http://bot.host2play.com:2005/api/create_event`;
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const eventId = searchParams.get("eventId");
+  const url = `http://bot.host2play.com:2005/api/create_event?eventId=${eventId}`;
   try {
     const response = await fetch(url, {
-      method: "POST",
+      cache: "no-store",
       headers: {
+        Authorization: `${process.env.BOT_KEY}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(request.body),
     });
     const data = await response.json();
     return Response.json(data);

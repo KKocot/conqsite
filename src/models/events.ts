@@ -7,9 +7,16 @@ const signUpsSchema = new Schema({
   userId: String,
 });
 const EventSchema = new Schema({
-  eventId: String,
-  date: String,
-  house: String,
+  event_template_id: String,
+  date_start_event: String,
+  time_start_event: String,
+  interval: Number,
+  activity_time: Number,
+  title: String,
+  description: String,
+  house_name: String,
+  channel_id: String,
+  role_id: String,
   signUps: [signUpsSchema],
 });
 

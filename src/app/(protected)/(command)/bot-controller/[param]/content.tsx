@@ -1,9 +1,5 @@
 "use client";
 
-import {
-  BotEvent,
-  useCreateEventMutation,
-} from "@/components/hooks/use-create-event-mutation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -64,8 +60,7 @@ const Content = ({
     queryFn: () => getCyclicalEvents(house),
     enabled: !!house,
   });
-  const createEvent = useCreateEventMutation();
-  const [values, setValues] = useState<BotEvent>({
+  const [values, setValues] = useState({
     title: "",
     description: "",
     date: "",
