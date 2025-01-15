@@ -139,7 +139,7 @@ const CreateHouseDiscordServers = ({
                 href="https://discord.com/oauth2/authorize?client_id=1002261855718342759&permissions=8&integration_type=0&scope=bot"
                 target="_blank"
               >
-                <Link2 className="inline-block" /> Konquerus
+                <Link2 className="inline-block" /> Bot Konquerus
               </Link>{" "}
               {t("verification.point_two")}
             </div>
@@ -152,7 +152,7 @@ const CreateHouseDiscordServers = ({
                 href="https://discord.com/oauth2/authorize?client_id=1002261855718342759&permissions=8&integration_type=0&scope=bot"
                 target="_blank"
               >
-                <Link2 className="inline-block" /> Konquerus
+                <Link2 className="inline-block" /> Bot Konquerus
               </Link>{" "}
               {t("verification.point_five")}
             </div>
