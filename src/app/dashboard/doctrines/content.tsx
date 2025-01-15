@@ -48,7 +48,7 @@ const Content = () => {
         { value: "group", doctrines: dedicatedForGruops },
         { value: "unit", doctrines: dedicatedForUnits },
       ].map(({ value, doctrines }) => (
-        <TabsContent key={value} value={value}>
+        <TabsContent key={value} value={value} className="flex justify-center">
           <DoctrinesList doctrines={doctrines} />
         </TabsContent>
       ))}
