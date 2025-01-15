@@ -39,11 +39,10 @@ export default function HouseCard({
     >
       <div className="relative w-full h-[362px]">
         <Link href={`/dashboard/houses/${house.name}`}>
-          <Image
+          <img
             src={house.avatar}
             alt={`${house.name} avatar`}
-            layout="fill"
-            objectFit="cover"
+            className="w-full h-full"
           />
         </Link>
       </div>

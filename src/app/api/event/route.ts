@@ -76,11 +76,11 @@ export async function GET(request: Request) {
     if (!(highCommandAccess || (discordKey && botAllowed(discordKey, envKey))))
       return new Response("401");
     if (eventId) {
-      const event = await Event.findOne({ eventId: eventId });
+      const event = await Event.findOne({ event_template_id: eventId });
       return new Response(JSON.stringify(event), { status: 200 });
     }
-    if (house && date) {
-      const event = await Event.findOne({ house: house, date: date });
+    if (house) {
+      const event = await Event.find({ house_name: house });
       return new Response(JSON.stringify(event), { status: 200 });
     }
   } catch (error) {
