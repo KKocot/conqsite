@@ -10,17 +10,17 @@ import {
 import { SquareUserRound, Frame, Castle } from "lucide-react";
 import LanguageToggle from "./language-toggle";
 import { ModeToggle } from "./theme-menu";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { Button } from "../../components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { rolesQueryOptions } from "@/queries/roles.query";
-import { SiDiscord } from "@icons-pack/react-simple-icons";
 import { profileQueryOptions } from "@/queries/profile.query";
 import SupportButton from "./support-button";
 import MobileTrigger from "./mobile-trigger";
 import NavUser from "./user-navbar";
 import ResposiveSidebar from "./responsive-navbar";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
   const { data: commanders = [] } = useQuery(rolesQueryOptions());
@@ -181,15 +181,11 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
             <div className="flex items-center justify-around">
               <LanguageToggle />
               <ModeToggle />
-              <Button
-                onClick={() =>
-                  signIn("discord", { callbackUrl: window.location.origin })
-                }
-                className="gap-1 rounded-xl h-9"
-              >
-                {t("auth.login")}
-                <SiDiscord />
-              </Button>
+              <Link href="/login">
+                <Button className="rounded-xl" variant="custom">
+                  {t("auth.login")}
+                </Button>
+              </Link>
             </div>
           )}
         </SidebarFooter>

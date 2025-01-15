@@ -185,7 +185,11 @@ const ResposiveSidebar = ({
             <SidebarTrigger />
           </div>{" "}
           <SidebarMenu>
-            <Collapsible key={openLinks.title} className="group/collapsible">
+            <Collapsible
+              defaultOpen={true}
+              key={openLinks.title}
+              className="group/collapsible"
+            >
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
                   <SidebarMenuButton>
@@ -215,6 +219,7 @@ const ResposiveSidebar = ({
           {dataExists ? (
             <SidebarMenu>
               <Collapsible
+                defaultOpen={true}
                 key={membersLinks.title}
                 className="group/collapsible"
               >
@@ -254,7 +259,11 @@ const ResposiveSidebar = ({
               ))
             : houseLinks?.map((e) => (
                 <SidebarMenu key={e.title}>
-                  <Collapsible key={e.title} className="group/collapsible">
+                  <Collapsible
+                    defaultOpen={true}
+                    key={e.title}
+                    className="group/collapsible"
+                  >
                     <SidebarMenuItem>
                       {e.items?.length ? (
                         <>
