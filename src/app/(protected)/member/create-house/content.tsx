@@ -6,6 +6,9 @@ import { DiscordProps, DiscordUsersProps, getAddAll } from "@/lib/get-data";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { MoveRight } from "lucide-react";
+import clsx from "clsx";
+import Steper from "@/components/steper";
 
 export interface ConfigProps {
   guild_id: string;
@@ -81,43 +84,54 @@ const Content = ({ username }: { username: string }) => {
     }
   };
   return (
-    <div className="container pt-8">
-      {step === 1 ? (
-        <CreateHouseDiscordServers
-          type="create"
-          creatorId={username}
-          handleStep={(e) => setStep(e)}
-          handleDiscord={setDiscordData}
-          handlerGeneral={setConfigValues}
-        />
-      ) : step === 2 && discordData.lists ? (
-        <CreateHouseConfig
-          type="create"
-          data={discordData.lists}
-          handleStep={(e) => setStep(e)}
-          values={configValues}
-          setValues={setConfigValues}
-          handleDiscordUsers={setDiscordData}
-          creatorId={username}
-          discordServer={configValues.guild_id}
-        />
-      ) : step === 3 && discordData.users ? (
-        <CreateHouseHighRoles
-          type="create"
-          handleStep={(e) => setStep(e)}
-          discordUsers={discordData.users}
-          values={configValues}
-          setValues={setConfigValues}
-        />
-      ) : step === 4 ? (
-        <CreateHouseCard
-          type="create"
-          onSubmit={onSubmit}
-          values={configValues}
-          setValues={setConfigValues}
-          handleStep={setStep}
-        />
-      ) : null}
+    <div className="flex flex-col items-center w-full pt-6">
+      <Steper
+        step={step}
+        tooltips={[
+          "Discord Servers",
+          "Bot Configuration",
+          "High Roles",
+          "Card",
+        ]}
+      />
+      <div className="container pt-8">
+        {step === 1 ? (
+          <CreateHouseDiscordServers
+            type="create"
+            creatorId={username}
+            handleStep={(e) => setStep(e)}
+            handleDiscord={setDiscordData}
+            handlerGeneral={setConfigValues}
+          />
+        ) : step === 2 && discordData.lists ? (
+          <CreateHouseConfig
+            type="create"
+            data={discordData.lists}
+            handleStep={(e) => setStep(e)}
+            values={configValues}
+            setValues={setConfigValues}
+            handleDiscordUsers={setDiscordData}
+            creatorId={username}
+            discordServer={configValues.guild_id}
+          />
+        ) : step === 3 && discordData.users ? (
+          <CreateHouseHighRoles
+            type="create"
+            handleStep={(e) => setStep(e)}
+            discordUsers={discordData.users}
+            values={configValues}
+            setValues={setConfigValues}
+          />
+        ) : step === 4 ? (
+          <CreateHouseCard
+            type="create"
+            onSubmit={onSubmit}
+            values={configValues}
+            setValues={setConfigValues}
+            handleStep={setStep}
+          />
+        ) : null}
+      </div>
     </div>
   );
 };
