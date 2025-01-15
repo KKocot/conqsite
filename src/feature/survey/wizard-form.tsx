@@ -1,4 +1,3 @@
-import { MoveRight } from "lucide-react";
 import { useState } from "react";
 import StepGeneral from "./step-general";
 import { lowUnits } from "@/assets/low-units-data";
@@ -8,13 +7,13 @@ import { goldenUnits } from "@/assets/golden-units-data";
 import { useForm } from "react-hook-form";
 import { Form } from "../../components/ui/form";
 import FormCol from "./form-col";
-import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { getSurvey, Survey } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import useSubmitSurveyMutation from "../../components/hooks/use-survey-mutation";
 import LoadingComponent from "../ifs/loading";
 import { createNewUnits, createNewWeapons } from "@/lib/utils";
+import Steper from "@/components/steper";
 
 export const DEFAULT_FORM_DATA: Survey = {
   discordNick: "",
@@ -105,32 +104,15 @@ export default function WizardForm({
         className="flex flex-col items-center p-4 gap-6 w-full"
       >
         <h1 className="text-3xl font-bold">{t("form")}</h1>
-        <ul className="flex gap-4 text-accent">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <li key={i} className="flex items-center gap-4">
-              <div
-                className={clsx("rounded-full", {
-                  "border-4 border-accent font-bold": step === i + 1,
-                })}
-              >
-                <Item
-                  moveToStep={setStep}
-                  tooltip={
-                    i === 0
-                      ? t("low_eras")
-                      : i === 1
-                      ? t("heroic_eras")
-                      : i === 2
-                      ? t("golden_era")
-                      : t("general")
-                  }
-                  page={i + 1}
-                />
-              </div>
-              {i !== 3 ? <MoveRight /> : null}
-            </li>
-          ))}
-        </ul>
+        <Steper
+          step={step}
+          tooltips={[
+            t("low_eras"),
+            t("heroic_eras"),
+            t("golden_era"),
+            t("general"),
+          ]}
+        />
         {step === 1 ? (
           <FormCol
             data={lowUnits}
@@ -159,23 +141,3 @@ export default function WizardForm({
     </Form>
   );
 }
-
-const Item = ({
-  tooltip,
-  page,
-  moveToStep,
-}: {
-  tooltip: string;
-  page: number;
-  moveToStep: (e: number) => void;
-}) => {
-  return (
-    <div
-      title={tooltip}
-      onClick={() => moveToStep(page)}
-      className="border-2 rounded-full w-10 h-10 flex items-center justify-center cursor-pointer text-accent border-accent"
-    >
-      {page}
-    </div>
-  );
-};

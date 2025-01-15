@@ -259,11 +259,7 @@ const ResposiveSidebar = ({
               ))
             : houseLinks?.map((e) => (
                 <SidebarMenu key={e.title}>
-                  <Collapsible
-                    defaultOpen={true}
-                    key={e.title}
-                    className="group/collapsible"
-                  >
+                  <Collapsible key={e.title} className="group/collapsible">
                     <SidebarMenuItem>
                       {e.items?.length ? (
                         <>
