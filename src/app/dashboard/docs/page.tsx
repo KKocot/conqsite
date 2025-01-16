@@ -29,12 +29,15 @@ const DocsPage: React.FC = () => {
           House Description - is required, not offensive to others, and not
           longer than 45 characters
         </li>
-        <li>Country - e.g. "Poland", "UK" or maybe "International"</li>
+        <li>
+          Country - e.g. &rdquo;Poland&rdquo;, &rdquo;UK&rdquo; or maybe
+          &rdquo;International&rdquo;
+        </li>
         <li>Discord Link - for your house discord server</li>
         <li>
           Avatar - Image URL address. I recommend using a free image hoster like
-          https://imgur.com to upload your house image. DON'T use URLs from
-          discord images, as they will disappear after a few days
+          https://imgur.com to upload your house image. DON&rsquo;T use URLs
+          from discord images, as they will disappear after a few days
         </li>
         <li>Server - On which CB server can we find your home</li>
       </ul>

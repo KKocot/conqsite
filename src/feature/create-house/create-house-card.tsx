@@ -17,12 +17,6 @@ import {
 } from "../../components/ui/select";
 import HouseCard from "./house-card";
 import { servers } from "@/lib/utils";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../../components/ui/tooltip";
 import { Info } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 import { getHousesDetails, HouseDetails } from "@/lib/get-data";
@@ -97,9 +91,10 @@ const CreateHouseCard = ({
                 {t("house_card.name")}
                 <HoverClickTooltip
                   triggerChildren={<Info />}
-                  children={t("house_card.name_info")}
                   buttonStyle="rounded-full"
-                />
+                >
+                  {t("house_card.name_info")}
+                </HoverClickTooltip>
               </Label>
               <Input
                 id="housename"
@@ -122,9 +117,10 @@ const CreateHouseCard = ({
                 {t("house_card.description")}
                 <HoverClickTooltip
                   triggerChildren={<Info />}
-                  children={t("house_card.description_info")}
                   buttonStyle="rounded-full"
-                />
+                >
+                  {t("house_card.description_info")}
+                </HoverClickTooltip>
               </Label>
               <Textarea
                 id="housedescription"
@@ -149,9 +145,10 @@ const CreateHouseCard = ({
                 {t("house_card.country")}
                 <HoverClickTooltip
                   triggerChildren={<Info />}
-                  children={t("house_card.country_info")}
                   buttonStyle="rounded-full"
-                />
+                >
+                  {t("house_card.country_info")}
+                </HoverClickTooltip>
               </Label>
               <Input
                 id="country"
@@ -173,9 +170,10 @@ const CreateHouseCard = ({
                 {t("house_card.link")}
                 <HoverClickTooltip
                   triggerChildren={<Info />}
-                  children={t("house_card.link_info")}
                   buttonStyle="rounded-full"
-                />
+                >
+                  {t("house_card.link_info")}
+                </HoverClickTooltip>
               </Label>
               <Input
                 id="discordlink"
@@ -203,10 +201,11 @@ const CreateHouseCard = ({
                 {t("house_card.logo")}
                 <HoverClickTooltip
                   triggerChildren={<Info />}
-                  children={t("house_card.logo_info")}
                   contentStyle="max-w-xs"
                   buttonStyle="rounded-full"
-                />
+                >
+                  {t("house_card.logo_info")}
+                </HoverClickTooltip>
               </Label>
               <Input
                 id="houseimage"
@@ -226,9 +225,10 @@ const CreateHouseCard = ({
                 {t("house_card.server")}
                 <HoverClickTooltip
                   triggerChildren={<Info />}
-                  children={t("house_card.server_info")}
                   buttonStyle="rounded-full"
-                />
+                >
+                  {t("house_card.server_info")}
+                </HoverClickTooltip>
               </Label>
               <Select
                 value={values.server}
