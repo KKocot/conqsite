@@ -29,6 +29,7 @@ import { getHousesDetails, HouseDetails } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { ConfigProps } from "@/app/(protected)/member/create-house/content";
 import clsx from "clsx";
+import HoverClickTooltip from "@/components/hover-click-tooltip";
 
 interface CreateProps {
   type: "create";
@@ -89,9 +90,16 @@ const CreateHouseCard = ({
         <div className="flex w-full justify-between py-6">
           <div className="flex flex-col w-1/2">
             <div>
-              <Label htmlFor="housename">
+              <Label
+                htmlFor="housename"
+                className="flex items-center p-2 gap-2"
+              >
                 {t("house_card.name")}
-                <InfoTooltip info={t("house_card.name_info")} />
+                <HoverClickTooltip
+                  triggerChildren={<Info />}
+                  children={t("house_card.name_info")}
+                  buttonStyle="rounded-full"
+                />
               </Label>
               <Input
                 id="housename"
@@ -107,9 +115,16 @@ const CreateHouseCard = ({
               />
             </div>
             <div>
-              <Label htmlFor="housedescription">
+              <Label
+                htmlFor="housedescription"
+                className="flex items-center p-2 gap-2"
+              >
                 {t("house_card.description")}
-                <InfoTooltip info={t("house_card.description_info")} />
+                <HoverClickTooltip
+                  triggerChildren={<Info />}
+                  children={t("house_card.description_info")}
+                  buttonStyle="rounded-full"
+                />
               </Label>
               <Textarea
                 id="housedescription"
@@ -130,9 +145,13 @@ const CreateHouseCard = ({
               />
             </div>
             <div>
-              <Label htmlFor="country">
+              <Label htmlFor="country" className="flex items-center p-2 gap-2">
                 {t("house_card.country")}
-                <InfoTooltip info={t("house_card.country_info")} />
+                <HoverClickTooltip
+                  triggerChildren={<Info />}
+                  children={t("house_card.country_info")}
+                  buttonStyle="rounded-full"
+                />
               </Label>
               <Input
                 id="country"
@@ -147,9 +166,16 @@ const CreateHouseCard = ({
               />
             </div>
             <div>
-              <Label htmlFor="discordlink">
+              <Label
+                htmlFor="discordlink"
+                className="flex items-center p-2 gap-2"
+              >
                 {t("house_card.link")}
-                <InfoTooltip info={t("house_card.link_info")} />
+                <HoverClickTooltip
+                  triggerChildren={<Info />}
+                  children={t("house_card.link_info")}
+                  buttonStyle="rounded-full"
+                />
               </Label>
               <Input
                 id="discordlink"
@@ -170,9 +196,17 @@ const CreateHouseCard = ({
               />
             </div>
             <div>
-              <Label htmlFor="houseimage">
+              <Label
+                htmlFor="houseimage"
+                className="flex items-center p-2 gap-2"
+              >
                 {t("house_card.logo")}
-                <InfoTooltip info={t("house_card.logo_info")} />
+                <HoverClickTooltip
+                  triggerChildren={<Info />}
+                  children={t("house_card.logo_info")}
+                  contentStyle="max-w-xs"
+                  buttonStyle="rounded-full"
+                />
               </Label>
               <Input
                 id="houseimage"
@@ -188,9 +222,13 @@ const CreateHouseCard = ({
             </div>
 
             <div>
-              <Label htmlFor="servers">
+              <Label htmlFor="servers" className="flex items-center p-2 gap-2">
                 {t("house_card.server")}
-                <InfoTooltip info={t("house_card.server_info")} />
+                <HoverClickTooltip
+                  triggerChildren={<Info />}
+                  children={t("house_card.server_info")}
+                  buttonStyle="rounded-full"
+                />
               </Label>
               <Select
                 value={values.server}
@@ -291,18 +329,3 @@ const CreateHouseCard = ({
 };
 
 export default CreateHouseCard;
-
-const InfoTooltip = ({ info }: { info: string }) => {
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Info className="m-1 inline-block cursor-pointer" />
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>{info}</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  );
-};
