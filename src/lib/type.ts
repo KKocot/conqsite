@@ -24,18 +24,6 @@ export interface Unit {
   src: string;
   value: number;
   pref?: string;
-  type?: string[];
-  description?: string;
-  tree?: {
-    maxlvl: number;
-    img: string;
-    structure: Tree[];
-  };
-  season?: { number: number; name: string };
-  formation?: { name: string; img: string; description: string }[];
-  skills?: { name: string; description: string; image: string }[];
-  dedicatedDoctrins?: { name: string; img: string; description: string }[];
-  kits?: { name: string; img: string };
 }
 export interface SheetTypes {
   username: string;

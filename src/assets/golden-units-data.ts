@@ -10,10 +10,6 @@ export const goldenUnits: Unit[] = [
     value: 10,
     era: "golden",
     icon: "/golden-icons/Siphonarioi.webp",
-    type: ["ranged", "special"],
-    description:
-      "Known as a Sipho or Flames. They burn enemies, protect them with a hero and other units like a shields etc.",
-    season: { number: 5, name: "Legacy of fire" },
   },
   {
     id: 2,
@@ -254,9 +250,6 @@ export const goldenUnits: Unit[] = [
     value: 10,
     era: "golden",
     icon: "/golden-icons/Queens_Paladins.webp",
-    type: ["infrantry"],
-    description: "description",
-    season: { number: 18, name: "Avalon" },
   },
   {
     id: 26,
@@ -277,9 +270,6 @@ export const goldenUnits: Unit[] = [
     value: 9,
     era: "golden",
     icon: "/golden-icons/Soneczna_falanga_icon.webp",
-    type: ["infrantry", "antycav"],
-    description: "Phalanx",
-    season: { number: 7, name: "Season of fire" },
   },
   {
     id: 28,
@@ -290,12 +280,6 @@ export const goldenUnits: Unit[] = [
     value: 9,
     era: "golden",
     icon: "/golden-icons/New_gold_unit.webp",
-    type: ["ranged", "special"],
-    description: "Cannons",
-    season: {
-      number: 22,
-      name: "Warfare revolution",
-    },
   },
   {
     id: 29,
@@ -306,11 +290,5 @@ export const goldenUnits: Unit[] = [
     value: 9,
     era: "golden",
     icon: "/golden-icons/T5_new_unit.png",
-    type: ["melee"],
-    description: "Spartans",
-    season: {
-      number: 23,
-      name: "Sparta",
-    },
   },
 ];
