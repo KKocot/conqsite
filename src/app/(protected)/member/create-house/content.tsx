@@ -4,7 +4,6 @@ import CreateHouseCard from "@/feature/create-house/create-house-card";
 import CreateHouseConfig from "@/feature/create-house/create-house-config";
 import { DiscordProps, DiscordUsersProps, getAddAll } from "@/lib/get-data";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 export interface ConfigProps {
@@ -47,7 +46,7 @@ const Content = ({ username }: { username: string }) => {
     description: "",
     country: "",
     discordLink: "",
-    avatar: "",
+    avatar: "https://i.imgur.com/4VEMy1m.png",
     server: "",
     highcommand: [],
     righthand: [],

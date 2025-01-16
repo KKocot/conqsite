@@ -12,6 +12,7 @@ import Link from "next/link";
 import { HouseAssets } from "@/lib/get-data";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface HouseDetails {
   name: string;
@@ -38,13 +39,13 @@ export default function HouseCard({
       })}
     >
       <div className="relative w-full h-[362px]">
-        <Link href={`/dashboard/houses/${house.name}`}>
-          <Image
-            src={house.avatar}
-            alt={`${house.name} avatar`}
-            layout="fill"
-            objectFit="cover"
-          />
+        <Link href={`/dashboard/houses/${house.name}`} target="_blank">
+          <Avatar className="w-[362px] h-[362px] rounded-none">
+            <AvatarImage src={house.avatar} alt={`${house.name} avatar`} />
+            <AvatarFallback>
+              <img src="https://i.imgur.com/4VEMy1m.png" alt="avatar" />
+            </AvatarFallback>
+          </Avatar>
         </Link>
       </div>
       <CardHeader className="pt-2 ">

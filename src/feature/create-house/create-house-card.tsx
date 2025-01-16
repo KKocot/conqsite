@@ -57,7 +57,10 @@ const CreateHouseCard = ({
     queryKey: ["houses"],
     queryFn: getHousesDetails,
   });
+  const pattern = /^[a-zA-Z0-9 .,!?':;"-]+$/;
+
   const validation = {
+    incorrectName: !pattern.test(values.name),
     isHouseNameAvailable: housesData
       ? [
           ...housesData.map((house) => house.name.toLocaleLowerCase()),
@@ -71,6 +74,10 @@ const CreateHouseCard = ({
       !values.discordLink.includes("discord.gg"),
     countryTooLong: values.country.length > 20,
     serverRequired: !values.server,
+    descriptionIsRequired: !values.description,
+    countryIsRequired: !values.country,
+    discordLinkIsRequired: !values.discordLink,
+    avatarIsRequired: !values.avatar,
   };
   return (
     <Card>
@@ -225,19 +232,31 @@ const CreateHouseCard = ({
               {t("previous")}
             </Button>
           )}
-          {validation.isHouseNameAvailable && type !== "edit" ? (
-            <p className="text-red-500">{t("house_card.error_one")}</p>
-          ) : validation.nameTooLong ? (
-            <p className="text-red-500">{t("house_card.error_two")}</p>
-          ) : validation.descriptionTooLong ? (
-            <p className="text-red-500">{t("house_card.error_three")}</p>
-          ) : validation.wrongDiscordLink ? (
-            <p className="text-red-500">{t("house_card.error_four")}</p>
-          ) : validation.countryTooLong ? (
-            <p className="text-red-500">{t("house_card.error_five")}</p>
-          ) : validation.serverRequired ? (
-            <p className="text-red-500">{t("house_card.error_six")}</p>
-          ) : null}
+          <p className="text-red-500">
+            {validation.isHouseNameAvailable && type !== "edit"
+              ? t("house_card.error_one")
+              : validation.incorrectName
+              ? 'Name can only contain letters, numbers, and special characters: .,!?":;-"'
+              : validation.nameTooLong
+              ? t("house_card.error_two")
+              : validation.descriptionTooLong
+              ? t("house_card.error_three")
+              : validation.wrongDiscordLink
+              ? t("house_card.error_four")
+              : validation.countryTooLong
+              ? t("house_card.error_five")
+              : validation.serverRequired
+              ? t("house_card.error_six")
+              : validation.descriptionIsRequired
+              ? "Description is required"
+              : validation.countryIsRequired
+              ? "Country is required"
+              : validation.discordLinkIsRequired
+              ? "Discord link is required"
+              : validation.avatarIsRequired
+              ? "Avatar is required"
+              : null}
+          </p>
           <Button
             disabled={
               !values.name ||
@@ -247,11 +266,16 @@ const CreateHouseCard = ({
               !values.avatar ||
               !values.server ||
               (validation.isHouseNameAvailable && type !== "edit") ||
+              validation.incorrectName ||
               validation.nameTooLong ||
               validation.descriptionTooLong ||
               validation.wrongDiscordLink ||
               validation.countryTooLong ||
-              validation.serverRequired
+              validation.serverRequired ||
+              validation.descriptionIsRequired ||
+              validation.countryIsRequired ||
+              validation.discordLinkIsRequired ||
+              validation.avatarIsRequired
             }
             variant="custom"
             onClick={onSubmit}
