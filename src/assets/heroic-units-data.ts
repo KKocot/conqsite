@@ -353,7 +353,7 @@ export const heroicUnits = [
     id: 36,
     name: "WuWei",
     src: "/heroic-units/wuwej.png",
-    leadership: 225,
+    leadership: 235,
     masteryPoints: false,
     value: 9,
     era: "heroic",

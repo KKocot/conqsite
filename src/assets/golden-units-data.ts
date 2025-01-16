@@ -272,7 +272,7 @@ export const goldenUnits: Unit[] = [
     id: 27,
     name: "Sunward Phalanx",
     src: "/golden-units/Soneczna_falanga.webp",
-    leadership: 290,
+    leadership: 300,
     masteryPoints: false,
     value: 9,
     era: "golden",
