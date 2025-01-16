@@ -17,6 +17,7 @@ import {
 } from "@/app/(protected)/member/create-house/content";
 import { EditConfigProps } from "@/app/(protected)/(owner)/settings/bot-config/[param]/content";
 import { useTranslations } from "next-intl";
+import HoverClickTooltip from "@/components/hover-click-tooltip";
 
 export interface CreateHouse {
   guild_id: string;
@@ -93,44 +94,40 @@ const CreateHouseDiscordServers = ({
             <div>{t("verification.house_id")}</div>
             <div className="flex gap-2">
               {t("verification.get_id")}
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <Info />
-                  </TooltipTrigger>
-                  <TooltipContent className="bg-background z-50">
-                    <div className="flex">
-                      <div className="flex flex-col items-center">
-                        <p>{t("verification.tooltip_one")}</p>
-                        <Image
-                          src="https://i.imgur.com/yT4pD80.png"
-                          alt="user settings"
-                          width={300}
-                          height={300}
-                        />
-                      </div>
-                      <div className="flex flex-col items-center">
-                        <p>{t("verification.tooltip_two")}n</p>
-                        <Image
-                          src="https://i.imgur.com/vF0rX4b.png"
-                          alt="advanced"
-                          width={500}
-                          height={500}
-                        />
-                      </div>
-                      <div className="flex flex-col items-center">
-                        <p>{t("verification.tooltip_three")}</p>
-                        <Image
-                          src="https://i.imgur.com/2O6V41u.png"
-                          alt="copy server id"
-                          width={200}
-                          height={500}
-                        />
-                      </div>
-                    </div>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <HoverClickTooltip
+                triggerChildren={<Info />}
+                buttonStyle="rounded-full"
+              >
+                <div className="flex">
+                  <div className="flex flex-col items-center">
+                    <p>{t("verification.tooltip_one")}</p>
+                    <Image
+                      src="https://i.imgur.com/yT4pD80.png"
+                      alt="user settings"
+                      width={300}
+                      height={300}
+                    />
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <p>{t("verification.tooltip_two")}n</p>
+                    <Image
+                      src="https://i.imgur.com/vF0rX4b.png"
+                      alt="advanced"
+                      width={500}
+                      height={500}
+                    />
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <p>{t("verification.tooltip_three")}</p>
+                    <Image
+                      src="https://i.imgur.com/2O6V41u.png"
+                      alt="copy server id"
+                      width={200}
+                      height={500}
+                    />
+                  </div>
+                </div>
+              </HoverClickTooltip>
             </div>
             <div>
               {t("verification.point_one")}

@@ -416,6 +416,13 @@ export const epicDoctrines: Doctrine[] = [
       "Increases piercing damage by 60. Increases armour penetration by 180.",
   },
   {
+    name: "Epic Immobility Doctrine",
+    img: "epic2.png",
+    forUnit: ["Javelin Infantry"],
+    dedicated: "group",
+    stats: "Javelins render enemies immobile for 1.5 seconds.",
+  },
+  {
     name: "Epic Lance Doctrine II",
     img: "/doctrines/epic-lance-doctrine-ii.png",
     forUnit: ["Lancers"],
@@ -851,15 +858,15 @@ export const epicDoctrines: Doctrine[] = [
   },
   {
     name: "Epic Spear Doctrine VI",
-    img: "/logo.png",
+    img: "/Epic-polearm-doctrine-vi.png",
     forUnit: ["Spear Infantry"],
     dedicated: "group",
     stats:
       "Unlocks Stand Fast. Gives control immunity for 2.5 seconds. Cooldown lasts 60 seconds.",
   },
   {
-    name: "Epic Valour Doctrine",
-    img: "/logo.png",
+    name: "Epic Valor Doctrine",
+    img: "/epic5.png",
     forUnit: ["TODO"],
     dedicated: "unit",
 
@@ -884,14 +891,14 @@ export const epicDoctrines: Doctrine[] = [
   },
   {
     name: "Epic Ammo Doctrine",
-    img: "/logo.png",
+    img: "/epic4.png",
     forUnit: ["TODO"],
     dedicated: "unit",
     stats: "Increases health by 300. Increases ammo by 15%.",
   },
   {
     name: "Epic Movement Doctrine",
-    img: "/logo.png",
+    img: "/epic3.png",
     forUnit: ["TODO"],
     dedicated: "unit",
     stats: "Increases health by 300. Increases movement speed by 10%.",

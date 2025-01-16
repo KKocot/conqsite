@@ -52,6 +52,7 @@ export async function GET(request: Request) {
   const discordKey = headers().get("discord-key");
   const envKey = process.env.BOT_KEY;
   const { searchParams } = new URL(request.url);
+  const list = searchParams.get("list");
   const query =
     searchParams.get("house") === "" ? undefined : searchParams.get("house");
 
@@ -61,8 +62,19 @@ export async function GET(request: Request) {
     const membersAllowed = houseUserAllowed(survey, query ?? "");
     if (!(membersAllowed || (discordKey && botAllowed(discordKey, envKey))))
       return new Response("401");
-    const surveys = await Survey.find({ house: query });
-    return NextResponse.json({ surveys });
+    if (list) {
+      const data = await Survey.find({ house: query });
+      const surveys = data.map((survey) => {
+        return {
+          discordId: survey.discordId,
+          inGameNick: survey.inGameNick,
+        };
+      });
+      return NextResponse.json({ surveys });
+    } else {
+      const surveys = await Survey.find({ house: query });
+      return NextResponse.json({ surveys });
+    }
   } catch (error) {
     if (error instanceof ZodError)
       return NextResponse.json({ message: error.message }, { status: 400 });

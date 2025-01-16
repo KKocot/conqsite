@@ -369,6 +369,17 @@ const CreateHouseConfig = ({
               <Button variant="custom" onClick={() => handleStep(1)}>
                 {t("previous")}
               </Button>
+              <div className="text-red-600">
+                {values.member === ""
+                  ? "Member Role is reqired"
+                  : values.logs === ""
+                  ? "Logs Channel is reqired"
+                  : values.lineup.some(
+                      (e) => e.channelID === "" || e.roleID === ""
+                    )
+                  ? "Lineup is reqired"
+                  : ""}
+              </div>
               <Button
                 disabled={
                   (data.twRoles !== null && values.tw_member === "") ||

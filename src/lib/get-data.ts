@@ -88,6 +88,17 @@ export const getSurvey = async (discordId: string): Promise<Survey> => {
   return result.survey;
 };
 
+export interface SurveyList {
+  discordId: string;
+  inGameNick: string;
+}
+
+export const getSurveyList = async (house: string): Promise<SurveyList[]> => {
+  const response = await fetch(`/api/survey?house=${house}&list=true`);
+  const result = await response.json();
+  return result.surveys;
+};
+
 interface Signup {
   name: string;
   signup: string[];

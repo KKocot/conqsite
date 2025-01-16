@@ -68,7 +68,7 @@ const Preview = ({
                   </TableRow>
                 ) : null}
                 <TableRow
-                  className={`text-white font-extrabold bg-gradient-to-r to-slate-950 to-20% border-2 border-stale-400 from${e.color}`}
+                  className={`text-white font-extrabold bg-gradient-to-r to-slate-900 to-20% border-2 border-stale-400 from${e.color} bg-slate-900 hover:bg-slate-800`}
                 >
                   <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
                     <span className="flex items-center gap-2">

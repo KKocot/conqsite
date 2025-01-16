@@ -17,18 +17,13 @@ import {
 } from "../../components/ui/select";
 import HouseCard from "./house-card";
 import { servers } from "@/lib/utils";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../../components/ui/tooltip";
 import { Info } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 import { getHousesDetails, HouseDetails } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { ConfigProps } from "@/app/(protected)/member/create-house/content";
 import clsx from "clsx";
+import HoverClickTooltip from "@/components/hover-click-tooltip";
 
 interface CreateProps {
   type: "create";
@@ -57,7 +52,10 @@ const CreateHouseCard = ({
     queryKey: ["houses"],
     queryFn: getHousesDetails,
   });
+  const pattern = /^[a-zA-Z0-9 .,!?':;"-]+$/;
+
   const validation = {
+    incorrectName: !pattern.test(values.name),
     isHouseNameAvailable: housesData
       ? [
           ...housesData.map((house) => house.name.toLocaleLowerCase()),
@@ -71,6 +69,10 @@ const CreateHouseCard = ({
       !values.discordLink.includes("discord.gg"),
     countryTooLong: values.country.length > 20,
     serverRequired: !values.server,
+    descriptionIsRequired: !values.description,
+    countryIsRequired: !values.country,
+    discordLinkIsRequired: !values.discordLink,
+    avatarIsRequired: !values.avatar,
   };
   return (
     <Card>
@@ -82,9 +84,17 @@ const CreateHouseCard = ({
         <div className="flex w-full justify-between py-6">
           <div className="flex flex-col w-1/2">
             <div>
-              <Label htmlFor="housename">
+              <Label
+                htmlFor="housename"
+                className="flex items-center p-2 gap-2"
+              >
                 {t("house_card.name")}
-                <InfoTooltip info={t("house_card.name_info")} />
+                <HoverClickTooltip
+                  triggerChildren={<Info />}
+                  buttonStyle="rounded-full"
+                >
+                  {t("house_card.name_info")}
+                </HoverClickTooltip>
               </Label>
               <Input
                 id="housename"
@@ -100,9 +110,17 @@ const CreateHouseCard = ({
               />
             </div>
             <div>
-              <Label htmlFor="housedescription">
+              <Label
+                htmlFor="housedescription"
+                className="flex items-center p-2 gap-2"
+              >
                 {t("house_card.description")}
-                <InfoTooltip info={t("house_card.description_info")} />
+                <HoverClickTooltip
+                  triggerChildren={<Info />}
+                  buttonStyle="rounded-full"
+                >
+                  {t("house_card.description_info")}
+                </HoverClickTooltip>
               </Label>
               <Textarea
                 id="housedescription"
@@ -123,9 +141,14 @@ const CreateHouseCard = ({
               />
             </div>
             <div>
-              <Label htmlFor="country">
+              <Label htmlFor="country" className="flex items-center p-2 gap-2">
                 {t("house_card.country")}
-                <InfoTooltip info={t("house_card.country_info")} />
+                <HoverClickTooltip
+                  triggerChildren={<Info />}
+                  buttonStyle="rounded-full"
+                >
+                  {t("house_card.country_info")}
+                </HoverClickTooltip>
               </Label>
               <Input
                 id="country"
@@ -140,9 +163,17 @@ const CreateHouseCard = ({
               />
             </div>
             <div>
-              <Label htmlFor="discordlink">
+              <Label
+                htmlFor="discordlink"
+                className="flex items-center p-2 gap-2"
+              >
                 {t("house_card.link")}
-                <InfoTooltip info={t("house_card.link_info")} />
+                <HoverClickTooltip
+                  triggerChildren={<Info />}
+                  buttonStyle="rounded-full"
+                >
+                  {t("house_card.link_info")}
+                </HoverClickTooltip>
               </Label>
               <Input
                 id="discordlink"
@@ -163,9 +194,18 @@ const CreateHouseCard = ({
               />
             </div>
             <div>
-              <Label htmlFor="houseimage">
+              <Label
+                htmlFor="houseimage"
+                className="flex items-center p-2 gap-2"
+              >
                 {t("house_card.logo")}
-                <InfoTooltip info={t("house_card.logo_info")} />
+                <HoverClickTooltip
+                  triggerChildren={<Info />}
+                  contentStyle="max-w-xs"
+                  buttonStyle="rounded-full"
+                >
+                  {t("house_card.logo_info")}
+                </HoverClickTooltip>
               </Label>
               <Input
                 id="houseimage"
@@ -181,9 +221,14 @@ const CreateHouseCard = ({
             </div>
 
             <div>
-              <Label htmlFor="servers">
+              <Label htmlFor="servers" className="flex items-center p-2 gap-2">
                 {t("house_card.server")}
-                <InfoTooltip info={t("house_card.server_info")} />
+                <HoverClickTooltip
+                  triggerChildren={<Info />}
+                  buttonStyle="rounded-full"
+                >
+                  {t("house_card.server_info")}
+                </HoverClickTooltip>
               </Label>
               <Select
                 value={values.server}
@@ -225,19 +270,31 @@ const CreateHouseCard = ({
               {t("previous")}
             </Button>
           )}
-          {validation.isHouseNameAvailable && type !== "edit" ? (
-            <p className="text-red-500">{t("house_card.error_one")}</p>
-          ) : validation.nameTooLong ? (
-            <p className="text-red-500">{t("house_card.error_two")}</p>
-          ) : validation.descriptionTooLong ? (
-            <p className="text-red-500">{t("house_card.error_three")}</p>
-          ) : validation.wrongDiscordLink ? (
-            <p className="text-red-500">{t("house_card.error_four")}</p>
-          ) : validation.countryTooLong ? (
-            <p className="text-red-500">{t("house_card.error_five")}</p>
-          ) : validation.serverRequired ? (
-            <p className="text-red-500">{t("house_card.error_six")}</p>
-          ) : null}
+          <p className="text-red-500">
+            {validation.isHouseNameAvailable && type !== "edit"
+              ? t("house_card.error_one")
+              : validation.incorrectName
+              ? 'Name can only contain letters, numbers, and special characters: .,!?":;-"'
+              : validation.nameTooLong
+              ? t("house_card.error_two")
+              : validation.descriptionTooLong
+              ? t("house_card.error_three")
+              : validation.wrongDiscordLink
+              ? t("house_card.error_four")
+              : validation.countryTooLong
+              ? t("house_card.error_five")
+              : validation.serverRequired
+              ? t("house_card.error_six")
+              : validation.descriptionIsRequired
+              ? "Description is required"
+              : validation.countryIsRequired
+              ? "Country is required"
+              : validation.discordLinkIsRequired
+              ? "Discord link is required"
+              : validation.avatarIsRequired
+              ? "Avatar is required"
+              : null}
+          </p>
           <Button
             disabled={
               !values.name ||
@@ -247,11 +304,16 @@ const CreateHouseCard = ({
               !values.avatar ||
               !values.server ||
               (validation.isHouseNameAvailable && type !== "edit") ||
+              validation.incorrectName ||
               validation.nameTooLong ||
               validation.descriptionTooLong ||
               validation.wrongDiscordLink ||
               validation.countryTooLong ||
-              validation.serverRequired
+              validation.serverRequired ||
+              validation.descriptionIsRequired ||
+              validation.countryIsRequired ||
+              validation.discordLinkIsRequired ||
+              validation.avatarIsRequired
             }
             variant="custom"
             onClick={onSubmit}
@@ -267,18 +329,3 @@ const CreateHouseCard = ({
 };
 
 export default CreateHouseCard;
-
-const InfoTooltip = ({ info }: { info: string }) => {
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Info className="m-1 inline-block cursor-pointer" />
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>{info}</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  );
-};

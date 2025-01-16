@@ -57,13 +57,15 @@ const HouseSeasonTable = ({
               {attendancePercentage}%
             </Badge>
           </TooltipTrigger>
-          <TooltipContent>
-            {cleandAttendanceDates.map((e) => (
-              <span key={e} className="text-center p-1">
-                {e}
-              </span>
-            ))}
-          </TooltipContent>
+          {cleandAttendanceDates.length !== 0 ? (
+            <TooltipContent className="flex flex-col">
+              {cleandAttendanceDates.map((e) => (
+                <span key={e} className="text-center p-1">
+                  {e}
+                </span>
+              ))}
+            </TooltipContent>
+          ) : null}
         </Tooltip>
       </TooltipProvider>
       <span className="text-start">

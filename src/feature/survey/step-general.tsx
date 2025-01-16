@@ -23,6 +23,7 @@ import { getHousesDetails } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import LoadingComponent from "../ifs/loading";
+import HoverClickTooltip from "@/components/hover-click-tooltip";
 
 const StepGeneral = ({
   form,
@@ -182,22 +183,21 @@ const StepGeneral = ({
           />
         </div>
         <div>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger type="button" className="flex items-center">
-                <>
-                  <h2 className="font-bold text-md">{t("weapons")}</h2>
-                  <Info className="h-5 hover:scale-110 ease-in-out duration-300" />
-                </>
-              </TooltipTrigger>
-              <TooltipContent>
-                <div>
-                  <p>1 - {t("i_preffer")}</p>
-                  <p>4 - {t("not_preffer")}</p>
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <HoverClickTooltip
+            triggerChildren={
+              <div className="flex items-center">
+                <h2 className="font-bold text-md">{t("weapons")}</h2>
+                <Info className="h-5 hover:scale-110 ease-in-out duration-300" />
+              </div>
+            }
+            buttonStyle="flex items-center rounded-xl"
+          >
+            <div>
+              <p>1 - {t("i_preffer")}</p>
+              <p>4 - {t("not_preffer")}</p>
+            </div>
+          </HoverClickTooltip>
+
           <ul className="flex flex-wrap p-2 gap-2">
             {form.watch("weapons").map((e: any, i: number) => (
               <li

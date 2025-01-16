@@ -43,8 +43,9 @@ const UsersList = ({
                   <Badge
                     variant="secondary"
                     className={clsx("bg-red-800 text-white", {
-                      "hover:text-black dark:hover:text-white bg-slate-600":
-                        !usedPlayers.some((e) => e === survey.inGameNick),
+                      "bg-slate-600": !usedPlayers.some(
+                        (e) => e === survey.inGameNick
+                      ),
                     })}
                   >
                     {survey.inGameNick}
