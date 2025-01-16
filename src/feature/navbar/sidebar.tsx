@@ -135,7 +135,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
           (e) =>
             e.discordId === data?.user.id &&
             e.house === house &&
-            (e.role === "HouseLeader" || e.role === "HighCommander")
+            (e.role === "HouseLeader" || e.role === "RightHand")
         ),
       },
       {
@@ -145,7 +145,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
           (e) =>
             e.discordId === data?.user.id &&
             e.house === house &&
-            (e.role === "HouseLeader" || e.role === "HighCommander")
+            (e.role === "HouseLeader" || e.role === "RightHand")
         ),
       },
       {
@@ -155,7 +155,17 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
           (e) =>
             e.discordId === data?.user.id &&
             e.house === house &&
-            (e.role === "HouseLeader" || e.role === "HighCommander")
+            (e.role === "HouseLeader" || e.role === "RightHand")
+        ),
+      },
+      {
+        title: "House Settings",
+        url: `/settings/${house}`,
+        visibleTo: commanders.some(
+          (e) =>
+            e.discordId === data?.user.id &&
+            e.house === house &&
+            (e.role === "HouseLeader" || e.role === "RightHand")
         ),
       },
     ],
