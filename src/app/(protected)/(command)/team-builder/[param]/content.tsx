@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArtilleryProps, SheetTypes } from "@/lib/type";
-import React, { useMemo, useState } from "react";
+import React, { ReactNode, useMemo, useState } from "react";
 import clsx from "clsx";
 import { weapons } from "@/assets/weapons";
 import Item from "@/feature/team-builder/sheet-form-item";
@@ -10,7 +10,7 @@ import { goldenUnits } from "@/assets/golden-units-data";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
 import { others } from "@/assets/other-units-data";
-import { ScanEye } from "lucide-react";
+import { Rows4, ScanEye, Table, Table2Icon, TableIcon } from "lucide-react";
 import UsersList from "@/feature/team-builder/users-list";
 import { HouseAssets, Survey } from "@/lib/get-data";
 import { DEFAULT_CARD } from "@/lib/defaults";
@@ -22,6 +22,12 @@ import { useParams } from "next/navigation";
 import ItemRow from "@/feature/team-builder/sheet-form-item-row";
 import { Switch } from "@/components/ui/switch";
 import Preview from "@/feature/team-builder/preview";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface PageProps {
   surveysData: Survey[];
@@ -160,33 +166,60 @@ const Content: React.FC<PageProps> = ({
         <Preview data={sheetData} units={units} />
       </div>
       <nav className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 rounded-full bg-background px-1 py-2 shadow-lg">
-        <PublicDialog
-          data={sheetData}
-          house={house}
-          setSheetData={setSheetData}
-          dates={publicLineupsDates}
-        />
-        <Templates
-          assets={assets}
-          house={house}
-          setSheetData={setSheetData}
-          sheetData={sheetData}
-        />
-        <LineupLoader
-          setUserList={setUserList}
-          surveysData={surveysData}
-          house={house}
-        />
-        <Filters filters={filterUnits} setFilter={setFilterUnits} />
-        <Button
-          variant="ghost"
-          size="icon"
-          className="rounded-full"
-          onClick={() => setShowPreview((prev) => !prev)}
-        >
-          <ScanEye className="h-5 w-5" />
-        </Button>
-        <Switch checked={row} onCheckedChange={(checked) => setRow(checked)} />
+        <TooltipContainer title="Public Lineups">
+          <PublicDialog
+            data={sheetData}
+            house={house}
+            setSheetData={setSheetData}
+            dates={publicLineupsDates}
+          />
+        </TooltipContainer>
+        <TooltipContainer title="Templates">
+          <Templates
+            assets={assets}
+            house={house}
+            setSheetData={setSheetData}
+            sheetData={sheetData}
+          />
+        </TooltipContainer>
+        <TooltipContainer title="Lineup Loader">
+          <LineupLoader
+            setUserList={setUserList}
+            surveysData={surveysData}
+            house={house}
+          />
+        </TooltipContainer>
+        <TooltipContainer title="Filters">
+          <Filters filters={filterUnits} setFilter={setFilterUnits} />
+        </TooltipContainer>
+        <TooltipContainer title="Preview">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={() => setShowPreview((prev) => !prev)}
+          >
+            {showPreview ? (
+              <ScanEye className="h-5 w-5" />
+            ) : (
+              <Table className="h-5 w-5" />
+            )}
+          </Button>
+        </TooltipContainer>
+        <TooltipContainer title="Row View">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={() => setRow((prev) => !prev)}
+          >
+            {row ? (
+              <TableIcon className="h-5 w-5" />
+            ) : (
+              <Rows4 className="h-5 w-5" />
+            )}
+          </Button>
+        </TooltipContainer>
       </nav>
     </div>
   );
@@ -194,3 +227,20 @@ const Content: React.FC<PageProps> = ({
 
 export default Content;
 // TODO translation
+
+const TooltipContainer = ({
+  children,
+  title,
+}: {
+  children: ReactNode;
+  title: string;
+}) => {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>{children}</TooltipTrigger>
+        <TooltipContent side="left">{title}</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+};
