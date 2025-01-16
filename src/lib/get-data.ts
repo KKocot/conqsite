@@ -326,3 +326,53 @@ export const getBotToken = async (token: string): Promise<AuthorityToken> => {
   const result = await response.json();
   return result;
 };
+
+export interface UnitObject {
+  name: string;
+  icon: string;
+  authors: string[];
+  era?: string;
+  image: string;
+  leadership?: number;
+  value?: number[];
+  masteryPoints?: boolean;
+  maxlvl?: number;
+  kits?: {
+    name: string;
+    description: string;
+    image: string;
+  }[];
+  season?: {
+    number: number;
+    name: string;
+  };
+  description?: string;
+  skills?: {
+    name: string;
+    description: string;
+    image: string;
+  }[];
+  challenges?: {
+    tier: number;
+    quests: string[];
+  }[];
+  formations?: {
+    name: string;
+    description: string;
+    image: string;
+  }[];
+  treeStructure?: {
+    name: string;
+    description: string;
+    img: string;
+    prev: number | null;
+    id: number;
+    value: number;
+  }[];
+}
+
+export const getUnitWiki = async (unit: string): Promise<UnitObject[]> => {
+  const response = await fetch(`/api/units/wiki?&name=${unit}`);
+  const result = await response.json();
+  return result;
+};

@@ -1,19 +1,253 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { epicDoctrines, rareDoctrines } from "@/assets/doctrines";
+import { useParams } from "next/navigation";
+import Content from "./content";
+import { getUnit } from "@/lib/utils";
+import { Unit } from "@/lib/type";
+import { useQuery } from "@tanstack/react-query";
+import { getUnitWiki } from "@/lib/get-data";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
-import WIP from "@/feature/ifs/wip";
-import Tree from "@/feature/unit-builder/tree";
-import { getUnitPosts } from "@/lib/get-data";
-import { Unit } from "@/lib/type";
-import { getUnit } from "@/lib/utils";
-import { useQuery } from "@tanstack/react-query";
-import { CirclePlus } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useParams } from "next/navigation";
+
+// const unitobject = {
+//   name: "Siphonarioi", // Uneditable
+//   icon: "/golden-icons/Siphonarioi.webp", // Uneditable
+//   era: "golden", // Uneditable
+//   image: "/golden-units/barc-narf-gua-thumb.png", // Uneditable
+//   leadership: 300, // Editable
+//   value: [1000, 900], // Editable
+//   authors: ["BardDev", "Czarny"], // Editable
+//   masteryPoints: false, // Editable
+//   maxlvl: 30, // Editable
+//   season: { number: 5, name: "Legacy of fire" },
+//   description:
+//     "Known as a Sipho or Flames. They burn enemies, protect them with a hero and other units like a shields etc.", // Editable
+//   kits: [
+//     {
+//       name: "Siphonarioi kit",
+//       description: "The Siphonarioi kit",
+//       image: "/kits/sipho_kit.png",
+//     },
+//   ], // Editable
+//   skills: [
+//     {
+//       name: "Firestorm",
+//       description:
+//         "The unit sprays a longer blast of hellfire that will set the enemy on fire for some time.",
+//       image: "/skills/firestorm.png",
+//     },
+//     {
+//       name: "Scorched Earth",
+//       description:
+//         "The unit sprays a quick burst of hellfire. Hellfire will continue to burn on the ground for an extended period of time, inflicting lots of burning damage to enemies passing through.",
+//       image: "/skills/scorched-earth.png",
+//     },
+//   ], // Editable
+//   formations: [
+//     {
+//       name: "Line",
+//       description:
+//         "The unit forms a horizontal line. Good for defending against an oncoming enemy.",
+//       image: "/formations/line-single-horizontal.png",
+//     },
+//     {
+//       name: "Cross Formation",
+//       description:
+//         "The unit stands in two criss-crossing ranks, making it superior at making frontal attacks.",
+//       image: "/formations/cross-formation.png",
+//     },
+//   ], // Editable
+//   treeStructure: [
+//     {
+//       name: "The soldier's life",
+//       description: "Increases health by 6%",
+//       img: "/tree-imgs/hp.png",
+//       prev: null,
+//       id: 1,
+//       value: 1,
+//     },
+
+//     {
+//       name: "Cooldown",
+//       description: "Each level reduces Firestorm's cooldown by 2 seconds",
+//       img: "/tree-imgs/clock.png",
+//       prev: 1,
+//       id: 2,
+//       value: 3,
+//     },
+//     {
+//       name: "Fiery Impact",
+//       description:
+//         "Each level increases flames' blunt damage against enemies by 100",
+//       img: "/tree-imgs/fire_up.png",
+//       prev: 2,
+//       id: 3,
+//       value: 3,
+//     },
+//     {
+//       name: "Move as One",
+//       description: "Increases movement speed by 3%",
+//       img: "/tree-imgs/aura_man.png",
+//       prev: 3,
+//       id: 4,
+//       value: 1,
+//     },
+//     {
+//       name: "Improved Supplies",
+//       description: "Each level increases ammo by 20",
+//       img: "/tree-imgs/ammo.png",
+//       prev: 4,
+//       id: 5,
+//       value: 3,
+//     },
+//     {
+//       name: "Purifyng Hellfire",
+//       description: "Each level increases fire damage by 80 seconds",
+//       img: "/tree-imgs/fire_up.png",
+//       prev: 5,
+//       id: 6,
+//       value: 3,
+//     },
+//     {
+//       name: "Cooldown",
+//       description: "Each level reduces Firestorm's cooldown by 2 seconds",
+//       img: "/tree-imgs/clock.png",
+//       prev: 6,
+//       id: 7,
+//       value: 3,
+//     },
+//     {
+//       name: "Improved Pump Seals",
+//       description: "Substantially increases Firestorm's rate of fire",
+//       img: "/tree-imgs/fire_up.png",
+//       prev: 7,
+//       id: 8,
+//       value: 1,
+//     },
+//     {
+//       name: "Cooldown",
+//       description: "Each level reduces Scorched Earth's cooldown by 2 seconds",
+//       img: "/tree-imgs/clock.png",
+//       prev: 8,
+//       id: 9,
+//       value: 3,
+//     },
+//     {
+//       name: "Eternal Flame",
+//       description: "Increases fire damage by 480",
+//       img: "/tree-imgs/fire_up.png",
+//       prev: 9,
+//       id: 10,
+//       value: 1,
+//     },
+//     {
+//       name: "Improved Supplies",
+//       description: "Increases ammo by 10%",
+//       img: "/tree-imgs/ammo.png",
+//       prev: 1,
+//       id: 11,
+//       value: 1,
+//     },
+//     {
+//       name: "Toughen Up",
+//       description: "Each level increases piercing defence by 3%",
+//       img: "/tree-imgs/def_slashing.png",
+//       prev: 11,
+//       id: 12,
+//       value: 3,
+//     },
+//     {
+//       name: "Bloodbath",
+//       description: "Each level increases slashing defence by 3%",
+//       img: "/tree-imgs/def_slashing.png",
+//       prev: 12,
+//       id: 13,
+//       value: 3,
+//     },
+//     {
+//       name: "A Land of Fire",
+//       description:
+//         "Each level increases duration of falmes on the ground by 2 seconds",
+//       img: "/tree-imgs/fire.png",
+//       prev: 13,
+//       id: 14,
+//       value: 2,
+//     },
+//     {
+//       name: "Refined Hellfire",
+//       description: "Each level increases duration of burning by 1.5 seconds",
+//       img: "/tree-imgs/fire_hand.png",
+//       prev: 14,
+//       id: 15,
+//       value: 3,
+//     },
+//     {
+//       name: "Improved Pump Seals",
+//       description: "Slightly increases Firestorm's rate of fire",
+//       img: "/tree-imgs/fire_up.png",
+//       prev: 15,
+//       id: 16,
+//       value: 1,
+//     },
+//     {
+//       name: "Improved Supplies",
+//       description: "Each level reduces ranged damage taken by 5%",
+//       img: "/tree-imgs/shield_with_arrow_down.png",
+//       prev: 16,
+//       id: 17,
+//       value: 2,
+//     },
+//     {
+//       name: "Move as one",
+//       description: "Each level increases movement speed by 3%",
+//       img: "/tree-imgs/aura_man.png",
+//       prev: 17,
+//       id: 18,
+//       value: 2,
+//     },
+//     {
+//       name: "Fiery Impact",
+//       description:
+//         "Each level increases flames' blunt damage against enemies by 100",
+//       img: "/tree-imgs/fire_up.png",
+//       prev: 18,
+//       id: 19,
+//       value: 3,
+//     },
+//     {
+//       name: "Thick Armour",
+//       description: "Increases all defence by 20%",
+//       img: "/tree-imgs/armored_man.png",
+//       prev: 19,
+//       id: 20,
+//       value: 1,
+//     },
+//   ], // Editable
+//   challenges: [
+//     {
+//       tier: 1,
+//       quests: [
+//         "Kill 100 enemies with Firestorm",
+//         "Kill 100 enemies with Scorched Earth",
+//       ],
+//     },
+//     {
+//       tier: 2,
+//       quests: [
+//         "Kill 200 enemies with Firestorm",
+//         "Kill 200 enemies with Scorched Earth",
+//       ],
+//     },
+//     {
+//       tier: 3,
+//       quests: [
+//         "Kill 300 enemies with Firestorm",
+//         "Kill 300 enemies with Scorched Earth",
+//       ],
+//     },
+//   ],
+// };
 
 const Page = () => {
   const params = useParams();
@@ -25,173 +259,24 @@ const Page = () => {
     | "blue"
     | "grey";
   const found_unit: Unit | null = getUnit(unit, era) ?? null;
+  const doctrines = [...epicDoctrines, ...rareDoctrines].filter(
+    (doctrine) =>
+      doctrine.dedicated === "unit" &&
+      doctrine.forUnit.includes(found_unit?.name ?? "")
+  );
   const { data, isLoading } = useQuery({
-    queryKey: ["unitPost", unit],
-    queryFn: () => getUnitPosts(unit),
+    queryKey: ["unit", found_unit?.name],
+    queryFn: () => getUnitWiki(found_unit?.name ?? ""),
+    enabled: !!found_unit,
   });
-  if (!found_unit) {
-    return <div>Unit not found</div>;
-  }
+  if (isLoading) return <LoadingComponent />;
+  if (!found_unit) return <NoData />;
   return (
-    <WIP />
-    // <div className="container mx-auto py-8">
-    //   <Card className="w-full max-w-4xl mx-auto">
-    //     <CardHeader>
-    //       <div className="flex items-center gap-4">
-    //         <Image
-    //           height={64}
-    //           width={64}
-    //           src={found_unit.icon}
-    //           alt={found_unit.name}
-    //           className="object-contain"
-    //         />
-    //         <CardTitle className="text-3xl sm:text-4xl lg:text-5xl">
-    //           {found_unit.name}
-    //         </CardTitle>
-    //       </div>
-    //     </CardHeader>
-    //     <CardContent className="grid gap-6">
-    //       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-    //         <div>
-    //           <p className="text-sm text-muted-foreground">Leadership</p>
-    //           <p className="font-medium">{found_unit.leadership}</p>
-    //         </div>
-    //         <div>
-    //           <p className="text-sm text-muted-foreground">Value</p>
-    //           <p className="font-medium">{found_unit.value}</p>
-    //         </div>
-    //         <div>
-    //           <p className="text-sm text-muted-foreground">Mastery Points</p>
-    //           <Badge
-    //             variant={found_unit.masteryPoints ? "default" : "secondary"}
-    //           >
-    //             {found_unit.masteryPoints ? "Yes" : "No"}
-    //           </Badge>
-    //         </div>
-    //         <div>
-    //           <p className="text-sm text-muted-foreground">Era</p>
-    //           <p className="font-medium">
-    //             {found_unit.era.charAt(0).toUpperCase() +
-    //               found_unit.era.slice(1)}
-    //           </p>
-    //         </div>
-    //       </div>
-
-    //       <div className="flex justify-between w-full">
-    //         <img src={found_unit.src} alt={found_unit.name} className="h-64" />
-    //         <p>{found_unit.description}</p>
-    //         <div className="w-[750px] h-64 overflow-y-scroll">
-    //           <div className="w-full bg-background p-2 flex justify-between">
-    //             <h2>Community build</h2>
-    //             <Link href={`${unit}/builder`}>
-    //               <CirclePlus />
-    //             </Link>
-    //           </div>
-    //           {isLoading ? (
-    //             <LoadingComponent />
-    //           ) : data && data.length !== 0 ? (
-    //             data.map((post) => (
-    //               <Card key={post.id} className="p-2 mb-2">
-    //                 <Link href={`${post.unit}/${post.id}`}>
-    //                   <div>
-    //                     <CardTitle className="text-xl">{post.title}</CardTitle>
-    //                   </div>
-    //                   <div>
-    //                     <div>{post.description}</div>
-    //                   </div>
-    //                 </Link>
-    //               </Card>
-    //             ))
-    //           ) : (
-    //             <NoData />
-    //           )}
-    //         </div>
-    //       </div>
-    //       <div className="flex justify-center py-4">
-    //         <Tree
-    //           nodes={found_unit.tree?.structure || []}
-    //           unitlvl={found_unit?.tree?.maxlvl || 0}
-    //           mode="view"
-    //         />
-    //       </div>
-    //       <div>
-    //         <h2 className="text-2xl font-semibold mb-4">Skills</h2>
-    //         <div className="grid gap-4 sm:grid-cols-2">
-    //           {!found_unit?.skills
-    //             ? null
-    //             : found_unit?.skills.map((skill) => (
-    //                 <Card key={skill.name}>
-    //                   <CardContent className="p-4">
-    //                     <div className="flex items-center gap-5">
-    //                       <img
-    //                         src={skill.image}
-    //                         alt={skill.name}
-    //                         className="object-cover rounded"
-    //                       />
-    //                       <h3 className="font-semibold">{skill.name}</h3>
-    //                     </div>
-    //                     <p className="text-sm mt-4">{skill.description}</p>
-    //                   </CardContent>
-    //                 </Card>
-    //               ))}
-    //         </div>
-    //       </div>
-
-    //       <div>
-    //         <h2 className="text-2xl font-semibold mb-4">Formations</h2>
-    //         <div className="grid gap-4 sm:grid-cols-2">
-    //           {!found_unit?.formation
-    //             ? null
-    //             : found_unit?.formation.map((formation) => (
-    //                 <Card key={formation.name}>
-    //                   <CardContent className="p-4">
-    //                     <div className="flex items-center gap-5">
-    //                       <img
-    //                         src={formation.img}
-    //                         alt={formation.name}
-    //                         className="object-cover rounded"
-    //                       />
-    //                       <h3 className="font-semibold">{formation.name}</h3>
-    //                     </div>
-    //                     <p className="text-sm mt-4">{formation.description}</p>
-    //                   </CardContent>
-    //                 </Card>
-    //               ))}
-    //         </div>
-    //       </div>
-
-    //       <div className="flex justify-around">
-    //         <div>
-    //           <h2 className="text-2xl font-semibold mb-4 text-center">
-    //             Dedicated Doctrines
-    //           </h2>
-    //           <div className="flex gap-4">
-    //             {found_unit?.dedicatedDoctrins?.map((doctrine) => (
-    //               <div key={doctrine.name} className="text-center">
-    //                 <img
-    //                   src={doctrine.img}
-    //                   alt={doctrine.name}
-    //                   title={doctrine.description}
-    //                   className="w-full h-24 object-contain mb-2"
-    //                 />
-    //                 <p className="text-sm font-medium">{doctrine.name}</p>
-    //               </div>
-    //             ))}
-    //           </div>
-    //         </div>
-    //         <div>
-    //           <h2 className="text-2xl font-semibold mb-4 text-center">Kits</h2>
-    //           <img
-    //             src={found_unit?.kits?.img}
-    //             alt={found_unit?.kits?.name}
-    //             className="w-full h-24 object-contain mb-2"
-    //           />
-    //           <p className="text-sm font-medium">{found_unit?.kits?.name}</p>
-    //         </div>
-    //       </div>
-    //     </CardContent>
-    //   </Card>
-    // </div>
+    <Content
+      entry={data?.[data.length - 1] ?? undefined}
+      doctrines={doctrines}
+      shortEntry={found_unit}
+    />
   );
 };
 export default Page;
