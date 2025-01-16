@@ -23,6 +23,7 @@ export interface Unit {
   name: string;
   src: string;
   value: number;
+  pref?: string;
 }
 export interface SheetTypes {
   username: string;

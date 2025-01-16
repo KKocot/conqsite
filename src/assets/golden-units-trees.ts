@@ -1,6 +1,6 @@
 import { Unit } from "@/lib/type";
 
-export const goldenUnits: Unit[] = [
+export const goldenUnits = [
   {
     id: 1,
     name: "Siphonarioi",
