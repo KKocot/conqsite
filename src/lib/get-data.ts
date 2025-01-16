@@ -287,27 +287,29 @@ export const getHousesAssets = async (): Promise<HouseAssets[]> => {
   return result.housesAssets;
 };
 
-export interface CyclicalEvents {
+type SignUp = {
+  name: string;
+  status: string;
+  lineup: string;
+  userId: string;
+};
+export interface BotEvent {
   _id?: string;
   event_template_id: string;
-  date: string;
-  time: string;
-  interval: "TW" | "Never" | number;
+  date_start_event: string;
+  time_start_event: string;
+  interval: number;
   activity_time: number;
   title: string;
   description: string;
-  guild_id: string;
   house_name: string;
   channel_id: string;
   role_id: string;
+  signUps: SignUp[];
 }
 
-export const getCyclicalEvents = async (
-  house: string
-): Promise<CyclicalEvents[]> => {
-  const response = await fetch(
-    `/api/discord-bot/event-controller?house-name=${house}`
-  );
+export const getBotEvent = async (house: string): Promise<BotEvent[]> => {
+  const response = await fetch(`/api/event?house=${house}`);
   const result = await response.json();
   return result;
 };
