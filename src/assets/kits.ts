@@ -1,0 +1,26 @@
+const kits = [
+  "/chevaliers_kit_thumb.png",
+  "/chevaliers_kit_thumb.png",
+  "/falco_kit_thumb.png",
+  "/fire_lance_kit.png",
+  "/hashashins_kit_thumb.png",
+  "/heavy_lance_kit.png",
+  "/houndsmen_kit_thumb.png",
+  "/iron_reaper_kit.png",
+  "/keshig_kit_thumb.png",
+  "/modao_battalion_kit_thumb.png",
+  "/musket_kit_b.png",
+  "/orochi_samurais_kit_thumb.png",
+  "/pavise_kit_thumb.png",
+  "/retiarius_kit_thumb.png",
+  "/shenji_kit_thumb.png",
+  "/shieldmaidens_kit_thumb.png",
+  "/sihl_kit_thumb.png",
+  "/sipho_kit.png",
+  "/varangian_guardsman_kit_thumb.png",
+  "/wing_hus_kit.png",
+  "/yanyuedao_cavalrymans_kit_thumb.png",
+  "/zweihander_kit_thumb.png",
+];
+
+export default kits;
