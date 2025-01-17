@@ -10,7 +10,7 @@ import { goldenUnits } from "@/assets/golden-units-data";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
 import { others } from "@/assets/other-units-data";
-import { Rows4, ScanEye, Table, Table2Icon, TableIcon } from "lucide-react";
+import { Rows4, ScanEye, Table, TableIcon } from "lucide-react";
 import UsersList from "@/feature/team-builder/users-list";
 import { HouseAssets, Survey } from "@/lib/get-data";
 import { DEFAULT_CARD } from "@/lib/defaults";
@@ -20,7 +20,6 @@ import LineupLoader from "@/feature/team-builder/lineupLoader";
 import { PublicDialog } from "@/feature/team-builder/public-dialog";
 import { useParams } from "next/navigation";
 import ItemRow from "@/feature/team-builder/sheet-form-item-row";
-import { Switch } from "@/components/ui/switch";
 import Preview from "@/feature/team-builder/preview";
 import {
   Tooltip,

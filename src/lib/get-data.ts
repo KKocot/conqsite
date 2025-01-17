@@ -331,37 +331,37 @@ export interface UnitObject {
   name: string;
   icon: string;
   authors: string[];
-  era?: string;
+  era: string;
   image: string;
   leadership?: number;
-  value?: number[];
+  value: number[];
   masteryPoints?: boolean;
-  maxlvl?: number;
-  kits?: {
+  maxlvl: number;
+  kits: {
     name: string;
     description: string;
     image: string;
   }[];
-  season?: {
+  season: {
     number: number;
     name: string;
   };
   description?: string;
-  skills?: {
+  skills: {
     name: string;
     description: string;
     image: string;
   }[];
-  challenges?: {
+  challenges: {
     tier: number;
     quests: string[];
   }[];
-  formations?: {
+  formations: {
     name: string;
     description: string;
     image: string;
   }[];
-  treeStructure?: {
+  treeStructure: {
     name: string;
     description: string;
     img: string;

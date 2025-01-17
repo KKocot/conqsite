@@ -1,13 +1,19 @@
 "use client";
 
-import { useState, useMemo, FC, useCallback, useEffect } from "react";
-import Image from "next/image";
-import clsx from "clsx";
+import {
+  useState,
+  useMemo,
+  useCallback,
+  SetStateAction,
+  Dispatch,
+} from "react";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { UnitObject } from "@/lib/get-data";
+import TreeRenderer from "./tree-renderer";
 
-type TreeNode = {
+export type TreeNode = {
   id: number;
   name: string;
   description: string;
@@ -17,10 +23,12 @@ type TreeNode = {
   children?: TreeNode[];
 };
 
-interface TreeProps {
+export interface TreeProps {
   nodes: TreeNode[];
   unitlvl: number;
+  editMode: boolean;
   mode: "edit" | "view";
+  setUnit: Dispatch<SetStateAction<UnitObject>>;
 }
 const generateTree = (nodes: TreeNode[]) => {
   const root = nodes.find((d) => d.prev === null);
@@ -33,7 +41,7 @@ const generateTree = (nodes: TreeNode[]) => {
   return mapWithChildren(root);
 };
 
-const Tree = ({ nodes, unitlvl, mode }: TreeProps) => {
+const Tree = ({ nodes, unitlvl, mode, editMode, setUnit }: TreeProps) => {
   const [value, setValue] = useState<Map<number, number>>(
     new Map(nodes.map((node) => [node.id, 0]))
   );
@@ -66,13 +74,15 @@ const Tree = ({ nodes, unitlvl, mode }: TreeProps) => {
   return (
     <div className="flex flex-col">
       {tree && (
-        <RenderTree
+        <TreeRenderer
           nodes={[tree]}
           values={value}
           nodesMap={nodesMap}
           onSkillUpdate={handleBadgeClick}
           disabled={sumOfPoints === unitlvl || mode === "view"}
           mode={mode}
+          editMode={editMode}
+          setUnit={setUnit}
         />
       )}
       <div className="flex flex-col w-16 self-end">
@@ -94,71 +104,3 @@ const Tree = ({ nodes, unitlvl, mode }: TreeProps) => {
 };
 
 export default Tree;
-
-const RenderTree: FC<{
-  nodes?: TreeNode[];
-  values: Map<number, number>;
-  nodesMap: Map<number, TreeNode>;
-  disabled: boolean;
-  onSkillUpdate: (nodeId: number) => void;
-  mode: "edit" | "view";
-}> = (props) => {
-  const { nodes = [], mode, ...rest } = props;
-  if (nodes.length === 0) return null;
-  return (
-    <ul>
-      {nodes.map((node) => {
-        return (
-          <li key={node.id} className="flex items-center">
-            <SkillButton {...rest} node={node} mode={mode} />
-            <RenderTree {...props} nodes={node.children} />
-          </li>
-        );
-      })}
-    </ul>
-  );
-};
-
-const SkillButton: FC<{
-  node: TreeNode;
-  values: Map<number, number>;
-  nodesMap: Map<number, TreeNode>;
-  disabled: boolean;
-  onSkillUpdate: (nodeId: number) => void;
-  mode: "edit" | "view";
-}> = ({ node, values, nodesMap, disabled, onSkillUpdate, mode }) => {
-  const value = values.get(node.id)!;
-  const prevValue = values.get(node.prev ?? -1);
-  const prevNode = nodesMap.get(node.prev ?? -1);
-  const isDisabled =
-    (prevValue !== undefined &&
-      prevNode !== undefined &&
-      prevValue < prevNode.value) ||
-    value === node.value;
-  return (
-    <button
-      type="button"
-      className="flex flex-col h-24 w-12 m-2 items-center select-none"
-      disabled={isDisabled || disabled}
-      onClick={() => onSkillUpdate(node.id)}
-    >
-      <Image
-        src={node.img}
-        alt={node.name}
-        width={48}
-        height={48}
-        title={node.name}
-        className="cursor-pointer"
-      />
-      <Badge
-        variant="tree"
-        className={clsx({
-          "opacity-50 cursor-not-allowed": isDisabled || disabled,
-          "bg-primary": value === node?.value,
-        })}
-      >
-        {mode === "view" ? node.value : `${value ?? 0}/${node.value}`}
-      </Badge>
-    </button>
-  );
-};
