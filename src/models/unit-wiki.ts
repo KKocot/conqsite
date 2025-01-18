@@ -6,23 +6,16 @@ const UnitWikiSchema: Schema = new Schema({
   authors: { type: [String], required: true },
   era: { type: String, required: true },
   image: { type: String, required: true },
-  leadership: { type: Number, required: true },
-  value: { type: [Number], required: true },
-  masteryPoints: { type: Boolean, required: true },
-  maxlvl: { type: Number, required: true },
-  accepted: { type: Boolean, required: true },
-  kits: [
-    {
-      name: { type: String, required: true },
-      description: { type: String, required: true },
-      image: { type: String, required: true },
-    },
-  ],
+  leadership: { type: String, required: false },
+  value: { type: [Number], required: false },
+  masteryPoints: { type: Boolean, required: false },
+  maxlvl: { type: String, required: false },
+  accepted: { type: Boolean, required: false },
   season: {
-    number: { type: Number, required: true },
-    name: { type: String, required: true },
+    number: { type: String, required: false },
+    name: { type: String, required: false },
   },
-  description: { type: String, required: true },
+  description: { type: String, required: false },
   skills: [
     {
       name: { type: String, required: true },

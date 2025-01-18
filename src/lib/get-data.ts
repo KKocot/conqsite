@@ -333,13 +333,13 @@ export interface UnitObject {
   authors: string[];
   era: string;
   image: string;
-  leadership?: number;
+  leadership?: string;
   value: number[];
   masteryPoints?: boolean;
-  maxlvl: number;
+  maxlvl: string;
 
   season: {
-    number: number;
+    number: string;
     name: string;
   };
   description?: string;

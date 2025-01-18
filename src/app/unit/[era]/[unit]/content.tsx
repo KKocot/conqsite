@@ -1,3 +1,4 @@
+import useWikiMutation from "@/components/hooks/use-wiki-mutation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,8 +16,9 @@ import { Unit } from "@/lib/type";
 import { PenIcon, Save } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const Content = ({
   entry,
@@ -29,14 +31,14 @@ const Content = ({
     values: {
       name: shortEntry.name,
       icon: shortEntry.icon,
-      era: entry?.era || "",
+      era: shortEntry.era,
       image: shortEntry.src,
-      leadership: entry?.leadership || shortEntry.leadership,
+      leadership: entry?.leadership || shortEntry.leadership.toString(),
       value: entry?.value || [],
       authors: entry?.authors || [],
       masteryPoints: entry?.masteryPoints || false,
-      maxlvl: entry?.maxlvl || 0,
-      season: entry?.season || { number: 0, name: "" },
+      maxlvl: entry?.maxlvl || "",
+      season: entry?.season || { number: "", name: "" },
       description: entry?.description || "",
       skills: entry?.skills || [],
       formations: entry?.formations || [],
@@ -46,7 +48,26 @@ const Content = ({
     },
   });
   const [editMode, setEditMode] = useState(false);
-  const { data } = useSession();
+  const { data: user } = useSession();
+  const wikiMutation = useWikiMutation();
+  const onSubmit = form.handleSubmit(async (data) => {
+    wikiMutation.mutate({
+      ...data,
+      season: {
+        number: data.season.number ?? 0,
+        name: data.season.name ?? "No season",
+      },
+      authors: [...data.authors, user?.user.name ?? "error"],
+    });
+  });
+  useEffect(() => {
+    if (wikiMutation.isSuccess) {
+      toast.success("Unit submitted successfully");
+    }
+    if (wikiMutation.isError) {
+      toast.error("Failed to submit unit");
+    }
+  }, [wikiMutation.isSuccess]);
   return (
     <Form {...form}>
       <form className="container mx-auto py-8">
@@ -88,11 +109,12 @@ const Content = ({
               <div className="flex flex-col items-center">
                 <p className="text-sm text-muted-foreground">Value</p>
                 <p className="font-medium">
-                  {entry && entry.value
+                  {/* {entry && entry.value
                     ? entry.value.reduce((acc, val) => acc + val, 0) /
                       entry.value.length /
                       100
-                    : 0}
+                    : 0} */}
+                  0
                 </p>
                 {/* TODO: Add a tooltip to show the values */}
               </div>
@@ -253,18 +275,21 @@ const Content = ({
               <div className="flex gap-1 mt-4 justify-self-end flex-col">
                 <h5 className="font-semibold">Authors</h5>
                 <div className="flex gap-4 text-xs">
-                  {entry?.authors.map((author) => (
+                  {Array.from(new Set(entry?.authors)).map((author) => (
                     <p key={author} className="text-center">
                       {author}
                     </p>
                   )) ?? "No authors"}
                 </div>
               </div>
-              {!data?.user.name ? (
+              {!user?.user.name ? (
                 <div />
               ) : editMode ? (
                 <Button
-                  onClick={() => setEditMode(!editMode)}
+                  onClick={() => {
+                    setEditMode(!editMode);
+                    onSubmit();
+                  }}
                   className="flex gap-2 rounded-3xl"
                   variant="custom"
                 >
