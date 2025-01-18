@@ -10,7 +10,7 @@ const skills: string[] = [
   "/hearts-of-bravery.png",
   "/unbending-spirit.png",
   "/performing.png",
-  "/brace-weapons.png",
+  "/brace_weapons.png",
   "/arrow-rain.png",
   "/bodkin-arrows.png",
   "/hunt.png",
@@ -20,7 +20,7 @@ const skills: string[] = [
   "/iaido-strike.png",
   "/shock-attack.png",
   "/gallop.png",
-  "/poison-arrows.pmg",
+  "/poison-arrows.png",
   "/wuxing-blast.png",
   "/healing-hands.png",
   "/move-and-fire.png",
@@ -29,5 +29,6 @@ const skills: string[] = [
   "/scorched-earth.png",
   "/blinding-smoke.png",
   "/first-aid.png",
+  "/logo.png",
 ];
 export default skills;

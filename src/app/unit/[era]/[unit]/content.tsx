@@ -6,10 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import SkillsArea from "@/feature/unit-builder/skills-area";
 import Tree from "@/feature/unit-builder/tree";
 import { UnitObject } from "@/lib/get-data";
 import { Unit } from "@/lib/type";
-import { PenIcon, Save } from "lucide-react";
+import { PenIcon, PlusCircle, Save } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
@@ -227,28 +228,7 @@ const Content = ({
               mode="view"
             />
           </div>
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Skills</h2>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {!entry?.skills
-                ? "No information yet"
-                : entry?.skills.map((skill) => (
-                    <Card key={skill.name}>
-                      <CardContent className="p-4">
-                        <div className="flex items-center gap-5">
-                          <img
-                            src={skill.image}
-                            alt={skill.name}
-                            className="object-cover rounded"
-                          />
-                          <h3 className="font-semibold">{skill.name}</h3>
-                        </div>
-                        <p className="text-sm mt-4">{skill.description}</p>
-                      </CardContent>
-                    </Card>
-                  ))}
-            </div>
-          </div>
+          <SkillsArea unit={unit} editMode={editMode} setUnit={setUnit} />
 
           <div>
             <h2 className="text-2xl font-semibold mb-4">Formations</h2>
@@ -272,7 +252,6 @@ const Content = ({
                   ))}
             </div>
           </div>
-
           <div className="flex justify-around">
             {doctrines.length === 0 ? null : (
               <div>
