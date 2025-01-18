@@ -568,7 +568,7 @@ export const goldenUnits = [
   },
   {
     id: 26,
-    name: "Xuanjia Heavy Cavalr",
+    name: "Xuanjia Heavy Cavalry",
     src: "/golden-units/Xuandzia.png",
     leadership: 295,
     masteryPoints: false,

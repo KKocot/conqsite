@@ -1238,7 +1238,14 @@ export const epicDoctrines: Doctrine[] = [
     forUnit: ["Crescent Monks"],
     dedicated: "unit",
     stats:
-      "Deadly Epicycle's first hit will restore small amount of health on self.",
+      "Deadly Epicycle's first hit will restore a small amount of Health on self",
+  },
+  {
+    name: "Yanyuedao-Resistance-Doctrine",
+    img: "/doctrines/Yanyuedao-Resistance-doctrine-new-s15.png",
+    forUnit: ["Yanyuedao Cavalry"],
+    dedicated: "unit",
+    stats: "While using Mounting Dread, all damage taken is reduced by 15%",
   },
   {
     name: "Yanyuedao Resistance Doctrine",
@@ -1252,54 +1259,54 @@ export const epicDoctrines: Doctrine[] = [
     img: "/logo.png",
     forUnit: ["Onna-musha"],
     dedicated: "unit",
-    stats: "Normal attacks apply a 15% health drain effect.",
+    stats: "Normal attacks apply a 15% health drain effect",
   },
   {
     name: "Samurai Assault Doctrine",
     img: "/logo.png",
     forUnit: ["Orochi Samurai"],
     dedicated: "unit",
-    stats: "Increases Double Strike damage by 15%.",
+    stats: "Increases Double Strike damage by 15%",
   },
   {
     name: "Kriegsbruders Battle Doctrine",
     img: "/logo.png",
-    forUnit: ["Kriegsruders"],
+    forUnit: ["Kriegsbruders"],
     dedicated: "unit",
-    stats: "Reduces Full Assault's cooldown by 5 seconds.",
+    stats: "Reduces Full Assault's cooldown by 5 seconds",
   },
   {
     name: "Zweihander Stamina Doctrine",
     img: "/logo.png",
     forUnit: ["Zweihanders"],
     dedicated: "unit",
-    stats: "Each level reduces Knight's Gampit's cooldown by 4 seconds.",
+    stats: "Each level reduces Knight's Gambit's cooldown by 4 seconds.",
   },
   {
     name: "Perceval's Shield Doctrine",
     img: "/logo.png",
-    forUnit: ["Perceval"],
+    forUnit: ["Percival Guardsmen"],
     dedicated: "unit",
-    stats: "Double the block breaking effect of Charge & Throw.",
+    stats: "Doubles the Block breaking effect of Charge & Throw.",
   },
   {
     name: "Queen's Knight Battle Doctrine",
     img: "/logo.png",
-    forUnit: ["Queen's Knight"],
+    forUnit: ["Queens Knights"],
     dedicated: "unit",
-    stats: "Block cannot be damaged within 2 seconds of using Run'Em Through.",
+    stats: "Block cannot be damaged within 2 seconds of using Run 'Em Through.",
   },
   {
     name: "Mansion Guard Medical Doctrine",
     img: "/logo.png",
-    forUnit: ["Wuwei Mansion Guard"],
+    forUnit: ["Wuwei"],
     dedicated: "unit",
     stats: "Using Brutal Sweep restores 10% maximum health.",
   },
   {
     name: "Xuanjia Cavalry Damage Doctrine",
     img: "/logo.png",
-    forUnit: ["Xuanjia Cavalry"],
+    forUnit: ["Xuanjia Heavy Cavalry"],
     dedicated: "unit",
     stats: "Reduces damage taken by 8%",
   },
@@ -1309,7 +1316,7 @@ export const epicDoctrines: Doctrine[] = [
     forUnit: ["Companion Cavalry"],
     dedicated: "unit",
     stats:
-      " Increases the movement speed of hero by 8% as well as piercing, slashing, and blunt damage by 100 for 18 seconds.",
+      "Unlocks [Conquest). Increases the movement speed of your hero by 8% as well as piercing, slashing and blunt damage by 100 for 18 seconds. Increases the base effect of [Sworn Guard] by 100% and makes it affect the whole battlefield for 18 seconds",
   },
   {
     name: "Overwhelm",
@@ -1319,8 +1326,41 @@ export const epicDoctrines: Doctrine[] = [
     stats:
       "Unlocks : Divine Gaze, Creates semi-circular totem of 8 meters at distance of 50 meters in any direction. Enemies within ranfe gain a stack of Expose, sracking ip to 10 times, Stacks are lose after 5 seconds. The Sunward Phalanx deals 40$ increased damage aginst enemies with 5 stacks of Expose. Base cooldown: 50 seconds. Base duration: 15 seconds.",
   },
+  {
+    name: "Crusher",
+    img: "/logo.png",
+    forUnit: ["Laconic Javelins"],
+    dedicated: "unit",
+    stats:
+      "Increases the blocking break effect of [Olympian Volley] on buckler infantry by 50%",
+  },
+
+  {
+    name: "Spartan Chosen: Divine Wrath",
+    img: "/doctrines/Spartan Chosen:-Divine-Wrath-new-s22.png",
+    forUnit: ["Spartan Chosen"],
+    dedicated: "unit",
+    stats:
+      "When the Spartan Chosen build full momentum, their normal and formation attacks can knock down enemy units",
+  },
 ];
 export const rareDoctrines: Doctrine[] = [
+  {
+    name: "Nimble Stride",
+    img: "/logo.png",
+    forUnit: ["Helot Auxilary"],
+    dedicated: "unit",
+    stats:
+      "Increases unit's movement speed by 5%, health by 80, and piercing defense by 100 points",
+  },
+
+  {
+    name: "Spartan Chosen: Formation March",
+    img: "/doctrines/Spartan-Chosen:-Formation-March-new-s22.png",
+    forUnit: ["Spartan Chosen"],
+    dedicated: "unit",
+    stats: "Increases movement speed by 6%.",
+  },
   {
     name: "Breakthrough Doctrine",
     img: "/doctrines/breakthrough-doctrine.png",
@@ -1704,59 +1744,58 @@ export const rareDoctrines: Doctrine[] = [
       "Increases Hashashins piercing armor penetration by 70 points. Increases Hashashins slashing armor penetration by 70 points. Increases Hashashins blunt armor penetration by 70 points.",
   },
   {
-    name: "Wuxing Fire Doctrine",
+    name: "Wuxing Pikemen Doctine",
     img: "/logo.png",
-    forUnit: ["Wuxing"],
+    forUnit: ["Wuxing Pikemens"],
     dedicated: "unit",
-    stats: "Increases Fiery Blast's burn damage by 100 points.",
+    stats: "Increases Fiery Blast's burn damage by 100 points",
   },
   {
-    name: "Yanyuedao Slashing Doctrine",
+    name: "Yanyuedao Cavalar Doctrine",
     img: "/logo.png",
-    forUnit: ["Yanyuedao"],
+    forUnit: ["Yanyuedao Cavalary"],
     dedicated: "unit",
-    stats: "Increases slashing damage by 100 points.",
+    stats: "Increases slashing damage by 100 points",
   },
   {
     name: "Ronin Tactical Doctrine",
     img: "/ronins.png",
     forUnit: ["Ronin"],
     dedicated: "unit",
-    stats: "Iaido Strike can damage an additional target.",
+    stats: "Laido Strike can damage an additional target",
   },
   {
     name: "Samurai Defence Doctrine",
     img: "/logo.png",
     forUnit: ["Orochi Samurai"],
     dedicated: "unit",
-    stats: "Reduces ranged damage taken by 6%.",
+    stats: "Reduces ranged damage taken by 6%",
   },
   {
     name: "Schutzdieners Support Doctrine",
     img: "/schutzdieners.png",
     forUnit: ["Schutzdieners"],
     dedicated: "unit",
-    stats:
-      "Increases all defences for allies that receive healing by 80 points.",
+    stats: "Increases all defences for allies that receive healing by 80",
   },
   {
     name: "Zweihander Marching Doctrine",
     img: "/logo.png",
     forUnit: ["Zweihanders"],
     dedicated: "unit",
-    stats: "Increases movement speed by 6%.",
+    stats: "Increases movment speed by 6%",
   },
   {
     name: "Caradoc's Assault Doctrine",
     img: "/logo.png",
-    forUnit: ["Caradoc"],
+    forUnit: ["Caradocs Cavalry"],
     dedicated: "unit",
     stats: "Increases piercing armour penetration by 10%.",
   },
   {
     name: "Queen's Knight Shield Doctrine",
     img: "/logo.png",
-    forUnit: ["Queen's Knight"],
+    forUnit: ["Queens Knights"],
     dedicated: "unit",
     stats: "Each level reduces damage taken when using Bash & Thrust by 18%.",
   },
@@ -1770,7 +1809,7 @@ export const rareDoctrines: Doctrine[] = [
   {
     name: "Xuanjia Cavalry Energy Doctrine",
     img: "/logo.png",
-    forUnit: ["Xuanjia Cavalry"],
+    forUnit: ["Xuanjia Heavy Cavalry"],
     dedicated: "unit",
     stats: "Reduces Disciplined Assault's cooldown by 4 seconds.",
   },
@@ -1787,7 +1826,23 @@ export const rareDoctrines: Doctrine[] = [
     forUnit: ["Sunward Phalanx"],
     dedicated: "unit",
     stats:
-      "Divine Gaze applies Expose to enemy units. Uppon reaching 10 stacks, that enemy deals 30% reduced damage to the Pverwhelm attire to take effect.",
+      "[Divine Gaze] applies [Expose] to enemy units Upon reaching 10 stacks, that enemy deals 30% reduced damage to the Sunward Phalanx. Must be equipped with the [Sunward Phalanx: Overwhelm] attire to take effect",
+  },
+  {
+    name: "Fire Penetration",
+    img: "/logo.png",
+    forUnit: ["Swinefeathers"],
+    dedicated: "unit",
+    stats:
+      "[Triple Shooting] Their bullets can penetrate two enemies with each enemy taking 75% damage. Their shot can also knock back the enemy units",
+  },
+
+  {
+    name: "Lionroar Crew - Veteran",
+    img: "/doctrines/Lionroar-Crew---Veteran-new-s21.png",
+    forUnit: ["Lionroar Crew"],
+    dedicated: "unit",
+    stats: "Reduce the time of deploying cannons by 2s",
   },
 ];
 export const uncommonDoctrines: Doctrine[] = [
@@ -1860,6 +1915,21 @@ export const uncommonDoctrines: Doctrine[] = [
     forUnit: ["Blunt"],
     dedicated: "group",
     stats: "Increases blunt damage by 60.",
+  },
+  {
+    name: "Ranging Fire",
+    img: "/logo.png",
+    forUnit: ["Reitar Pistoleers"],
+    dedicated: "unit",
+    stats: "Increase the damage of [Roar of Powder] by 15%",
+  },
+
+  {
+    name: "Lionroar Crew - Blood of Iron",
+    img: "/doctrines/Lionroar-Crew---Blood-of-Iron-new-s21.png",
+    forUnit: ["Lionroar Crew"],
+    dedicated: "unit",
+    stats: "Increase the endurance of cannons by 500",
   },
 ];
 export const commonDoctrines: Doctrine[] = [
