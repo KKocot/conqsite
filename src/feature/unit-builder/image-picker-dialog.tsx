@@ -35,7 +35,7 @@ const ImagePickerDialog = ({
   return (
     <Dialog open={open} onOpenChange={setOpenImagePicker}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent>
+      <DialogContent className="h-96 overflow-y-scroll">
         <DialogHeader>
           <DialogTitle>Choose image</DialogTitle>
           <DialogDescription>
@@ -43,7 +43,7 @@ const ImagePickerDialog = ({
             discord
           </DialogDescription>
         </DialogHeader>
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-4 w-full justify-center">
           {images.map((image, i) => (
             <div
               key={i}
