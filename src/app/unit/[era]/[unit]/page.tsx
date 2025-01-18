@@ -26,9 +26,10 @@ const Page = () => {
   });
   if (isLoading) return <LoadingComponent />;
   if (!found_unit) return <NoData />;
+  const lastAccepted = data?.filter((d) => d.accepted ?? d);
   return (
     <Content
-      entry={data?.[data.length - 1] ?? undefined}
+      entry={lastAccepted?.[lastAccepted.length - 1] ?? undefined}
       shortEntry={found_unit}
     />
   );

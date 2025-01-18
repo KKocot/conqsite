@@ -365,6 +365,7 @@ export interface UnitObject {
     id: number;
     value: number;
   }[];
+  accepted: boolean;
 }
 
 export const getUnitWiki = async (unit: string): Promise<UnitObject[]> => {

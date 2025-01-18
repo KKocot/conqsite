@@ -42,6 +42,7 @@ const Content = ({
       formations: entry?.formations || [],
       treeStructure: entry?.treeStructure || [],
       challenges: entry?.challenges || [],
+      accepted: false,
     },
   });
   const [editMode, setEditMode] = useState(false);
@@ -247,7 +248,7 @@ const Content = ({
               <DoctrinesArea unitName={shortEntry.name} />
               <KitsArea unitName={shortEntry.name} />
             </div>
-            <ChallengesArea editMode={editMode} form={form} />
+            {/* <ChallengesArea editMode={editMode} form={form} /> */}
             <div className="flex items-end justify-between">
               <div className="flex gap-1 mt-4 justify-self-end flex-col">
                 <h5 className="font-semibold">Authors</h5>

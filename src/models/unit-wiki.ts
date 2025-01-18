@@ -10,6 +10,7 @@ const UnitWikiSchema: Schema = new Schema({
   value: { type: [Number], required: true },
   masteryPoints: { type: Boolean, required: true },
   maxlvl: { type: Number, required: true },
+  accepted: { type: Boolean, required: true },
   kits: [
     {
       name: { type: String, required: true },
