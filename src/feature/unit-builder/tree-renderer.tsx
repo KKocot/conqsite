@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction } from "react";
-import SkillButton from "./skill-button";
+import BranchButton from "./branch-button";
 import { TreeNode } from "./tree";
 import { UnitObject } from "@/lib/get-data";
 
@@ -20,7 +20,7 @@ const TreeRenderer: FC<{
       {nodes.map((node) => {
         return (
           <li key={node.id} className="flex items-center">
-            <SkillButton {...rest} node={node} mode={mode} />
+            <BranchButton {...rest} node={node} mode={mode} />
             <TreeRenderer {...props} nodes={node.children} />
           </li>
         );

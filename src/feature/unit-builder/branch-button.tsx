@@ -6,7 +6,7 @@ import { TreeNode } from "./tree";
 import clsx from "clsx";
 import { UnitObject } from "@/lib/get-data";
 
-const SkillButton: FC<{
+const BranchButton: FC<{
   node: TreeNode;
   values: Map<number, number>;
   nodesMap: Map<number, TreeNode>;
@@ -36,7 +36,6 @@ const SkillButton: FC<{
 
   const onAdd = () => {
     setUnit((prevUnit) => {
-      console.log(values);
       return {
         ...prevUnit,
         treeStructure: [
@@ -52,7 +51,6 @@ const SkillButton: FC<{
         ],
       };
     });
-    console.log(node);
   };
   return (
     <div className="flex flex-col items-center">
@@ -95,4 +93,4 @@ const SkillButton: FC<{
   );
 };
 
-export default SkillButton;
+export default BranchButton;

@@ -1,44 +1,37 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { UnitObject } from "@/lib/get-data";
 import { PlusCircle, PlusSquare, Trash2 } from "lucide-react";
 import { FC } from "react";
 import ImagePickerDialog from "./image-picker-dialog";
-import skills from "@/assets/skills";
+import { formations } from "@/assets/formations";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 import Image from "next/image";
 
-const SkillsArea: FC<{
+const FormationsArea: FC<{
   editMode: boolean;
   form: UseFormReturn<UnitObject, any, undefined>;
-}> = ({ editMode, form }) => {
+}> = ({ form, editMode }) => {
   const { fields, append, remove, update } = useFieldArray({
     control: form.control,
-    name: "skills",
+    name: "formations",
   });
-
   return (
     <div>
       {fields.length > 0 || editMode ? (
         <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
-          Skills
-          {editMode && (
+          Formations
+          {editMode ? (
             <Button
               className="rounded-full w-fit h-fit p-0"
               variant="custom"
-              onClick={() =>
-                append({
-                  name: "",
-                  description: "",
-                  image: "",
-                })
-              }
+              onClick={() => append({ name: "", image: "", description: "" })}
             >
               <PlusCircle className="w-6 h-6" />
             </Button>
-          )}
+          ) : null}
         </h2>
       ) : null}
       <div className="grid gap-4 sm:grid-cols-2">
@@ -48,8 +41,8 @@ const SkillsArea: FC<{
               <div className="flex items-center gap-5">
                 {editMode ? (
                   <ImagePickerDialog
-                    images={skills}
-                    path="skills"
+                    images={formations.map((formation) => formation.image)}
+                    path="formations"
                     onSetImage={(image) => {
                       update(i, { ...field, image });
                     }}
@@ -58,7 +51,7 @@ const SkillsArea: FC<{
                       <Image
                         width={40}
                         height={40}
-                        src={`/skills/${field.image}`}
+                        src={`/formations/${field.image}`}
                         alt={field.name}
                         className="cursor-pointer hover:border-accent border-4"
                       />
@@ -75,13 +68,13 @@ const SkillsArea: FC<{
                   <Image
                     width={40}
                     height={40}
-                    src={`/skills/${field.image}`}
+                    src={`/formations/${field.image}`}
                     alt={field.name}
                     className="object-cover rounded"
                   />
                 )}
                 {editMode ? (
-                  <Input {...form.register(`skills.${i}.name`)} />
+                  <Input {...form.register(`formations.${i}.name`)} />
                 ) : (
                   <h3 className="font-semibold">{field.name}</h3>
                 )}
@@ -96,7 +89,7 @@ const SkillsArea: FC<{
                 ) : null}
               </div>
               {editMode ? (
-                <Textarea {...form.register(`skills.${i}.description`)} />
+                <Textarea {...form.register(`formations.${i}.description`)} />
               ) : (
                 <p className="text-sm mt-4">{field.description}</p>
               )}
@@ -108,4 +101,4 @@ const SkillsArea: FC<{
   );
 };
 
-export default SkillsArea;
+export default FormationsArea;

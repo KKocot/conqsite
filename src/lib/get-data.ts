@@ -337,11 +337,7 @@ export interface UnitObject {
   value: number[];
   masteryPoints?: boolean;
   maxlvl: number;
-  kits: {
-    name: string;
-    description: string;
-    image: string;
-  }[];
+
   season: {
     number: number;
     name: string;
