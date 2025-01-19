@@ -45,6 +45,16 @@ const DocsPage: React.FC = () => {
         <li>Server - On which CB server can we find your home</li>
       </ul>
 
+      <h2 className="text-xl font-semibold mb-2">General Informations:</h2>
+      <ul className="list-disc pl-6 mb-4">
+        <li>
+          Add/Remove Member - To add user to your house, give him Member role on
+          your Discord and Konquerus gonna add him to website database. To
+          remove someone from house, take off his Member role or he will get
+          remove automaticly when he leave your server or someone kick him
+        </li>
+      </ul>
+
       <h2 className="text-xl font-semibold mb-2">Funders Houses Options:</h2>
       <h3 className="text-lg font-semibold mb-1">House:</h3>
       <ul className="list-disc pl-6 mb-4">
