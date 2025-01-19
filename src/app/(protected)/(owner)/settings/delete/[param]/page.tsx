@@ -20,11 +20,12 @@ const Page = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center gap-4">
       <h1>To delete house write your house name</h1>
       <Input value={name} onChange={(e) => setName(e.target.value)} />
       <Button
         disabled={house !== name}
+        className="self-end"
         variant="destructive"
         onClick={onDelete}
       >
