@@ -19,7 +19,7 @@ export async function POST(request: Request) {
   const discordKey = headers().get("discord-key");
   const envKey = process.env.BOT_KEY;
   const botAccess = discordKey ? botAllowed(discordKey, envKey) : false;
-  if (!botAccess) return new Response("401");
+  // if (!botAccess) return new Response("401");
   try {
     await connectMongoDB();
     const data = putEventSchema.parse(await request.json());
@@ -83,6 +83,36 @@ export async function GET(request: Request) {
       const event = await Event.find({ house_name: house });
       return new Response(JSON.stringify(event), { status: 200 });
     }
+  } catch (error) {
+    if (error instanceof ZodError)
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    if (error instanceof Error)
+      return NextResponse.json({ message: error.message }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: Request) {
+  const discordKey = headers().get("discord-key");
+  const envKey = process.env.BOT_KEY;
+
+  const session = await getServerSession(authOptions);
+  try {
+    await connectMongoDB();
+    const data = putEventSchema.parse(await request.json());
+
+    const roles = await Roles.find({ house: data.house_name });
+    const highCommandAccess = highCommandAllowed(
+      roles,
+      session,
+      data.house_name
+    );
+    if (!(highCommandAccess || (discordKey && botAllowed(discordKey, envKey))))
+      return new Response("401");
+
+    const event = await Event.findOneAndDelete({
+      event_template_id: data.event_template_id,
+    });
+    return new Response(JSON.stringify(event), { status: 200 });
   } catch (error) {
     if (error instanceof ZodError)
       return NextResponse.json({ message: error.message }, { status: 400 });
