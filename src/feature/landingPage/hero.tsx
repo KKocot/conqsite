@@ -12,11 +12,11 @@ export default function Hero() {
         </p>
         <div className="flex justify-center space-x-8 text-background">
           <div className="transform hover:scale-105 transition-transform duration-300 p-4 rounded-lg medieval-border bg-accent/70">
-            <p className="text-3xl font-bold">16</p>
+            <p className="text-3xl font-bold">17</p>
             <p>Houses using our website and bot</p>
           </div>
           <div className="transform hover:scale-105 transition-transform duration-300 p-4 rounded-lg medieval-border bg-accent/70">
-            <p className="text-3xl font-bold">1530</p>
+            <p className="text-3xl font-bold">1572</p>
             <p>Warriors surveys</p>
           </div>
         </div>

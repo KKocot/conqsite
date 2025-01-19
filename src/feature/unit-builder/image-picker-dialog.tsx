@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import clsx from "clsx";
+import Image from "next/image";
 import { ReactNode, useId, useState } from "react";
 
 const ImagePickerDialog = ({
@@ -52,10 +53,13 @@ const ImagePickerDialog = ({
               })}
             >
               <Label htmlFor={id + "_" + image}>
-                <img
+                <Image
                   src={`/${path}/${image}`}
                   title={image}
-                  className="w-10 h-10 cursor-pointer"
+                  alt={image}
+                  width={40}
+                  height={40}
+                  className="cursor-pointer"
                 />
               </Label>
               <Input

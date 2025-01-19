@@ -67,7 +67,7 @@ const Content = ({
     if (wikiMutation.isError) {
       toast.error("Failed to submit unit");
     }
-  }, [wikiMutation.isSuccess]);
+  }, [wikiMutation.isSuccess, wikiMutation.isError]);
   return (
     <Form {...form}>
       <form className="container mx-auto py-8">
@@ -205,11 +205,18 @@ const Content = ({
               </div>
             </div>
             <div className="flex justify-between w-full">
-              <img
-                src={shortEntry.src}
-                alt={shortEntry.name}
-                className="h-64"
-              />
+              <div className="max-w-64">
+                <Image
+                  src={shortEntry.src}
+                  alt={shortEntry.name}
+                  width={500}
+                  height={500}
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                  }}
+                />
+              </div>
               <FormField
                 control={form.control}
                 name="description"

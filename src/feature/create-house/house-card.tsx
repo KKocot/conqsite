@@ -43,7 +43,12 @@ export default function HouseCard({
           <Avatar className="w-[362px] h-[362px] rounded-none">
             <AvatarImage src={house.avatar} alt={`${house.name} avatar`} />
             <AvatarFallback>
-              <img src="https://i.imgur.com/4VEMy1m.png" alt="avatar" />
+              <Image
+                src="https://i.imgur.com/4VEMy1m.png"
+                alt="avatar"
+                width={362}
+                height={362}
+              />
             </AvatarFallback>
           </Avatar>
         </Link>

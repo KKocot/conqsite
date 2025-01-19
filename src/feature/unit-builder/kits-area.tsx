@@ -1,4 +1,5 @@
 import kits from "@/assets/kits";
+import Image from "next/image";
 
 const KitsArea = ({ unitName }: { unitName: string }) => {
   const kit = kits.find((kit) => kit.unit === unitName);
@@ -8,19 +9,23 @@ const KitsArea = ({ unitName }: { unitName: string }) => {
       <h2 className="text-2xl font-semibold mb-4 text-center">Kits</h2>
 
       <div>
-        <img
+        <Image
           src={`/kits/${kit.image}`}
           alt={kit.unit}
-          className="w-full h-24 object-contain mb-2"
+          width={96}
+          height={96}
+          className="object-contain mb-2"
         />
         <p className="text-sm font-medium">{`${kit.unit} kit`}</p>
       </div>
       {houseKit ? (
         <div>
-          <img
+          <Image
             src={houseKit.image}
             alt={houseKit.unit}
-            className="w-full h-24 object-contain mb-2"
+            width={96}
+            height={96}
+            className="object-contain mb-2"
           />
           <p className="text-sm font-medium">{`${houseKit.unit} house`}</p>
         </div>

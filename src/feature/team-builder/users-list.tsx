@@ -33,6 +33,7 @@ const UsersList = ({
             <span className="text-purple-500">{t("preffer")}</span>
             <span className="text-blue-500">{t("maxed")}</span>
             <span className="text-green-500">{t("i_have")}</span>
+            <span className="text-red-500">No info</span>
           </div>
         </AccordionTrigger>
         <AccordionContent>
