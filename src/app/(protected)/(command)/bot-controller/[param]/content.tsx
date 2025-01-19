@@ -1,5 +1,6 @@
 "use client";
 
+import { useDeleteBotEventMutation } from "@/components/hooks/use-bot-event-mutation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import AddEventDialog from "@/feature/bot-controller/add-event";
@@ -38,7 +39,10 @@ const Content = ({
       }),
     enabled: !!house,
   });
-
+  const deleteBotEventMutation = useDeleteBotEventMutation();
+  const onDelete = (event: BotEvent) => {
+    deleteBotEventMutation.mutate(event);
+  };
   const premium = assets?.premium ?? false;
   const limited = (events.length ?? 0) >= (premium ? 6 : 7);
   return (
@@ -59,6 +63,7 @@ const Content = ({
                     <Button
                       variant="destructive"
                       className="rounded-full p-2 h-fit"
+                      onClick={() => onDelete(event)}
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
@@ -91,7 +96,11 @@ const Content = ({
       </div>
       {discordDataLoading || !discordData ? null : (
         <div className="absolute bottom-4 right-4 gap-2 flex">
-          <AddEventDialog disabled={limited} discordData={discordData} />
+          <AddEventDialog
+            disabled={limited}
+            discordData={discordData}
+            house={house}
+          />
         </div>
       )}
     </div>
