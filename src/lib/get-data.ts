@@ -373,3 +373,12 @@ export const getUnitWiki = async (unit: string): Promise<UnitObject[]> => {
   const result = await response.json();
   return result;
 };
+
+export const getSurveysAndHousesNumber = async (): Promise<{
+  surveys: number;
+  houses: number;
+}> => {
+  const response = await fetch(`/api/housesAndSurveysInfo`);
+  const result = await response.json();
+  return result;
+};
