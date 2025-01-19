@@ -2,7 +2,7 @@
 
 import { getHousesAssets, getHousesDetails } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
-import HouseCard from "@/feature/create-house/house-card";
+import HouseCard from "@/feature/house-settings/house-card";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 

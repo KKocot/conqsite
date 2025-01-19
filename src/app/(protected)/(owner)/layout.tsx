@@ -1,8 +1,9 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 import { Role } from "@/queries/roles.query";
 import Link from "next/link";
+import SettingsNavbar from "@/feature/house-settings/settings-navbar";
 
 export default async function Layout({
   children,
@@ -13,7 +14,6 @@ export default async function Layout({
   if (!session) redirect("/home");
 
   const origin = process.env.ORIGIN;
-
   const highestCommanders = await fetch(`${origin}/api/roles`).then((res) =>
     res.json()
   );
@@ -25,28 +25,10 @@ export default async function Layout({
       .some((e: Role) => e.discordId === session?.user.id)
   )
     redirect("/");
-  const house = data ? data[0].house : "";
   return (
     <div className="w-full flex flex-col items-center gap-4">
-      <div className="flex justify-around bg-accent w-full text-background font-bold">
-        <Item href={`/settings/bot-config/${house}`} title="Bot Config" />
-        <Item href={`/settings/high-roles/${house}`} title="High Roles" />
-        <Item href={`/settings/house-card/${house}`} title="House Card" />
-        <Item href={`/settings/delete/${house}`} title="Delete House" />
-        <Item href={`/settings/change-leader/${house}`} title="Change Leader" />
-      </div>
+      <SettingsNavbar />
       {children}
     </div>
   );
 }
-
-const Item = ({ href, title }: { href: string; title: string }) => {
-  return (
-    <Link
-      href={href}
-      className="hover:bg-background hover:text-accent py-1 px-8 text-sm"
-    >
-      {title}
-    </Link>
-  );
-};

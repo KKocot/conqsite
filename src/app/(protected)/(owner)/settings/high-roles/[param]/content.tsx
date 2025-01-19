@@ -4,7 +4,7 @@ import {
   useAddRoleMutation,
   useDeleteRoleMutation,
 } from "@/components/hooks/use-roles-mutation";
-import CreateHouseHighRoles from "@/feature/create-house/create-house-high-roles";
+import CreateHouseHighRoles from "@/feature/house-settings/create-house-high-roles";
 import { DiscordUsersProps, HouseAssets, Roles } from "@/lib/get-data";
 
 export interface HighRolesValues {
