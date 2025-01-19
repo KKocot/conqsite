@@ -20,9 +20,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `${origin}/houses/${house}`,
       images: [
         {
-          url: response.image,
-          width: 150,
-          height: 150,
+          url: response.avatar,
+          width: 200,
+          height: 200,
           alt: response.name,
         },
       ],
