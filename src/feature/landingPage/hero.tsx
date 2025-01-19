@@ -1,6 +1,10 @@
 "use client";
 
-export default function Hero() {
+export default function Hero({
+  data,
+}: {
+  data?: { houses: number; surveys: number };
+}) {
   return (
     <section className="relative py-20 overflow-hidden">
       <div className="relative z-10 container mx-auto px-4 flex flex-col items-center text-center">
@@ -12,11 +16,11 @@ export default function Hero() {
         </p>
         <div className="flex justify-center space-x-8 text-background">
           <div className="transform hover:scale-105 transition-transform duration-300 p-4 rounded-lg medieval-border bg-accent/70">
-            <p className="text-3xl font-bold">17</p>
+            <p className="text-3xl font-bold">{data?.houses}</p>
             <p>Houses using our website and bot</p>
           </div>
           <div className="transform hover:scale-105 transition-transform duration-300 p-4 rounded-lg medieval-border bg-accent/70">
-            <p className="text-3xl font-bold">1572</p>
+            <p className="text-3xl font-bold">{data?.surveys}</p>
             <p>Warriors surveys</p>
           </div>
         </div>
