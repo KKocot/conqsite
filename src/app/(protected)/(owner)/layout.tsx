@@ -2,7 +2,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect, useParams } from "next/navigation";
 import { Role } from "@/queries/roles.query";
-import Link from "next/link";
 import SettingsNavbar from "@/feature/house-settings/settings-navbar";
 
 export default async function Layout({
