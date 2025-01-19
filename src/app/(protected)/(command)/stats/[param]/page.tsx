@@ -35,7 +35,8 @@ const Page = () => {
   const noAttendance: UsersStats[] = list
     .filter(
       (item: SurveyList) =>
-        !data.some((player: UsersStats) => player.id === item.discordId)
+        !data.some((player: UsersStats) => player.id === item.discordId) &&
+        item.discordId !== "303156898532818944"
     )
     .map((item: SurveyList) => ({
       id: item.discordId,
