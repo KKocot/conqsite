@@ -18,7 +18,6 @@ const SkillsArea: FC<{
     control: form.control,
     name: "skills",
   });
-
   return (
     <div>
       {fields.length > 0 || editMode ? (

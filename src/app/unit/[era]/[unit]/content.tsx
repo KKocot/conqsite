@@ -282,7 +282,7 @@ const Content = ({
                   )) ?? "No authors"}
                 </div>
               </div>
-              {!user?.user.name ? (
+              {/* {!user?.user.name ? (
                 <div />
               ) : editMode ? (
                 <Button
@@ -305,7 +305,7 @@ const Content = ({
                   <PenIcon className="w-4 h-4" />
                   Edit
                 </Button>
-              )}
+              )} */}
             </div>
           </CardContent>
         </Card>

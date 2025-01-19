@@ -24,16 +24,16 @@ const ImagePickerDialog = ({
   images: string[];
   path: string;
 }) => {
-  const [open, setOpenImagePicker] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const id = useId();
   const [value, setValue] = useState("");
   const onSubmit = () => {
     onSetImage(value);
-    setOpenImagePicker(false);
+    setOpen(false);
   };
   return (
-    <Dialog open={open} onOpenChange={setOpenImagePicker}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="h-96 overflow-y-scroll">
         <DialogHeader>
