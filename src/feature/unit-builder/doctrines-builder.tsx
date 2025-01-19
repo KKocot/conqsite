@@ -94,7 +94,7 @@ const DoctrinedBuilder = ({
   }
   useEffect(() => {
     setValue("doctrines", doctrineSlot);
-  }, [doctrineSlot]);
+  }, [doctrineSlot, setValue]);
 
   const handleDrop = (id: number, item: DroppedItem) => {
     setDoctrineSlot((prevSlots) =>

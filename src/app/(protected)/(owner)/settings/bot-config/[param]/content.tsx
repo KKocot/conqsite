@@ -1,8 +1,8 @@
 "use client";
 
 import { DiscordDataProps } from "@/app/(protected)/member/create-house/content";
-import CreateHouseConfig from "@/feature/create-house/create-house-config";
-import CreateHouseDiscordServers from "@/feature/create-house/create-house-discord-servers";
+import CreateHouseConfig from "@/feature/house-settings/create-house-config";
+import CreateHouseDiscordServers from "@/feature/house-settings/create-house-discord-servers";
 import { HouseSettings } from "@/lib/get-data";
 import { useState } from "react";
 import { toast } from "react-toastify";

@@ -100,7 +100,7 @@ const Item = ({
   }, [data.unit1, data.unit2, data.unit3, units]);
   useEffect(() => {
     setUser(findUserByNick(users, data.username));
-  }, [data.username]);
+  }, [data.username, users]);
 
   function mapUnitsByEra(
     units: Unit[],
@@ -149,10 +149,12 @@ const Item = ({
                   className="flex flex-col items-center justify-around"
                   title={weapon.name}
                 >
-                  <img
+                  <Image
                     src={weapon.src}
                     alt={weapon.name}
-                    className={clsx("rounded-full h-5 shadow-md", {
+                    width={20}
+                    height={20}
+                    className={clsx("rounded-full shadow-md", {
                       "shadow-yellow-500": user.weapons[index].pref === 1,
                       "shadow-purple-500": user.weapons[index].pref === 2,
                       "shadow-blue-500": user.weapons[index].pref === 3,

@@ -331,37 +331,33 @@ export interface UnitObject {
   name: string;
   icon: string;
   authors: string[];
-  era?: string;
+  era: string;
   image: string;
-  leadership?: number;
-  value?: number[];
+  leadership?: string;
+  value: number[];
   masteryPoints?: boolean;
-  maxlvl?: number;
-  kits?: {
-    name: string;
-    description: string;
-    image: string;
-  }[];
-  season?: {
-    number: number;
+  maxlvl: string;
+
+  season: {
+    number: string;
     name: string;
   };
   description?: string;
-  skills?: {
+  skills: {
     name: string;
     description: string;
     image: string;
   }[];
-  challenges?: {
+  challenges: {
     tier: number;
     quests: string[];
   }[];
-  formations?: {
+  formations: {
     name: string;
     description: string;
     image: string;
   }[];
-  treeStructure?: {
+  treeStructure: {
     name: string;
     description: string;
     img: string;
@@ -369,6 +365,7 @@ export interface UnitObject {
     id: number;
     value: number;
   }[];
+  accepted: boolean;
 }
 
 export const getUnitWiki = async (unit: string): Promise<UnitObject[]> => {

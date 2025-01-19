@@ -1,7 +1,7 @@
-import CreateHouseDiscordServers from "@/feature/create-house/create-house-discord-servers";
-import CreateHouseHighRoles from "@/feature/create-house/create-house-high-roles";
-import CreateHouseCard from "@/feature/create-house/create-house-card";
-import CreateHouseConfig from "@/feature/create-house/create-house-config";
+import CreateHouseDiscordServers from "@/feature/house-settings/create-house-discord-servers";
+import CreateHouseHighRoles from "@/feature/house-settings/create-house-high-roles";
+import CreateHouseCard from "@/feature/house-settings/create-house-card";
+import CreateHouseConfig from "@/feature/house-settings/create-house-config";
 import { DiscordProps, DiscordUsersProps, getAddAll } from "@/lib/get-data";
 import { useState } from "react";
 import { useRouter } from "next/navigation";

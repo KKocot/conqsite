@@ -129,38 +129,8 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         ),
       },
       {
-        title: t("house.high_roles"),
-        url: `/settings/high-roles/${house}`,
-        visibleTo: commanders.some(
-          (e) =>
-            e.discordId === data?.user.id &&
-            e.house === house &&
-            (e.role === "HouseLeader" || e.role === "RightHand")
-        ),
-      },
-      {
-        title: t("house.bot_config"),
-        url: `/settings/bot-config/${house}`,
-        visibleTo: commanders.some(
-          (e) =>
-            e.discordId === data?.user.id &&
-            e.house === house &&
-            (e.role === "HouseLeader" || e.role === "RightHand")
-        ),
-      },
-      {
-        title: t("house.house_card"),
-        url: `/settings/house-card/${house}`,
-        visibleTo: commanders.some(
-          (e) =>
-            e.discordId === data?.user.id &&
-            e.house === house &&
-            (e.role === "HouseLeader" || e.role === "RightHand")
-        ),
-      },
-      {
         title: "House Settings",
-        url: `/settings/${house}`,
+        url: `/settings/bot-config/${house}`,
         visibleTo: commanders.some(
           (e) =>
             e.discordId === data?.user.id &&

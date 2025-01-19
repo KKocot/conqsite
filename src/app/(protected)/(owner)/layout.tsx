@@ -1,7 +1,9 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 import { Role } from "@/queries/roles.query";
+import Link from "next/link";
+import SettingsNavbar from "@/feature/house-settings/settings-navbar";
 
 export default async function Layout({
   children,
@@ -12,7 +14,6 @@ export default async function Layout({
   if (!session) redirect("/home");
 
   const origin = process.env.ORIGIN;
-
   const highestCommanders = await fetch(`${origin}/api/roles`).then((res) =>
     res.json()
   );
@@ -24,6 +25,10 @@ export default async function Layout({
       .some((e: Role) => e.discordId === session?.user.id)
   )
     redirect("/");
-
-  return children;
+  return (
+    <div className="w-full flex flex-col items-center gap-4">
+      <SettingsNavbar />
+      {children}
+    </div>
+  );
 }

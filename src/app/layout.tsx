@@ -16,6 +16,7 @@ import AppSidebar from "@/feature/navbar/sidebar";
 export const metadata: Metadata = {
   title: "House management app",
   description: "Counquerors Blade app to house management",
+  keywords: ["Conqueror Blade", "CB", "House", "Management"],
 };
 
 export default async function RootLayout({

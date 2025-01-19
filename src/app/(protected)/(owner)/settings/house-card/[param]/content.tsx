@@ -1,6 +1,6 @@
 "use client";
 
-import CreateHouseCard from "@/feature/create-house/create-house-card";
+import CreateHouseCard from "@/feature/house-settings/create-house-card";
 import { HouseDetails } from "@/lib/get-data";
 import { useState } from "react";
 import { toast } from "react-toastify";

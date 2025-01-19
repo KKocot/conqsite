@@ -1,3 +1,6 @@
+import { Link2 } from "lucide-react";
+import Link from "next/link";
+
 const DocsPage: React.FC = () => {
   return (
     <div className="container mx-auto p-6">
@@ -42,6 +45,16 @@ const DocsPage: React.FC = () => {
         <li>Server - On which CB server can we find your home</li>
       </ul>
 
+      <h2 className="text-xl font-semibold mb-2">General Informations:</h2>
+      <ul className="list-disc pl-6 mb-4">
+        <li>
+          Add/Remove Member - To add user to your house, give him Member role on
+          your Discord and Konquerus gonna add him to website database. To
+          remove someone from house, take off his Member role or he will get
+          remove automaticly when he leave your server or someone kick him
+        </li>
+      </ul>
+
       <h2 className="text-xl font-semibold mb-2">Funders Houses Options:</h2>
       <h3 className="text-lg font-semibold mb-1">House:</h3>
       <ul className="list-disc pl-6 mb-4">
@@ -49,6 +62,7 @@ const DocsPage: React.FC = () => {
         <li>More than 3(6) commanders and more than 1(2) right hand</li>
         <li>More than 5(10) templates</li>
         <li>More than 3(6) events</li>
+        <li>more them 1(3) houses per player</li>
       </ul>
 
       <h3 className="text-lg font-semibold mb-1">User:</h3>
@@ -84,6 +98,8 @@ const DocsPage: React.FC = () => {
           <ul className="list-disc pl-6">
             <li>Lx_</li>
             <li>GryzoN</li>
+            <li>Villek</li>
+            <li>jerzyk</li>
           </ul>
         </li>
         <li>
@@ -96,8 +112,39 @@ const DocsPage: React.FC = () => {
           <strong>Others:</strong>
           <ul className="list-disc pl-6">
             <li>Nero - Coding Mentor</li>
-            <li>SuperKitowiec - Promotion Support</li>
+            {/* <li>SuperKitowiec - Promotion Support</li> */}
           </ul>
+        </li>
+      </ul>
+
+      <h2 className="text-xl font-semibold mb-2">Sources:</h2>
+      <ul className="pl-6 mb-4 text-red-600">
+        <li>
+          <Link
+            className="flex items-center gap-2"
+            href="https://www.conquerorsblade.com/en/"
+            target="_blank"
+          >
+            <Link2 /> Game Conquerors Blade
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="flex items-center gap-2"
+            href="https://conqhub.com"
+            target="_blank"
+          >
+            <Link2 /> Conqhub
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="flex items-center gap-2"
+            href="https://conquerors-blade.fandom.com/wiki/Conquerors_Blade_Wiki"
+            target="_blank"
+          >
+            <Link2 /> Conquerors Blade Wiki
+          </Link>
         </li>
       </ul>
     </div>

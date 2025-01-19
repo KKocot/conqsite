@@ -196,6 +196,8 @@ const renderCommandItem = (
             item.pref === "1",
           "to-40% bg-gradient-to-r from-gray-700 dark:to-slate-800 to-slate-300 hover:to-gray-700":
             item.pref === "0",
+          "to-40% bg-gradient-to-r from-red-700 dark:to-slate-800 to-slate-300 hover:to-gray-700":
+            item.pref === undefined,
         }
       )}
       title={item.name}

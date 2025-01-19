@@ -6,22 +6,16 @@ const putUnitObjectSchema = z.object({
   authors: z.array(z.string()),
   era: z.string(),
   image: z.string(),
-  leadership: z.number(),
+  leadership: z.string(),
   value: z.array(z.number()),
   masteryPoints: z.boolean(),
-  maxlvl: z.number(),
-  kits: z.array(
-    z.object({
-      name: z.string(),
-      description: z.string(),
-      image: z.string(),
-    })
-  ),
+  maxlvl: z.string(),
+  accepted: z.boolean(),
   season: z.object({
-    number: z.number(),
-    name: z.string(),
+    number: z.string().optional(),
+    name: z.string().optional(),
   }),
-  description: z.string(),
+  description: z.string().optional(),
   skills: z.array(
     z.object({
       name: z.string(),
