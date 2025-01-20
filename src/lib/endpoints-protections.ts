@@ -9,6 +9,21 @@ export const botAllowed = (botKey: string, envKey?: string) => {
 };
 
 // Leader Access
+export const leaderRoleAllowed = (
+  roles: Role[] | null,
+  session: Session | null,
+  house: string | null
+) => {
+  if (!roles || !session || !house) return false;
+  return roles.some(
+    (role) =>
+      role.discordId === session?.user?.id &&
+      role.house === house &&
+      role.role === "HouseLeader"
+  );
+};
+
+// Highest Access
 export const highestRolesAllowed = (
   roles: Role[] | null,
   session: Session | null,
