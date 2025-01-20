@@ -39,9 +39,14 @@ interface ChangeLeaderDialogProps {
     house: string;
   };
 }
-
+interface Values {
+  newLeaderId: string;
+  newLeaderName: string;
+  newRole: string;
+}
 const defaultValues = {
   newLeaderId: "",
+  newLeaderName: "",
   newRole: "",
 };
 const ChangeLeaderDialog: React.FC<ChangeLeaderDialogProps> = ({
@@ -51,7 +56,7 @@ const ChangeLeaderDialog: React.FC<ChangeLeaderDialogProps> = ({
   noMoreHighCommand,
   currentLeader,
 }) => {
-  const [values, setValues] = useState(defaultValues);
+  const [values, setValues] = useState<Values>(defaultValues);
   const [open, setOpen] = useState(false);
   const updateLeaderMutation = useUpdateLeaderMutation();
   const onSubmit = () => {
@@ -59,9 +64,7 @@ const ChangeLeaderDialog: React.FC<ChangeLeaderDialogProps> = ({
       exLeaderName: currentLeader.discordNick,
       exLeaderId: currentLeader.discordId,
       exLeaderNewRole: values.newRole,
-      newLeaderName:
-        members.users.find((user) => user.id === values.newLeaderId)
-          ?.username || "",
+      newLeaderName: values.newLeaderName,
       newLeaderId: values.newLeaderId,
       house: currentLeader.house,
     });
@@ -70,6 +73,7 @@ const ChangeLeaderDialog: React.FC<ChangeLeaderDialogProps> = ({
     updateLeaderMutation.isSuccess && toast.success("Leader updated");
     updateLeaderMutation.isError && toast.error("Failed to update leader");
   };
+  console.log(values);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
@@ -88,6 +92,8 @@ const ChangeLeaderDialog: React.FC<ChangeLeaderDialogProps> = ({
           onValueChange={(e) => {
             setValues({
               ...values,
+              newLeaderName:
+                members.users.find((user) => user.id === e)?.username ?? "",
               newLeaderId: e,
             });
           }}
@@ -125,8 +131,8 @@ const ChangeLeaderDialog: React.FC<ChangeLeaderDialogProps> = ({
                 key={e.value}
                 value={e.value}
                 disabled={
-                  (e.value === "rightHand" && noMoreRightHand) ||
-                  (e.value === "highCommand" && noMoreHighCommand)
+                  (e.value === "RightHand" && noMoreRightHand) ||
+                  (e.value === "HighCommand" && noMoreHighCommand)
                 }
               >
                 {e.title}

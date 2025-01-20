@@ -23,7 +23,7 @@ const Page = () => {
     enabled: !!house,
   });
   const { data: membersList, isLoading: membersListLoading } = useQuery({
-    queryKey: ["highRoles", house],
+    queryKey: ["members", house],
     queryFn: () =>
       getDiscordUsers(
         data?.id ?? "",

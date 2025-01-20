@@ -1,4 +1,3 @@
-import { Roles } from "@/lib/get-data";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface UpdateLeaderProps {
@@ -30,8 +29,13 @@ export const useUpdateLeaderMutation = () => {
       return response.json();
     },
     onSuccess: (data) => {
-      const { house } = data;
-      queryClient.invalidateQueries({ queryKey: ["highRolesList", house] });
+      const { exLeader } = data;
+      queryClient.invalidateQueries({
+        queryKey: ["highRolesList", exLeader.house],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["profile", exLeader.discordId],
+      });
     },
     onError: (error: Error) => {
       console.error("Error occurred:", error.message);

@@ -7,17 +7,11 @@ import Roles from "@/models/roles";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { changeLeaderSchema } from "./shema";
-//   exLeaderName: z.string(),
-//   exLeaderId: z.string(),
-//   exLeaderNewRole: z.string(),
-//   newLeaderName: z.string(),
-//   newLeaderId: z.string(),
-//   house: z.string(),
+
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
   const discordKey = headers().get("discord-key");
   const envKey = process.env.BOT_KEY;
-  const { searchParams } = new URL(request.url);
 
   if (!session) return new Response("401");
   try {
