@@ -55,6 +55,7 @@ const Page = () => {
         members={membersList}
         highRoles={highRolesList}
         assets={assets}
+        house={house}
       />
     </div>
   );

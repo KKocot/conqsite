@@ -6,6 +6,7 @@ import {
 } from "@/components/hooks/use-roles-mutation";
 import CreateHouseHighRoles from "@/feature/house-settings/create-house-high-roles";
 import { DiscordUsersProps, HouseAssets, Roles } from "@/lib/get-data";
+import { FC } from "react";
 
 export interface HighRolesValues {
   highcommand: Roles[];
@@ -13,15 +14,12 @@ export interface HighRolesValues {
   houseLeader: Roles[];
 }
 
-const Content = ({
-  members,
-  highRoles,
-  assets,
-}: {
+const Content: FC<{
   members: DiscordUsersProps;
   highRoles: Roles[];
   assets?: HouseAssets;
-}) => {
+  house: string;
+}> = ({ members, highRoles, assets, house }) => {
   const values: HighRolesValues = {
     highcommand: highRoles.filter((role) => role.role === "HighCommand"),
     righthand: highRoles.filter((role) => role.role === "RightHand"),
@@ -38,6 +36,7 @@ const Content = ({
         onDelete={(discordId, house) => deleteRole.mutate({ discordId, house })}
         onAdd={(user) => addRole.mutate(user)}
         premium={assets?.premium ?? false}
+        house={house}
       />
     </div>
   );

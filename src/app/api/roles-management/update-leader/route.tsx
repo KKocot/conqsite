@@ -22,20 +22,24 @@ export async function POST(request: Request) {
     const leaderRoleAccess = leaderRoleAllowed(roles, session, data.house);
     if (!(leaderRoleAccess || (discordKey && botAllowed(discordKey, envKey))))
       return new Response("401");
-
     const newLeader = await Roles.create({
       discordId: data.newLeaderId,
-      discordName: data.newLeaderName,
+      discordNick: data.newLeaderName,
       role: "HouseLeader",
       house: data.house,
     });
     let exLeader;
     if (data.exLeaderNewRole === "member") {
-      exLeader = await Roles.findOneAndDelete({ discordId: data.exLeaderId });
+      exLeader = await Roles.findOneAndDelete({
+        discordId: data.exLeaderId,
+        house: data.house,
+      });
     } else {
       exLeader = await Roles.findOneAndUpdate(
         { discordId: data.exLeaderId },
-        { role: data.exLeaderNewRole }
+        {
+          role: data.exLeaderNewRole,
+        }
       );
     }
     return NextResponse.json({ newLeader, exLeader }, { status: 201 });

@@ -27,6 +27,7 @@ interface CreateHouseHighRolesProps {
   onAdd?: never;
   onDelete?: never;
   premium?: never;
+  house?: never;
 }
 
 interface EditHouseHighRolesProps {
@@ -38,6 +39,7 @@ interface EditHouseHighRolesProps {
   onAdd: (e: Roles) => void;
   onDelete: (userId: string, house: string) => void;
   premium: boolean;
+  house: string;
 }
 
 const CreateHouseHighRoles = ({
@@ -49,8 +51,8 @@ const CreateHouseHighRoles = ({
   onAdd,
   onDelete,
   premium,
+  house,
 }: CreateHouseHighRolesProps | EditHouseHighRolesProps) => {
-  const house = type === "edit" ? values.houseLeader[0].house : "";
   const t = useTranslations("Settings");
   return (
     <Card>
@@ -187,7 +189,7 @@ const CreateHouseHighRoles = ({
                     <div className="w-5" />
                     <p>{user.discordNick}</p>
                     <Button
-                      className="h-7 rounded-full"
+                      className="h-8 rounded-r-full"
                       onClick={() => onDelete(user.discordId, user.house)}
                     >
                       X
@@ -202,7 +204,7 @@ const CreateHouseHighRoles = ({
                     <div className="w-5" />
                     <p>{user.username}</p>
                     <Button
-                      className="h-7 rounded-full"
+                      className="h-8 rounded-r-full"
                       onClick={() =>
                         setValues((prev) => ({
                           ...prev,
@@ -312,7 +314,7 @@ const CreateHouseHighRoles = ({
                     <div />
                     <p>{user.username}</p>
                     <Button
-                      className="h-7 rounded-full"
+                      className="h-8 rounded-r-full"
                       onClick={() =>
                         setValues((prev) => ({
                           ...prev,

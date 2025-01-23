@@ -73,7 +73,6 @@ const ChangeLeaderDialog: React.FC<ChangeLeaderDialogProps> = ({
     updateLeaderMutation.isSuccess && toast.success("Leader updated");
     updateLeaderMutation.isError && toast.error("Failed to update leader");
   };
-  console.log(values);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
@@ -141,7 +140,7 @@ const ChangeLeaderDialog: React.FC<ChangeLeaderDialogProps> = ({
           </SelectContent>
         </Select>
         <DialogFooter className="flex justify-between items-center">
-          <p className="text-red-500 text-xs">
+          <div className="text-red-500 text-xs">
             {values.newLeaderId === "" ? (
               "Please select a new leader"
             ) : values.newRole === "" ? (
@@ -149,7 +148,7 @@ const ChangeLeaderDialog: React.FC<ChangeLeaderDialogProps> = ({
             ) : (
               <div />
             )}
-          </p>
+          </div>
           <Button
             type="submit"
             disabled={values.newLeaderId === "" || values.newRole === ""}
