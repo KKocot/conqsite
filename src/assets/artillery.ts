@@ -54,4 +54,9 @@ export const artillery = [
     src: "/artillery/tower.webp",
     id: 11,
   },
+  {
+    name: "Crows",
+    src: "/artillery/Divine_Crow.webp",
+    id: 12,
+  },
 ];
