@@ -291,5 +291,30 @@
   "HouseCard": {
     "house_leader": "Házvezető",
     "join_discord": "Csatlakozz Discordhoz"
+  },
+  "Home": {
+    "HeroSection": {
+      "title": "Conquerors Blade Házkezelés",
+      "description": "Takarítson meg időt, automatizálja a házkezelését ingyen",
+      "stat_one": "Házak, amelyek használják a weboldalunkat és botunkat",
+      "stat_two": "Harcosok kérdőívei"
+    },
+    "ProblemSection": {
+      "problem_one": "A vezetőknek és parancsnokoknak rengeteg munkájuk van a ház és a tagok kezelésével",
+      "problem_two": "Hozzon létre táblázatokat TW-hez, kövesse a jelenlétet, ossza meg a táblázatokat csak a háza tagjaival"
+    },
+    "SolutionSection": {
+      "features_one": "Csapatépítő - könnyen létrehozható táblázatok a háztagok kérdőívei alapján",
+      "features_two": "Előnézet készítése a tagok számára - készítsen szép és könnyen olvasható előnézetet",
+      "features_three": "TW Jelenlétkövetés - a bot naponta háromszor ellenőrzi a Discord csatornáit, hogy elkészítse a játékosok jelenléti listáját",
+      "features_four": "Kérdőívek követése - egyszerű mód a tagok kérdőíveinek ellenőrzésére",
+      "features_five": "Jogosultságkezelés - döntse el, ki hozhat létre csapatokat a házában",
+      "features_six": "Egyszerű bejelentkezés - Jelentkezzen be Discord-fiókkal vagy a Discord botunk segítségével"
+    },
+    "CallSection": {
+      "call_one": "Kész arra, hogy dicsőségre vezesse házát?",
+      "call_two": "Csatlakozzon a már bizonyított platformunkat használó több ezer parancsnokhoz",
+      "button_title": "Hozza létre a házát (Ingyenes)"
+    }
   }
 }

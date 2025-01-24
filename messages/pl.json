@@ -291,5 +291,30 @@
   "HouseCard": {
     "house_leader": "Lider Rodu",
     "join_discord": "Dołącz do Discorda"
+  },
+  "Home": {
+    "HeroSection": {
+      "title": "Zarządzanie Domem w Conquerors Blade",
+      "description": "Oszczędzaj czas, zautomatyzuj zarządzanie swoim domem za darmo",
+      "stat_one": "Domy korzystające z naszej strony i bota",
+      "stat_two": "Ankiety wojowników"
+    },
+    "ProblemSection": {
+      "problem_one": "Liderzy i dowódcy mają dużo pracy związanej z zarządzaniem domem i jego członkami",
+      "problem_two": "Twórz arkusze dla TW, śledź obecność, udostępniaj arkusze tylko członkom swojego domu"
+    },
+    "SolutionSection": {
+      "features_one": "Budowniczy Zespołów - łatwe tworzenie arkuszy na podstawie ankiet członków twojego domu",
+      "features_two": "Przygotowanie Podglądu dla Członków - stwórz czytelny i przejrzysty podgląd",
+      "features_three": "Śledzenie Obecności na TW - bot sprawdza trzy razy dziennie twoje kanały na Discordzie, aby stworzyć listę obecności graczy",
+      "features_four": "Śledzenie Ankiet - łatwy sposób na sprawdzenie ankiet członków",
+      "features_five": "Zarządzanie Uprawnieniami - zdecyduj, kto może tworzyć zespoły w twoim domu",
+      "features_six": "Łatwy Sposób na Logowanie - Zaloguj się za pomocą konta Discord lub poprzez naszego bota na Discordzie"
+    },
+    "CallSection": {
+      "call_one": "Gotowy poprowadzić swój dom do chwały?",
+      "call_two": "Dołącz do tysięcy dowódców, którzy już korzystają z naszej sprawdzonej platformy",
+      "button_title": "Stwórz Swój Dom (Za Darmo)"
+    }
   }
 }

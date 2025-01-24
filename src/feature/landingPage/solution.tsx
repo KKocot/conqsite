@@ -9,32 +9,34 @@ import {
   Lock,
   LogIn,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function Solution() {
+  const t = useTranslations("Home.SolutionSection");
   const features = [
     {
       icon: Shield,
-      text: "Team Builder - to easy sheet create, based on your house members surveys",
+      text: t("features_one"),
     },
     {
       icon: Users,
-      text: "Prepare Preview for Members - create nice and easy to read preview",
+      text: t("features_two"),
     },
     {
       icon: Calendar,
-      text: "TW Attendance tracing - bot checking 3 times your discord channels to create attendance list with players",
+      text: t("features_three"),
     },
     {
       icon: ClipboardList,
-      text: "Track Surveys - easy way to check members surveys",
+      text: t("features_four"),
     },
     {
       icon: Lock,
-      text: "Permissions management - decide who should be able to create teams in your house",
+      text: t("features_five"),
     },
     {
       icon: LogIn,
-      text: "Easy Way to Login - Login with Discord account or behalf our discord bot ",
+      text: t("features_six"),
     },
   ];
 

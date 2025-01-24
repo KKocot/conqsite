@@ -294,5 +294,30 @@
   "HouseCard": {
     "house_leader": "House Leader",
     "join_discord": "Join Discord"
+  },
+  "Home": {
+    "HeroSection": {
+      "title": "Conquerors Blade House Management",
+      "description": "Save time, automate your house management for free",
+      "stat_one": "Houses using our website and bot",
+      "stat_two": "Warriors surveys"
+    },
+    "ProblemSection": {
+      "problem_one": "Leaders and commanders have a lot of work to manage the house and the members",
+      "problem_two": "Create sheets for TW, track attendance, share sheet only with members of your house"
+    },
+    "SolutionSection": {
+      "features_one": "Team Builder - to easy sheet create, based on your house members surveys",
+      "features_two": "Prepare Preview for Members - create nice and easy to read preview",
+      "features_three": "TW Attendance tracing - bot checking 3 times your discord channels to create attendance list with players",
+      "features_four": "Track Surveys - easy way to check members surveys",
+      "features_five": "Permissions management - decide who should be able to create teams in your house",
+      "features_six": "Easy Way to Login - Login with Discord account or behalf our discord bot "
+    },
+    "CallSection": {
+      "call_one": "Ready to lead your house to glory?",
+      "call_two": "Join thousands of commanders already using our battle-tested platform",
+      "button_title": "Create Your House (Free)"
+    }
   }
 }
