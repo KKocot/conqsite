@@ -77,7 +77,7 @@ const Content = ({ username }: { username: string }) => {
     } catch (error) {
       console.error("error_adding", error);
     } finally {
-      router.push("/");
+      router.push(`/dashboard/houses/${configValues.name}`);
     }
   };
   return (

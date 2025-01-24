@@ -26,11 +26,12 @@ const Page: React.FC = () => {
     queryFn: () => getHouseAssets(house),
     enabled: !!house,
   });
-  const { data: publicLineupsDates } = useQuery({
-    queryKey: ["lineupsDates", house],
-    queryFn: () => getPublicLineupDates(house),
-    enabled: !!house,
-  });
+  const { data: publicLineupsDates, isLoading: publicLineupsLoading } =
+    useQuery({
+      queryKey: ["lineupsDates", house],
+      queryFn: () => getPublicLineupDates(house),
+      enabled: !!house,
+    });
   useEffect(() => {
     fetch(`/api/discord-bot/uploadAttendance?house=${house}`);
   }, [house]);
@@ -42,7 +43,10 @@ const Page: React.FC = () => {
       <Content
         surveysData={data}
         assets={assets}
-        publicLineupsDates={publicLineupsDates}
+        publicLineups={{
+          dates: publicLineupsDates,
+          loading: publicLineupsLoading,
+        }}
       />
     </div>
   );
