@@ -141,7 +141,7 @@
       "tw_role_description": "Konquerus need to know the common role on the TW discord to",
       "tw_pleaceholder": "Common role on TW channel",
       "lineup": "Lineup",
-      "lineup_description": "Bot needs to know how to split your house into lineups if you have more than one raid.",
+      "lineup_description": "Bot needs to know how to split your house into lineups if you have more than one raid, so pick channel with attendance bot and role for this lineup.",
       "channel_label": "Channel",
       "channel_pleaceholder": "Pick sign up bot channel",
       "role_label": "Role",

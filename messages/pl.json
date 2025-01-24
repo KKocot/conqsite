@@ -138,7 +138,7 @@
       "tw_role_description": "Konquerus musi znać rolę na Discordzie TW, aby",
       "tw_pleaceholder": "Zwykła rola na kanale TW",
       "lineup": "Skład",
-      "lineup_description": "Bot musi wiedzieć, jak podzielić twój dom na składy, jeśli masz więcej niż jedną rajdę.",
+      "lineup_description": "Bot musi wiedzieć, jak podzielić twój dom na składy, jeśli masz więcej niż jeden rajd, wiec wybierze kanal z lista obecnosci na TW",
       "channel_label": "Kanał",
       "channel_pleaceholder": "Wybierz kanał bota rejestracyjnego",
       "role_label": "Rola",
