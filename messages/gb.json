@@ -25,13 +25,13 @@
       "member": "Member",
       "my_profile": "My Profile",
       "my_stats": "My Stats",
-      "update_form": "Update Form",
+      "update_form": "Update Profile",
       "create_house": "Create House"
     },
     "house": {
       "lineups": "Lineups",
       "my_house": "My House",
-      "build_team": "Build Team",
+      "build_team": "Build Lineup",
       "house_stats": "House Stats",
       "bot_controller": "Bot Controller",
       "high_roles": "High Roles",
