@@ -86,10 +86,6 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         url: "/member/update-form",
         disabled: false,
       },
-      {
-        title: t("member.create_house"),
-        url: "/member/create-house",
-      },
     ],
   };
   const houseLinks = profile?.house.map((house) => ({

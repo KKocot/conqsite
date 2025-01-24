@@ -291,5 +291,30 @@
   "HouseCard": {
     "house_leader": "Líder de la Casa",
     "join_discord": "Unirse a Discord"
+  },
+  "Home": {
+    "HeroSection": {
+      "title": "Gestión de Casas de Conquerors Blade",
+      "description": "Ahorra tiempo, automatiza la gestión de tu casa gratis",
+      "stat_one": "Casas que usan nuestra página web y bot",
+      "stat_two": "Encuestas de guerreros"
+    },
+    "ProblemSection": {
+      "problem_one": "Los líderes y comandantes tienen mucho trabajo para gestionar la casa y a los miembros",
+      "problem_two": "Crea hojas para TW, rastrea la asistencia y comparte hojas solo con los miembros de tu casa"
+    },
+    "SolutionSection": {
+      "features_one": "Creador de Equipos - para crear hojas fácilmente basadas en las encuestas de los miembros de tu casa",
+      "features_two": "Preparar Vista Previa para Miembros - crea una vista previa clara y fácil de leer",
+      "features_three": "Seguimiento de Asistencia de TW - el bot revisa tres veces tus canales de Discord para crear una lista de asistencia de jugadores",
+      "features_four": "Seguimiento de Encuestas - una forma sencilla de revisar las encuestas de los miembros",
+      "features_five": "Gestión de Permisos - decide quién puede crear equipos en tu casa",
+      "features_six": "Fácil Forma de Iniciar Sesión - Inicia sesión con tu cuenta de Discord o mediante nuestro bot de Discord"
+    },
+    "CallSection": {
+      "call_one": "¿Listo para llevar tu casa a la gloria?",
+      "call_two": "Únete a miles de comandantes que ya usan nuestra plataforma probada en batalla",
+      "button_title": "Crea Tu Casa (Gratis)"
+    }
   }
 }

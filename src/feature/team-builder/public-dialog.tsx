@@ -35,7 +35,6 @@ export function PublicDialog({
   const [publicationName, setPublicationName] = useState("");
   const [date, setDate] = useState<string>(dates ? dates[0] : "");
   const [publicLineup, setPublicLineup] = useState<PublicLineup[]>([]);
-
   const deleteSheetMutation = useDeleteSheetMutation();
   const updateLineup = useAddLineupMutation();
   const onDateChange = async (date: string) => {
@@ -52,10 +51,16 @@ export function PublicDialog({
   };
 
   useEffect(() => {
-    if (date) {
+    if (date || updateLineup.isSuccess || deleteSheetMutation.isSuccess) {
       onDateChange(date);
     }
-  }, [date]);
+  }, [
+    date,
+    updateLineup.isSuccess,
+    updateLineup.isPending,
+    deleteSheetMutation.isSuccess,
+    deleteSheetMutation.isPending,
+  ]);
   const existingLineup = publicLineup.find((e) => e.name === publicationName);
   return (
     <Dialog>

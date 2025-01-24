@@ -291,5 +291,30 @@
   "HouseCard": {
     "house_leader": "Vůdce Domu",
     "join_discord": "Připojit se k Discordu"
+  },
+  "Home": {
+    "HeroSection": {
+      "title": "Správa Domu Conquerors Blade",
+      "description": "Ušetřete čas, automatizujte správu svého domu zdarma",
+      "stat_one": "Domy používající naši webovou stránku a bota",
+      "stat_two": "Průzkumy válečníků"
+    },
+    "ProblemSection": {
+      "problem_one": "Vedoucí a velitelé mají mnoho práce se správou domu a členů",
+      "problem_two": "Vytvářejte tabulky pro TW, sledujte docházku, sdílejte tabulky pouze s členy vašeho domu"
+    },
+    "SolutionSection": {
+      "features_one": "Tvůrce týmů - snadné vytvoření tabulek na základě průzkumů členů vašeho domu",
+      "features_two": "Příprava přehledu pro členy - vytvoření pěkného a snadno čitelného přehledu",
+      "features_three": "Sledování docházky na TW - bot kontroluje vaše Discord kanály 3krát denně a vytváří seznam docházky hráčů",
+      "features_four": "Sledování průzkumů - snadný způsob, jak zkontrolovat průzkumy členů",
+      "features_five": "Správa oprávnění - rozhodněte, kdo může vytvářet týmy ve vašem domě",
+      "features_six": "Snadné přihlášení - Přihlaste se pomocí Discord účtu nebo prostřednictvím našeho Discord bota"
+    },
+    "CallSection": {
+      "call_one": "Připraveni vést svůj dům ke slávě?",
+      "call_two": "Přidejte se k tisícům velitelů, kteří již používají naši osvědčenou platformu",
+      "button_title": "Vytvořte svůj dům (Zdarma)"
+    }
   }
 }

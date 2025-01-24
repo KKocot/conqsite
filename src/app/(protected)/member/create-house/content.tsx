@@ -5,8 +5,6 @@ import CreateHouseConfig from "@/feature/house-settings/create-house-config";
 import { DiscordProps, DiscordUsersProps, getAddAll } from "@/lib/get-data";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { MoveRight } from "lucide-react";
-import clsx from "clsx";
 import Steper from "@/components/steper";
 
 export interface ConfigProps {
@@ -79,7 +77,7 @@ const Content = ({ username }: { username: string }) => {
     } catch (error) {
       console.error("error_adding", error);
     } finally {
-      router.push("/");
+      router.push(`/dashboard/houses/${configValues.name}`);
     }
   };
   return (

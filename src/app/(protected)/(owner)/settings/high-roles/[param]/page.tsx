@@ -22,15 +22,15 @@ const Page = () => {
     queryFn: () => getHouseSettings(house),
     enabled: !!house,
   });
-  const { data: highRolesData, isLoading: highRolesLoading } = useQuery({
-    queryKey: ["highRoles", house],
+  const { data: membersList, isLoading: membersListLoading } = useQuery({
+    queryKey: ["members", house],
     queryFn: () =>
       getDiscordUsers(
         data?.id ?? "",
         user?.user.id ?? "",
         data?.member.id ?? ""
       ),
-    enabled: !!data,
+    enabled: !!data && !!user,
   });
   const { data: highRolesList, isLoading: highRolesListLoading } = useQuery({
     queryKey: ["highRolesList", house],
@@ -42,16 +42,21 @@ const Page = () => {
     queryFn: () => getHouseAssets(house),
     enabled: !!house,
   });
-  if (isLoading || highRolesLoading || highRolesListLoading) {
+  if (isLoading || membersListLoading || highRolesListLoading) {
     return <LoadingComponent />;
   }
 
-  if (!data || !highRolesData || !highRolesList || !user) {
+  if (!data || !membersList || !highRolesList || !user) {
     return <NoData />;
   }
   return (
     <div className="flex flex-col gap-6 container">
-      <Content members={highRolesData} highRoles={highRolesList} />
+      <Content
+        members={membersList}
+        highRoles={highRolesList}
+        assets={assets}
+        house={house}
+      />
     </div>
   );
 };

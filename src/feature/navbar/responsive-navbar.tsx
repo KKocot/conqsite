@@ -12,19 +12,19 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-import { LucideIcon, Minus, MoreHorizontal, Plus } from "lucide-react";
+import { Home, LucideIcon, Minus, MoreHorizontal, Plus } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "../../components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "../../components/ui/collapsible";
+} from "@/components/ui/collapsible";
 import clsx from "clsx";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -77,6 +77,14 @@ const ResposiveSidebar = ({
             <SidebarTrigger />
           </div>
           <DropdownMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link href="/home">
+                  <Home />
+                  Home
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
             <SidebarMenuItem>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
@@ -185,6 +193,14 @@ const ResposiveSidebar = ({
             <SidebarTrigger />
           </div>{" "}
           <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link href="/home">
+                  <Home />
+                  Home
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
             <Collapsible
               defaultOpen={true}
               key={openLinks.title}

@@ -99,7 +99,7 @@
     );
     background-size: 400% 400%;
 
-    animation: Gradient 15s infinite steps(75);
+    /* animation: Gradient 15s infinite steps(75); */
   }
 }
 

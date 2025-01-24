@@ -27,17 +27,18 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import Loading from "react-loading";
 
 interface PageProps {
   surveysData: Survey[];
   assets?: HouseAssets;
-  publicLineupsDates?: string[];
+  publicLineups: { dates?: string[]; loading: boolean };
 }
 
 const Content: React.FC<PageProps> = ({
   surveysData,
   assets,
-  publicLineupsDates,
+  publicLineups,
 }) => {
   const { param }: { param: string } = useParams();
   const house = param.replaceAll("%20", " ");
@@ -166,12 +167,16 @@ const Content: React.FC<PageProps> = ({
       </div>
       <nav className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 rounded-full bg-background px-1 py-2 shadow-lg">
         <TooltipContainer title="Public Lineups">
-          <PublicDialog
-            data={sheetData}
-            house={house}
-            setSheetData={setSheetData}
-            dates={publicLineupsDates}
-          />
+          {publicLineups.loading ? (
+            <Loading type="spin" color="#94a3b8" />
+          ) : (
+            <PublicDialog
+              data={sheetData}
+              house={house}
+              setSheetData={setSheetData}
+              dates={publicLineups.dates}
+            />
+          )}
         </TooltipContainer>
         <TooltipContainer title="Templates">
           <Templates

@@ -16,6 +16,7 @@ import { DiscordUsersProps, Roles } from "@/lib/get-data";
 import { ConfigProps } from "@/app/(protected)/member/create-house/content";
 import { HighRolesValues } from "@/app/(protected)/(owner)/settings/high-roles/[param]/content";
 import { useTranslations } from "next-intl";
+import ChangeLeaderDialog from "./change-leader-dialog";
 
 interface CreateHouseHighRolesProps {
   type: "create";
@@ -26,6 +27,7 @@ interface CreateHouseHighRolesProps {
   onAdd?: never;
   onDelete?: never;
   premium?: never;
+  house?: never;
 }
 
 interface EditHouseHighRolesProps {
@@ -37,6 +39,7 @@ interface EditHouseHighRolesProps {
   onAdd: (e: Roles) => void;
   onDelete: (userId: string, house: string) => void;
   premium: boolean;
+  house: string;
 }
 
 const CreateHouseHighRoles = ({
@@ -48,8 +51,8 @@ const CreateHouseHighRoles = ({
   onAdd,
   onDelete,
   premium,
+  house,
 }: CreateHouseHighRolesProps | EditHouseHighRolesProps) => {
-  const house = type === "edit" ? values.houseLeader[0].house : "";
   const t = useTranslations("Settings");
   return (
     <Card>
@@ -72,9 +75,31 @@ const CreateHouseHighRoles = ({
                     key={user.discordId}
                     className="text-base h-8 flex justify-between"
                   >
-                    <div />
+                    <div className="w-4 h-4" />
                     <p>{user.discordNick}</p>
-                    <div />
+                    {type === "edit" ? (
+                      <ChangeLeaderDialog
+                        members={discordUsers}
+                        highroles={[
+                          ...values.houseLeader,
+                          ...values.highcommand,
+                          ...values.righthand,
+                        ].map((e) => e.discordId)}
+                        currentLeader={{
+                          discordId: user.discordId,
+                          discordNick: user.discordNick,
+                          house: house,
+                        }}
+                        noMoreRightHand={
+                          values.righthand.length >= (premium ? 2 : 1)
+                        }
+                        noMoreHighCommand={
+                          values.highcommand.length >= (premium ? 6 : 3)
+                        }
+                      />
+                    ) : (
+                      <div className="w-4 h-4" />
+                    )}
                   </Badge>
                 ))}
             </div>
@@ -164,7 +189,7 @@ const CreateHouseHighRoles = ({
                     <div className="w-5" />
                     <p>{user.discordNick}</p>
                     <Button
-                      className="h-7"
+                      className="h-8 rounded-r-full"
                       onClick={() => onDelete(user.discordId, user.house)}
                     >
                       X
@@ -179,7 +204,7 @@ const CreateHouseHighRoles = ({
                     <div className="w-5" />
                     <p>{user.username}</p>
                     <Button
-                      className="h-7"
+                      className="h-8 rounded-r-full"
                       onClick={() =>
                         setValues((prev) => ({
                           ...prev,
@@ -271,10 +296,10 @@ const CreateHouseHighRoles = ({
                     key={user.discordId}
                     className="text-base h-8 flex justify-between"
                   >
-                    <div />
+                    <div className="w-5" />
                     <p>{user.discordNick}</p>
                     <Button
-                      className="h-7"
+                      className="h-8 rounded-r-full"
                       onClick={() => onDelete(user.discordId, user.house)}
                     >
                       X
@@ -289,7 +314,7 @@ const CreateHouseHighRoles = ({
                     <div />
                     <p>{user.username}</p>
                     <Button
-                      className="h-7"
+                      className="h-8 rounded-r-full"
                       onClick={() =>
                         setValues((prev) => ({
                           ...prev,

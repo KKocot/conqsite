@@ -17,8 +17,10 @@ const SupportButton = () => {
       <Image
         height={32}
         width={150}
+        style={{ height: "auto", width: "auto" }}
         src="https://storage.ko-fi.com/cdn/kofi6.png?v=6"
         alt="Buy Me a Coffee at ko-fi.com"
+        priority
       />
     </a>
   );

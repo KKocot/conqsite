@@ -27,6 +27,13 @@ const Home = () => {
       <Hero data={data} />
       <Problem />
       <Solution />
+      <Image
+        src="/graf.png"
+        alt="graf"
+        width={600}
+        height={800}
+        className="mx-auto my-20"
+      />
       <CallToAction />
     </div>
   );

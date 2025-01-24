@@ -291,5 +291,30 @@
   "HouseCard": {
     "house_leader": "Ev Lideri",
     "join_discord": "Discord'a Katıl"
+  },
+  "Home": {
+    "HeroSection": {
+      "title": "Conquerors Blade Ev Yönetimi",
+      "description": "Zaman kazanın, ev yönetiminizi ücretsiz bir şekilde otomatikleştirin",
+      "stat_one": "Web sitemizi ve botumuzu kullanan evler",
+      "stat_two": "Savaşçı anketleri"
+    },
+    "ProblemSection": {
+      "problem_one": "Liderler ve komutanlar, evi ve üyeleri yönetmek için çok iş yapmak zorunda",
+      "problem_two": "TW için tablolar oluşturun, katılımı takip edin, tabloları yalnızca evinizin üyeleriyle paylaşın"
+    },
+    "SolutionSection": {
+      "features_one": "Takım Oluşturucu - ev üyelerinizin anketlerine dayalı olarak kolayca tablo oluşturma",
+      "features_two": "Üyeler İçin Önizleme Hazırlama - güzel ve okunması kolay bir önizleme oluşturun",
+      "features_three": "TW Katılım Takibi - botunuz Discord kanallarınızı günde 3 kez kontrol eder ve oyuncuların katılım listesini oluşturur",
+      "features_four": "Anketleri Takip Etme - üyelerin anketlerini kolayca kontrol etmenin bir yolu",
+      "features_five": "İzin Yönetimi - evinizde kimlerin takım oluşturabileceğine karar verin",
+      "features_six": "Kolay Giriş Yolu - Discord hesabınızla veya Discord botumuz aracılığıyla giriş yapın"
+    },
+    "CallSection": {
+      "call_one": "Evinizi zafere götürmeye hazır mısınız?",
+      "call_two": "Savaşta test edilmiş platformumuzu zaten kullanan binlerce komutana katılın",
+      "button_title": "Evinizi Oluşturun (Ücretsiz)"
+    }
   }
 }

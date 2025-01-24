@@ -291,5 +291,30 @@
   "HouseCard": {
     "house_leader": "Hausführer",
     "join_discord": "Discord beitreten"
+  },
+  "Home": {
+    "HeroSection": {
+      "title": "Conquerors Blade Hausverwaltung",
+      "description": "Sparen Sie Zeit, automatisieren Sie Ihre Hausverwaltung kostenlos",
+      "stat_one": "Häuser, die unsere Website und unseren Bot nutzen",
+      "stat_two": "Umfragen von Kriegern"
+    },
+    "ProblemSection": {
+      "problem_one": "Anführer und Kommandanten haben viel Arbeit bei der Verwaltung des Hauses und der Mitglieder",
+      "problem_two": "Erstellen Sie Tabellen für TW, verfolgen Sie die Anwesenheit und teilen Sie die Tabellen nur mit den Mitgliedern Ihres Hauses"
+    },
+    "SolutionSection": {
+      "features_one": "Team Builder - einfaches Erstellen von Tabellen basierend auf den Umfragen Ihrer Hausmitglieder",
+      "features_two": "Vorschau für Mitglieder vorbereiten - eine übersichtliche und leicht lesbare Vorschau erstellen",
+      "features_three": "TW-Anwesenheitsverfolgung - Bot überprüft dreimal täglich Ihre Discord-Kanäle, um eine Anwesenheitsliste der Spieler zu erstellen",
+      "features_four": "Umfragen verfolgen - einfacher Weg, die Umfragen der Mitglieder zu überprüfen",
+      "features_five": "Berechtigungsverwaltung - entscheiden Sie, wer in Ihrem Haus Teams erstellen darf",
+      "features_six": "Einfache Anmeldung - Anmelden mit Discord-Konto oder über unseren Discord-Bot"
+    },
+    "CallSection": {
+      "call_one": "Bereit, Ihr Haus zum Ruhm zu führen?",
+      "call_two": "Schließen Sie sich tausenden Kommandanten an, die unsere bewährte Plattform bereits nutzen",
+      "button_title": "Erstellen Sie Ihr Haus (Kostenlos)"
+    }
   }
 }
