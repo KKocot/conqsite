@@ -9,7 +9,7 @@ export default function Hero({
 }) {
   const t = useTranslations("Home.HeroSection");
   return (
-    <section className="relative py-20 overflow-hidden">
+    <section className="relative my-20 overflow-hidden">
       <div className="relative z-10 container mx-auto px-4 flex flex-col items-center text-center">
         <h2 className="text-5xl font-bold mb-4 animate-fade-in-down text-ac">
           {t("title")}

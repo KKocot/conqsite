@@ -41,7 +41,7 @@ export default function Solution() {
   ];
 
   return (
-    <section id="solution" className="py-20">
+    <section id="solution" className="my-20">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-8">
           {features.map((feature, index) => (

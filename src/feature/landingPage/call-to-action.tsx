@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 export default function CallToAction() {
   const t = useTranslations("Home.CallSection");
   return (
-    <section id="cta" className="py-20">
+    <section id="cta" className="my-20 pb-20">
       <div className="container mx-auto px-4 text-center">
         <h2 className="text-4xl font-bold mb-4 animate-fade-in-down">
           {t("call_one")}
