@@ -50,6 +50,12 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         disabled: false,
       },
       {
+        title: "Map (Soon)",
+        url: "/dashboard/maps",
+        disabled: false,
+        // TODO translate
+      },
+      {
         title: t("dashboard.privacy_policy"),
         url: "/dashboard/policy",
         disabled: false,
@@ -97,6 +103,12 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         title: t("house.lineups"),
         url: `/lineups/${house}`,
         visibleTo: true,
+      },
+      {
+        title: "TW history (Soon)",
+        url: `/house/${house}/history`,
+        visibleTo: true,
+        // TODO translate
       },
       {
         title: t("house.my_house"),
