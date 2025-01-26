@@ -106,7 +106,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
       },
       {
         title: "TW history (Soon)",
-        url: `/house/${house}/history`,
+        url: `/history/${house}`,
         visibleTo: true,
         // TODO translate
       },
