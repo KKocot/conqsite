@@ -10,6 +10,7 @@ export default async function Layout({
   const session = await getServerSession(authOptions);
   if (!session) redirect("/home");
 
-  if (session?.user.id !== "303156898532818944") redirect("/");
+  if (!["303156898532818944", "373563828513931266"].includes(session.user.id))
+    redirect("/");
   return children;
 }
