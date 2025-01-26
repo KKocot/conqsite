@@ -277,7 +277,7 @@ const Content = ({
               <DoctrinesArea unitName={shortEntry.name} />
               <KitsArea unitName={shortEntry.name} />
             </div>
-            {/* <ChallengesArea editMode={editMode} form={form} /> */}
+            <ChallengesArea editMode={editMode} form={form} />
             <div className="flex items-end justify-between">
               <div className="flex gap-1 mt-4 justify-self-end flex-col">
                 <h5 className="font-semibold">Authors</h5>
@@ -289,7 +289,7 @@ const Content = ({
                   )) ?? "No authors"}
                 </div>
               </div>
-              {/* {!user?.user.name ? (
+              {!user?.user.name ? (
                 <div />
               ) : editMode ? (
                 <Button
@@ -297,7 +297,7 @@ const Content = ({
                     setEditMode(!editMode);
                     onSubmit();
                   }}
-                  className="flex gap-2 rounded-3xl"
+                  className="flex gap-1 rounded-3xl text-xs py-0 h-6"
                   variant="custom"
                 >
                   <Save />
@@ -312,7 +312,7 @@ const Content = ({
                   <PenIcon className="w-4 h-4" />
                   Edit
                 </Button>
-              )} */}
+              )}
             </div>
           </CardContent>
         </Card>
