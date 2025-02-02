@@ -13,7 +13,7 @@ import KitsArea from "@/feature/unit-builder/kits-area";
 import SkillsArea from "@/feature/unit-builder/skills-area";
 import { UnitObject } from "@/lib/get-data";
 import { Unit } from "@/lib/type";
-import { PenIcon, Save } from "lucide-react";
+import { PenIcon, Save, X } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -44,7 +44,7 @@ const Content = ({
       formations: entry?.formations || [],
       treeStructure: entry?.treeStructure || [],
       challenges: entry?.challenges || [],
-      accepted: false,
+      status: "pending",
     },
   });
   const [editMode, setEditMode] = useState(false);
@@ -292,17 +292,30 @@ const Content = ({
               {!user?.user.name ? (
                 <div />
               ) : editMode ? (
-                <Button
-                  onClick={() => {
-                    setEditMode(!editMode);
-                    onSubmit();
-                  }}
-                  className="flex gap-1 rounded-3xl text-xs py-0 h-6"
-                  variant="custom"
-                >
-                  <Save />
-                  Save
-                </Button>
+                <div className="flex gap-4">
+                  <Button
+                    onClick={() => {
+                      form.reset();
+                      setEditMode(!editMode);
+                    }}
+                    className="flex gap-1 rounded-3xl text-xs py-0 h-6"
+                    variant="destructive"
+                  >
+                    <X />
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setEditMode(!editMode);
+                      onSubmit();
+                    }}
+                    className="flex gap-1 rounded-3xl text-xs py-0 h-6"
+                    variant="custom"
+                  >
+                    <Save />
+                    Save
+                  </Button>
+                </div>
               ) : (
                 <Button
                   onClick={() => setEditMode(!editMode)}

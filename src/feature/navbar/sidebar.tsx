@@ -56,6 +56,13 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         // TODO translate
       },
       {
+        title: "Wiki requests",
+        url: `/dashboard/wiki-requests`,
+        visibleTo: commanders.some(
+          (e) => e.discordId === data?.user.id && e.role === "Reviewer"
+        ),
+      },
+      {
         title: t("dashboard.privacy_policy"),
         url: "/dashboard/policy",
         disabled: false,

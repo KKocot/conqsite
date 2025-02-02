@@ -26,9 +26,12 @@ export async function POST(request: Request) {
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const name = searchParams.get("name");
+  const status = searchParams.get("status");
   try {
     await connectMongoDB();
-    const unitWiki = await UnitWiki.find({ name });
+    let unitWiki;
+    if (name && status) unitWiki = await UnitWiki.find({ name, status });
+    if (status && !name) unitWiki = await UnitWiki.find({ status });
     return NextResponse.json(unitWiki, { status: 200 });
   } catch (error) {
     if (error instanceof ZodError)

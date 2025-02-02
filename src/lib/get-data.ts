@@ -337,7 +337,6 @@ export interface UnitObject {
   value: number[];
   masteryPoints?: boolean;
   maxlvl: string;
-
   season: {
     number: string;
     name: string;
@@ -365,13 +364,29 @@ export interface UnitObject {
     id: number;
     value: number;
   }[];
-  accepted: boolean;
+  status: "rejected" | "accepted" | "pending";
+  reviewNotes?: string;
+  _id?: string;
 }
 
-export const getUnitWiki = async (unit: string): Promise<UnitObject[]> => {
-  const response = await fetch(`/api/units/wiki?&name=${unit}`);
+export const getUnitWiki = async (
+  unit: string,
+  status: "rejected" | "accepted" | "pending"
+): Promise<UnitObject[]> => {
+  const response = await fetch(`/api/units/wiki?name=${unit}&status=${status}`);
   const result = await response.json();
   return result;
+};
+export const getUnitsReview = async (): Promise<UnitObject[]> => {
+  const response = await fetch(`/api/units/wiki?status=pending`);
+  const result = await response.json();
+  return result;
+};
+
+export const getUnitWikiById = async (id: string): Promise<UnitObject> => {
+  const response = await fetch(`/api/units/wiki/${id}`);
+  const result = await response.json();
+  return result.wikiPost;
 };
 
 export const getSurveysAndHousesNumber = async (): Promise<{

@@ -21,15 +21,14 @@ const Page = () => {
   const found_unit: Unit | null = getUnit(unit, era) ?? null;
   const { data, isLoading } = useQuery({
     queryKey: ["unit", found_unit?.name],
-    queryFn: () => getUnitWiki(found_unit?.name ?? ""),
+    queryFn: () => getUnitWiki(found_unit?.name ?? "", "accepted"),
     enabled: !!found_unit,
   });
   if (isLoading) return <LoadingComponent />;
   if (!found_unit) return <NoData />;
-  const lastAccepted = data?.filter((d) => d.accepted ?? d);
   return (
     <Content
-      entry={lastAccepted?.[lastAccepted.length - 1] ?? undefined}
+      entry={data?.[data.length - 1] ?? undefined}
       shortEntry={found_unit}
     />
   );

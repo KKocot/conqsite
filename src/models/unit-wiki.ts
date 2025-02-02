@@ -10,7 +10,8 @@ const UnitWikiSchema: Schema = new Schema({
   value: { type: [Number], required: false },
   masteryPoints: { type: Boolean, required: false },
   maxlvl: { type: String, required: false },
-  accepted: { type: Boolean, required: false },
+  status: { type: String, required: false },
+  reviewNotes: { type: String, required: false },
   season: {
     number: { type: String, required: false },
     name: { type: String, required: false },

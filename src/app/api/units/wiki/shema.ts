@@ -10,7 +10,8 @@ const putUnitObjectSchema = z.object({
   value: z.array(z.number()),
   masteryPoints: z.boolean(),
   maxlvl: z.string(),
-  accepted: z.boolean(),
+  status: z.string(),
+  reviewNotes: z.string(),
   season: z.object({
     number: z.string().optional(),
     name: z.string().optional(),
