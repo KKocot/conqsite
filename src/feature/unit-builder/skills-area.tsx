@@ -42,7 +42,7 @@ const SkillsArea: FC<{
       ) : null}
       <div className="grid gap-4 sm:grid-cols-2">
         {fields.map((field, i) => (
-          <Card key={field.id}>
+          <Card key={i}>
             <CardContent className="p-4">
               <div className="flex items-center gap-5">
                 {editMode ? (
@@ -80,7 +80,13 @@ const SkillsArea: FC<{
                   />
                 )}
                 {editMode ? (
-                  <Input {...form.register(`skills.${i}.name`)} />
+                  <Input
+                    {...form.register(`skills.${i}.name`)}
+                    onChange={(e) => {
+                      update(i, { ...field, name: e.target.value });
+                    }}
+                    value={field.name}
+                  />
                 ) : (
                   <h3 className="font-semibold">{field.name}</h3>
                 )}
@@ -95,7 +101,13 @@ const SkillsArea: FC<{
                 ) : null}
               </div>
               {editMode ? (
-                <Textarea {...form.register(`skills.${i}.description`)} />
+                <Textarea
+                  {...form.register(`skills.${i}.description`)}
+                  onChange={(e) => {
+                    update(i, { ...field, description: e.target.value });
+                  }}
+                  value={field.description}
+                />
               ) : (
                 <p className="text-sm mt-4">{field.description}</p>
               )}

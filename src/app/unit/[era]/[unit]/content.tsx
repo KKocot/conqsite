@@ -11,9 +11,10 @@ import DoctrinesArea from "@/feature/unit-builder/dosctrines-area";
 import FormationsArea from "@/feature/unit-builder/formations-area";
 import KitsArea from "@/feature/unit-builder/kits-area";
 import SkillsArea from "@/feature/unit-builder/skills-area";
-import { UnitObject } from "@/lib/get-data";
+import { getRoleById, UnitObject } from "@/lib/get-data";
 import { Unit } from "@/lib/type";
-import { PenIcon, Save } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { PenIcon, Save, X } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -27,6 +28,19 @@ const Content = ({
   entry?: UnitObject;
   shortEntry: Unit;
 }) => {
+  const { data: user } = useSession();
+  const { data: roles, isLoading: rolesLoading } = useQuery({
+    queryKey: ["roles", user?.user.id],
+    queryFn: () => getRoleById(user?.user.id ?? ""),
+    enabled: !!user?.user.id,
+  });
+  const autoStatus =
+    roles?.some((role) => role.role === "Reviewer") ||
+    roles?.some((role) => role.role === "Trusted")
+      ? "accepted"
+      : "pending";
+
+  const banned = roles?.some((role) => role.role === "Banned");
   const form = useForm<UnitObject>({
     values: {
       name: shortEntry.name,
@@ -44,11 +58,10 @@ const Content = ({
       formations: entry?.formations || [],
       treeStructure: entry?.treeStructure || [],
       challenges: entry?.challenges || [],
-      accepted: false,
+      status: autoStatus,
     },
   });
   const [editMode, setEditMode] = useState(false);
-  const { data: user } = useSession();
   const wikiMutation = useWikiMutation();
   const onSubmit = form.handleSubmit(async (data) => {
     wikiMutation.mutate({
@@ -277,7 +290,7 @@ const Content = ({
               <DoctrinesArea unitName={shortEntry.name} />
               <KitsArea unitName={shortEntry.name} />
             </div>
-            {/* <ChallengesArea editMode={editMode} form={form} /> */}
+            <ChallengesArea editMode={editMode} form={form} />
             <div className="flex items-end justify-between">
               <div className="flex gap-1 mt-4 justify-self-end flex-col">
                 <h5 className="font-semibold">Authors</h5>
@@ -289,30 +302,44 @@ const Content = ({
                   )) ?? "No authors"}
                 </div>
               </div>
-              {/* {!user?.user.name ? (
+              {!user?.user.name || banned ? (
                 <div />
               ) : editMode ? (
-                <Button
-                  onClick={() => {
-                    setEditMode(!editMode);
-                    onSubmit();
-                  }}
-                  className="flex gap-2 rounded-3xl"
-                  variant="custom"
-                >
-                  <Save />
-                  Save
-                </Button>
+                <div className="flex gap-4">
+                  <Button
+                    onClick={() => {
+                      form.reset();
+                      setEditMode(!editMode);
+                    }}
+                    className="flex gap-1 rounded-3xl text-xs py-0 h-6"
+                    variant="destructive"
+                  >
+                    <X />
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setEditMode(!editMode);
+                      onSubmit();
+                    }}
+                    className="flex gap-1 rounded-3xl text-xs py-0 h-6"
+                    variant="custom"
+                  >
+                    <Save />
+                    Save
+                  </Button>
+                </div>
               ) : (
                 <Button
                   onClick={() => setEditMode(!editMode)}
                   className="flex gap-1 rounded-3xl text-xs py-0 h-6"
                   variant="custom"
+                  disabled={rolesLoading}
                 >
                   <PenIcon className="w-4 h-4" />
                   Edit
                 </Button>
-              )} */}
+              )}
             </div>
           </CardContent>
         </Card>
