@@ -88,7 +88,7 @@ export async function DELETE(request: Request) {
     if (!(highestRolesAccess || (discordKey && botAllowed(discordKey, envKey))))
       return new Response("401");
 
-    const roles = await Roles.findOneAndDelete({ discordId: id });
+    const roles = await Roles.findOneAndDelete({ discordId: id, house: house });
     return NextResponse.json({ roles });
   } catch (error) {
     if (error instanceof ZodError)
