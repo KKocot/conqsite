@@ -24,6 +24,7 @@ const Page = () => {
     queryFn: () => getUnitWiki(found_unit?.name ?? "", "accepted"),
     enabled: !!found_unit,
   });
+
   if (isLoading) return <LoadingComponent />;
   if (!found_unit) return <NoData />;
   return (
