@@ -397,3 +397,14 @@ export const getSurveysAndHousesNumber = async (): Promise<{
   const result = await response.json();
   return result;
 };
+export interface FilledSurveys {
+  filled_surveys: number;
+  not_filled_surveys: number;
+}
+export const getFilledSurveys = async (
+  house: string
+): Promise<FilledSurveys> => {
+  const response = await fetch(`/api/survey/filled?house=${house}`);
+  const result = await response.json();
+  return result;
+};

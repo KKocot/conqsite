@@ -3,6 +3,7 @@
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 import {
+  getFilledSurveys,
   getHouseStats,
   getSeasons,
   getSurveyList,
@@ -30,8 +31,14 @@ const Page = () => {
     queryFn: () => getSurveyList(house),
     enabled: !!house,
   });
-  if (isLoading || seasonsLoading || listLoading) return <LoadingComponent />;
-  if (!data || !seasons || !list) return <NoData />;
+  const { data: filledList, isLoading: filledListLoading } = useQuery({
+    queryKey: ["filledList", house],
+    queryFn: () => getFilledSurveys(house),
+    enabled: !!house,
+  });
+  if (isLoading || seasonsLoading || listLoading || filledListLoading)
+    return <LoadingComponent />;
+  if (!data || !seasons || !list || !filledList) return <NoData />;
   const noAttendance: UsersStats[] = list
     .filter(
       (item: SurveyList) =>
@@ -50,6 +57,7 @@ const Page = () => {
       data={[...data, ...noAttendance]}
       seasons={seasons}
       numberOfPlayer={list.length}
+      filledList={filledList}
     />
   );
 };
