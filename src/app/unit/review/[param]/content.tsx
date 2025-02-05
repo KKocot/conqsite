@@ -17,14 +17,15 @@ const Content = ({ data }: { data: UnitObject }) => {
   });
   const changeWikiStatus = useChangeWikiStatus();
   const [note, setNote] = useState("");
+  const lastAccepted = prevData ? prevData[prevData.length - 1] : undefined;
   return (
     <div className="max-w-4xl mx-auto p-4 space-y-8">
       <div className="flex gap-4">
         <Version data={data} version="new" />
         {prevLoading ? (
           <LoadingComponent />
-        ) : prevData ? (
-          <Version data={prevData[prevData?.length - 1]} version="prev" />
+        ) : lastAccepted ? (
+          <Version data={lastAccepted} version="prev" />
         ) : null}
       </div>
       <Textarea
