@@ -217,15 +217,17 @@ const ResposiveSidebar = ({
                 {openLinks.items?.length ? (
                   <CollapsibleContent>
                     <SidebarMenuSub>
-                      {openLinks.items?.map((subItem) => (
-                        <SidebarMenuSubItem key={subItem.title}>
-                          <SidebarMenuSubButton asChild>
-                            <Link href={subItem.url}>
-                              <span>{subItem.title}</span>
-                            </Link>
-                          </SidebarMenuSubButton>
-                        </SidebarMenuSubItem>
-                      ))}
+                      {openLinks.items?.map((subItem) =>
+                        subItem.visibleTo === false ? null : (
+                          <SidebarMenuSubItem key={subItem.title}>
+                            <SidebarMenuSubButton asChild>
+                              <Link href={subItem.url}>
+                                <span>{subItem.title}</span>
+                              </Link>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        )
+                      )}
                     </SidebarMenuSub>
                   </CollapsibleContent>
                 ) : null}

@@ -99,6 +99,11 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         url: "/member/update-form",
         disabled: false,
       },
+      {
+        title: "My History",
+        url: "/member/my-history",
+        disabled: !profile,
+      },
     ],
   };
   const houseLinks = profile?.house.map((house) => ({
@@ -112,7 +117,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         visibleTo: true,
       },
       {
-        title: "TW history (Soon)",
+        title: "TW history",
         url: `/history/${house}`,
         visibleTo: true,
         // TODO translate
