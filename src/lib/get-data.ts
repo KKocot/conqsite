@@ -1,3 +1,4 @@
+import { date } from "zod";
 import { SheetTypes } from "./type";
 
 export interface Roles {
@@ -405,6 +406,52 @@ export const getFilledSurveys = async (
   house: string
 ): Promise<FilledSurveys> => {
   const response = await fetch(`/api/survey/filled?house=${house}`);
+  const result = await response.json();
+  return result;
+};
+
+export interface HistoryPost {
+  twDate: Date;
+  ytUrl: string;
+  title: string;
+  description: string;
+  visibleTo: string;
+  author: string;
+  house: string;
+  publicDate: Date;
+  authorID: string;
+  _id?: string;
+}
+
+export const getHistoryPostsByDate = async (
+  house: string,
+  date: string
+): Promise<HistoryPost[]> => {
+  const response = await fetch(
+    `/api/house/tw-history?house=${house}&date=${date}`
+  );
+  const result = await response.json();
+  return result;
+};
+
+export const getHistoryDates = async (house: string): Promise<string[]> => {
+  const response = await fetch(
+    `/api/house/tw-history/list-of-dates?house=${house}`
+  );
+  const result = await response.json();
+  return result;
+};
+
+export const getHistoryDatesByUser = async (): Promise<string[]> => {
+  const response = await fetch(`/api/house/tw-history/list-of-dates`);
+  const result = await response.json();
+  return result;
+};
+
+export const getHistoryPostsByUser = async (
+  date: string
+): Promise<HistoryPost[]> => {
+  const response = await fetch(`/api/house/tw-history?date=${date}`);
   const result = await response.json();
   return result;
 };
