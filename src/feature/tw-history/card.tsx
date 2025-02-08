@@ -1,4 +1,9 @@
 import {
+  useDeleteHistoryPostMutation,
+  useEditHistoryPostMutation,
+} from "@/components/hooks/use-history-post-mutation";
+import { Button } from "@/components/ui/button";
+import {
   Card,
   CardHeader,
   CardTitle,
@@ -7,14 +12,30 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { HistoryPost } from "@/lib/get-data";
+import { Trash } from "lucide-react";
 
-const TWCard = ({ data }: { data: HistoryPost }) => {
+const TWCard = ({
+  roleDisable,
+  data,
+  pageType,
+}: {
+  data: HistoryPost;
+  pageType: "user" | "house";
+  roleDisable?: boolean;
+}) => {
   const youtubeLinkRegex =
     /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed|shorts\/|v\/)?([a-zA-Z0-9_-]+)/i;
   const match = data.ytUrl.match(youtubeLinkRegex);
-
+  const deletePost = useDeleteHistoryPostMutation();
+  const movePostToProfileOnly = useEditHistoryPostMutation();
+  const handleDelete = () => {
+    deletePost.mutate(data?._id ?? "");
+  };
+  const handleMoveToProfileOnly = () => {
+    movePostToProfileOnly.mutate(data._id ?? "");
+  };
   return (
-    <Card className="w-full flex flex-col">
+    <Card className="w-fit flex flex-col">
       <CardHeader>
         <CardTitle>{data.title}</CardTitle>
         <CardDescription>{data.description}</CardDescription>
@@ -32,10 +53,19 @@ const TWCard = ({ data }: { data: HistoryPost }) => {
         </p>
       </CardContent>
       <CardFooter>
-        <div className="flex items-center gap-2 text-xs">
+        <div className="flex justify-between items-center gap-2 text-xs w-full">
           <span>{data.author}</span>
           <span>{data.publicDate.toString().split("T")[0]}</span>
           <span className="justify-self-end">Visible to: {data.visibleTo}</span>
+          {pageType === "user" ? (
+            <Button variant="destructive" onClick={handleDelete}>
+              <Trash />
+            </Button>
+          ) : pageType === "house" && !roleDisable ? (
+            <Button variant="destructive" onClick={handleMoveToProfileOnly}>
+              Delete from House
+            </Button>
+          ) : null}
         </div>
       </CardFooter>
     </Card>

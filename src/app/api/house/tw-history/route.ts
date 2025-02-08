@@ -24,7 +24,6 @@ export async function POST(request: Request) {
       return new Response("401");
     }
     const publicHistory = await TWHistory.create(data);
-
     return new Response(JSON.stringify(publicHistory), { status: 201 });
   } catch (error) {
     if (error instanceof ZodError)
