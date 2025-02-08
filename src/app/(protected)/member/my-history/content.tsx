@@ -49,7 +49,7 @@ const Content = ({ dates }: TWHistory) => {
         <LoadingComponent />
       ) : !latesTW ? (
         <div className="w-full text-center text-2xl font-bold">
-          No History Posts yet
+          No archive yet
         </div>
       ) : (
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols3 justify-center">

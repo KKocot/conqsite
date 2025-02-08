@@ -100,7 +100,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         disabled: false,
       },
       {
-        title: "My History",
+        title: "My Archive",
         url: "/member/my-history",
         disabled: !profile,
       },
@@ -117,7 +117,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         visibleTo: true,
       },
       {
-        title: "TW history",
+        title: "Archive",
         url: `/history/${house}`,
         visibleTo: true,
         // TODO translate
