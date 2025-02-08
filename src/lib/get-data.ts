@@ -464,3 +464,9 @@ export const getHistoryPostsByUser = async (
   const result = await response.json();
   return result;
 };
+
+export const getSurveysAdmin = async (): Promise<FilledSurveys> => {
+  const response = await fetch(`/api/admin/surveys`);
+  const result = await response.json();
+  return result;
+};
