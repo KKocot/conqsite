@@ -24,7 +24,8 @@ export async function POST(request: Request) {
       name: data.name,
       status: "accepted",
     });
-    if (dataExists) {
+    console.log(dataExists);
+    if (dataExists.length !== 0) {
       wikiData = await UnitWiki.findOneAndUpdate(
         { _id: dataExists[dataExists.length - 1]._id },
         { challenges: data.challenges },
