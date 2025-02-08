@@ -60,6 +60,10 @@ export async function GET(request: Request) {
     if (house) {
       const roles = await Roles.find({ house: house });
       return NextResponse.json({ roles });
+    }
+    if (id && house) {
+      const roles = await Roles.find({ discordId: id, house: house });
+      return NextResponse.json({ roles });
     } else {
       const roles = await Roles.find();
       return NextResponse.json({ roles });

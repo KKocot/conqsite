@@ -31,8 +31,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import useAddHistoryPostMutation from "@/components/hooks/use-add-history-post-mutation";
-import { useState } from "react";
+import { useAddHistoryPostMutation } from "@/components/hooks/use-history-post-mutation";
+import { useEffect, useState } from "react";
 
 const visibilityOptions = ["House", "Command", "Me"];
 
@@ -84,6 +84,14 @@ const AddDialog = ({ house, author, authorID }: AddDialogProps) => {
     mutationFn.mutate(values);
     mutationFn.isSuccess && (setOpen(false), form.reset());
   };
+  useEffect(() => {
+    if (mutationFn.isSuccess) {
+      form.reset();
+      setOpen(false);
+    }
+  }, [mutationFn.isPending]);
+
+  // console.log(form.getValues());
   const pending = mutationFn.isPending;
   return (
     <Dialog open={open} onOpenChange={(value) => !pending && setOpen(value)}>
@@ -181,7 +189,7 @@ const AddDialog = ({ house, author, authorID }: AddDialogProps) => {
                     <FormLabel>TW Date</FormLabel>
                     <Calendar
                       mode="single"
-                      selected={field.value ? new Date(field.value) : undefined}
+                      selected={field.value}
                       onSelect={field.onChange}
                       disabled={(date) =>
                         date > new Date() || date < new Date("1900-01-01")

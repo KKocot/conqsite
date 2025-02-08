@@ -21,6 +21,15 @@ export const getHighRoles = async (house: string): Promise<Roles[]> => {
   return result.roles;
 };
 
+export const getRolesByHouseAndId = async (
+  house: string,
+  id: string
+): Promise<Roles[]> => {
+  const response = await fetch(`/api/roles?house=${house}&id=${id}`);
+  const result = await response.json();
+  return result.roles;
+};
+
 export interface HouseDetails {
   name: string;
   description: string;
