@@ -1,7 +1,7 @@
 "use client";
 
 import LoadingComponent from "@/feature/ifs/loading";
-import { getHighRoles } from "@/lib/get-data";
+import { getHighRoles, getSurveysAdmin } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import Content from "./content";
 import NoData from "@/feature/ifs/no-data";
@@ -12,9 +12,14 @@ const AdminPage = () => {
     queryKey: ["highRolesList", house],
     queryFn: () => getHighRoles(house),
   });
-  if (wikiLoading) return <LoadingComponent />;
-  if (!wikiData) return <NoData />;
-  return <Content wikiRoles={wikiData} />;
+  const { data: surveysStats, isLoading: surveysStatsLoading } = useQuery({
+    queryKey: ["surveysStats", house],
+    queryFn: () => getSurveysAdmin(),
+  });
+
+  if (wikiLoading || surveysStatsLoading) return <LoadingComponent />;
+  if (!wikiData || !surveysStats) return <NoData />;
+  return <Content wikiRoles={wikiData} surveysStats={surveysStats} />;
 };
 
 export default AdminPage;
