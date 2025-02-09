@@ -652,14 +652,14 @@ export const epicDoctrines: Doctrine[] = [
   {
     name: "Modao Doctrine I",
     img: "/doctrines/modao-doctrine.png",
-    forUnit: ["Modao"],
+    forUnit: ["Modao Battalion"],
     dedicated: "unit",
     stats: "Increases damage versus cavalry by 200 points.",
   },
   {
     name: "Modao Doctrine II",
     img: "/doctrines/modao-doctrine.png",
-    forUnit: ["Modao"],
+    forUnit: ["Modao Battalion"],
     dedicated: "unit",
     stats: "The unit's ability to stop cavalry is increased by 1 second.",
   },
@@ -1243,7 +1243,7 @@ export const epicDoctrines: Doctrine[] = [
   {
     name: "Yanyuedao Resistance Doctrine",
     img: "/logo.png",
-    forUnit: ["Yanyuedao"],
+    forUnit: ["Yanyuedao Cavalry"],
     dedicated: "unit",
     stats: "While using Mounting Dread, all damage taken is reduced by 15%.",
   },
@@ -1285,7 +1285,7 @@ export const epicDoctrines: Doctrine[] = [
   {
     name: "Queen's Knight Battle Doctrine",
     img: "/logo.png",
-    forUnit: ["Queen's Knight"],
+    forUnit: ["Queens Knights"],
     dedicated: "unit",
     stats: "Block cannot be damaged within 2 seconds of using Run'Em Through.",
   },
@@ -1299,7 +1299,7 @@ export const epicDoctrines: Doctrine[] = [
   {
     name: "Xuanjia Cavalry Damage Doctrine",
     img: "/logo.png",
-    forUnit: ["Xuanjia Cavalry"],
+    forUnit: ["Xuanjia Heavy Cavalry"],
     dedicated: "unit",
     stats: "Reduces damage taken by 8%",
   },
@@ -1529,7 +1529,7 @@ export const rareDoctrines: Doctrine[] = [
   {
     name: "Falconettii Gunners Doctrine III",
     img: "/doctrines/falconettii-gunners-doctrine-iii.png",
-    forUnit: ["Falconettii Gunners"],
+    forUnit: ["Falconetti Gunners"],
     dedicated: "unit",
     stats: "Increases piercing defence by 100",
   },
@@ -1550,14 +1550,14 @@ export const rareDoctrines: Doctrine[] = [
   {
     name: "Liao's Rangers Weapons Doctrine",
     img: "/doctrines/liaos-rangers-weapons-doctrine.png",
-    forUnit: ["Liao's Rangers"],
+    forUnit: ["Liaos Rangers"],
     dedicated: "unit",
     stats: "Increases Bludgeon damage by 5%.",
   },
   {
     name: "Rapidity Doctrine",
     img: "/doctrines/liaos-rangers-weapons-doctrine.png",
-    forUnit: ["Liao's Rangers"],
+    forUnit: ["Liaos Rangers"],
     dedicated: "unit",
     stats: "Increases Liao's Rangers' movement speed by 7%.",
   },
@@ -1713,7 +1713,7 @@ export const rareDoctrines: Doctrine[] = [
   {
     name: "Yanyuedao Slashing Doctrine",
     img: "/logo.png",
-    forUnit: ["Yanyuedao"],
+    forUnit: ["Yanyuedao Cavalry"],
     dedicated: "unit",
     stats: "Increases slashing damage by 100 points.",
   },
@@ -1756,7 +1756,7 @@ export const rareDoctrines: Doctrine[] = [
   {
     name: "Queen's Knight Shield Doctrine",
     img: "/logo.png",
-    forUnit: ["Queen's Knight"],
+    forUnit: ["Queens Knights"],
     dedicated: "unit",
     stats: "Each level reduces damage taken when using Bash & Thrust by 18%.",
   },
@@ -1770,7 +1770,7 @@ export const rareDoctrines: Doctrine[] = [
   {
     name: "Xuanjia Cavalry Energy Doctrine",
     img: "/logo.png",
-    forUnit: ["Xuanjia Cavalry"],
+    forUnit: ["Xuanjia Heavy Cavalry"],
     dedicated: "unit",
     stats: "Reduces Disciplined Assault's cooldown by 4 seconds.",
   },
