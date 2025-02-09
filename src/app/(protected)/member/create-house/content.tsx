@@ -6,6 +6,7 @@ import { DiscordProps, DiscordUsersProps, getAddAll } from "@/lib/get-data";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Steper from "@/components/steper";
+import { toast } from "react-toastify";
 
 export interface ConfigProps {
   guild_id: string;
@@ -78,6 +79,9 @@ const Content = ({ username }: { username: string }) => {
       console.error("error_adding", error);
     } finally {
       router.push(`/dashboard/houses/${configValues.name}`);
+      toast.success(
+        "House created successfully \n Go to Logs channel on discord and check bot adding members progress"
+      );
     }
   };
   return (

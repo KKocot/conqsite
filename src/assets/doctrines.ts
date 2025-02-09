@@ -57,9 +57,9 @@ export const epicDoctrines: Doctrine[] = [
     stats: "Reduces On Watch cooldown by 4 seconds",
   },
   {
-    name: "Sihladars Doctrine II",
+    name: "Silahdars Doctrine II",
     img: "/doctrines/sihladars-doctrine-ii.png",
-    forUnit: ["Sihladars"],
+    forUnit: ["Silahdars"],
     dedicated: "unit",
     stats: "Increases Get Over Here movement speed by 10%",
   },
@@ -96,7 +96,7 @@ export const epicDoctrines: Doctrine[] = [
     img: "/doctrines/siphonarioi-doctrine-ii.png",
     dedicated: "unit",
     forUnit: ["Siphonarioi"],
-    stats: "Extends the durationof burn by 2 seconds",
+    stats: "Increases flame duration by 2 seconds",
   },
   {
     name: "Epic Sword Doctrine II",
@@ -627,13 +627,13 @@ export const epicDoctrines: Doctrine[] = [
     dedicated: "unit",
     stats: "Reduces Berserker Cooldown by 20%.",
   },
-  {
-    name: "Guardian Doctrine",
-    img: "/doctrines/guardian-doctrine.png",
-    forUnit: ["Shieldmaidens"],
-    dedicated: "unit",
-    stats: "Reduces Guardian cooldown by 5 seconds.",
-  },
+  // {
+  //   name: "Guardian Doctrine",
+  //   img: "/doctrines/guardian-doctrine.png",
+  //   forUnit: ["Shieldmaidens"],
+  //   dedicated: "unit",
+  //   stats: "Reduces Guardian cooldown by 5 seconds.",
+  // },
   {
     name: "Greyhair Doctrine II",
     img: "/doctrines/greybeard-doctrine-main.png",
@@ -818,14 +818,14 @@ export const epicDoctrines: Doctrine[] = [
     stats:
       "Deal 20% increased damage to cavalry units. Deal 20% reduced damage to ranged and melee infantry units.",
   },
-  {
-    name: "Varangian Sword Doctrine II",
-    img: "/doctrines/varangian-axe-doctrine.png",
-    forUnit: ["Varangian Guards"],
-    dedicated: "unit",
+  // {
+  //   name: "Varangian Sword Doctrine II",
+  //   img: "/doctrines/varangian-axe-doctrine.png",
+  //   forUnit: ["Varangian Guards"],
+  //   dedicated: "unit",
 
-    stats: "Reduces Varangian Guards' melee damage taken by 5%.",
-  },
+  //   stats: "Reduces Varangian Guards' melee damage taken by 5%.",
+  // },
   {
     name: "Myrmillones Morale Doctrine",
     img: "/logo.png",
@@ -1319,6 +1319,21 @@ export const epicDoctrines: Doctrine[] = [
     stats:
       "Unlocks : Divine Gaze, Creates semi-circular totem of 8 meters at distance of 50 meters in any direction. Enemies within ranfe gain a stack of Expose, sracking ip to 10 times, Stacks are lose after 5 seconds. The Sunward Phalanx deals 40$ increased damage aginst enemies with 5 stacks of Expose. Base cooldown: 50 seconds. Base duration: 15 seconds.",
   },
+  {
+    name: "Lionroar Crew - Veteran",
+    img: "/logo.png",
+    forUnit: ["Lionroar Crew"],
+    dedicated: "unit",
+    stats: "Reduces the time of deploying cannon by 2 seconds.",
+  },
+  {
+    name: "Divine Wrath",
+    img: "/logo.png",
+    forUnit: ["Spartan Chosen"],
+    dedicated: "unit",
+    stats:
+      "When the Spartan Chosen build full momentum, their normal and formation attacks can knock down enemy units",
+  },
 ];
 export const rareDoctrines: Doctrine[] = [
   {
@@ -1513,9 +1528,9 @@ export const rareDoctrines: Doctrine[] = [
     stats: "Increases Brace damage by 12%.",
   },
   {
-    name: "Sihladars Doctrine I",
+    name: "Silahdars Doctrine I",
     img: "/doctrines/sihladars-doctrine-i.png",
-    forUnit: ["Sihladars"],
+    forUnit: ["Silahdars"],
     dedicated: "unit",
     stats: "Reduces ranged damage taken by 50 points.",
   },
@@ -1538,7 +1553,7 @@ export const rareDoctrines: Doctrine[] = [
     img: "/doctrines/siphonarioi-doctrine-i.png",
     forUnit: ["Siphonarioi"],
     dedicated: "unit",
-    stats: "Increases the impact damage of flames by 8%.",
+    stats: "Increases blunt damage by 200 when hellfire strikes target.",
   },
   {
     name: "Armiger Lancers' Weapons Doctrine",
@@ -1554,13 +1569,13 @@ export const rareDoctrines: Doctrine[] = [
     dedicated: "unit",
     stats: "Increases Bludgeon damage by 5%.",
   },
-  {
-    name: "Rapidity Doctrine",
-    img: "/doctrines/liaos-rangers-weapons-doctrine.png",
-    forUnit: ["Liaos Rangers"],
-    dedicated: "unit",
-    stats: "Increases Liao's Rangers' movement speed by 7%.",
-  },
+  // {
+  //   name: "Rapidity Doctrine",
+  //   img: "/doctrines/liaos-rangers-weapons-doctrine.png",
+  //   forUnit: ["Liaos Rangers"],
+  //   dedicated: "unit",
+  //   stats: "Increases Liao's Rangers' movement speed by 7%.",
+  // },
   {
     name: "Defence Doctrine",
     img: "/doctrines/defense-doctrine.png",
@@ -1652,7 +1667,7 @@ export const rareDoctrines: Doctrine[] = [
   },
   {
     name: "Varangian Sword Doctrine I",
-    img: "/doctrines/varangian-axe-doctrine.png",
+    img: "/doctrines/varangian-sword-doctrine-i.png",
     forUnit: ["Varangian Guards"],
     dedicated: "unit",
     stats:
@@ -1788,6 +1803,20 @@ export const rareDoctrines: Doctrine[] = [
     dedicated: "unit",
     stats:
       "Divine Gaze applies Expose to enemy units. Uppon reaching 10 stacks, that enemy deals 30% reduced damage to the Pverwhelm attire to take effect.",
+  },
+  {
+    name: "Blood of Iron",
+    img: "/logo.png",
+    forUnit: ["Lionroar Crew"],
+    dedicated: "unit",
+    stats: "Reduces the endurance of cannons by 500",
+  },
+  {
+    name: "Formation March",
+    img: "/logo.png",
+    forUnit: ["Spartan Chosen"],
+    dedicated: "unit",
+    stats: "Increases movement speed by 6%.",
   },
 ];
 export const uncommonDoctrines: Doctrine[] = [

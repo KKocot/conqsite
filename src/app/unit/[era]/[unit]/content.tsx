@@ -129,15 +129,7 @@ const Content = ({
               </div>
               <div className="flex flex-col items-center">
                 <p className="text-sm text-muted-foreground">Value</p>
-                <p className="font-medium">
-                  {/* {entry && entry.value
-                    ? entry.value.reduce((acc, val) => acc + val, 0) /
-                      entry.value.length /
-                      100
-                    : 0} */}
-                  0
-                </p>
-                {/* TODO: Add a tooltip to show the values */}
+                <p className="font-medium">{shortEntry.value}</p>
               </div>
               <div className="flex flex-col items-center">
                 <p className="text-sm text-muted-foreground mb-2">
