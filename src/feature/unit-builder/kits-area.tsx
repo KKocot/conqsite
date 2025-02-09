@@ -9,8 +9,9 @@ const KitsArea = ({ unitName }: { unitName: string }) => {
       <h2 className="text-2xl font-semibold mb-4 text-center">Kits</h2>
       <div>
         <div className="flex">
-          {filteredKits.map((kit) => (
+          {filteredKits.map((kit, i) => (
             <Image
+              key={i}
               src={`/kits/${kit.image}`}
               alt={kit.unit}
               width={96}
