@@ -97,9 +97,7 @@ const DocsPage: React.FC = () => {
           <strong>Data Miner:</strong>
           <ul className="list-disc pl-6">
             <li>Lx_</li>
-            <li>GryzoN</li>
             <li>Villek</li>
-            <li>jerzyk</li>
           </ul>
         </li>
         <li>

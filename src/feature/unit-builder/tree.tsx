@@ -72,7 +72,7 @@ const Tree = ({ nodes, unitlvl, mode, editMode, setUnit }: TreeProps) => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col items-center">
       {tree && (
         <TreeRenderer
           nodes={[tree]}

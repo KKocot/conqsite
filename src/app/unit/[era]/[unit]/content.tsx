@@ -286,7 +286,7 @@ const Content = ({
             </div>
             <SkillsArea editMode={editMode} form={form} />
             <FormationsArea editMode={editMode} form={form} />
-            <div className="flex justify-around">
+            <div className="flex justify-around flex-col items-center lg:flex-row">
               <DoctrinesArea unitName={shortEntry.name} />
               <KitsArea unitName={shortEntry.name} />
             </div>

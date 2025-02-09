@@ -1321,18 +1321,26 @@ export const epicDoctrines: Doctrine[] = [
   },
   {
     name: "Lionroar Crew - Veteran",
-    img: "/logo.png",
+    img: "/doctrines/Lionroar.png",
     forUnit: ["Lionroar Crew"],
     dedicated: "unit",
     stats: "Reduces the time of deploying cannon by 2 seconds.",
   },
   {
     name: "Divine Wrath",
-    img: "/logo.png",
+    img: "/doctrines/Spartan.png",
     forUnit: ["Spartan Chosen"],
     dedicated: "unit",
     stats:
       "When the Spartan Chosen build full momentum, their normal and formation attacks can knock down enemy units",
+  },
+  {
+    name: "Swinefeathers - Fire Penetration",
+    img: "/doctrines/Swinefeathers.png",
+    forUnit: ["Swinefeathers"],
+    dedicated: "unit",
+    stats:
+      "[Triple Shooting] Their bullets can penetrate two enemies with each enemy taking 75% damage. Their shot can also knock back the enemy units",
   },
 ];
 export const rareDoctrines: Doctrine[] = [
@@ -1806,17 +1814,24 @@ export const rareDoctrines: Doctrine[] = [
   },
   {
     name: "Blood of Iron",
-    img: "/logo.png",
+    img: "/doctrines/Lionroar_blue.png",
     forUnit: ["Lionroar Crew"],
     dedicated: "unit",
     stats: "Reduces the endurance of cannons by 500",
   },
   {
     name: "Formation March",
-    img: "/logo.png",
+    img: "/doctrines/Spartan_blue.png",
     forUnit: ["Spartan Chosen"],
     dedicated: "unit",
     stats: "Increases movement speed by 6%.",
+  },
+  {
+    name: "Reitar Pistoleers - Ranging Fire",
+    img: "/doctrines/Reitar_Pistoleers.png",
+    forUnit: ["Reitar Pistoleers"],
+    dedicated: "unit",
+    stats: "Increase the damage of [Roar of Powder] by 15%",
   },
 ];
 export const uncommonDoctrines: Doctrine[] = [

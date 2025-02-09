@@ -17,7 +17,7 @@ const DoctrinesArea = ({ unitName }: { unitName: string }) => {
       <h2 className="text-2xl font-semibold mb-4 text-center">
         Dedicated Doctrines
       </h2>
-      <div className="flex gap-4">
+      <div className="flex justify-around gap-2">
         {doctrines.map((doctrine) => (
           <div
             key={doctrine.name}
@@ -39,7 +39,6 @@ const DoctrinesArea = ({ unitName }: { unitName: string }) => {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-            <p className="text-sm font-medium">{doctrine.name}</p>
           </div>
         ))}
       </div>
