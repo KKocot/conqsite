@@ -129,15 +129,7 @@ const Content = ({
               </div>
               <div className="flex flex-col items-center">
                 <p className="text-sm text-muted-foreground">Value</p>
-                <p className="font-medium">
-                  {/* {entry && entry.value
-                    ? entry.value.reduce((acc, val) => acc + val, 0) /
-                      entry.value.length /
-                      100
-                    : 0} */}
-                  0
-                </p>
-                {/* TODO: Add a tooltip to show the values */}
+                <p className="font-medium">{shortEntry.value}</p>
               </div>
               <div className="flex flex-col items-center">
                 <p className="text-sm text-muted-foreground mb-2">
@@ -294,7 +286,7 @@ const Content = ({
             </div>
             <SkillsArea editMode={editMode} form={form} />
             <FormationsArea editMode={editMode} form={form} />
-            <div className="flex justify-around">
+            <div className="flex justify-around flex-col items-center lg:flex-row">
               <DoctrinesArea unitName={shortEntry.name} />
               <KitsArea unitName={shortEntry.name} />
             </div>
