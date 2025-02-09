@@ -1,5 +1,11 @@
 import { epicDoctrines, rareDoctrines } from "@/assets/doctrines";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const DoctrinesArea = ({ unitName }: { unitName: string }) => {
   const doctrines = [...epicDoctrines, ...rareDoctrines].filter(
@@ -17,10 +23,23 @@ const DoctrinesArea = ({ unitName }: { unitName: string }) => {
             key={doctrine.name}
             className="text-center flex flex-col items-center"
           >
-            <Avatar className="w-fit h-24 object-contain mb-2 rounded-none">
-              <AvatarImage src={doctrine.img} alt={`${doctrine.name} avatar`} />
-            </Avatar>
-            <p className="text-sm font-medium">{doctrine.stats}</p>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Avatar className="w-fit h-24 object-contain mb-2 rounded-none">
+                    <AvatarImage
+                      src={doctrine.img}
+                      alt={`${doctrine.name} avatar`}
+                    />
+                  </Avatar>
+                </TooltipTrigger>
+                <TooltipContent className="max-w-[300px]">
+                  <h2 className="p-2 text-xl">{doctrine.name}</h2>
+                  <p>{doctrine.stats}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <p className="text-sm font-medium">{doctrine.name}</p>
           </div>
         ))}
       </div>

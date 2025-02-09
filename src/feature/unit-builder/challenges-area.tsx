@@ -1,3 +1,9 @@
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -35,74 +41,79 @@ const ChallengesArea = ({
           </Button>
         )}
       </h2>
-      <div className="grid gap-4 sm:grid-cols-2">
-        {fields.map((field, i) => (
-          <Card key={i}>
-            <CardContent className="p-4 flex flex-col gap-4">
-              <h3 className="font-semibold flex items-center justify-between">
-                <span className="flex items-center gap-2">
-                  Tier {i + 1}
-                  {editMode ? (
-                    <Button
-                      className="rounded-full w-fit h-fit p-0 hover:bg-transparent hover:text-red-500"
-                      variant="ghost"
-                      onClick={() =>
-                        update(i, {
-                          tier: i + 1,
-                          quests: [...field.quests, ""],
-                        })
-                      }
-                    >
-                      <PlusCircle className="w-6 h-6" />
-                    </Button>
-                  ) : null}
-                </span>
-
-                {editMode ? (
-                  <Button
-                    className="rounded-full w-fit h-fit p-0 hover:bg-transparent hover:text-red-500"
-                    variant="ghost"
-                    onClick={() => remove(i)}
-                  >
-                    <Trash2 className="w-6 h-6" />
-                  </Button>
-                ) : null}
-              </h3>
-              <ul className="flex flex-col gap-2">
-                {field.quests.map((quest, index) => (
-                  <li key={index}>
-                    {editMode ? (
-                      <div className="flex items-center gap-2">
-                        <Input
-                          {...form.register(`challenges.${i}.quests.${index}`)}
-                          value={quest}
-                          onChange={(e) => {
-                            const newQuests = [...field.quests];
-                            newQuests[index] = e.target.value;
-                            update(i, { ...field, quests: newQuests });
-                          }}
-                        />
+      <div>
+        <Accordion type="single" collapsible>
+          {fields.map((field, i) => (
+            <Card key={i}>
+              <AccordionItem value={field.id}>
+                <CardContent className="p-4 flex flex-col gap-4">
+                  <AccordionTrigger className="font-semibold flex items-center justify-between p-0">
+                    <span className="flex items-center gap-2">
+                      Tier {i + 1}
+                      {editMode ? (
                         <Button
                           className="rounded-full w-fit h-fit p-0 hover:bg-transparent hover:text-red-500"
                           variant="ghost"
-                          onClick={() => {
-                            const newQuests = [...field.quests];
-                            newQuests.splice(index, 1);
-                            update(i, { ...field, quests: newQuests });
-                          }}
+                          onClick={() =>
+                            update(i, {
+                              tier: i + 1,
+                              quests: [...field.quests, ""],
+                            })
+                          }
                         >
-                          <Trash2 className="w-6 h-6" />
+                          <PlusCircle className="w-6 h-6" />
                         </Button>
+                      ) : null}
+                    </span>
+                    {editMode ? (
+                      <Button
+                        className="rounded-full w-fit h-fit p-0 hover:bg-transparent hover:text-red-500"
+                        variant="ghost"
+                        onClick={() => remove(i)}
+                      >
+                        <Trash2 className="w-6 h-6" />
+                      </Button>
+                    ) : null}
+                  </AccordionTrigger>
+                  <AccordionContent className="flex flex-col gap-2">
+                    {field.quests.map((quest, index) => (
+                      <div key={index} className="border-b-2 border-accent">
+                        {editMode ? (
+                          <div className="flex items-center gap-2">
+                            <Input
+                              {...form.register(
+                                `challenges.${i}.quests.${index}`
+                              )}
+                              value={quest}
+                              onChange={(e) => {
+                                const newQuests = [...field.quests];
+                                newQuests[index] = e.target.value;
+                                update(i, { ...field, quests: newQuests });
+                              }}
+                            />
+                            <Button
+                              className="rounded-full w-fit h-fit p-0 hover:bg-transparent hover:text-red-500"
+                              variant="ghost"
+                              onClick={() => {
+                                const newQuests = [...field.quests];
+                                newQuests.splice(index, 1);
+                                update(i, { ...field, quests: newQuests });
+                              }}
+                            >
+                              <Trash2 className="w-6 h-6" />
+                            </Button>
+                          </div>
+                        ) : (
+                          quest
+                        )}
                       </div>
-                    ) : (
-                      quest
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        ))}
+                    ))}
+                  </AccordionContent>
+                </CardContent>
+              </AccordionItem>
+            </Card>
+          ))}
+        </Accordion>
       </div>
     </div>
   ) : null;

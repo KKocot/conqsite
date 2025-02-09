@@ -5,6 +5,12 @@ import { Dispatch, FC, SetStateAction } from "react";
 import { TreeNode } from "./tree";
 import clsx from "clsx";
 import { UnitObject } from "@/lib/get-data";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const BranchButton: FC<{
   node: TreeNode;
@@ -71,14 +77,24 @@ const BranchButton: FC<{
         disabled={isDisabled || disabled}
         onClick={() => onSkillUpdate(node.id)}
       >
-        <Image
-          src={node.img}
-          alt={node.name}
-          width={48}
-          height={48}
-          title={node.name}
-          className="cursor-pointer"
-        />
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Image
+                src={node.img}
+                alt={node.name}
+                width={48}
+                height={48}
+                title={node.name}
+                className="cursor-pointer"
+              />
+            </TooltipTrigger>
+            <TooltipContent>
+              <h2 className="p-2 text-xl">{node.name}</h2>
+              <p>{node.description}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         <Badge
           variant="tree"
           className={clsx({

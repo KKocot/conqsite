@@ -11,10 +11,11 @@ import DoctrinesArea from "@/feature/unit-builder/dosctrines-area";
 import FormationsArea from "@/feature/unit-builder/formations-area";
 import KitsArea from "@/feature/unit-builder/kits-area";
 import SkillsArea from "@/feature/unit-builder/skills-area";
+import Tree from "@/feature/unit-builder/tree";
 import { getRoleById, UnitObject } from "@/lib/get-data";
 import { Unit } from "@/lib/type";
 import { useQuery } from "@tanstack/react-query";
-import { PenIcon, Save, X } from "lucide-react";
+import { ArrowBigLeft, ArrowBigRight, PenIcon, Save, X } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -63,6 +64,9 @@ const Content = ({
   });
   const [editMode, setEditMode] = useState(false);
   const wikiMutation = useWikiMutation();
+  const [unit, setUnit] = useState<UnitObject>(form.getValues());
+  const treeStructure = form.watch("treeStructure");
+  const maxlvl = form.watch("maxlvl");
   const onSubmit = form.handleSubmit(async (data) => {
     wikiMutation.mutate({
       ...data,
@@ -85,6 +89,10 @@ const Content = ({
     <Form {...form}>
       <form className="container mx-auto py-8">
         <Card className="w-full max-w-4xl mx-auto">
+          <ArrowBigLeft
+            className="cursor-pointer relative top-0 left-0 ml-4 mt-4"
+            onClick={() => history.back()}
+          />
           <CardHeader>
             <div className="flex items-center gap-4">
               <Image
@@ -273,17 +281,17 @@ const Content = ({
               )} 
             </div>*/}
             </div>
-            {/* 
-          <div className="flex justify-center flex-col py-4">
-            <h2 className="text-2xl font-semibold mb-4 text-center">Tree</h2>
-            <Tree
-              editMode={false}
-              nodes={unit.treeStructure || []}
-              unitlvl={unit.maxlvl || 0}
-              setUnit={setUnit}
-              mode="view"
-            />
-          </div> */}
+
+            <div className="flex justify-center flex-col py-4">
+              <h2 className="text-2xl font-semibold mb-4 text-center">Tree</h2>
+              <Tree
+                editMode={false}
+                nodes={treeStructure || []}
+                unitlvl={Number(maxlvl) || 0}
+                mode="view"
+                setUnit={setUnit}
+              />
+            </div>
             <SkillsArea editMode={editMode} form={form} />
             <FormationsArea editMode={editMode} form={form} />
             <div className="flex justify-around">
