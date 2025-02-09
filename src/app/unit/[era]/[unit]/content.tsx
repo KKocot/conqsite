@@ -64,6 +64,7 @@ const Content = ({
   });
   const [editMode, setEditMode] = useState(false);
   const wikiMutation = useWikiMutation();
+  const [unit, setUnit] = useState<UnitObject>(form.getValues());
   const treeStructure = form.watch("treeStructure");
   const maxlvl = form.watch("maxlvl");
   const onSubmit = form.handleSubmit(async (data) => {
@@ -288,7 +289,7 @@ const Content = ({
                 nodes={treeStructure || []}
                 unitlvl={Number(maxlvl) || 0}
                 mode="view"
-                setUnit={() => null} // eslint-disable-line @typescript-eslint/no-empty-function
+                setUnit={setUnit}
               />
             </div>
             <SkillsArea editMode={editMode} form={form} />

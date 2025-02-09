@@ -89,9 +89,7 @@ const AddDialog = ({ house, author, authorID }: AddDialogProps) => {
       form.reset();
       setOpen(false);
     }
-  }, [mutationFn.isPending]);
-
-  // console.log(form.getValues());
+  }, [mutationFn.isPending, mutationFn.isSuccess, form]);
   const pending = mutationFn.isPending;
   return (
     <Dialog open={open} onOpenChange={(value) => !pending && setOpen(value)}>
