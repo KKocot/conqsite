@@ -29,6 +29,9 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
   const { data: profile, isLoading } = useQuery(
     profileQueryOptions(data?.user.id)
   );
+  const list_of_house = profile?.house
+    .filter((house) => house !== "none")
+    .filter((house, index, self) => self.indexOf(house) === index);
   const openLinks = {
     title: t("dashboard.dashboard"),
     url: "/dashboard",
@@ -104,7 +107,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
       },
     ],
   };
-  const houseLinks = profile?.house.map((house) => ({
+  const houseLinks = list_of_house?.map((house) => ({
     title: house,
     url: `/house/${house}`,
     icon: Castle,
