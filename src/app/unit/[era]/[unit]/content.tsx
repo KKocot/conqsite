@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import ChallengesArea from "@/feature/unit-builder/challenges-area";
-import DoctrinesArea from "@/feature/unit-builder/dosctrines-area";
+import DoctrinesArea from "@/feature/unit-builder/doctrines-area";
 import FormationsArea from "@/feature/unit-builder/formations-area";
 import KitsArea from "@/feature/unit-builder/kits-area";
 import SkillsArea from "@/feature/unit-builder/skills-area";

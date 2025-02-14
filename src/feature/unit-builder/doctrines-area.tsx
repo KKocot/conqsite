@@ -28,6 +28,7 @@ const DoctrinesArea = ({ unitName }: { unitName: string }) => {
                 <TooltipTrigger>
                   <Avatar className="w-fit h-24 object-contain mb-2 rounded-none">
                     <AvatarImage
+                      className="block max-w-24"
                       src={doctrine.img}
                       alt={`${doctrine.name} avatar`}
                     />
