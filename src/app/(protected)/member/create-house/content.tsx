@@ -56,7 +56,7 @@ const Content = ({ username }: { username: string }) => {
   const onSubmit = async () => {
     try {
       const response = await fetch(
-        `/api/createHouse?house=${configValues.name}`,
+        `/api/house/createHouse?house=${configValues.name}`,
         {
           method: "POST",
           body: JSON.stringify({

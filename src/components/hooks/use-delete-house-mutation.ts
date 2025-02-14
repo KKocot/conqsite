@@ -4,7 +4,7 @@ const useDeleteHouseMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (house: string) => {
-      const response = await fetch(`/api/deleteHouse?house=${house}`, {
+      const response = await fetch(`/api/house/deleteHouse?house=${house}`, {
         method: "DELETE",
       });
       if (!response.ok) {

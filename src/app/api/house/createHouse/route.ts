@@ -7,6 +7,7 @@ import { ZodError } from "zod";
 import Roles from "@/models/roles";
 import putCreateHouseSchema from "./schema";
 import HouseSettings from "@/models/houseSettings";
+import Survey from "@/models/surveys";
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
@@ -48,6 +49,14 @@ export async function POST(request: Request) {
       role: "HouseLeader",
       house: house,
     });
+    // Leader Survey
+    const leaderSurvey = await Survey.findOneAndUpdate(
+      { discordId: session?.user.id },
+      house === "none"
+        ? { $set: { house: [house] } }
+        : { $push: { house: house } },
+      { new: true }
+    );
     //  Roles
     let highRoles = [];
     if (data.righthand.length > 0) {
@@ -75,7 +84,13 @@ export async function POST(request: Request) {
       }
     }
     return NextResponse.json(
-      { houseSettings, houseDetails, leaderRole, ...highRoles },
+      {
+        settings: houseSettings,
+        detaild: houseDetails,
+        leader_role: leaderRole,
+        leader_profile: leaderSurvey,
+        commanders: highRoles,
+      },
       { status: 201 }
     );
   } catch (error) {
