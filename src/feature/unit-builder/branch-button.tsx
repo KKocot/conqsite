@@ -89,7 +89,7 @@ const BranchButton: FC<{
                 className="cursor-pointer"
               />
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="max-w-sm">
               <h2 className="p-2 text-xl">{node.name}</h2>
               <p>{node.description}</p>
             </TooltipContent>
