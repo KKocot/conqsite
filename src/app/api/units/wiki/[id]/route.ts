@@ -27,7 +27,10 @@ export async function POST(
       status: data.status,
       reviewNotes: data.reviewNotes,
     });
-    return NextResponse.json({ new_version: updatedUnitWiki, prev_version: unitWiki }, { status: 201 });
+    return NextResponse.json(
+      { new_version: updatedUnitWiki, prev_version: unitWiki },
+      { status: 201 }
+    );
   } catch (error) {
     if (error instanceof ZodError)
       return NextResponse.json({ message: error.message }, { status: 400 });
@@ -47,7 +50,8 @@ export async function GET(
       discordId: session?.user.id,
       role: "Reviewer",
     });
-    if (!session || !reviewer) return new Response("401");
+    // if (!session || !reviewer) return new Response("401");
+    if (!session) return new Response("401");
 
     const wikiPost = await UnitWiki.findById(id);
     return NextResponse.json({ wikiPost }, { status: 200 });

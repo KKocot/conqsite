@@ -58,9 +58,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
       {
         title: "Wiki requests",
         url: `/dashboard/wiki-requests`,
-        visibleTo: commanders.some(
-          (e) => e.discordId === data?.user.id && e.role === "Reviewer"
-        ),
+        visibleTo: data?.user.id ? true : false,
       },
       {
         title: t("dashboard.privacy_policy"),

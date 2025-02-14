@@ -387,8 +387,10 @@ export const getUnitWiki = async (
   const result = await response.json();
   return result;
 };
-export const getUnitsReview = async (): Promise<UnitObject[]> => {
-  const response = await fetch(`/api/units/wiki?status=pending`);
+export const getUnitsReview = async (
+  status: "pending" | "accepted" | "rejected"
+): Promise<UnitObject[]> => {
+  const response = await fetch(`/api/units/wiki?status=${status}`);
   const result = await response.json();
   return result;
 };

@@ -3,23 +3,33 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import LoadingComponent from "@/feature/ifs/loading";
-import { getUnitWiki, UnitObject } from "@/lib/get-data";
+import { getUnitWiki, Roles, UnitObject } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
+import { ArrowBigLeft } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
-const Content = ({ data }: { data: UnitObject }) => {
+const Content = ({ data, roles }: { data: UnitObject; roles?: Roles[] }) => {
   const { data: prevData, isLoading: prevLoading } = useQuery({
     queryKey: ["prevUnit", data.name],
     queryFn: () => getUnitWiki(data.name, "accepted"),
     enabled: !!data,
   });
+  const reviewer = roles?.some((role) => role.role === "reviewer") ?? false;
   const changeWikiStatus = useChangeWikiStatus();
   const [note, setNote] = useState("");
   const lastAccepted = prevData ? prevData[prevData.length - 1] : undefined;
   return (
     <div className="max-w-4xl mx-auto p-4 space-y-8">
+      <Button
+        variant="custom"
+        onClick={() => window.history.back()}
+        className="flex items-center gap-2"
+      >
+        <ArrowBigLeft />
+        Back
+      </Button>
       <div className="flex gap-4">
         <Version data={data} version="new" />
         {prevLoading ? (
@@ -28,38 +38,42 @@ const Content = ({ data }: { data: UnitObject }) => {
           <Version data={lastAccepted} version="prev" />
         ) : null}
       </div>
-      <Textarea
-        placeholder="Review Notes"
-        onChange={(e) => setNote(e.target.value)}
-        value={note}
-      />
-      <div className="flex justify-end space-x-4">
-        <Button
-          variant="destructive"
-          className="font-bold text-md"
-          onClick={() =>
-            changeWikiStatus.mutate({
-              id: data._id ?? "",
-              status: "rejected",
-              reviewNotes: note,
-            })
-          }
-        >
-          Reject
-        </Button>
-        <Button
-          variant="custom"
-          onClick={() => {
-            changeWikiStatus.mutate({
-              id: data._id ?? "",
-              status: "accepted",
-              reviewNotes: note,
-            });
-          }}
-        >
-          Accept
-        </Button>
-      </div>
+      {reviewer ? (
+        <>
+          <Textarea
+            placeholder="Review Notes"
+            onChange={(e) => setNote(e.target.value)}
+            value={note}
+          />
+          <div className="flex justify-end space-x-4">
+            <Button
+              variant="destructive"
+              className="font-bold text-md"
+              onClick={() =>
+                changeWikiStatus.mutate({
+                  id: data._id ?? "",
+                  status: "rejected",
+                  reviewNotes: note,
+                })
+              }
+            >
+              Reject
+            </Button>
+            <Button
+              variant="custom"
+              onClick={() => {
+                changeWikiStatus.mutate({
+                  id: data._id ?? "",
+                  status: "accepted",
+                  reviewNotes: note,
+                });
+              }}
+            >
+              Accept
+            </Button>
+          </div>
+        </>
+      ) : null}
     </div>
   );
 };
