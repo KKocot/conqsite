@@ -17,7 +17,7 @@ export const lowUnits = [
     leadership: 0,
     value: 6,
     era: "grey",
-    icon: "/unit.jpg",
+    icon: "/low-tiers-icons/arc_mil_pre.png",
   },
   {
     id: 3,
@@ -47,7 +47,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 5,
     era: "green",
-    icon: "/unit.jpg",
+    icon: "/low-tiers-icons/bla_drag_arc.png",
   },
   {
     id: 6,
@@ -157,7 +157,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "green",
-    icon: "/unit.jpg",
+    icon: "/low-tiers-icons/dem_jav_pre.png",
   },
   {
     id: 17,
@@ -227,7 +227,7 @@ export const lowUnits = [
     masteryPoints: true,
     value: 2,
     era: "green",
-    icon: "/unit.jpg",
+    icon: "/low-tiers-icons/iro_bow_pre.png",
   },
   {
     id: 24,
@@ -477,7 +477,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "blue",
-    icon: "/unit.jpg",
+    icon: "/low-tiers-icons/sea_stag_death.png",
   },
   {
     id: 49,
@@ -487,7 +487,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 3,
     era: "blue",
-    icon: "/unit.jpg",
+    icon: "/low-tiers-icons/selem_cav.png",
   },
   {
     id: 50,
@@ -517,7 +517,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "grey",
-    icon: "/unit.jpg",
+    icon: "/low-tiers-icons/spear_mil.png",
   },
   {
     id: 53,
@@ -537,7 +537,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 2,
     era: "grey",
-    icon: "/unit.jpg",
+    icon: "/low-tiers-icons/sword_mil_post.png",
   },
   {
     id: 55,
@@ -547,7 +547,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 1,
     era: "grey",
-    icon: "/unit.jpg",
+    icon: "/low-tiers-icons/ten_farm_pre.png",
   },
   {
     id: 56,
@@ -638,6 +638,16 @@ export const lowUnits = [
     value: 8,
     era: "blue",
     icon: "/low-tiers-icons/t3image.png",
+  },
+  {
+    id: 65,
+    name: "Demesne Pikemen",
+    src: "/low-tiers-units/dem_pike_pre.png",
+    leadership: 55,
+    masteryPoints: false,
+    value: 1,
+    era: "grey",
+    icon: "/low-tiers-icons/demesne_pikemen.png",
   },
 ];
 

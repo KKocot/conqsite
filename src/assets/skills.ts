@@ -1,4 +1,7 @@
 const skills: string[] = [
+  "bulets.png",
+  "karabiny.png",
+  "armata.png",
   "shield_rush.png",
   "sprint.png",
   "charge.png",
