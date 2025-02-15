@@ -1,6 +1,6 @@
 "use client";
 
-import { DiscordDataProps } from "@/app/(protected)/member/create-house/content";
+import { DiscordDataProps } from "@/app/(pages)/(protected)/member/create-house/content";
 import CreateHouseConfig from "@/feature/house-settings/create-house-config";
 import CreateHouseDiscordServers from "@/feature/house-settings/create-house-discord-servers";
 import { HouseSettings } from "@/lib/get-data";

@@ -1,8 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "../../components/ui/separator";
 import { Info, Link2 } from "lucide-react";
-import { Tooltip, TooltipProvider } from "../../components/ui/tooltip";
-import { TooltipContent, TooltipTrigger } from "@radix-ui/react-tooltip";
 import Image from "next/image";
 import { Label } from "../../components/ui/label";
 import { Input } from "../../components/ui/input";
@@ -11,13 +9,13 @@ import { Button } from "../../components/ui/button";
 import { Checkbox } from "../../components/ui/checkbox";
 import { Dispatch, SetStateAction, useState } from "react";
 import { DiscordProps, getDiscordData } from "@/lib/get-data";
+import { useTranslations } from "next-intl";
+import HoverClickTooltip from "@/components/hover-click-tooltip";
 import {
   ConfigProps,
   DiscordDataProps,
-} from "@/app/(protected)/member/create-house/content";
-import { EditConfigProps } from "@/app/(protected)/(owner)/settings/bot-config/[param]/content";
-import { useTranslations } from "next-intl";
-import HoverClickTooltip from "@/components/hover-click-tooltip";
+} from "@/app/(pages)/(protected)/member/create-house/content";
+import { EditConfigProps } from "@/app/(pages)/(protected)/(owner)/settings/bot-config/[param]/content";
 
 export interface CreateHouse {
   guild_id: string;

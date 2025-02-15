@@ -1,7 +1,6 @@
 import { useSession } from "next-auth/react";
-import AddDialog from "../../../../feature/tw-history/dialog";
 import { useQuery } from "@tanstack/react-query";
-import { getHistoryPostsByDate, getRolesByHouseAndId } from "@/lib/get-data";
+import { getHistoryPostsByUser } from "@/lib/get-data";
 import TWCard from "@/feature/tw-history/card";
 import { useState } from "react";
 import {
@@ -14,22 +13,16 @@ import {
 import LoadingComponent from "@/feature/ifs/loading";
 
 interface TWHistory {
-  house: string;
   dates: string[] | undefined;
 }
 
-const Content = ({ house, dates }: TWHistory) => {
+const Content = ({ dates }: TWHistory) => {
   const { data } = useSession();
   const [date, setDate] = useState<string | undefined>(dates?.[0] ?? undefined);
   const { data: latesTW, isLoading: latestTWLoading } = useQuery({
-    queryKey: ["latestTW", house, date],
-    queryFn: () => getHistoryPostsByDate(house, date ?? ""),
+    queryKey: ["latestTW", data?.user.id, date],
+    queryFn: () => getHistoryPostsByUser(date ?? ""),
     enabled: !!date,
-  });
-  const { data: role, isLoading: roleLoading } = useQuery({
-    queryKey: ["roles", house],
-    queryFn: () => getRolesByHouseAndId(house, data?.user.id ?? ""),
-    enabled: !!house && !!data?.user.id,
   });
 
   return (
@@ -57,23 +50,14 @@ const Content = ({ house, dates }: TWHistory) => {
           No archive yet
         </div>
       ) : (
-        <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:grid-cols-3 justify-center">
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols3 justify-center">
           {latesTW?.map((tw) => (
-            <li key={tw._id} className="flex justify-center">
-              <TWCard
-                data={tw}
-                pageType="house"
-                roleDisable={!role || roleLoading}
-              />
+            <li key={tw._id}>
+              <TWCard data={tw} pageType="user" />
             </li>
           ))}
         </ul>
       )}
-      <AddDialog
-        house={house}
-        author={data?.user.name ?? "Unknown"}
-        authorID={data?.user.id ?? "Unknown"}
-      />
     </div>
   );
 };

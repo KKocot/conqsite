@@ -28,8 +28,8 @@ import { Label } from "../../components/ui/label";
 import {
   ConfigProps,
   DiscordDataProps,
-} from "@/app/(protected)/member/create-house/content";
-import { EditConfigProps } from "@/app/(protected)/(owner)/settings/bot-config/[param]/content";
+} from "@/app/(pages)/(protected)/member/create-house/content";
+import { EditConfigProps } from "@/app/(pages)/(protected)/(owner)/settings/bot-config/[param]/content";
 
 interface CreateConfig {
   type: "create";
