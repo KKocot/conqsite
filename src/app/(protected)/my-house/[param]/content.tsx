@@ -11,7 +11,8 @@ import { HouseAssets, Roles, Survey } from "@/lib/get-data";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface ContentProps {
   house: string;
@@ -30,18 +31,35 @@ const Content: FC<ContentProps> = ({
 }) => {
   const t = useTranslations("MyHouse");
   const [inputQuery, setInputQuery] = useState<string>("");
+  const [sortBy, setSortBy] = useState<"level" | "update">("level");
+
   const updateHouseAssets = useUpdateAssetsMutation();
-  const filtredSurveys = surveysData
-    ?.sort((a, b) => Number(a.characterLevel) - Number(b.characterLevel))
-    .reverse()
-    .filter((value) => {
+  const filteredData = useMemo(() => {
+    const filtered = surveysData.filter((value) => {
       const searchWord = inputQuery.toLowerCase();
       const countryName = value.inGameNick.toLowerCase();
-      if (countryName.includes(searchWord)) {
-        return true;
-      }
-      return false;
+      return countryName.includes(searchWord);
     });
+
+    if (sortBy === "level") {
+      return [...filtered].sort(
+        (a, b) => Number(b.characterLevel) - Number(a.characterLevel)
+      );
+    }
+
+    return [...filtered].sort((a, b) => {
+      if (a.updates?.length && b.updates?.length) {
+        return (
+          new Date(b.updates[b.updates.length - 1].toString()).getTime() -
+          new Date(a.updates[a.updates.length - 1].toString()).getTime()
+        );
+      }
+      if (!a.updates?.length && !b.updates?.length) return 0;
+      if (!a.updates?.length) return 1;
+      return -1;
+    });
+  }, [surveysData, inputQuery, sortBy]);
+
   return (
     <div className="w-full">
       {rolesData
@@ -74,8 +92,26 @@ const Content: FC<ContentProps> = ({
           value={inputQuery}
         />
       </div>
+      <div className="flex justify-center mt-4 gap-4">
+        <Label>Sort By: </Label>
+        <RadioGroup
+          defaultValue="level"
+          value={sortBy}
+          onValueChange={(value) => setSortBy(value as "level" | "update")}
+          className="flex space-x-4"
+        >
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="level" id="sort-level" />
+            <Label htmlFor="sort-level">Level</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="update" id="sort-update" />
+            <Label htmlFor="sort-update">Last Update</Label>
+          </div>
+        </RadioGroup>
+      </div>
       <div className="flex gap-4 p-4 flex-wrap">
-        {filtredSurveys?.map((e) => (
+        {filteredData.map((e) => (
           <div key={e.discordId}>
             <UserProfile player={e}>
               <Badge

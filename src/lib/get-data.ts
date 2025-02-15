@@ -69,6 +69,7 @@ export const getHouseSettings = async (
 
 export interface Survey {
   _id?: string;
+  updates?: String[];
   discordNick: string;
   inGameNick: string;
   discordId: string;

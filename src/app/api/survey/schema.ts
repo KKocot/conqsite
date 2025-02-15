@@ -3,6 +3,7 @@ export const putSurveySchema = z.object({
   discordNick: z.string(),
   discordId: z.string(),
   inGameNick: z.string(),
+  updates: z.array(z.string()).optional(),
   characterLevel: z.string(),
   avatar: z.string().optional(),
   house: z.array(z.string()).optional(),

@@ -78,11 +78,13 @@ export default function Content() {
               <div>
                 {t("houses")}
                 {": "}
-                {profileData.house.map((e, i) => (
-                  <span key={e}>
-                    {i + 1 === profileData.house.length ? e : e + ","}{" "}
-                  </span>
-                ))}
+                {profileData.house
+                  .filter((e) => e !== "none")
+                  .map((e, i) => (
+                    <span key={i}>
+                      {i + 1 === profileData.house.length ? e : e + ","}{" "}
+                    </span>
+                  ))}
               </div>
             ) : null}
           </div>

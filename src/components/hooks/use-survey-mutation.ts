@@ -2,30 +2,18 @@ import { Survey } from "@/lib/get-data";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
-interface SubmitSurveyParams {
-  values: Survey;
-  user_id: string;
-  avatar: string;
-}
-
 const useSubmitSurveyMutation = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ values, user_id, avatar }: SubmitSurveyParams) => {
-      const data = {
-        ...values,
-        discordId: user_id,
-        avatar: avatar,
-      };
-
+    mutationFn: async (values: Survey) => {
       const response = await fetch("/api/survey", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(values),
       });
 
       if (!response.ok) {

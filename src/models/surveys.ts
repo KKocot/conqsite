@@ -2,6 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const SurveySchema = new Schema({
   discordNick: { type: String, required: true },
+  updates: { type: [String], required: false },
   inGameNick: { type: String, required: true },
   discordId: { type: String, required: true },
   characterLevel: { type: String, required: true },
