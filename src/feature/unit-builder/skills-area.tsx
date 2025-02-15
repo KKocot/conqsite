@@ -52,6 +52,7 @@ const SkillsArea: FC<{
                     onSetImage={(image) => {
                       update(i, { ...field, image });
                     }}
+                    value={field.image}
                   >
                     {field.image ? (
                       <Image

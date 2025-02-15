@@ -17,20 +17,21 @@ import { ReactNode, useId, useState } from "react";
 const ImagePickerDialog = ({
   children,
   onSetImage,
+  value,
   images,
   path,
 }: {
   children: ReactNode;
   onSetImage: (e: string) => void;
   images: string[];
+  value: string;
   path: string;
 }) => {
   const [open, setOpen] = useState(false);
 
   const id = useId();
-  const [value, setValue] = useState("");
-  const onSubmit = () => {
-    onSetImage(value);
+  const onSubmit = (img: string) => {
+    onSetImage(img);
     setOpen(false);
   };
   return (
@@ -64,7 +65,7 @@ const ImagePickerDialog = ({
               </Label>
               <Input
                 checked={value === image}
-                onChange={() => setValue(image)}
+                onChange={() => onSubmit(image)}
                 className="hidden"
                 id={id + "_" + image}
                 type="radio"
@@ -72,9 +73,6 @@ const ImagePickerDialog = ({
             </div>
           ))}
         </div>
-        <DialogFooter>
-          <Button onClick={onSubmit}>Save changes</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
