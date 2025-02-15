@@ -87,6 +87,11 @@ const PolicyPage: React.FC = () => {
         responding to such requests. You also have the right to lodge a
         complaint with a Data Protection Authority regarding our collection and
         use of your personal data.
+      </p>{" "}
+      <h2 className="text-2xl font-semibold mb-4">Data Rights</h2>
+      <p className="mb-4">
+        All data collected in database belongs to website owner. If you want to
+        delete your data, please contact us via Discord.
       </p>
       <h2 className="text-2xl font-semibold mb-4">Cookies</h2>
       <p className="mb-4">

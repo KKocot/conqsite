@@ -1,17 +1,41 @@
+"use client";
+
 import { goldenUnits } from "@/assets/golden-units-data";
 import { heroicUnits } from "@/assets/heroic-units-data";
 import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Unit } from "@/lib/type";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
+import { useMemo, useState } from "react";
 
 const Page = () => {
-  const units = [goldenUnits, heroicUnits, blueUnits, greenUnits, greyUnits];
+  const [query, setQuery] = useState("");
+  const units = useMemo(() => {
+    const filteredUnits = [
+      goldenUnits,
+      heroicUnits,
+      blueUnits,
+      greenUnits,
+      greyUnits,
+    ].map((unitList) =>
+      unitList
+        .filter((unit) => unit.name.toLowerCase().includes(query.toLowerCase()))
+        .sort((a, b) => a.name.localeCompare(b.name))
+    );
+    return filteredUnits;
+  }, [query]);
+
   return (
-    <div className="flex flex-col gap-6 container">
+    <div className="flex flex-col gap-6 container my-12">
+      <Input
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search"
+      />
       {units.map((unit, index) => (
         <List key={index} units={unit} />
       ))}
@@ -22,8 +46,11 @@ export default Page;
 
 const List = ({ units }: { units: Unit[] }) => {
   const t = useTranslations("Units");
+  if (!units || units.length === 0) {
+    return null;
+  }
   let era;
-  switch (units[0].era) {
+  switch (units[0]?.era ?? "") {
     case "golden":
       era = t("golden_era");
       break;
