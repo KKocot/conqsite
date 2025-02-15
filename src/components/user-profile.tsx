@@ -51,6 +51,11 @@ export function UserProfile({
             <DialogDescription>{player.discordNick}</DialogDescription>
           </div>
         </DialogHeader>
+        {player.updates && player.updates?.length! > 0 ? (
+          <div className="text-xs">{`Survey last update: ${
+            player.updates[player.updates.length - 1]
+          }`}</div>
+        ) : null}
         <ProfileData profile={player} />
       </DialogContent>
     </Dialog>

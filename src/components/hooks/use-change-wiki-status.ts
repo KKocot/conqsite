@@ -28,7 +28,9 @@ const useChangeWikiStatus = () => {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["previewUnit", data.id] });
-      queryClient.invalidateQueries({ queryKey: ["wiki-requests"] });
+      queryClient.invalidateQueries({
+        queryKey: ["wiki-requests", data.status],
+      });
       router.push(`/dashboard/wiki-requests`);
     },
   });

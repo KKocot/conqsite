@@ -6,12 +6,7 @@ import { ZodError } from "zod";
 import { headers } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import {
-  botAllowed,
-  highCommandAllowed,
-  houseUserAllowed,
-} from "@/lib/endpoints-protections";
-import Roles from "@/models/roles";
+import { botAllowed, houseUserAllowed } from "@/lib/endpoints-protections";
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
@@ -21,6 +16,7 @@ export async function POST(request: Request) {
   try {
     await connectMongoDB();
     const data = putSurveySchema.parse(await request.json());
+    console.log(data);
     const existingSurvey = await Survey.findOne({ discordId: data.discordId });
 
     const userAccount = data.discordId === session?.user.id;

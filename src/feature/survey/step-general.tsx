@@ -10,12 +10,6 @@ import {
   FormLabel,
 } from "../../components/ui/form";
 import { weapons } from "@/assets/weapons";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
 import { Label } from "../../components/ui/label";
 import { useTranslations } from "next-intl";
@@ -168,13 +162,15 @@ const StepGeneral = ({
             name="house"
             render={({ field }) => (
               <div className="mt-2">
-                {field.value ? (
+                {field.value && field.value !== "none" ? (
                   <>
                     <h1 className="font-bold">{t("house")}</h1>
                     <ul>
-                      {field.value.map((e: string) => (
-                        <li key={e}>- {e} </li>
-                      ))}
+                      {field.value
+                        .filter((e: string) => e !== "none")
+                        .map((e: string, i: number) => (
+                          <li key={i}>- {e} </li>
+                        ))}
                     </ul>
                   </>
                 ) : null}

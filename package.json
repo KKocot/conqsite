@@ -37,7 +37,7 @@
     "framer-motion": "^11.15.0",
     "lucide-react": "^0.378.0",
     "mongoose": "^8.4.0",
-    "next": "14.2.3",
+    "next": "^14.2.24",
     "next-auth": "^4.24.7",
     "next-intl": "^3.17.2",
     "next-themes": "^0.3.0",

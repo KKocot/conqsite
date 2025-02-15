@@ -36,7 +36,7 @@ const FormationsArea: FC<{
       ) : null}
       <div className="grid gap-4 sm:grid-cols-2">
         {fields.map((field, i) => (
-          <Card key={field.id}>
+          <Card key={i}>
             <CardContent className="p-4">
               <div className="flex items-center gap-5">
                 {editMode ? (
@@ -46,6 +46,7 @@ const FormationsArea: FC<{
                     onSetImage={(image) => {
                       update(i, { ...field, image });
                     }}
+                    value={field.image}
                   >
                     {field.image ? (
                       <Image

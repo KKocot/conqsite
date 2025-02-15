@@ -13,10 +13,10 @@ import {
 import { SelectGroup, SelectValue } from "@radix-ui/react-select";
 import { Badge } from "../../components/ui/badge";
 import { DiscordUsersProps, Roles } from "@/lib/get-data";
-import { ConfigProps } from "@/app/(protected)/member/create-house/content";
-import { HighRolesValues } from "@/app/(protected)/(owner)/settings/high-roles/[param]/content";
 import { useTranslations } from "next-intl";
 import ChangeLeaderDialog from "./change-leader-dialog";
+import { ConfigProps } from "@/app/(pages)/(protected)/member/create-house/content";
+import { HighRolesValues } from "@/app/(pages)/(protected)/(owner)/settings/high-roles/[param]/content";
 
 interface CreateHouseHighRolesProps {
   type: "create";

@@ -23,6 +23,7 @@ export const DEFAULT_FORM_DATA: Survey = {
   avatar: "",
   house: [],
   artyAmount: "none",
+  updates: [],
   weapons: weapons.map(() => ({ value: false, leadership: 0, pref: 0 })),
   units: {
     low: lowUnits.map((unit) => ({ id: unit.id, value: "0", pref: "0" })),
@@ -92,9 +93,14 @@ export default function WizardForm({
   });
 
   const submitMutation = useSubmitSurveyMutation();
-
+  const today = new Date().toString();
   const onSubmit = (values: Survey) => {
-    submitMutation.mutate({ values, user_id, avatar: avatar || "" });
+    submitMutation.mutate({
+      ...values,
+      updates: [...(values?.updates ?? []), today],
+      discordId: user_id,
+      avatar: avatar || "",
+    });
   };
   if (profileIsLoading || submitMutation.isPending) return <LoadingComponent />;
   return (
