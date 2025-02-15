@@ -18,8 +18,8 @@ const HousesPage = () => {
   if (isLoading || assetsLoading) return <LoadingComponent />;
   if (!data || !assetsData) return <NoData />;
   return (
-    <div className="flex flex-col items-center container">
-      <ul className="flex flex-wrap gap-4 m-12 justify-around">
+    <div className="flex flex-col items-center">
+      <ul className="flex flex-wrap gap-4 my-12 justify-around">
         {data.map((house) => (
           <HouseCard key={house.name} house={house} assetsData={assetsData} />
         ))}

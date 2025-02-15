@@ -194,7 +194,7 @@ const StepGeneral = ({
             </div>
           </HoverClickTooltip>
 
-          <ul className="flex flex-wrap p-2 gap-2">
+          <ul className="flex flex-wrap justify-center p-2 gap-2">
             {form.watch("weapons").map((e: any, i: number) => (
               <li
                 key={i}

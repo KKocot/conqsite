@@ -32,7 +32,7 @@ const Content = () => {
 
   return (
     <Tabs defaultValue="all">
-      <TabsList className="flex justify-between w-full">
+      <TabsList className="flex justify-between w-full flex-col sm:flex-row">
         {["all", "group", "unit"].map((value) => (
           <TabsTrigger key={value} value={value}>
             {value === "all"

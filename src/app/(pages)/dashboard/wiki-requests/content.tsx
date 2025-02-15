@@ -26,8 +26,8 @@ const Content = ({
     setFilteredList(data);
   }, [status]);
   return (
-    <div className="container">
-      <div className="flex justify-center gap-4 p-4">
+    <div className="container px-2">
+      <div className="flex justify-center gap-4 my-4">
         <Button
           variant="custom"
           className="bg-accent"
@@ -60,7 +60,7 @@ const Content = ({
         }}
         placeholder="Search"
       />
-      <div className="container py-4 flex flex-wrap justify-center gap-4">
+      <div className="py-4 flex flex-wrap justify-center gap-4">
         {filteredList.length === 0 ? (
           <div className="w-full flex items-center justify-center">
             {`No ${status} requests`}
