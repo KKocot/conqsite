@@ -67,7 +67,6 @@ export async function GET(request: Request) {
   const eventId = searchParams.get("eventId");
   const house = searchParams.get("house");
   const date = searchParams.get("date");
-
   const session = await getServerSession(authOptions);
   try {
     await connectMongoDB();
@@ -75,6 +74,10 @@ export async function GET(request: Request) {
     const highCommandAccess = highCommandAllowed(roles, session, house);
     if (!(highCommandAccess || (discordKey && botAllowed(discordKey, envKey))))
       return new Response("401");
+    if (date) {
+      const event = await Event.find({ date_start_event: date });
+      return new Response(JSON.stringify(event), { status: 200 });
+    }
     if (eventId) {
       const event = await Event.findOne({ event_template_id: eventId });
       return new Response(JSON.stringify(event), { status: 200 });

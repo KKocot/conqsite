@@ -7,6 +7,7 @@ const signUpsSchema = new Schema({
   userId: String,
 });
 const EventSchema = new Schema({
+  bot_type: String,
   event_template_id: String,
   date_start_event: String,
   time_start_event: String,
