@@ -77,7 +77,7 @@ export const lowUnits = [
     masteryPoints: false,
     value: 3,
     era: "blue",
-    icon: "/unit.jpg",
+    icon: "/low-tiers-icons/bla_drag_spear.png",
   },
   {
     id: 9,
