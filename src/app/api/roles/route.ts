@@ -53,16 +53,16 @@ export async function GET(request: Request) {
   const house = searchParams.get("house");
   try {
     await connectMongoDB();
+    if (id && house) {
+      const roles = await Roles.find({ discordId: id, house: house });
+      return NextResponse.json({ roles });
+    }
     if (id) {
       const roles = await Roles.find({ discordId: id });
       return NextResponse.json({ roles });
     }
     if (house) {
       const roles = await Roles.find({ house: house });
-      return NextResponse.json({ roles });
-    }
-    if (id && house) {
-      const roles = await Roles.find({ discordId: id, house: house });
       return NextResponse.json({ roles });
     } else {
       const roles = await Roles.find();
