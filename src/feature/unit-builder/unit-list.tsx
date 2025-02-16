@@ -4,6 +4,7 @@ import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 import { TableCell } from "@/components/ui/table";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 interface Unit {
   era: string;
@@ -32,18 +33,25 @@ const List = ({ units, value }: { units: Unit[]; value: string }) => {
                   </div>
                 </div>
               ) : null}
-              <Avatar
-                className={clsx(
-                  "h-8 w-8 md:h-12 md:w-12 border-solid border-2 border-transparent shadow-md rounded-none",
-                  {
-                    "border-red-600": unit.value >= 9,
-                  }
-                )}
-                title={unit.name}
+              <Link
+                href={`/unit/${unit?.era}/${unit?.name
+                  .replaceAll(" ", "_")
+                  .toLocaleLowerCase()}`}
+                target="_blank"
               >
-                <AvatarImage alt={unit.name} src={unit.icon} />
-                <AvatarFallback className="rounded-none">U</AvatarFallback>
-              </Avatar>
+                <Avatar
+                  className={clsx(
+                    "h-8 w-8 md:h-12 md:w-12 border-solid border-2 border-transparent shadow-md rounded-none",
+                    {
+                      "border-red-600": unit.value >= 9,
+                    }
+                  )}
+                  title={unit.name}
+                >
+                  <AvatarImage alt={unit.name} src={unit.icon} />
+                  <AvatarFallback className="rounded-none">U</AvatarFallback>
+                </Avatar>
+              </Link>
             </span>
           ) : null
         )}
