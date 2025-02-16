@@ -75,7 +75,13 @@ const FormationsArea: FC<{
                   />
                 )}
                 {editMode ? (
-                  <Input {...form.register(`formations.${i}.name`)} />
+                  <Input
+                    {...form.register(`formations.${i}.name`)}
+                    onChange={(e) =>
+                      update(i, { ...field, name: e.target.value })
+                    }
+                    value={field.name}
+                  />
                 ) : (
                   <h3 className="font-semibold">{field.name}</h3>
                 )}
@@ -90,7 +96,13 @@ const FormationsArea: FC<{
                 ) : null}
               </div>
               {editMode ? (
-                <Textarea {...form.register(`formations.${i}.description`)} />
+                <Textarea
+                  {...form.register(`formations.${i}.description`)}
+                  onChange={(e) =>
+                    update(i, { ...field, description: e.target.value })
+                  }
+                  value={field.description}
+                />
               ) : (
                 <p className="text-sm mt-4">{field.description}</p>
               )}
