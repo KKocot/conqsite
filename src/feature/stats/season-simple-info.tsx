@@ -77,7 +77,6 @@ const CustomTooltip = ({
   payload?: Payload[];
 }) => {
   if (active && payload && payload.length) {
-    console.log(payload);
     return (
       <div className="bg-background p-2 text-sm">
         <p>{`Date: ${payload[0].payload.date}`}</p>

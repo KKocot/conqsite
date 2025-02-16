@@ -29,7 +29,6 @@ const Content = ({ data }: { data: HouseDetails }) => {
         const errorData = await response.json();
         console.error("error_occurred", errorData);
       } else {
-        console.log("success", await response.json());
         toast.success("house_details_saved");
       }
     } catch (error) {

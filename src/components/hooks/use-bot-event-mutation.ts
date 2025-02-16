@@ -51,7 +51,6 @@ export const useDeleteBotEventMutation = () => {
       return data;
     },
     onSuccess: (data) => {
-      console.log(data);
       const { house_name } = data;
       queryClient.invalidateQueries({
         queryKey: ["events", house_name],

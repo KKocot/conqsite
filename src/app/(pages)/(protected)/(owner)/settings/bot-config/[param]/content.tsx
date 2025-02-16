@@ -77,7 +77,6 @@ const Content = ({
         console.error("error_occurred", errorData);
       } else {
         toast.success("house_settings_saved");
-        console.log("success", await response.json());
       }
     } catch (error) {
       toast.error("error_occurred");

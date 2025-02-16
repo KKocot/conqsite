@@ -24,7 +24,6 @@ export async function DELETE(request: Request) {
       house: house,
       role: "HouseLeader",
     });
-    console.log(houseLeader);
     if (!houseLeader) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
