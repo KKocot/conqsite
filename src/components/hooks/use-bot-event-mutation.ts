@@ -22,7 +22,6 @@ export const useAddBotEventMutation = () => {
       return response.json();
     },
     onSuccess: (data) => {
-      console.log(data);
       const { house_name } = data;
       queryClient.invalidateQueries({
         queryKey: ["events", house_name],
@@ -48,8 +47,8 @@ export const useDeleteBotEventMutation = () => {
         const errorData = await response.json();
         throw new Error(errorData?.message || "Failed to delete Event");
       }
-
-      return response.json();
+      const data = await response.json();
+      return data;
     },
     onSuccess: (data) => {
       console.log(data);

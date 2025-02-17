@@ -42,8 +42,6 @@ const AddEventDialog = ({
   entry?: BotEvent;
 }) => {
   const [open, setOpen] = useState(false);
-  const id = useId();
-  const date = new Date();
   const form = useForm<BotEvent>({
     values: {
       ...(entry ?? defaultValues),
@@ -56,8 +54,6 @@ const AddEventDialog = ({
     addBotEventMutation.mutate({
       ...data,
       activity_time: Number(data.activity_time),
-      event_template_id:
-        entry?.event_template_id ?? `id_${id}_${house}_${date.getTime()}`,
     });
     addBotEventMutation.isSuccess && toast.success("Event created");
     setOpen(false);

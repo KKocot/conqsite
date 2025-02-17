@@ -3,7 +3,7 @@ import connectMongoDB from "@/lib/mongodb";
 import { headers } from "next/headers";
 import { putEventSchema } from "./shema";
 import Event from "@/models/events";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -23,9 +23,7 @@ export async function POST(request: Request) {
   try {
     await connectMongoDB();
     const data = putEventSchema.parse(await request.json());
-    const existingEvent = await Event.findOne({
-      event_template_id: data.event_template_id,
-    });
+    const existingEvent = await Event.findById(data?._id);
     let event;
     if (existingEvent) {
       const updatedSignUps = data.signUps.reduce(
@@ -94,7 +92,7 @@ export async function GET(request: Request) {
   }
 }
 
-export async function DELETE(request: Request) {
+export async function DELETE(request: NextRequest) {
   const discordKey = headers().get("discord-key");
   const envKey = process.env.BOT_KEY;
 
@@ -110,12 +108,10 @@ export async function DELETE(request: Request) {
       data.house_name
     );
     if (!(highCommandAccess || (discordKey && botAllowed(discordKey, envKey))))
-      return new Response("401");
-
-    const event = await Event.findOneAndDelete({
-      event_template_id: data.event_template_id,
-    });
-    return new Response(JSON.stringify(event), { status: 200 });
+      return new NextResponse("401");
+    console.log(data._id);
+    await Event.findByIdAndDelete(data._id);
+    return new NextResponse(JSON.stringify(data), { status: 200 });
   } catch (error) {
     if (error instanceof ZodError)
       return NextResponse.json({ message: error.message }, { status: 400 });

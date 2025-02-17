@@ -7,7 +7,6 @@ import { getBotEvent, getHouseSettings } from "@/lib/get-data";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 import { useSession } from "next-auth/react";
-import WIP from "@/feature/ifs/wip";
 
 const Page = () => {
   const { param }: { param: string } = useParams();
@@ -27,13 +26,12 @@ const Page = () => {
   if (!data || !user || !events) return <NoData />;
 
   return (
-    // <Content
-    //   config={data}
-    //   events={events}
-    //   house={house}
-    //   userId={user.user.id}
-    // />
-    <WIP />
+    <Content
+      config={data}
+      events={events}
+      house={house}
+      userId={user.user.id}
+    />
   );
 };
 export default Page;

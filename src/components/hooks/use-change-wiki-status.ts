@@ -12,7 +12,6 @@ const useChangeWikiStatus = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: ChangeWikiStatusData) => {
-      console.log(data, JSON.stringify(data));
       const response = await fetch(`/api/units/wiki/${data.id}`, {
         method: "POST",
         headers: {

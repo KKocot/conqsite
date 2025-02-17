@@ -8,8 +8,8 @@ const signUpSchema = z.object({
 });
 
 export const putEventSchema = z.object({
+  _id: z.string().optional(),
   bot_type: z.string(),
-  event_template_id: z.string(),
   date_start_event: z.string(),
   time_start_event: z.string(),
   interval: z.number(),
