@@ -1,7 +1,8 @@
 import { BotEvent } from "@/lib/get-data";
+import { pokeBotEvent } from "@/lib/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useAddBotEventMutation = () => {
+export const useBotEventMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -22,11 +23,11 @@ export const useAddBotEventMutation = () => {
       return response.json();
     },
     onSuccess: (data) => {
-      const { house_name } = data;
+      const { house_name, _id } = data;
+      pokeBotEvent(_id, "create");
       queryClient.invalidateQueries({
         queryKey: ["events", house_name],
       });
-      fetch(`/api/discord-bot/create-event?eventId=${data._id}&action=create`);
     },
   });
 };
@@ -54,7 +55,8 @@ export const useDeleteBotEventMutation = () => {
       return data;
     },
     onSuccess: (data) => {
-      const { house_name } = data;
+      const { house_name, _id } = data;
+      pokeBotEvent(_id, "delete");
       queryClient.invalidateQueries({
         queryKey: ["events", house_name],
       });

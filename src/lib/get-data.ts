@@ -317,6 +317,7 @@ export interface BotEvent {
   role_id: string;
   bot_type: string;
   signUps: SignUp[];
+  active: boolean;
 }
 
 export const getBotEvent = async (house: string): Promise<BotEvent[]> => {

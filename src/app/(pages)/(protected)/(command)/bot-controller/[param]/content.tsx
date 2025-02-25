@@ -2,8 +2,20 @@
 
 import { useDeleteBotEventMutation } from "@/components/hooks/use-bot-event-mutation";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import AddEventDialog from "@/feature/bot-controller/add-event";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import EventDialog from "@/feature/bot-controller/dialog";
 import {
   getDiscordData,
   getHouseAssets,
@@ -56,18 +68,6 @@ const Content = ({
               <CardHeader>
                 <CardTitle className="flex justify-between items-center">
                   {event.title}
-                  <div className="flex gap-2">
-                    <Button variant="custom" className="rounded-full p-2 h-fit">
-                      <PenIcon className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant="destructive"
-                      className="rounded-full p-2 h-fit"
-                      onClick={() => onDelete(event)}
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -90,13 +90,41 @@ const Content = ({
                 }`}</div>
                 <div>{`List: ${event.signUps.length}`}</div>
               </CardContent>
+              <CardFooter className="flex justify-end gap-4">
+                <span>Actions:</span>
+                {discordDataLoading || !discordData ? null : (
+                  <EventDialog
+                    disabled={limited}
+                    discordData={discordData}
+                    house={house}
+                    entry={event}
+                    roleId={config.member.id}
+                  />
+                )}
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="destructive"
+                        className="rounded-full p-2 h-fit"
+                        onClick={() => onDelete(event)}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Delete</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </CardFooter>
             </Card>
           ))
         )}
       </div>
       {discordDataLoading || !discordData ? null : (
         <div className="absolute bottom-4 right-4 gap-2 flex">
-          <AddEventDialog
+          <EventDialog
             disabled={limited}
             discordData={discordData}
             house={house}

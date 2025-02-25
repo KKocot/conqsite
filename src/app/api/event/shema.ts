@@ -9,7 +9,7 @@ const signUpSchema = z.object({
 
 export const putEventSchema = z.object({
   _id: z.string().optional(),
-  bot_type: z.string().optional(),
+  bot_type: z.string(),
   date_start_event: z.string(),
   time_start_event: z.string(),
   interval: z.number(),
@@ -20,4 +20,5 @@ export const putEventSchema = z.object({
   channel_id: z.string(),
   role_id: z.string(),
   signUps: z.array(signUpSchema),
+  active: z.boolean(),
 });
