@@ -26,6 +26,7 @@ export const useAddBotEventMutation = () => {
       queryClient.invalidateQueries({
         queryKey: ["events", house_name],
       });
+      fetch(`/api/discord-bot/create-event?eventId=${data._id}&action=create`);
     },
   });
 };
@@ -34,14 +35,16 @@ export const useDeleteBotEventMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (event: BotEvent) => {
-      const response = await fetch("/api/event", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(event),
-      });
+    mutationFn: async ({ id, house }: { id: string; house: string }) => {
+      const response = await fetch(
+        `/api/event?eventId=${id}&house=house${house}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

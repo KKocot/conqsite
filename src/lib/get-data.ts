@@ -315,6 +315,7 @@ export interface BotEvent {
   house_name: string;
   channel_id: string;
   role_id: string;
+  bot_type: string;
   signUps: SignUp[];
 }
 

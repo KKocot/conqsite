@@ -9,7 +9,7 @@ const signUpSchema = z.object({
 
 export const putEventSchema = z.object({
   _id: z.string().optional(),
-  bot_type: z.string(),
+  bot_type: z.string().optional(),
   date_start_event: z.string(),
   time_start_event: z.string(),
   interval: z.number(),

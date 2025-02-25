@@ -41,7 +41,7 @@ const Content = ({
   });
   const deleteBotEventMutation = useDeleteBotEventMutation();
   const onDelete = (event: BotEvent) => {
-    deleteBotEventMutation.mutate(event);
+    deleteBotEventMutation.mutate({ id: event._id ?? "", house });
   };
   const premium = assets?.premium ?? false;
   const limited = (events.length ?? 0) >= (premium ? 6 : 7);
@@ -100,6 +100,7 @@ const Content = ({
             disabled={limited}
             discordData={discordData}
             house={house}
+            roleId={config.member.id}
           />
         </div>
       )}
