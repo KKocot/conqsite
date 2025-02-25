@@ -2,7 +2,7 @@ import { BotEvent } from "@/lib/get-data";
 import { pokeBotEvent } from "@/lib/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useAddBotEventMutation = () => {
+export const useBotEventMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({

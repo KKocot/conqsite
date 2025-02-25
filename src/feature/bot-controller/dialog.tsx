@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { BotEvent, DiscordProps } from "@/lib/get-data";
 import EventForm from "./event-form";
-import { useAddBotEventMutation } from "@/components/hooks/use-bot-event-mutation";
+import { useBotEventMutation } from "@/components/hooks/use-bot-event-mutation";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -19,6 +19,13 @@ import { DialogDescription } from "@radix-ui/react-dialog";
 import { getCloserDay } from "@/lib/utils";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { PenIcon } from "lucide-react";
 
 // Default values for the form
 const defaultValues = {
@@ -54,7 +61,7 @@ const putEventSchema = z.object({
   date_start_event: z.string().min(1, "Date is required"),
   time_start_event: z.string().min(1, "Hour is required"),
   interval: z.number().min(-1),
-  activity_time: z.number().min(1, "Activity time is required"),
+  activity_time: z.number(),
   title: z.string().min(1, "Title is required"),
   description: z
     .string()
@@ -67,7 +74,7 @@ const putEventSchema = z.object({
   active: z.boolean(),
 });
 
-const AddEventDialog = ({
+const EventDialog = ({
   disabled,
   discordData,
   house,
@@ -92,31 +99,36 @@ const AddEventDialog = ({
     },
   });
 
-  const addBotEventMutation = useAddBotEventMutation();
+  // This dialog is used for create and edit events
+  const edit_mode = !!entry;
+
+  const botEventMutation = useBotEventMutation();
 
   const onSubmit = () => {
     const data = form.getValues();
-    addBotEventMutation.mutate({
+    console.log(data);
+    botEventMutation.mutate({
       ...data,
       // Convert string to number
       activity_time: Number(data.activity_time),
     });
   };
+
   useEffect(() => {
     // On reqiest success close dialog, reset form and show success toast message
-    if (addBotEventMutation.isSuccess) {
+    if (botEventMutation.isSuccess) {
       setOpen(false);
       form.reset();
-      toast.success("Event created");
+      toast.success(`Event ${edit_mode ? "update" : "created"}`);
     }
     // On request fail show error toast message
-    if (addBotEventMutation.isError) {
-      toast.error("Failed to create event");
+    if (botEventMutation.isError) {
+      toast.error(`Failed to ${edit_mode ? "update" : "create"} event`);
     }
   }, [
-    addBotEventMutation.isSuccess,
-    addBotEventMutation.isPending,
-    addBotEventMutation.isError,
+    botEventMutation.isSuccess,
+    botEventMutation.isPending,
+    botEventMutation.isError,
     form,
   ]);
 
@@ -146,9 +158,15 @@ const AddEventDialog = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="custom" disabled={disabled}>
-          Create Event
-        </Button>
+        {edit_mode ? (
+          <Button variant="custom" className="rounded-full p-2 h-fit">
+            <PenIcon className="w-4 h-4" />
+          </Button>
+        ) : (
+          <Button variant="custom" disabled={disabled}>
+            Create Event
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="max-h-screen overflow-y-scroll">
         <DialogHeader>
@@ -167,4 +185,4 @@ const AddEventDialog = ({
   );
 };
 
-export default AddEventDialog;
+export default EventDialog;
