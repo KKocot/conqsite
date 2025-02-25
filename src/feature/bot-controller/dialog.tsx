@@ -102,7 +102,7 @@ const EventDialog = ({
   // This dialog is used for create and edit events
   const edit_mode = !!entry;
 
-  const botEventMutation = useBotEventMutation();
+  const botEventMutation = useBotEventMutation(edit_mode ? "edit" : "create");
 
   const onSubmit = () => {
     const data = form.getValues();

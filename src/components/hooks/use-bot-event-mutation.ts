@@ -2,7 +2,7 @@ import { BotEvent } from "@/lib/get-data";
 import { pokeBotEvent } from "@/lib/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useBotEventMutation = () => {
+export const useBotEventMutation = (action: "create" | "edit") => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -24,7 +24,7 @@ export const useBotEventMutation = () => {
     },
     onSuccess: (data) => {
       const { house_name, _id } = data;
-      pokeBotEvent(_id, "create");
+      pokeBotEvent(_id, action);
       queryClient.invalidateQueries({
         queryKey: ["events", house_name],
       });
