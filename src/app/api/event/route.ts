@@ -81,7 +81,7 @@ export async function GET(request: Request) {
       return new Response(JSON.stringify(event), { status: 200 });
     }
     if (house) {
-      const event = await Event.find({ house_name: house });
+      const event = await Event.find({ house_name: house, active: true });
       return new Response(JSON.stringify(event), { status: 200 });
     }
   } catch (error) {
@@ -110,11 +110,9 @@ export async function DELETE(request: NextRequest) {
       discordId: session?.user.id,
     });
     const highCommandAccess = highCommandAllowed(roles, session, house);
-    // if (
-    //   !(highCommandAccess || (discordKey && botAllowed(discordKey, envKey)))
-    // ) {
-    //   return new NextResponse("401");
-    // }
+    if (!(highCommandAccess || (discordKey && botAllowed(discordKey, envKey))))
+      return new NextResponse("401");
+
     const event = await Event.findOneAndDelete({
       _id: eventId,
     });
