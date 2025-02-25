@@ -13,11 +13,14 @@ import { BotEvent, DiscordProps } from "@/lib/get-data";
 import EventForm from "./event-form";
 import { useAddBotEventMutation } from "@/components/hooks/use-bot-event-mutation";
 import { useForm } from "react-hook-form";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { getCloserDay } from "@/lib/utils";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
+// Default values for the form
 const defaultValues = {
   title: "My Event",
   description: "Attendance on event...",
@@ -30,8 +33,39 @@ const defaultValues = {
   role_id: "",
   bot_type: "Konquerus",
   signUps: [],
+  active: true,
 };
+
+// Get the next TW date, next Tuesday or Saturday
 const next_tw = getCloserDay();
+
+// Sign up schema
+const signUpSchema = z.object({
+  name: z.string(),
+  status: z.string(),
+  lineup: z.string(),
+  userId: z.string(),
+});
+
+// Event schema with all required fields
+const putEventSchema = z.object({
+  _id: z.string().optional(),
+  bot_type: z.string(),
+  date_start_event: z.string().min(1, "Date is required"),
+  time_start_event: z.string().min(1, "Hour is required"),
+  interval: z.number().min(-1),
+  activity_time: z.number().min(1, "Activity time is required"),
+  title: z.string().min(1, "Title is required"),
+  description: z
+    .string()
+    .min(1, "Description is required")
+    .max(250, "Description is too long"),
+  house_name: z.string(),
+  channel_id: z.string().min(1, "Channel is required"),
+  role_id: z.string().min(1, "Role is required"),
+  signUps: z.array(signUpSchema),
+  active: z.boolean(),
+});
 
 const AddEventDialog = ({
   disabled,
@@ -48,26 +82,34 @@ const AddEventDialog = ({
 }) => {
   const [open, setOpen] = useState(false);
   const form = useForm<BotEvent>({
+    resolver: zodResolver(putEventSchema),
     values: {
       ...(entry ?? defaultValues),
+      // Set house based on member house
       house_name: entry?.house_name ?? house,
+      // Set role based house settings
       role_id: entry?.role_id ?? roleId,
     },
   });
+
   const addBotEventMutation = useAddBotEventMutation();
+
   const onSubmit = () => {
     const data = form.getValues();
     addBotEventMutation.mutate({
       ...data,
+      // Convert string to number
       activity_time: Number(data.activity_time),
     });
   };
   useEffect(() => {
+    // On reqiest success close dialog, reset form and show success toast message
     if (addBotEventMutation.isSuccess) {
       setOpen(false);
       form.reset();
       toast.success("Event created");
     }
+    // On request fail show error toast message
     if (addBotEventMutation.isError) {
       toast.error("Failed to create event");
     }
@@ -118,7 +160,7 @@ const AddEventDialog = ({
         </DialogHeader>
         <EventForm discordData={discordData} form={form} />
         <DialogFooter>
-          <Button onClick={onSubmit}>Create Event</Button>
+          <Button onClick={form.handleSubmit(onSubmit)}>Create Event</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -185,3 +185,17 @@ export const createNewWeapons = (
   }
   return [...existingWeapons, ...newWeapons];
 };
+
+// Function to let the bot know that an event has been updated.
+export const pokeBotEvent = async (
+  eventId: string,
+  action: "create" | "edit" | "delete"
+) => {
+  try {
+    await fetch(
+      `/api/discord-bot/create-event?eventId=${eventId}&action=${action}`
+    );
+  } catch (error) {
+    console.error("Failed to poke bot event", error);
+  }
+};

@@ -17,6 +17,7 @@ const EventSchema = new Schema({
   house_name: String,
   channel_id: String,
   role_id: String,
+  active: Boolean,
   signUps: [signUpsSchema],
 });
 
