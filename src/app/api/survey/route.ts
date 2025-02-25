@@ -16,7 +16,6 @@ export async function POST(request: Request) {
   try {
     await connectMongoDB();
     const data = putSurveySchema.parse(await request.json());
-    console.log(data);
     const existingSurvey = await Survey.findOne({ discordId: data.discordId });
 
     const userAccount = data.discordId === session?.user.id;

@@ -3,7 +3,7 @@ import connectMongoDB from "@/lib/mongodb";
 import { headers } from "next/headers";
 import { putEventSchema } from "./shema";
 import Event from "@/models/events";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -23,9 +23,7 @@ export async function POST(request: Request) {
   try {
     await connectMongoDB();
     const data = putEventSchema.parse(await request.json());
-    const existingEvent = await Event.findOne({
-      event_template_id: data.event_template_id,
-    });
+    const existingEvent = await Event.findOne({ _id: data._id });
     let event;
     if (existingEvent) {
       const updatedSignUps = data.signUps.reduce(
@@ -79,7 +77,7 @@ export async function GET(request: Request) {
       return new Response(JSON.stringify(event), { status: 200 });
     }
     if (eventId) {
-      const event = await Event.findOne({ event_template_id: eventId });
+      const event = await Event.findOne({ _id: eventId });
       return new Response(JSON.stringify(event), { status: 200 });
     }
     if (house) {
@@ -94,28 +92,33 @@ export async function GET(request: Request) {
   }
 }
 
-export async function DELETE(request: Request) {
+export async function DELETE(request: NextRequest) {
   const discordKey = headers().get("discord-key");
   const envKey = process.env.BOT_KEY;
 
+  const { searchParams } = new URL(request.url);
+
+  const eventId = searchParams.get("eventId");
+  const house = searchParams.get("house");
+
   const session = await getServerSession(authOptions);
+  if (!session || !eventId || !house) return new NextResponse("401");
   try {
     await connectMongoDB();
-    const data = putEventSchema.parse(await request.json());
-
-    const roles = await Roles.find({ house: data.house_name });
-    const highCommandAccess = highCommandAllowed(
-      roles,
-      session,
-      data.house_name
-    );
-    if (!(highCommandAccess || (discordKey && botAllowed(discordKey, envKey))))
-      return new Response("401");
-
-    const event = await Event.findOneAndDelete({
-      event_template_id: data.event_template_id,
+    const roles = await Roles.find({
+      house: house,
+      discordId: session?.user.id,
     });
-    return new Response(JSON.stringify(event), { status: 200 });
+    const highCommandAccess = highCommandAllowed(roles, session, house);
+    // if (
+    //   !(highCommandAccess || (discordKey && botAllowed(discordKey, envKey)))
+    // ) {
+    //   return new NextResponse("401");
+    // }
+    const event = await Event.findOneAndDelete({
+      _id: eventId,
+    });
+    return new NextResponse(JSON.stringify(event), { status: 200 });
   } catch (error) {
     if (error instanceof ZodError)
       return NextResponse.json({ message: error.message }, { status: 400 });

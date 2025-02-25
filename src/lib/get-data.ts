@@ -306,7 +306,6 @@ type SignUp = {
 };
 export interface BotEvent {
   _id?: string;
-  event_template_id: string;
   date_start_event: string;
   time_start_event: string;
   interval: number;
@@ -316,6 +315,7 @@ export interface BotEvent {
   house_name: string;
   channel_id: string;
   role_id: string;
+  bot_type: string;
   signUps: SignUp[];
 }
 

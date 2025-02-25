@@ -21,7 +21,6 @@ export const useAddHistoryPostMutation = () => {
       return response.json();
     },
     onSuccess: (data) => {
-      console.log("Success", data);
       queryClient.invalidateQueries({
         queryKey: ["latestTW", data.house, data.twDate],
       });

@@ -72,7 +72,6 @@ const Content = ({ username }: { username: string }) => {
         const errorData = await response.json();
         console.error("error_occurred", errorData);
       } else {
-        console.log("success", await response.json());
         getAddAll(configValues.name);
       }
     } catch (error) {
