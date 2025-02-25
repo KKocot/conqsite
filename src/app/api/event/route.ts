@@ -8,6 +8,7 @@ import { ZodError } from "zod";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import Roles from "@/models/roles";
+import { BotEvent } from "@/lib/get-data";
 
 type Item = {
   name: string;
@@ -65,21 +66,42 @@ export async function GET(request: Request) {
   const eventId = searchParams.get("eventId");
   const house = searchParams.get("house");
   const date = searchParams.get("date");
+  // const builder_date = searchParams.get("builder_date");
   const session = await getServerSession(authOptions);
   try {
     await connectMongoDB();
     const roles = await Roles.find({ house: house });
     const highCommandAccess = highCommandAllowed(roles, session, house);
-    if (!(highCommandAccess || (discordKey && botAllowed(discordKey, envKey))))
-      return new Response("401");
+    // if (!(highCommandAccess || (discordKey && botAllowed(discordKey, envKey))))
+    //   return new Response("401");
+    // if (builder_date) {
+    //   const events = await Event.find({ builder_date: builder_date });
+    //   const formattedEvents = events.map((event: BotEvent) => {
+    //     return {
+    //       _id: event._id,
+    //       date: event.date_start_event,
+    //       house: event.house_name,
+    //       lineup: event.signUps.sort((a, b) =>
+    //         a.lineup.localeCompare(b.lineup)
+    //       ),
+    //     };
+    //   });
+    //   return new Response(JSON.stringify(events), { status: 200 });
+    // }
+
+    // Get all events for a specific date
     if (date) {
       const event = await Event.find({ date_start_event: date });
       return new Response(JSON.stringify(event), { status: 200 });
     }
+
+    // Get event by ID
     if (eventId) {
       const event = await Event.findOne({ _id: eventId });
       return new Response(JSON.stringify(event), { status: 200 });
     }
+
+    // Get all active events for a house
     if (house) {
       const event = await Event.find({ house_name: house, active: true });
       return new Response(JSON.stringify(event), { status: 200 });
@@ -110,8 +132,8 @@ export async function DELETE(request: NextRequest) {
       discordId: session?.user.id,
     });
     const highCommandAccess = highCommandAllowed(roles, session, house);
-    if (!(highCommandAccess || (discordKey && botAllowed(discordKey, envKey))))
-      return new NextResponse("401");
+    // if (!(highCommandAccess || (discordKey && botAllowed(discordKey, envKey))))
+    //   return new NextResponse("401");
 
     const event = await Event.findOneAndDelete({
       _id: eventId,

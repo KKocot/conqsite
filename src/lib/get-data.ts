@@ -320,8 +320,16 @@ export interface BotEvent {
   active: boolean;
 }
 
-export const getBotEvent = async (house: string): Promise<BotEvent[]> => {
+// Function to get all active events from house
+export const getBotEvents = async (house: string): Promise<BotEvent[]> => {
   const response = await fetch(`/api/event?house=${house}`);
+  const result = await response.json();
+  return result;
+};
+
+// Function to get one event by id
+export const getBotEvent = async (id: string): Promise<BotEvent> => {
+  const response = await fetch(`/api/event?eventId=${id}`);
   const result = await response.json();
   return result;
 };

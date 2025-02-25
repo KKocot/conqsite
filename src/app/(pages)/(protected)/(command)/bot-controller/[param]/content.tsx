@@ -9,12 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import EventDialog from "@/feature/bot-controller/dialog";
 import {
   getDiscordData,
@@ -23,24 +17,21 @@ import {
   BotEvent,
 } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
-import { PenIcon, Trash2 } from "lucide-react";
-
-const Content = ({
-  house,
-  userId,
-  config,
-  events,
-}: {
+import { Trash2 } from "lucide-react";
+interface Props {
   house: string;
   userId: string;
   config: HouseSettings;
   events: BotEvent[];
-}) => {
+}
+const Content = ({ house, userId, config, events }: Props) => {
+  // Get house assets
   const { data: assets } = useQuery({
     queryKey: ["houseAssets", house],
     queryFn: () => getHouseAssets(house),
     enabled: !!house,
   });
+  // Data for discord server: channels, roles, users
   const { data: discordData, isLoading: discordDataLoading } = useQuery({
     queryKey: ["discordData", house],
     queryFn: () =>
@@ -52,18 +43,27 @@ const Content = ({
     enabled: !!house,
   });
   const deleteBotEventMutation = useDeleteBotEventMutation();
+
+  // Delete event
   const onDelete = (event: BotEvent) => {
-    deleteBotEventMutation.mutate({ id: event._id ?? "", house });
+    // event._id is undefined when creating new event
+    if (event._id) deleteBotEventMutation.mutate({ id: event._id, house });
   };
+
+  // Check if house is premium
   const premium = assets?.premium ?? false;
-  const limited = (events.length ?? 0) >= (premium ? 6 : 7);
+
+  // Check if if limited events is reached
+  const limited = (events.length ?? 0) >= (premium ? 6 : 3);
+
   return (
     <div className="container py-8 px-4">
-      <div className="flex gap-4 flex-wrap">
-        {events.length === 0 ? (
-          <div>No events found</div>
-        ) : (
-          events.map((event, i) => (
+      {/* Check if events list is empty */}
+      {events.length === 0 ? (
+        <div>No events found</div>
+      ) : (
+        <div className="flex gap-4 flex-wrap">
+          {events.map((event, i) => (
             <Card key={i}>
               <CardHeader>
                 <CardTitle className="flex justify-between items-center">
@@ -101,27 +101,18 @@ const Content = ({
                     roleId={config.member.id}
                   />
                 )}
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        variant="destructive"
-                        className="rounded-full p-2 h-fit"
-                        onClick={() => onDelete(event)}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Delete</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <Button
+                  variant="destructive"
+                  className="rounded-full p-2 h-fit"
+                  onClick={() => onDelete(event)}
+                >
+                  <Trash2 className="w-4 h-4" />
+                </Button>
               </CardFooter>
             </Card>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
       {discordDataLoading || !discordData ? null : (
         <div className="absolute bottom-4 right-4 gap-2 flex">
           <EventDialog

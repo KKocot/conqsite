@@ -19,12 +19,6 @@ import { DialogDescription } from "@radix-ui/react-dialog";
 import { getCloserDay } from "@/lib/utils";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { PenIcon } from "lucide-react";
 
 // Default values for the form
@@ -140,13 +134,15 @@ const EventDialog = ({
   // Default TW hour
   const tw_hour = 19;
 
-  // Hour formated for input time with added timezone
+  // Default time formated for input with added timezone
   const hour = `${
     Number(next_tw?.toLocaleTimeString().split(":")[0]) + tw_hour
   }:00`;
 
+  // Default title for TW event
   const tw_tilte = `TW Event ${date}`;
-  // Set default date and hour for TW event
+
+  // Set default title, date and hour for TW event
   useEffect(() => {
     if (form.getValues("interval") === -1) {
       form.setValue("date_start_event", date);
