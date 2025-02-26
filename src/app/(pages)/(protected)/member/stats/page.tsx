@@ -20,7 +20,7 @@ const Page = () => {
   });
 
   if (isLoading || seasonsLoading) return <LoadingComponent />;
-  if (!data || !seasons) return <NoData />;
+  if (!seasons) return <NoData />;
   return <Content data={data} seasons={seasons} />;
 };
 export default Page;

@@ -114,7 +114,7 @@ export default function Content() {
             )}
           </ul>
         </div>
-        <div className="py-8">
+        <div className="py-8 sm:block hidden">
           <Table>
             <TableHeader>
               <TableRow>
@@ -169,6 +169,60 @@ export default function Content() {
                 <List units={grey} value="3" />
                 <List units={grey} value="2" />
                 <List units={grey} value="1" />
+                <List units={grey} value="0" />
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+        <div className="py-8 sm:hidden">
+          <div className="flex gap-4">
+            <div className="text-center px-1 text-yellow-500">
+              {t("max_and_preffer")}
+            </div>
+            <div className="text-center px-1 text-purple-500">
+              {t("preffer")}
+            </div>
+            <div className="text-center px-1 text-blue-500">{t("maxed")}</div>
+            <div className="text-center px-1 text-green-500">{t("i_have")}</div>
+            <div className="text-center px-1 text-red-500">
+              {t("i_dont_have")}
+            </div>
+          </div>
+          <Table>
+            <TableBody>
+              <TableRow className="bg-yellow-500/50 hover:bg-yellow-500/75">
+                <List units={golden} value="4" />
+                <List units={heroic} value="4" />
+                <List units={blue} value="4" />
+                <List units={grey} value="4" />
+                <List units={green} value="4" />
+              </TableRow>
+              <TableRow className="bg-purple-500/50 hover:bg-purple-500/75">
+                <List units={golden} value="3" />
+                <List units={heroic} value="3" />
+                <List units={blue} value="3" />
+                <List units={green} value="3" />
+                <List units={grey} value="3" />
+              </TableRow>
+              <TableRow className="bg-blue-500/50 hover:bg-blue-500/75">
+                <List units={golden} value="2" />
+                <List units={heroic} value="2" />
+                <List units={blue} value="2" />
+                <List units={green} value="2" />
+                <List units={grey} value="2" />
+              </TableRow>
+              <TableRow className="bg-green-500/50 hover:bg-green-500/75">
+                <List units={golden} value="1" />
+                <List units={heroic} value="1" />
+                <List units={blue} value="1" />
+                <List units={green} value="1" />
+                <List units={grey} value="1" />
+              </TableRow>
+              <TableRow className="bg-red-500/50 hover:bg-red-500/75">
+                <List units={golden} value="0" />
+                <List units={heroic} value="0" />
+                <List units={blue} value="0" />
+                <List units={green} value="0" />
                 <List units={grey} value="0" />
               </TableRow>
             </TableBody>

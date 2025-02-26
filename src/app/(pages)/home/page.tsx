@@ -15,7 +15,7 @@ const Home = () => {
     enabled: true,
   });
   return (
-    <div className="container w-full h-64">
+    <div className="w-full h-64">
       <section className="relative py-56 overflow-hidden">
         <Image
           src="/logov2_ver1.png"

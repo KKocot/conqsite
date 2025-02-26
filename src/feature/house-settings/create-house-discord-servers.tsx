@@ -66,12 +66,16 @@ const CreateHouseDiscordServers = ({
         handlerGeneral((prev) => ({
           ...prev,
           guild_id: values.guild_id,
+          tw_member:
+            prev.tw_discord === values.tw_discord ? prev.tw_member : "",
           tw_discord: values.tw_discord,
         }));
       } else {
         handlerGeneral((prev) => ({
           ...prev,
           guild_id: values.guild_id,
+          tw_member:
+            prev.tw_discord === values.tw_discord ? prev.tw_member : "",
           tw_discord: values.tw_discord,
         }));
       }
