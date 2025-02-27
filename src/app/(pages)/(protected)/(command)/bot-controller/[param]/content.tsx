@@ -56,11 +56,17 @@ const Content = ({ house, userId, config, events }: Props) => {
   // Check if if limited events is reached
   const limited = (events.length ?? 0) >= (premium ? 6 : 3);
 
+  // Check if response from discord server is an error
+  if (discordData?.status === "error") {
+    return (
+      <div className="container text-center py-8 px-4">{discordData.error}</div>
+    );
+  }
   return (
     <div className="container py-8 px-4">
       {/* Check if events list is empty */}
       {events.length === 0 ? (
-        <div>No events found</div>
+        <div className="text-center">No events found</div>
       ) : (
         <div className="flex gap-4 flex-wrap">
           {events.map((event, i) => (
