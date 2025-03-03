@@ -44,7 +44,7 @@ const HouseSeasonTable = ({
     listOfTW.length > 0
       ? ((cleandAttendanceDates.length / listOfTW.length) * 100).toFixed(0)
       : "0.00";
-
+  const otherActivities = cleanedOtherActivities.length;
   return (
     <div className="flex items-center gap-2 max-w-64">
       <span className="flex flex-col items-center">
@@ -79,7 +79,17 @@ const HouseSeasonTable = ({
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <Badge>Other</Badge>
+              <Badge
+                className={clsx("text-black font-bold", {
+                  "bg-red-500": otherActivities === 0,
+                  "bg-green-500": otherActivities > 0 && otherActivities <= 3,
+                  "bg-blue-500": otherActivities > 6,
+                  "bg-purple-500": otherActivities > 9,
+                  "bg-yellow-500": otherActivities > 12,
+                })}
+              >
+                Other
+              </Badge>
             </TooltipTrigger>
             {cleanedOtherActivities.length !== 0 ? (
               <TooltipContent className="flex flex-col">
