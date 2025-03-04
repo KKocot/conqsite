@@ -174,6 +174,7 @@ export interface UsersStats {
   id: string;
   house: string[];
   attendance: string[];
+  otherActivities?: { date: string; type: string }[];
 }
 
 export const getUserStats = async (id: string): Promise<UsersStats> => {

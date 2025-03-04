@@ -5,6 +5,16 @@ const putUserStatsSchema = z.object({
   id: z.string(),
   house: z.array(z.string()),
   attendance: z.array(z.string()),
+  otherActivities: z
+    .array(
+      z
+        .object({
+          date: z.string(),
+          type: z.string(),
+        })
+        .optional()
+    )
+    .optional(),
 });
 
 export default putUserStatsSchema;
