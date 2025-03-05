@@ -70,7 +70,7 @@ const Content: FC<ContentProps> = ({
             id="visible"
             disabled={updateHouseAssets.status === "pending"}
             checked={houseAssets?.sharedList ?? false}
-            onCheckedChange={(e) => {
+            onCheckedChange={() => {
               updateHouseAssets.mutate({
                 name: houseAssets?.name ?? house,
                 premium: houseAssets?.premium ?? false,

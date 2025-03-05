@@ -285,6 +285,7 @@ export interface HouseAssets {
   premium: boolean;
   sharedList: boolean;
   signupBot: string;
+  messages?: boolean;
 }
 
 export const getHouseAssets = async (house: string): Promise<HouseAssets> => {

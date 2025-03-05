@@ -9,12 +9,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import AssetsDialog from "@/feature/bot-controller/assets-dialog";
 import EventDialog from "@/feature/bot-controller/dialog";
 import {
   getDiscordData,
-  getHouseAssets,
   HouseSettings,
   BotEvent,
+  HouseAssets,
 } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { Trash2 } from "lucide-react";
@@ -23,14 +24,16 @@ interface Props {
   userId: string;
   config: HouseSettings;
   events: BotEvent[];
+  assets?: HouseAssets;
 }
-const Content = ({ house, userId, config, events }: Props) => {
-  // Get house assets
-  const { data: assets } = useQuery({
-    queryKey: ["houseAssets", house],
-    queryFn: () => getHouseAssets(house),
-    enabled: !!house,
-  });
+
+const Content = ({
+  house,
+  userId,
+  config,
+  events,
+  assets = { name: house, premium: false, sharedList: false, signupBot: "" },
+}: Props) => {
   // Data for discord server: channels, roles, users
   const { data: discordData, isLoading: discordDataLoading } = useQuery({
     queryKey: ["discordData", house],
@@ -50,11 +53,8 @@ const Content = ({ house, userId, config, events }: Props) => {
     if (event._id) deleteBotEventMutation.mutate({ id: event._id, house });
   };
 
-  // Check if house is premium
-  const premium = assets?.premium ?? false;
-
   // Check if if limited events is reached
-  const limited = (events.length ?? 0) >= (premium ? 6 : 3);
+  const limited = (events.length ?? 0) >= (assets.premium ? 6 : 3);
 
   // Check if response from discord server is an error
   if (discordData?.status === "error") {
@@ -121,6 +121,7 @@ const Content = ({ house, userId, config, events }: Props) => {
       )}
       {discordDataLoading || !discordData ? null : (
         <div className="absolute bottom-4 right-4 gap-2 flex">
+          <AssetsDialog assets={assets} house={house} />
           <EventDialog
             disabled={limited}
             discordData={discordData}
