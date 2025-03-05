@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import AssetsDialog from "@/feature/bot-controller/assets-dialog";
+import AssetsDialog from "@/feature/bot-controller/messages-dialog";
 import EventDialog from "@/feature/bot-controller/dialog";
 import {
   getDiscordData,

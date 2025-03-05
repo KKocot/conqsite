@@ -64,7 +64,7 @@ const AssetsDialog = ({ assets, house }: Props) => {
           </DialogTrigger>
           <DialogContent className="">
             <DialogHeader>
-              <DialogTitle>Bot Assets</DialogTitle>
+              <DialogTitle>Bot messages</DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
               <h2 className="font-bold">Permisions</h2>
@@ -94,7 +94,7 @@ const AssetsDialog = ({ assets, house }: Props) => {
             </div>
           </DialogContent>
         </Dialog>
-        <TooltipContent>Bot Settings</TooltipContent>
+        <TooltipContent>Bot messages</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );
