@@ -2,12 +2,6 @@ import { Survey } from "@/queries/profile.query";
 import { Role } from "@/queries/roles.query";
 import { Session } from "next-auth";
 
-// Bot Access
-export const botAllowed = (botKey: string, envKey?: string) => {
-  if (!botKey || !envKey) return false;
-  return botKey === envKey;
-};
-
 // Leader Access
 export const leaderRoleAllowed = (
   roles: Role[] | null,

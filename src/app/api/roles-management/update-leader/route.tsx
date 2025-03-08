@@ -1,8 +1,7 @@
 import { authOptions } from "@/lib/auth";
 import connectMongoDB from "@/lib/mongodb";
 import { getServerSession } from "next-auth";
-import { headers } from "next/headers";
-import { botAllowed, leaderRoleAllowed } from "@/lib/endpoints-protections";
+import { leaderRoleAllowed } from "@/lib/endpoints-protections";
 import Roles from "@/models/roles";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
@@ -10,8 +9,6 @@ import { changeLeaderSchema } from "./shema";
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
-  const discordKey = headers().get("discord-key");
-  const envKey = process.env.BOT_KEY;
 
   if (!session) return new Response("401");
   try {
@@ -20,8 +17,8 @@ export async function POST(request: Request) {
     const roles = await Roles.find({ house: data.house });
 
     const leaderRoleAccess = leaderRoleAllowed(roles, session, data.house);
-    if (!(leaderRoleAccess || (discordKey && botAllowed(discordKey, envKey))))
-      return new Response("401");
+    if (!leaderRoleAccess) return new Response("401");
+
     const newLeader = await Roles.create({
       discordId: data.newLeaderId,
       discordNick: data.newLeaderName,

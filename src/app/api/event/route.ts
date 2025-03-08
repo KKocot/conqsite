@@ -1,4 +1,4 @@
-import { botAllowed, highCommandAllowed } from "@/lib/endpoints-protections";
+import { highCommandAllowed } from "@/lib/endpoints-protections";
 import connectMongoDB from "@/lib/mongodb";
 import { headers } from "next/headers";
 import { putEventSchema } from "./shema";
@@ -34,12 +34,10 @@ type Item = {
 };
 
 export async function POST(request: Request) {
-  const discordKey = headers().get("discord-key");
-  const envKey = process.env.BOT_KEY;
   const session = await getServerSession(authOptions);
 
-  // Early check for session and discord key
-  if (!session && !discordKey) return new Response("401");
+  // Early check for session
+  if (!session) return new Response("401");
   try {
     // Connect to Mongo database
     await connectMongoDB();
@@ -57,9 +55,8 @@ export async function POST(request: Request) {
       data.house_name
     );
 
-    // Check if user has access to house events or bot key is provided
-    if (!(highCommandAccess || (discordKey && botAllowed(discordKey, envKey))))
-      return new Response("401");
+    // Check if user has access to house events
+    if (!highCommandAccess) return new Response("401");
 
     // Check if event existing in database
     const existingEvent = await Event.findOne({ _id: data._id });
@@ -99,8 +96,6 @@ export async function POST(request: Request) {
 }
 
 export async function GET(request: Request) {
-  const discordKey = headers().get("discord-key");
-  const envKey = process.env.BOT_KEY;
   const { searchParams } = new URL(request.url);
   const house = searchParams.get("house");
   const session = await getServerSession(authOptions);
@@ -113,9 +108,8 @@ export async function GET(request: Request) {
       house: house,
     });
 
-    // Access to this data is restricted to the bot and house members
-    if (!(!!survey || (discordKey && botAllowed(discordKey, envKey))))
-      return new Response("401");
+    // Access to this data is restricted to house members
+    if (!!!survey) return new Response("401");
     if (house) {
       const event = await Event.find({ house_name: house, active: true });
       return new Response(JSON.stringify(event), { status: 200 });
