@@ -1,6 +1,5 @@
 import { highCommandAllowed } from "@/lib/endpoints-protections";
 import connectMongoDB from "@/lib/mongodb";
-import { headers } from "next/headers";
 import { putEventSchema } from "./shema";
 import Event from "@/models/events";
 import { NextRequest, NextResponse } from "next/server";
@@ -14,16 +13,15 @@ import Survey from "@/models/surveys";
  * API Routes for Discord Attendance Events Management
  *
  * Endpoints:
- * - POST: Create/Update events (High Command/Bot)
- * - GET: Retrieve events (House members/Bot)
+ * - POST: Create/Update events (High Command)
+ * - GET: Retrieve events (House members)
  * - DELETE: Remove events (High Command)
  *
  * Authentication:
- * - Requires valid session or bot API key
+ * - Requires valid session
  * - Role-based access control per house
  * - Event operations restricted by user permissions
  *
- * TODO - Add GET for TeamBuilder
  */
 
 type Item = {
@@ -63,25 +61,9 @@ export async function POST(request: Request) {
     let event;
     // If event exists, update it
     if (existingEvent) {
-      // Update signUps array with member changes
-      const updatedSignUps = data.signUps.reduce(
-        (acc: Item[], signUp: Item) => {
-          const index: number = acc.findIndex(
-            (item: Item) => item.userId === signUp.userId
-          );
-          if (index !== -1) {
-            acc.splice(index, 1);
-          }
-          acc.push(signUp);
-          return acc;
-        },
-        []
-      );
-      event = await Event.findByIdAndUpdate(
-        existingEvent._id,
-        { ...data, signUps: updatedSignUps },
-        { new: true }
-      );
+      event = await Event.findByIdAndUpdate(existingEvent._id, data, {
+        new: true,
+      });
       // Otherwise, create a new event
     } else {
       event = await Event.create(data);
@@ -109,16 +91,47 @@ export async function GET(request: Request) {
     });
 
     // Access to this data is restricted to house members
-    if (!!!survey) return new Response("401");
+    if (!survey) return new Response("401");
+    // Get event by date and house
+    const date = searchParams.get("date");
+    if (date && house) {
+      const event = await Event.findOne({
+        date_start_event: date,
+        house_name: house,
+      });
+
+      // Sort signups by lineup
+      const sortedLineup = event.signUps
+        .filter(
+          (e: {
+            name: string;
+            status: string;
+            lineup: string;
+            userId: string;
+          }) => e.status === "Yes"
+        )
+        .reduce((acc: { [key: string]: string[] }, item: Item) => {
+          if (!acc[item.lineup]) {
+            acc[item.lineup] = [];
+          }
+          acc[item.lineup].push(item.userId);
+          return acc;
+        }, {});
+
+      // Return refactored data friedly for the client
+      const attendance = {
+        date: event.date_start_event,
+        house: event.house_name,
+        lineup: Object.entries(sortedLineup).map(([name, signup]) => ({
+          name,
+          signup,
+        })),
+      };
+      console.log(sortedLineup);
+      return new Response(JSON.stringify(attendance), { status: 200 });
+    }
     if (house) {
       const event = await Event.find({ house_name: house, active: true });
-      return new Response(JSON.stringify(event), { status: 200 });
-    }
-
-    // Get all events for a specific date
-    const date = searchParams.get("date");
-    if (date) {
-      const event = await Event.find({ date_start_event: date });
       return new Response(JSON.stringify(event), { status: 200 });
     }
 
@@ -128,6 +141,7 @@ export async function GET(request: Request) {
       const event = await Event.findOne({ _id: eventId });
       return new Response(JSON.stringify(event), { status: 200 });
     }
+    // In case of error, return 400 or 500 status to let the client know
   } catch (error) {
     if (error instanceof ZodError)
       return NextResponse.json({ message: error.message }, { status: 400 });

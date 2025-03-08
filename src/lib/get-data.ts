@@ -122,11 +122,11 @@ export interface LineupData {
 }
 export const getNextTWLineups = async (
   house: string,
-  nextTW: string
+  twDate: string
 ): Promise<LineupData> => {
-  const response = await fetch(`/api/attendance?house=${house}&date=${nextTW}`);
+  const response = await fetch(`/api/event?house=${house}&date=${twDate}`);
   const result = await response.json();
-  return result.attendance[0];
+  return result;
 };
 
 export interface Template {
