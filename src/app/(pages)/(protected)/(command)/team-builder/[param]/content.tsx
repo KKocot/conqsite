@@ -188,6 +188,7 @@ const Content: React.FC<PageProps> = ({
               data={sheetData}
               house={house}
               commander={commander}
+              setCommander={setCommander}
               setSheetData={setSheetData}
               dates={publicLineups.dates}
             />
@@ -195,8 +196,10 @@ const Content: React.FC<PageProps> = ({
         </TooltipContainer>
         <TooltipContainer title="Templates">
           <Templates
+            commander={commander}
             assets={assets}
             house={house}
+            setCommander={setCommander}
             setSheetData={setSheetData}
             sheetData={sheetData}
           />

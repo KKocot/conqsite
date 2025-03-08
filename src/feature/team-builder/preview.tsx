@@ -36,7 +36,7 @@ const Preview = ({
           {show ? t("hide_name") : t("show_name")}
         </Button>
       </div>
-      {commander ? (
+      {commander || commander !== "" ? (
         <div className="my-12">
           <h3 className="text-xl font-bold text-center">Lineup Commander</h3>
           <h2 className="text-lg font-bold text-center">{commander}</h2>

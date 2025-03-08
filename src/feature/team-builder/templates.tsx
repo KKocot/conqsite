@@ -26,11 +26,15 @@ const Templates = ({
   house,
   setSheetData,
   sheetData,
+  commander,
   assets,
+  setCommander,
 }: {
   house: string;
   setSheetData: Dispatch<SetStateAction<SheetTypes[]>>;
+  setCommander: Dispatch<SetStateAction<string>>;
   sheetData: SheetTypes[];
+  commander: string;
   assets?: HouseAssets;
 }) => {
   const t = useTranslations("BuildTeam.templates");
@@ -71,6 +75,7 @@ const Templates = ({
               onClick={() => {
                 addTemplate.mutate({
                   house: house,
+                  commander: commander,
                   templateName: templateName,
                   sheet: sheetData,
                 });
@@ -99,6 +104,7 @@ const Templates = ({
                     onClick={() => {
                       setSheetData(template.sheet);
                       setTemplateName(template.templateName);
+                      setCommander(template.commander ?? "");
                       toast.success(t("template_loaded"));
                     }}
                   >

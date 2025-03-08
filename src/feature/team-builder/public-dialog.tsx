@@ -26,12 +26,14 @@ export function PublicDialog({
   dates,
   commander,
   setSheetData,
+  setCommander,
 }: {
   data: SheetTypes[];
   house: string;
   dates?: string[];
   commander?: string;
   setSheetData: Dispatch<SetStateAction<SheetTypes[]>>;
+  setCommander: Dispatch<SetStateAction<string>>;
 }) {
   const t = useTranslations("BuildTeam.public");
   const [publicationName, setPublicationName] = useState("");
@@ -122,6 +124,7 @@ export function PublicDialog({
                         setPublicationName(e.name);
                         setSheetData(e.sheet);
                         toast.success(t("lineup_loaded"));
+                        setCommander(e.commander || "");
                       }}
                     >
                       {t("load")}
