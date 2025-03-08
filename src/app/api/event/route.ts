@@ -100,6 +100,17 @@ export async function GET(request: Request) {
         house_name: house,
       });
 
+      // Default values in case of no event
+      const defaultResponse = {
+        date: date,
+        house: house,
+        lineup: [],
+      };
+
+      // Return default values if no event is found
+      if (!event)
+        return new Response(JSON.stringify(defaultResponse), { status: 200 });
+
       // Sort signups by lineup
       const sortedLineup = event.signUps
         .filter(
@@ -122,12 +133,14 @@ export async function GET(request: Request) {
       const attendance = {
         date: event.date_start_event,
         house: event.house_name,
-        lineup: Object.entries(sortedLineup).map(([name, signup]) => ({
-          name,
-          signup,
-        })),
+        lineup: !event
+          ? []
+          : Object.entries(sortedLineup).map(([name, signup]) => ({
+              name,
+              signup,
+            })),
       };
-      console.log(sortedLineup);
+
       return new Response(JSON.stringify(attendance), { status: 200 });
     }
     if (house) {
