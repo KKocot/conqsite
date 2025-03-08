@@ -3,7 +3,7 @@ import { Autocompleter } from "./autocompleter";
 import { Textarea } from "../../components/ui/textarea";
 import { useEffect, useMemo, useState } from "react";
 import { useArtyAmount } from "@/lib/utils";
-import { PackageOpen } from "lucide-react";
+import { ChevronDown, ChevronUp, PackageOpen } from "lucide-react";
 import clsx from "clsx";
 import { Button } from "../../components/ui/button";
 import { artillery } from "@/assets/artillery";
@@ -56,6 +56,8 @@ const Item = ({
   data,
   usedUsers,
   onEdit,
+  moveUp,
+  moveDown,
 }: {
   units: Unit[];
   users: Survey[];
@@ -74,6 +76,8 @@ const Item = ({
     color: string,
     altillery: ArtilleryProps[]
   ) => void;
+  moveUp: (index: number) => void;
+  moveDown: (index: number) => void;
 }) => {
   const t = useTranslations("BuildTeam.card");
   const users_list = users
@@ -383,6 +387,26 @@ const Item = ({
           )
         }
       />
+      <div className="flex justify-between gap-1 items-center flex-col">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8"
+          onClick={() => moveUp(index)}
+          disabled={index === 0}
+        >
+          <ChevronUp className="h-4 w-4" />
+        </Button>
+        <p>{index + 1}</p>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8"
+          onClick={() => moveDown(index)}
+        >
+          <ChevronDown className="h-4 w-4" />
+        </Button>
+      </div>
     </li>
   );
 };

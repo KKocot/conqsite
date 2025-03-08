@@ -84,6 +84,27 @@ const Content: React.FC<PageProps> = ({
     filterUnits.rustic_checked,
     filterUnits.other_checked,
   ]);
+  const moveItemUp = (index: number) => {
+    if (index > 0) {
+      const newItems = [...sheetData];
+      [newItems[index - 1], newItems[index]] = [
+        newItems[index],
+        newItems[index - 1],
+      ];
+      setSheetData(newItems);
+    }
+  };
+
+  const moveItemDown = (index: number) => {
+    if (index < sheetData.length - 1) {
+      const newItems = [...sheetData];
+      [newItems[index], newItems[index + 1]] = [
+        newItems[index + 1],
+        newItems[index],
+      ];
+      setSheetData(newItems);
+    }
+  };
   const handleEdit = (
     index: number,
     username: string,
@@ -145,6 +166,8 @@ const Content: React.FC<PageProps> = ({
                 data={e}
                 onEdit={handleEdit}
                 usedUsers={usedUsersList}
+                moveUp={moveItemUp}
+                moveDown={moveItemDown}
               />
             ))}
           </ul>
@@ -164,6 +187,8 @@ const Content: React.FC<PageProps> = ({
                 data={e}
                 onEdit={handleEdit}
                 usedUsers={usedUsersList}
+                moveUp={moveItemUp}
+                moveDown={moveItemDown}
               />
             ))}
           </ul>
