@@ -46,7 +46,12 @@ const Content = ({
           value={e.name}
           className="flex self-center"
         >
-          <Preview data={e.sheet} units={units} username={survey.inGameNick} />
+          <Preview
+            data={e.sheet}
+            units={units}
+            username={survey.inGameNick}
+            commander={e.commander}
+          />
         </TabsContent>
       ))}
     </Tabs>

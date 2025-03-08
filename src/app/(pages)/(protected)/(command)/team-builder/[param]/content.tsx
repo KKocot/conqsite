@@ -28,6 +28,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Loading from "react-loading";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface PageProps {
   surveysData: Survey[];
@@ -43,8 +45,10 @@ const Content: React.FC<PageProps> = ({
   const { param }: { param: string } = useParams();
   const house = param.replaceAll("%20", " ");
   const [showPreview, setShowPreview] = useState(false);
+
   const [userList, setUserList] = useState<Survey[]>(surveysData);
   const [row, setRow] = useState(false);
+  const [commander, setCommander] = useState("");
   const [sheetData, setSheetData] = useState<SheetTypes[]>(
     Array(10).fill(DEFAULT_CARD)
   );
@@ -115,6 +119,16 @@ const Content: React.FC<PageProps> = ({
     <div className="flex justify-center flex-col items-center overflow-x-hidden">
       <div className={clsx("flex flex-col gap-5 p-2", { hidden: showPreview })}>
         <UsersList usedPlayers={usedUsersList} allPlayers={userList} />
+        <div className="w-full flex justify-center">
+          <div className="flex flex-col gap-2 items-center w-fit">
+            <Label htmlFor="commander">Lineup Commander</Label>
+            <Input
+              value={commander}
+              onChange={(e) => setCommander(e.target.value)}
+              id="commander"
+            />
+          </div>
+        </div>
         {row ? (
           <ul className="">
             {sheetData.map((e, index) => (
@@ -163,7 +177,7 @@ const Content: React.FC<PageProps> = ({
         </Button>
       </div>
       <div className={clsx({ hidden: !showPreview })}>
-        <Preview data={sheetData} units={units} />
+        <Preview data={sheetData} units={units} commander={commander} />
       </div>
       <nav className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 rounded-full bg-background px-1 py-2 shadow-lg">
         <TooltipContainer title="Public Lineups">
@@ -173,6 +187,7 @@ const Content: React.FC<PageProps> = ({
             <PublicDialog
               data={sheetData}
               house={house}
+              commander={commander}
               setSheetData={setSheetData}
               dates={publicLineups.dates}
             />
@@ -204,9 +219,9 @@ const Content: React.FC<PageProps> = ({
             onClick={() => setShowPreview((prev) => !prev)}
           >
             {showPreview ? (
-              <ScanEye className="h-5 w-5" />
-            ) : (
               <Table className="h-5 w-5" />
+            ) : (
+              <ScanEye className="h-5 w-5" />
             )}
           </Button>
         </TooltipContainer>

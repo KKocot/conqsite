@@ -1,6 +1,5 @@
 import { authOptions } from "@/lib/auth";
 import connectMongoDB from "@/lib/mongodb";
-import Attendance from "@/models/attendance";
 import House from "@/models/house";
 import HouseAssets from "@/models/houseAssets";
 import HouseSettings from "@/models/houseSettings";
@@ -40,7 +39,6 @@ export async function DELETE(request: Request) {
     const houseAssets = await HouseAssets.findOneAndDelete({ name: house });
     const templates = await Template.deleteMany({ house });
     const publicLineups = await PublicLineup.deleteMany({ house });
-    const attendance = await Attendance.deleteMany({ house });
     const roles = await Roles.deleteMany({ house });
     const response = {
       surveys: surveys,
@@ -51,7 +49,6 @@ export async function DELETE(request: Request) {
       houseAssets: houseAssets,
       templates: templates,
       publicLineups: publicLineups,
-      attendance: attendance,
       houseLeader: houseLeader,
     };
     return NextResponse.json({ response }, { status: 200 });

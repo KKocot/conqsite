@@ -133,6 +133,7 @@ export interface Template {
   _id?: string;
   house: string;
   templateName: string;
+  commander?: string;
   sheet: SheetTypes[];
 }
 
@@ -148,6 +149,7 @@ export interface PublicLineup {
   house: string;
   name: string;
   date: string;
+  commander?: string;
   sheet: SheetTypes[];
 }
 export const getPublicLineup = async (

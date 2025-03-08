@@ -20,5 +20,6 @@ export const putPublicLineupSchema = z.object({
   name: z.string(),
   house: z.string(),
   date: z.string(),
+  commander: z.string().optional(),
   sheet: z.array(SheetSchema),
 });

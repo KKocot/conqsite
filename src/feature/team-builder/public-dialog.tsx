@@ -24,11 +24,13 @@ export function PublicDialog({
   data,
   house,
   dates,
+  commander,
   setSheetData,
 }: {
   data: SheetTypes[];
   house: string;
   dates?: string[];
+  commander?: string;
   setSheetData: Dispatch<SetStateAction<SheetTypes[]>>;
 }) {
   const t = useTranslations("BuildTeam.public");
@@ -169,6 +171,7 @@ export function PublicDialog({
                     house: house,
                     date: date,
                     sheet: data,
+                    commander: commander ?? "",
                   });
                   toast.success(
                     existingLineup ? t("lineup_updated") : t("lineup_added")

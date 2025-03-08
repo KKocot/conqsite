@@ -19,5 +19,6 @@ const SheetSchema = z.object({
 export const putTemplateSchema = z.object({
   templateName: z.string(),
   house: z.string(),
+  commander: z.string().optional(),
   sheet: z.array(SheetSchema),
 });
