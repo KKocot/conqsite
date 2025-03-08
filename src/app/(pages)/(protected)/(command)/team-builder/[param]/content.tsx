@@ -240,10 +240,8 @@ const Content: React.FC<PageProps> = ({
           <Filters filters={filterUnits} setFilter={setFilterUnits} />
         </TooltipContainer>
         <TooltipContainer title="Preview">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="rounded-full"
+          <div
+            className="rounded-full flex items-center justify-center p-3 cursor-pointer hover:bg-accent hover:text-background"
             onClick={() => setShowPreview((prev) => !prev)}
           >
             {showPreview ? (
@@ -251,13 +249,11 @@ const Content: React.FC<PageProps> = ({
             ) : (
               <ScanEye className="h-5 w-5" />
             )}
-          </Button>
+          </div>
         </TooltipContainer>
         <TooltipContainer title="Row View">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="rounded-full"
+          <div
+            className="rounded-full flex items-center justify-center p-3 cursor-pointer hover:bg-accent hover:text-background"
             onClick={() => setRow((prev) => !prev)}
           >
             {row ? (
@@ -265,7 +261,7 @@ const Content: React.FC<PageProps> = ({
             ) : (
               <Rows4 className="h-5 w-5" />
             )}
-          </Button>
+          </div>
         </TooltipContainer>
       </nav>
     </div>

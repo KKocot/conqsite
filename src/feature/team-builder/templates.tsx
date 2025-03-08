@@ -49,9 +49,9 @@ const Templates = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="icon" className="rounded-full">
+        <div className="rounded-full flex items-center justify-center p-3 cursor-pointer hover:bg-accent hover:text-background">
           <NotepadTextDashed className="h-5 w-5" />
-        </Button>
+        </div>
       </DialogTrigger>
       <DialogContent className="overflow-y-scroll">
         <DialogHeader>

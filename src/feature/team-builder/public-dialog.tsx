@@ -69,9 +69,9 @@ export function PublicDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="icon" className="rounded-full">
+        <div className="rounded-full flex items-center justify-center p-3 cursor-pointer hover:bg-accent hover:text-background">
           <Send className="w-5 h-5" />
-        </Button>
+        </div>
       </DialogTrigger>
       <DialogContent className="w-fit">
         <DialogHeader>
