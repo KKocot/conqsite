@@ -5,7 +5,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const house = searchParams.get("house");
 
-  const url = `http://bot.host2play.com:2005/api/add_all?house=${house}`;
+  const url = `${process.env.BOT_ORIGIN}/api/add_all?house=${house}`;
   try {
     const response = await fetch(url, {
       cache: "no-store",

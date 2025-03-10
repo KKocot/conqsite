@@ -4,7 +4,7 @@ import { ZodError } from "zod";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const house = searchParams.get("house");
-  const url = `http://bot.host2play.com:2005/api/attendance/${house}`;
+  const url = `${process.env.BOT_ORIGIN}/api/attendance/${house}`;
   try {
     const response = await fetch(url, {
       cache: "no-store",
