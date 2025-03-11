@@ -199,3 +199,11 @@ export const pokeBotEvent = async (
     console.error("Failed to poke bot event", error);
   }
 };
+
+export const countLeadership = (units: Unit[], unit: string): number => {
+  const matchedUnit = units.find((e) => e.name === unit);
+  if (!matchedUnit) return 0;
+
+  const discount = matchedUnit.reduceCost ? 0.84 : 1; // 16% discount means multiply by 0.84
+  return matchedUnit.leadership * discount;
+};

@@ -45,7 +45,6 @@ const Content: React.FC<PageProps> = ({
   const { param }: { param: string } = useParams();
   const house = param.replaceAll("%20", " ");
   const [showPreview, setShowPreview] = useState(false);
-
   const [userList, setUserList] = useState<Survey[]>(surveysData);
   const [row, setRow] = useState(false);
   const [commander, setCommander] = useState("");

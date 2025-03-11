@@ -100,7 +100,7 @@ export function Autocompleter({
               "bg-green-800 text-white": user_preferences?.value === "1",
             })}
           >
-            {unit.leadership}
+            {unit.leadership * (user_preferences?.reduceCost ? 0.84 : 1)}
           </span>
         ) : null}
       </div>
