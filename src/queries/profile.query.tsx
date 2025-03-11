@@ -4,6 +4,7 @@ import { z } from "zod";
 const unitSchema = z.object({
   id: z.number(),
   value: z.string(),
+  reduceCost: z.boolean().optional(),
 });
 const surveySchema = z.object({
   artyAmount: z.enum(["none", "some", "average", "aLot"]),

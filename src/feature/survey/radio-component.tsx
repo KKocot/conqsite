@@ -65,14 +65,9 @@ const Component = ({
 const RadioComponent: FC<{
   unitData: FormColData;
   controller: any;
-}> = ({ unitData, controller }) => {
+  era: "golden" | "heroic" | "low";
+}> = ({ unitData, controller, era }) => {
   const t = useTranslations("AddForm");
-  const era =
-    unitData.era === "golden"
-      ? "golden"
-      : unitData.era === "heroic"
-      ? "heroic"
-      : "low";
 
   return (
     <div>

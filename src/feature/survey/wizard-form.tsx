@@ -26,9 +26,22 @@ export const DEFAULT_FORM_DATA: Survey = {
   updates: [],
   weapons: weapons.map(() => ({ value: false, leadership: 0, pref: 0 })),
   units: {
-    low: lowUnits.map((unit) => ({ id: unit.id, value: "0", pref: "0" })),
-    heroic: heroicUnits.map((unit) => ({ id: unit.id, value: "0" })),
-    golden: goldenUnits.map((unit) => ({ id: unit.id, value: "0" })),
+    low: lowUnits.map((unit) => ({
+      id: unit.id,
+      value: "0",
+      pref: "0",
+      reduceCost: false,
+    })),
+    heroic: heroicUnits.map((unit) => ({
+      id: unit.id,
+      value: "0",
+      reduceCost: false,
+    })),
+    golden: goldenUnits.map((unit) => ({
+      id: unit.id,
+      value: "0",
+      reduceCost: false,
+    })),
   },
 };
 
@@ -121,6 +134,7 @@ export default function WizardForm({
         />
         {step === 1 ? (
           <FormCol
+            era="low"
             data={lowUnits}
             controller={form.control}
             moveToStep={setStep}
@@ -128,6 +142,7 @@ export default function WizardForm({
           />
         ) : step === 2 ? (
           <FormCol
+            era="heroic"
             data={heroicUnits}
             controller={form.control}
             moveToStep={setStep}
@@ -135,6 +150,7 @@ export default function WizardForm({
           />
         ) : step === 3 ? (
           <FormCol
+            era="golden"
             data={goldenUnits}
             controller={form.control}
             moveToStep={setStep}

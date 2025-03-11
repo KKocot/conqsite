@@ -79,9 +79,9 @@ export interface Survey {
   artyAmount: "none" | "some" | "average" | "aLot";
   weapons: { value: boolean; leadership: number; pref?: number }[];
   units: {
-    low: { id: number; value: string }[];
-    heroic: { id: number; value: string }[];
-    golden: { id: number; value: string }[];
+    low: { id: number; value: string; reduceCost?: boolean }[];
+    heroic: { id: number; value: string; reduceCost?: boolean }[];
+    golden: { id: number; value: string; reduceCost?: boolean }[];
   };
 }
 

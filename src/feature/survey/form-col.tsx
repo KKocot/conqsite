@@ -3,6 +3,9 @@ import clsx from "clsx";
 import { Button } from "../../components/ui/button";
 import RadioComponent from "./radio-component";
 import { useTranslations } from "next-intl";
+import { FormControl, FormField, FormItem } from "@/components/ui/form";
+import { CustomSwitch } from "@/components/ui/customSwitch";
+import { ShieldCheck, ShieldX } from "lucide-react";
 
 type FormColData = {
   id: number;
@@ -16,11 +19,13 @@ type FormColData = {
 };
 
 const FormCol = ({
+  era,
   data,
   controller,
   moveToStep,
   step,
 }: {
+  era: "golden" | "heroic" | "low";
   data: FormColData[];
   controller: any;
   moveToStep: (step: number) => void;
@@ -51,8 +56,36 @@ const FormCol = ({
             <div className="flex justify-center">
               <img className="h-40" alt={e.name} src={e.src} />
             </div>
-            <RadioComponent unitData={e} controller={controller} />
+            <RadioComponent unitData={e} controller={controller} era={era} />
           </div>
+          <FormField
+            control={controller}
+            name={`units.${era}.${e.id - 1}.reduceCost`}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className="flex items-center justify-center">
+                    <CustomSwitch
+                      checked={field.value === true}
+                      onCheckedChange={(checked) =>
+                        field.onChange(checked ? true : false)
+                      }
+                      label="Leadership Doctrine"
+                      icon={
+                        field.value === true ? (
+                          <ShieldCheck className="h-3 w-3" />
+                        ) : (
+                          <ShieldX className="h-3 w-3" />
+                        )
+                      }
+                      variant="warning"
+                      size="lg"
+                    />
+                  </div>
+                </FormControl>
+              </FormItem>
+            )}
+          />
         </div>
       ))}
       <Button
