@@ -67,13 +67,13 @@ export function useArtyAmount(
 
 export function ownedUnits(
   units: Unit[],
-  profile_units: { id: number; value: string }[]
+  profile_units: { id: number; value: string; reduceCost?: boolean }[]
 ) {
-  const mergedGoldenUnits = units.map((unit) => {
-    const matchingGolden = profile_units.find((g) => g.id === unit.id);
-    return { ...unit, matchingGolden };
+  const mergedUnits = units.map((unit) => {
+    const matchingUnit = profile_units.find((g) => g.id === unit.id);
+    return { ...unit, matchingUnit };
   });
-  return mergedGoldenUnits;
+  return mergedUnits;
 }
 
 export function getLineup(surveys: Survey[] | undefined, lineup: string[]) {
