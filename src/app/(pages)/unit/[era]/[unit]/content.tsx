@@ -6,18 +6,28 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 import ChallengesArea from "@/feature/unit-builder/challenges-area";
 import DoctrinesArea from "@/feature/unit-builder/doctrines-area";
 import FormationsArea from "@/feature/unit-builder/formations-area";
 import KitsArea from "@/feature/unit-builder/kits-area";
 import SkillsArea from "@/feature/unit-builder/skills-area";
 import Tree from "@/feature/unit-builder/tree";
-import { getRoleById, UnitObject } from "@/lib/get-data";
+import { getRoleById, UnitData, UnitObject } from "@/lib/get-data";
 import { Unit } from "@/lib/type";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowBigLeft, ArrowBigRight, PenIcon, Save, X } from "lucide-react";
+import {
+  ArrowBigLeft,
+  ArrowBigRight,
+  CirclePlus,
+  PenIcon,
+  Save,
+  X,
+} from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -25,9 +35,13 @@ import { toast } from "react-toastify";
 const Content = ({
   entry,
   shortEntry,
+  posts,
+  postsLoading,
 }: {
   entry?: UnitObject;
   shortEntry: Unit;
+  posts?: UnitData[];
+  postsLoading: boolean;
 }) => {
   const { data: user } = useSession();
   const { data: roles, isLoading: rolesLoading } = useQuery({
@@ -245,33 +259,34 @@ const Content = ({
                   </FormItem>
                 )}
               />
-
-              {/* <div className="w-[750px] h-64 overflow-y-scroll">
-              <div className="w-full bg-background p-2 flex justify-between">
-                <h2>Community build</h2>
-                <Link href={`${unit.name}/builder`}>
-                  <CirclePlus />
-                </Link>
+              <div className="w-[750px] h-64 overflow-y-scroll">
+                <div className="w-full bg-background p-2 flex justify-between">
+                  <h2>Community build</h2>
+                  <Link href={`${unit.name}/builder`}>
+                    <CirclePlus />
+                  </Link>
+                </div>
+                {postsLoading ? (
+                  <LoadingComponent />
+                ) : posts && posts.length !== 0 ? (
+                  posts.map((post) => (
+                    <Card key={post.id} className="p-2 mb-2">
+                      <Link href={`${post.unit}/${post.id}`}>
+                        <div>
+                          <CardTitle className="text-xl">
+                            {post.title}
+                          </CardTitle>
+                        </div>
+                        <div>
+                          <div>{post.description}</div>
+                        </div>
+                      </Link>
+                    </Card>
+                  ))
+                ) : (
+                  <NoData />
+                )}
               </div>
-              {isLoading ? (
-                <LoadingComponent />
-              ) : data && data.length !== 0 ? (
-                data.map((post) => (
-                  <Card key={post.id} className="p-2 mb-2">
-                    <Link href={`${post.unit}/${post.id}`}>
-                      <div>
-                        <CardTitle className="text-xl">{post.title}</CardTitle>
-                      </div>
-                      <div>
-                        <div>{post.description}</div>
-                      </div>
-                    </Link>
-                  </Card>
-                ))
-              ) : (
-                <NoData />
-              )} 
-            </div>*/}
             </div>
 
             <div className="flex justify-center flex-col py-4">

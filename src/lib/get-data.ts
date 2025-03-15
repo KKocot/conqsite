@@ -277,7 +277,7 @@ export interface UnitData {
 }
 
 export const getUnitPosts = async (unit: string): Promise<UnitData[]> => {
-  const response = await fetch(`/api/unitPost?unit=${unit}`);
+  const response = await fetch(`/api/units/posts?unit=${unit}`);
   const result = await response.json();
   return result;
 };
