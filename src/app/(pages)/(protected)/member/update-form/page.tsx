@@ -1,17 +1,20 @@
 "use client";
 
-import React, { FC } from "react";
+import React from "react";
 import { useSession } from "next-auth/react";
 import WizardForm from "@/feature/survey/wizard-form";
 import LoadingComponent from "@/feature/ifs/loading";
-import { UnitAssetsGroup } from "@/lib/get-data";
+import { getUnitsAssets } from "@/lib/get-data";
+import { useQuery } from "@tanstack/react-query";
 
-interface PageProps {
-  unitsAssets: UnitAssetsGroup | undefined;
-}
-
-const Page = ({ unitsAssets }: PageProps) => {
+const Page = () => {
   const { data } = useSession();
+  const { data: unitsAssets } = useQuery({
+    queryKey: ["unitsAssets"],
+    queryFn: getUnitsAssets,
+    enabled: true,
+  });
+
   if (!data || !unitsAssets) return <LoadingComponent />;
   return (
     <WizardForm

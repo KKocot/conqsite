@@ -5,15 +5,16 @@ import Content from "./content";
 import { getUnit } from "@/lib/utils";
 import { Unit } from "@/lib/type";
 import { useQuery } from "@tanstack/react-query";
-import { getUnitPosts, getUnitWiki, UnitAssetsGroup } from "@/lib/get-data";
+import { getUnitPosts, getUnitsAssets, getUnitWiki } from "@/lib/get-data";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 
-interface PageProps {
-  unitsAssets?: UnitAssetsGroup;
-}
-
-const Page = ({ unitsAssets }: PageProps) => {
+const Page = () => {
+  const { data: unitsAssets } = useQuery({
+    queryKey: ["unitsAssets"],
+    queryFn: getUnitsAssets,
+    enabled: true,
+  });
   const params = useParams();
   const unit = params.unit.toString();
   const era = params.era.toString() as

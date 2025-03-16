@@ -8,19 +8,21 @@ import {
   getHighRoles,
   getHouseAssets,
   getSurveys,
-  UnitAssetsGroup,
+  getUnitsAssets,
 } from "@/lib/get-data";
 import { useSession } from "next-auth/react";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 import { useTranslations } from "next-intl";
 
-interface PageProps {
-  unitsAssets: UnitAssetsGroup | undefined;
-}
-
-const Page = ({ unitsAssets }: PageProps) => {
+const Page = () => {
   const { param }: { param: string } = useParams();
+  const { data: unitsAssets } = useQuery({
+    queryKey: ["unitsAssets"],
+    queryFn: getUnitsAssets,
+    enabled: true,
+  });
+
   const t = useTranslations("MyHouse");
   const house = param.replaceAll("%20", " ");
   const { data: user } = useSession();

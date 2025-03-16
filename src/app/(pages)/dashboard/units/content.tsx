@@ -9,7 +9,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-interface PageProps {
+interface ContentProps {
   unitsAssets: {
     goldenEra: UnitAsset[];
     heroicEra: UnitAsset[];
@@ -20,7 +20,7 @@ interface PageProps {
 }
 const Content = ({
   unitsAssets: { goldenEra, heroicEra, blueEra, greenEra, greyEra },
-}: PageProps) => {
+}: ContentProps) => {
   const [query, setQuery] = useState("");
   const units = useMemo(() => {
     const filteredUnits = [

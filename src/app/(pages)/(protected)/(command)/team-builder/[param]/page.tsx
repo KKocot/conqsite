@@ -8,16 +8,17 @@ import {
   getHouseAssets,
   getPublicLineupDates,
   getSurveys,
-  UnitAssetsGroup,
+  getUnitsAssets,
 } from "@/lib/get-data";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 
-interface PageProps {
-  unitsAssets: UnitAssetsGroup | undefined;
-}
-
-const Page = ({ unitsAssets }: PageProps) => {
+const Page = () => {
+  const { data: unitsAssets } = useQuery({
+    queryKey: ["unitsAssets"],
+    queryFn: getUnitsAssets,
+    enabled: true,
+  });
   const { param }: { param: string } = useParams();
   const house = param.replaceAll("%20", " ");
 
