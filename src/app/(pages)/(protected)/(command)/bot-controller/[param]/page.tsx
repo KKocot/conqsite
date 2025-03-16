@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import Content from "./content";
 import { useQuery } from "@tanstack/react-query";
-import { getBotEvents, getHouseSettings } from "@/lib/get-data";
+import { getBotEvents, getHouseAssets, getHouseSettings } from "@/lib/get-data";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 import { useSession } from "next-auth/react";
@@ -30,6 +30,14 @@ const Page = () => {
     queryFn: () => getBotEvents(house),
     enabled: !!house,
   });
+
+  // Get house assets
+  const { data: assets } = useQuery({
+    queryKey: ["houseAssets", house],
+    queryFn: () => getHouseAssets(house),
+    enabled: !!house,
+  });
+
   // Show loading component while fetching data
   if (isLoading || eventsLoading) return <LoadingComponent />;
   // Show no data component if no data is found
@@ -37,6 +45,7 @@ const Page = () => {
 
   return (
     <Content
+      assets={assets}
       config={data}
       events={events}
       house={house}

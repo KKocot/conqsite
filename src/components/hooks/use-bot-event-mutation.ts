@@ -37,15 +37,12 @@ export const useDeleteBotEventMutation = () => {
 
   return useMutation({
     mutationFn: async ({ id, house }: { id: string; house: string }) => {
-      const response = await fetch(
-        `/api/event?eventId=${id}&house=house${house}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`/api/event?eventId=${id}&house=${house}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) {
         const errorData = await response.json();

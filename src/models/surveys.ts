@@ -25,18 +25,21 @@ const SurveySchema = new Schema({
       {
         id: { type: Number, required: true },
         value: { type: String, required: true },
+        reduceCost: { type: Boolean, required: false },
       },
     ],
     heroic: [
       {
         id: { type: Number, required: true },
         value: { type: String, required: true },
+        reduceCost: { type: Boolean, required: false },
       },
     ],
     golden: [
       {
         id: { type: Number, required: true },
         value: { type: String, required: true },
+        reduceCost: { type: Boolean, required: false },
       },
     ],
   },

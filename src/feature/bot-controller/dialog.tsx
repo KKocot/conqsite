@@ -19,7 +19,13 @@ import { DialogDescription } from "@radix-ui/react-dialog";
 import { getCloserDay } from "@/lib/utils";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PenIcon } from "lucide-react";
+import { PenIcon, PlusCircle } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 // Default values for the form
 const defaultValues = {
@@ -152,32 +158,45 @@ const EventDialog = ({
   }, [form.getValues("interval")]);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        {edit_mode ? (
-          <Button variant="custom" className="rounded-full p-2 h-fit">
-            <PenIcon className="w-4 h-4" />
-          </Button>
-        ) : (
-          <Button variant="custom" disabled={disabled}>
-            Create Event
-          </Button>
-        )}
-      </DialogTrigger>
-      <DialogContent className="max-h-screen overflow-y-scroll">
-        <DialogHeader>
-          <DialogTitle>Create Attendance Event</DialogTitle>
-          <DialogDescription>
-            Event will be posted in the selected channel after you press Create
-            Event
-          </DialogDescription>
-        </DialogHeader>
-        <EventForm discordData={discordData} form={form} />
-        <DialogFooter>
-          <Button onClick={form.handleSubmit(onSubmit)}>Create Event</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <TooltipProvider>
+      <Tooltip>
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
+            {edit_mode ? (
+              <Button variant="custom" className="rounded-full p-2 h-fit">
+                <PenIcon className="w-4 h-4" />
+              </Button>
+            ) : (
+              <TooltipTrigger asChild>
+                <Button
+                  variant="custom"
+                  disabled={disabled}
+                  className="rounded-full p-2 h-fit"
+                >
+                  <PlusCircle size={24} />
+                </Button>
+              </TooltipTrigger>
+            )}
+          </DialogTrigger>
+          <DialogContent className="max-h-screen overflow-y-scroll">
+            <DialogHeader>
+              <DialogTitle>Create Attendance Event</DialogTitle>
+              <DialogDescription>
+                Event will be posted in the selected channel after you press
+                Create Event
+              </DialogDescription>
+            </DialogHeader>
+            <EventForm discordData={discordData} form={form} />
+            <DialogFooter>
+              <Button onClick={form.handleSubmit(onSubmit)}>
+                Create Event
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+        <TooltipContent>Create event</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 

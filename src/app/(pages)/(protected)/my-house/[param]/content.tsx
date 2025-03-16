@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { UserProfile } from "@/components/user-profile";
-import { HouseAssets, Roles, Survey } from "@/lib/get-data";
+import { HouseAssets, Roles, Survey, UnitAssetsGroup } from "@/lib/get-data";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -20,6 +20,7 @@ interface ContentProps {
   rolesData: Roles[];
   houseAssets: HouseAssets | null | undefined;
   userId: string;
+  unitsAssets: UnitAssetsGroup;
 }
 
 const Content: FC<ContentProps> = ({
@@ -28,6 +29,7 @@ const Content: FC<ContentProps> = ({
   rolesData,
   houseAssets,
   userId,
+  unitsAssets,
 }) => {
   const t = useTranslations("MyHouse");
   const [inputQuery, setInputQuery] = useState<string>("");
@@ -70,7 +72,7 @@ const Content: FC<ContentProps> = ({
             id="visible"
             disabled={updateHouseAssets.status === "pending"}
             checked={houseAssets?.sharedList ?? false}
-            onCheckedChange={(e) => {
+            onCheckedChange={() => {
               updateHouseAssets.mutate({
                 name: houseAssets?.name ?? house,
                 premium: houseAssets?.premium ?? false,
@@ -113,7 +115,7 @@ const Content: FC<ContentProps> = ({
       <div className="flex gap-4 p-4 flex-wrap">
         {filteredData.map((e) => (
           <div key={e.discordId}>
-            <UserProfile player={e}>
+            <UserProfile player={e} unitsAssets={unitsAssets}>
               <Badge
                 className={clsx(
                   "cursor-pointer text-md p-2 hover:bg-destructive",

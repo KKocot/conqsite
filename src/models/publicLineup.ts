@@ -4,6 +4,7 @@ const PublicLineupSchema = new Schema({
   name: { type: String, required: true },
   house: { type: String, required: true },
   date: { type: String, required: true },
+  commander: { type: String, required: false },
   sheet: [
     {
       artillery: [

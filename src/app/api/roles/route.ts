@@ -5,13 +5,10 @@ import { putRolestSchema } from "./schema";
 import { ZodError } from "zod";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { headers } from "next/headers";
-import { botAllowed, highestRolesAllowed } from "@/lib/endpoints-protections";
+import { highestRolesAllowed } from "@/lib/endpoints-protections";
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
-  const discordKey = headers().get("discord-key");
-  const envKey = process.env.BOT_KEY;
   const { searchParams } = new URL(request.url);
   const house = searchParams.get("house");
 
@@ -21,8 +18,6 @@ export async function POST(request: Request) {
     const roles = await Roles.find({ house: house });
 
     const highestRolesAccess = highestRolesAllowed(roles, session, house);
-    if (discordKey && botAllowed(discordKey, envKey))
-      return new Response("401");
 
     const data = putRolestSchema.parse(await request.json());
     const existingRole = await Roles.findOne({
@@ -80,17 +75,15 @@ export async function DELETE(request: Request) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
   const house = searchParams.get("house");
-  const discordKey = headers().get("discord-key");
-  const envKey = process.env.BOT_KEY;
   const session = await getServerSession(authOptions);
+
   try {
     await connectMongoDB();
     const rolesLisy = await Roles.find();
 
     const highestRolesAccess = highestRolesAllowed(rolesLisy, session, house);
 
-    if (!(highestRolesAccess || (discordKey && botAllowed(discordKey, envKey))))
-      return new Response("401");
+    if (!highestRolesAccess) return new Response("401");
 
     const roles = await Roles.findOneAndDelete({ discordId: id, house: house });
     return NextResponse.json({ roles });

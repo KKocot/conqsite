@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import { date } from "zod";
 
 const otherActivitiesSchema: Schema = new Schema({
   date: String,

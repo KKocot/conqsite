@@ -24,12 +24,16 @@ export function PublicDialog({
   data,
   house,
   dates,
+  commander,
   setSheetData,
+  setCommander,
 }: {
   data: SheetTypes[];
   house: string;
   dates?: string[];
+  commander?: string;
   setSheetData: Dispatch<SetStateAction<SheetTypes[]>>;
+  setCommander: Dispatch<SetStateAction<string>>;
 }) {
   const t = useTranslations("BuildTeam.public");
   const [publicationName, setPublicationName] = useState("");
@@ -65,9 +69,9 @@ export function PublicDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="icon" className="rounded-full">
+        <div className="rounded-full flex items-center justify-center p-3 cursor-pointer hover:bg-accent hover:text-background">
           <Send className="w-5 h-5" />
-        </Button>
+        </div>
       </DialogTrigger>
       <DialogContent className="w-fit">
         <DialogHeader>
@@ -120,6 +124,7 @@ export function PublicDialog({
                         setPublicationName(e.name);
                         setSheetData(e.sheet);
                         toast.success(t("lineup_loaded"));
+                        setCommander(e.commander || "");
                       }}
                     >
                       {t("load")}
@@ -169,6 +174,7 @@ export function PublicDialog({
                     house: house,
                     date: date,
                     sheet: data,
+                    commander: commander ?? "",
                   });
                   toast.success(
                     existingLineup ? t("lineup_updated") : t("lineup_added")

@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { Badge } from "../../components/ui/badge";
 import { UserProfile } from "../../components/user-profile";
-import { Survey } from "@/lib/get-data";
+import { Survey, UnitAssetsGroup } from "@/lib/get-data";
 import {
   Accordion,
   AccordionContent,
@@ -10,13 +10,16 @@ import {
 } from "@/components/ui/accordion";
 import { useTranslations } from "next-intl";
 
+interface UsersListProps {
+  usedPlayers: string[];
+  allPlayers: Survey[];
+  unitsAssets: UnitAssetsGroup;
+}
 const UsersList = ({
   usedPlayers,
   allPlayers,
-}: {
-  usedPlayers: string[];
-  allPlayers: Survey[];
-}) => {
+  unitsAssets,
+}: UsersListProps) => {
   const t = useTranslations("BuildTeam");
 
   return (
@@ -40,7 +43,7 @@ const UsersList = ({
           <div className="flex flex-wrap gap-2 p-4">
             {allPlayers.map((survey) => (
               <div key={survey.discordId}>
-                <UserProfile player={survey}>
+                <UserProfile player={survey} unitsAssets={unitsAssets}>
                   <Badge
                     variant="secondary"
                     className={clsx("bg-red-800 text-white", {

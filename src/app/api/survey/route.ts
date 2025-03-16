@@ -3,15 +3,12 @@ import Survey from "@/models/surveys";
 import { NextResponse } from "next/server";
 import { putSurveySchema } from "./schema";
 import { ZodError } from "zod";
-import { headers } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { botAllowed, houseUserAllowed } from "@/lib/endpoints-protections";
+import { houseUserAllowed } from "@/lib/endpoints-protections";
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
-  const discordKey = headers().get("discord-key");
-  const envKey = process.env.BOT_KEY;
 
   try {
     await connectMongoDB();
@@ -19,8 +16,7 @@ export async function POST(request: Request) {
     const existingSurvey = await Survey.findOne({ discordId: data.discordId });
 
     const userAccount = data.discordId === session?.user.id;
-    if (!(userAccount || (discordKey && botAllowed(discordKey, envKey))))
-      return new Response("401");
+    if (!userAccount) return new Response("401");
 
     let survey;
     if (existingSurvey) {
@@ -44,8 +40,6 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   const session = await getServerSession(authOptions);
-  const discordKey = headers().get("discord-key");
-  const envKey = process.env.BOT_KEY;
   const { searchParams } = new URL(request.url);
   const list = searchParams.get("list");
   const query =
@@ -55,8 +49,7 @@ export async function GET(request: Request) {
     await connectMongoDB();
     const survey = await Survey.findOne({ discordId: session?.user.id });
     const membersAllowed = houseUserAllowed(survey, query ?? "");
-    if (!(membersAllowed || (discordKey && botAllowed(discordKey, envKey))))
-      return new Response("401");
+    if (!membersAllowed) return new Response("401");
     if (list) {
       const data = await Survey.find({ house: query });
       const surveys = data.map((survey) => {

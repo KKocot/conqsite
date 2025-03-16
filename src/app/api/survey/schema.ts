@@ -20,18 +20,21 @@ export const putSurveySchema = z.object({
       z.object({
         id: z.number(),
         value: z.string(),
+        reduceCost: z.boolean().optional(),
       })
     ),
     heroic: z.array(
       z.object({
         id: z.number(),
         value: z.string(),
+        reduceCost: z.boolean().optional(),
       })
     ),
     golden: z.array(
       z.object({
         id: z.number(),
         value: z.string(),
+        reduceCost: z.boolean().optional(),
       })
     ),
   }),

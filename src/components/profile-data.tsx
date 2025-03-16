@@ -1,6 +1,3 @@
-import { goldenUnits } from "@/assets/golden-units-data";
-import { heroicUnits } from "@/assets/heroic-units-data";
-import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
 import { ownedUnits } from "@/lib/utils";
 import {
   TableHeader,
@@ -12,17 +9,23 @@ import {
 import { weapons } from "@/assets/weapons";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
-import { Survey } from "@/lib/get-data";
+import { Survey, UnitAssetsGroup } from "@/lib/get-data";
 import Image from "next/image";
 import List from "@/feature/unit-builder/unit-list";
 
-const ProfileData = ({ profile }: { profile: Survey }) => {
+interface ProfileDataProps {
+  profile: Survey;
+  unitsAssets: UnitAssetsGroup;
+}
+
+const ProfileData = ({ profile, unitsAssets }: ProfileDataProps) => {
+  const { goldenEra, heroicEra, blueEra, greenEra, greyEra } = unitsAssets;
   const t = useTranslations("MyProfile");
-  const golden = ownedUnits(goldenUnits, profile.units.golden);
-  const heroic = ownedUnits(heroicUnits, profile.units.heroic);
-  const blue = ownedUnits(blueUnits, profile.units.low);
-  const green = ownedUnits(greenUnits, profile.units.low);
-  const grey = ownedUnits(greyUnits, profile.units.low);
+  const golden = ownedUnits(goldenEra, profile.units.golden);
+  const heroic = ownedUnits(heroicEra, profile.units.heroic);
+  const blue = ownedUnits(blueEra, profile.units.low);
+  const green = ownedUnits(greenEra, profile.units.low);
+  const grey = ownedUnits(greyEra, profile.units.low);
   const weapons_list = weapons.map((weapon) => {
     const matchingWeapon = profile.weapons.find(
       (w, index) => index + 1 === weapon.id

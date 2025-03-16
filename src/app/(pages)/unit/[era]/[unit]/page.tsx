@@ -5,11 +5,15 @@ import Content from "./content";
 import { getUnit } from "@/lib/utils";
 import { Unit } from "@/lib/type";
 import { useQuery } from "@tanstack/react-query";
-import { getUnitWiki } from "@/lib/get-data";
+import { getUnitPosts, getUnitWiki, UnitAssetsGroup } from "@/lib/get-data";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 
-const Page = () => {
+interface PageProps {
+  unitsAssets?: UnitAssetsGroup;
+}
+
+const Page = ({ unitsAssets }: PageProps) => {
   const params = useParams();
   const unit = params.unit.toString();
   const era = params.era.toString() as
@@ -18,19 +22,25 @@ const Page = () => {
     | "green"
     | "blue"
     | "grey";
-  const found_unit: Unit | null = getUnit(unit, era) ?? null;
+  const found_unit: Unit | null = getUnit(unit, era, unitsAssets) ?? null;
   const { data, isLoading } = useQuery({
     queryKey: ["unit", found_unit?.name],
     queryFn: () => getUnitWiki(found_unit?.name ?? "", "accepted"),
     enabled: !!found_unit,
   });
-
+  const { data: posts, isLoading: loadingPosts } = useQuery({
+    queryKey: ["unitPosts", found_unit?.name],
+    queryFn: () => getUnitPosts(found_unit?.name.toLocaleLowerCase() ?? ""),
+    enabled: !!found_unit,
+  });
   if (isLoading) return <LoadingComponent />;
   if (!found_unit) return <NoData />;
   return (
     <Content
       entry={data?.[data.length - 1] ?? undefined}
       shortEntry={found_unit}
+      posts={posts}
+      postsLoading={loadingPosts}
     />
   );
 };

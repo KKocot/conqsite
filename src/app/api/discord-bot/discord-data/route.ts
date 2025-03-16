@@ -7,7 +7,7 @@ export async function GET(request: Request) {
   const member_id = searchParams.get("member_id");
   const tw_server = searchParams.get("tw_server");
 
-  const url = `http://bot.host2play.com:2005/api/server_verification?guild_id=${guild_id}&member_id=${member_id}&tw_server=${tw_server}`;
+  const url = `${process.env.BOT_ORIGIN}/api/server_verification?guild_id=${guild_id}&member_id=${member_id}&tw_server=${tw_server}`;
   try {
     const response = await fetch(url, {
       cache: "no-store",

@@ -19,11 +19,11 @@ export interface Unit {
   icon: string;
   id: number;
   leadership: number;
-  masteryPoints: boolean;
   name: string;
   src: string;
   value: number;
   pref?: string;
+  reduceCost?: boolean;
 }
 export interface SheetTypes {
   username: string;

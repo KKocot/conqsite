@@ -7,22 +7,19 @@ import { headers } from "next/headers";
 import HouseSettings from "@/models/houseSettings";
 import putHouseSettingsSchema from "./shema";
 import Roles from "@/models/roles";
-import { botAllowed, highestRolesAllowed } from "@/lib/endpoints-protections";
+import { highestRolesAllowed } from "@/lib/endpoints-protections";
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
   const { searchParams } = new URL(request.url);
   const name = searchParams.get("name");
-  const discordKey = headers().get("discord-key");
-  const envKey = process.env.BOT_KEY;
 
   try {
     await connectMongoDB();
     const roles = await Roles.find({ house: name });
 
     const highestRolesAccess = highestRolesAllowed(roles, session, name);
-    if (!(highestRolesAccess || (discordKey && botAllowed(discordKey, envKey))))
-      return new Response("401");
+    if (!highestRolesAccess) return new Response("401");
 
     const data = putHouseSettingsSchema.parse(await request.json());
     const houseSettingsExists = await HouseSettings.findOne({
@@ -64,8 +61,7 @@ export async function GET(request: Request) {
     const envKey = process.env.BOT_KEY;
     const highestRolesAccess = highestRolesAllowed(roles, session, name);
 
-    if (!(highestRolesAccess || (discordKey && botAllowed(discordKey, envKey))))
-      return new Response("401");
+    if (!highestRolesAccess) return new Response("401");
 
     let houseSettings;
     if (id) {

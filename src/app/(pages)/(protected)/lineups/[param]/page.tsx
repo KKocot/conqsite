@@ -1,6 +1,6 @@
 "use client";
 
-import { getPublicLineupDates } from "@/lib/get-data";
+import { getPublicLineupDates, getUnitsAssets } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import Content from "./content";
@@ -8,9 +8,6 @@ import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { goldenUnits } from "@/assets/golden-units-data";
-import { heroicUnits } from "@/assets/heroic-units-data";
-import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
 import {
   Sheet,
   SheetClose,
@@ -19,7 +16,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { others } from "@/assets/other-units-data";
 import { useTranslations } from "next-intl";
 
 const Page = () => {
@@ -31,21 +27,28 @@ const Page = () => {
     queryFn: () => getPublicLineupDates(house),
     enabled: !!house,
   });
+  const { data: unitsAssets, isLoading: unitsAssetsLoading } = useQuery({
+    queryKey: ["unitsAssets"],
+    queryFn: () => getUnitsAssets(),
+    enabled: true,
+  });
   const [date, setDate] = useState<string>("");
 
   const latestDate = data ? data[0] : "";
   useEffect(() => {
     if (latestDate) setDate(latestDate);
   }, [latestDate]);
-  if (isLoading) return <LoadingComponent />;
-  if (!data || !date) return <NoData />;
+  if (isLoading || unitsAssetsLoading) return <LoadingComponent />;
+  if (!data || !date || !unitsAssets) return <NoData />;
+  const { goldenEra, heroicEra, blueEra, greenEra, greyEra, otherEra } =
+    unitsAssets;
   const units = [
-    ...goldenUnits,
-    ...heroicUnits,
-    ...blueUnits,
-    ...greenUnits,
-    ...greyUnits,
-    ...others,
+    ...goldenEra,
+    ...heroicEra,
+    ...blueEra,
+    ...greenEra,
+    ...greyEra,
+    ...otherEra,
   ];
 
   return (

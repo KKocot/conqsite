@@ -2,8 +2,8 @@ import { ArtilleryProps, SheetTypes, Unit, WeaponsTypes } from "@/lib/type";
 import { Autocompleter } from "./autocompleter";
 import { Textarea } from "../../components/ui/textarea";
 import { useEffect, useMemo, useState } from "react";
-import { useArtyAmount } from "@/lib/utils";
-import { PackageOpen } from "lucide-react";
+import { countLeadership, useArtyAmount } from "@/lib/utils";
+import { ChevronLeft, ChevronRight, PackageOpen } from "lucide-react";
 import clsx from "clsx";
 import { Button } from "../../components/ui/button";
 import { artillery } from "@/assets/artillery";
@@ -60,6 +60,8 @@ const Item = ({
   data,
   usedUsers,
   onEdit,
+  moveUp,
+  moveDown,
 }: {
   units: Unit[];
   users: Survey[];
@@ -78,6 +80,8 @@ const Item = ({
     color: string,
     altillery: ArtilleryProps[]
   ) => void;
+  moveUp: (index: number) => void;
+  moveDown: (index: number) => void;
 }) => {
   const t = useTranslations("BuildTeam.card");
   const users_list = users
@@ -86,22 +90,6 @@ const Item = ({
   const [user, setUser] = useState<Survey | undefined>();
   const user_artillery = useArtyAmount(user?.artyAmount);
 
-  const leadership = useMemo(() => {
-    const unit1_leadership = units.find(
-      (unit) => unit.name === data.unit1
-    )?.leadership;
-    const unit2_leadership = units.find(
-      (unit) => unit.name === data.unit2
-    )?.leadership;
-    const unit3_leadership = units.find(
-      (unit) => unit.name === data.unit3
-    )?.leadership;
-    return (
-      (unit1_leadership ? unit1_leadership : 0) +
-      (unit2_leadership ? unit2_leadership : 0) +
-      (unit3_leadership ? unit3_leadership : 0)
-    );
-  }, [data.unit1, data.unit2, data.unit3, units]);
   useEffect(() => {
     setUser(findUserByNick(users, data.username));
   }, [data.username, users]);
@@ -121,7 +109,11 @@ const Item = ({
 
     return filteredUnits?.map((unit: Unit) => {
       const userUnit = userUnitsFiltered?.find((u) => u.id === unit.id);
-      return { pref: userUnit?.value, ...unit };
+      return {
+        pref: userUnit?.value,
+        reduceCost: userUnit?.reduceCost ?? false,
+        ...unit,
+      };
     });
   }
 
@@ -135,6 +127,12 @@ const Item = ({
     ...low_units_user,
     ...other_units_user,
   ];
+  const leadership = useMemo(() => {
+    const unit1_leadership = countLeadership(units_user, data.unit1);
+    const unit2_leadership = countLeadership(units_user, data.unit2);
+    const unit3_leadership = countLeadership(units_user, data.unit3);
+    return unit1_leadership + unit2_leadership + unit3_leadership;
+  }, [data.unit1, data.unit2, data.unit3, JSON.stringify(units_user)]);
   return (
     <li
       className={clsx(
@@ -385,6 +383,26 @@ const Item = ({
           )
         }
       />
+      <div className="flex justify-between gap-1 items-center">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8"
+          onClick={() => moveUp(index)}
+          disabled={index === 0}
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
+        <p>{index + 1}</p>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8"
+          onClick={() => moveDown(index)}
+        >
+          <ChevronRight className="h-4 w-4" />
+        </Button>
+      </div>
     </li>
   );
 };

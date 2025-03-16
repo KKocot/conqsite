@@ -8,16 +8,7 @@ import {
 } from "../../components/ui/form";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
-
-type FormColData = {
-  id: number;
-  name: string;
-  src: string;
-  leadership: number;
-  masteryPoints: boolean;
-  value: number;
-  era: string;
-};
+import { Unit } from "@/lib/type";
 
 const Component = ({
   unitValue,
@@ -63,16 +54,11 @@ const Component = ({
   );
 };
 const RadioComponent: FC<{
-  unitData: FormColData;
+  unitData: Unit;
   controller: any;
-}> = ({ unitData, controller }) => {
+  era: "golden" | "heroic" | "low";
+}> = ({ unitData, controller, era }) => {
   const t = useTranslations("AddForm");
-  const era =
-    unitData.era === "golden"
-      ? "golden"
-      : unitData.era === "heroic"
-      ? "heroic"
-      : "low";
 
   return (
     <div>

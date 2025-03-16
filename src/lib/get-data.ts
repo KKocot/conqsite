@@ -79,9 +79,9 @@ export interface Survey {
   artyAmount: "none" | "some" | "average" | "aLot";
   weapons: { value: boolean; leadership: number; pref?: number }[];
   units: {
-    low: { id: number; value: string }[];
-    heroic: { id: number; value: string }[];
-    golden: { id: number; value: string }[];
+    low: { id: number; value: string; reduceCost?: boolean }[];
+    heroic: { id: number; value: string; reduceCost?: boolean }[];
+    golden: { id: number; value: string; reduceCost?: boolean }[];
   };
 }
 
@@ -122,17 +122,18 @@ export interface LineupData {
 }
 export const getNextTWLineups = async (
   house: string,
-  nextTW: string
+  twDate: string
 ): Promise<LineupData> => {
-  const response = await fetch(`/api/attendance?house=${house}&date=${nextTW}`);
+  const response = await fetch(`/api/event?house=${house}&date=${twDate}`);
   const result = await response.json();
-  return result.attendance[0];
+  return result;
 };
 
 export interface Template {
   _id?: string;
   house: string;
   templateName: string;
+  commander?: string;
   sheet: SheetTypes[];
 }
 
@@ -148,6 +149,7 @@ export interface PublicLineup {
   house: string;
   name: string;
   date: string;
+  commander?: string;
   sheet: SheetTypes[];
 }
 export const getPublicLineup = async (
@@ -275,7 +277,7 @@ export interface UnitData {
 }
 
 export const getUnitPosts = async (unit: string): Promise<UnitData[]> => {
-  const response = await fetch(`/api/unitPost?unit=${unit}`);
+  const response = await fetch(`/api/units/posts?unit=${unit}`);
   const result = await response.json();
   return result;
 };
@@ -285,6 +287,7 @@ export interface HouseAssets {
   premium: boolean;
   sharedList: boolean;
   signupBot: string;
+  messages?: boolean;
 }
 
 export const getHouseAssets = async (house: string): Promise<HouseAssets> => {
@@ -480,6 +483,31 @@ export const getHistoryPostsByUser = async (
 
 export const getSurveysAdmin = async (): Promise<FilledSurveys> => {
   const response = await fetch(`/api/admin/surveys`);
+  const result = await response.json();
+  return result;
+};
+
+export interface UnitAsset {
+  era: string;
+  icon: string;
+  id: number;
+  leadership: number;
+  name: string;
+  src: string;
+  value: number;
+}
+
+export interface UnitAssetsGroup {
+  goldenEra: UnitAsset[];
+  heroicEra: UnitAsset[];
+  blueEra: UnitAsset[];
+  greenEra: UnitAsset[];
+  greyEra: UnitAsset[];
+  otherEra: UnitAsset[];
+}
+
+export const getUnitsAssets = async (): Promise<UnitAssetsGroup> => {
+  const response = await fetch(`/api/assets/units`);
   const result = await response.json();
   return result;
 };

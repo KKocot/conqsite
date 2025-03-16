@@ -11,7 +11,7 @@ export async function GET(request: Request) {
   const tw_server = searchParams.get("tw_server");
   const tw_member = searchParams.get("tw_member");
 
-  const url = `http://bot.host2play.com:2005/api/server_verification?guild_id=${guild_id}&member_id=${member_id}&member=${member}&logs=${logs}&attendance=${attendance}&tw_server=${tw_server}&tw_member=${tw_member}`;
+  const url = `${process.env.BOT_ORIGIN}/api/server_verification?guild_id=${guild_id}&member_id=${member_id}&member=${member}&logs=${logs}&attendance=${attendance}&tw_server=${tw_server}&tw_member=${tw_member}`;
 
   try {
     const response = await fetch(url);

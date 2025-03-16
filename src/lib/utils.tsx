@@ -2,10 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Unit } from "./type";
 import { useTranslations } from "next-intl";
-import { Survey } from "./get-data";
-import { goldenUnits } from "@/assets/golden-units-data";
-import { heroicUnits } from "@/assets/heroic-units-data";
-import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
+import { Survey, UnitAssetsGroup } from "./get-data";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -67,13 +64,13 @@ export function useArtyAmount(
 
 export function ownedUnits(
   units: Unit[],
-  profile_units: { id: number; value: string }[]
+  profile_units: { id: number; value: string; reduceCost?: boolean }[]
 ) {
-  const mergedGoldenUnits = units.map((unit) => {
-    const matchingGolden = profile_units.find((g) => g.id === unit.id);
-    return { ...unit, matchingGolden };
+  const mergedUnits = units.map((unit) => {
+    const matchingUnit = profile_units.find((g) => g.id === unit.id);
+    return { ...unit, matchingUnit };
   });
-  return mergedGoldenUnits;
+  return mergedUnits;
 }
 
 export function getLineup(surveys: Survey[] | undefined, lineup: string[]) {
@@ -103,28 +100,31 @@ export function getUniqueValues(arr: string[]): string[] {
 
 export function getUnit(
   unitName: string,
-  era: "golden" | "heroic" | "green" | "blue" | "grey"
+  era: "golden" | "heroic" | "green" | "blue" | "grey",
+  unitsAssets?: UnitAssetsGroup
 ) {
+  if (!unitsAssets) return null;
+  const { goldenEra, heroicEra, greenEra, blueEra, greyEra } = unitsAssets;
   const cleanUnitName = unitName?.replace(/_/g, " ");
   switch (era) {
     case "golden":
-      return goldenUnits.find(
+      return goldenEra.find(
         (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
       );
     case "heroic":
-      return heroicUnits.find(
+      return heroicEra.find(
         (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
       );
     case "green":
-      return greenUnits.find(
+      return greenEra.find(
         (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
       );
     case "blue":
-      return blueUnits.find(
+      return blueEra.find(
         (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
       );
     case "grey":
-      return greyUnits.find(
+      return greyEra.find(
         (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
       );
     default:
@@ -198,4 +198,12 @@ export const pokeBotEvent = async (
   } catch (error) {
     console.error("Failed to poke bot event", error);
   }
+};
+
+export const countLeadership = (units: Unit[], unit: string): number => {
+  const matchedUnit = units.find((e) => e.name === unit);
+  if (!matchedUnit) return 0;
+
+  const discount = matchedUnit.reduceCost ? 0.84 : 1; // 16% discount means multiply by 0.84
+  return matchedUnit.leadership * discount;
 };

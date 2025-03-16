@@ -2,6 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const TemplateSchema = new Schema({
   templateName: { type: String, required: true },
+  commander: { type: String, required: false },
   house: { type: String, required: true },
   sheet: [
     {

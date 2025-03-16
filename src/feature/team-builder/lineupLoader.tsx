@@ -41,9 +41,9 @@ const LineupLoader = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="icon" className="rounded-full">
+        <div className="rounded-full flex items-center justify-center p-3 cursor-pointer hover:bg-accent hover:text-background">
           <Bot className="h-5 w-5" />
-        </Button>
+        </div>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -71,21 +71,31 @@ const LineupLoader = ({
         {data ? (
           <div className="flex flex-col gap-4">
             <h1 className="text-xl font-bold text-center">{`Attendance loaded from ${data.date}`}</h1>
-            <h1 className="text-lg text-center">{t("pick_lineup")}</h1>
-            <div className="flex flex-col gap-4">
-              {data.lineup.map((e) => (
-                <Button
-                  key={e.name}
-                  onClick={() =>
-                    setUserList(
-                      surveysData.filter((s) => e.signup.includes(s.discordId))
-                    )
-                  }
-                >
-                  {e.name}
-                </Button>
-              ))}
-            </div>
+            {data.lineup.length > 0 ? (
+              <>
+                <h1 className="text-lg text-center">{t("pick_lineup")}</h1>
+                <div className="flex flex-col gap-4">
+                  {data.lineup.map((e) => (
+                    <Button
+                      key={e.name}
+                      onClick={() =>
+                        setUserList(
+                          surveysData.filter((s) =>
+                            e.signup.includes(s.discordId)
+                          )
+                        )
+                      }
+                    >
+                      {e.name}
+                    </Button>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <h1 className="text-lg text-center">
+                Nothing to load to that date
+              </h1>
+            )}
           </div>
         ) : null}
         <Button onClick={() => setUserList(surveysData)}>

@@ -6,10 +6,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { putTemplateSchema } from "./schema";
 import Roles from "@/models/roles";
-import {
-  highCommandAllowed,
-  highestRolesAllowed,
-} from "@/lib/endpoints-protections";
+import { highCommandAllowed } from "@/lib/endpoints-protections";
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);

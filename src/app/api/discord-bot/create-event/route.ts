@@ -5,7 +5,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const eventId = searchParams.get("eventId");
   const action = searchParams.get("action") as "create" | "edit" | "delete";
-  const url = `http://bot.host2play.com:2005/api/create_event?eventId=${eventId}&action=${action}`;
+  const url = `${process.env.BOT_ORIGIN}/api/create_event?eventId=${eventId}&action=${action}`;
   try {
     const response = await fetch(url, {
       cache: "no-store",
