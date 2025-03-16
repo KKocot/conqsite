@@ -80,9 +80,8 @@ const AssetsDialog = ({ assets, house }: Props) => {
                 </Label>
               </div>
             </div>
-            <div className="space-y-4">
+            {/* <div className="space-y-4">
               <h2 className="font-bold">Pings</h2>
-              {/* Not in use yet TODO */}
               <div>
                 <Button variant="tab" onClick={onSurveysPing}>
                   Empty surveys
@@ -91,7 +90,7 @@ const AssetsDialog = ({ assets, house }: Props) => {
                   Missing attendance
                 </Button>
               </div>
-            </div>
+            </div> */}
           </DialogContent>
         </Dialog>
         <TooltipContent>Bot messages</TooltipContent>
