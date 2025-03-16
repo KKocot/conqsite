@@ -3,18 +3,12 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import UnitWiki from "@/models/unit-wiki";
 import { ZodError } from "zod";
-import { goldenUnits } from "@/assets/golden-units-data";
-import { heroicUnits } from "@/assets/heroic-units-data";
-import { blueUnits, greenUnits } from "@/assets/low-units-data";
 import veterancySchema from "./schema";
 
 export async function POST(request: Request) {
   try {
     await connectMongoDB();
     const data = veterancySchema.parse(await request.json());
-    const assetsData = [...goldenUnits, ...heroicUnits, ...blueUnits].find(
-      (unit) => unit.name === data.name
-    );
     let wikiData;
     const dataExists = await UnitWiki.find({
       name: data.name,
@@ -29,14 +23,7 @@ export async function POST(request: Request) {
         }
       );
     } else {
-      wikiData = await UnitWiki.create({
-        ...data,
-        image: assetsData?.src,
-        era: assetsData?.era,
-        icon: assetsData?.icon,
-        masteryPoints: assetsData?.masteryPoints,
-        status: "accepted",
-      });
+      return NextResponse.json({ message: "Unit not found" }, { status: 404 });
     }
     return NextResponse.json(wikiData, { status: 201 });
   } catch (error) {

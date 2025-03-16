@@ -12,7 +12,6 @@ interface Unit {
   icon: string;
   id: number;
   leadership: number;
-  masteryPoints: boolean;
   name: string;
   src: string;
   value: number;

@@ -10,15 +10,17 @@ import ProfileData from "./profile-data";
 import { ReactNode } from "react";
 import { Avatar } from "@radix-ui/react-avatar";
 import { AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Survey } from "@/lib/get-data";
+import { Survey, UnitAssetsGroup } from "@/lib/get-data";
 import Image from "next/image";
 
 export function UserProfile({
   player,
   children,
+  unitsAssets,
 }: {
   player: Survey;
   children: ReactNode;
+  unitsAssets: UnitAssetsGroup;
 }) {
   return (
     <Dialog>
@@ -56,7 +58,7 @@ export function UserProfile({
             player.updates[player.updates.length - 1]
           }`}</div>
         ) : null}
-        <ProfileData profile={player} />
+        <ProfileData profile={player} unitsAssets={unitsAssets} />
       </DialogContent>
     </Dialog>
   );

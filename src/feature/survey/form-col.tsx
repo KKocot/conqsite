@@ -6,17 +6,7 @@ import { useTranslations } from "next-intl";
 import { FormControl, FormField, FormItem } from "@/components/ui/form";
 import { CustomSwitch } from "@/components/ui/customSwitch";
 import { ShieldCheck, ShieldX } from "lucide-react";
-
-type FormColData = {
-  id: number;
-  name: string;
-  src: string;
-  leadership: number;
-  masteryPoints: boolean;
-  value: number;
-  era: string;
-  icon: string;
-};
+import { Unit } from "@/lib/type";
 
 const FormCol = ({
   era,
@@ -26,7 +16,7 @@ const FormCol = ({
   step,
 }: {
   era: "golden" | "heroic" | "low";
-  data: FormColData[];
+  data: Unit[];
   controller: any;
   moveToStep: (step: number) => void;
   step: number;

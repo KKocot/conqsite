@@ -1,56 +1,25 @@
 import { useState } from "react";
 import StepGeneral from "./step-general";
-import { lowUnits } from "@/assets/low-units-data";
 import { weapons } from "@/assets/weapons";
-import { heroicUnits } from "@/assets/heroic-units-data";
-import { goldenUnits } from "@/assets/golden-units-data";
 import { useForm } from "react-hook-form";
 import { Form } from "../../components/ui/form";
 import FormCol from "./form-col";
 import { useTranslations } from "next-intl";
-import { getSurvey, Survey } from "@/lib/get-data";
+import { getSurvey, Survey, UnitAssetsGroup } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import useSubmitSurveyMutation from "../../components/hooks/use-survey-mutation";
 import LoadingComponent from "../ifs/loading";
 import { createNewUnits, createNewWeapons } from "@/lib/utils";
 import Steper from "@/components/steper";
 
-export const DEFAULT_FORM_DATA: Survey = {
-  discordNick: "",
-  inGameNick: "",
-  discordId: "",
-  characterLevel: "",
-  avatar: "",
-  house: [],
-  artyAmount: "none",
-  updates: [],
-  weapons: weapons.map(() => ({ value: false, leadership: 0, pref: 0 })),
-  units: {
-    low: lowUnits.map((unit) => ({
-      id: unit.id,
-      value: "0",
-      pref: "0",
-      reduceCost: false,
-    })),
-    heroic: heroicUnits.map((unit) => ({
-      id: unit.id,
-      value: "0",
-      reduceCost: false,
-    })),
-    golden: goldenUnits.map((unit) => ({
-      id: unit.id,
-      value: "0",
-      reduceCost: false,
-    })),
-  },
-};
-
 export default function WizardForm({
   user_id,
   avatar,
+  unitsAssets,
 }: {
   user_id: string;
   avatar?: string;
+  unitsAssets: UnitAssetsGroup;
 }) {
   const t = useTranslations("AddForm");
   const [step, setStep] = useState(1);
@@ -59,12 +28,42 @@ export default function WizardForm({
     queryFn: () => getSurvey(user_id),
     enabled: !!user_id,
   });
-
+  const { goldenEra, heroicEra, blueEra, greenEra, greyEra } = unitsAssets;
+  const lowEras = [...greyEra, ...greenEra, ...blueEra];
+  const DEFAULT_FORM_DATA: Survey = {
+    discordNick: "",
+    inGameNick: "",
+    discordId: "",
+    characterLevel: "",
+    avatar: "",
+    house: [],
+    artyAmount: "none",
+    updates: [],
+    weapons: weapons.map(() => ({ value: false, leadership: 0, pref: 0 })),
+    units: {
+      low: lowEras.map((unit) => ({
+        id: unit.id,
+        value: "0",
+        pref: "0",
+        reduceCost: false,
+      })),
+      heroic: heroicEra.map((unit) => ({
+        id: unit.id,
+        value: "0",
+        reduceCost: false,
+      })),
+      golden: goldenEra.map((unit) => ({
+        id: unit.id,
+        value: "0",
+        reduceCost: false,
+      })),
+    },
+  };
   const unitForm = profileData ?? DEFAULT_FORM_DATA;
 
-  const low_units_diff = lowUnits.length - unitForm.units.low.length;
-  const heroic_units_diff = heroicUnits.length - unitForm.units.heroic.length;
-  const golden_units_diff = goldenUnits.length - unitForm.units.golden.length;
+  const low_units_diff = lowEras.length - unitForm.units.low.length;
+  const heroic_units_diff = heroicEra.length - unitForm.units.heroic.length;
+  const golden_units_diff = goldenEra.length - unitForm.units.golden.length;
   const no_new_units = 0;
   const weapons_diff = weapons.length - unitForm.weapons.length;
   const no_new_weapons = 0;
@@ -135,7 +134,7 @@ export default function WizardForm({
         {step === 1 ? (
           <FormCol
             era="low"
-            data={lowUnits}
+            data={lowEras}
             controller={form.control}
             moveToStep={setStep}
             step={step}
@@ -143,7 +142,7 @@ export default function WizardForm({
         ) : step === 2 ? (
           <FormCol
             era="heroic"
-            data={heroicUnits}
+            data={heroicEra}
             controller={form.control}
             moveToStep={setStep}
             step={step}
@@ -151,7 +150,7 @@ export default function WizardForm({
         ) : step === 3 ? (
           <FormCol
             era="golden"
-            data={goldenUnits}
+            data={goldenEra}
             controller={form.control}
             moveToStep={setStep}
             step={step}

@@ -1342,6 +1342,34 @@ export const epicDoctrines: Doctrine[] = [
     stats:
       "[Triple Shooting] Their bullets can penetrate two enemies with each enemy taking 75% damage. Their shot can also knock back the enemy units",
   },
+  {
+    name: "Hwarang: Windwalker",
+    img: "/logo.png",
+    forUnit: ["Hwarang"],
+    dedicated: "unit",
+    stats: "Reduce [Windstep]'s cooldown by 5 seconds.",
+  },
+  {
+    name: "Hwarang: Fallen Petals",
+    img: "/logo.png",
+    forUnit: ["Hwarang"],
+    dedicated: "unit",
+    stats: "Each enemy killed will replenish ammo for Hwarang.",
+  },
+  {
+    name: "Tiger Fists: Swift Stance",
+    img: "/logo.png",
+    forUnit: ["Tiger Fists"],
+    dedicated: "unit",
+    stats: "Reduces [Mighty Slap]'s cooldown by 5 seconds.",
+  },
+  {
+    name: "Tiger Fists: Dread Roar",
+    img: "/logo.png",
+    forUnit: ["Tiger Fists"],
+    dedicated: "unit",
+    stats: "[Tiger's Fury] reduces enemy unit's damage by 15% for 5 seconds.",
+  },
 ];
 export const rareDoctrines: Doctrine[] = [
   {
@@ -1832,6 +1860,27 @@ export const rareDoctrines: Doctrine[] = [
     forUnit: ["Reitar Pistoleers"],
     dedicated: "unit",
     stats: "Increase the damage of [Roar of Powder] by 15%",
+  },
+  {
+    name: "Hwarang: Plucked Blossoms",
+    img: "/logo.png",
+    forUnit: ["Hwarang"],
+    dedicated: "unit",
+    stats: "Reduces [Flying Perals]'s cooldown by 2 seconds.",
+  },
+  {
+    name: "Silla Guards: Royal Escort",
+    img: "/logo.png",
+    forUnit: ["Silla Guards"],
+    dedicated: "unit",
+    stats: "Reduces [Spear Slam]'s cooldown by 5 seconds.",
+  },
+  {
+    name: "Silla Guards: [Shield Throw] stuns target units for 3 seconds upon hit.",
+    img: "/logo.png",
+    forUnit: ["Silla Guards"],
+    dedicated: "unit",
+    stats: "Reduces [Spear Slam]'s cooldown by 5 seconds.",
   },
 ];
 export const uncommonDoctrines: Doctrine[] = [

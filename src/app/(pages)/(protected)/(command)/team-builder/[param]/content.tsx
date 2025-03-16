@@ -2,17 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import { ArtilleryProps, SheetTypes } from "@/lib/type";
-import React, { ReactNode, useMemo, useState } from "react";
+import React, { FC, ReactNode, useMemo, useState } from "react";
 import clsx from "clsx";
 import { weapons } from "@/assets/weapons";
 import Item from "@/feature/team-builder/sheet-form-item";
-import { goldenUnits } from "@/assets/golden-units-data";
-import { heroicUnits } from "@/assets/heroic-units-data";
-import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
-import { others } from "@/assets/other-units-data";
 import { Rows4, ScanEye, Table, TableIcon } from "lucide-react";
 import UsersList from "@/feature/team-builder/users-list";
-import { HouseAssets, Survey } from "@/lib/get-data";
+import { HouseAssets, Survey, UnitAssetsGroup } from "@/lib/get-data";
 import { DEFAULT_CARD } from "@/lib/defaults";
 import Filters from "@/feature/team-builder/filters";
 import Templates from "@/feature/team-builder/templates";
@@ -31,17 +27,21 @@ import Loading from "react-loading";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-interface PageProps {
+interface ContentProps {
   surveysData: Survey[];
   assets?: HouseAssets;
   publicLineups: { dates?: string[]; loading: boolean };
+  unitsAssets: UnitAssetsGroup;
 }
 
-const Content: React.FC<PageProps> = ({
+const Content = ({
   surveysData,
   assets,
   publicLineups,
-}) => {
+  unitsAssets,
+}: ContentProps) => {
+  const { goldenEra, heroicEra, blueEra, greenEra, greyEra, otherEra } =
+    unitsAssets;
   const { param }: { param: string } = useParams();
   const house = param.replaceAll("%20", " ");
   const [showPreview, setShowPreview] = useState(false);
@@ -61,12 +61,12 @@ const Content: React.FC<PageProps> = ({
     meta_units_only: true,
   });
   const units = useMemo(() => {
-    const golden_era = filterUnits.golden_checked ? goldenUnits : [];
-    const heroic_era = filterUnits.heroic_checked ? heroicUnits : [];
-    const silver_era = filterUnits.silver_checked ? blueUnits : [];
-    const chivalric_era = filterUnits.chivalric_checked ? greenUnits : [];
-    const rustic_era = filterUnits.rustic_checked ? greyUnits : [];
-    const others_unit = filterUnits.other_checked ? others : [];
+    const golden_era = filterUnits.golden_checked ? goldenEra : [];
+    const heroic_era = filterUnits.heroic_checked ? heroicEra : [];
+    const silver_era = filterUnits.silver_checked ? blueEra : [];
+    const chivalric_era = filterUnits.chivalric_checked ? greenEra : [];
+    const rustic_era = filterUnits.rustic_checked ? greyEra : [];
+    const others_unit = filterUnits.other_checked ? otherEra : [];
     return [
       ...golden_era,
       ...heroic_era,
@@ -138,7 +138,11 @@ const Content: React.FC<PageProps> = ({
   return (
     <div className="flex justify-center flex-col items-center overflow-x-hidden">
       <div className={clsx("flex flex-col gap-5 p-2", { hidden: showPreview })}>
-        <UsersList usedPlayers={usedUsersList} allPlayers={userList} />
+        <UsersList
+          usedPlayers={usedUsersList}
+          allPlayers={userList}
+          unitsAssets={unitsAssets}
+        />
         <div className="w-full flex justify-center">
           <div className="flex flex-col gap-2 items-center w-fit">
             <Label htmlFor="commander">Lineup Commander</Label>

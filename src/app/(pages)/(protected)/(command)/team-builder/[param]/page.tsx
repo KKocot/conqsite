@@ -8,11 +8,16 @@ import {
   getHouseAssets,
   getPublicLineupDates,
   getSurveys,
+  UnitAssetsGroup,
 } from "@/lib/get-data";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 
-const Page: React.FC = () => {
+interface PageProps {
+  unitsAssets: UnitAssetsGroup | undefined;
+}
+
+const Page = ({ unitsAssets }: PageProps) => {
   const { param }: { param: string } = useParams();
   const house = param.replaceAll("%20", " ");
 
@@ -32,15 +37,17 @@ const Page: React.FC = () => {
       queryFn: () => getPublicLineupDates(house),
       enabled: !!house,
     });
+
   useEffect(() => {
     fetch(`/api/discord-bot/uploadAttendance?house=${house}`);
   }, [house]);
   if (isLoading) return <LoadingComponent />;
-  if (!data) return <NoData />;
+  if (!data || !unitsAssets) return <NoData />;
 
   return (
     <div className="w-full">
       <Content
+        unitsAssets={unitsAssets}
         surveysData={data}
         assets={assets}
         publicLineups={{

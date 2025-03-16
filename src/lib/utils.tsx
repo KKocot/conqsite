@@ -2,10 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Unit } from "./type";
 import { useTranslations } from "next-intl";
-import { Survey } from "./get-data";
-import { goldenUnits } from "@/assets/golden-units-data";
-import { heroicUnits } from "@/assets/heroic-units-data";
-import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
+import { Survey, UnitAssetsGroup } from "./get-data";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -103,28 +100,31 @@ export function getUniqueValues(arr: string[]): string[] {
 
 export function getUnit(
   unitName: string,
-  era: "golden" | "heroic" | "green" | "blue" | "grey"
+  era: "golden" | "heroic" | "green" | "blue" | "grey",
+  unitsAssets?: UnitAssetsGroup
 ) {
+  if (!unitsAssets) return null;
+  const { goldenEra, heroicEra, greenEra, blueEra, greyEra } = unitsAssets;
   const cleanUnitName = unitName?.replace(/_/g, " ");
   switch (era) {
     case "golden":
-      return goldenUnits.find(
+      return goldenEra.find(
         (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
       );
     case "heroic":
-      return heroicUnits.find(
+      return heroicEra.find(
         (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
       );
     case "green":
-      return greenUnits.find(
+      return greenEra.find(
         (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
       );
     case "blue":
-      return blueUnits.find(
+      return blueEra.find(
         (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
       );
     case "grey":
-      return greyUnits.find(
+      return greyEra.find(
         (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
       );
     default:

@@ -259,7 +259,7 @@ const Content = ({
                   </FormItem>
                 )}
               />
-              <div className="w-[750px] h-64 overflow-y-scroll">
+              {/* <div className="w-[750px] h-64 overflow-y-scroll">
                 <div className="w-full bg-background p-2 flex justify-between">
                   <h2>Community build</h2>
                   <Link href={`${unit.name}/builder`}>
@@ -286,7 +286,7 @@ const Content = ({
                 ) : (
                   <NoData />
                 )}
-              </div>
+              </div> */}
             </div>
 
             <div className="flex justify-center flex-col py-4">

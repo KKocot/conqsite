@@ -1,8 +1,5 @@
 "use client";
 
-import { blueUnits, greenUnits, greyUnits } from "@/assets/low-units-data";
-import { heroicUnits } from "@/assets/heroic-units-data";
-import { goldenUnits } from "@/assets/golden-units-data";
 import {
   TableHeader,
   TableRow,
@@ -23,7 +20,12 @@ import Image from "next/image";
 import List from "@/feature/unit-builder/unit-list";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
-export default function Content() {
+import { UnitAssetsGroup } from "@/lib/get-data";
+
+interface ContentProps {
+  unitsAssets: UnitAssetsGroup | undefined;
+}
+export default function Content({ unitsAssets }: ContentProps) {
   const { data: user_data } = useSession();
   const t = useTranslations("MyProfile");
 
@@ -33,14 +35,14 @@ export default function Content() {
   });
 
   if (profileIsLoading) return <LoadingComponent />;
+  if (!profileData || !unitsAssets) return <NoData />;
+  const { goldenEra, heroicEra, blueEra, greenEra, greyEra } = unitsAssets;
 
-  if (!profileData) return <NoData />;
-
-  const golden = ownedUnits(goldenUnits, profileData.units.golden);
-  const heroic = ownedUnits(heroicUnits, profileData.units.heroic);
-  const blue = ownedUnits(blueUnits, profileData.units.low);
-  const green = ownedUnits(greenUnits, profileData.units.low);
-  const grey = ownedUnits(greyUnits, profileData.units.low);
+  const golden = ownedUnits(goldenEra, profileData.units.golden);
+  const heroic = ownedUnits(heroicEra, profileData.units.heroic);
+  const blue = ownedUnits(blueEra, profileData.units.low);
+  const green = ownedUnits(greenEra, profileData.units.low);
+  const grey = ownedUnits(greyEra, profileData.units.low);
   const weapons_list = weapons.map((weapon) => {
     const matchingWeapon = profileData.weapons.find(
       (w, index) => index + 1 === weapon.id

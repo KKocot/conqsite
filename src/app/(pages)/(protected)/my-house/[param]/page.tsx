@@ -4,13 +4,22 @@ import React from "react";
 import Content from "./content";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { getHighRoles, getHouseAssets, getSurveys } from "@/lib/get-data";
+import {
+  getHighRoles,
+  getHouseAssets,
+  getSurveys,
+  UnitAssetsGroup,
+} from "@/lib/get-data";
 import { useSession } from "next-auth/react";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 import { useTranslations } from "next-intl";
 
-const Page: React.FC = () => {
+interface PageProps {
+  unitsAssets: UnitAssetsGroup | undefined;
+}
+
+const Page = ({ unitsAssets }: PageProps) => {
   const { param }: { param: string } = useParams();
   const t = useTranslations("MyHouse");
   const house = param.replaceAll("%20", " ");
@@ -34,7 +43,7 @@ const Page: React.FC = () => {
   });
 
   if (rolesIsLoading || surveysIsLoading) return <LoadingComponent />;
-  if (!surveysData || !rolesData) return <NoData />;
+  if (!surveysData || !rolesData || !unitsAssets) return <NoData />;
 
   return assetsData?.sharedList ||
     !!rolesData.find((e) => e.discordId === user?.user.id) ? (
@@ -44,6 +53,7 @@ const Page: React.FC = () => {
       rolesData={rolesData}
       houseAssets={assetsData}
       userId={user?.user.id ?? ""}
+      unitsAssets={unitsAssets}
     />
   ) : (
     <div className="flex justify-center items-center h-screen w-full">

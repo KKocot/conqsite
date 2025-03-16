@@ -486,3 +486,28 @@ export const getSurveysAdmin = async (): Promise<FilledSurveys> => {
   const result = await response.json();
   return result;
 };
+
+export interface UnitAsset {
+  era: string;
+  icon: string;
+  id: number;
+  leadership: number;
+  name: string;
+  src: string;
+  value: number;
+}
+
+export interface UnitAssetsGroup {
+  goldenEra: UnitAsset[];
+  heroicEra: UnitAsset[];
+  blueEra: UnitAsset[];
+  greenEra: UnitAsset[];
+  greyEra: UnitAsset[];
+  otherEra: UnitAsset[];
+}
+
+export const getUnitsAssets = async (): Promise<UnitAssetsGroup> => {
+  const response = await fetch(`/api/assets/units`);
+  const result = await response.json();
+  return result;
+};
