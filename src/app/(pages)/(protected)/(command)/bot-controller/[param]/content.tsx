@@ -40,8 +40,8 @@ const Content = ({
     queryFn: () =>
       getDiscordData(userId, {
         guild_id: config.id,
-        tw_discord: config.tw.server,
-        anotherDC: config.tw.server !== config.id,
+        tw_discord: config.id,
+        anotherDC: true,
       }),
     enabled: !!house,
   });
