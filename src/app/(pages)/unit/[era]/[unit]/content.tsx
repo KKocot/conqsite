@@ -4,12 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 import ChallengesArea from "@/feature/unit-builder/challenges-area";
-import DoctrinesArea from "@/feature/unit-builder/doctrines-area";
+import DoctrinesArea from "@/feature/unit-builder/doctrines/area";
 import FormationsArea from "@/feature/unit-builder/formations-area";
 import KitsArea from "@/feature/unit-builder/kits-area";
 import SkillsArea from "@/feature/unit-builder/skills-area";
@@ -102,6 +103,36 @@ const Content = ({
   return (
     <Form {...form}>
       <form className="container mx-auto py-8">
+        <div>
+          <div className="flex flex-col gap-4 mb-4">
+            {postsLoading
+              ? [1, 2, 3, 4, 5].map((_, i) => (
+                  <Card key={i} className="w-full">
+                    <CardHeader>
+                      <Skeleton className="h-6 w-48" />
+                    </CardHeader>
+                    <CardContent>
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-3/4 mt-2" />
+                    </CardContent>
+                  </Card>
+                ))
+              : posts
+              ? posts.map((e, i) => (
+                  <div>
+                    <Card key={i} className="w-full">
+                      <CardHeader>
+                        <h2>{e.title}</h2>
+                      </CardHeader>
+                      <CardContent>
+                        <p>{e.description}</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                ))
+              : null}
+          </div>
+        </div>
         <Card className="w-full max-w-4xl mx-auto">
           <ArrowBigLeft
             className="cursor-pointer relative top-0 left-0 ml-4 mt-4"

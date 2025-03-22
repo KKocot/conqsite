@@ -141,7 +141,6 @@ export const epicDoctrines: Doctrine[] = [
     img: "/doctrines/epic-lance-doctrine.png",
     forUnit: ["Lancers"],
     dedicated: "group",
-
     stats: "Increases charge damage by 225.",
   },
   {
@@ -417,7 +416,7 @@ export const epicDoctrines: Doctrine[] = [
   },
   {
     name: "Epic Immobility Doctrine",
-    img: "epic2.png",
+    img: "/logo.png",
     forUnit: ["Javelin Infantry"],
     dedicated: "group",
     stats: "Javelins render enemies immobile for 1.5 seconds.",
@@ -858,7 +857,7 @@ export const epicDoctrines: Doctrine[] = [
   },
   {
     name: "Epic Spear Doctrine VI",
-    img: "/Epic-polearm-doctrine-vi.png",
+    img: "/doctrines/Epic-polearm-doctrine-vi.png",
     forUnit: ["Spear Infantry"],
     dedicated: "group",
     stats:
@@ -866,7 +865,7 @@ export const epicDoctrines: Doctrine[] = [
   },
   {
     name: "Epic Valor Doctrine",
-    img: "/epic5.png",
+    img: "/doctrines/epic5.png",
     forUnit: ["TODO"],
     dedicated: "unit",
 
@@ -891,14 +890,14 @@ export const epicDoctrines: Doctrine[] = [
   },
   {
     name: "Epic Ammo Doctrine",
-    img: "/epic4.png",
+    img: "/doctrines/epic4.png",
     forUnit: ["TODO"],
     dedicated: "unit",
     stats: "Increases health by 300. Increases ammo by 15%.",
   },
   {
     name: "Epic Movement Doctrine",
-    img: "/epic3.png",
+    img: "/doctrines/epic3.png",
     forUnit: ["TODO"],
     dedicated: "unit",
     stats: "Increases health by 300. Increases movement speed by 10%.",

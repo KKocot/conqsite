@@ -266,22 +266,6 @@ export const getSeasons = async (): Promise<SeasonProps[]> => {
   return result.seasons;
 };
 
-export interface UnitData {
-  title: string;
-  id: string;
-  unit: string;
-  ytlink: string;
-  description: string;
-  tree: { structure: Map<number, number>; maxlvl: number };
-  doctrines: { id: number; name: string; img: string }[];
-}
-
-export const getUnitPosts = async (unit: string): Promise<UnitData[]> => {
-  const response = await fetch(`/api/units/posts?unit=${unit}`);
-  const result = await response.json();
-  return result;
-};
-
 export interface HouseAssets {
   name: string;
   premium: boolean;
@@ -508,6 +492,42 @@ export interface UnitAssetsGroup {
 
 export const getUnitsAssets = async (): Promise<UnitAssetsGroup> => {
   const response = await fetch(`/api/assets/units`);
+  const result = await response.json();
+  return result;
+};
+
+export const getUnitAssets = async (name: string): Promise<UnitAsset> => {
+  const response = await fetch(`/api/assets/units?name=${name}`);
+  const result = await response.json();
+  return result.unitAsset;
+};
+
+export interface UnitData {
+  _id?: string;
+  author: string;
+  title: string;
+  unit: string;
+  house: string;
+  ytlink: string;
+  description: string;
+  tree: { structure: Map<number, number>; maxlvl: number };
+  doctrines: { id: number; name: string; img: string }[];
+}
+
+export const getUnitPost = async (id: string): Promise<UnitData> => {
+  const response = await fetch(`/api/units/post?id=${id}`);
+  const result = await response.json();
+  return result;
+};
+
+export const getAllUnitPosts = async (unit: string): Promise<UnitData[]> => {
+  const response = await fetch(`/api/units/post?unit=${unit}`);
+  const result = await response.json();
+  return result;
+};
+
+export const getAllUnitsPosts = async (): Promise<UnitData[]> => {
+  const response = await fetch(`/api/units/post`);
   const result = await response.json();
   return result;
 };

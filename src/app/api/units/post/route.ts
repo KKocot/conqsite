@@ -8,15 +8,7 @@ export async function POST(request: Request) {
   try {
     await connectMongoDB();
     const data = putUnitPostSchema.parse(await request.json());
-    const userPostExists = await UnitPost.findOne({ id: data.id });
-    let userPost;
-    if (userPostExists) {
-      userPost = await UnitPost.findByIdAndUpdate(userPostExists._id, data, {
-        new: true,
-      });
-    } else {
-      userPost = await UnitPost.create(data);
-    }
+    const userPost = await UnitPost.create(data);
     return NextResponse.json(userPost, { status: 201 });
   } catch (error) {
     if (error instanceof ZodError)
@@ -29,9 +21,18 @@ export async function POST(request: Request) {
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const unit = searchParams.get("unit");
+  const id = searchParams.get("id");
   try {
     await connectMongoDB();
-    const userPost = await UnitPost.find({ unit: unit });
+    if (id) {
+      const userPost = await UnitPost.findById(id);
+      return NextResponse.json(userPost, { status: 200 });
+    }
+    if (unit) {
+      const userPost = await UnitPost.find({ unit: unit.replaceAll("_", " ") });
+      return NextResponse.json(userPost, { status: 200 });
+    }
+    const userPost = await UnitPost.find();
     return NextResponse.json(userPost, { status: 200 });
   } catch (error) {
     if (error instanceof Error)
