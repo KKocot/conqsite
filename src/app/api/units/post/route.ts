@@ -3,6 +3,7 @@ import putUnitPostSchema from "./schema";
 import UnitPost from "@/models/unit-post";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
+import Survey from "@/models/surveys";
 
 export async function POST(request: Request) {
   try {
@@ -25,11 +26,45 @@ export async function GET(request: Request) {
   try {
     await connectMongoDB();
     if (id) {
-      const userPost = await UnitPost.findById(id);
-      return NextResponse.json(userPost, { status: 200 });
+      const post = await UnitPost.findById(id);
+      const authorSurvey = await Survey.findOne({
+        discordId: post?.author,
+      });
+      return NextResponse.json(
+        {
+          tree: post.tree,
+          _id: post._id,
+          title: post.title,
+          unit: post.unit,
+          ytlink: post.ytlink,
+          description: post.description,
+          doctrines: post.doctrines,
+          author: post.author,
+          date: post.date,
+          authorNick: authorSurvey.discordNick,
+          authorAvatar: authorSurvey.avatar,
+        },
+        { status: 200 }
+      );
     }
     if (unit) {
-      const userPost = await UnitPost.find({ unit: unit.replaceAll("_", " ") });
+      const posts = await UnitPost.find({ unit: unit.replaceAll("_", " ") });
+      const userPost = [];
+      for (const post of posts) {
+        console.log(post);
+        const authorSurvey = await Survey.findOne({
+          discordId: post.author,
+        });
+        userPost.push({
+          _id: post._id,
+          title: post.title,
+          unit: post.unit,
+          description: post.description,
+          author: post.author,
+          authorNick: authorSurvey.discordNick,
+          authorAvatar: authorSurvey.avatar,
+        });
+      }
       return NextResponse.json(userPost, { status: 200 });
     }
     const userPost = await UnitPost.find();

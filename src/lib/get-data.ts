@@ -505,7 +505,10 @@ export const getUnitAssets = async (name: string): Promise<UnitAsset> => {
 export interface UnitData {
   _id?: string;
   author: string;
+  authorNick?: string;
+  authorAvatar?: string;
   title: string;
+  date: string;
   unit: string;
   house: string;
   ytlink: string;

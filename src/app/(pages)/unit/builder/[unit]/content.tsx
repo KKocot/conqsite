@@ -15,12 +15,14 @@ import { SetStateAction } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePostBuildMutation } from "@/components/hooks/use-post-build-mutation";
+import { useSession } from "next-auth/react";
 
 const DEFAULT_UNIT_DATA: UnitData = {
   title: "",
   author: "",
   unit: "",
   ytlink: "",
+  date: "",
   description: "",
   house: "all",
   tree: {
@@ -45,6 +47,8 @@ const unitSchema = z.object({
   unit: z.string(),
   ytlink: z.string().url({ message: "Invalid URL" }).optional(),
   author: z.string(),
+  house: z.string(),
+  date: z.string(),
   description: z
     .string()
     .max(500, { message: "Description must be less than 500 characters" })
@@ -77,11 +81,14 @@ interface ContentProps {
   unitTree: UnitObject;
 }
 const Content = ({ data, unitTree }: ContentProps) => {
+  const user = useSession();
   const postBuildMutation = usePostBuildMutation();
   const form = useForm({
     resolver: zodResolver(unitSchema),
     values: {
       ...DEFAULT_UNIT_DATA,
+      date: new Date().toString(),
+      author: user.data?.user.id || "",
       unit: data.name || "",
       tree: {
         structure: new Map<number, number>(
@@ -177,3 +184,6 @@ const Content = ({ data, unitTree }: ContentProps) => {
   );
 };
 export default Content;
+function useUser(): { data: any } {
+  throw new Error("Function not implemented.");
+}

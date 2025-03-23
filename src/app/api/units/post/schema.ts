@@ -5,6 +5,7 @@ const putUnitPostSchema = z.object({
   unit: z.string(),
   author: z.string(),
   house: z.string(),
+  date: z.string(),
   ytlink: z.string().optional(),
   description: z.string().optional(),
   doctrines: z
