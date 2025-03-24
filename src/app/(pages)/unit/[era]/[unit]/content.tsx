@@ -4,27 +4,20 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import LoadingComponent from "@/feature/ifs/loading";
-import NoData from "@/feature/ifs/no-data";
 import ChallengesArea from "@/feature/unit-builder/challenges-area";
-import DoctrinesArea from "@/feature/unit-builder/doctrines-area";
+import DoctrinesArea from "@/feature/unit-builder/doctrines/area";
 import FormationsArea from "@/feature/unit-builder/formations-area";
 import KitsArea from "@/feature/unit-builder/kits-area";
+import PostCard from "@/feature/unit-builder/post/card";
 import SkillsArea from "@/feature/unit-builder/skills-area";
 import Tree from "@/feature/unit-builder/tree";
 import { getRoleById, UnitData, UnitObject } from "@/lib/get-data";
 import { Unit } from "@/lib/type";
 import { useQuery } from "@tanstack/react-query";
-import {
-  ArrowBigLeft,
-  ArrowBigRight,
-  CirclePlus,
-  PenIcon,
-  Save,
-  X,
-} from "lucide-react";
+import { ArrowBigLeft, PenIcon, PlusCircle, Save, X } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -77,9 +70,11 @@ const Content = ({
     },
   });
   const [editMode, setEditMode] = useState(false);
-  const wikiMutation = useWikiMutation();
-  const [unit, setUnit] = useState<UnitObject>(form.getValues());
   const treeStructure = form.watch("treeStructure");
+  const wikiMutation = useWikiMutation();
+  const [treeValue, setTreeValue] = useState<Map<number, number>>(
+    () => new Map(treeStructure.map((node) => [node.id, 0]))
+  );
   const maxlvl = form.watch("maxlvl");
   const onSubmit = form.handleSubmit(async (data) => {
     wikiMutation.mutate({
@@ -259,44 +254,15 @@ const Content = ({
                   </FormItem>
                 )}
               />
-              {/* <div className="w-[750px] h-64 overflow-y-scroll">
-                <div className="w-full bg-background p-2 flex justify-between">
-                  <h2>Community build</h2>
-                  <Link href={`${unit.name}/builder`}>
-                    <CirclePlus />
-                  </Link>
-                </div>
-                {postsLoading ? (
-                  <LoadingComponent />
-                ) : posts && posts.length !== 0 ? (
-                  posts.map((post) => (
-                    <Card key={post.id} className="p-2 mb-2">
-                      <Link href={`${post.unit}/${post.id}`}>
-                        <div>
-                          <CardTitle className="text-xl">
-                            {post.title}
-                          </CardTitle>
-                        </div>
-                        <div>
-                          <div>{post.description}</div>
-                        </div>
-                      </Link>
-                    </Card>
-                  ))
-                ) : (
-                  <NoData />
-                )}
-              </div> */}
             </div>
-
             <div className="flex justify-center flex-col py-4">
               <h2 className="text-2xl font-semibold mb-4 text-center">Tree</h2>
               <Tree
-                editMode={false}
                 nodes={treeStructure || []}
                 unitlvl={Number(maxlvl) || 0}
                 mode="view"
-                setUnit={setUnit}
+                treeValue={treeValue}
+                setTreeValue={setTreeValue}
               />
             </div>
             <SkillsArea editMode={editMode} form={form} />
@@ -358,6 +324,34 @@ const Content = ({
             </div>
           </CardContent>
         </Card>
+        {/* <h1 className="text-xl text-center p-2 flex items-center justify-center gap-2">
+          Community builds
+          <Link
+            href={`/unit/builder/${entry?.name.replaceAll(" ", "_")}`}
+            className="hover:text-accent"
+          >
+            <PlusCircle />
+          </Link>
+        </h1> */}
+        {/* <div className="flex gap-4 justify-center flex-wrap mb-4 max-w-4xl mx-auto">
+          {postsLoading ? (
+            [...Array(4)].map((_, i) => (
+              <Card key={i} className="w-52">
+                <CardHeader>
+                  <Skeleton className="h-6 w-12" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-3/4 mt-2" />
+                </CardContent>
+              </Card>
+            ))
+          ) : posts && posts.length > 0 ? (
+            posts.map((e) => <PostCard key={e._id} post={e} />)
+          ) : (
+            <div>No Posts</div>
+          )}
+        </div> */}
       </form>
     </Form>
   );

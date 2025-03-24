@@ -31,7 +31,7 @@ const Content = ({
       greyEra,
     ].map((unitList) =>
       unitList
-        .filter((unit) => unit.name.toLowerCase().includes(query.toLowerCase()))
+        .filter((unit) => unit.name.includes(query))
         .sort((a, b) => a.name.localeCompare(b.name))
     );
     return filteredUnits;
@@ -97,9 +97,7 @@ const List = ({ units }: { units: Unit[] }) => {
         {units.map((unit) => (
           <div key={unit.id}>
             <Link
-              href={`/unit/${unit.era}/${unit.name
-                .toLowerCase()
-                .replaceAll(" ", "_")}`}
+              href={`/unit/${unit.era}/${unit.name.replaceAll(" ", "_")}`}
               className="flex items-center gap-2 p-2 hover:bg-background"
             >
               <Image src={unit.icon} alt={unit.name} width={48} height={48} />

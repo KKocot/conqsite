@@ -10,7 +10,6 @@ import {
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { UnitObject } from "@/lib/get-data";
 import TreeRenderer from "./tree-renderer";
 
 export type TreeNode = {
@@ -26,9 +25,9 @@ export type TreeNode = {
 export interface TreeProps {
   nodes: TreeNode[];
   unitlvl: number;
-  editMode: boolean;
-  mode: "edit" | "view";
-  setUnit: Dispatch<SetStateAction<UnitObject>>;
+  mode: "edit" | "view" | "builded";
+  treeValue: Map<number, number>;
+  setTreeValue: Dispatch<SetStateAction<Map<number, number>>>;
 }
 const generateTree = (nodes: TreeNode[]) => {
   const root = nodes.find((d) => d.prev === null);
@@ -41,10 +40,7 @@ const generateTree = (nodes: TreeNode[]) => {
   return mapWithChildren(root);
 };
 
-const Tree = ({ nodes, unitlvl, mode, editMode, setUnit }: TreeProps) => {
-  const [value, setValue] = useState<Map<number, number>>(
-    new Map(nodes.map((node) => [node.id, 0]))
-  );
+const Tree = ({ nodes, unitlvl, mode, treeValue, setTreeValue }: TreeProps) => {
   const nodesMap = useMemo(
     () => new Map(nodes.map((node) => [node.id, node])),
     [nodes]
@@ -52,13 +48,13 @@ const Tree = ({ nodes, unitlvl, mode, editMode, setUnit }: TreeProps) => {
 
   const tree = useMemo(() => generateTree(nodes), [nodes]);
 
-  const sumOfPoints = Array.from(value).reduce(
+  const sumOfPoints = Array.from(treeValue).reduce(
     (sum, [_id, value]) => sum + value,
     0
   );
 
   const handleBadgeClick = useCallback((id: number) => {
-    setValue((prevValues) => {
+    setTreeValue((prevValues) => {
       const valuesMap = new Map(prevValues);
       const value = valuesMap.get(id);
       if (value !== undefined) valuesMap.set(id, value + 1);
@@ -68,7 +64,7 @@ const Tree = ({ nodes, unitlvl, mode, editMode, setUnit }: TreeProps) => {
   }, []);
 
   const handleReset = () => {
-    setValue(new Map(nodes.map((node) => [node.id, 0])));
+    setTreeValue(new Map(nodes.map((node) => [node.id, 0])));
   };
 
   return (
@@ -76,17 +72,17 @@ const Tree = ({ nodes, unitlvl, mode, editMode, setUnit }: TreeProps) => {
       {tree && (
         <TreeRenderer
           nodes={[tree]}
-          values={value}
+          values={treeValue}
           nodesMap={nodesMap}
           onSkillUpdate={handleBadgeClick}
-          disabled={sumOfPoints === unitlvl || mode === "view"}
+          disabled={
+            sumOfPoints === unitlvl || mode === "view" || mode === "builded"
+          }
           mode={mode}
-          editMode={editMode}
-          setUnit={setUnit}
         />
       )}
       <div className="flex flex-col w-16 self-end">
-        {mode === "view" ? null : (
+        {mode === "edit" ? (
           <>
             <div className=" flex flex-col items-center gap-2">
               <Label>Points</Label>
@@ -97,7 +93,7 @@ const Tree = ({ nodes, unitlvl, mode, editMode, setUnit }: TreeProps) => {
               Reset
             </Button>
           </>
-        )}
+        ) : null}
       </div>
     </div>
   );

@@ -2,8 +2,10 @@ import { z } from "zod";
 
 const putUnitPostSchema = z.object({
   title: z.string(),
-  id: z.string(),
   unit: z.string(),
+  author: z.string(),
+  house: z.string(),
+  date: z.string(),
   ytlink: z.string().optional(),
   description: z.string().optional(),
   doctrines: z

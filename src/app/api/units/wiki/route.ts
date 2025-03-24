@@ -30,7 +30,11 @@ export async function GET(request: Request) {
   try {
     await connectMongoDB();
     let unitWiki;
-    if (name && status) unitWiki = await UnitWiki.find({ name, status });
+    if (name && status)
+      unitWiki = await UnitWiki.find({
+        name: name.replaceAll("_", " "),
+        status,
+      });
     if (status && !name) unitWiki = await UnitWiki.find({ status });
     return NextResponse.json(unitWiki, { status: 200 });
   } catch (error) {
