@@ -51,7 +51,6 @@ export async function GET(request: Request) {
       const posts = await UnitPost.find({ unit: unit.replaceAll("_", " ") });
       const userPost = [];
       for (const post of posts) {
-        console.log(post);
         const authorSurvey = await Survey.findOne({
           discordId: post.author,
         });

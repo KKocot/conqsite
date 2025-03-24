@@ -1,4 +1,4 @@
-import { UnitAsset, UnitData } from "@/lib/get-data";
+import { UnitData, UnitObject } from "@/lib/get-data";
 import {
   Card,
   CardContent,
@@ -11,16 +11,20 @@ import Image from "next/image";
 import { Doctrine } from "@/assets/doctrines";
 import DoctrinesGroup from "@/feature/unit-builder/post/doctrines-group";
 import Tree from "@/feature/unit-builder/tree";
+import { useState } from "react";
 
 interface ContentProps {
   data: UnitData;
-  unitAssets: UnitAsset;
   doctrines: Doctrine[];
+  unitTree: UnitObject;
 }
 
-const Content = ({ data, unitAssets, doctrines }: ContentProps) => {
+const Content = ({ data, doctrines, unitTree }: ContentProps) => {
   const doctrinesMap = doctrines.filter((d) =>
     data.doctrines.some((e) => e.name === d.name)
+  );
+  const [treeValue, setTreeValue] = useState<Map<number, number>>(
+    data.tree.structure
   );
   return (
     <Card className="max-w-3xl mx-auto overflow-hidden h-fit my-8">
@@ -30,15 +34,15 @@ const Content = ({ data, unitAssets, doctrines }: ContentProps) => {
             <h2 className="text-2xl font-bold mb-4">{data.title}</h2>
 
             <Link
-              href={`/unit/${unitAssets.era}/${unitAssets.name.replaceAll(
+              href={`/unit/${unitTree.era}/${unitTree.name.replaceAll(
                 " ",
                 "_"
               )}`}
               className="flex items-center gap-2"
             >
               <Image
-                src={unitAssets.icon}
-                alt={unitAssets.name}
+                src={unitTree.icon}
+                alt={unitTree.name}
                 width={48}
                 height={48}
               />
@@ -67,13 +71,15 @@ const Content = ({ data, unitAssets, doctrines }: ContentProps) => {
           <p>{data.description}</p>
         </div>
         <DoctrinesGroup doctrines={doctrinesMap} />
-        {/* <Tree
-                editMode={false}
-                nodes={treeStructure || []}
-                unitlvl={Number(maxlvl) || 0}
-                mode="view"
-                setUnit={setUnit}
-              /> */}
+        {data.tree.structure && Array(data.tree.structure).length > 0 ? (
+          <Tree
+            nodes={unitTree.treeStructure || []}
+            unitlvl={Number(unitTree.maxlvl)}
+            mode="builded"
+            treeValue={treeValue}
+            setTreeValue={setTreeValue}
+          />
+        ) : null}
       </CardContent>
 
       <CardFooter className="border-t pt-4">

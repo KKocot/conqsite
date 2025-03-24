@@ -11,11 +11,11 @@ import { Form, FormField, FormItem } from "@/components/ui/form";
 import Image from "next/image";
 import { UnitAsset, UnitData, UnitObject } from "@/lib/get-data";
 import Tree from "@/feature/unit-builder/tree";
-import { SetStateAction } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePostBuildMutation } from "@/components/hooks/use-post-build-mutation";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 
 const DEFAULT_UNIT_DATA: UnitData = {
   title: "",
@@ -98,12 +98,20 @@ const Content = ({ data, unitTree }: ContentProps) => {
       },
     },
   });
+  const values = form.getValues();
+  const [treeValue, setTreeValue] = useState<Map<number, number>>(
+    () => new Map(unitTree.treeStructure.map((node) => [node.id, 0]))
+  );
   const onSubmit = async () => {
     const data = form.getValues();
-    postBuildMutation.mutate(data);
+    postBuildMutation.mutate({
+      ...data,
+      tree: {
+        ...data.tree,
+        structure: treeValue,
+      },
+    });
   };
-
-  const values = form.getValues();
 
   return (
     <div className="container mx-auto py-8">
@@ -163,10 +171,8 @@ const Content = ({ data, unitTree }: ContentProps) => {
                 nodes={unitTree.treeStructure || []}
                 unitlvl={Number(unitTree?.maxlvl) || 0}
                 mode="edit"
-                editMode={false}
-                setUnit={function (value: SetStateAction<UnitObject>): void {
-                  throw new Error("Function not implemented.");
-                }}
+                treeValue={treeValue}
+                setTreeValue={setTreeValue}
               />
               <DoctrinedBuilder
                 setValue={form.setValue}

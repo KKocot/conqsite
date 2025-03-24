@@ -17,20 +17,9 @@ const BranchButton: FC<{
   values: Map<number, number>;
   nodesMap: Map<number, TreeNode>;
   disabled: boolean;
-  editMode: boolean;
   onSkillUpdate: (nodeId: number) => void;
-  setUnit: Dispatch<SetStateAction<UnitObject>>;
-  mode: "edit" | "view";
-}> = ({
-  node,
-  values,
-  nodesMap,
-  disabled,
-  onSkillUpdate,
-  mode,
-  editMode,
-  setUnit,
-}) => {
+  mode: "edit" | "view" | "builded";
+}> = ({ node, values, nodesMap, disabled, onSkillUpdate, mode }) => {
   const value = values.get(node.id)!;
   const prevValue = values.get(node.prev ?? -1);
   const prevNode = nodesMap.get(node.prev ?? -1);
@@ -40,37 +29,8 @@ const BranchButton: FC<{
       prevValue < prevNode.value) ||
     value === node.value;
 
-  const onAdd = () => {
-    setUnit((prevUnit) => {
-      return {
-        ...prevUnit,
-        treeStructure: [
-          ...prevUnit.treeStructure,
-          {
-            description: "Some description",
-            id: prevUnit.treeStructure.length,
-            img: "/logo.png",
-            name: "Some name",
-            prev: node.id,
-            value: 3,
-          },
-        ],
-      };
-    });
-  };
   return (
     <div className="flex flex-col items-center">
-      {editMode ? (
-        <div className="flex items-center">
-          <button className="p-0 h-4">
-            <Trash2 />
-          </button>
-          <button className="p-0 h-4" onClick={onAdd}>
-            <Plus />
-          </button>
-        </div>
-      ) : null}
-
       <button
         type="button"
         className="flex flex-col h-24 w-12 m-2 items-center select-none"

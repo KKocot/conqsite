@@ -2,7 +2,7 @@
 
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
-import { getUnitAssets, getUnitPost } from "@/lib/get-data";
+import { getUnitAssets, getUnitPost, getUnitWiki } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import Content from "./content";
@@ -20,9 +20,9 @@ const Page = () => {
     queryFn: () => getUnitPost(id.toString()),
     enabled: !!id,
   });
-  const { data: unitAssets, isLoading: unitAssetsLoading } = useQuery({
-    queryKey: ["unitAssets", unit],
-    queryFn: () => getUnitAssets(unit.toString()),
+  const { data: unitWiki, isLoading: unitWikiLoading } = useQuery({
+    queryKey: ["unitWiki", unit],
+    queryFn: () => getUnitWiki(unit.toString(), "accepted"),
     enabled: !!unit,
   });
   const doctrines = [
@@ -31,8 +31,14 @@ const Page = () => {
     ...commonDoctrines,
     ...uncommonDoctrines,
   ];
-  if (isLoading || unitAssetsLoading) return <LoadingComponent />;
-  if (!data || !unitAssets) return <NoData />;
-  return <Content data={data} unitAssets={unitAssets} doctrines={doctrines} />;
+  if (isLoading || unitWikiLoading) return <LoadingComponent />;
+  if (!data || !unitWiki) return <NoData />;
+  return (
+    <Content
+      data={data}
+      doctrines={doctrines}
+      unitTree={unitWiki[unitWiki.length - 1]}
+    />
+  );
 };
 export default Page;

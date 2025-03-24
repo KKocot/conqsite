@@ -70,9 +70,11 @@ const Content = ({
     },
   });
   const [editMode, setEditMode] = useState(false);
-  const wikiMutation = useWikiMutation();
-  const [unit, setUnit] = useState<UnitObject>(form.getValues());
   const treeStructure = form.watch("treeStructure");
+  const wikiMutation = useWikiMutation();
+  const [treeValue, setTreeValue] = useState<Map<number, number>>(
+    () => new Map(treeStructure.map((node) => [node.id, 0]))
+  );
   const maxlvl = form.watch("maxlvl");
   const onSubmit = form.handleSubmit(async (data) => {
     wikiMutation.mutate({
@@ -256,11 +258,11 @@ const Content = ({
             <div className="flex justify-center flex-col py-4">
               <h2 className="text-2xl font-semibold mb-4 text-center">Tree</h2>
               <Tree
-                editMode={false}
                 nodes={treeStructure || []}
                 unitlvl={Number(maxlvl) || 0}
                 mode="view"
-                setUnit={setUnit}
+                treeValue={treeValue}
+                setTreeValue={setTreeValue}
               />
             </div>
             <SkillsArea editMode={editMode} form={form} />
@@ -322,7 +324,7 @@ const Content = ({
             </div>
           </CardContent>
         </Card>
-        <h1 className="text-xl text-center p-2 flex items-center justify-center gap-2">
+        {/* <h1 className="text-xl text-center p-2 flex items-center justify-center gap-2">
           Community builds
           <Link
             href={`/unit/builder/${entry?.name.replaceAll(" ", "_")}`}
@@ -330,8 +332,8 @@ const Content = ({
           >
             <PlusCircle />
           </Link>
-        </h1>
-        <div className="flex gap-4 justify-center flex-wrap mb-4 max-w-4xl mx-auto">
+        </h1> */}
+        {/* <div className="flex gap-4 justify-center flex-wrap mb-4 max-w-4xl mx-auto">
           {postsLoading ? (
             [...Array(4)].map((_, i) => (
               <Card key={i} className="w-52">
@@ -349,7 +351,7 @@ const Content = ({
           ) : (
             <div>No Posts</div>
           )}
-        </div>
+        </div> */}
       </form>
     </Form>
   );

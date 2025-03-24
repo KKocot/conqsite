@@ -6,14 +6,7 @@ export interface ItemProps {
   lineup_4: string[];
   lineup_5: string[];
 }
-type Tree = {
-  name: string;
-  description: string;
-  img: string;
-  prev: number | null;
-  id: number;
-  value: number;
-};
+
 export interface Unit {
   era: string;
   icon: string;
