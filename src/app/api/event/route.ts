@@ -95,7 +95,7 @@ export async function GET(request: Request) {
     // Get event by date and house
     const date = searchParams.get("date");
     if (date && house) {
-      const event = await Event.findOne({
+      const events = await Event.find({
         date_start_event: date,
         house_name: house,
       });
@@ -108,37 +108,21 @@ export async function GET(request: Request) {
       };
 
       // Return default values if no event is found
-      if (!event)
+      if (!events)
         return new Response(JSON.stringify(defaultResponse), { status: 200 });
-
-      // Sort signups by lineup
-      const sortedLineup = event.signUps
-        .filter(
-          (e: {
-            name: string;
-            status: string;
-            lineup: string;
-            userId: string;
-          }) => e.status === "Yes"
-        )
-        .reduce((acc: { [key: string]: string[] }, item: Item) => {
-          if (!acc[item.lineup]) {
-            acc[item.lineup] = [];
-          }
-          acc[item.lineup].push(item.userId);
-          return acc;
-        }, {});
 
       // Return refactored data friedly for the client
       const attendance = {
-        date: event.date_start_event,
-        house: event.house_name,
-        lineup: !event
+        date: date,
+        house: house,
+        lineup: !events
           ? []
-          : Object.entries(sortedLineup).map(([name, signup]) => ({
-              name,
-              signup,
-            })),
+          : events.flatMap((event) =>
+              Object.entries(sortedLineup(event)).map(([name, signup]) => ({
+                name,
+                signup,
+              }))
+            ),
       };
 
       return new Response(JSON.stringify(attendance), { status: 200 });
@@ -195,3 +179,18 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
+
+// Sort signups by lineup
+const sortedLineup = (event: any) =>
+  event.signUps
+    .filter(
+      (e: { name: string; status: string; lineup: string; userId: string }) =>
+        e.status === "Yes"
+    )
+    .reduce((acc: { [key: string]: string[] }, item: Item) => {
+      if (!acc[item.lineup]) {
+        acc[item.lineup] = [];
+      }
+      acc[item.lineup].push(item.userId);
+      return acc;
+    }, {});
