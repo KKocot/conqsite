@@ -19,13 +19,22 @@ interface ContentProps {
   unitTree: UnitObject;
 }
 
+function transformToMap(obj: Map<number, number>): Map<number, number> {
+  const map = new Map<number, number>();
+  Object.entries(obj).forEach(([key, value]) => {
+    map.set(Number(key), value);
+  });
+  return map;
+}
+
 const Content = ({ data, doctrines, unitTree }: ContentProps) => {
   const doctrinesMap = doctrines.filter((d) =>
     data.doctrines.some((e) => e.name === d.name)
   );
   const [treeValue, setTreeValue] = useState<Map<number, number>>(
-    data.tree.structure
+    transformToMap(data.tree.structure)
   );
+
   return (
     <Card className="max-w-3xl mx-auto overflow-hidden h-fit my-8">
       <CardHeader className="pb-0">

@@ -324,7 +324,7 @@ const Content = ({
             </div>
           </CardContent>
         </Card>
-        {/* <h1 className="text-xl text-center p-2 flex items-center justify-center gap-2">
+        <h1 className="text-xl text-center p-2 flex items-center justify-center gap-2">
           Community builds
           <Link
             href={`/unit/builder/${entry?.name.replaceAll(" ", "_")}`}
@@ -332,8 +332,8 @@ const Content = ({
           >
             <PlusCircle />
           </Link>
-        </h1> */}
-        {/* <div className="flex gap-4 justify-center flex-wrap mb-4 max-w-4xl mx-auto">
+        </h1>
+        <div className="flex gap-4 justify-center flex-wrap mb-4 max-w-4xl mx-auto">
           {postsLoading ? (
             [...Array(4)].map((_, i) => (
               <Card key={i} className="w-52">
@@ -351,7 +351,7 @@ const Content = ({
           ) : (
             <div>No Posts</div>
           )}
-        </div> */}
+        </div>
       </form>
     </Form>
   );
