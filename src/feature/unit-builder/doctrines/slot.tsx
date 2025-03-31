@@ -2,6 +2,7 @@
 
 import { useDrag, useDrop, DndProvider } from "react-dnd";
 import Image from "next/image";
+import clsx from "clsx";
 
 const ItemTypes = {
   DOCTRINE: "doctrine",
@@ -11,17 +12,22 @@ interface Slot {
   id: number;
   name: string;
   img: string;
+  stats: string;
 }
 
 interface DoctrineSlotProps {
   slot: Slot;
-  onDrop: (id: number, item: { name: string; img: string }) => void;
+  onDrop: (
+    id: number,
+    item: { name: string; img: string; stats: string }
+  ) => void;
 }
 
 const DoctrineSlot = ({ slot, onDrop }: DoctrineSlotProps) => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.DOCTRINE,
-    drop: (item: { name: string; img: string }) => onDrop(slot.id, item),
+    drop: (item: { name: string; img: string; stats: string }) =>
+      onDrop(slot.id, item),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
@@ -31,15 +37,21 @@ const DoctrineSlot = ({ slot, onDrop }: DoctrineSlotProps) => {
     <div
       // @ts-ignore
       ref={drop}
-      className="w-12 h-12 bg-accent rounded-full flex items-center"
+      className={clsx(
+        "w-24 h-24 bg-accent rounded-full flex items-center cursor-not-allowed",
+        {
+          "bg-opacity-50": isOver,
+          "bg-opacity-100": !isOver,
+        }
+      )}
+      onClick={() => onDrop(slot.id, { name: "", img: "", stats: "" })}
     >
-      {/* <div ref={drop} className="border-2 border-primary w-24 h-24 text-center"> */}
       {slot.name && (
         <Image
           src={slot.img}
           alt={slot.name}
-          width={48}
-          height={48}
+          width={140}
+          height={140}
           title={slot.name}
         />
       )}

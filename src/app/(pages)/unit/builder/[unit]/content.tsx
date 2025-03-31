@@ -30,11 +30,11 @@ const DEFAULT_UNIT_DATA: UnitData = {
     maxlvl: 0,
   },
   doctrines: [
-    { id: 1, name: "", img: "" },
-    { id: 2, name: "", img: "" },
-    { id: 3, name: "", img: "" },
-    { id: 4, name: "", img: "" },
-    { id: 5, name: "", img: "" },
+    { id: 1, name: "", img: "", stats: "" },
+    { id: 2, name: "", img: "", stats: "" },
+    { id: 3, name: "", img: "", stats: "" },
+    { id: 4, name: "", img: "", stats: "" },
+    { id: 5, name: "", img: "", stats: "" },
   ],
 };
 const unitSchema = z.object({
@@ -65,6 +65,7 @@ const unitSchema = z.object({
         id: z.number(),
         name: z.string(),
         img: z.string(),
+        stats: z.string(),
       })
     )
     .refine(
@@ -90,6 +91,7 @@ const Content = ({ data, unitTree }: ContentProps) => {
       date: new Date().toString(),
       author: user.data?.user.id || "",
       unit: data.name || "",
+      description: data.description || "",
       tree: {
         structure: new Map<number, number>(
           new Map(unitTree.treeStructure.map((node) => [node.id, 0]) || [])
@@ -190,6 +192,3 @@ const Content = ({ data, unitTree }: ContentProps) => {
   );
 };
 export default Content;
-function useUser(): { data: any } {
-  throw new Error("Function not implemented.");
-}

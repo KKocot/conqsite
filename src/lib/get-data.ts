@@ -476,6 +476,7 @@ export interface UnitAsset {
   icon: string;
   id: number;
   leadership: number;
+  description: string;
   name: string;
   src: string;
   value: number;
@@ -514,7 +515,7 @@ export interface UnitData {
   ytlink: string;
   description: string;
   tree: { structure: Map<number, number>; maxlvl: number };
-  doctrines: { id: number; name: string; img: string }[];
+  doctrines: { id: number; name: string; img: string; stats: string }[];
 }
 
 export const getUnitPost = async (id: string): Promise<UnitData> => {

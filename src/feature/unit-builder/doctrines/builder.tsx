@@ -22,7 +22,7 @@ const DoctrinedBuilder = ({
   unitName,
 }: {
   setValue: UseFormSetValue<UnitData>;
-  doctrineSlot: { id: number; name: string; img: string }[];
+  doctrineSlot: { id: number; name: string; img: string; stats: string }[];
   unitName: string;
 }) => {
   const [doctrineSlot, setDoctrineSlot] = useState(initialDoctrineSlot);
@@ -35,6 +35,7 @@ const DoctrinedBuilder = ({
   interface DroppedItem {
     name: string;
     img: string;
+    stats: string;
   }
   useEffect(() => {
     setValue("doctrines", doctrineSlot);
@@ -43,7 +44,9 @@ const DoctrinedBuilder = ({
   const handleDrop = (id: number, item: DroppedItem) => {
     setDoctrineSlot((prevSlots) =>
       prevSlots.map((slot) =>
-        slot.id === id ? { ...slot, name: item.name, img: item.img } : slot
+        slot.id === id
+          ? { ...slot, name: item.name, img: item.img, stats: item.stats }
+          : slot
       )
     );
   };
@@ -123,11 +126,26 @@ const DoctrinedBuilder = ({
             <Doctrine key={doctrine.name} doctrine={doctrine} />
           ))}
         </div>
-
-        <div className="flex justify-around">
-          {doctrineSlot.map((slot) => (
-            <DoctrineSlot key={slot.id} slot={slot} onDrop={handleDrop} />
-          ))}
+        <div>
+          <div className="flex justify-around mt-2">
+            {doctrineSlot.map((slot) => (
+              <div key={slot.id} className="w-32 text-center text-sm font-bold">
+                {slot.name}
+              </div>
+            ))}
+          </div>
+          <div className="flex justify-around mt-2">
+            {doctrineSlot.map((slot) => (
+              <DoctrineSlot key={slot.id} slot={slot} onDrop={handleDrop} />
+            ))}
+          </div>
+          <div className="flex justify-around mt-2">
+            {doctrineSlot.map((slot) => (
+              <div key={slot.id} className="w-32 text-xs">
+                {slot.stats}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </DndProvider>
