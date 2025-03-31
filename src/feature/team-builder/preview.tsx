@@ -92,7 +92,7 @@ const Preview = ({
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8" title={unit1?.name}>
                         <Link
-                          href={`/unit/${unit1?.era}/${unit1?.name
+                          href={`/unit/${unit1?.name
                             .replaceAll(" ", "_")
                             .toLocaleLowerCase()}`}
                           target="_blank"
@@ -107,7 +107,7 @@ const Preview = ({
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8" title={unit2?.name}>
                         <Link
-                          href={`/unit/${unit2?.era}/${unit2?.name
+                          href={`/unit/${unit2?.name
                             .replaceAll(" ", "_")
                             .toLocaleLowerCase()}`}
                           target="_blank"
@@ -122,7 +122,7 @@ const Preview = ({
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8" title={unit3?.name}>
                         <Link
-                          href={`/unit/${unit3?.era}/${unit3?.name
+                          href={`/unit/${unit3?.name
                             .replaceAll(" ", "_")
                             .toLocaleLowerCase()}`}
                           target="_blank"

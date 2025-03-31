@@ -535,3 +535,19 @@ export const getAllUnitsPosts = async (): Promise<UnitData[]> => {
   const result = await response.json();
   return result;
 };
+
+export interface UserUnitPost {
+  author: {
+    img: string;
+    nick: string;
+  };
+  posts: UnitData[];
+}
+
+export const getUserUnitsPosts = async (
+  author: string
+): Promise<UserUnitPost> => {
+  const response = await fetch(`/api/units/post?author=${author}`);
+  const result = await response.json();
+  return result;
+};

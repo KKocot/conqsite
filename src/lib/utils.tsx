@@ -105,7 +105,7 @@ export function getUnit(
 ) {
   if (!unitsAssets) return null;
   const { goldenEra, heroicEra, greenEra, blueEra, greyEra } = unitsAssets;
-  const cleanUnitName = unitName?.replace(/_/g, " ");
+  const cleanUnitName = unitName?.replaceAll(/_/g, " ");
   switch (era) {
     case "golden":
       return goldenEra.find(

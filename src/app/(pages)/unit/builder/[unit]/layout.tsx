@@ -6,7 +6,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   let data;
   const origin = process.env.ORIGIN;
-  const unitName = params.unit.replace("_", " ");
+  const unitName = params.unit.replaceAll("_", " ");
   try {
     const response = await fetch(`${origin}/api/assets/units?name=${unitName}`);
     if (!response.ok) {

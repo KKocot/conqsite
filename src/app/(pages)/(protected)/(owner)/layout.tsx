@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { redirect, useParams } from "next/navigation";
+import { redirect } from "next/navigation";
 import { Role } from "@/queries/roles.query";
 import SettingsNavbar from "@/feature/house-settings/settings-navbar";
 

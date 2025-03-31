@@ -2,7 +2,7 @@
 
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
-import { getUnitAssets, getUnitPost, getUnitWiki } from "@/lib/get-data";
+import { getUnitPost, getUnitWiki } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import Content from "./content";
