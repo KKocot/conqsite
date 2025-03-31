@@ -257,13 +257,14 @@ const Content = ({
             </div>
             <div className="flex justify-center flex-col py-4">
               <h2 className="text-2xl font-semibold mb-4 text-center">Tree</h2>
-              <Tree
-                nodes={treeStructure || []}
-                unitlvl={Number(maxlvl) || 0}
-                mode="view"
-                treeValue={treeValue}
-                setTreeValue={setTreeValue}
-              />
+              {entry ? (
+                <Tree
+                  nodes={treeStructure || []}
+                  unitlvl={Number(maxlvl) || 0}
+                  mode="view"
+                  unitTree={entry}
+                />
+              ) : null}
             </div>
             <SkillsArea editMode={editMode} form={form} />
             <FormationsArea editMode={editMode} form={form} />
