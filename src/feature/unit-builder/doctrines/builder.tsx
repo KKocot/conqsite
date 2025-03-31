@@ -53,22 +53,34 @@ const DoctrinedBuilder = ({
   const sortedDoctrines = useMemo(() => {
     const epic = rarityFilter?.epic
       ? epicDoctrines.filter(
-          (e) => e.dedicated === "all" || e.forUnit.includes(unitName)
+          (e) =>
+            e.dedicated === "all" ||
+            e.dedicated === "group" ||
+            e.forUnit.includes(unitName)
         )
       : [];
     const rare = rarityFilter?.rare
       ? rareDoctrines.filter(
-          (e) => e.dedicated === "all" || e.forUnit.includes(unitName)
+          (e) =>
+            e.dedicated === "all" ||
+            e.dedicated === "group" ||
+            e.forUnit.includes(unitName)
         )
       : [];
     const uncommon = rarityFilter?.uncommon
       ? uncommonDoctrines.filter(
-          (e) => e.dedicated === "all" || e.forUnit.includes(unitName)
+          (e) =>
+            e.dedicated === "all" ||
+            e.dedicated === "group" ||
+            e.forUnit.includes(unitName)
         )
       : [];
     const common = rarityFilter?.common
       ? commonDoctrines.filter(
-          (e) => e.dedicated === "all" || e.forUnit.includes(unitName)
+          (e) =>
+            e.dedicated === "all" ||
+            e.dedicated === "group" ||
+            e.forUnit.includes(unitName)
         )
       : [];
     return [...epic, ...rare, ...uncommon, ...common];
