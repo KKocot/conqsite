@@ -106,7 +106,6 @@ const EventDialog = ({
 
   const onSubmit = () => {
     const data = form.getValues();
-    console.log(data);
     botEventMutation.mutate({
       ...data,
       // Convert string to number
@@ -138,7 +137,7 @@ const EventDialog = ({
   ).padStart(2, "0")}-${String(next_tw?.getDate()).padStart(2, "0")}`;
 
   // Default TW hour
-  const tw_hour = 19;
+  const tw_hour = 18;
 
   // Default time formated for input with added timezone
   const hour = `${
