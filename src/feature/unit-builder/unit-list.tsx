@@ -44,9 +44,7 @@ const List = ({ units, value }: { units: Unit[]; value: string }) => {
                 </div>
               ) : null}
               <Link
-                href={`/unit/${unit?.name
-                  .replaceAll(" ", "_")
-                  .toLocaleLowerCase()}`}
+                href={`/unit/${unit?.name.replaceAll(" ", "_")}`}
                 target="_blank"
               >
                 <Avatar
