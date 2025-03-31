@@ -8,7 +8,7 @@ const UnitPostSchema = new Schema({
   unit: { type: String },
   ytlink: { type: String },
   description: { type: String },
-  doctrines: [{ id: Number, name: String, img: String }],
+  doctrines: [{ id: Number, name: String, img: String, stats: String }],
   tree: {
     structure: { type: Map, of: Number },
     maxlvl: { type: Number },

@@ -27,7 +27,11 @@ export const usePostBuildMutation = () => {
       }
       return response.json();
     },
-    onSuccess: () => {},
+    onSuccess: (data) => {
+      location.href = `/unit/builder/${data.unit.replaceAll(" ", "_")}/${
+        data._id
+      }`;
+    },
     onError: (error: Error) => {
       console.error("Error occurred:", error.message);
     },

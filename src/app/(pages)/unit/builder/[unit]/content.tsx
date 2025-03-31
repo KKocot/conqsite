@@ -15,7 +15,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePostBuildMutation } from "@/components/hooks/use-post-build-mutation";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import Loading from "react-loading";
 
 const DEFAULT_UNIT_DATA: UnitData = {
   title: "",
@@ -30,11 +30,11 @@ const DEFAULT_UNIT_DATA: UnitData = {
     maxlvl: 0,
   },
   doctrines: [
-    { id: 1, name: "", img: "" },
-    { id: 2, name: "", img: "" },
-    { id: 3, name: "", img: "" },
-    { id: 4, name: "", img: "" },
-    { id: 5, name: "", img: "" },
+    { id: 1, name: "", img: "", stats: "" },
+    { id: 2, name: "", img: "", stats: "" },
+    { id: 3, name: "", img: "", stats: "" },
+    { id: 4, name: "", img: "", stats: "" },
+    { id: 5, name: "", img: "", stats: "" },
   ],
 };
 const unitSchema = z.object({
@@ -65,6 +65,7 @@ const unitSchema = z.object({
         id: z.number(),
         name: z.string(),
         img: z.string(),
+        stats: z.string(),
       })
     )
     .refine(
@@ -90,6 +91,7 @@ const Content = ({ data, unitTree }: ContentProps) => {
       date: new Date().toString(),
       author: user.data?.user.id || "",
       unit: data.name || "",
+      description: data.description || "",
       tree: {
         structure: new Map<number, number>(
           new Map(unitTree.treeStructure.map((node) => [node.id, 0]) || [])
@@ -99,18 +101,10 @@ const Content = ({ data, unitTree }: ContentProps) => {
     },
   });
   const values = form.getValues();
-  const [treeValue, setTreeValue] = useState<Map<number, number>>(
-    () => new Map(unitTree.treeStructure.map((node) => [node.id, 0]))
-  );
+
   const onSubmit = async () => {
     const data = form.getValues();
-    postBuildMutation.mutate({
-      ...data,
-      tree: {
-        ...data.tree,
-        structure: treeValue,
-      },
-    });
+    postBuildMutation.mutate(data);
   };
 
   return (
@@ -142,7 +136,12 @@ const Content = ({ data, unitTree }: ContentProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <Label htmlFor="title">Title</Label>
-                    <Input id="title" {...field} required />
+                    <Input
+                      id="title"
+                      {...field}
+                      required
+                      disabled={postBuildMutation.isPending}
+                    />
                   </FormItem>
                 )}
               />
@@ -152,7 +151,12 @@ const Content = ({ data, unitTree }: ContentProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <Label htmlFor="ytlink">Youtube Link</Label>
-                    <Input id="ytlink" type="url" {...field} />
+                    <Input
+                      id="ytlink"
+                      type="url"
+                      {...field}
+                      disabled={postBuildMutation.isPending}
+                    />
                   </FormItem>
                 )}
               />
@@ -162,25 +166,37 @@ const Content = ({ data, unitTree }: ContentProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <Label htmlFor="description">Description</Label>
-                    <Textarea id="description" {...field} />
+                    <Textarea
+                      id="description"
+                      {...field}
+                      disabled={postBuildMutation.isPending}
+                    />
                   </FormItem>
                 )}
               />
-
               <Tree
                 nodes={unitTree.treeStructure || []}
                 unitlvl={Number(unitTree?.maxlvl) || 0}
                 mode="edit"
-                treeValue={treeValue}
-                setTreeValue={setTreeValue}
+                unitTree={unitTree}
+                setValue={form.setValue}
               />
               <DoctrinedBuilder
                 setValue={form.setValue}
                 doctrineSlot={values.doctrines}
                 unitName={data.name}
               />
-              <Button type="submit" onClick={onSubmit} variant="custom">
-                Submit
+              <Button
+                type="submit"
+                onClick={onSubmit}
+                variant="custom"
+                disabled={postBuildMutation.isPending}
+              >
+                {postBuildMutation.isPending ? (
+                  <Loading color="#94a3b8" />
+                ) : (
+                  "Submit"
+                )}
               </Button>
             </form>
           </Form>
@@ -190,6 +206,3 @@ const Content = ({ data, unitTree }: ContentProps) => {
   );
 };
 export default Content;
-function useUser(): { data: any } {
-  throw new Error("Function not implemented.");
-}

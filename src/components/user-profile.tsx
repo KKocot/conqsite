@@ -12,6 +12,8 @@ import { Avatar } from "@radix-ui/react-avatar";
 import { AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Survey, UnitAssetsGroup } from "@/lib/get-data";
 import Image from "next/image";
+import Link from "next/link";
+import { CircleUser } from "lucide-react";
 
 export function UserProfile({
   player,
@@ -50,7 +52,16 @@ export function UserProfile({
               {player.inGameNick}
               <span className="text-red-500">({player.characterLevel})</span>
             </DialogTitle>
-            <DialogDescription>{player.discordNick}</DialogDescription>
+            <DialogDescription className="flex items-center gap-1">
+              {player.discordNick}
+              <Link
+                href={`/profile/${player.discordId}`}
+                className="hover:text-accent"
+                target="_blank"
+              >
+                <CircleUser />
+              </Link>
+            </DialogDescription>
           </div>
         </DialogHeader>
         {player.updates && player.updates?.length! > 0 ? (

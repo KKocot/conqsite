@@ -1,16 +1,20 @@
 "use client";
 
-import {
-  useState,
-  useMemo,
-  useCallback,
-  SetStateAction,
-  Dispatch,
-} from "react";
+import { useMemo, useCallback, useState, useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import TreeRenderer from "./tree-renderer";
+import { UnitData, UnitObject } from "@/lib/get-data";
+import { UseFormSetValue } from "react-hook-form";
+
+function transformToMap(obj: Map<number, number>): Map<number, number> {
+  const map = new Map<number, number>();
+  Object.entries(obj).forEach(([key, value]) => {
+    map.set(Number(key), value);
+  });
+  return map;
+}
 
 export type TreeNode = {
   id: number;
@@ -26,8 +30,9 @@ export interface TreeProps {
   nodes: TreeNode[];
   unitlvl: number;
   mode: "edit" | "view" | "builded";
-  treeValue: Map<number, number>;
-  setTreeValue: Dispatch<SetStateAction<Map<number, number>>>;
+  unitTree: UnitObject;
+  setValue?: UseFormSetValue<UnitData>;
+  entry?: Map<number, number>;
 }
 const generateTree = (nodes: TreeNode[]) => {
   const root = nodes.find((d) => d.prev === null);
@@ -40,19 +45,38 @@ const generateTree = (nodes: TreeNode[]) => {
   return mapWithChildren(root);
 };
 
-const Tree = ({ nodes, unitlvl, mode, treeValue, setTreeValue }: TreeProps) => {
+const Tree = ({
+  nodes,
+  unitlvl,
+  mode,
+  unitTree,
+  setValue,
+  entry,
+}: TreeProps) => {
+  const [treeValue, setTreeValue] = useState<Map<number, number>>(
+    entry
+      ? transformToMap(entry)
+      : () => new Map(unitTree.treeStructure.map((node) => [node.id, 0]))
+  );
+
   const nodesMap = useMemo(
     () => new Map(nodes.map((node) => [node.id, node])),
     [nodes]
   );
-
   const tree = useMemo(() => generateTree(nodes), [nodes]);
 
   const sumOfPoints = Array.from(treeValue).reduce(
     (sum, [_id, value]) => sum + value,
     0
   );
-
+  useEffect(() => {
+    if (setValue) {
+      setValue("tree", {
+        structure: treeValue,
+        maxlvl: unitlvl,
+      });
+    }
+  }, [treeValue, unitlvl]);
   const handleBadgeClick = useCallback((id: number) => {
     setTreeValue((prevValues) => {
       const valuesMap = new Map(prevValues);

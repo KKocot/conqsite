@@ -21,6 +21,8 @@ import List from "@/feature/unit-builder/unit-list";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 import { UnitAssetsGroup } from "@/lib/get-data";
+import Link from "next/link";
+import { CircleUser } from "lucide-react";
 
 interface ContentProps {
   unitsAssets: UnitAssetsGroup | undefined;
@@ -72,6 +74,12 @@ export default function Content({ unitsAssets }: ContentProps) {
               </h2>
               <div className="text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1">
                 {profileData.discordNick}
+                <Link
+                  href={`/profile/${profileData.discordId}`}
+                  className="hover:text-accent"
+                >
+                  <CircleUser />
+                </Link>
               </div>
             </div>
           </div>

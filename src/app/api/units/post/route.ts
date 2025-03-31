@@ -23,6 +23,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const unit = searchParams.get("unit");
   const id = searchParams.get("id");
+  const author = searchParams.get("author");
   try {
     await connectMongoDB();
     if (id) {
@@ -65,6 +66,19 @@ export async function GET(request: Request) {
         });
       }
       return NextResponse.json(userPost, { status: 200 });
+    }
+    if (author) {
+      const authorSurvey = await Survey.findOne({
+        discordId: author,
+      });
+      const posts = await UnitPost.find({ author: author });
+      return NextResponse.json(
+        {
+          author: { img: authorSurvey.avatar, nick: authorSurvey.discordNick },
+          posts,
+        },
+        { status: 200 }
+      );
     }
     const userPost = await UnitPost.find();
     return NextResponse.json(userPost, { status: 200 });

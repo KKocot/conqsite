@@ -11,7 +11,6 @@ import Image from "next/image";
 import { Doctrine } from "@/assets/doctrines";
 import DoctrinesGroup from "@/feature/unit-builder/post/doctrines-group";
 import Tree from "@/feature/unit-builder/tree";
-import { useState } from "react";
 
 interface ContentProps {
   data: UnitData;
@@ -23,9 +22,7 @@ const Content = ({ data, doctrines, unitTree }: ContentProps) => {
   const doctrinesMap = doctrines.filter((d) =>
     data.doctrines.some((e) => e.name === d.name)
   );
-  const [treeValue, setTreeValue] = useState<Map<number, number>>(
-    data.tree.structure
-  );
+
   return (
     <Card className="max-w-3xl mx-auto overflow-hidden h-fit my-8">
       <CardHeader className="pb-0">
@@ -34,10 +31,7 @@ const Content = ({ data, doctrines, unitTree }: ContentProps) => {
             <h2 className="text-2xl font-bold mb-4">{data.title}</h2>
 
             <Link
-              href={`/unit/${unitTree.era}/${unitTree.name.replaceAll(
-                " ",
-                "_"
-              )}`}
+              href={`/unit/${unitTree.name.replaceAll(" ", "_")}`}
               className="flex items-center gap-2"
             >
               <Image
@@ -76,8 +70,8 @@ const Content = ({ data, doctrines, unitTree }: ContentProps) => {
             nodes={unitTree.treeStructure || []}
             unitlvl={Number(unitTree.maxlvl)}
             mode="builded"
-            treeValue={treeValue}
-            setTreeValue={setTreeValue}
+            unitTree={unitTree}
+            entry={data.tree.structure}
           />
         ) : null}
       </CardContent>
@@ -89,7 +83,12 @@ const Content = ({ data, doctrines, unitTree }: ContentProps) => {
             <AvatarFallback>{data.authorNick}</AvatarFallback>
           </Avatar>
           <div>
-            <p className="text-sm font-medium">{data.authorNick}</p>
+            <Link
+              href={`/profile/${data.author}`}
+              className="text-sm font-medium"
+            >
+              {data.authorNick}
+            </Link>
             <p className="text-xs text-muted-foreground">
               {new Date(data.date).toLocaleDateString("en-GB")}
             </p>

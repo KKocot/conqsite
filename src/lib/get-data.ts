@@ -476,6 +476,7 @@ export interface UnitAsset {
   icon: string;
   id: number;
   leadership: number;
+  description: string;
   name: string;
   src: string;
   value: number;
@@ -514,7 +515,7 @@ export interface UnitData {
   ytlink: string;
   description: string;
   tree: { structure: Map<number, number>; maxlvl: number };
-  doctrines: { id: number; name: string; img: string }[];
+  doctrines: { id: number; name: string; img: string; stats: string }[];
 }
 
 export const getUnitPost = async (id: string): Promise<UnitData> => {
@@ -531,6 +532,22 @@ export const getAllUnitPosts = async (unit: string): Promise<UnitData[]> => {
 
 export const getAllUnitsPosts = async (): Promise<UnitData[]> => {
   const response = await fetch(`/api/units/post`);
+  const result = await response.json();
+  return result;
+};
+
+export interface UserUnitPost {
+  author: {
+    img: string;
+    nick: string;
+  };
+  posts: UnitData[];
+}
+
+export const getUserUnitsPosts = async (
+  author: string
+): Promise<UserUnitPost> => {
+  const response = await fetch(`/api/units/post?author=${author}`);
   const result = await response.json();
   return result;
 };

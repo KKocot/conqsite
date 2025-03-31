@@ -98,40 +98,6 @@ export function getUniqueValues(arr: string[]): string[] {
   return arr.filter((value, index) => arr.indexOf(value) === index);
 }
 
-export function getUnit(
-  unitName: string,
-  era: "golden" | "heroic" | "green" | "blue" | "grey",
-  unitsAssets?: UnitAssetsGroup
-) {
-  if (!unitsAssets) return null;
-  const { goldenEra, heroicEra, greenEra, blueEra, greyEra } = unitsAssets;
-  const cleanUnitName = unitName?.replace(/_/g, " ");
-  switch (era) {
-    case "golden":
-      return goldenEra.find(
-        (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
-      );
-    case "heroic":
-      return heroicEra.find(
-        (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
-      );
-    case "green":
-      return greenEra.find(
-        (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
-      );
-    case "blue":
-      return blueEra.find(
-        (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
-      );
-    case "grey":
-      return greyEra.find(
-        (unit) => unit.name.toLocaleLowerCase() === cleanUnitName
-      );
-    default:
-      return null;
-  }
-}
-
 export const createDateArray = (start: string, end: string): string[] => {
   const startDate = new Date(start);
   const endDate = new Date(end);

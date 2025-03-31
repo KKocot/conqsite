@@ -92,9 +92,7 @@ const Preview = ({
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8" title={unit1?.name}>
                         <Link
-                          href={`/unit/${unit1?.era}/${unit1?.name
-                            .replaceAll(" ", "_")
-                            .toLocaleLowerCase()}`}
+                          href={`/unit/${unit1?.name.replaceAll(" ", "_")}`}
                           target="_blank"
                         >
                           <AvatarImage alt={unit1?.name} src={unit1?.icon} />
@@ -107,9 +105,7 @@ const Preview = ({
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8" title={unit2?.name}>
                         <Link
-                          href={`/unit/${unit2?.era}/${unit2?.name
-                            .replaceAll(" ", "_")
-                            .toLocaleLowerCase()}`}
+                          href={`/unit/${unit2?.name.replaceAll(" ", "_")}`}
                           target="_blank"
                         >
                           <AvatarImage alt={unit2?.name} src={unit2?.icon} />
@@ -122,9 +118,7 @@ const Preview = ({
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8" title={unit3?.name}>
                         <Link
-                          href={`/unit/${unit3?.era}/${unit3?.name
-                            .replaceAll(" ", "_")
-                            .toLocaleLowerCase()}`}
+                          href={`/unit/${unit3?.name.replaceAll(" ", "_")}`}
                           target="_blank"
                         >
                           <AvatarImage alt={unit3?.name} src={unit3?.icon} />

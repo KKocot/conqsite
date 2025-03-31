@@ -14,6 +14,7 @@ const putUnitPostSchema = z.object({
         id: z.number(),
         name: z.string(),
         img: z.string(),
+        stats: z.string(),
       })
     )
     .optional(),

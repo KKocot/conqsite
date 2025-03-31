@@ -29,7 +29,7 @@ export async function GET(request: Request) {
   try {
     await connectMongoDB();
     if (name) {
-      const cleanName = name.replace("_", " ");
+      const cleanName = name.replaceAll("_", " ");
       const unitAsset = await UnitAsset.findOne({ name: cleanName });
       return NextResponse.json({ unitAsset });
     }
