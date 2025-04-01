@@ -4,6 +4,8 @@ import UnitPost from "@/models/unit-post";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import Survey from "@/models/surveys";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export async function POST(request: Request) {
   try {
@@ -82,6 +84,30 @@ export async function GET(request: Request) {
     }
     const userPost = await UnitPost.find();
     return NextResponse.json(userPost, { status: 200 });
+  } catch (error) {
+    if (error instanceof Error)
+      return NextResponse.json({ message: error.message }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
+  const session = await getServerSession(authOptions);
+  if (!session || !id) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    await connectMongoDB();
+    const post = await UnitPost.findById(id);
+    const authorCheck = post?.author === session.user.id;
+    if (!authorCheck) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    } else {
+      const deletedPost = await UnitPost.findByIdAndDelete(id);
+      return NextResponse.json(deletedPost, { status: 200 });
+    }
   } catch (error) {
     if (error instanceof Error)
       return NextResponse.json({ message: error.message }, { status: 500 });
