@@ -23,7 +23,21 @@ export async function POST(
     const data = statusSchema.parse(await request.json());
     const unitWiki = await UnitWiki.findByIdAndDelete(id);
     const updatedUnitWiki = await UnitWiki.create({
-      ...unitWiki,
+      name: unitWiki.name,
+      icon: unitWiki.icon,
+      authors: unitWiki.authors,
+      era: unitWiki.era,
+      image: unitWiki.image,
+      leadership: unitWiki.leadership,
+      value: unitWiki.value,
+      masteryPoints: unitWiki.masteryPoints,
+      maxlvl: unitWiki.maxlvl,
+      season: unitWiki.season,
+      description: unitWiki.description,
+      skills: unitWiki.skills,
+      challenges: unitWiki.challenges,
+      formations: unitWiki.formations,
+      treeStructure: unitWiki.treeStructure,
       status: data.status,
       reviewNotes: data.reviewNotes,
     });

@@ -16,7 +16,7 @@ const Content = ({ data, roles }: { data: UnitObject; roles?: Roles[] }) => {
     queryFn: () => getUnitWiki(data.name, "accepted"),
     enabled: !!data,
   });
-  const reviewer = roles?.some((role) => role.role === "reviewer") ?? false;
+  const reviewer = roles?.some((role) => role.role === "Reviewer") ?? false;
   const changeWikiStatus = useChangeWikiStatus();
   const [note, setNote] = useState("");
   const lastAccepted = prevData ? prevData[prevData.length - 1] : undefined;
