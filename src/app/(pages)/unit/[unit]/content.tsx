@@ -145,7 +145,7 @@ const Content = ({
               <span>{`Avrage rate: ${
                 votes.length === 0
                   ? "No votes"
-                  : `${averageVote} from ${votes.length} votes`
+                  : `${averageVote.toFixed(2)} from ${votes.length} votes`
               }`}</span>
               <span>{`Your rate: ${userVote}`}</span>
               <Stars rating={userVote} setRating={(e: number) => onVote(e)} />

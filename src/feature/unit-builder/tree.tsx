@@ -53,6 +53,7 @@ const Tree = ({
   setValue,
   entry,
 }: TreeProps) => {
+  const maxPoints = unitlvl - 1;
   const [treeValue, setTreeValue] = useState<Map<number, number>>(
     entry
       ? transformToMap(entry)
@@ -73,10 +74,10 @@ const Tree = ({
     if (setValue) {
       setValue("tree", {
         structure: treeValue,
-        maxlvl: unitlvl,
+        maxlvl: maxPoints,
       });
     }
-  }, [treeValue, unitlvl]);
+  }, [treeValue, maxPoints]);
   const handleBadgeClick = useCallback((id: number) => {
     setTreeValue((prevValues) => {
       const valuesMap = new Map(prevValues);
@@ -100,7 +101,7 @@ const Tree = ({
           nodesMap={nodesMap}
           onSkillUpdate={handleBadgeClick}
           disabled={
-            sumOfPoints === unitlvl || mode === "view" || mode === "builded"
+            sumOfPoints === maxPoints || mode === "view" || mode === "builded"
           }
           mode={mode}
         />
@@ -110,7 +111,7 @@ const Tree = ({
           <>
             <div className=" flex flex-col items-center gap-2">
               <Label>Points</Label>
-              <Badge variant="tree">{`${sumOfPoints}/${unitlvl}`}</Badge>
+              <Badge variant="tree">{`${sumOfPoints}/${maxPoints}`}</Badge>
             </div>
 
             <Button variant="destructive" onClick={handleReset}>
