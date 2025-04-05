@@ -263,9 +263,9 @@ const Item = ({
           }
         />
       </span>
-      <span className="w-24 text-center">{`${t("cost")} ${
-        leadership ? leadership : 0
-      }`}</span>
+      <span className="w-24 text-center">{`${t("cost")} ${(
+        leadership ?? 0
+      ).toFixed(0)}`}</span>
 
       <span>
         <Autocompleter

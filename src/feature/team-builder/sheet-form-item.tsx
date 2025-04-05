@@ -261,8 +261,7 @@ const Item = ({
           }
         />
       </span>
-      <span>{t("cost") + " " + (leadership ? leadership : 0)}</span>
-
+      <span>{`${t("cost")} ${(leadership ?? 0).toFixed(0)}`}</span>
       <span>
         <Autocompleter
           placeholder={t("weapon")}
