@@ -1,3 +1,4 @@
+import { useVoteUnitMutation } from "@/components/hooks/use-vote-unit-mutation";
 import useWikiMutation from "@/components/hooks/use-wiki-mutation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -5,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import Stars from "@/components/ui/stars";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import ChallengesArea from "@/feature/unit-builder/challenges-area";
@@ -14,7 +16,7 @@ import KitsArea from "@/feature/unit-builder/kits-area";
 import PostCard from "@/feature/unit-builder/post/card";
 import SkillsArea from "@/feature/unit-builder/skills-area";
 import Tree from "@/feature/unit-builder/tree";
-import { getRoleById, UnitData, UnitObject } from "@/lib/get-data";
+import { getRoleById, Rate, UnitData, UnitObject } from "@/lib/get-data";
 import { Unit } from "@/lib/type";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowBigLeft, PenIcon, PlusCircle, Save, X } from "lucide-react";
@@ -30,11 +32,16 @@ const Content = ({
   shortEntry,
   posts,
   postsLoading,
+  votes,
 }: {
   entry?: UnitObject;
   shortEntry: Unit;
   posts?: UnitData[];
   postsLoading: boolean;
+  votes: {
+    id: string;
+    rate: number;
+  }[];
 }) => {
   const { data: user } = useSession();
   const { data: roles, isLoading: rolesLoading } = useQuery({
@@ -47,7 +54,10 @@ const Content = ({
     roles?.some((role) => role.role === "Trusted")
       ? "accepted"
       : "pending";
+  const userVote = votes?.find((v) => v.id === user?.user.id)?.rate || 0;
 
+  const averageVote =
+    votes?.reduce((acc, curr) => acc + curr.rate, 0) / votes.length;
   const banned = roles?.some((role) => role.role === "Banned");
   const form = useForm<UnitObject>({
     values: {
@@ -72,9 +82,6 @@ const Content = ({
   const [editMode, setEditMode] = useState(false);
   const treeStructure = form.watch("treeStructure");
   const wikiMutation = useWikiMutation();
-  const [treeValue, setTreeValue] = useState<Map<number, number>>(
-    () => new Map(treeStructure.map((node) => [node.id, 0]))
-  );
   const maxlvl = form.watch("maxlvl");
   const onSubmit = form.handleSubmit(async (data) => {
     wikiMutation.mutate({
@@ -94,6 +101,23 @@ const Content = ({
       toast.error("Failed to submit unit");
     }
   }, [wikiMutation.isSuccess, wikiMutation.isError]);
+
+  const voteUnitMutation = useVoteUnitMutation();
+  const onVote = async (rate: number) => {
+    if (!user?.user.id) {
+      toast.error("You need to be logged in to vote");
+      return;
+    }
+    voteUnitMutation.mutate({ unit: shortEntry.name, rate });
+  };
+  useEffect(() => {
+    if (voteUnitMutation.isSuccess) {
+      toast.success("Vote submitted successfully");
+    }
+    if (voteUnitMutation.isError) {
+      toast.error("Failed to submit vote");
+    }
+  }, [voteUnitMutation.isSuccess, voteUnitMutation.isError]);
   return (
     <Form {...form}>
       <form className="container mx-auto py-8">
@@ -117,6 +141,16 @@ const Content = ({
             </div>
           </CardHeader>
           <CardContent className="grid gap-6">
+            <div className="flex justify-center flex-col items-center">
+              <span>{`Avrage rate: ${
+                votes.length === 0
+                  ? "No votes"
+                  : `${averageVote} from ${votes.length} votes`
+              }`}</span>
+              <span>{`Your rate: ${userVote}`}</span>
+              <Stars rating={userVote} setRating={(e: number) => onVote(e)} />
+            </div>
+
             <div className="flex justify-around">
               <div className="flex flex-col items-center">
                 <p className="text-sm text-muted-foreground">Leadership</p>

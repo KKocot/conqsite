@@ -551,3 +551,17 @@ export const getUserUnitsPosts = async (
   const result = await response.json();
   return result;
 };
+
+export interface Rate {
+  unit: string;
+  votes: {
+    id: string;
+    rate: number;
+  }[];
+}
+
+export const getUnitRate = async (unit: string): Promise<Rate> => {
+  const response = await fetch(`/api/units/rate?unit=${unit}`);
+  const result = await response.json();
+  return result;
+};

@@ -3,7 +3,12 @@
 import { useParams } from "next/navigation";
 import Content from "./content";
 import { useQuery } from "@tanstack/react-query";
-import { getAllUnitPosts, getUnitAssets, getUnitWiki } from "@/lib/get-data";
+import {
+  getAllUnitPosts,
+  getUnitAssets,
+  getUnitRate,
+  getUnitWiki,
+} from "@/lib/get-data";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 
@@ -25,6 +30,11 @@ const Page = () => {
     queryFn: () => getAllUnitPosts(unit),
     enabled: !!unit,
   });
+  const { data: unitRate } = useQuery({
+    queryKey: ["unitRate", unit],
+    queryFn: () => getUnitRate(unit),
+    enabled: !!unit,
+  });
   if (isLoading) return <LoadingComponent />;
   if (!unitAssets) return <NoData />;
   return (
@@ -33,6 +43,7 @@ const Page = () => {
       shortEntry={unitAssets}
       posts={posts}
       postsLoading={loadingPosts}
+      votes={unitRate?.votes || []}
     />
   );
 };
