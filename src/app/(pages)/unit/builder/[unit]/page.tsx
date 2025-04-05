@@ -10,7 +10,7 @@ import LoadingComponent from "@/feature/ifs/loading";
 const Page = () => {
   const unitName = useParams().unit.toString().replaceAll("_", " ");
   const { data: unitAssets } = useQuery({
-    queryKey: ["unitAssets"],
+    queryKey: ["unitAssets", unitName],
     queryFn: () => getUnitAssets(unitName),
     enabled: true,
   });
