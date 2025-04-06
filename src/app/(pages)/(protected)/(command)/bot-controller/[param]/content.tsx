@@ -18,7 +18,15 @@ import {
   HouseAssets,
 } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
-import { Trash2 } from "lucide-react";
+import { Info, Trash2 } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import BotDocs from "@/components/bot-docs";
 interface Props {
   house: string;
   userId: string;
@@ -121,6 +129,23 @@ const Content = ({
       )}
       {discordDataLoading || !discordData ? null : (
         <div className="absolute bottom-4 right-4 gap-2 flex">
+          <TooltipProvider>
+            <Tooltip>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <TooltipTrigger asChild>
+                    <Button variant="custom" className="rounded-full p-2 h-fit">
+                      <Info size={24} />
+                    </Button>
+                  </TooltipTrigger>
+                </DialogTrigger>
+                <DialogContent className=" overflow-y-scroll max-h-full h-fit">
+                  <BotDocs />
+                </DialogContent>
+              </Dialog>
+              <TooltipContent>Info</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <AssetsDialog assets={assets} house={house} />
           <EventDialog
             disabled={limited}

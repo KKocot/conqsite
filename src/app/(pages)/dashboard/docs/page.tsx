@@ -1,9 +1,11 @@
+import BotDocs from "@/components/bot-docs";
 import { Link2 } from "lucide-react";
 import Link from "next/link";
 
 const DocsPage: React.FC = () => {
   return (
     <div className="container mx-auto p-6">
+      <BotDocs />
       <h2 className="text-xl font-semibold mb-2">Bot Config:</h2>
       <ul className="list-disc pl-6 mb-4">
         <li>
@@ -64,7 +66,6 @@ const DocsPage: React.FC = () => {
         <li>More than 3(6) events</li>
         <li>more them 1(3) houses per player</li>
       </ul>
-
       <h3 className="text-lg font-semibold mb-1">User:</h3>
       <ul className="list-disc pl-6 mb-4">
         <li>Post builds only to house - Not available yet</li>
