@@ -22,9 +22,9 @@ const BotDocs = () => {
           </p>
           <p>
             To create a list, click the ➕ button in the bottom-right corner of
-            the screen. Then choose the event's date and time (the event will be
-            sent immediately to the channel). There are 3 options for repeating
-            the event:
+            the screen. Then choose the event&apos;s date and time (the event
+            will be sent immediately to the channel). There are 3 options for
+            repeating the event:
           </p>
           <div className="flex flex-col md:flex-row items-start gap-6">
             <img
@@ -69,8 +69,9 @@ const BotDocs = () => {
             .
           </p>
           <p>
-            The fourth option ⚙ is available to users with "High Roles" and
-            allows pinging: untagged members or one of the three response types.
+            The fourth option ⚙ is available to users with &quot;High
+            Roles&quot; and allows pinging: untagged members or one of the three
+            response types.
           </p>
         </div>
       </details>
@@ -128,7 +129,7 @@ const BotDocs = () => {
               <code className="px-2 py-1 rounded bg-gray-100 dark:bg-gray-800 font-mono text-sm border border-gray-200 dark:border-gray-700">
                 /apollo_ping_tentative
               </code>{" "}
-              - pings users marked as "tentative"
+              - pings users marked as &quot;tentative&quot;
             </li>
           </ul>
           <img
@@ -178,7 +179,7 @@ const BotDocs = () => {
               <code className="px-2 py-1 rounded bg-gray-100 dark:bg-gray-800 font-mono text-sm border border-gray-200 dark:border-gray-700">
                 /apollo_ping_tentative
               </code>{" "}
-              - pings users marked as "tentative"
+              - pings users marked as &quot;tentative&quot;
             </li>
             <li>
               <code className="px-2 py-1 rounded bg-gray-100 dark:bg-gray-800 font-mono text-sm border border-gray-200 dark:border-gray-700">

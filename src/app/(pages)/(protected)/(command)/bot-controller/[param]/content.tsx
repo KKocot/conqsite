@@ -19,25 +19,13 @@ import {
 } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { Info, Trash2 } from "lucide-react";
-import { useUpdateAssetsMutation } from "@/components/hooks/use-assets-mutation";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Settings } from "lucide-react";
 import BotDocs from "@/components/bot-docs";
 interface Props {
   house: string;
@@ -155,7 +143,7 @@ const Content = ({
                   <BotDocs />
                 </DialogContent>
               </Dialog>
-              <TooltipContent>Bot messages</TooltipContent>
+              <TooltipContent>Info</TooltipContent>
             </Tooltip>
           </TooltipProvider>
           <AssetsDialog assets={assets} house={house} />

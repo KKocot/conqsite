@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArtilleryProps, SheetTypes } from "@/lib/type";
-import React, { FC, ReactNode, useMemo, useState } from "react";
+import React, { ReactNode, useMemo, useState } from "react";
 import clsx from "clsx";
 import { weapons } from "@/assets/weapons";
 import Item from "@/feature/team-builder/sheet-form-item";
@@ -26,6 +26,7 @@ import {
 import Loading from "react-loading";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import PickedUnitsStats from "@/feature/team-builder/picked-units-stats";
 
 interface ContentProps {
   surveysData: Survey[];
@@ -208,9 +209,17 @@ const Content = ({
         <Preview data={sheetData} units={units} commander={commander} />
       </div>
       <nav className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 rounded-full bg-background px-1 py-2 shadow-lg">
+        <TooltipContainer title="Sheet Stats">
+          <PickedUnitsStats
+            sheetData={sheetData}
+            units={units.map((e) => ({ name: e.name, icon: e.icon }))}
+          />
+        </TooltipContainer>
         <TooltipContainer title="Public Lineups">
           {publicLineups.loading ? (
-            <Loading type="spin" color="#94a3b8" />
+            <div className="flex w-full items-center justify-center">
+              <Loading type="spin" color="#94a3b8" height={30} width={30} />
+            </div>
           ) : (
             <PublicDialog
               data={sheetData}
