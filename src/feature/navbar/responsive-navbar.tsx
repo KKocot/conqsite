@@ -28,6 +28,8 @@ import {
 import clsx from "clsx";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
+import HouseLinks from "./house-links";
+import HouseLinkMobile from "./house-link-moblie";
 
 interface LinkItem {
   title: string;
@@ -36,7 +38,7 @@ interface LinkItem {
   visibleTo?: boolean;
 }
 
-interface SidebarLink {
+export interface SidebarLink {
   title: string;
   url: string;
   icon: LucideIcon;
@@ -141,34 +143,7 @@ const ResposiveSidebar = ({
             </DropdownMenu>
           ) : null}
           {houseLinks?.map((e) => (
-            <DropdownMenu key={e.title}>
-              <SidebarMenuItem>
-                <DropdownMenuTrigger asChild>
-                  <SidebarMenuButton className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
-                    <e.icon /> {e.title} <MoreHorizontal className="ml-auto" />
-                  </SidebarMenuButton>
-                </DropdownMenuTrigger>
-                {e.items?.length ? (
-                  <DropdownMenuContent className="min-w-56 rounded-lg">
-                    <DropdownMenuLabel className="p-0 font-normal">
-                      <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                        <e.icon />
-                        <span className="truncate font-semibold">
-                          {e.title}
-                        </span>
-                      </div>
-                    </DropdownMenuLabel>
-                    {e.items.map((item) =>
-                      item.visibleTo === false ? null : (
-                        <DropdownMenuItem asChild key={item.title}>
-                          <Link href={item.url}>{item.title}</Link>
-                        </DropdownMenuItem>
-                      )
-                    )}
-                  </DropdownMenuContent>
-                ) : null}
-              </SidebarMenuItem>
-            </DropdownMenu>
+            <HouseLinkMobile key={e.title} house={e} />
           ))}
         </SidebarMenu>
       </SidebarGroupContent>
@@ -275,40 +250,7 @@ const ResposiveSidebar = ({
                   className="h-4 w-[160px] rounded-3xl m-2"
                 />
               ))
-            : houseLinks?.map((e) => (
-                <SidebarMenu key={e.title}>
-                  <Collapsible key={e.title} className="group/collapsible">
-                    <SidebarMenuItem>
-                      {e.items?.length ? (
-                        <>
-                          <CollapsibleTrigger asChild>
-                            <SidebarMenuButton>
-                              <e.icon /> {e.title}{" "}
-                              <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
-                              <Minus className="ml-auto group-data-[state=closed]/collapsible:hidden" />
-                            </SidebarMenuButton>
-                          </CollapsibleTrigger>
-                          <CollapsibleContent>
-                            <SidebarMenuSub>
-                              {e.items?.map((subItem) =>
-                                subItem.visibleTo === false ? null : (
-                                  <SidebarMenuSubItem key={subItem.title}>
-                                    <SidebarMenuSubButton asChild>
-                                      <Link href={subItem.url}>
-                                        <span>{subItem.title}</span>
-                                      </Link>
-                                    </SidebarMenuSubButton>
-                                  </SidebarMenuSubItem>
-                                )
-                              )}
-                            </SidebarMenuSub>
-                          </CollapsibleContent>
-                        </>
-                      ) : null}
-                    </SidebarMenuItem>
-                  </Collapsible>
-                </SidebarMenu>
-              ))}
+            : houseLinks?.map((e) => <HouseLinks key={e.title} house={e} />)}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
