@@ -49,7 +49,6 @@ const Content = ({
       getDiscordData(userId, {
         guild_id: config.id,
         tw_discord: config.id,
-        anotherDC: true,
       }),
     enabled: !!house,
   });

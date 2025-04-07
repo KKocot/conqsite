@@ -2,7 +2,12 @@ import CreateHouseDiscordServers from "@/feature/house-settings/create-house-dis
 import CreateHouseHighRoles from "@/feature/house-settings/create-house-high-roles";
 import CreateHouseCard from "@/feature/house-settings/create-house-card";
 import CreateHouseConfig from "@/feature/house-settings/create-house-config";
-import { DiscordProps, DiscordUsersProps, getAddAll } from "@/lib/get-data";
+import {
+  DiscordProps,
+  DiscordUsersProps,
+  getAddAll,
+  Servers,
+} from "@/lib/get-data";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Steper from "@/components/steper";
@@ -30,7 +35,13 @@ export interface DiscordDataProps {
   users: DiscordUsersProps | null;
 }
 
-const Content = ({ username }: { username: string }) => {
+const Content = ({
+  username,
+  servers,
+}: {
+  username: string;
+  servers: Servers[];
+}) => {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [discordData, setDiscordData] = useState<DiscordDataProps>({
@@ -97,6 +108,7 @@ const Content = ({ username }: { username: string }) => {
       <div className="container pt-8">
         {step === 1 ? (
           <CreateHouseDiscordServers
+            servers={servers}
             type="create"
             creatorId={username}
             handleStep={(e) => setStep(e)}
