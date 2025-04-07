@@ -43,11 +43,29 @@ const AssetsDialog = ({ assets, house }: Props) => {
       messages: assets?.messages ? !assets.messages : true,
     });
   };
-  const onSurveysPing = () => {
-    toast("Not implemented yet");
-  };
-  const onAttendancePing = () => {
-    toast("Not implemented yet");
+  const onSurveysPing = async () => {
+    const url = `/api/discord-bot/ping-no-surveys?guild_id=${house}`;
+    let data;
+    try {
+      const response = await fetch(url, {
+        cache: "no-store",
+        headers: {
+          Authorization: `${process.env.BOT_KEY}`,
+          "Content-Type": "application/json",
+        },
+      });
+      data = await response.json();
+    } catch (error) {
+      if (error instanceof Error) {
+        toast(error.message);
+      }
+    } finally {
+      if (data.status === "ok") {
+        toast(
+          `Emtpy surveys: ${data.empty_survey}, but ${data.failed_members.length} failed`
+        );
+      }
+    }
   };
   return (
     <TooltipProvider>
@@ -78,17 +96,14 @@ const AssetsDialog = ({ assets, house }: Props) => {
                 </Label>
               </div>
             </div>
-            {/* <div className="space-y-4">
+            <div className="space-y-4">
               <h2 className="font-bold">Pings</h2>
-              <div>
+              <div className="flex flex-col space-y-2">
                 <Button variant="tab" onClick={onSurveysPing}>
                   Empty surveys
                 </Button>
-                <Button variant="tab" onClick={onAttendancePing}>
-                  Missing attendance
-                </Button>
               </div>
-            </div> */}
+            </div>
           </DialogContent>
         </Dialog>
         <TooltipContent>Bot messages</TooltipContent>

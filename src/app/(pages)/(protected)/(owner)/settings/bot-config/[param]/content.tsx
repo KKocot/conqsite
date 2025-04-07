@@ -3,7 +3,7 @@
 import { DiscordDataProps } from "@/app/(pages)/(protected)/member/create-house/content";
 import CreateHouseConfig from "@/feature/house-settings/create-house-config";
 import CreateHouseDiscordServers from "@/feature/house-settings/create-house-discord-servers";
-import { HouseSettings } from "@/lib/get-data";
+import { HouseSettings, Servers } from "@/lib/get-data";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -19,9 +19,11 @@ export interface EditConfigProps {
 const Content = ({
   data,
   creatorId,
+  servers,
 }: {
   data: HouseSettings;
   creatorId: string;
+  servers: Servers[];
 }) => {
   const [step, setStep] = useState(1);
   const [discordData, setDiscordData] = useState<DiscordDataProps>({
@@ -93,6 +95,7 @@ const Content = ({
           handleDiscord={setDiscordData}
           handlerGeneral={setValues}
           configValues={values}
+          servers={servers}
         />
       ) : step === 2 && discordData.lists ? (
         <CreateHouseConfig

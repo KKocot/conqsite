@@ -220,11 +220,10 @@ export interface DiscordProps {
 }
 export const getDiscordData = async (
   member_id: string,
-  values: { guild_id: string; tw_discord: string; anotherDC: boolean }
+  values: { guild_id: string; tw_discord: string }
 ): Promise<DiscordProps> => {
-  const tw_server = values.anotherDC ? values.tw_discord : values.guild_id;
   const response = await fetch(
-    `/api/discord-bot/discord-data?guild_id=${values.guild_id}&member_id=${member_id}&tw_server=${tw_server}`
+    `/api/discord-bot/discord-data?guild_id=${values.guild_id}&member_id=${member_id}&tw_server=${values.tw_discord}`
   );
   const result = await response.json();
   return result;
@@ -562,6 +561,21 @@ export interface Rate {
 
 export const getUnitRate = async (unit: string): Promise<Rate> => {
   const response = await fetch(`/api/units/rate?unit=${unit}`);
+  const result = await response.json();
+  return result;
+};
+
+export interface UserServers {
+  status: string;
+  servers: Servers[];
+}
+export type Servers = {
+  id: string;
+  name: string;
+  icon: string;
+};
+export const getUserServers = async (userId: string): Promise<UserServers> => {
+  const response = await fetch(`/api/discord-bot/user-servers?id=${userId}`);
   const result = await response.json();
   return result;
 };
