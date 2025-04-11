@@ -61,7 +61,7 @@ const Content = ({
   };
 
   // Check if if limited events is reached
-  const limited = (events.length ?? 0) >= (assets.premium ? 6 : 3);
+  const limited = (events.length ?? 0) >= (assets?.premium ? 6 : 3);
 
   // Check if response from discord server is an error
   if (discordData?.status === "error") {
