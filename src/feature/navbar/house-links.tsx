@@ -33,9 +33,9 @@ const HouseLinks = ({ house }: { house: SidebarLink }) => {
               <CollapsibleTrigger asChild>
                 <SidebarMenuButton className="gap-1 pl-0">
                   {isLoading ? (
-                    <Castle className="h-8 w-8 rounded-none p-0 mr-3" />
+                    <Castle className="h-8 w-8 p-0 mr-3" />
                   ) : (
-                    <Avatar className="h-8 w-8 rounded-none p-0">
+                    <Avatar className="h-8 w-8 p-0">
                       <AvatarImage src={data?.avatar} alt="House Icon" />
                     </Avatar>
                   )}
