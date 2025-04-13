@@ -4,11 +4,11 @@ import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 import {
   getFilledSurveys,
-  getHouseStats,
+  getHouseSortedStats,
   getSeasons,
   getSurveyList,
   SurveyList,
-  UsersStats,
+  UsersStatsSorted,
 } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
@@ -18,8 +18,8 @@ const Page = () => {
   const { param }: { param: string } = useParams();
   const house = param.replaceAll("%20", " ");
   const { data, isLoading } = useQuery({
-    queryKey: ["houseStats", house],
-    queryFn: () => getHouseStats(house),
+    queryKey: ["houseStatsSorted", house],
+    queryFn: () => getHouseSortedStats(house),
     enabled: !!house,
   });
   const { data: seasons, isLoading: seasonsLoading } = useQuery({
@@ -39,11 +39,10 @@ const Page = () => {
   if (isLoading || seasonsLoading || listLoading || filledListLoading)
     return <LoadingComponent />;
   if (!data || !seasons || !list || !filledList) return <NoData />;
-  const noAttendance: UsersStats[] = list
+  const noAttendance: UsersStatsSorted[] = list
     .filter(
       (item: SurveyList) =>
-        !data.some((player: UsersStats) => player.id === item.discordId) &&
-        item.discordId !== "303156898532818944"
+        !data.some((player: UsersStatsSorted) => player.id === item.discordId)
     )
     .map((item: SurveyList) => ({
       id: item.discordId,

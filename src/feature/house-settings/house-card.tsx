@@ -28,14 +28,13 @@ export default function HouseCard({
   assetsData,
 }: {
   house: HouseDetails;
-  assetsData?: HouseAssets[];
+  assetsData?: HouseAssets;
 }) {
-  const houseAssets = assetsData?.find((asset) => asset.name === house.name);
   const t = useTranslations("ListOfHouses");
   return (
     <Card
       className={clsx("w-[362px] overflow-hidden flex flex-col", {
-        "border-4 border-accent": houseAssets?.premium,
+        "border-4 border-accent": assetsData?.premium,
       })}
     >
       <div className="relative w-full h-[362px]">
@@ -56,7 +55,7 @@ export default function HouseCard({
       <CardHeader className="pt-2 ">
         <CardTitle
           className={clsx("text-xl font-bold", {
-            "text-accent": houseAssets?.premium,
+            "text-accent": assetsData?.premium,
           })}
         >
           {house.name}

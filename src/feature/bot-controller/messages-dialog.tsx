@@ -40,7 +40,7 @@ const AssetsDialog = ({ assets, house }: Props) => {
       // signupBot is konquerus by default
       signupBot: assets?.signupBot ?? "konquerus",
       // messages is the opposite of the current value or true by default
-      messages: assets?.messages ? !assets.messages : true,
+      messages: !!assets ? !assets.messages : false,
     });
   };
   const onSurveysPing = async () => {

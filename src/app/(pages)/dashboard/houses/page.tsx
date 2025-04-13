@@ -17,11 +17,39 @@ const HousesPage = () => {
   });
   if (isLoading || assetsLoading) return <LoadingComponent />;
   if (!data || !assetsData) return <NoData />;
+  const fullData = data
+    .map((house) => {
+      const houseAssets = assetsData.find((asset) => asset.name === house.name);
+      return houseAssets
+        ? {
+            name: house.name,
+            card: house,
+            houseAssets,
+          }
+        : {
+            name: house.name,
+            card: house,
+            houseAssets: {
+              name: house.name,
+              premium: false,
+              sharedList: false,
+              signupBot: "",
+              messages: true,
+            },
+          };
+    })
+    .sort(
+      (a, b) => Number(b.houseAssets.premium) - Number(a.houseAssets.premium)
+    );
   return (
     <div className="flex flex-col items-center">
       <ul className="flex flex-wrap gap-4 my-12 justify-around">
-        {data.map((house) => (
-          <HouseCard key={house.name} house={house} assetsData={assetsData} />
+        {fullData.map((house) => (
+          <HouseCard
+            key={house.name}
+            house={house.card}
+            assetsData={house.houseAssets}
+          />
         ))}
       </ul>
     </div>

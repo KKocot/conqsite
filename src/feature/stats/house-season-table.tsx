@@ -1,6 +1,6 @@
 "use client";
 
-import { SeasonProps, UsersStats } from "@/lib/get-data";
+import { SeasonProps, UsersStats, UsersStatsSorted } from "@/lib/get-data";
 import { createDateArray } from "@/lib/utils";
 import clsx from "clsx";
 import { Badge } from "@/components/ui/badge";
@@ -13,10 +13,14 @@ import {
 
 const HouseSeasonTable = ({
   item,
-  userStats,
+  attendance,
+  username,
+  otherActivities,
 }: {
   item: SeasonProps;
-  userStats: UsersStats;
+  attendance: string[];
+  username: string;
+  otherActivities: UsersStats["otherActivities"];
 }) => {
   const endDate =
     new Date(item.endDate) > new Date() ? new Date() : new Date(item.endDate);
@@ -26,7 +30,7 @@ const HouseSeasonTable = ({
     endDate.toISOString().split("T")[0]
   ).filter((date) => !item.drillModes.includes(date));
 
-  const cleandAttendanceDates = userStats.attendance.filter((date) => {
+  const cleandAttendanceDates = attendance.filter((date) => {
     return (
       new Date(date) >= new Date(item.startDate) &&
       new Date(date) <= new Date(item.endDate) &&
@@ -34,7 +38,7 @@ const HouseSeasonTable = ({
     );
   });
   const cleanedOtherActivities =
-    userStats.otherActivities?.filter((date) => {
+    otherActivities?.filter((date) => {
       return (
         new Date(date.date) >= new Date(item.startDate) &&
         new Date(date.date) <= new Date(item.endDate)
@@ -44,7 +48,7 @@ const HouseSeasonTable = ({
     listOfTW.length > 0
       ? ((cleandAttendanceDates.length / listOfTW.length) * 100).toFixed(0)
       : "0.00";
-  const otherActivities = cleanedOtherActivities.length;
+  const otherActivitiesLenght = cleanedOtherActivities.length;
   return (
     <div className="flex items-center gap-2 max-w-64">
       <span className="flex flex-col items-center">
@@ -81,11 +85,12 @@ const HouseSeasonTable = ({
             <TooltipTrigger>
               <Badge
                 className={clsx("text-black font-bold", {
-                  "bg-red-500": otherActivities === 0,
-                  "bg-green-500": otherActivities > 0 && otherActivities <= 3,
-                  "bg-blue-500": otherActivities > 6,
-                  "bg-purple-500": otherActivities > 9,
-                  "bg-yellow-500": otherActivities > 12,
+                  "bg-red-500": otherActivitiesLenght === 0,
+                  "bg-green-500":
+                    otherActivitiesLenght > 0 && otherActivitiesLenght <= 3,
+                  "bg-blue-500": otherActivitiesLenght > 6,
+                  "bg-purple-500": otherActivitiesLenght > 9,
+                  "bg-yellow-500": otherActivitiesLenght > 12,
                 })}
               >
                 Other
@@ -104,7 +109,7 @@ const HouseSeasonTable = ({
         </TooltipProvider>
       </span>
       <span className="text-start">
-        <div>{userStats.nick ?? userStats.id}</div>
+        <div>{username}</div>
       </span>
     </div>
   );
