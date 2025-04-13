@@ -2,7 +2,7 @@
 
 import HouseSeasonTable from "@/feature/stats/house-season-table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FilledSurveys, SeasonProps, UsersStats } from "@/lib/get-data";
+import { FilledSurveys, SeasonProps, UsersStatsSorted } from "@/lib/get-data";
 import SeasonSimpleInfo from "@/feature/stats/season-simple-info";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
@@ -46,7 +46,7 @@ const Content = ({
   numberOfPlayer,
   filledList,
 }: {
-  data: UsersStats[];
+  data: UsersStatsSorted[];
   seasons: SeasonProps[];
   numberOfPlayer: number;
   filledList: FilledSurveys;
@@ -106,12 +106,35 @@ const Content = ({
 
         {seasons.map((e) => (
           <TabsContent value={e.season} key={e.season}>
-            <SeasonSimpleInfo item={e} data={data} />
+            <SeasonSimpleInfo
+              item={e}
+              data={data.map((e) => ({
+                ...e,
+                attendance: e.attendance.flatMap((season) => season.dates),
+              }))}
+            />
             <div className="grid grid-cols-3 gap-4 p-4">
-              {data
-                .sort((a, b) => b.attendance.length - a.attendance.length)
+              {[...data]
+                .sort((a, b) => {
+                  const aAttendance =
+                    a.attendance.find((att) => att.season === e.season)?.dates
+                      .length ?? 0;
+                  const bAttendance =
+                    b.attendance.find((att) => att.season === e.season)?.dates
+                      .length ?? 0;
+                  return bAttendance - aAttendance;
+                })
                 .map((user) => (
-                  <HouseSeasonTable key={user.id} item={e} userStats={user} />
+                  <HouseSeasonTable
+                    otherActivities={user.otherActivities}
+                    key={user.id}
+                    item={e}
+                    username={user.nick}
+                    attendance={
+                      user.attendance.find((att) => att.season === e.season)
+                        ?.dates ?? []
+                    }
+                  />
                 ))}
             </div>
           </TabsContent>

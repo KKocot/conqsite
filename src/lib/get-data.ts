@@ -191,6 +191,22 @@ export const getHouseStats = async (house: string): Promise<UsersStats[]> => {
   return result;
 };
 
+export interface UsersStatsSorted {
+  nick: string;
+  id: string;
+  house: string[];
+  attendance: { season: string; dates: string[] }[];
+  otherActivities?: { date: string; type: string }[];
+}
+
+export const getHouseSortedStats = async (
+  house: string
+): Promise<UsersStatsSorted[]> => {
+  const response = await fetch(`/api/userStats/sorted?house=${house}`);
+  const result = await response.json();
+  return result;
+};
+
 interface BotSettings {
   status: string;
 }
