@@ -222,6 +222,7 @@ const Content = ({
             </div>
           ) : (
             <PublicDialog
+              premium={assets?.premium}
               data={sheetData}
               house={house}
               commander={commander}
