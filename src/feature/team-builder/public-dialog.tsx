@@ -27,6 +27,7 @@ export function PublicDialog({
   commander,
   setSheetData,
   setCommander,
+  premium,
 }: {
   data: SheetTypes[];
   house: string;
@@ -34,6 +35,7 @@ export function PublicDialog({
   commander?: string;
   setSheetData: Dispatch<SetStateAction<SheetTypes[]>>;
   setCommander: Dispatch<SetStateAction<string>>;
+  premium?: boolean;
 }) {
   const t = useTranslations("BuildTeam.public");
   const [publicationName, setPublicationName] = useState("");
@@ -66,6 +68,7 @@ export function PublicDialog({
     deleteSheetMutation.isPending,
   ]);
   const existingLineup = publicLineup.find((e) => e.name === publicationName);
+  const lineupsLimit = premium ? 6 : 3;
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -167,7 +170,10 @@ export function PublicDialog({
                 variant="custom"
                 size="sm"
                 className="absolute right-1 top-1/2 -translate-y-1/2"
-                disabled={publicationName === ""}
+                disabled={
+                  publicationName === "" ||
+                  (publicLineup.length >= lineupsLimit && !existingLineup)
+                }
                 onClick={() => {
                   updateLineup.mutate({
                     name: publicationName,

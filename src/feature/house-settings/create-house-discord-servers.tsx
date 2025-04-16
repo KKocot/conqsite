@@ -13,6 +13,8 @@ import {
 } from "@/app/(pages)/(protected)/member/create-house/content";
 import { EditConfigProps } from "@/app/(pages)/(protected)/(owner)/settings/bot-config/[param]/content";
 import clsx from "clsx";
+import Link from "next/link";
+import { Link2 } from "lucide-react";
 
 export interface CreateHouse {
   guild_id: string;
@@ -84,6 +86,23 @@ const CreateHouseDiscordServers = ({
         {t("verification.discord_verification")}
       </CardHeader>
       <CardContent className="flex flex-col w-full">
+        <Separator />
+        <div className="my-2">
+          <span>You cannot see your discord? Make sure</span>{" "}
+          <Link
+            className="text-red-600 inline-block items-start"
+            href="https://discord.com/oauth2/authorize?client_id=1002261855718342759&permissions=8&integration_type=0&scope=bot"
+            target="_blank"
+          >
+            <Link2 className="inline-block mb-1" />
+            <span className="inline-block">ConqBot</span>
+          </Link>{" "}
+          <span>
+            is added to your server and you have{" "}
+            <span className="text-red-600">ADMIN</span> role on that discord
+            server and refresh this page after adding the bot.
+          </span>
+        </div>
         <Separator />
         <div className="flex p-12 justify-around gap-4">
           <div className="flex flex-col justify-between gap-6">
