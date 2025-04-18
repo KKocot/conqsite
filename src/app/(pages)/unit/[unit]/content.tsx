@@ -141,12 +141,21 @@ const Content = ({
             </div>
           </CardHeader>
           <CardContent className="grid gap-6">
-            <div className="flex justify-center flex-col items-center">
-              <span>{`Avrage rate: ${
-                votes.length === 0
-                  ? "No votes"
-                  : `${averageVote.toFixed(2)} from ${votes.length} votes`
-              }`}</span>
+            <div className="flex justify-center flex-col items-center gap-2">
+              <span>
+                Average rate:{" "}
+                {votes.length === 0 ? (
+                  "No votes"
+                ) : (
+                  <>
+                    <span className="font-bold underline text-accent">
+                      {averageVote.toFixed(2)}
+                    </span>
+                    {` from ${votes.length} votes`}
+                  </>
+                )}
+              </span>
+
               <span>{`Your rate: ${userVote}`}</span>
               <Stars rating={userVote} setRating={(e: number) => onVote(e)} />
             </div>
