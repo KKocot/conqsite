@@ -15,7 +15,7 @@ import { Badge } from "../../components/ui/badge";
 import { DiscordUsersProps, Roles } from "@/lib/get-data";
 import { useTranslations } from "next-intl";
 import ChangeLeaderDialog from "./change-leader-dialog";
-import { ConfigProps } from "@/app/(pages)/(protected)/member/create-house/content";
+import { ConfigProps } from "@/app/(pages)/(protected)/create-house/content";
 import { HighRolesValues } from "@/app/(pages)/(protected)/(owner)/settings/high-roles/[param]/content";
 
 interface CreateHouseHighRolesProps {

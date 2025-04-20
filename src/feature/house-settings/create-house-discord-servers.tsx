@@ -10,7 +10,7 @@ import { useTranslations } from "next-intl";
 import {
   ConfigProps,
   DiscordDataProps,
-} from "@/app/(pages)/(protected)/member/create-house/content";
+} from "@/app/(pages)/(protected)/create-house/content";
 import { EditConfigProps } from "@/app/(pages)/(protected)/(owner)/settings/bot-config/[param]/content";
 import clsx from "clsx";
 import Link from "next/link";
