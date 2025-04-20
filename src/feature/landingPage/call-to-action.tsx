@@ -14,7 +14,7 @@ export default function CallToAction() {
           {t("call_one")}
         </h2>
         <p className="text-xl mb-8 animate-fade-in-up">{t("call_two")}</p>
-        <Link href="/member/create-house">
+        <Link href="/create-house">
           <Button variant="custom" className="px-8 py-6 rounded-3xl text-xl">
             <Sword className="mr-2" />
             {t("button_title")}

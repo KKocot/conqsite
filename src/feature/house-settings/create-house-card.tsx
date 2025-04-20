@@ -23,7 +23,7 @@ import { getHousesDetails, HouseDetails } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import HoverClickTooltip from "@/components/hover-click-tooltip";
-import { ConfigProps } from "@/app/(pages)/(protected)/member/create-house/content";
+import { ConfigProps } from "@/app/(pages)/(protected)/create-house/content";
 
 interface CreateProps {
   type: "create";

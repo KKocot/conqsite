@@ -28,7 +28,7 @@ import { Label } from "../../components/ui/label";
 import {
   ConfigProps,
   DiscordDataProps,
-} from "@/app/(pages)/(protected)/member/create-house/content";
+} from "@/app/(pages)/(protected)/create-house/content";
 import { EditConfigProps } from "@/app/(pages)/(protected)/(owner)/settings/bot-config/[param]/content";
 
 interface CreateConfig {

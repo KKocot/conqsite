@@ -174,7 +174,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
               buttonStyle="rounded-md"
               triggerChildren={
                 <Link
-                  href="/dashboard/policy"
+                  href="/policy"
                   className="hover:opacity-80 transition-opacity"
                 >
                   <Notebook className="h-5 w-5" />
@@ -187,7 +187,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
               buttonStyle="rounded-md"
               triggerChildren={
                 <Link
-                  href="/dashboard/tos"
+                  href="/tos"
                   className="hover:opacity-80 transition-opacity"
                 >
                   <BookTypeIcon className="h-5 w-5" />
@@ -200,7 +200,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
               buttonStyle="rounded-full"
               triggerChildren={
                 <Link
-                  href="/dashboard/docs"
+                  href="/docs"
                   className="hover:opacity-80 transition-opacity"
                 >
                   <Info className="h-5 w-5" />
