@@ -4,15 +4,9 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useEffect, useMemo, useState } from "react";
 import { UseFormSetValue } from "react-hook-form";
-import { UnitData } from "@/lib/get-data";
-import {
-  commonDoctrines,
-  epicDoctrines,
-  rareDoctrines,
-  uncommonDoctrines,
-} from "@/assets/doctrines";
+import { DoctrineType, UnitData } from "@/lib/get-data";
 import DoctrineSlot from "./slot";
-import Doctrine from "./item";
+import DoctrineItem from "./item";
 import { Filter } from "lucide-react";
 import CheckboxItem from "./checkbox";
 
@@ -20,10 +14,12 @@ const DoctrinedBuilder = ({
   setValue,
   doctrineSlot: initialDoctrineSlot,
   unitName,
+  doctrines,
 }: {
   setValue: UseFormSetValue<UnitData>;
   doctrineSlot: { id: number; name: string; img: string; stats: string }[];
   unitName: string;
+  doctrines: DoctrineType[];
 }) => {
   const [doctrineSlot, setDoctrineSlot] = useState(initialDoctrineSlot);
   const [rarityFilter, setRarityFilter] = useState({
@@ -52,35 +48,39 @@ const DoctrinedBuilder = ({
   };
   const sortedDoctrines = useMemo(() => {
     const epic = rarityFilter?.epic
-      ? epicDoctrines.filter(
+      ? doctrines.filter(
           (e) =>
-            e.dedicated === "all" ||
-            e.dedicated === "group" ||
-            e.forUnit.includes(unitName)
+            e.rarity === "epic" &&
+            (e.dedicated === "all" ||
+              e.dedicated === "group" ||
+              e.forUnit.includes(unitName))
         )
       : [];
     const rare = rarityFilter?.rare
-      ? rareDoctrines.filter(
+      ? doctrines.filter(
           (e) =>
-            e.dedicated === "all" ||
-            e.dedicated === "group" ||
-            e.forUnit.includes(unitName)
+            e.rarity === "rare" &&
+            (e.dedicated === "all" ||
+              e.dedicated === "group" ||
+              e.forUnit.includes(unitName))
         )
       : [];
     const uncommon = rarityFilter?.uncommon
-      ? uncommonDoctrines.filter(
+      ? doctrines.filter(
           (e) =>
-            e.dedicated === "all" ||
-            e.dedicated === "group" ||
-            e.forUnit.includes(unitName)
+            e.rarity === "uncommon" &&
+            (e.dedicated === "all" ||
+              e.dedicated === "group" ||
+              e.forUnit.includes(unitName))
         )
       : [];
     const common = rarityFilter?.common
-      ? commonDoctrines.filter(
+      ? doctrines.filter(
           (e) =>
-            e.dedicated === "all" ||
-            e.dedicated === "group" ||
-            e.forUnit.includes(unitName)
+            e.rarity === "common" &&
+            (e.dedicated === "all" ||
+              e.dedicated === "group" ||
+              e.forUnit.includes(unitName))
         )
       : [];
     return [...epic, ...rare, ...uncommon, ...common];
@@ -135,7 +135,7 @@ const DoctrinedBuilder = ({
         </div>
         <div className="flex gap-5 flex-wrap">
           {sortedDoctrines.map((doctrine) => (
-            <Doctrine key={doctrine.name} doctrine={doctrine} />
+            <DoctrineItem key={doctrine.name} doctrine={doctrine} />
           ))}
         </div>
         <div>

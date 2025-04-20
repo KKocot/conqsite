@@ -17,9 +17,9 @@ import PostCard from "@/feature/unit-builder/post/card";
 import SkillsArea from "@/feature/unit-builder/skills-area";
 import Tree from "@/feature/unit-builder/tree";
 import {
+  DoctrineType,
   getRoleById,
   KitsAssets,
-  Rate,
   UnitData,
   UnitObject,
 } from "@/lib/get-data";
@@ -40,7 +40,9 @@ const Content = ({
   postsLoading,
   votes,
   kits,
+  doctrines,
 }: {
+  doctrines: DoctrineType[];
   entry?: UnitObject;
   shortEntry: Unit;
   posts?: UnitData[];
@@ -320,7 +322,7 @@ const Content = ({
             <SkillsArea editMode={editMode} form={form} />
             <FormationsArea editMode={editMode} form={form} />
             <div className="flex justify-around flex-col items-center lg:flex-row">
-              <DoctrinesArea unitName={shortEntry.name} />
+              <DoctrinesArea doctrines={doctrines} />
               <KitsArea kits={kits} />
             </div>
             <ChallengesArea editMode={editMode} form={form} />

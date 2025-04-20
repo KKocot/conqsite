@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { getUnitAssets, getUnitWiki } from "@/lib/get-data";
+import { getDoctrineAssets, getUnitAssets, getUnitWiki } from "@/lib/get-data";
 import NoData from "@/feature/ifs/no-data";
 import Content from "./content";
 import { useQuery } from "@tanstack/react-query";
@@ -19,8 +19,21 @@ const Page = () => {
     queryFn: () => getUnitWiki(unitName, "accepted"),
     enabled: !!unitName,
   });
-  if (isLoading) return <LoadingComponent />;
-  if (!unitAssets || !data) return <NoData />;
-  return <Content data={unitAssets} unitTree={data[data.length - 1]} />;
+  const { data: doctrinesAssets, isLoading: doctrinesAssetsLoading } = useQuery(
+    {
+      queryKey: ["doctrinesAssets", unitName],
+      queryFn: () => getDoctrineAssets(),
+    }
+  );
+
+  if (isLoading || doctrinesAssetsLoading) return <LoadingComponent />;
+  if (!unitAssets || !data || !doctrinesAssets) return <NoData />;
+  return (
+    <Content
+      data={unitAssets}
+      unitTree={data[data.length - 1]}
+      doctrines={doctrinesAssets}
+    />
+  );
 };
 export default Page;

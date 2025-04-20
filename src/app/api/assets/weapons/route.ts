@@ -8,19 +8,13 @@ export async function POST(request: Request) {
   const headers = request.headers;
   if (headers.get("auth") !== process.env.BOT_KEY)
     return NextResponse.json({ status: 401 });
-
   try {
     await connectMongoDB();
-    const data = await request.json();
-    const weapons = Array.isArray(data) ? data : [data];
-
-    const validatedWeapons = weapons.map((weapon) =>
-      weaponSchema.parse(weapon)
-    );
-    const response = await Weapon.insertMany(validatedWeapons);
+    const data = weaponSchema.parse(await request.json());
+    const response = await Weapon.create(data);
 
     return NextResponse.json({
-      message: `Successfully added ${response.length} weapons`,
+      message: `Successfully added weapon`,
       response,
     });
   } catch (error) {

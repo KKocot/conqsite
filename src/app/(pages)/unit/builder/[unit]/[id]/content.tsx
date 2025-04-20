@@ -1,4 +1,4 @@
-import { UnitData, UnitObject } from "@/lib/get-data";
+import { DoctrineType, UnitData, UnitObject } from "@/lib/get-data";
 import {
   Card,
   CardContent,
@@ -8,13 +8,12 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import Image from "next/image";
-import { Doctrine } from "@/assets/doctrines";
 import DoctrinesGroup from "@/feature/unit-builder/post/doctrines-group";
 import Tree from "@/feature/unit-builder/tree";
 
 interface ContentProps {
   data: UnitData;
-  doctrines: Doctrine[];
+  doctrines: DoctrineType[];
   unitTree: UnitObject;
 }
 
@@ -29,7 +28,6 @@ const Content = ({ data, doctrines, unitTree }: ContentProps) => {
         <div className="flex justify-between items-start">
           <div>
             <h2 className="text-2xl font-bold mb-4">{data.title}</h2>
-
             <Link
               href={`/unit/${unitTree.name.replaceAll(" ", "_")}`}
               className="flex items-center gap-2"

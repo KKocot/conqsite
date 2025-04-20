@@ -23,7 +23,7 @@ const ItemTypes = {
   DOCTRINE: "doctrine",
 };
 
-const Doctrine = ({ doctrine }: DoctrineProps) => {
+const DoctrineItem = ({ doctrine }: DoctrineProps) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.DOCTRINE,
     item: { name: doctrine.name, img: doctrine.img, stats: doctrine.stats },
@@ -60,4 +60,4 @@ const Doctrine = ({ doctrine }: DoctrineProps) => {
   );
 };
 
-export default Doctrine;
+export default DoctrineItem;

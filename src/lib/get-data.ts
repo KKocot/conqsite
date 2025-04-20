@@ -650,3 +650,26 @@ export const getWeaponsAssets = async (): Promise<WeaponAsset[]> => {
   const result = await response.json();
   return result.weapons;
 };
+
+export interface DoctrineType {
+  name: string;
+  img: string;
+  forUnit: string[];
+  dedicated: "all" | "group" | "unit";
+  stats: string;
+  rarity: "common" | "uncommon" | "rare" | "epic";
+}
+
+export const getDoctrineAssets = async (): Promise<DoctrineType[]> => {
+  const response = await fetch(`/api/assets/doctrines`);
+  const result = await response.json();
+  return result;
+};
+
+export const getUnitDoctrines = async (
+  unit: string
+): Promise<DoctrineType[]> => {
+  const response = await fetch(`/api/assets/doctrines?unit=${unit}`);
+  const result = await response.json();
+  return result;
+};

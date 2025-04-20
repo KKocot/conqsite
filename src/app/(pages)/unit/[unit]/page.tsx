@@ -7,6 +7,7 @@ import {
   getAllUnitPosts,
   getKitsAssets,
   getUnitAssets,
+  getUnitDoctrines,
   getUnitRate,
   getUnitWiki,
 } from "@/lib/get-data";
@@ -41,10 +42,17 @@ const Page = () => {
     queryFn: () => getKitsAssets(unit),
     enabled: !!unit,
   });
+  const { data: doctrinesAssets, isLoading: doctrinesAssetsLoading } = useQuery(
+    {
+      queryKey: ["doctrinesAssets", unit],
+      queryFn: () => getUnitDoctrines(unit),
+    }
+  );
   if (isLoading) return <LoadingComponent />;
   if (!unitAssets) return <NoData />;
   return (
     <Content
+      doctrines={doctrinesAssets ?? []}
       kits={KitsAssets ?? []}
       entry={data?.[data.length - 1] ?? undefined}
       shortEntry={unitAssets}
