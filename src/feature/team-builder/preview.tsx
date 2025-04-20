@@ -52,9 +52,7 @@ const Preview = ({
             <TableHead className="w-[10px] text-center">
               {t("weapon")}
             </TableHead>
-            <TableHead className="w-[180px] text-center">
-              {t("artillery")}
-            </TableHead>
+            <TableHead className="text-center">{t("artillery")}</TableHead>
             <TableHead>{t("description")}</TableHead>
           </TableRow>
         </TableHeader>
@@ -139,18 +137,19 @@ const Preview = ({
                       </Avatar>
                     </div>
                   </TableCell>
-                  <TableCell className="w-fit py-1">
-                    <Avatar className="flex gap-1">
+                  <TableCell className="p-1 w-fit">
+                    <div className="flex items-center gap-1 justify-center">
                       {artli.map((a) => (
-                        <AvatarImage
-                          key={a.id}
-                          className="h-8 w-8 rounded-full"
-                          alt={a?.name}
-                          src={a?.src}
-                          title={a?.name}
-                        />
+                        <Avatar className="h-8 w-8" key={a.id}>
+                          <AvatarImage
+                            className="rounded-full"
+                            alt={a?.name}
+                            src={a?.src}
+                            title={a?.name}
+                          />
+                        </Avatar>
                       ))}
-                    </Avatar>
+                    </div>
                   </TableCell>
                   <TableCell className="pr-2 py-1 font-semibold">
                     {e.description}

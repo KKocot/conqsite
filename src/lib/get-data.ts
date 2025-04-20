@@ -595,3 +595,24 @@ export const getUserServers = async (userId: string): Promise<UserServers> => {
   const result = await response.json();
   return result;
 };
+
+export interface Badge {
+  house: string;
+  premium: boolean;
+  surveys: number;
+  history: number;
+  conqBot: number;
+  lineups: number;
+  card?: HouseDetails;
+}
+
+export const getHouseBadges = async (house: string): Promise<Badge[]> => {
+  const response = await fetch(`/api/house/badges?house=${house}`);
+  const result = await response.json();
+  return result;
+};
+export const getAllHousesBadges = async (): Promise<Badge[]> => {
+  const response = await fetch(`/api/house/badges`);
+  const result = await response.json();
+  return result;
+};

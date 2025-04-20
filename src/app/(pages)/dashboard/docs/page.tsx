@@ -6,6 +6,26 @@ const DocsPage: React.FC = () => {
   return (
     <div className="container mx-auto p-6">
       <BotDocs />
+      <h2 className="text-xl font-semibold mb-2">Badges</h2>
+      <ul className="list-disc pl-6 mb-4">
+        <li>
+          <strong>Premium House:</strong> That house supports the project and
+          gets premium features with over 25 euro donation per month
+        </li>
+        <li>
+          <strong>Dilled surveys:</strong> That house has over 90% of filled
+          surveys
+        </li>
+        <li>
+          <strong>ConqBot:</strong> That house uses the ConqBot events over 50
+        </li>
+        <li>
+          <strong>Lineups:</strong> That house has over public 100 lineups
+        </li>
+        <li>
+          <strong>Archive:</strong> That house has over 50 archived Povs
+        </li>
+      </ul>
       <h2 className="text-xl font-semibold mb-2">Bot Config:</h2>
       <ul className="list-disc pl-6 mb-4">
         <li>
