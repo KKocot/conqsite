@@ -26,13 +26,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import BotDocs from "@/components/bot-docs";
 interface Props {
   house: string;
   userId: string;
   config: HouseSettings;
   events: BotEvent[];
   assets?: HouseAssets;
+  botContent: string;
 }
 
 const Content = ({
@@ -40,6 +40,7 @@ const Content = ({
   userId,
   config,
   events,
+  botContent,
   assets = { name: house, premium: false, sharedList: false, signupBot: "" },
 }: Props) => {
   // Data for discord server: channels, roles, users
@@ -139,7 +140,9 @@ const Content = ({
                   </TooltipTrigger>
                 </DialogTrigger>
                 <DialogContent className=" overflow-y-scroll max-h-full h-fit">
-                  <BotDocs />
+                  <div className="prose max-w-none container py-12">
+                    <div dangerouslySetInnerHTML={{ __html: botContent }} />
+                  </div>
                 </DialogContent>
               </Dialog>
               <TooltipContent>Info</TooltipContent>

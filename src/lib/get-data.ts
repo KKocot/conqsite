@@ -673,3 +673,15 @@ export const getUnitDoctrines = async (
   const result = await response.json();
   return result;
 };
+
+export interface PageMD {
+  page: string;
+  body: string;
+}
+export const getPageMD = async (
+  page: "tos" | "policy" | "docs" | "bot"
+): Promise<PageMD> => {
+  const response = await fetch(`/api/pagemd?page=${page}`);
+  const result = await response.json();
+  return result;
+};
