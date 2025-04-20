@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 import challengesSchema from "./shema";
 import UnitWiki from "@/models/unit-wiki";
 import { ZodError } from "zod";
-import UnitAsset from "@/models/unit-asset";
 
 export async function POST(request: Request) {
   const privateKey = headers().get("private-key");

@@ -6,9 +6,8 @@ import { useArtyAmount } from "@/lib/utils";
 import { ChevronDown, ChevronUp, PackageOpen } from "lucide-react";
 import clsx from "clsx";
 import { Button } from "../../components/ui/button";
-import { artillery } from "@/assets/artillery";
 import { useTranslations } from "next-intl";
-import { Survey } from "@/lib/get-data";
+import { ArtilleryAsset, Survey } from "@/lib/get-data";
 import Image from "next/image";
 import { Popover, PopoverContent } from "@/components/ui/popover";
 import { PopoverTrigger } from "@radix-ui/react-popover";
@@ -58,6 +57,7 @@ const Item = ({
   onEdit,
   moveUp,
   moveDown,
+  artillery,
 }: {
   units: Unit[];
   users: Survey[];
@@ -65,6 +65,7 @@ const Item = ({
   index: number;
   data: SheetTypes;
   usedUsers: string[];
+  artillery: ArtilleryAsset[];
   onEdit: (
     index: number,
     username: string,

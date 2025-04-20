@@ -7,7 +7,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import { artillery } from "@/assets/artillery";
 import { SheetTypes, Unit } from "@/lib/type";
 import { weapons } from "@/assets/weapons";
 import { Fragment, useState } from "react";
@@ -15,17 +14,20 @@ import { useTranslations } from "next-intl";
 import { OctagonAlert } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ArtilleryAsset } from "@/lib/get-data";
 
 const Preview = ({
   data,
   units,
   username,
   commander,
+  artillery,
 }: {
   data: SheetTypes[];
   units: Unit[];
   username?: string | null;
   commander?: string;
+  artillery: ArtilleryAsset[];
 }) => {
   const [show, setShow] = useState<boolean>(true);
   const t = useTranslations("Lineups");
@@ -63,7 +65,7 @@ const Preview = ({
             const unit2 = units.find((unit) => unit.name === e.unit2);
             const unit3 = units.find((unit) => unit.name === e.unit3);
             const weapon = weapons.find((w) => w.name === e.weapon);
-            const artli = artillery.filter((a) =>
+            const art = artillery.filter((a) =>
               e.artillery.find((art) => art.id === a.id && art.check)
             );
             return e.username !== "" ? (
@@ -139,7 +141,7 @@ const Preview = ({
                   </TableCell>
                   <TableCell className="p-1 w-fit">
                     <div className="flex items-center gap-1 justify-center">
-                      {artli.map((a) => (
+                      {art.map((a) => (
                         <Avatar className="h-8 w-8" key={a.id}>
                           <AvatarImage
                             className="rounded-full"

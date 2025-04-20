@@ -616,3 +616,15 @@ export const getAllHousesBadges = async (): Promise<Badge[]> => {
   const result = await response.json();
   return result;
 };
+
+export interface ArtilleryAsset {
+  name: string;
+  src: string;
+  id: number;
+}
+
+export const getArtilleryAssets = async (): Promise<ArtilleryAsset[]> => {
+  const response = await fetch(`/api/assets/artillery`);
+  const result = await response.json();
+  return result.artilleriesAsset;
+};

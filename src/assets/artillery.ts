@@ -1,3 +1,4 @@
+let ao;
 export const artillery = [
   {
     name: "Bombard",

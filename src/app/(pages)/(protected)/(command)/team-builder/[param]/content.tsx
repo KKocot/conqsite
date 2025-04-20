@@ -8,7 +8,12 @@ import { weapons } from "@/assets/weapons";
 import Item from "@/feature/team-builder/sheet-form-item";
 import { Rows4, ScanEye, Table, TableIcon } from "lucide-react";
 import UsersList from "@/feature/team-builder/users-list";
-import { HouseAssets, Survey, UnitAssetsGroup } from "@/lib/get-data";
+import {
+  ArtilleryAsset,
+  HouseAssets,
+  Survey,
+  UnitAssetsGroup,
+} from "@/lib/get-data";
 import { DEFAULT_CARD } from "@/lib/defaults";
 import Filters from "@/feature/team-builder/filters";
 import Templates from "@/feature/team-builder/templates";
@@ -33,6 +38,7 @@ interface ContentProps {
   assets?: HouseAssets;
   publicLineups: { dates?: string[]; loading: boolean };
   unitsAssets: UnitAssetsGroup;
+  artillery: ArtilleryAsset[];
 }
 
 const Content = ({
@@ -40,6 +46,7 @@ const Content = ({
   assets,
   publicLineups,
   unitsAssets,
+  artillery,
 }: ContentProps) => {
   const { goldenEra, heroicEra, blueEra, greenEra, greyEra, otherEra } =
     unitsAssets;
@@ -158,6 +165,7 @@ const Content = ({
           <ul className="">
             {sheetData.map((e, index) => (
               <ItemRow
+                artillery={artillery}
                 users={userList}
                 weapons={weapons}
                 key={index}
@@ -179,6 +187,7 @@ const Content = ({
           <ul className="grid grid-cols-5 gap-4">
             {sheetData.map((e, index) => (
               <Item
+                artillery={artillery}
                 users={userList}
                 weapons={weapons}
                 key={index}
@@ -206,7 +215,12 @@ const Content = ({
         </Button>
       </div>
       <div className={clsx({ hidden: !showPreview })}>
-        <Preview data={sheetData} units={units} commander={commander} />
+        <Preview
+          data={sheetData}
+          units={units}
+          commander={commander}
+          artillery={artillery}
+        />
       </div>
       <nav className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 rounded-full bg-background px-1 py-2 shadow-lg">
         <TooltipContainer title="Sheet Stats">
