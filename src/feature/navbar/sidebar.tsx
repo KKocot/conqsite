@@ -7,7 +7,14 @@ import {
   SidebarProvider,
   Sidebar,
 } from "@/components/ui/sidebar";
-import { SquareUserRound, Frame, Castle } from "lucide-react";
+import {
+  SquareUserRound,
+  Frame,
+  Castle,
+  Notebook,
+  Info,
+  BookTypeIcon,
+} from "lucide-react";
 import LanguageToggle from "./language-toggle";
 import { ModeToggle } from "./theme-menu";
 import { useSession } from "next-auth/react";
@@ -21,6 +28,7 @@ import NavUser from "./user-navbar";
 import ResposiveSidebar from "./responsive-navbar";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import HoverClickTooltip from "@/components/hover-click-tooltip";
 
 const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
   const { data: commanders = [] } = useQuery(rolesQueryOptions());
@@ -62,21 +70,6 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         title: "Wiki requests",
         url: `/dashboard/wiki-requests`,
         visibleTo: data?.user.id ? true : false,
-      },
-      {
-        title: t("dashboard.privacy_policy"),
-        url: "/dashboard/policy",
-        disabled: false,
-      },
-      {
-        title: t("dashboard.terms_of_service"),
-        url: "/dashboard/tos",
-        disabled: false,
-      },
-      {
-        title: t("dashboard.documentation"),
-        url: "/dashboard/docs",
-        disabled: false,
       },
     ],
   };
@@ -176,6 +169,47 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         </SidebarContent>
         <SidebarFooter>
           <SupportButton />
+          <div className="flex items-center justify-between px-4 py-1">
+            <HoverClickTooltip
+              buttonStyle="rounded-md"
+              triggerChildren={
+                <Link
+                  href="/dashboard/policy"
+                  className="hover:opacity-80 transition-opacity"
+                >
+                  <Notebook className="h-5 w-5" />
+                </Link>
+              }
+            >
+              <p className="text-sm w-40">{t("dashboard.privacy_policy")}</p>
+            </HoverClickTooltip>
+            <HoverClickTooltip
+              buttonStyle="rounded-md"
+              triggerChildren={
+                <Link
+                  href="/dashboard/tos"
+                  className="hover:opacity-80 transition-opacity"
+                >
+                  <BookTypeIcon className="h-5 w-5" />
+                </Link>
+              }
+            >
+              <p className="text-sm w-40">{t("dashboard.terms_of_service")}</p>
+            </HoverClickTooltip>
+            <HoverClickTooltip
+              buttonStyle="rounded-full"
+              triggerChildren={
+                <Link
+                  href="/dashboard/docs"
+                  className="hover:opacity-80 transition-opacity"
+                >
+                  <Info className="h-5 w-5" />
+                </Link>
+              }
+            >
+              <p className="text-sm w-40">{t("dashboard.documentation")}</p>
+            </HoverClickTooltip>
+          </div>
           {data ? (
             <NavUser name={data.user.name} avatar={data.user.image} />
           ) : (

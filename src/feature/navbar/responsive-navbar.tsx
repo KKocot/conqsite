@@ -30,7 +30,7 @@ import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import HouseLinks from "./house-links";
 import HouseLinkMobile from "./house-link-moblie";
-
+import Image from "next/image";
 interface LinkItem {
   title: string;
   url: string;
@@ -74,9 +74,17 @@ const ResposiveSidebar = ({
                 hidden: !open,
               })}
             >
-              ConqSite
+              <Image
+                src="/website-logo.webp"
+                alt="logo"
+                width={160}
+                height={80}
+                className="rounded-full"
+              />
             </Link>
-            <SidebarTrigger />
+            <div className="flex items-center h-full">
+              <SidebarTrigger />
+            </div>
           </div>
           <DropdownMenu>
             <SidebarMenuItem>
@@ -163,9 +171,17 @@ const ResposiveSidebar = ({
                 hidden: !open,
               })}
             >
-              ConqSite
+              <Image
+                src="/website-logo.webp"
+                alt="logo"
+                width={160}
+                height={80}
+                className="rounded-full"
+              />
             </Link>
-            <SidebarTrigger />
+            <div className="flex items-center h-full">
+              <SidebarTrigger />
+            </div>
           </div>{" "}
           <SidebarMenu>
             <SidebarMenuItem>

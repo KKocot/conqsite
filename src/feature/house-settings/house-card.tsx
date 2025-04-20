@@ -41,18 +41,25 @@ export default function HouseCard({
               <Image
                 src="/badges/image-1.webp"
                 alt="premiumBadge"
-                width={60}
-                height={60}
-                title="Premium House"
+                width={50}
+                height={50}
               />
             }
             contentStyle="w-48"
             buttonStyle="hover:bg-transparent"
           >
-            <p className="text-sm">
-              supports the project and gets premium features with over 25 euro
-              donation per month
-            </p>
+            <div className="flex flex-col items-center">
+              <Image
+                src="/badges/image-1.webp"
+                alt="premiumBadge"
+                width={120}
+                height={120}
+              />
+              <p className="text-sm">
+                supports the project and gets premium features with over 25 euro
+                donation per month
+              </p>
+            </div>
           </HoverClickTooltip>
         ) : null}
         {(badgesData?.surveys ?? 0) > 90 ? (
@@ -61,54 +68,94 @@ export default function HouseCard({
               <Image
                 src="/badges/image.webp"
                 alt="premiumBadge"
-                width={60}
-                height={60}
-                title="Over 90% of filled surveys"
+                width={50}
+                height={50}
               />
             }
             contentStyle="w-48"
             buttonStyle="hover:bg-transparent"
           >
-            <p className="text-sm">over 90% of filled surveys</p>
+            <div className="flex flex-col items-center">
+              <Image
+                src="/badges/image.webp"
+                alt="premiumBadge"
+                width={120}
+                height={120}
+              />
+              <p className="text-sm">over 90% of filled surveys</p>
+            </div>
           </HoverClickTooltip>
         ) : null}
         {(badgesData?.history ?? 0) > 50 ? (
           <HoverClickTooltip
             triggerChildren={
-              <div className="bg-accent rounded-2xl">
-                <Camera className="h-14 w-14 text-background" />
-              </div>
+              <Image
+                src="/badges/recorded-badge.webp"
+                alt="recordedBadge"
+                width={50}
+                height={50}
+              />
             }
             contentStyle="w-48"
             buttonStyle="hover:bg-transparent"
           >
-            <p className="text-sm">House has over 50 PoVs in archive</p>
+            <div className="flex flex-col items-center">
+              <Image
+                src="/badges/recorded-badge.webp"
+                alt="recordedBadge"
+                width={120}
+                height={120}
+              />
+              <p className="text-sm">House has over 50 PoVs in archive</p>
+            </div>
           </HoverClickTooltip>
         ) : null}
         {(badgesData?.conqBot ?? 0) > 50 ? (
           <HoverClickTooltip
             triggerChildren={
-              <div className="bg-accent rounded-2xl">
-                <Bot className="h-14 w-14 text-background" />
-              </div>
+              <Image
+                src="/badges/Konkerus1.webp"
+                alt="conqBotBadge"
+                width={50}
+                height={50}
+              />
             }
             contentStyle="w-48"
             buttonStyle="hover:bg-transparent"
           >
-            <p className="text-sm">House used ConqBot events over 50 times</p>
+            <div className="flex flex-col items-center">
+              <Image
+                src="/badges/Konkerus1.webp"
+                alt="conqBotBadge"
+                width={120}
+                height={120}
+              />
+              <p className="text-sm">House used ConqBot events over 50 times</p>
+            </div>
           </HoverClickTooltip>
         ) : null}
         {(badgesData?.lineups ?? 0) > 100 ? (
           <HoverClickTooltip
             triggerChildren={
-              <div className="bg-accent rounded-2xl">
-                <Send className="h-14 w-14 text-background" />
-              </div>
+              <Image
+                src="/badges/public-badge.webp"
+                alt="publicBadge"
+                width={50}
+                height={50}
+              />
             }
             contentStyle="w-48"
             buttonStyle="hover:bg-transparent"
           >
-            <p className="text-sm">over 100 of public lineups</p>
+            <div className="flex flex-col items-center">
+              <Image
+                src="/badges/public-badge.webp"
+                alt="publicBadge"
+                width={120}
+                height={120}
+              />
+              <p className="text-sm">over 100 of public lineups</p>
+            </div>
           </HoverClickTooltip>
         ) : null}
       </div>

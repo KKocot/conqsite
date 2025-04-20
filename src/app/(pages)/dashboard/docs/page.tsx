@@ -20,7 +20,7 @@ const DocsPage: React.FC = () => {
           <strong>ConqBot:</strong> That house uses the ConqBot events over 50
         </li>
         <li>
-          <strong>Lineups:</strong> That house has over public 50 lineups
+          <strong>Lineups:</strong> That house has over public 100 lineups
         </li>
         <li>
           <strong>Archive:</strong> That house has over 50 archived Povs

@@ -33,7 +33,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/logo.png" sizes="any" />
+        <link rel="icon" href="/card-logo.webp" sizes="any" />
       </head>
       <body className="grid grid-rows-[max-content_1fr_max-content] min-h-screen w-full">
         <NextIntlClientProvider messages={messages}>
