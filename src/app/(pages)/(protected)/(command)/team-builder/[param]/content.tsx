@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { ArtilleryProps, SheetTypes } from "@/lib/type";
 import React, { ReactNode, useMemo, useState } from "react";
 import clsx from "clsx";
-import { weapons } from "@/assets/weapons";
 import Item from "@/feature/team-builder/sheet-form-item";
 import { Rows4, ScanEye, Table, TableIcon } from "lucide-react";
 import UsersList from "@/feature/team-builder/users-list";
@@ -13,6 +12,7 @@ import {
   HouseAssets,
   Survey,
   UnitAssetsGroup,
+  WeaponAsset,
 } from "@/lib/get-data";
 import { DEFAULT_CARD } from "@/lib/defaults";
 import Filters from "@/feature/team-builder/filters";
@@ -39,6 +39,7 @@ interface ContentProps {
   publicLineups: { dates?: string[]; loading: boolean };
   unitsAssets: UnitAssetsGroup;
   artillery: ArtilleryAsset[];
+  weapons: WeaponAsset[];
 }
 
 const Content = ({
@@ -47,6 +48,7 @@ const Content = ({
   publicLineups,
   unitsAssets,
   artillery,
+  weapons,
 }: ContentProps) => {
   const { goldenEra, heroicEra, blueEra, greenEra, greyEra, otherEra } =
     unitsAssets;
@@ -150,6 +152,7 @@ const Content = ({
           usedPlayers={usedUsersList}
           allPlayers={userList}
           unitsAssets={unitsAssets}
+          weapons={weapons}
         />
         <div className="w-full flex justify-center">
           <div className="flex flex-col gap-2 items-center w-fit">
@@ -220,6 +223,7 @@ const Content = ({
           units={units}
           commander={commander}
           artillery={artillery}
+          weapons={weapons}
         />
       </div>
       <nav className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 rounded-full bg-background px-1 py-2 shadow-lg">

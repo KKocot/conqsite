@@ -8,13 +8,12 @@ import {
 } from "@/components/ui/table";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { SheetTypes, Unit } from "@/lib/type";
-import { weapons } from "@/assets/weapons";
 import { Fragment, useState } from "react";
 import { useTranslations } from "next-intl";
 import { OctagonAlert } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArtilleryAsset } from "@/lib/get-data";
+import { ArtilleryAsset, WeaponAsset } from "@/lib/get-data";
 
 const Preview = ({
   data,
@@ -22,12 +21,14 @@ const Preview = ({
   username,
   commander,
   artillery,
+  weapons,
 }: {
   data: SheetTypes[];
   units: Unit[];
   username?: string | null;
   commander?: string;
   artillery: ArtilleryAsset[];
+  weapons: WeaponAsset[];
 }) => {
   const [show, setShow] = useState<boolean>(true);
   const t = useTranslations("Lineups");

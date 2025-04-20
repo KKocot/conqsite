@@ -10,7 +10,7 @@ import ProfileData from "./profile-data";
 import { ReactNode } from "react";
 import { Avatar } from "@radix-ui/react-avatar";
 import { AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Survey, UnitAssetsGroup } from "@/lib/get-data";
+import { Survey, UnitAssetsGroup, WeaponAsset } from "@/lib/get-data";
 import Image from "next/image";
 import Link from "next/link";
 import { CircleUser } from "lucide-react";
@@ -19,10 +19,12 @@ export function UserProfile({
   player,
   children,
   unitsAssets,
+  weapons,
 }: {
   player: Survey;
   children: ReactNode;
   unitsAssets: UnitAssetsGroup;
+  weapons: WeaponAsset[];
 }) {
   return (
     <Dialog>
@@ -69,7 +71,11 @@ export function UserProfile({
             player.updates[player.updates.length - 1]
           }`}</div>
         ) : null}
-        <ProfileData profile={player} unitsAssets={unitsAssets} />
+        <ProfileData
+          profile={player}
+          unitsAssets={unitsAssets}
+          weapons={weapons}
+        />
       </DialogContent>
     </Dialog>
   );

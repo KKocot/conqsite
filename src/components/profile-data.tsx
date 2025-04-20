@@ -6,19 +6,19 @@ import {
   TableBody,
   Table,
 } from "@/components/ui/table";
-import { weapons } from "@/assets/weapons";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
-import { Survey, UnitAssetsGroup } from "@/lib/get-data";
+import { Survey, UnitAssetsGroup, WeaponAsset } from "@/lib/get-data";
 import Image from "next/image";
 import List from "@/feature/unit-builder/unit-list";
 
 interface ProfileDataProps {
   profile: Survey;
   unitsAssets: UnitAssetsGroup;
+  weapons: WeaponAsset[];
 }
 
-const ProfileData = ({ profile, unitsAssets }: ProfileDataProps) => {
+const ProfileData = ({ profile, unitsAssets, weapons }: ProfileDataProps) => {
   const { goldenEra, heroicEra, blueEra, greenEra, greyEra } = unitsAssets;
   const t = useTranslations("MyProfile");
   const golden = ownedUnits(goldenEra, profile.units.golden);

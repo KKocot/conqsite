@@ -4,6 +4,7 @@ import {
   getArtilleryAssets,
   getPublicLineupDates,
   getUnitsAssets,
+  getWeaponsAssets,
 } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useSearchParams } from "next/navigation";
@@ -47,6 +48,11 @@ const Page = () => {
     }
   );
 
+  const { data: weaponsAssets, isLoading: weaponsAssetsLoading } = useQuery({
+    queryKey: ["weaponsAssets"],
+    queryFn: () => getWeaponsAssets(),
+  });
+
   const latestDate = data ? data[0] : "";
   const [date, setDate] = useLineupDate(urlDate, latestDate);
   const units = useMemo(() => {
@@ -74,13 +80,20 @@ const Page = () => {
     [urlName]
   );
 
-  if (isLoading || unitsAssetsLoading || artilleryAssetsLoading)
+  if (
+    isLoading ||
+    unitsAssetsLoading ||
+    artilleryAssetsLoading ||
+    weaponsAssetsLoading
+  )
     return <LoadingComponent />;
-  if (!data || !date || !unitsAssets || !artilleryAssets) return <NoData />;
+  if (!data || !date || !unitsAssets || !artilleryAssets || !weaponsAssets)
+    return <NoData />;
 
   return (
     <div className="flex justify-center w-full">
       <Content
+        weapons={weaponsAssets}
         date={date}
         house={house}
         units={units}

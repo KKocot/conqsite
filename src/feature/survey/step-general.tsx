@@ -1,5 +1,5 @@
-import { Input } from "../../components/ui/input";
-import { Button } from "../../components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "../../components/ui/radio-group";
 import clsx from "clsx";
 import { Controller } from "react-hook-form";
@@ -8,12 +8,11 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from "../../components/ui/form";
-import { weapons } from "@/assets/weapons";
+} from "@/components/ui/form";
 import { Info } from "lucide-react";
 import { Label } from "../../components/ui/label";
 import { useTranslations } from "next-intl";
-import { getHousesDetails } from "@/lib/get-data";
+import { getHousesDetails, WeaponAsset } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import LoadingComponent from "../ifs/loading";
@@ -22,9 +21,11 @@ import HoverClickTooltip from "@/components/hover-click-tooltip";
 const StepGeneral = ({
   form,
   moveToStep,
+  weapons,
 }: {
   form: any;
   moveToStep: (e: number) => void;
+  weapons: WeaponAsset[];
 }) => {
   const { data, isLoading } = useQuery({
     queryKey: ["houses"],

@@ -639,3 +639,14 @@ export const getKitsAssets = async (unit: string): Promise<KitsAssets[]> => {
   const result = await response.json();
   return result.artilleryAsset;
 };
+
+export interface WeaponAsset {
+  id: number;
+  name: string;
+  src: string;
+}
+export const getWeaponsAssets = async (): Promise<WeaponAsset[]> => {
+  const response = await fetch(`/api/assets/weapons`);
+  const result = await response.json();
+  return result.weapons;
+};

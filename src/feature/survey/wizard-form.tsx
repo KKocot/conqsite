@@ -1,11 +1,15 @@
 import { useState } from "react";
 import StepGeneral from "./step-general";
-import { weapons } from "@/assets/weapons";
 import { useForm } from "react-hook-form";
 import { Form } from "../../components/ui/form";
 import FormCol from "./form-col";
 import { useTranslations } from "next-intl";
-import { getSurvey, Survey, UnitAssetsGroup } from "@/lib/get-data";
+import {
+  getSurvey,
+  Survey,
+  UnitAssetsGroup,
+  WeaponAsset,
+} from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import useSubmitSurveyMutation from "../../components/hooks/use-survey-mutation";
 import LoadingComponent from "../ifs/loading";
@@ -16,10 +20,12 @@ export default function WizardForm({
   user_id,
   avatar,
   unitsAssets,
+  weapons,
 }: {
   user_id: string;
   avatar?: string;
   unitsAssets: UnitAssetsGroup;
+  weapons: WeaponAsset[];
 }) {
   const t = useTranslations("AddForm");
   const [step, setStep] = useState(1);
@@ -156,7 +162,7 @@ export default function WizardForm({
             step={step}
           />
         ) : step === 4 ? (
-          <StepGeneral form={form} moveToStep={setStep} />
+          <StepGeneral form={form} moveToStep={setStep} weapons={weapons} />
         ) : null}
       </form>
     </Form>

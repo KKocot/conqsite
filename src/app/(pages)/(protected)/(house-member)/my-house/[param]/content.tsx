@@ -7,7 +7,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { UserProfile } from "@/components/user-profile";
-import { HouseAssets, Roles, Survey, UnitAssetsGroup } from "@/lib/get-data";
+import {
+  HouseAssets,
+  Roles,
+  Survey,
+  UnitAssetsGroup,
+  WeaponAsset,
+} from "@/lib/get-data";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -21,6 +27,7 @@ interface ContentProps {
   houseAssets: HouseAssets | null | undefined;
   userId: string;
   unitsAssets: UnitAssetsGroup;
+  weapons: WeaponAsset[];
 }
 
 const Content: FC<ContentProps> = ({
@@ -30,6 +37,7 @@ const Content: FC<ContentProps> = ({
   houseAssets,
   userId,
   unitsAssets,
+  weapons,
 }) => {
   const t = useTranslations("MyHouse");
   const [inputQuery, setInputQuery] = useState<string>("");
@@ -115,7 +123,7 @@ const Content: FC<ContentProps> = ({
       <div className="flex gap-4 p-4 flex-wrap">
         {filteredData.map((e) => (
           <div key={e.discordId}>
-            <UserProfile player={e} unitsAssets={unitsAssets}>
+            <UserProfile player={e} unitsAssets={unitsAssets} weapons={weapons}>
               <Badge
                 className={clsx(
                   "cursor-pointer text-md p-2 hover:bg-destructive",

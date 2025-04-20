@@ -4,7 +4,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 import Preview from "@/feature/team-builder/preview";
-import { ArtilleryAsset, getPublicLineup, getSurvey } from "@/lib/get-data";
+import {
+  ArtilleryAsset,
+  getPublicLineup,
+  getSurvey,
+  WeaponAsset,
+} from "@/lib/get-data";
 import { Unit } from "@/lib/type";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -16,12 +21,14 @@ const Content = ({
   units,
   lineupName,
   artillery,
+  weapons,
 }: {
   date: string;
   house: string;
   units: Unit[];
   lineupName: string | null;
   artillery: ArtilleryAsset[];
+  weapons: WeaponAsset[];
 }) => {
   const { data: user } = useSession();
   const cleanedLineupName = lineupName?.replaceAll("_", " ");
@@ -83,6 +90,7 @@ const Content = ({
           className="flex self-center"
         >
           <Preview
+            weapons={weapons}
             data={e.sheet}
             units={units}
             username={survey.inGameNick}
