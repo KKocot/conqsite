@@ -16,7 +16,13 @@ import KitsArea from "@/feature/unit-builder/kits-area";
 import PostCard from "@/feature/unit-builder/post/card";
 import SkillsArea from "@/feature/unit-builder/skills-area";
 import Tree from "@/feature/unit-builder/tree";
-import { getRoleById, Rate, UnitData, UnitObject } from "@/lib/get-data";
+import {
+  DoctrineType,
+  getRoleById,
+  KitsAssets,
+  UnitData,
+  UnitObject,
+} from "@/lib/get-data";
 import { Unit } from "@/lib/type";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowBigLeft, PenIcon, PlusCircle, Save, X } from "lucide-react";
@@ -33,11 +39,15 @@ const Content = ({
   posts,
   postsLoading,
   votes,
+  kits,
+  doctrines,
 }: {
+  doctrines: DoctrineType[];
   entry?: UnitObject;
   shortEntry: Unit;
   posts?: UnitData[];
   postsLoading: boolean;
+  kits: KitsAssets[];
   votes: {
     id: string;
     rate: number;
@@ -312,8 +322,8 @@ const Content = ({
             <SkillsArea editMode={editMode} form={form} />
             <FormationsArea editMode={editMode} form={form} />
             <div className="flex justify-around flex-col items-center lg:flex-row">
-              <DoctrinesArea unitName={shortEntry.name} />
-              <KitsArea unitName={shortEntry.name} />
+              <DoctrinesArea doctrines={doctrines} />
+              <KitsArea kits={kits} />
             </div>
             <ChallengesArea editMode={editMode} form={form} />
             <div className="flex items-end justify-between">

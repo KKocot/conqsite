@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import Content from "./content";
-import { getUnitsAssets } from "@/lib/get-data";
+import { getUnitsAssets, getWeaponsAssets } from "@/lib/get-data";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
 
@@ -12,8 +12,12 @@ export default function Page() {
     queryFn: getUnitsAssets,
     enabled: true,
   });
-  if (isLoading) return <LoadingComponent />;
-  if (!data) return <NoData />;
+  const { data: weaponsAssets, isLoading: weaponsAssetsLoading } = useQuery({
+    queryKey: ["weaponsAssets"],
+    queryFn: () => getWeaponsAssets(),
+  });
+  if (isLoading || weaponsAssetsLoading) return <LoadingComponent />;
+  if (!data || !weaponsAssets) return <NoData />;
 
-  return <Content unitsAssets={data} />;
+  return <Content unitsAssets={data} weapons={weaponsAssets} />;
 }

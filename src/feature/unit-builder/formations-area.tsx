@@ -4,11 +4,46 @@ import { UnitObject } from "@/lib/get-data";
 import { PlusCircle, PlusSquare, Trash2 } from "lucide-react";
 import { FC } from "react";
 import ImagePickerDialog from "./image-picker-dialog";
-import { formations } from "@/assets/formations";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 import Image from "next/image";
+
+const formationsImages = [
+  "block-even.png",
+  "block-retairii.png",
+  "dispersed.png",
+  "line-staggered.png",
+  "column.png",
+  "schiltron.png",
+  "wings.png",
+  "horns.png",
+  "line.png",
+  "turtle.png",
+  "three-ranks.png",
+  "shield.png",
+  "wedge.png",
+  "line-single-horizontal.png",
+  "music.png",
+  "column-heavy.png",
+  "block-staggered.png",
+  "wedge-messy.png",
+  "dispersed-fenrir.png",
+  "scatter.png",
+  "dispersed-dima.png",
+  "hawk-dima.png",
+  "cover-commander.png",
+  "wedge-heavy.png",
+  "column-charge.png",
+  "huskarl-shield.png",
+  "hawk.png",
+  "cross-formation.png",
+  "crescent.png",
+  "trapezoid-formation.png",
+  "stand-ground.png",
+  "phalanx.png",
+  "logo.png",
+];
 
 const FormationsArea: FC<{
   editMode: boolean;
@@ -41,7 +76,7 @@ const FormationsArea: FC<{
               <div className="flex items-center gap-5">
                 {editMode ? (
                   <ImagePickerDialog
-                    images={formations.map((formation) => formation.image)}
+                    images={formationsImages}
                     path="formations"
                     onSetImage={(image) => {
                       update(i, { ...field, image });

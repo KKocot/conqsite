@@ -2,7 +2,7 @@ import connectMongoDB from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import unitAssetSchema from "./schema";
-import UnitAsset from "@/models/unit-asset";
+import UnitAsset from "@/models/assets/unit";
 
 export async function POST(request: Request) {
   const headers = request.headers;

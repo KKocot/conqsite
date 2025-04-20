@@ -7,7 +7,6 @@ import {
   TableBody,
   Table,
 } from "@/components/ui/table";
-import { weapons } from "@/assets/weapons";
 import { useSession } from "next-auth/react";
 import { ownedUnits } from "@/lib/utils";
 import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -20,14 +19,15 @@ import Image from "next/image";
 import List from "@/feature/unit-builder/unit-list";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
-import { UnitAssetsGroup } from "@/lib/get-data";
+import { UnitAssetsGroup, WeaponAsset } from "@/lib/get-data";
 import Link from "next/link";
 import { CircleUser } from "lucide-react";
 
 interface ContentProps {
   unitsAssets: UnitAssetsGroup | undefined;
+  weapons: WeaponAsset[];
 }
-export default function Content({ unitsAssets }: ContentProps) {
+export default function Content({ unitsAssets, weapons }: ContentProps) {
   const { data: user_data } = useSession();
   const t = useTranslations("MyProfile");
 

@@ -2,16 +2,10 @@
 
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
-import { getUnitPost, getUnitWiki } from "@/lib/get-data";
+import { getDoctrineAssets, getUnitPost, getUnitWiki } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import Content from "./content";
-import {
-  commonDoctrines,
-  epicDoctrines,
-  rareDoctrines,
-  uncommonDoctrines,
-} from "@/assets/doctrines";
 
 const Page = () => {
   const { unit, id } = useParams();
@@ -25,14 +19,13 @@ const Page = () => {
     queryFn: () => getUnitWiki(unit.toString(), "accepted"),
     enabled: !!unit,
   });
-  const doctrines = [
-    ...epicDoctrines,
-    ...rareDoctrines,
-    ...commonDoctrines,
-    ...uncommonDoctrines,
-  ];
-  if (isLoading || unitWikiLoading) return <LoadingComponent />;
-  if (!data || !unitWiki) return <NoData />;
+  const { data: doctrines, isLoading: doctrinesLoading } = useQuery({
+    queryKey: ["doctrinesAssets"],
+    queryFn: () => getDoctrineAssets(),
+  });
+  if (isLoading || unitWikiLoading || doctrinesLoading)
+    return <LoadingComponent />;
+  if (!data || !unitWiki || !doctrines) return <NoData />;
   return (
     <Content
       data={data}

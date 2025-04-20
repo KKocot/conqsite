@@ -9,7 +9,7 @@ import DoctrinedBuilder from "@/feature/unit-builder/doctrines/builder";
 import { useForm } from "react-hook-form";
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import Image from "next/image";
-import { UnitAsset, UnitData, UnitObject } from "@/lib/get-data";
+import { DoctrineType, UnitAsset, UnitData, UnitObject } from "@/lib/get-data";
 import Tree from "@/feature/unit-builder/tree";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -80,8 +80,9 @@ const unitSchema = z.object({
 interface ContentProps {
   data: UnitAsset;
   unitTree: UnitObject;
+  doctrines: DoctrineType[];
 }
-const Content = ({ data, unitTree }: ContentProps) => {
+const Content = ({ data, unitTree, doctrines }: ContentProps) => {
   const user = useSession();
   const postBuildMutation = usePostBuildMutation();
   const form = useForm({
@@ -185,6 +186,7 @@ const Content = ({ data, unitTree }: ContentProps) => {
                 setValue={form.setValue}
                 doctrineSlot={values.doctrines}
                 unitName={data.name}
+                doctrines={doctrines}
               />
               <Button
                 type="submit"

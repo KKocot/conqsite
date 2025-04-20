@@ -9,6 +9,7 @@ import {
   getHouseAssets,
   getSurveys,
   getUnitsAssets,
+  getWeaponsAssets,
 } from "@/lib/get-data";
 import { useSession } from "next-auth/react";
 import LoadingComponent from "@/feature/ifs/loading";
@@ -43,13 +44,19 @@ const Page = () => {
     queryFn: () => getHouseAssets(house),
     enabled: !!house,
   });
-
-  if (rolesIsLoading || surveysIsLoading) return <LoadingComponent />;
-  if (!surveysData || !rolesData || !unitsAssets) return <NoData />;
+  const { data: weaponsAssets, isLoading: weaponsAssetsLoading } = useQuery({
+    queryKey: ["weaponsAssets"],
+    queryFn: () => getWeaponsAssets(),
+  });
+  if (rolesIsLoading || surveysIsLoading || weaponsAssetsLoading)
+    return <LoadingComponent />;
+  if (!surveysData || !rolesData || !unitsAssets || !weaponsAssets)
+    return <NoData />;
 
   return assetsData?.sharedList ||
     !!rolesData.find((e) => e.discordId === user?.user.id) ? (
     <Content
+      weapons={weaponsAssets}
       house={house}
       surveysData={surveysData}
       rolesData={rolesData}

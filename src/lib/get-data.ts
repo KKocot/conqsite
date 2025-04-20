@@ -616,3 +616,72 @@ export const getAllHousesBadges = async (): Promise<Badge[]> => {
   const result = await response.json();
   return result;
 };
+
+export interface ArtilleryAsset {
+  name: string;
+  src: string;
+  id: number;
+}
+
+export const getArtilleryAssets = async (): Promise<ArtilleryAsset[]> => {
+  const response = await fetch(`/api/assets/artillery`);
+  const result = await response.json();
+  return result.artilleriesAsset;
+};
+
+export interface KitsAssets {
+  image: string;
+  unit: string;
+}
+
+export const getKitsAssets = async (unit: string): Promise<KitsAssets[]> => {
+  const response = await fetch(`/api/assets/kits?unit=${unit}`);
+  const result = await response.json();
+  return result.artilleryAsset;
+};
+
+export interface WeaponAsset {
+  id: number;
+  name: string;
+  src: string;
+}
+export const getWeaponsAssets = async (): Promise<WeaponAsset[]> => {
+  const response = await fetch(`/api/assets/weapons`);
+  const result = await response.json();
+  return result.weapons;
+};
+
+export interface DoctrineType {
+  name: string;
+  img: string;
+  forUnit: string[];
+  dedicated: "all" | "group" | "unit";
+  stats: string;
+  rarity: "common" | "uncommon" | "rare" | "epic";
+}
+
+export const getDoctrineAssets = async (): Promise<DoctrineType[]> => {
+  const response = await fetch(`/api/assets/doctrines`);
+  const result = await response.json();
+  return result;
+};
+
+export const getUnitDoctrines = async (
+  unit: string
+): Promise<DoctrineType[]> => {
+  const response = await fetch(`/api/assets/doctrines?unit=${unit}`);
+  const result = await response.json();
+  return result;
+};
+
+export interface PageMD {
+  page: string;
+  body: string;
+}
+export const getPageMD = async (
+  page: "tos" | "policy" | "docs" | "bot"
+): Promise<PageMD> => {
+  const response = await fetch(`/api/pagemd?page=${page}`);
+  const result = await response.json();
+  return result;
+};

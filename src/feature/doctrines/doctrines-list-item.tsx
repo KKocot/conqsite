@@ -1,11 +1,11 @@
 "use client";
 
-import { Doctrine } from "@/assets/doctrines";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { DoctrineType } from "@/lib/get-data";
 import Image from "next/image";
 
-const DoctrinesLisItem = ({ doctrine }: { doctrine: Doctrine }) => {
+const DoctrinesLisItem = ({ doctrine }: { doctrine: DoctrineType }) => {
   const statsList = doctrine.stats.split(". ").filter(Boolean);
   return (
     <Card className="w-[260px]">

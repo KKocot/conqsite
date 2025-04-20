@@ -12,7 +12,6 @@ const SettingsNavbar = () => {
       <Item href={`/settings/high-roles/${house}`} title="High Roles" />
       <Item href={`/settings/house-card/${house}`} title="House Card" />
       <Item href={`/settings/delete/${house}`} title="Delete House" />
-      {/* <Item href={`/settings/members-check/${house}`} title="Members Check" /> */}
     </div>
   );
 };

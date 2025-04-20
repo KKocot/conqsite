@@ -1,32 +1,20 @@
 "use client";
 
-import {
-  commonDoctrines,
-  uncommonDoctrines,
-  rareDoctrines,
-  epicDoctrines,
-} from "@/assets/doctrines";
 import { Tabs, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 import { TabsList } from "@radix-ui/react-tabs";
 import DoctrinesList from "@/feature/doctrines/doctrines-list";
 import { useTranslations } from "next-intl";
+import { DoctrineType } from "@/lib/get-data";
 
-const group = [
-  ...epicDoctrines,
-  ...rareDoctrines,
-  ...uncommonDoctrines,
-  ...commonDoctrines,
-];
-
-const Content = () => {
+const Content = ({ doctrines }: { doctrines: DoctrineType[] }) => {
   const t = useTranslations("Doctrines");
-  const dedicatedForAll = group.filter(
+  const dedicatedForAll = doctrines.filter(
     (doctrine) => doctrine.dedicated === "all"
   );
-  const dedicatedForGruops = group.filter(
+  const dedicatedForGruops = doctrines.filter(
     (doctrine) => doctrine.dedicated === "group"
   );
-  const dedicatedForUnits = group.filter(
+  const dedicatedForUnits = doctrines.filter(
     (doctrine) => doctrine.dedicated === "unit"
   );
 

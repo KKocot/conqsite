@@ -1,6 +1,11 @@
 "use client";
 
-import { getPublicLineupDates, getUnitsAssets } from "@/lib/get-data";
+import {
+  getArtilleryAssets,
+  getPublicLineupDates,
+  getUnitsAssets,
+  getWeaponsAssets,
+} from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useSearchParams } from "next/navigation";
 import Content from "./content";
@@ -35,7 +40,17 @@ const Page = () => {
   const { data: unitsAssets, isLoading: unitsAssetsLoading } = useQuery({
     queryKey: ["unitsAssets"],
     queryFn: () => getUnitsAssets(),
-    enabled: true,
+  });
+  const { data: artilleryAssets, isLoading: artilleryAssetsLoading } = useQuery(
+    {
+      queryKey: ["artilleryAssets"],
+      queryFn: () => getArtilleryAssets(),
+    }
+  );
+
+  const { data: weaponsAssets, isLoading: weaponsAssetsLoading } = useQuery({
+    queryKey: ["weaponsAssets"],
+    queryFn: () => getWeaponsAssets(),
   });
 
   const latestDate = data ? data[0] : "";
@@ -65,12 +80,26 @@ const Page = () => {
     [urlName]
   );
 
-  if (isLoading || unitsAssetsLoading) return <LoadingComponent />;
-  if (!data || !date || !unitsAssets) return <NoData />;
+  if (
+    isLoading ||
+    unitsAssetsLoading ||
+    artilleryAssetsLoading ||
+    weaponsAssetsLoading
+  )
+    return <LoadingComponent />;
+  if (!data || !date || !unitsAssets || !artilleryAssets || !weaponsAssets)
+    return <NoData />;
 
   return (
     <div className="flex justify-center w-full">
-      <Content date={date} house={house} units={units} lineupName={urlName} />
+      <Content
+        weapons={weaponsAssets}
+        date={date}
+        house={house}
+        units={units}
+        lineupName={urlName}
+        artillery={artilleryAssets}
+      />
       <DateSelector
         currentDate={date}
         dates={data}

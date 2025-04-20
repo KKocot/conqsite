@@ -5,10 +5,12 @@ import Content from "./content";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import {
+  getArtilleryAssets,
   getHouseAssets,
   getPublicLineupDates,
   getSurveys,
   getUnitsAssets,
+  getWeaponsAssets,
 } from "@/lib/get-data";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
@@ -39,18 +41,33 @@ const Page = () => {
       enabled: !!house,
     });
 
+  const { data: artilleryAssets, isLoading: artilleryAssetsLoading } = useQuery(
+    {
+      queryKey: ["artilleryAssets"],
+      queryFn: () => getArtilleryAssets(),
+    }
+  );
+  const { data: weaponsAssets, isLoading: weaponsAssetsLoading } = useQuery({
+    queryKey: ["weaponsAssets"],
+    queryFn: () => getWeaponsAssets(),
+  });
+
   useEffect(() => {
     fetch(`/api/discord-bot/uploadAttendance?house=${house}`);
   }, [house]);
-  if (isLoading) return <LoadingComponent />;
-  if (!data || !unitsAssets) return <NoData />;
+  if (isLoading || artilleryAssetsLoading || weaponsAssetsLoading)
+    return <LoadingComponent />;
+  if (!data || !unitsAssets || !artilleryAssets || !weaponsAssets)
+    return <NoData />;
 
   return (
     <div className="w-full">
       <Content
+        weapons={weaponsAssets}
         unitsAssets={unitsAssets}
         surveysData={data}
         assets={assets}
+        artillery={artilleryAssets}
         publicLineups={{
           dates: publicLineupsDates,
           loading: publicLineupsLoading,

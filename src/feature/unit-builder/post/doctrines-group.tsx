@@ -1,8 +1,8 @@
-import { Doctrine } from "@/assets/doctrines";
+import { DoctrineType } from "@/lib/get-data";
 import DoctrineTooltip from "./doctrine-tooltip";
 
 interface DoctrineGroupProps {
-  doctrines: Doctrine[];
+  doctrines: DoctrineType[];
 }
 
 const DoctrinesGroup = ({ doctrines }: DoctrineGroupProps) => {

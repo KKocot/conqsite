@@ -1,4 +1,3 @@
-import { epicDoctrines, rareDoctrines } from "@/assets/doctrines";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
   Tooltip,
@@ -6,12 +5,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { DoctrineType } from "@/lib/get-data";
 
-const DoctrinesArea = ({ unitName }: { unitName: string }) => {
-  const doctrines = [...epicDoctrines, ...rareDoctrines].filter(
-    (doctrine) =>
-      doctrine.dedicated === "unit" && doctrine.forUnit.includes(unitName)
-  );
+const DoctrinesArea = ({ doctrines }: { doctrines: DoctrineType[] }) => {
   return doctrines.length === 0 ? null : (
     <div>
       <h2 className="text-2xl font-semibold mb-4 text-center">
