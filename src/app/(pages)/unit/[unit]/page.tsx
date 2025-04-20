@@ -5,6 +5,7 @@ import Content from "./content";
 import { useQuery } from "@tanstack/react-query";
 import {
   getAllUnitPosts,
+  getKitsAssets,
   getUnitAssets,
   getUnitRate,
   getUnitWiki,
@@ -35,10 +36,16 @@ const Page = () => {
     queryFn: () => getUnitRate(unit),
     enabled: !!unit,
   });
+  const { data: KitsAssets } = useQuery({
+    queryKey: ["kitsAssets", unit],
+    queryFn: () => getKitsAssets(unit),
+    enabled: !!unit,
+  });
   if (isLoading) return <LoadingComponent />;
   if (!unitAssets) return <NoData />;
   return (
     <Content
+      kits={KitsAssets ?? []}
       entry={data?.[data.length - 1] ?? undefined}
       shortEntry={unitAssets}
       posts={posts}
