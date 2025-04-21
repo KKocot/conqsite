@@ -234,12 +234,29 @@ export interface DiscordProps {
   channels: { id: string; label: string }[];
   twRoles: { id: string; label: string }[] | null;
 }
+
 export const getDiscordData = async (
   member_id: string,
   values: { guild_id: string; tw_discord: string }
 ): Promise<DiscordProps> => {
   const response = await fetch(
     `/api/discord-bot/discord-data?guild_id=${values.guild_id}&member_id=${member_id}&tw_server=${values.tw_discord}`
+  );
+  const result = await response.json();
+  return result;
+};
+
+export interface DiscordDataByName {
+  roles: { id: string; label: string }[];
+  channels: { id: string; label: string }[];
+  default_channel: string;
+  default_role_id: string;
+}
+export const getDiscordDataByName = async (
+  name: string
+): Promise<DiscordDataByName> => {
+  const response = await fetch(
+    `/api/discord-bot/discord-data-by-name?name=${name}`
   );
   const result = await response.json();
   return result;

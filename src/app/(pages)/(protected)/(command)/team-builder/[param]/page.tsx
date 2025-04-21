@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import {
   getArtilleryAssets,
+  getDiscordDataByName,
   getHouseAssets,
   getPublicLineupDates,
   getSurveys,
@@ -51,13 +52,22 @@ const Page = () => {
     queryKey: ["weaponsAssets"],
     queryFn: () => getWeaponsAssets(),
   });
-
+  const { data: discordData, isLoading: discordDataLoading } = useQuery({
+    queryKey: ["discordData", house],
+    queryFn: () => getDiscordDataByName(house),
+  });
   useEffect(() => {
     fetch(`/api/discord-bot/uploadAttendance?house=${house}`);
   }, [house]);
   if (isLoading || artilleryAssetsLoading || weaponsAssetsLoading)
     return <LoadingComponent />;
-  if (!data || !unitsAssets || !artilleryAssets || !weaponsAssets)
+  if (
+    !data ||
+    !unitsAssets ||
+    !artilleryAssets ||
+    !weaponsAssets ||
+    !discordData
+  )
     return <NoData />;
 
   return (
@@ -70,7 +80,8 @@ const Page = () => {
         artillery={artilleryAssets}
         publicLineups={{
           dates: publicLineupsDates,
-          loading: publicLineupsLoading,
+          loading: publicLineupsLoading || discordDataLoading,
+          discordData: discordData,
         }}
       />
     </div>
