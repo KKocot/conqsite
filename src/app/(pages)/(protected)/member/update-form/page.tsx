@@ -10,7 +10,7 @@ import NoData from "@/feature/ifs/no-data";
 
 const Page = () => {
   const { data } = useSession();
-  const { data: unitsAssets } = useQuery({
+  const { data: unitsAssets, isLoading: unitsAssetsLoading } = useQuery({
     queryKey: ["unitsAssets"],
     queryFn: getUnitsAssets,
     enabled: true,
@@ -20,8 +20,8 @@ const Page = () => {
     queryFn: () => getWeaponsAssets(),
   });
 
-  if (!unitsAssets || !weaponsAssetsLoading) return <LoadingComponent />;
-  if (!data || !weaponsAssets) return <NoData />;
+  if (weaponsAssetsLoading || unitsAssetsLoading) return <LoadingComponent />;
+  if (!data || !weaponsAssets || !unitsAssets) return <NoData />;
   return (
     <WizardForm
       weapons={weaponsAssets}
