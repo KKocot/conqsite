@@ -12,13 +12,36 @@ import { SheetTypes } from "@/lib/type";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Calendar } from "../../components/ui/calendar";
 import { Send } from "lucide-react";
-import { getPublicLineup, PublicLineup } from "@/lib/get-data";
+import {
+  DiscordDataByName,
+  getPublicLineup,
+  PublicLineup,
+} from "@/lib/get-data";
 import { Popover, PopoverTrigger } from "@/components/ui/popover";
 import { PopoverContent } from "@radix-ui/react-popover";
 import { useAddLineupMutation } from "@/components/hooks/use-lineups-mutation";
 import useDeleteSheetMutation from "@/components/hooks/use-sheet-mutation";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useLocalStorage } from "usehooks-ts";
+import { useSession } from "next-auth/react";
+
+export interface MessageData {
+  url: string;
+  channel_id: string;
+  role_id: string;
+  author: string;
+  tread: boolean;
+}
 
 export function PublicDialog({
   data,
@@ -28,6 +51,7 @@ export function PublicDialog({
   setSheetData,
   setCommander,
   premium,
+  discordData,
 }: {
   data: SheetTypes[];
   house: string;
@@ -36,11 +60,28 @@ export function PublicDialog({
   setSheetData: Dispatch<SetStateAction<SheetTypes[]>>;
   setCommander: Dispatch<SetStateAction<string>>;
   premium?: boolean;
+  discordData: DiscordDataByName;
 }) {
+  const { data: user } = useSession();
   const t = useTranslations("BuildTeam.public");
+
+  const DEFAULT_MESSAGE_DATA: MessageData = {
+    url: `https://conqsite.bard-dev.com/lineups/${house}`,
+    channel_id: discordData.default_channel,
+    role_id: discordData.default_role_id,
+    author: user?.user.id ?? "",
+    tread: false,
+  };
+
   const [publicationName, setPublicationName] = useState("");
   const [date, setDate] = useState<string>(dates ? dates[0] : "");
   const [publicLineup, setPublicLineup] = useState<PublicLineup[]>([]);
+  const [storedMessageData, setStorageMessageData] =
+    useLocalStorage<MessageData>(
+      `discord-message-${house}`,
+      DEFAULT_MESSAGE_DATA
+    );
+
   const deleteSheetMutation = useDeleteSheetMutation();
   const updateLineup = useAddLineupMutation();
   const onDateChange = async (date: string) => {
@@ -67,6 +108,7 @@ export function PublicDialog({
     deleteSheetMutation.isSuccess,
     deleteSheetMutation.isPending,
   ]);
+
   const existingLineup = publicLineup.find((e) => e.name === publicationName);
   const lineupsLimit = premium ? 6 : 3;
   return (
@@ -109,7 +151,7 @@ export function PublicDialog({
             </div>
           </DialogTitle>
         </DialogHeader>
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col items-center gap-2">
           <div className="flex flex-col gap-2">
             <h1>
               {t("lineups_from")}
@@ -182,6 +224,29 @@ export function PublicDialog({
                     sheet: data,
                     commander: commander ?? "",
                   });
+                  try {
+                    fetch("/api/discord-bot/message-lineup", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({
+                        ...storedMessageData,
+                        date: date,
+                        name: publicationName,
+                        house: house,
+                        url: `https://conqsite.bard-dev.com/lineups/${house.replaceAll(
+                          " ",
+                          "%20"
+                        )}?name=${publicationName.replaceAll(
+                          " ",
+                          "+"
+                        )}&date=${date}`,
+                      }),
+                    });
+                  } catch (error) {
+                    console.error("Error occurred:", error);
+                  }
                   toast.success(
                     existingLineup ? t("lineup_updated") : t("lineup_added")
                   );
@@ -189,6 +254,73 @@ export function PublicDialog({
               >
                 {existingLineup ? t("update") : t("add")}
               </Button>
+            </div>
+          </div>
+          <div className="flex w-full justify-between">
+            <div className="w-1/2">
+              <Label>DC channel</Label>
+              <Select
+                value={storedMessageData.channel_id}
+                onValueChange={(e) => {
+                  setStorageMessageData((prev) => ({ ...prev, channel_id: e }));
+                }}
+              >
+                <SelectTrigger className="col-span-3">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {discordData.channels.map((e) => (
+                      <SelectItem key={e.id} value={e.id}>
+                        {e.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <div>
+                <Label
+                  htmlFor="tread"
+                  className="text-sm text-muted-foreground flex justify-between p-1 items-center"
+                >
+                  <div>Post in Tread</div>
+
+                  {storedMessageData.tread ? "✅" : "❌"}
+                </Label>
+                <Checkbox
+                  id="tread"
+                  className="hidden"
+                  checked={storedMessageData.tread}
+                  onCheckedChange={(e) => {
+                    setStorageMessageData((prev) => ({
+                      ...prev,
+                      tread: !prev.tread,
+                    }));
+                  }}
+                />
+              </div>
+            </div>
+            <div className="w-1/2">
+              <Label>DC role</Label>
+              <Select
+                value={storedMessageData.role_id}
+                onValueChange={(e) => {
+                  setStorageMessageData((prev) => ({ ...prev, role_id: e }));
+                }}
+              >
+                <SelectTrigger className="col-span-3">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {discordData.roles.map((e) => (
+                      <SelectItem key={e.id} value={e.id}>
+                        {e.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
           </div>
           <Calendar

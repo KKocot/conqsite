@@ -9,6 +9,8 @@ import { Rows4, ScanEye, Table, TableIcon } from "lucide-react";
 import UsersList from "@/feature/team-builder/users-list";
 import {
   ArtilleryAsset,
+  DiscordDataByName,
+  DiscordProps,
   HouseAssets,
   Survey,
   UnitAssetsGroup,
@@ -36,7 +38,11 @@ import PickedUnitsStats from "@/feature/team-builder/picked-units-stats";
 interface ContentProps {
   surveysData: Survey[];
   assets?: HouseAssets;
-  publicLineups: { dates?: string[]; loading: boolean };
+  publicLineups: {
+    dates?: string[];
+    loading: boolean;
+    discordData: DiscordDataByName;
+  };
   unitsAssets: UnitAssetsGroup;
   artillery: ArtilleryAsset[];
   weapons: WeaponAsset[];
@@ -247,6 +253,7 @@ const Content = ({
               setCommander={setCommander}
               setSheetData={setSheetData}
               dates={publicLineups.dates}
+              discordData={publicLineups.discordData}
             />
           )}
         </TooltipContainer>
