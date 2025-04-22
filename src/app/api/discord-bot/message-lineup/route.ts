@@ -15,7 +15,6 @@ export async function POST(request: Request) {
       cache: "no-store",
     });
     const data = await response.json();
-    console.log("data", data);
     return Response.json(data);
   } catch (error) {
     if (error instanceof ZodError)

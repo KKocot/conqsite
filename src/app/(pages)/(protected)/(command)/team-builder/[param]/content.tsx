@@ -10,7 +10,6 @@ import UsersList from "@/feature/team-builder/users-list";
 import {
   ArtilleryAsset,
   DiscordDataByName,
-  DiscordProps,
   HouseAssets,
   Survey,
   UnitAssetsGroup,
