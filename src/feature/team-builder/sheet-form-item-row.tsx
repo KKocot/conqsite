@@ -2,7 +2,7 @@ import { ArtilleryProps, SheetTypes, Unit, WeaponsTypes } from "@/lib/type";
 import { Autocompleter } from "./autocompleter";
 import { Textarea } from "../../components/ui/textarea";
 import { useEffect, useMemo, useState } from "react";
-import { useArtyAmount } from "@/lib/utils";
+import { countLeadership, mapUnitsByEra, useArtyAmount } from "@/lib/utils";
 import { ChevronDown, ChevronUp, PackageOpen } from "lucide-react";
 import clsx from "clsx";
 import { Button } from "../../components/ui/button";
@@ -87,44 +87,9 @@ const Item = ({
   const [user, setUser] = useState<Survey | undefined>();
   const user_artillery = useArtyAmount(user?.artyAmount);
 
-  const leadership = useMemo(() => {
-    const unit1_leadership = units.find(
-      (unit) => unit.name === data.unit1
-    )?.leadership;
-    const unit2_leadership = units.find(
-      (unit) => unit.name === data.unit2
-    )?.leadership;
-    const unit3_leadership = units.find(
-      (unit) => unit.name === data.unit3
-    )?.leadership;
-    return (
-      (unit1_leadership ? unit1_leadership : 0) +
-      (unit2_leadership ? unit2_leadership : 0) +
-      (unit3_leadership ? unit3_leadership : 0)
-    );
-  }, [data.unit1, data.unit2, data.unit3, units]);
   useEffect(() => {
     setUser(findUserByNick(users, data.username));
   }, [data.username, users]);
-
-  function mapUnitsByEra(
-    units: Unit[],
-    userUnits?: Survey,
-    era: string | string[] = "low"
-  ) {
-    const isEraArray = Array.isArray(era);
-    const filteredUnits = units?.filter((u) =>
-      isEraArray ? era.includes(u.era) : u.era === era
-    );
-    const userUnitsKey: string = isEraArray ? "low" : era;
-    const userUnitsFiltered =
-      userUnits?.units?.[userUnitsKey as keyof typeof userUnits.units] ?? [];
-
-    return filteredUnits?.map((unit: Unit) => {
-      const userUnit = userUnitsFiltered?.find((u) => u.id === unit.id);
-      return { pref: userUnit?.value, ...unit };
-    });
-  }
 
   const golden_units_user = mapUnitsByEra(units, user, "golden");
   const heroic_units_user = mapUnitsByEra(units, user, "heroic");
@@ -136,6 +101,12 @@ const Item = ({
     ...low_units_user,
     ...other_units_user,
   ];
+  const leadership = useMemo(() => {
+    const unit1_leadership = countLeadership(units_user, data.unit1);
+    const unit2_leadership = countLeadership(units_user, data.unit2);
+    const unit3_leadership = countLeadership(units_user, data.unit3);
+    return unit1_leadership + unit2_leadership + unit3_leadership;
+  }, [data.unit1, data.unit2, data.unit3, JSON.stringify(units_user)]);
   return (
     <li
       className={clsx(

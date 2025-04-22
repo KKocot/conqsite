@@ -2,7 +2,7 @@ import { ArtilleryProps, SheetTypes, Unit, WeaponsTypes } from "@/lib/type";
 import { Autocompleter } from "./autocompleter";
 import { Textarea } from "../../components/ui/textarea";
 import { useEffect, useMemo, useState } from "react";
-import { countLeadership, useArtyAmount } from "@/lib/utils";
+import { countLeadership, mapUnitsByEra, useArtyAmount } from "@/lib/utils";
 import { ChevronLeft, ChevronRight, PackageOpen } from "lucide-react";
 import clsx from "clsx";
 import { Button } from "../../components/ui/button";
@@ -94,29 +94,6 @@ const Item = ({
   useEffect(() => {
     setUser(findUserByNick(users, data.username));
   }, [data.username, users]);
-
-  function mapUnitsByEra(
-    units: Unit[],
-    userUnits?: Survey,
-    era: string | string[] = "low"
-  ) {
-    const isEraArray = Array.isArray(era);
-    const filteredUnits = units?.filter((u) =>
-      isEraArray ? era.includes(u.era) : u.era === era
-    );
-    const userUnitsKey: string = isEraArray ? "low" : era;
-    const userUnitsFiltered =
-      userUnits?.units?.[userUnitsKey as keyof typeof userUnits.units] ?? [];
-
-    return filteredUnits?.map((unit: Unit) => {
-      const userUnit = userUnitsFiltered?.find((u) => u.id === unit.id);
-      return {
-        pref: userUnit?.value,
-        reduceCost: userUnit?.reduceCost ?? false,
-        ...unit,
-      };
-    });
-  }
 
   const golden_units_user = mapUnitsByEra(units, user, "golden");
   const heroic_units_user = mapUnitsByEra(units, user, "heroic");

@@ -173,3 +173,26 @@ export const countLeadership = (units: Unit[], unit: string): number => {
   const discount = matchedUnit.reduceCost ? 0.84 : 1; // 16% discount means multiply by 0.84
   return matchedUnit.leadership * discount;
 };
+
+export function mapUnitsByEra(
+  units: Unit[],
+  userUnits?: Survey,
+  era: string | string[] = "low"
+) {
+  const isEraArray = Array.isArray(era);
+  const filteredUnits = units?.filter((u) =>
+    isEraArray ? era.includes(u.era) : u.era === era
+  );
+  const userUnitsKey: string = isEraArray ? "low" : era;
+  const userUnitsFiltered =
+    userUnits?.units?.[userUnitsKey as keyof typeof userUnits.units] ?? [];
+
+  return filteredUnits?.map((unit: Unit) => {
+    const userUnit = userUnitsFiltered?.find((u) => u.id === unit.id);
+    return {
+      pref: userUnit?.value,
+      reduceCost: userUnit?.reduceCost ?? false,
+      ...unit,
+    };
+  });
+}

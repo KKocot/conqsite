@@ -25,7 +25,6 @@ export async function GET(request: Request) {
         }
       );
       const data = await response.json();
-      console.log(data);
       return Response.json({
         roles: data.roles,
         channels: data.channels,
