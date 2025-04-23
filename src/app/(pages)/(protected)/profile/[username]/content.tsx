@@ -4,19 +4,36 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProfileHeader from "@/feature/profile/header";
 import PostsList from "@/feature/profile/posts-list";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import TierList from "@/feature/profile/tier-list";
+import { useState } from "react";
 
 interface ContentProps {
   data: UserUnitPost;
 }
 
 const Content = ({ data }: ContentProps) => {
+  const params = useSearchParams();
+  const router = useRouter();
+  const { username } = useParams();
+  const card = params.get("card") as "posts" | "about" | "tierList" | null;
+  const [tab, setTab] = useState(card ?? "posts");
+  const onTabChange = (value: "posts" | "about" | "tierList") => {
+    setTab(value);
+    router.push(`/profile/${username}?card=${value}`);
+  };
   return (
     <div className="container mx-auto py-8 px-4">
       <ProfileHeader author={data.author} postCount={data.posts.length} />
-      <Tabs defaultValue="posts" className="mt-8">
-        <TabsList className="grid w-full max-w-md grid-cols-1">
+      <Tabs
+        value={tab}
+        onValueChange={(e) => onTabChange(e as "posts" | "about" | "tierList")}
+        className="mt-8"
+      >
+        <TabsList className="">
           <TabsTrigger value="posts">Posts</TabsTrigger>
-          {/* <TabsTrigger value="about">About</TabsTrigger> */}
+          <TabsTrigger value="about">About</TabsTrigger>
+          <TabsTrigger value="tierList">Tier List</TabsTrigger>
         </TabsList>
         <TabsContent value="posts" className="mt-6">
           <PostsList posts={data.posts} />
@@ -55,6 +72,11 @@ const Content = ({ data }: ContentProps) => {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+        <TabsContent value="tierList" className="mt-6">
+          {Array.isArray(username)
+            ? username[0]
+            : username && <TierList id={username} />}
         </TabsContent>
       </Tabs>
     </div>

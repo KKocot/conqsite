@@ -702,3 +702,17 @@ export const getPageMD = async (
   const result = await response.json();
   return result;
 };
+
+export interface TierUnits {
+  id: string;
+  name: string;
+  image: string;
+  rating: number;
+  era: "golden" | "heroic" | "blue" | "green" | "grey";
+}
+
+export const getTierUnits = async (id: string): Promise<TierUnits[]> => {
+  const response = await fetch(`/api/user/tierList?userId=${id}`);
+  const result = await response.json();
+  return result;
+};
