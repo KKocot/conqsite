@@ -35,7 +35,9 @@ export default function WizardForm({
     enabled: !!user_id,
   });
   const { goldenEra, heroicEra, blueEra, greenEra, greyEra } = unitsAssets;
-  const lowEras = [...greyEra, ...greenEra, ...blueEra];
+  const lowEras = [...greyEra, ...greenEra, ...blueEra].sort(
+    (a, b) => a.id - b.id
+  );
   const DEFAULT_FORM_DATA: Survey = {
     discordNick: "",
     inGameNick: "",
@@ -66,7 +68,6 @@ export default function WizardForm({
     },
   };
   const unitForm = profileData ?? DEFAULT_FORM_DATA;
-
   const low_units_diff = lowEras.length - unitForm.units.low.length;
   const heroic_units_diff = heroicEra.length - unitForm.units.heroic.length;
   const golden_units_diff = goldenEra.length - unitForm.units.golden.length;
