@@ -5,8 +5,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProfileHeader from "@/feature/profile/header";
 import PostsList from "@/feature/profile/posts-list";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import TierList from "@/feature/profile/tier-list";
+import TierList from "@/components/tier-list";
 import { useState } from "react";
+import TierListContainer from "@/feature/profile/tier-list-container";
 
 interface ContentProps {
   data: UserUnitPost;
@@ -30,7 +31,7 @@ const Content = ({ data }: ContentProps) => {
         onValueChange={(e) => onTabChange(e as "posts" | "about" | "tierList")}
         className="mt-8"
       >
-        <TabsList className="">
+        <TabsList>
           <TabsTrigger value="posts">Posts</TabsTrigger>
           <TabsTrigger value="about">About</TabsTrigger>
           <TabsTrigger value="tierList">Tier List</TabsTrigger>
@@ -76,7 +77,7 @@ const Content = ({ data }: ContentProps) => {
         <TabsContent value="tierList" className="mt-6">
           {Array.isArray(username)
             ? username[0]
-            : username && <TierList id={username} />}
+            : username && <TierListContainer id={username} />}
         </TabsContent>
       </Tabs>
     </div>

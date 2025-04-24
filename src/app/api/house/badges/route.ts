@@ -14,20 +14,21 @@ export async function GET(request: Request) {
   try {
     await connectMongoDB();
     const assets = await HouseAssets.find();
-    const card = await House.find();
+    const cards = await House.find();
     const filledSurveys = await getFilledSurveys();
     const history = await getHistory();
     const conqBotUsers = await getConqBotUsers();
     const publicLineups = await getPublicLineups();
 
-    const combinedData = assets.map((asset) => ({
-      house: asset.name,
-      premium: asset.premium ?? false,
-      surveys: filledSurveys.find((s) => s.house === asset.name)?.percent || 0,
-      history: history.find((h) => h._id === asset.name)?.count || 0,
-      conqBot: conqBotUsers.find((c) => c._id === asset.name)?.count || 0,
-      lineups: publicLineups.find((l) => l._id === asset.name)?.count || 0,
-      card: card.find((c) => c.name === asset.name),
+    const combinedData = cards.map((card) => ({
+      house: card.name,
+      premium:
+        assets.find((asset) => asset.name === card.name)?.premium || false,
+      surveys: filledSurveys.find((s) => s.house === card.name)?.percent || 0,
+      history: history.find((h) => h._id === card.name)?.count || 0,
+      conqBot: conqBotUsers.find((c) => c._id === card.name)?.count || 0,
+      lineups: publicLineups.find((l) => l._id === card.name)?.count || 0,
+      card: card,
     }));
 
     if (house) {
