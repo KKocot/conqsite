@@ -716,3 +716,9 @@ export const getTierUnits = async (id: string): Promise<TierUnits[]> => {
   const result = await response.json();
   return result;
 };
+
+export const getCommunityTierList = async (): Promise<TierUnits[]> => {
+  const response = await fetch(`/api/units/tierList`);
+  const result = await response.json();
+  return result;
+};

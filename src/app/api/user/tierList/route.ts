@@ -38,7 +38,6 @@ export async function GET(request: Request) {
           era: unitAsset.era,
         };
       });
-      console.log(units);
       return NextResponse.json(units, { status: 200 });
     }
     return NextResponse.json(

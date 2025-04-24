@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useQuery } from "@tanstack/react-query";
 import { getTierUnits, TierUnits } from "@/lib/get-data";
-import LoadingComponent from "../ifs/loading";
+import LoadingComponent from "../feature/ifs/loading";
 import HoverClickTooltip from "@/components/hover-click-tooltip";
 import Link from "next/link";
 import clsx from "clsx";
@@ -34,11 +34,13 @@ const tiers = [
   { value: 1, color: "bg-blue-400", label: "1" },
 ];
 
-const TierList = ({ id }: { id: string }) => {
-  const { data, isLoading } = useQuery({
-    queryKey: ["tierList", id],
-    queryFn: () => getTierUnits(id),
-  });
+const TierList = ({
+  data,
+  isLoading,
+}: {
+  data?: TierUnits[];
+  isLoading: boolean;
+}) => {
   const [units, setUnits] = useState<TierListItem[]>([]);
   const [filter, setFilter] = useState({
     golden: true,
