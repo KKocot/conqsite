@@ -2,7 +2,7 @@ import { authOptions } from "@/lib/auth";
 import connectMongoDB from "@/lib/mongodb";
 import TWHistory from "@/models/house/twHistory";
 import Roles from "@/models/roles";
-import Survey from "@/models/surveys";
+import Survey from "@/models/user/surveys";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";

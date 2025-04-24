@@ -5,7 +5,7 @@ import HouseAssets from "@/models/houseAssets";
 import HouseSettings from "@/models/houseSettings";
 import PublicLineup from "@/models/publicLineup";
 import Roles from "@/models/roles";
-import Survey from "@/models/surveys";
+import Survey from "@/models/user/surveys";
 import Template from "@/models/template";
 import UserStats from "@/models/userStats";
 import { getServerSession } from "next-auth";

@@ -7,7 +7,7 @@ import { ZodError } from "zod";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import Roles from "@/models/roles";
-import Survey from "@/models/surveys";
+import Survey from "@/models/user/surveys";
 
 /**
  * API Routes for Discord Attendance Events Management

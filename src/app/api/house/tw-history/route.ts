@@ -5,7 +5,7 @@ import { twHistorySchema } from "./shema";
 import TWHistory from "@/models/house/twHistory";
 import { ZodError } from "zod";
 import { NextResponse } from "next/server";
-import Survey from "@/models/surveys";
+import Survey from "@/models/user/surveys";
 import Roles from "@/models/roles";
 
 export async function POST(request: Request) {

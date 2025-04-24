@@ -1,5 +1,5 @@
 import connectMongoDB from "@/lib/mongodb";
-import Survey from "@/models/surveys";
+import Survey from "@/models/user/surveys";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { getServerSession } from "next-auth";

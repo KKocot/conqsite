@@ -10,7 +10,7 @@ import {
   houseUserAllowed,
 } from "@/lib/endpoints-protections";
 import Roles from "@/models/roles";
-import Survey from "@/models/surveys";
+import Survey from "@/models/user/surveys";
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
