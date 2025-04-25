@@ -163,7 +163,6 @@ const TierList = ({
                             href={`/unit/${item.name.replaceAll(" ", "_")}`}
                             key={item.id}
                             className="p-[2px]"
-                            target="_blank"
                           >
                             <Avatar className="rounded-none w-12 h-12">
                               <AvatarImage

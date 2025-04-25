@@ -29,6 +29,7 @@ import ResposiveSidebar from "./responsive-navbar";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import HoverClickTooltip from "@/components/hover-click-tooltip";
+import Image from "next/image";
 
 const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
   const { data: commanders = [] } = useQuery(rolesQueryOptions());
@@ -43,7 +44,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
   const openLinks = {
     title: t("dashboard.dashboard"),
     url: "/dashboard",
-    icon: Frame,
+    icon: "/icons/book.svg",
     items: [
       {
         title: t("dashboard.list_of_house"),
@@ -76,7 +77,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
   const membersLinks = {
     title: t("member.member"),
     url: "/member",
-    icon: SquareUserRound,
+    icon: "/icons/profile.svg",
     items: [
       {
         title: t("member.my_profile"),
@@ -103,7 +104,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
   const houseLinks = list_of_house?.map((house) => ({
     title: house,
     url: `/house/${house}`,
-    icon: Castle,
+    icon: "",
     items: [
       {
         title: t("house.lineups"),
@@ -177,7 +178,13 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
                   href="/policy"
                   className="hover:opacity-80 transition-opacity"
                 >
-                  <Notebook className="h-5 w-5" />
+                  <Image
+                    src="/icons/policy.svg"
+                    alt="policy"
+                    width={30}
+                    height={30}
+                    className="bg-accent rounded-xl"
+                  />
                 </Link>
               }
             >
@@ -190,7 +197,13 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
                   href="/tos"
                   className="hover:opacity-80 transition-opacity"
                 >
-                  <BookTypeIcon className="h-5 w-5" />
+                  <Image
+                    src="/icons/tos.svg"
+                    alt="tos"
+                    width={30}
+                    height={30}
+                    className="bg-accent rounded-xl"
+                  />
                 </Link>
               }
             >
@@ -203,7 +216,13 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
                   href="/docs"
                   className="hover:opacity-80 transition-opacity"
                 >
-                  <Info className="h-5 w-5" />
+                  <Image
+                    src="/icons/docs.svg"
+                    alt="docs"
+                    width={30}
+                    height={30}
+                    className="bg-accent rounded-full"
+                  />
                 </Link>
               }
             >

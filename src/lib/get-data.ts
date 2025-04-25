@@ -88,15 +88,19 @@ export interface Survey {
 export const getSurveys = async (house: string): Promise<Survey[]> => {
   const response = await fetch(`/api/survey?house=${house}`);
   const result = await response.json();
-  return result.surveys.filter(
-    (e: Survey) => e.discordId !== "303156898532818944"
-  );
+  return result.surveys;
 };
 
 export const getSurvey = async (discordId: string): Promise<Survey> => {
   const response = await fetch(`/api/survey/${discordId}`);
   const result = await response.json();
   return result.survey;
+};
+
+export const getSubSurves = async (discordId: string): Promise<Survey[]> => {
+  const response = await fetch(`/api/survey/sub-acc/${discordId}`);
+  const result = await response.json();
+  return result.subSurvey;
 };
 
 export interface SurveyList {

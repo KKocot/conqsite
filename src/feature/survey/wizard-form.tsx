@@ -21,19 +21,23 @@ export default function WizardForm({
   avatar,
   unitsAssets,
   weapons,
+  profileData,
+  profileIsLoading,
+  surveyType,
+  userHouses,
 }: {
   user_id: string;
   avatar?: string;
   unitsAssets: UnitAssetsGroup;
   weapons: WeaponAsset[];
+  profileData?: Survey;
+  profileIsLoading: boolean;
+  surveyType: "main" | "sub" | "newSub";
+  userHouses: string[];
 }) {
   const t = useTranslations("AddForm");
   const [step, setStep] = useState(1);
-  const { data: profileData, isLoading: profileIsLoading } = useQuery({
-    queryKey: ["profile", user_id],
-    queryFn: () => getSurvey(user_id),
-    enabled: !!user_id,
-  });
+
   const { goldenEra, heroicEra, blueEra, greenEra, greyEra } = unitsAssets;
   const lowEras = [...greyEra, ...greenEra, ...blueEra].sort(
     (a, b) => a.id - b.id
@@ -44,7 +48,7 @@ export default function WizardForm({
     discordId: "",
     characterLevel: "",
     avatar: "",
-    house: [],
+    house: userHouses,
     artyAmount: "none",
     updates: [],
     weapons: weapons.map(() => ({ value: false, leadership: 0, pref: 0 })),
@@ -115,10 +119,13 @@ export default function WizardForm({
   const today = new Date().toString();
   const onSubmit = (values: Survey) => {
     submitMutation.mutate({
-      ...values,
-      updates: [...(values?.updates ?? []), today],
-      discordId: user_id,
-      avatar: avatar || "",
+      surveyType,
+      values: {
+        ...values,
+        updates: [...(values?.updates ?? []), today],
+        discordId: user_id,
+        avatar: avatar || "",
+      },
     });
   };
   if (profileIsLoading || submitMutation.isPending) return <LoadingComponent />;
@@ -163,7 +170,13 @@ export default function WizardForm({
             step={step}
           />
         ) : step === 4 ? (
-          <StepGeneral form={form} moveToStep={setStep} weapons={weapons} />
+          <StepGeneral
+            form={form}
+            moveToStep={setStep}
+            weapons={weapons}
+            surveyType={surveyType}
+            userHouses={userHouses}
+          />
         ) : null}
       </form>
     </Form>

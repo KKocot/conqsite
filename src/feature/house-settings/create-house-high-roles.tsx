@@ -68,40 +68,38 @@ const CreateHouseHighRoles = ({
           <div />
           {type === "edit" ? (
             <div className="grid grid-cols-1 gap-5">
-              {values.houseLeader
-                .filter((e) => e.discordId !== "303156898532818944")
-                .map((user) => (
-                  <Badge
-                    key={user.discordId}
-                    className="text-base h-8 flex justify-between"
-                  >
+              {values.houseLeader.map((user) => (
+                <Badge
+                  key={user.discordId}
+                  className="text-base h-8 flex justify-between"
+                >
+                  <div className="w-4 h-4" />
+                  <p>{user.discordNick}</p>
+                  {type === "edit" ? (
+                    <ChangeLeaderDialog
+                      members={discordUsers}
+                      highroles={[
+                        ...values.houseLeader,
+                        ...values.highcommand,
+                        ...values.righthand,
+                      ].map((e) => e.discordId)}
+                      currentLeader={{
+                        discordId: user.discordId,
+                        discordNick: user.discordNick,
+                        house: house,
+                      }}
+                      noMoreRightHand={
+                        values.righthand.length >= (premium ? 2 : 1)
+                      }
+                      noMoreHighCommand={
+                        values.highcommand.length >= (premium ? 6 : 3)
+                      }
+                    />
+                  ) : (
                     <div className="w-4 h-4" />
-                    <p>{user.discordNick}</p>
-                    {type === "edit" ? (
-                      <ChangeLeaderDialog
-                        members={discordUsers}
-                        highroles={[
-                          ...values.houseLeader,
-                          ...values.highcommand,
-                          ...values.righthand,
-                        ].map((e) => e.discordId)}
-                        currentLeader={{
-                          discordId: user.discordId,
-                          discordNick: user.discordNick,
-                          house: house,
-                        }}
-                        noMoreRightHand={
-                          values.righthand.length >= (premium ? 2 : 1)
-                        }
-                        noMoreHighCommand={
-                          values.highcommand.length >= (premium ? 6 : 3)
-                        }
-                      />
-                    ) : (
-                      <div className="w-4 h-4" />
-                    )}
-                  </Badge>
-                ))}
+                  )}
+                </Badge>
+              ))}
             </div>
           ) : (
             <Badge className="text-base h-8 flex justify-between">

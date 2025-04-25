@@ -22,10 +22,14 @@ const StepGeneral = ({
   form,
   moveToStep,
   weapons,
+  userHouses,
+  surveyType,
 }: {
   form: any;
   moveToStep: (e: number) => void;
   weapons: WeaponAsset[];
+  userHouses: string[];
+  surveyType: "main" | "sub" | "newSub";
 }) => {
   const { data, isLoading } = useQuery({
     queryKey: ["houses"],
@@ -54,6 +58,7 @@ const StepGeneral = ({
           <FormField
             control={form.control}
             name="inGameNick"
+            disabled={surveyType === "sub"}
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="font-bold">{t("nick_in_game")}</FormLabel>
@@ -163,18 +168,48 @@ const StepGeneral = ({
             name="house"
             render={({ field }) => (
               <div className="mt-2">
-                {field.value && field.value !== "none" ? (
+                {surveyType === "main" ? (
+                  field.value && field.value !== "none" ? (
+                    <>
+                      <h1 className="font-bold">{t("house")}</h1>
+                      <ul>
+                        {field.value
+                          .filter((e: string) => e !== "none")
+                          .map((e: string, i: number) => (
+                            <li key={i}>- {e}</li>
+                          ))}
+                      </ul>
+                    </>
+                  ) : null
+                ) : (
                   <>
-                    <h1 className="font-bold">{t("house")}</h1>
-                    <ul>
-                      {field.value
-                        .filter((e: string) => e !== "none")
-                        .map((e: string, i: number) => (
-                          <li key={i}>- {e} </li>
-                        ))}
-                    </ul>
+                    <FormLabel className="font-bold">{t("house")}</FormLabel>
+                    <div className="flex flex-col gap-2">
+                      {userHouses?.map((house) => (
+                        <div
+                          key={house}
+                          className="flex items-center space-x-2"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={field.value?.includes(house)}
+                            onChange={(e) => {
+                              const newValue = e.target.checked
+                                ? [...(field.value || []), house]
+                                : field.value?.filter(
+                                    (h: string) => h !== house
+                                  );
+                              field.onChange(newValue);
+                            }}
+                            id={house}
+                            className="w-4 h-4"
+                          />
+                          <label htmlFor={house}>{house}</label>
+                        </div>
+                      ))}
+                    </div>
                   </>
-                ) : null}
+                )}
               </div>
             )}
           />
