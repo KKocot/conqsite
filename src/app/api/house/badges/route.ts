@@ -1,6 +1,6 @@
 import connectMongoDB from "@/lib/mongodb";
 import HouseAssets from "@/models/houseAssets";
-import Survey from "@/models/surveys";
+import Survey from "@/models/user/surveys";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import History from "@/models/house/twHistory";

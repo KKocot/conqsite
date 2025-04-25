@@ -3,7 +3,7 @@ import putUnitPostSchema from "./schema";
 import UnitPost from "@/models/unit-post";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
-import Survey from "@/models/surveys";
+import Survey from "@/models/user/surveys";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 

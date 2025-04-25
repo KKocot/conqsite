@@ -1,7 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 
 export const useVoteUnitMutation = () => {
   const queryClient = useQueryClient();
+  const user = useSession();
   return useMutation({
     mutationFn: async (data: { unit: string; rate: number }) => {
       const response = await fetch("/api/units/rate", {
@@ -20,7 +22,10 @@ export const useVoteUnitMutation = () => {
       return response.json();
     },
     onSuccess: (data) => {
+      const id = user.data?.user?.id;
       const { unit } = data;
+      queryClient.invalidateQueries({ queryKey: ["tierList", id] });
+      queryClient.invalidateQueries({ queryKey: ["tier-list"] });
       queryClient.invalidateQueries({
         queryKey: ["unitRate", unit.replaceAll(" ", "_")],
       });

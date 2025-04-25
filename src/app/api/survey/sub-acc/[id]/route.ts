@@ -1,9 +1,9 @@
 import connectMongoDB from "@/lib/mongodb";
-import Survey from "@/models/user/surveys";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import SubSurvey from "@/models/user/subSurvey";
 
 export async function GET(
   _request: Request,
@@ -12,11 +12,11 @@ export async function GET(
   const session = await getServerSession(authOptions);
   try {
     await connectMongoDB();
-    const survey = await Survey.findOne({ discordId: id });
-    const userAccess = survey?.discordId === session?.user.id;
+    const subSurvey = await SubSurvey.find({ discordId: id });
+    const userAccess = subSurvey[0]?.discordId === session?.user.id;
     if (!userAccess) return new Response("401");
 
-    return NextResponse.json({ survey }, { status: 200 });
+    return NextResponse.json({ subSurvey }, { status: 200 });
   } catch (error) {
     if (error instanceof ZodError)
       return NextResponse.json({ message: error.message }, { status: 400 });

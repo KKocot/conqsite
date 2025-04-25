@@ -7,8 +7,16 @@ const useSubmitSurveyMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (values: Survey) => {
-      const response = await fetch("/api/survey", {
+    mutationFn: async ({
+      values,
+      surveyType,
+    }: {
+      values: Survey;
+      surveyType: "main" | "sub" | "newSub";
+    }) => {
+      const url =
+        surveyType === "main" ? "/api/survey" : "/api/survey?subSurvey=true";
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

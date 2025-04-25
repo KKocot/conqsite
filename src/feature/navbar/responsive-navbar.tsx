@@ -12,7 +12,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-import { Home, LucideIcon, Minus, MoreHorizontal, Plus } from "lucide-react";
+import { LucideIcon, Minus, MoreHorizontal, Plus } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -41,7 +41,7 @@ interface LinkItem {
 export interface SidebarLink {
   title: string;
   url: string;
-  icon: LucideIcon;
+  icon: string;
   items?: LinkItem[];
 }
 
@@ -88,9 +88,15 @@ const ResposiveSidebar = ({
           </div>
           <DropdownMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton asChild className="p-0">
                 <Link href="/home">
-                  <Home />
+                  <Image
+                    src="/icons/home.svg"
+                    alt="home"
+                    width={40}
+                    height={40}
+                    className="rounded-full bg-accent p-[1px]"
+                  />
                   Home
                 </Link>
               </SidebarMenuButton>
@@ -98,15 +104,21 @@ const ResposiveSidebar = ({
             <SidebarMenuItem>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
-                  <openLinks.icon /> {openLinks.title}{" "}
-                  <MoreHorizontal className="ml-auto" />
+                  <Image
+                    src={openLinks.icon}
+                    alt="open links"
+                    width={30}
+                    height={30}
+                    className="rounded-full bg-accent p-[1px]"
+                  />{" "}
+                  {openLinks.title} <MoreHorizontal className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               {openLinks.items?.length ? (
                 <DropdownMenuContent className="min-w-56 rounded-lg">
                   <DropdownMenuLabel className="p-0 font-normal">
                     <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                      <openLinks.icon />
+                      {/* <openLinks.icon /> */}
                       <span className="truncate font-semibold">
                         {openLinks.title}
                       </span>
@@ -126,15 +138,27 @@ const ResposiveSidebar = ({
               <SidebarMenuItem>
                 <DropdownMenuTrigger asChild>
                   <SidebarMenuButton className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
-                    <membersLinks.icon /> {membersLinks.title}{" "}
-                    <MoreHorizontal className="ml-auto" />
+                    <Image
+                      src={membersLinks.icon}
+                      alt="members links"
+                      width={30}
+                      height={30}
+                      className="rounded-full bg-accent p-[1px]"
+                    />{" "}
+                    {membersLinks.title} <MoreHorizontal className="ml-auto" />
                   </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 {membersLinks.items?.length ? (
                   <DropdownMenuContent className="min-w-56 rounded-lg">
                     <DropdownMenuLabel className="p-0 font-normal">
                       <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                        <membersLinks.icon />
+                        <Image
+                          src={membersLinks.icon}
+                          alt="members links"
+                          width={30}
+                          height={30}
+                          className="rounded-full bg-accent"
+                        />
                         <span className="truncate font-semibold">
                           {membersLinks.title}
                         </span>
@@ -187,7 +211,15 @@ const ResposiveSidebar = ({
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <Link href="/home">
-                  <Home />
+                  <div className="bg-accent rounded-full p-1">
+                    <Image
+                      src="/icons/home.svg"
+                      alt="home"
+                      width={20}
+                      height={20}
+                      className="rounded-full"
+                    />
+                  </div>
                   Home
                 </Link>
               </SidebarMenuButton>
@@ -200,7 +232,14 @@ const ResposiveSidebar = ({
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
                   <SidebarMenuButton>
-                    <openLinks.icon /> {openLinks.title}{" "}
+                    <Image
+                      src={openLinks.icon}
+                      alt="members links"
+                      width={28}
+                      height={28}
+                      className="rounded-full bg-accent p-[2px]"
+                    />{" "}
+                    {openLinks.title}{" "}
                     <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
                     <Minus className="ml-auto group-data-[state=closed]/collapsible:hidden" />
                   </SidebarMenuButton>
@@ -235,7 +274,14 @@ const ResposiveSidebar = ({
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuButton>
-                      <membersLinks.icon /> {membersLinks.title}{" "}
+                      <Image
+                        src={membersLinks.icon}
+                        alt="members links"
+                        width={28}
+                        height={28}
+                        className="rounded-full bg-accent p-[2px]"
+                      />{" "}
+                      {membersLinks.title}{" "}
                       <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
                       <Minus className="ml-auto group-data-[state=closed]/collapsible:hidden" />
                     </SidebarMenuButton>

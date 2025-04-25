@@ -1,7 +1,7 @@
 import { authOptions } from "@/lib/auth";
 import { Survey as SurveyList } from "@/lib/get-data";
 import connectMongoDB from "@/lib/mongodb";
-import Survey from "@/models/surveys";
+import Survey from "@/models/user/surveys";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";

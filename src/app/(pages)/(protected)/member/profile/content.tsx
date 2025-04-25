@@ -13,28 +13,28 @@ import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Avatar } from "@radix-ui/react-avatar";
 import { useTranslations } from "next-intl";
 import clsx from "clsx";
-import { useQuery } from "@tanstack/react-query";
-import { profileQueryOptions } from "@/queries/profile.query";
 import Image from "next/image";
 import List from "@/feature/unit-builder/unit-list";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
-import { UnitAssetsGroup, WeaponAsset } from "@/lib/get-data";
+import { Survey, UnitAssetsGroup, WeaponAsset } from "@/lib/get-data";
 import Link from "next/link";
 import { CircleUser } from "lucide-react";
 
 interface ContentProps {
   unitsAssets: UnitAssetsGroup | undefined;
   weapons: WeaponAsset[];
+  profileIsLoading: boolean;
+  profileData?: Survey;
 }
-export default function Content({ unitsAssets, weapons }: ContentProps) {
+export default function Content({
+  unitsAssets,
+  weapons,
+  profileIsLoading,
+  profileData,
+}: ContentProps) {
   const { data: user_data } = useSession();
   const t = useTranslations("MyProfile");
-
-  const { data: profileData, isLoading: profileIsLoading } = useQuery({
-    ...profileQueryOptions(user_data!.user.id),
-    enabled: !!user_data?.user.id,
-  });
 
   if (profileIsLoading) return <LoadingComponent />;
   if (!profileData || !unitsAssets) return <NoData />;
@@ -88,7 +88,10 @@ export default function Content({ unitsAssets, weapons }: ContentProps) {
               <div>
                 {t("houses")}
                 {": "}
-                {profileData.house
+                {(typeof profileData.house === "string"
+                  ? [profileData.house]
+                  : profileData.house
+                )
                   .filter((e) => e !== "none")
                   .map((e, i) => (
                     <span key={i}>

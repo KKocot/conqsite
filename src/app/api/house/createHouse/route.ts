@@ -7,7 +7,7 @@ import { ZodError } from "zod";
 import Roles from "@/models/roles";
 import putCreateHouseSchema from "./schema";
 import HouseSettings from "@/models/houseSettings";
-import Survey from "@/models/surveys";
+import Survey from "@/models/user/surveys";
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
