@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { SidebarLink } from "./responsive-navbar";
 import { SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
-
+import Image from "next/image";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { getHouseDetails } from "@/lib/get-data";
@@ -51,7 +51,20 @@ const HouseLinkMobile = ({ house }: { house: SidebarLink }) => {
             {house.items.map((item) =>
               item.visibleTo === false ? null : (
                 <DropdownMenuItem asChild key={item.title}>
-                  <Link href={item.url}>{item.title}</Link>
+                  <Link
+                    href={item.url}
+                    className="flex items-center gap-2 px-1 py-1.5 text-left text-sm ml-3"
+                  >
+                    <Image
+                      src={item.iconPath}
+                      alt="link"
+                      width={25}
+                      height={25}
+                      className="rounded-xl bg-accent p-[2px]"
+                    />
+
+                    <span>{item.title}</span>
+                  </Link>
                 </DropdownMenuItem>
               )
             )}
