@@ -50,27 +50,32 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         title: t("dashboard.list_of_house"),
         url: "/dashboard/houses",
         disabled: false,
+        iconPath: "/icons/houses.svg",
       },
       {
         title: t("dashboard.units"),
         url: "/dashboard/units",
         disabled: false,
+        iconPath: "/icons/units.svg",
       },
       {
         title: t("dashboard.doctrines"),
         url: "/dashboard/doctrines",
         disabled: false,
+        iconPath: "/icons/doctrines.svg",
       },
-      {
-        title: "Map (Soon)",
-        url: "/dashboard/maps",
-        disabled: false,
-        // TODO translate
-      },
+      // {
+      //   title: "Map (Soon)",
+      //   url: "/dashboard/maps",
+      //   disabled: false,
+      //   // TODO translate
+      //   iconPath: "/icons/doctrines.svg",
+      // },
       {
         title: "Wiki requests",
         url: `/dashboard/wiki-requests`,
         visibleTo: data?.user.id ? true : false,
+        iconPath: "/icons/wiki.svg",
       },
     ],
   };
@@ -83,21 +88,25 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         title: t("member.my_profile"),
         url: "/member/profile",
         disabled: !profile,
+        iconPath: "/icons/myprofile.svg",
       },
       {
         title: t("member.my_stats"),
         url: "/member/stats",
         disabled: !profile,
+        iconPath: "/icons/stats.svg",
       },
       {
         title: t("member.update_form"),
         url: "/member/update-form",
         disabled: false,
+        iconPath: "/icons/update.svg",
       },
       {
         title: "My Archive",
         url: "/member/my-history",
         disabled: !profile,
+        iconPath: "/icons/archive.svg",
       },
     ],
   };
@@ -110,17 +119,20 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         title: t("house.lineups"),
         url: `/lineups/${house}`,
         visibleTo: true,
+        iconPath: "/icons/lineups.svg",
       },
       {
         title: "Archive",
         url: `/history/${house}`,
         visibleTo: true,
         // TODO translate
+        iconPath: "/icons/archive.svg",
       },
       {
         title: t("house.my_house"),
         url: `/my-house/${house}`,
         visibleTo: true,
+        iconPath: "/icons/myhouse.svg",
       },
       {
         title: t("house.build_team"),
@@ -128,6 +140,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         visibleTo: commanders.some(
           (e) => e.discordId === data?.user.id && e.house === house
         ),
+        iconPath: "/icons/builder.svg",
       },
       {
         title: t("house.house_stats"),
@@ -135,6 +148,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         visibleTo: commanders.some(
           (e) => e.discordId === data?.user.id && e.house === house
         ),
+        iconPath: "/icons/stats.svg",
       },
       {
         title: t("house.bot_controller"),
@@ -142,6 +156,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         visibleTo: commanders.some(
           (e) => e.discordId === data?.user.id && e.house === house
         ),
+        iconPath: "/icons/bot.svg",
       },
       {
         title: "House Settings",
@@ -152,6 +167,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
             e.house === house &&
             (e.role === "HouseLeader" || e.role === "RightHand")
         ),
+        iconPath: "/icons/settings.svg",
       },
     ],
   }));

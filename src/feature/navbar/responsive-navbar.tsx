@@ -12,7 +12,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-import { LucideIcon, Minus, MoreHorizontal, Plus } from "lucide-react";
+import { Minus, MoreHorizontal, Plus } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,6 +36,7 @@ interface LinkItem {
   url: string;
   disabled?: boolean;
   visibleTo?: boolean;
+  iconPath: string;
 }
 
 export interface SidebarLink {
@@ -79,7 +80,7 @@ const ResposiveSidebar = ({
                 alt="logo"
                 width={160}
                 height={80}
-                className="rounded-full"
+                className="rounded-xl bg-accent"
               />
             </Link>
             <div className="flex items-center h-full">
@@ -95,7 +96,7 @@ const ResposiveSidebar = ({
                     alt="home"
                     width={40}
                     height={40}
-                    className="rounded-full bg-accent p-[1px]"
+                    className="rounded-xl bg-accent p-[1px]"
                   />
                   Home
                 </Link>
@@ -109,7 +110,7 @@ const ResposiveSidebar = ({
                     alt="open links"
                     width={30}
                     height={30}
-                    className="rounded-full bg-accent p-[1px]"
+                    className="rounded-xl bg-accent p-[1px]"
                   />{" "}
                   {openLinks.title} <MoreHorizontal className="ml-auto" />
                 </SidebarMenuButton>
@@ -118,7 +119,13 @@ const ResposiveSidebar = ({
                 <DropdownMenuContent className="min-w-56 rounded-lg">
                   <DropdownMenuLabel className="p-0 font-normal">
                     <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                      {/* <openLinks.icon /> */}
+                      <Image
+                        src={openLinks.icon}
+                        alt="open links"
+                        width={30}
+                        height={30}
+                        className="rounded-xl bg-accent p-[2px]"
+                      />
                       <span className="truncate font-semibold">
                         {openLinks.title}
                       </span>
@@ -126,7 +133,19 @@ const ResposiveSidebar = ({
                   </DropdownMenuLabel>
                   {openLinks.items.map((item) => (
                     <DropdownMenuItem asChild key={item.title}>
-                      <Link href={item.url}>{item.title}</Link>
+                      <Link
+                        href={item.url}
+                        className="flex items-center gap-2 px-1 py-1.5 text-left text-sm ml-3"
+                      >
+                        <Image
+                          src={item.iconPath}
+                          alt="link"
+                          width={25}
+                          height={25}
+                          className="rounded-xl bg-accent p-[1px]"
+                        />
+                        {item.title}
+                      </Link>
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
@@ -143,7 +162,7 @@ const ResposiveSidebar = ({
                       alt="members links"
                       width={30}
                       height={30}
-                      className="rounded-full bg-accent p-[1px]"
+                      className="rounded-xl bg-accent p-[1px]"
                     />{" "}
                     {membersLinks.title} <MoreHorizontal className="ml-auto" />
                   </SidebarMenuButton>
@@ -157,7 +176,7 @@ const ResposiveSidebar = ({
                           alt="members links"
                           width={30}
                           height={30}
-                          className="rounded-full bg-accent"
+                          className="rounded-xl bg-accent"
                         />
                         <span className="truncate font-semibold">
                           {membersLinks.title}
@@ -166,7 +185,19 @@ const ResposiveSidebar = ({
                     </DropdownMenuLabel>
                     {membersLinks.items.map((item) => (
                       <DropdownMenuItem asChild key={item.title}>
-                        <Link href={item.url}>{item.title}</Link>
+                        <Link
+                          href={item.url}
+                          className="flex items-center gap-2 px-1 py-1.5 text-left text-sm ml-3"
+                        >
+                          <Image
+                            src={item.iconPath}
+                            alt="link"
+                            width={25}
+                            height={25}
+                            className="rounded-xl bg-accent p-[1px]"
+                          />
+                          {item.title}
+                        </Link>
                       </DropdownMenuItem>
                     ))}
                   </DropdownMenuContent>
@@ -200,7 +231,7 @@ const ResposiveSidebar = ({
                 alt="logo"
                 width={160}
                 height={80}
-                className="rounded-full"
+                className="rounded-3xl bg-accent"
               />
             </Link>
             <div className="flex items-center h-full">
@@ -211,13 +242,13 @@ const ResposiveSidebar = ({
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <Link href="/home">
-                  <div className="bg-accent rounded-full p-1">
+                  <div className="bg-accent rounded-xl p-1">
                     <Image
                       src="/icons/home.svg"
                       alt="home"
                       width={20}
                       height={20}
-                      className="rounded-full"
+                      className="rounded-xl"
                     />
                   </div>
                   Home
@@ -237,7 +268,7 @@ const ResposiveSidebar = ({
                       alt="members links"
                       width={28}
                       height={28}
-                      className="rounded-full bg-accent p-[2px]"
+                      className="rounded-xl bg-accent p-[2px]"
                     />{" "}
                     {openLinks.title}{" "}
                     <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
@@ -252,6 +283,13 @@ const ResposiveSidebar = ({
                           <SidebarMenuSubItem key={subItem.title}>
                             <SidebarMenuSubButton asChild>
                               <Link href={subItem.url}>
+                                <Image
+                                  src={subItem.iconPath}
+                                  alt="link"
+                                  width={25}
+                                  height={25}
+                                  className="rounded-xl bg-accent p-[1px]"
+                                />
                                 <span>{subItem.title}</span>
                               </Link>
                             </SidebarMenuSubButton>
@@ -277,9 +315,9 @@ const ResposiveSidebar = ({
                       <Image
                         src={membersLinks.icon}
                         alt="members links"
-                        width={28}
-                        height={28}
-                        className="rounded-full bg-accent p-[2px]"
+                        width={30}
+                        height={30}
+                        className="rounded-xl bg-accent p-[2px]"
                       />{" "}
                       {membersLinks.title}{" "}
                       <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
@@ -293,6 +331,13 @@ const ResposiveSidebar = ({
                           <SidebarMenuSubItem key={subItem.title}>
                             <SidebarMenuSubButton asChild>
                               <Link href={subItem.url}>
+                                <Image
+                                  src={subItem.iconPath}
+                                  alt="link"
+                                  width={25}
+                                  height={25}
+                                  className="rounded-xl bg-accent p-[1px]"
+                                />{" "}
                                 <span>{subItem.title}</span>
                               </Link>
                             </SidebarMenuSubButton>

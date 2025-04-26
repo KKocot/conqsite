@@ -17,6 +17,7 @@ import Link from "next/link";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useQuery } from "@tanstack/react-query";
 import { getHouseDetails } from "@/lib/get-data";
+import Image from "next/image";
 
 const HouseLinks = ({ house }: { house: SidebarLink }) => {
   const { data, isLoading } = useQuery({
@@ -51,6 +52,13 @@ const HouseLinks = ({ house }: { house: SidebarLink }) => {
                       <SidebarMenuSubItem key={subItem.title}>
                         <SidebarMenuSubButton asChild>
                           <Link href={subItem.url}>
+                            <Image
+                              src={subItem.iconPath}
+                              alt="link"
+                              width={25}
+                              height={25}
+                              className="rounded-xl bg-accent p-[1px]"
+                            />
                             <span>{subItem.title}</span>
                           </Link>
                         </SidebarMenuSubButton>
