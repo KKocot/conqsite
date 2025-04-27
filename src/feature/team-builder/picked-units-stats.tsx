@@ -62,17 +62,17 @@ const PickedUnitsStats = ({
           <Sheet className="h-5 w-5" />
         </div>
       </DialogTrigger>
-      <DialogContent className="max-h-full overflow-y-auto">
-        <div className="flex flex-col gap-4">
-          <h1 className="text-xl font-bold">Sheet Stats</h1>
+      <DialogContent className="max-h-[80vh] overflow-y-auto p-4">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-lg font-bold">Sheet Stats</h1>
 
-          <div className="flex flex-col gap-4">
-            <div className="space-y-2">
-              <h2 className="text-lg font-semibold">Main Unit Types</h2>
+          <div className="flex flex-col gap-2">
+            <div className="space-y-1">
+              <h2 className="text-base font-semibold">Main Unit Types</h2>
               {typeStats.mainTypeStats.map((stat) => (
                 <div
                   key={stat.type}
-                  className="flex items-center justify-between rounded-lg bg-primary/10 p-2"
+                  className="flex items-center justify-between rounded bg-primary/10 px-2 py-1 text-sm"
                 >
                   <span>{stat.type}</span>
                   <span className="font-semibold">{stat.count}</span>
@@ -80,12 +80,12 @@ const PickedUnitsStats = ({
               ))}
             </div>
 
-            <div className="space-y-2">
-              <h2 className="text-lg font-semibold">Other Types</h2>
+            <div className="space-y-1">
+              <h2 className="text-base font-semibold">Other Types</h2>
               {typeStats.otherTypeStats.map((stat) => (
                 <div
                   key={stat.type}
-                  className="flex items-center justify-between rounded-lg bg-secondary/10 p-2"
+                  className="flex items-center justify-between rounded bg-secondary/10 px-2 py-1 text-sm"
                 >
                   <span>{stat.type}</span>
                   <span className="font-semibold">{stat.count}</span>
@@ -93,15 +93,15 @@ const PickedUnitsStats = ({
               ))}
             </div>
 
-            <div className="space-y-2">
-              <h2 className="text-lg font-semibold">Units</h2>
+            <div className="space-y-1">
+              <h2 className="text-base font-semibold">Units</h2>
               {unitsList.map((unit) => (
                 <div
                   key={unit.name}
-                  className="flex items-center justify-between rounded-lg bg-accent pr-2 font-semibold text-background"
+                  className="flex items-center justify-between rounded bg-accent pr-2 font-medium text-background text-sm"
                 >
                   <div className="flex items-center gap-2">
-                    <Avatar className="h-10 w-10 rounded-none">
+                    <Avatar className="h-8 w-8 rounded-none">
                       <AvatarImage alt={unit.name} src={unit.icon} />
                     </Avatar>
                     <p>{unit.name === "" ? "Empty" : unit.name}</p>
