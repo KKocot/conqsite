@@ -18,7 +18,7 @@ import {
 import { DEFAULT_CARD } from "@/lib/defaults";
 import Filters from "@/feature/team-builder/filters";
 import Templates from "@/feature/team-builder/templates";
-import LineupLoader from "@/feature/team-builder/lineupLoader";
+import LineupLoader from "@/feature/team-builder/lineup-loader";
 import { PublicDialog } from "@/feature/team-builder/public-dialog";
 import { useParams } from "next/navigation";
 import ItemRow from "@/feature/team-builder/sheet-form-item-row";
@@ -235,7 +235,11 @@ const Content = ({
         <TooltipContainer title="Sheet Stats">
           <PickedUnitsStats
             sheetData={sheetData}
-            units={units.map((e) => ({ name: e.name, icon: e.icon }))}
+            units={units.map((e) => ({
+              name: e.name,
+              icon: e.icon,
+              types: e.types,
+            }))}
           />
         </TooltipContainer>
         <TooltipContainer title="Public Lineups">

@@ -17,6 +17,7 @@ export interface Unit {
   value: number;
   pref?: string;
   reduceCost?: boolean;
+  types: string[];
 }
 export interface SheetTypes {
   username: string;

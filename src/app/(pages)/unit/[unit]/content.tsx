@@ -278,6 +278,20 @@ const Content = ({
                   )}
                 />
               </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Unit Types:</p>
+                <div className="flex gap-2 flex-col">
+                  {shortEntry.types.map((type) => (
+                    <Badge
+                      key={type}
+                      variant="secondary"
+                      className="text-xs font-normal"
+                    >
+                      {type.charAt(0).toUpperCase() + type.slice(1)}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
             </div>
             <div className="flex justify-between w-full">
               <div className="max-w-64">

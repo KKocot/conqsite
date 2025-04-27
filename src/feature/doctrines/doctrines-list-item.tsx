@@ -1,14 +1,21 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { DoctrineType } from "@/lib/get-data";
 import Image from "next/image";
 
 const DoctrinesLisItem = ({ doctrine }: { doctrine: DoctrineType }) => {
   const statsList = doctrine.stats.split(". ").filter(Boolean);
   return (
-    <Card className="w-[260px]">
+    <Card className="w-[260px] h-full">
       <CardHeader>
         <CardTitle className="text-lg h-14">{doctrine.name}</CardTitle>
       </CardHeader>
@@ -27,6 +34,14 @@ const DoctrinesLisItem = ({ doctrine }: { doctrine: DoctrineType }) => {
           ))}
         </ul>
       </CardContent>
+      <Separator className="w-full my-4" />
+
+      <CardFooter className="flex flex-col">
+        <span className="text-sm font-semibold">For Unit:</span>
+        {doctrine.forUnit.map((unit, i) => (
+          <span key={i}>- {unit}</span>
+        ))}
+      </CardFooter>
     </Card>
   );
 };
