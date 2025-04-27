@@ -1,4 +1,3 @@
-import { date } from "zod";
 import { SheetTypes } from "./type";
 
 export interface Roles {
@@ -516,6 +515,7 @@ export interface UnitAsset {
   name: string;
   src: string;
   value: number;
+  types: string[];
 }
 
 export interface UnitAssetsGroup {
