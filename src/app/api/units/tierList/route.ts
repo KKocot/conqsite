@@ -4,9 +4,7 @@ import Rate from "@/models/rate";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-
+export async function GET(_request: Request) {
   try {
     await connectMongoDB();
     const rate = await Rate.aggregate([
@@ -24,11 +22,12 @@ export async function GET(request: Request) {
       const evrageRate: number =
         unit.rate.reduce((acc: number, rate: number): number => acc + rate, 0) /
         unit.rate.length;
+      const dividedRate: number = (evrageRate + unitAsset.value) / 2;
       return {
         id: unitAsset._id,
         name: unit.unit,
         image: unitAsset.icon,
-        rating: Number(evrageRate.toFixed(0)),
+        rating: Number(dividedRate.toFixed(0)),
         era: unitAsset.era,
       };
     });

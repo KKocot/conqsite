@@ -4,13 +4,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "../../components/ui/form";
 import FormCol from "./form-col";
 import { useTranslations } from "next-intl";
-import {
-  getSurvey,
-  Survey,
-  UnitAssetsGroup,
-  WeaponAsset,
-} from "@/lib/get-data";
-import { useQuery } from "@tanstack/react-query";
+import { Survey, UnitAssetsGroup, WeaponAsset } from "@/lib/get-data";
 import useSubmitSurveyMutation from "../../components/hooks/use-survey-mutation";
 import LoadingComponent from "../ifs/loading";
 import { createNewUnits, createNewWeapons } from "@/lib/utils";
