@@ -33,7 +33,8 @@ const useSubmitSurveyMutation = () => {
     },
     onSuccess: (data) => {
       const { discordId } = data;
-      queryClient.invalidateQueries({ queryKey: ["profile", discordId] });
+      queryClient.invalidateQueries({ queryKey: ["mainProfile", discordId] });
+      queryClient.invalidateQueries({ queryKey: ["subProfile", discordId] });
       router.push(`/member/profile`);
     },
     onError: (error: Error) => {
