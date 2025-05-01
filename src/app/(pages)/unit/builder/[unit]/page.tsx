@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { getDoctrineAssets, getUnitAssets, getUnitWiki } from "@/lib/get-data";
+import { getUnitDoctrines, getUnitAssets, getUnitWiki } from "@/lib/get-data";
 import NoData from "@/feature/ifs/no-data";
 import Content from "./content";
 import { useQuery } from "@tanstack/react-query";
@@ -22,7 +22,7 @@ const Page = () => {
   const { data: doctrinesAssets, isLoading: doctrinesAssetsLoading } = useQuery(
     {
       queryKey: ["doctrinesAssets", unitName],
-      queryFn: () => getDoctrineAssets(),
+      queryFn: () => getUnitDoctrines(unitName),
     }
   );
 

@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import doctrineSchema from "./schema";
 import { Doctrine } from "@/models/assets/doctrine";
+import { DoctrineType, UnitAsset } from "@/lib/get-data";
+import UnitTypes from "@/models/assets/unit";
 
 export async function POST(request: Request) {
   const headers = request.headers;
@@ -32,7 +34,6 @@ export async function POST(request: Request) {
 }
 
 export async function GET(request: Request) {
-  const headers = request.headers;
   const { searchParams } = new URL(request.url);
   const rarity = searchParams.get("rarity");
   const unit = searchParams.get("unit");
@@ -40,10 +41,47 @@ export async function GET(request: Request) {
   try {
     await connectMongoDB();
     if (unit) {
-      const doctrineAsset = await Doctrine.find({
-        forUnit: unit.replaceAll("_", " "),
+      const unitName = unit.replaceAll("_", " ");
+      const doctrineAsset = await Doctrine.find();
+      const unitAssets = await UnitTypes.findOne({
+        name: unitName,
       });
-      return NextResponse.json(doctrineAsset);
+
+      const doctrines = doctrineAsset.filter((doctrine) => {
+        // Check for "all" type doctrines
+        if (doctrine.dedicated === "all") return true;
+
+        // Check for unit-specific doctrines
+        if (
+          doctrine.dedicated === "unit" &&
+          doctrine.forUnit &&
+          doctrine.forUnit.includes(unitName)
+        ) {
+          return true;
+        }
+
+        // Check for group doctrines
+        if (doctrine.dedicated === "group" && doctrine.forUnit) {
+          if (doctrine.forUnit.includes(unitName)) return true;
+
+          if (unitAssets && unitAssets.types) {
+            const type0 = unitAssets.types[0];
+            const type1 = unitAssets.types[1];
+
+            if (type0 && doctrine.forUnit.includes(type0)) return true;
+            if (type1 && doctrine.forUnit.includes(type1)) return true;
+            if (
+              type0 &&
+              type1 &&
+              doctrine.forUnit.includes(`${type1} ${type0}`)
+            )
+              return true;
+          }
+        }
+
+        return false;
+      });
+      return NextResponse.json(doctrines);
     }
     if (rarity) {
       const doctrineAsset = await Doctrine.findOne({ rarity });
@@ -56,3 +94,34 @@ export async function GET(request: Request) {
       return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
+
+// const unitDoctrines = doctrineAsset.map((doctrine) => {
+//   if (doctrine.dedicated === "all") {
+//     doctrines.push(doctrine);
+//   }
+//   if (
+//     doctrine.dedicated === "unit" &&
+//     doctrine.forUnit.includes(unitName)
+//   ) {
+//     doctrines.push(doctrine);
+//   }
+//   if (doctrine.dedicated === "group") {
+//     if (doctrine.forUnit.includes(unitName)) {
+//       doctrines.push(doctrine);
+//     }
+//     if (unitAssets && doctrine.forUnit.includes(unitAssets.types[0])) {
+//       doctrines.push(doctrine);
+//     }
+//     if (unitAssets && doctrine.forUnit.includes(unitAssets.types[1])) {
+//       doctrines.push(doctrine);
+//     }
+//     if (
+//       unitAssets &&
+//       doctrine.forUnit.includes(
+//         unitAssets.types[1] + " " + unitAssets.types[0]
+//       )
+//     ) {
+//       doctrines.push(doctrine);
+//     }
+//   }
+// });
