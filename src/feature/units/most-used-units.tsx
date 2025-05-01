@@ -31,7 +31,7 @@ const MostUsedUnits = () => {
                 </Avatar>
               </Link>
               <span className="text-sm font-semibold">{unit.name}</span>
-              <span className="text-xs">Popularity: {unit.rating}</span>
+              <span className="text-xs">Popularity points: {unit.rating}</span>
             </div>
           ))}
         </div>
