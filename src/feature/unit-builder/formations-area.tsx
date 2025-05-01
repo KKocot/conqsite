@@ -10,6 +10,9 @@ import { useFieldArray, UseFormReturn } from "react-hook-form";
 import Image from "next/image";
 
 const formationsImages = [
+  "bersekersFormation.png",
+  "CompanionFormation.png",
+  "Swinefeathersformation.png",
   "huntsformation.png",
   "block-even.png",
   "block-retairii.png",
