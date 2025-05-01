@@ -46,6 +46,10 @@ const Page = () => {
     {
       queryKey: ["doctrinesAssets", unit],
       queryFn: () => getUnitDoctrines(unit),
+      select: (data) =>
+        data.filter((doctrine) =>
+          doctrine.forUnit.includes(unit.replaceAll("_", " "))
+        ),
     }
   );
   if (isLoading) return <LoadingComponent />;
