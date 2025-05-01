@@ -24,9 +24,9 @@ const DoctrinedBuilder = ({
   const [doctrineSlot, setDoctrineSlot] = useState(initialDoctrineSlot);
   const [rarityFilter, setRarityFilter] = useState({
     epic: true,
-    rare: true,
-    uncommon: true,
-    common: true,
+    rare: false,
+    uncommon: false,
+    common: false,
   });
   interface DroppedItem {
     name: string;
