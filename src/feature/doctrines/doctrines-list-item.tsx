@@ -11,9 +11,14 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { DoctrineType } from "@/lib/get-data";
 import Image from "next/image";
+import Link from "next/link";
 
 const DoctrinesLisItem = ({ doctrine }: { doctrine: DoctrineType }) => {
   const statsList = doctrine.stats.split(". ").filter(Boolean);
+  const linkHref =
+    doctrine.dedicated === "unit"
+      ? `/unit/${doctrine.name.replaceAll(" ", "_")}`
+      : `/dashboard/units`;
   return (
     <Card className="w-[260px] flex flex-col">
       <CardHeader>
@@ -41,7 +46,9 @@ const DoctrinesLisItem = ({ doctrine }: { doctrine: DoctrineType }) => {
       <CardFooter className="flex flex-col">
         <span className="text-sm font-semibold">For Unit:</span>
         {doctrine.forUnit.map((unit, i) => (
-          <span key={i}>- {unit}</span>
+          <Link href={linkHref} key={i}>
+            - {unit}
+          </Link>
         ))}
       </CardFooter>
     </Card>

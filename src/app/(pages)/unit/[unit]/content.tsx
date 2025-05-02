@@ -69,6 +69,9 @@ const Content = ({
   const averageVote =
     votes?.reduce((acc, curr) => acc + curr.rate, 0) / votes.length;
   const banned = roles?.some((role) => role.role === "Banned");
+  const editor = roles?.some(
+    (role) => role.role === "Trusted" || role.role === "Reviewer"
+  );
   const form = useForm<UnitObject>({
     values: {
       name: shortEntry.name,
@@ -341,17 +344,7 @@ const Content = ({
             </div>
             <ChallengesArea editMode={editMode} form={form} />
             <div className="flex items-end justify-between">
-              <div className="flex gap-1 mt-4 justify-self-end flex-col">
-                <h5 className="font-semibold">Authors</h5>
-                <div className="flex gap-4 text-xs">
-                  {Array.from(new Set(entry?.authors)).map((author) => (
-                    <p key={author} className="text-center">
-                      {author}
-                    </p>
-                  )) ?? "No authors"}
-                </div>
-              </div>
-              {!user?.user.name || banned ? (
+              {!user?.user.name || banned || !editor ? (
                 <div />
               ) : editMode ? (
                 <div className="flex gap-4">
