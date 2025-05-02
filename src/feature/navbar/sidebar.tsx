@@ -71,12 +71,12 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
       //   // TODO translate
       //   iconPath: "/icons/doctrines.svg",
       // },
-      {
-        title: "Wiki requests",
-        url: `/dashboard/wiki-requests`,
-        visibleTo: data?.user.id ? true : false,
-        iconPath: "/icons/wiki.svg",
-      },
+      // {
+      //   title: "Wiki requests",
+      //   url: `/dashboard/wiki-requests`,
+      //   visibleTo: data?.user.id ? true : false,
+      //   iconPath: "/icons/wiki.svg",
+      // },
     ],
   };
   const membersLinks = {
