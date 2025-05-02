@@ -10,6 +10,17 @@ import { useFieldArray, UseFormReturn } from "react-hook-form";
 import Image from "next/image";
 
 const skills: string[] = [
+  "skill12.png",
+  "skill13.png",
+  "skill14.png",
+  "skill15.png",
+  "skill16.png",
+  "skill17.png",
+  "skill18.png",
+  "skill19.png",
+  "skill20.png",
+  "skill21.png",
+  "skill22.png",
   "pleace-armata.png",
   "bulletsv1.png",
   "guns.png",
