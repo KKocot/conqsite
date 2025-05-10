@@ -10,6 +10,7 @@ import Link from "next/link";
 import Image from "next/image";
 import DoctrinesGroup from "@/feature/unit-builder/post/doctrines-group";
 import Tree from "@/feature/unit-builder/tree";
+import clsx from "clsx";
 
 interface ContentProps {
   data: UnitData;
@@ -62,7 +63,26 @@ const Content = ({ data, doctrines, unitTree }: ContentProps) => {
         <div className="prose max-w-none">
           <p>{data.description}</p>
         </div>
-        <DoctrinesGroup doctrines={doctrinesMap} />
+        <div className="gap-2 w-full grid grid-cols-3">
+          <DoctrinesGroup doctrines={doctrinesMap} />
+          <div className="col-span-1">
+            {doctrinesMap.map((doctrine) => (
+              <div key={doctrine.name} className="my-3">
+                <h4
+                  className={clsx("text-sm", {
+                    "text-purple-500": doctrine.rarity === "epic",
+                    "text-blue-500": doctrine.rarity === "rare",
+                    "text-green-500": doctrine.rarity === "uncommon",
+                    "text-gray-500": doctrine.rarity === "common",
+                  })}
+                >
+                  {doctrine.name}
+                </h4>
+                <p className="text-xs">{doctrine.stats}</p>
+              </div>
+            ))}
+          </div>
+        </div>
         {data.tree.structure && Array(data.tree.structure).length > 0 ? (
           <Tree
             nodes={unitTree.treeStructure || []}

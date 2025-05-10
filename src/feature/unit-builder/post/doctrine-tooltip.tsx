@@ -20,7 +20,6 @@ const DoctrineTooltip = ({ img, label, description }: IconProps) => (
         </TooltipTrigger>
         <TooltipContent className="p-4 text-sm bg-background max-w-64">
           <div className="font-bold">{label}</div>
-          <div>{description}</div>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
