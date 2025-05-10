@@ -15,10 +15,6 @@ import Link from "next/link";
 
 const DoctrinesLisItem = ({ doctrine }: { doctrine: DoctrineType }) => {
   const statsList = doctrine.stats.split(". ").filter(Boolean);
-  const linkHref =
-    doctrine.dedicated === "unit"
-      ? `/unit/${doctrine.name.replaceAll(" ", "_")}`
-      : `/dashboard/units`;
   return (
     <Card className="w-[260px] flex flex-col">
       <CardHeader>
@@ -46,7 +42,14 @@ const DoctrinesLisItem = ({ doctrine }: { doctrine: DoctrineType }) => {
       <CardFooter className="flex flex-col">
         <span className="text-sm font-semibold">For Unit:</span>
         {doctrine.forUnit.map((unit, i) => (
-          <Link href={linkHref} key={i}>
+          <Link
+            href={
+              doctrine.dedicated === "unit"
+                ? `/unit/${unit.replaceAll(" ", "_")}`
+                : `/dashboard/units`
+            }
+            key={i}
+          >
             - {unit}
           </Link>
         ))}

@@ -5,7 +5,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProfileHeader from "@/feature/profile/header";
 import PostsList from "@/feature/profile/posts-list";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import TierList from "@/components/tier-list";
 import { useState } from "react";
 import TierListContainer from "@/feature/profile/tier-list-container";
 
