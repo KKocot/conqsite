@@ -138,6 +138,11 @@ const DoctrinedBuilder = ({
             <DoctrineItem key={doctrine.name} doctrine={doctrine} />
           ))}
         </div>
+        <p className="text-center text-sm font-bold">
+          Drag and drop doctrines into the slots above to build your unit.
+          <br />
+          To remove a doctrine click on the doctrine
+        </p>
         <div>
           <div className="flex justify-around mt-2">
             {doctrineSlot.map((slot) => (

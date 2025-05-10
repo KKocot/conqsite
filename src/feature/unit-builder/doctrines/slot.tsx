@@ -1,6 +1,6 @@
 "use client";
 
-import { useDrag, useDrop, DndProvider } from "react-dnd";
+import { useDrop } from "react-dnd";
 import Image from "next/image";
 import clsx from "clsx";
 
@@ -38,7 +38,7 @@ const DoctrineSlot = ({ slot, onDrop }: DoctrineSlotProps) => {
       // @ts-ignore
       ref={drop}
       className={clsx(
-        "w-24 h-24 bg-accent rounded-full flex items-center cursor-not-allowed",
+        "w-24 h-24 bg-accent rounded-full flex items-center cursor-alias",
         {
           "bg-opacity-50": isOver,
           "bg-opacity-100": !isOver,

@@ -16,6 +16,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { usePostBuildMutation } from "@/components/hooks/use-post-build-mutation";
 import { useSession } from "next-auth/react";
 import Loading from "react-loading";
+import { useState } from "react";
+import { MinusCircle, PlusCircle } from "lucide-react";
 
 const DEFAULT_UNIT_DATA: UnitData = {
   title: "",
@@ -84,6 +86,7 @@ interface ContentProps {
 }
 const Content = ({ data, unitTree, doctrines }: ContentProps) => {
   const user = useSession();
+  const [showYTInput, setShowYTInput] = useState(false);
   const postBuildMutation = usePostBuildMutation();
   const form = useForm({
     resolver: zodResolver(unitSchema),
@@ -146,21 +149,45 @@ const Content = ({ data, unitTree, doctrines }: ContentProps) => {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="ytlink"
-                render={({ field }) => (
-                  <FormItem>
-                    <Label htmlFor="ytlink">Youtube Link</Label>
-                    <Input
-                      id="ytlink"
-                      type="url"
-                      {...field}
-                      disabled={postBuildMutation.isPending}
-                    />
-                  </FormItem>
-                )}
-              />
+              {showYTInput ? (
+                <>
+                  <FormField
+                    control={form.control}
+                    name="ytlink"
+                    render={({ field }) => (
+                      <FormItem>
+                        <Label htmlFor="ytlink">Youtube Link</Label>
+                        <Input
+                          id="ytlink"
+                          type="url"
+                          {...field}
+                          disabled={postBuildMutation.isPending}
+                        />
+                      </FormItem>
+                    )}
+                  />
+                  <Button
+                    variant="link"
+                    className="w-fit p-1 font-semibold text-sm flex gap-1"
+                    onClick={() => {
+                      setShowYTInput(false);
+                      form.setValue("ytlink", "");
+                    }}
+                  >
+                    Remove Youtube Link <MinusCircle size={16} />
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  variant="link"
+                  className="w-fit p-1 font-semibold text-sm flex gap-1"
+                  onClick={(e) => {
+                    setShowYTInput(true);
+                  }}
+                >
+                  Add Youtube Link <PlusCircle size={16} />
+                </Button>
+              )}
               <FormField
                 control={form.control}
                 name="description"

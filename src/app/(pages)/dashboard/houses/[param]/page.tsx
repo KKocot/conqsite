@@ -8,7 +8,6 @@ import { getHighRoles, getHouseDetails } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { Globe, Users } from "lucide-react";
 import { useParams } from "next/navigation";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -36,13 +35,6 @@ const Page = () => {
         <div className="flex flex-col md:flex-row">
           <div className="relative w-full md:w-2/5 h-80 md:h-auto">
             <div className="absolute inset-0 " />
-            {/* <Image
-              src={card.avatar}
-              alt={`${card.name} avatar`}
-              layout="fill"
-              objectFit="cover"
-              className="absolute inset-0"
-            /> */}
             <Avatar className="w-[362px] h-[362px] rounded-none">
               <AvatarImage src={card.avatar} alt={`${card.name} avatar`} />
               <AvatarFallback>{card.name.substring(0, 2)}</AvatarFallback>
