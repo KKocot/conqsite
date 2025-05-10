@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { DoctrineType } from "@/lib/get-data";
-import Image from "next/image";
 import Link from "next/link";
 
 const DoctrinesLisItem = ({ doctrine }: { doctrine: DoctrineType }) => {
@@ -24,9 +23,7 @@ const DoctrinesLisItem = ({ doctrine }: { doctrine: DoctrineType }) => {
         <div className="w-64 h-32 flex justify-center items-center">
           <Avatar className="w-1/2 h-full rounded-none">
             <AvatarImage src={doctrine.img} alt={`${doctrine.name} avatar`} />
-            <AvatarFallback>
-              <Image src="/logo.png" alt="avatar" width={362} height={362} />
-            </AvatarFallback>
+            <AvatarFallback>{doctrine.name.substring(0, 2)}</AvatarFallback>
           </Avatar>
         </div>
         <ul className="mt-2">

@@ -156,7 +156,9 @@ export function Autocompleter({
                     >
                       <Avatar className="h-8 w-8" title={item.name}>
                         <AvatarImage alt={item.name} src={item.src} />
-                        <AvatarFallback>W</AvatarFallback>
+                        <AvatarFallback>
+                          {item.name.substring(0, 2)}
+                        </AvatarFallback>
                       </Avatar>
                       <span>{item.name}</span>
                     </div>
@@ -206,7 +208,9 @@ const renderCommandItem = (
     >
       <Avatar className="h-8 w-8 rounded-none" title={item.name}>
         <AvatarImage alt={item.name} src={item.icon} />
-        <AvatarFallback className="rounded-none">U</AvatarFallback>
+        <AvatarFallback className="rounded-none">
+          {item.name.substring(0, 2)}
+        </AvatarFallback>
       </Avatar>
       <span>{item.name}</span>
     </div>

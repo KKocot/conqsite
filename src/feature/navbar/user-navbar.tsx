@@ -20,7 +20,6 @@ import LanguageToggle from "./language-toggle";
 import { ModeToggle } from "./theme-menu";
 import { signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 function NavUser({
@@ -47,7 +46,7 @@ function NavUser({
                   alt={name ?? "avatar"}
                 />
                 <AvatarFallback className="rounded-lg">
-                  <Image height={32} width={32} src="/logo.png" alt="Logo" />
+                  {(name ?? "Avatar").substring(0, 2)}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -71,7 +70,7 @@ function NavUser({
                     alt={name ?? "avatar"}
                   />
                   <AvatarFallback className="rounded-lg">
-                    <Image height={32} width={32} src="/logo.png" alt="Logo" />
+                    {(name ?? "Avatar").substring(0, 2)}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">

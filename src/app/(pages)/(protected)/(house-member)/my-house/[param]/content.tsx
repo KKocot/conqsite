@@ -16,7 +16,6 @@ import {
 } from "@/lib/get-data";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 import { FC, useMemo, useState } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
@@ -143,12 +142,7 @@ const Content: FC<ContentProps> = ({
                   <Avatar className="w-8 h-8 mr-1 rounded-full">
                     <AvatarImage alt={e.discordNick} src={e.avatar} />
                     <AvatarFallback className="rounded-none">
-                      <Image
-                        width={32}
-                        height={32}
-                        src="/logo.png"
-                        alt="logo"
-                      />
+                      {e.inGameNick.substring(0, 2)}
                     </AvatarFallback>
                   </Avatar>
                 ) : null}

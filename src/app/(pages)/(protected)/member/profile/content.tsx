@@ -62,7 +62,9 @@ export default function Content({
                 alt="avatar"
                 src={user_data?.user.image ?? "/placeholder-avatar.jpg"}
               />
-              <AvatarFallback>KK</AvatarFallback>
+              <AvatarFallback>
+                {(user_data?.user.name ?? "User").substring(0, 2)}
+              </AvatarFallback>
             </Avatar>
             <div>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
