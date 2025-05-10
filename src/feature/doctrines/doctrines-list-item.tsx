@@ -10,15 +10,10 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { DoctrineType } from "@/lib/get-data";
-import Image from "next/image";
 import Link from "next/link";
 
 const DoctrinesLisItem = ({ doctrine }: { doctrine: DoctrineType }) => {
   const statsList = doctrine.stats.split(". ").filter(Boolean);
-  const linkHref =
-    doctrine.dedicated === "unit"
-      ? `/unit/${doctrine.name.replaceAll(" ", "_")}`
-      : `/dashboard/units`;
   return (
     <Card className="w-[260px] flex flex-col">
       <CardHeader>
@@ -28,9 +23,7 @@ const DoctrinesLisItem = ({ doctrine }: { doctrine: DoctrineType }) => {
         <div className="w-64 h-32 flex justify-center items-center">
           <Avatar className="w-1/2 h-full rounded-none">
             <AvatarImage src={doctrine.img} alt={`${doctrine.name} avatar`} />
-            <AvatarFallback>
-              <Image src="/logo.png" alt="avatar" width={362} height={362} />
-            </AvatarFallback>
+            <AvatarFallback>{doctrine.name.substring(0, 2)}</AvatarFallback>
           </Avatar>
         </div>
         <ul className="mt-2">
@@ -46,7 +39,14 @@ const DoctrinesLisItem = ({ doctrine }: { doctrine: DoctrineType }) => {
       <CardFooter className="flex flex-col">
         <span className="text-sm font-semibold">For Unit:</span>
         {doctrine.forUnit.map((unit, i) => (
-          <Link href={linkHref} key={i}>
+          <Link
+            href={
+              doctrine.dedicated === "unit"
+                ? `/unit/${unit.replaceAll(" ", "_")}`
+                : `/dashboard/units`
+            }
+            key={i}
+          >
             - {unit}
           </Link>
         ))}

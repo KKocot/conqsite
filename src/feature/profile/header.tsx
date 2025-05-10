@@ -1,6 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UserUnitPost } from "@/lib/get-data";
-import Image from "next/image";
 
 const ProfileHeader = ({
   author,
@@ -13,9 +12,7 @@ const ProfileHeader = ({
     <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
       <Avatar className="h-32 w-32">
         <AvatarImage src={author.img} alt={author.nick} />
-        <AvatarFallback>
-          <Image width={32} height={32} src="/logo.png" alt="logo" />
-        </AvatarFallback>
+        <AvatarFallback>{author.nick.substring(0, 2)}</AvatarFallback>
       </Avatar>
       <div className="text-center md:text-left">
         <h1 className="text-3xl font-bold">{author.nick}</h1>

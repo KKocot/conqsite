@@ -7,7 +7,7 @@ interface DoctrineGroupProps {
 
 const DoctrinesGroup = ({ doctrines }: DoctrineGroupProps) => {
   return doctrines && doctrines.length > 0 ? (
-    <div className="space-y-2">
+    <div className="space-y-2 col-span-2">
       <div className="w-full max-w-md mx-auto">
         <div className="relative">
           {/* Circle background */}

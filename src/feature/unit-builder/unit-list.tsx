@@ -57,7 +57,9 @@ const List = ({ units, value }: { units: Unit[]; value: string }) => {
                   title={unit.name}
                 >
                   <AvatarImage alt={unit.name} src={unit.icon} />
-                  <AvatarFallback className="rounded-none">U</AvatarFallback>
+                  <AvatarFallback className="rounded-none">
+                    {unit.name.substring(0, 2)}
+                  </AvatarFallback>
                 </Avatar>
               </Link>
             </span>

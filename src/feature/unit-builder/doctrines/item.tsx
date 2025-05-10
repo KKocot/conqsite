@@ -40,7 +40,7 @@ const DoctrineItem = ({ doctrine }: DoctrineProps) => {
             // @ts-ignore
             ref={drag}
             style={{ opacity: isDragging ? 0.5 : 1 }}
-            className="cursor-grab"
+            className={`${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
           >
             <Image
               src={doctrine.img}

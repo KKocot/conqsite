@@ -3,8 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useQuery } from "@tanstack/react-query";
-import { getTierUnits, TierUnits } from "@/lib/get-data";
+import { TierUnits } from "@/lib/get-data";
 import LoadingComponent from "../feature/ifs/loading";
 import HoverClickTooltip from "@/components/hover-click-tooltip";
 import Link from "next/link";

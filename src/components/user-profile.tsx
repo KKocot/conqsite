@@ -11,7 +11,6 @@ import { ReactNode } from "react";
 import { Avatar } from "@radix-ui/react-avatar";
 import { AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Survey, UnitAssetsGroup, WeaponAsset } from "@/lib/get-data";
-import Image from "next/image";
 import Link from "next/link";
 import { CircleUser } from "lucide-react";
 
@@ -39,13 +38,7 @@ export function UserProfile({
                 src={player.avatar}
               />
               <AvatarFallback>
-                <Image
-                  width={64}
-                  height={64}
-                  src="/logo.png"
-                  alt="logo"
-                  className="rounded-none"
-                />
+                {player.inGameNick.substring(0, 2)}
               </AvatarFallback>
             </Avatar>
           ) : null}

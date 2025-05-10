@@ -161,6 +161,7 @@ const Content = ({ data, unitTree, doctrines }: ContentProps) => {
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
                 name="description"

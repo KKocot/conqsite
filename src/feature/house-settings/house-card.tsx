@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Bot, Camera, ExternalLink, Send } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/lib/get-data";
 import clsx from "clsx";
@@ -171,14 +171,7 @@ export default function HouseCard({
           <Link href={`/dashboard/houses/${house.name}`} target="_blank">
             <Avatar className="w-[362px] h-[362px] rounded-none">
               <AvatarImage src={house.avatar} alt={`${house.name} avatar`} />
-              <AvatarFallback>
-                <Image
-                  src="https://i.imgur.com/4VEMy1m.png"
-                  alt="avatar"
-                  width={362}
-                  height={362}
-                />
-              </AvatarFallback>
+              <AvatarFallback>{house.name.substring(0, 2)}</AvatarFallback>
             </Avatar>
           </Link>
         </div>
