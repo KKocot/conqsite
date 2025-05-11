@@ -41,7 +41,6 @@ import type {
 import type { KonvaEventObject } from "konva/lib/Node";
 import type Konva from "konva";
 import { useImageLoader } from "@/components/hooks/use-image-loader";
-import { useWindowSize } from "usehooks-ts";
 
 interface ExtendedMapEditorProps extends MapEditorProps {
   gridEnabled?: boolean;
@@ -87,13 +86,10 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
     });
     const stageRef = useRef<Konva.Stage>(null);
     const layerRef = useRef<Konva.Layer>(null);
-    const windowSize = useWindowSize();
 
     // Calculate stage dimensions based on window size
-    const stageWidth = windowSize.width
-      ? Math.min(windowSize.width - 350, 1200)
-      : 800;
-    const stageHeight = windowSize.height ? windowSize.height - 200 : 600;
+    const stageWidth = 750;
+    const stageHeight = 750;
 
     useImperativeHandle(ref, () => ({
       getMapData: (): MapData => {
@@ -691,7 +687,7 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
     };
 
     return (
-      <div className="relative w-full h-full">
+      <div className="relative w-fit h-fit">
         <Stage
           ref={stageRef}
           width={stageWidth}
