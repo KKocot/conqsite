@@ -3,26 +3,25 @@
 import type React from "react";
 
 import { useState, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Trash2, Download, Save, Eye } from "lucide-react";
 import { Toolbar } from "@/feature/map-editor/toolbar";
 import { MapEditor } from "@/feature/map-editor/editor";
 import { MapEditorRef, Plan } from "@/feature/map-editor/types";
+import { UseQueryResult } from "@tanstack/react-query";
+import { getPublicLineup, PublicLineup, UnitAssetsGroup } from "@/lib/get-data";
 
-export default function TacticalMapPage() {
+export default function TacticalMapPage({
+  dates,
+  house,
+  unitsAssets,
+}: {
+  dates: UseQueryResult<string[], Error>;
+  house: string;
+  unitsAssets: UseQueryResult<UnitAssetsGroup, Error>;
+}) {
   const [selectedTool, setSelectedTool] = useState<string>("select");
   const [selectedColor, setSelectedColor] = useState<string>("#ff0000");
   const [strokeWidth, setStrokeWidth] = useState<number>(3);
-  const [mapImage, setMapImage] = useState<string>("/maps/1-1.jpg");
+  const [mapImage, setMapImage] = useState<string>("");
   const [planName, setPlanName] = useState<string>("");
   const [gridEnabled, setGridEnabled] = useState<boolean>(false);
   const [gridSize, setGridSize] = useState<number>(20);
@@ -34,7 +33,8 @@ export default function TacticalMapPage() {
   const [showPreview, setShowPreview] = useState<boolean>(false);
   const [previewImage, setPreviewImage] = useState<string>("");
   const editorRef = useRef<MapEditorRef>(null);
-
+  const [lineupSheets, setLineupSheets] = useState<PublicLineup[] | null>(null);
+  const [currentLineup, setCurrentLineup] = useState<PublicLineup | null>(null);
   const handleMapUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -93,22 +93,50 @@ export default function TacticalMapPage() {
     setShowPreview(true);
   };
 
+  const mapPicker = (map: string) => {
+    setMapImage(map);
+  };
+
+  const handleSetCurrentLineup = (lineup: PublicLineup) => {
+    setCurrentLineup(lineup);
+  };
+
+  const onDateChange = async (date: string) => {
+    try {
+      const response = await getPublicLineup(house, date);
+      if (!response) {
+        console.error("Error occurred:", response);
+      } else {
+        setLineupSheets(response);
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+    }
+  };
+
   return (
-    <div className="container mx-auto p-4 flex flex-col h-screen">
+    <div className="container mx-auto p-4 flex flex-col">
       <h1 className="text-2xl font-bold mb-4 text-center">
         Tactical Map Editor
       </h1>
       <div className="flex justify-center gap-2 overflow-hidden">
-        <MapEditor
-          ref={editorRef}
-          mapImage={mapImage}
-          tool={selectedTool}
-          color={selectedColor}
-          strokeWidth={strokeWidth}
-          gridEnabled={gridEnabled}
-          gridSize={gridSize}
-          fontSize={selectedFontSize}
-        />
+        {mapImage ? (
+          <MapEditor
+            ref={editorRef}
+            mapImage={mapImage}
+            tool={selectedTool}
+            color={selectedColor}
+            strokeWidth={strokeWidth}
+            gridEnabled={gridEnabled}
+            gridSize={gridSize}
+            fontSize={selectedFontSize}
+          />
+        ) : (
+          <div className="flex items-center justify-center w-[750px] h-[750px] border-2 border-dashed rounded-lg">
+            <p>No map selected</p>
+          </div>
+        )}
+
         <Toolbar
           selectedTool={selectedTool}
           setSelectedTool={setSelectedTool}
@@ -126,6 +154,14 @@ export default function TacticalMapPage() {
           setSelectedFontSize={setSelectedFontSize}
           selectedIconType={selectedIconType}
           setSelectedIconType={setSelectedIconType}
+          selectedMapImage={mapImage}
+          setSelectedMapImage={setMapImage}
+          dates={dates}
+          onDateChange={onDateChange}
+          lineupSheets={lineupSheets}
+          currentLineup={currentLineup}
+          setCurrentLineup={handleSetCurrentLineup}
+          unitsAssets={unitsAssets}
         />
       </div>
     </div>

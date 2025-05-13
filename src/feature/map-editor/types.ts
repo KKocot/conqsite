@@ -1,3 +1,6 @@
+import { PublicLineup, UnitAssetsGroup } from "@/lib/get-data";
+import { UseQueryResult } from "@tanstack/react-query";
+
 export interface MapElement {
   id: string;
   tool: string;
@@ -106,6 +109,14 @@ export interface ToolbarProps {
   setSelectedFontSize: (size: number) => void;
   selectedIconType: string;
   setSelectedIconType: (type: string) => void;
+  selectedMapImage: string;
+  setSelectedMapImage: (image: string) => void;
+  dates: UseQueryResult<string[], Error>;
+  onDateChange: (date: string) => void;
+  lineupSheets: PublicLineup[] | null;
+  currentLineup: PublicLineup | null;
+  setCurrentLineup: (lineup: PublicLineup) => void;
+  unitsAssets: UseQueryResult<UnitAssetsGroup, Error>;
 }
 
 export interface WindowSize {

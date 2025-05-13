@@ -34,7 +34,25 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { militaryIcons } from "./tactical-icons";
 import type { ToolbarProps, IconType } from "./types";
+import clsx from "clsx";
+import { useState } from "react";
+import { PublicLineup } from "@/lib/get-data";
 
+const maps = [
+  { name: "Map 1", image: "/maps/1-1.jpg", occurrence: ["map1", "map2"] },
+  { name: "Map 2", image: "/maps/fort1.jpg", occurrence: ["map3", "map4"] },
+];
+const tools = [
+  { id: "select", icon: MousePointer, label: "Select" },
+  { id: "pen", icon: Pen, label: "Pen" },
+  { id: "line", icon: Minus, label: "Line" },
+  { id: "arrow", icon: ArrowRight, label: "Arrow" },
+  { id: "circle", icon: Circle, label: "Circle" },
+  { id: "icon", icon: MapPin, label: "Icon" },
+  { id: "text", icon: Type, label: "Text" },
+  { id: "tooltip", icon: Info, label: "Tooltip" },
+  { id: "delete", icon: Trash2, label: "Delete" },
+];
 export function Toolbar({
   selectedTool,
   setSelectedTool,
@@ -52,28 +70,160 @@ export function Toolbar({
   setSelectedFontSize,
   selectedIconType,
   setSelectedIconType,
+  selectedMapImage,
+  setSelectedMapImage,
+  dates,
+  onDateChange,
+  lineupSheets,
+  currentLineup,
+  setCurrentLineup,
+  unitsAssets,
 }: ToolbarProps) {
-  const tools = [
-    { id: "select", icon: MousePointer, label: "Select" },
-    { id: "pen", icon: Pen, label: "Pen" },
-    { id: "line", icon: Minus, label: "Line" },
-    { id: "arrow", icon: ArrowRight, label: "Arrow" },
-    { id: "circle", icon: Circle, label: "Circle" },
-    { id: "icon", icon: MapPin, label: "Icon" },
-    { id: "text", icon: Type, label: "Text" },
-    { id: "tooltip", icon: Info, label: "Tooltip" },
-  ];
-
+  const unitsAssetsList = !!unitsAssets.data
+    ? [
+        ...unitsAssets.data?.goldenEra,
+        ...unitsAssets.data?.heroicEra,
+        ...unitsAssets.data?.blueEra,
+        ...unitsAssets.data?.greenEra,
+        ...unitsAssets.data?.greyEra,
+      ]
+    : [];
   return (
     <TooltipProvider>
       <div className="flex flex-col gap-4 p-4 border rounded-lg w-72 overflow-y-auto">
-        <Tabs defaultValue="tools" className="w-full">
-          <TabsList className="grid grid-cols-3 mb-2">
+        <Tabs defaultValue="lineups" className="w-full">
+          <TabsList className="mb-2">
+            <TabsTrigger value="maps">Maps</TabsTrigger>
+            <TabsTrigger value="lineups">Lineups</TabsTrigger>
             <TabsTrigger value="tools">Tools</TabsTrigger>
             <TabsTrigger value="style">Style</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
-
+          <TabsContent value="maps" className="space-y-4">
+            <div className="space-y-2">
+              {maps.map((map) => (
+                <div
+                  key={map.name}
+                  className={clsx(
+                    "flex items-center gap-3 p-2 border rounded-lg cursor-pointer",
+                    {
+                      "bg-background": selectedMapImage === map.image,
+                    }
+                  )}
+                  onClick={() => setSelectedMapImage(map.image)}
+                >
+                  <div className="h-12 w-12 rounded-md overflow-hidden">
+                    <img
+                      src={map.image}
+                      alt={map.name}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-medium">{map.name}</h4>
+                    <div className="flex gap-1 flex-wrap">
+                      {map.occurrence.map((occ) => (
+                        <span key={occ} className="text-xs px-2 py-0.5 rounded">
+                          {occ}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </TabsContent>
+          <TabsContent value="lineups" className="space-y-4">
+            <div className="space-y-2">
+              <Select onValueChange={onDateChange}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select date" />
+                </SelectTrigger>
+                <SelectContent>
+                  {!dates.data || dates.isLoading ? (
+                    <SelectItem value="loading" disabled>
+                      Loading...
+                    </SelectItem>
+                  ) : (
+                    dates.data.map((date) => (
+                      <SelectItem key={date} value={date}>
+                        {date}
+                      </SelectItem>
+                    ))
+                  )}
+                </SelectContent>
+              </Select>
+              <div className="flex flex-col gap-2 items-center">
+                {!lineupSheets ? (
+                  <div>Load Date</div>
+                ) : (
+                  lineupSheets.map((sheet) => (
+                    <Button
+                      variant="ghost"
+                      key={sheet.name}
+                      className={clsx("p-1", {
+                        "bg-background":
+                          !!currentLineup && currentLineup.name === sheet.name,
+                      })}
+                      onClick={() => {
+                        setCurrentLineup(sheet);
+                      }}
+                    >
+                      {sheet.name}
+                    </Button>
+                  ))
+                )}
+              </div>
+              <div>
+                {!!currentLineup && !!unitsAssets.data && (
+                  <div className="flex flex-col gap-2">
+                    <h3 className="font-medium mb-2">Current Lineup</h3>
+                    <div className="flex flex-col gap-1">
+                      {currentLineup.sheet.map((member, i) => (
+                        <div
+                          key={i}
+                          className="flex items-center gap-3 p-2 border rounded-lg cursor-pointer"
+                        >
+                          <div className="flex-1">
+                            <h4 className="font-medium">{`${i}. ${member.username}`}</h4>
+                            <div className="flex gap-1">
+                              <img
+                                src={
+                                  unitsAssetsList.find(
+                                    (e) => e.name === member.unit1
+                                  )?.icon
+                                }
+                                alt={member.unit1}
+                                className="w-6 h-6"
+                              />
+                              <img
+                                src={
+                                  unitsAssetsList.find(
+                                    (e) => e.name === member.unit2
+                                  )?.icon
+                                }
+                                alt={member.unit2}
+                                className="w-6 h-6"
+                              />
+                              <img
+                                src={
+                                  unitsAssetsList.find(
+                                    (e) => e.name === member.unit3
+                                  )?.icon
+                                }
+                                alt={member.unit3}
+                                className="w-6 h-6"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </TabsContent>
           <TabsContent value="tools" className="space-y-4">
             <div>
               <h3 className="font-medium mb-2">Drawing Tools</h3>
@@ -126,7 +276,6 @@ export function Toolbar({
                 </Select>
               </div>
             )}
-
             <div>
               <h3 className="font-medium mb-2">Actions</h3>
               <div className="flex gap-2">

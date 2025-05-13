@@ -687,7 +687,7 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
     };
 
     return (
-      <div className="relative w-fit h-fit">
+      <div className="relative w-[750px] h-[750px]">
         <Stage
           ref={stageRef}
           width={stageWidth}
