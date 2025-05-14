@@ -18,41 +18,33 @@ export async function POST(request: Request) {
 
     const userAccount = data.discordId === session?.user.id;
     if (!userAccount) return new Response("401");
-    console.log(subSurvey);
     if (subSurvey === "true") {
-      console.log("subSurvey");
       const subSurveyExist = await SubSurvey.findOne({
         inGameNick: data.inGameNick,
       });
       if (subSurveyExist) {
-        console.log("subSurveyExist");
         const survey = await SubSurvey.findByIdAndUpdate(
           subSurveyExist._id,
           { ...data, discordId: session?.user.id },
           { new: true }
         );
-        console.log("survey1", survey);
         return NextResponse.json(survey, { status: 201 });
       } else {
         const survey = await SubSurvey.create({
           ...data,
           discordId: session?.user.id,
         });
-        console.log("survey2", survey);
         return NextResponse.json(survey, { status: 201 });
       }
     }
     const existingSurvey = await Survey.findOne({ discordId: data.discordId });
-    console.log("existingSurvey", existingSurvey);
     if (existingSurvey) {
       const survey = await Survey.findByIdAndUpdate(existingSurvey._id, data, {
         new: true,
       });
-      console.log("survey3", survey);
       return NextResponse.json(survey, { status: 201 });
     } else {
       const survey = await Survey.create(data);
-      console.log("survey4", survey);
       return NextResponse.json(survey, { status: 201 });
     }
   } catch (error) {

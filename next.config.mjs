@@ -4,6 +4,12 @@ const withNextIntl = createNextIntlPlugin();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  webpack: (config) => {
+    // This is to handle the canvas package which is not compatible with the browser
+    config.externals = [...(config.externals || []), { canvas: "canvas" }];
+
+    return config;
+  },
   images: {
     remotePatterns: [
       {

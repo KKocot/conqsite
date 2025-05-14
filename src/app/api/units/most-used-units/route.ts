@@ -60,7 +60,7 @@ export async function GET(_request: Request) {
         if (a.rating < b.rating) return 1;
         return 0;
       })
-      .slice(0, 9);
+      .slice(0, 15);
 
     return NextResponse.json(findedUnits, { status: 200 });
   } catch (error) {
