@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Page = () => {
   const { param }: { param: string } = useParams();
@@ -16,7 +17,7 @@ const Page = () => {
   const onDelete = () => {
     confirm("Are you sure you want to delete this house?")
       ? deleteHouseMutation.mutate(house)
-      : console.log("cancel");
+      : toast.warning("House not deleted");
     router.push("/home");
   };
 

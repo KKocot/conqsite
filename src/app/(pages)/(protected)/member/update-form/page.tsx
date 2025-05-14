@@ -16,7 +16,7 @@ const Page = () => {
     "main"
   );
   const { data: profileData, isLoading: loadingProfile } = useQuery({
-    queryKey: ["profile", data?.user.id],
+    queryKey: ["mainProfile", data?.user.id],
     queryFn: () => getSurvey(data?.user.id ?? ""),
     enabled: !!data?.user.id,
   });
