@@ -12,11 +12,13 @@ import {
 } from "@/components/ui/tooltip";
 
 const HouseSeasonTable = ({
+  index,
   item,
   attendance,
   username,
   otherActivities,
 }: {
+  index: number;
   item: SeasonProps;
   attendance: string[];
   username: string;
@@ -51,6 +53,7 @@ const HouseSeasonTable = ({
   const otherActivitiesLenght = cleanedOtherActivities.length;
   return (
     <div className="flex items-center gap-2 max-w-64">
+      {index}
       <span className="flex flex-col items-center">
         <TooltipProvider>
           <Tooltip>
