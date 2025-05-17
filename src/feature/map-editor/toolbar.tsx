@@ -74,25 +74,9 @@ export function Toolbar({
   lineupSheets,
   currentLineup,
   setCurrentLineup,
-  unitsAssets,
+  unitsAssetsList,
   artAssets,
 }: ToolbarProps) {
-  const unitsAssetsList = !!unitsAssets.data
-    ? [
-        ...unitsAssets.data?.goldenEra,
-        ...unitsAssets.data?.heroicEra,
-        ...unitsAssets.data?.blueEra,
-        ...unitsAssets.data?.greenEra,
-        ...unitsAssets.data?.greyEra,
-      ]
-    : [];
-  const unitIcons = [
-    ...unitsAssetsList,
-    ...(unitsAssets.data?.otherEra ?? []),
-  ].map((unit) => ({
-    name: unit.name,
-    icon: unit.icon,
-  }));
   return (
     <TooltipProvider>
       <div className="flex flex-col gap-4 p-4 border rounded-lg w-72 overflow-y-auto">
@@ -179,7 +163,7 @@ export function Toolbar({
                 )}
               </div>
               <div>
-                {!!currentLineup && !!unitsAssets.data && (
+                {!!currentLineup && (
                   <div className="flex flex-col gap-2">
                     <h3 className="font-medium mb-2">Current Lineup</h3>
                     <div className="flex flex-col gap-1">
@@ -288,15 +272,13 @@ export function Toolbar({
                 <h3 className="font-medium mb-2">Icon Type</h3>
                 <Select
                   value={selectedIconType}
-                  onValueChange={(value) =>
-                    setSelectedIconType(value as IconType)
-                  }
+                  onValueChange={(value) => setSelectedIconType(value)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select icon type" />
                   </SelectTrigger>
                   <SelectContent>
-                    {unitIcons.map((icon) => (
+                    {unitsAssetsList.map((icon) => (
                       <SelectItem key={icon.name} value={icon.name}>
                         <div className="flex items-center gap-2">
                           <img

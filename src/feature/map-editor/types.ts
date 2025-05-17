@@ -116,7 +116,10 @@ export interface ToolbarProps {
   lineupSheets: PublicLineup[] | null;
   currentLineup: PublicLineup | null;
   setCurrentLineup: (lineup: PublicLineup) => void;
-  unitsAssets: UseQueryResult<UnitAssetsGroup, Error>;
+  unitsAssetsList: {
+    name: string;
+    icon: string;
+  }[];
   artAssets: UseQueryResult<ArtilleryAsset[], Error>;
 }
 
@@ -125,17 +128,7 @@ export interface WindowSize {
   height: number | undefined;
 }
 
-export type IconType =
-  | "infantry"
-  | "armor"
-  | "artillery"
-  | "helicopter"
-  | "airforce"
-  | "navy"
-  | "command"
-  | "medical"
-  | "supply"
-  | "unknown";
+export type IconType = string;
 
 export interface IconDefinition {
   type: IconType;

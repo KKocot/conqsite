@@ -24,7 +24,6 @@ import {
   TooltipProvider,
 } from "@/components/ui/tooltip";
 import { nanoid } from "nanoid";
-import { getMilitaryIcon } from "./tactical-icons";
 import type {
   MapEditorProps,
   MapEditorRef,
@@ -41,12 +40,14 @@ import type {
 import type { KonvaEventObject } from "konva/lib/Node";
 import type Konva from "konva";
 import { useImageLoader } from "@/components/hooks/use-image-loader";
+import { UnitAssetsGroup } from "@/lib/get-data";
 
 interface ExtendedMapEditorProps extends MapEditorProps {
   gridEnabled?: boolean;
   gridSize?: number;
   fontSize?: number;
   iconType?: IconType;
+  unitAssets?: UnitAssetsGroup;
 }
 
 export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
@@ -59,7 +60,8 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
       gridEnabled = false,
       gridSize = 20,
       fontSize = 16,
-      iconType = "infantry",
+      iconType = "",
+      unitAssets = [],
     },
     ref
   ) => {
@@ -86,7 +88,7 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
     });
     const stageRef = useRef<Konva.Stage>(null);
     const layerRef = useRef<Konva.Layer>(null);
-
+    console.log(iconType);
     // Calculate stage dimensions based on window size
     const stageWidth = 750;
     const stageHeight = 750;
@@ -493,7 +495,6 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
           return null;
         case "icon":
           if ("x" in element && "y" in element && "iconType" in element) {
-            const iconInfo = getMilitaryIcon(element.iconType);
             return (
               <Group
                 key={element.id}
@@ -504,20 +505,17 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
                 draggable={tool === "select"}
                 onDragEnd={(e) => handleDragEnd(e, element.id)}
               >
-                <Circle
-                  radius={20}
+                <Image image={undefined} />
+                <Text
+                  text={element.iconType}
+                  fontSize={fontSize}
                   fill={element.color}
+                  onClick={() => handleElementClick(element.id)}
+                  onTap={() => handleElementClick(element.id)}
                   shadowEnabled={isSelected}
                   shadowColor="black"
                   shadowBlur={10}
                   shadowOpacity={0.5}
-                />
-                <Text
-                  text={iconInfo.symbol}
-                  fontSize={18}
-                  x={-9}
-                  y={-9}
-                  fill="#ffffff"
                 />
               </Group>
             );
