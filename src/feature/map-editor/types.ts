@@ -1,4 +1,4 @@
-import { PublicLineup, UnitAssetsGroup } from "@/lib/get-data";
+import { ArtilleryAsset, PublicLineup, UnitAssetsGroup } from "@/lib/get-data";
 import { UseQueryResult } from "@tanstack/react-query";
 
 export interface MapElement {
@@ -117,6 +117,7 @@ export interface ToolbarProps {
   currentLineup: PublicLineup | null;
   setCurrentLineup: (lineup: PublicLineup) => void;
   unitsAssets: UseQueryResult<UnitAssetsGroup, Error>;
+  artAssets: UseQueryResult<ArtilleryAsset[], Error>;
 }
 
 export interface WindowSize {

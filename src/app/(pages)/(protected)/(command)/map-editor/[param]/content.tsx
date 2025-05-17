@@ -7,16 +7,23 @@ import { Toolbar } from "@/feature/map-editor/toolbar";
 import { MapEditor } from "@/feature/map-editor/editor";
 import { MapEditorRef, Plan } from "@/feature/map-editor/types";
 import { UseQueryResult } from "@tanstack/react-query";
-import { getPublicLineup, PublicLineup, UnitAssetsGroup } from "@/lib/get-data";
+import {
+  ArtilleryAsset,
+  getPublicLineup,
+  PublicLineup,
+  UnitAssetsGroup,
+} from "@/lib/get-data";
 
 export default function TacticalMapPage({
   dates,
   house,
   unitsAssets,
+  artAssets,
 }: {
   dates: UseQueryResult<string[], Error>;
   house: string;
   unitsAssets: UseQueryResult<UnitAssetsGroup, Error>;
+  artAssets: UseQueryResult<ArtilleryAsset[], Error>;
 }) {
   const [selectedTool, setSelectedTool] = useState<string>("select");
   const [selectedColor, setSelectedColor] = useState<string>("#ff0000");
@@ -162,6 +169,7 @@ export default function TacticalMapPage({
           currentLineup={currentLineup}
           setCurrentLineup={handleSetCurrentLineup}
           unitsAssets={unitsAssets}
+          artAssets={artAssets}
         />
       </div>
     </div>
