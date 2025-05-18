@@ -124,8 +124,9 @@ const Content = ({
                       .length ?? 0;
                   return bAttendance - aAttendance;
                 })
-                .map((user) => (
+                .map((user, i) => (
                   <HouseSeasonTable
+                    index={i + 1}
                     otherActivities={user.otherActivities}
                     key={user.id}
                     item={e}

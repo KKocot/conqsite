@@ -22,4 +22,5 @@ export const putPublicLineupSchema = z.object({
   date: z.string(),
   commander: z.string().optional(),
   sheet: z.array(SheetSchema),
+  change_nick: z.boolean(),
 });

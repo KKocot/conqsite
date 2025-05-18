@@ -7,16 +7,23 @@ import { Toolbar } from "@/feature/map-editor/toolbar";
 import { MapEditor } from "@/feature/map-editor/editor";
 import { MapEditorRef, Plan } from "@/feature/map-editor/types";
 import { UseQueryResult } from "@tanstack/react-query";
-import { getPublicLineup, PublicLineup, UnitAssetsGroup } from "@/lib/get-data";
+import {
+  ArtilleryAsset,
+  getPublicLineup,
+  PublicLineup,
+  UnitAssetsGroup,
+} from "@/lib/get-data";
 
 export default function TacticalMapPage({
   dates,
   house,
   unitsAssets,
+  artAssets,
 }: {
   dates: UseQueryResult<string[], Error>;
   house: string;
   unitsAssets: UseQueryResult<UnitAssetsGroup, Error>;
+  artAssets: UseQueryResult<ArtilleryAsset[], Error>;
 }) {
   const [selectedTool, setSelectedTool] = useState<string>("select");
   const [selectedColor, setSelectedColor] = useState<string>("#ff0000");
@@ -26,26 +33,26 @@ export default function TacticalMapPage({
   const [gridEnabled, setGridEnabled] = useState<boolean>(false);
   const [gridSize, setGridSize] = useState<number>(20);
   const [selectedFontSize, setSelectedFontSize] = useState<number>(16);
-  const [selectedIconType, setSelectedIconType] = useState<string>("infantry");
+  const [selectedIconType, setSelectedIconType] = useState<string>("");
   const [currentPlanId, setCurrentPlanId] = useState<string | undefined>(
     undefined
   );
-  const [showPreview, setShowPreview] = useState<boolean>(false);
-  const [previewImage, setPreviewImage] = useState<string>("");
   const editorRef = useRef<MapEditorRef>(null);
   const [lineupSheets, setLineupSheets] = useState<PublicLineup[] | null>(null);
   const [currentLineup, setCurrentLineup] = useState<PublicLineup | null>(null);
-  const handleMapUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setMapImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
+  const unitsAssetsList = !!unitsAssets.data
+    ? [
+        ...unitsAssets.data?.goldenEra,
+        ...unitsAssets.data?.heroicEra,
+        ...unitsAssets.data?.blueEra,
+        ...unitsAssets.data?.greenEra,
+        ...unitsAssets.data?.greyEra,
+        ...unitsAssets.data?.otherEra,
+      ].map((unit) => ({
+        name: unit.name,
+        icon: unit.icon,
+      }))
+    : [];
   const loadPlan = (plan: Plan) => {
     if (editorRef.current) {
       setMapImage(plan.mapImage);
@@ -62,7 +69,6 @@ export default function TacticalMapPage({
       }
     }
   };
-
   const handleClearAll = () => {
     if (editorRef.current) {
       if (confirm("Are you sure you want to clear all elements?")) {
@@ -75,26 +81,6 @@ export default function TacticalMapPage({
     if (editorRef.current) {
       editorRef.current.deleteSelected();
     }
-  };
-
-  const exportAsImage = () => {
-    if (!editorRef.current) return;
-    const dataURL = editorRef.current.getDataURL();
-    const link = document.createElement("a");
-    link.download = `${planName || "tactical-map"}.png`;
-    link.href = dataURL;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const previewPlan = (plan: Plan) => {
-    setPreviewImage(plan.thumbnail || "");
-    setShowPreview(true);
-  };
-
-  const mapPicker = (map: string) => {
-    setMapImage(map);
   };
 
   const handleSetCurrentLineup = (lineup: PublicLineup) => {
@@ -130,6 +116,7 @@ export default function TacticalMapPage({
             gridEnabled={gridEnabled}
             gridSize={gridSize}
             fontSize={selectedFontSize}
+            unitAssets={unitsAssets.data}
           />
         ) : (
           <div className="flex items-center justify-center w-[750px] h-[750px] border-2 border-dashed rounded-lg">
@@ -161,7 +148,8 @@ export default function TacticalMapPage({
           lineupSheets={lineupSheets}
           currentLineup={currentLineup}
           setCurrentLineup={handleSetCurrentLineup}
-          unitsAssets={unitsAssets}
+          unitsAssetsList={unitsAssetsList}
+          artAssets={artAssets}
         />
       </div>
     </div>

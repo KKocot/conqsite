@@ -3,7 +3,11 @@
 import { useQuery } from "@tanstack/react-query";
 import Content from "./content";
 import { useParams } from "next/navigation";
-import { getPublicLineupDates, getUnitsAssets } from "@/lib/get-data";
+import {
+  getArtilleryAssets,
+  getPublicLineupDates,
+  getUnitsAssets,
+} from "@/lib/get-data";
 
 const Page = () => {
   const { param }: { param: string } = useParams();
@@ -18,7 +22,19 @@ const Page = () => {
     queryFn: getUnitsAssets,
     enabled: true,
   });
-  return <Content dates={dates} house={house} unitsAssets={unitsAssets} />;
+  const artAssets = useQuery({
+    queryKey: ["artilleryAssets"],
+    queryFn: () => getArtilleryAssets(),
+    enabled: true,
+  });
+  return (
+    <Content
+      dates={dates}
+      house={house}
+      unitsAssets={unitsAssets}
+      artAssets={artAssets}
+    />
+  );
 };
 
 export default Page;

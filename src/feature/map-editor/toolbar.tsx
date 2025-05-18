@@ -6,7 +6,7 @@ import {
   Circle,
   ArrowRight,
   Minus,
-  MapPin,
+  Sword,
   Info,
   Trash2,
   Type,
@@ -32,11 +32,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { militaryIcons } from "./tactical-icons";
 import type { ToolbarProps, IconType } from "./types";
 import clsx from "clsx";
-import { useState } from "react";
-import { PublicLineup } from "@/lib/get-data";
 
 const maps = [
   { name: "Map 1", image: "/maps/1-1.jpg", occurrence: ["map1", "map2"] },
@@ -48,7 +45,7 @@ const tools = [
   { id: "line", icon: Minus, label: "Line" },
   { id: "arrow", icon: ArrowRight, label: "Arrow" },
   { id: "circle", icon: Circle, label: "Circle" },
-  { id: "icon", icon: MapPin, label: "Icon" },
+  { id: "icon", icon: Sword, label: "Icon" },
   { id: "text", icon: Type, label: "Text" },
   { id: "tooltip", icon: Info, label: "Tooltip" },
   { id: "delete", icon: Trash2, label: "Delete" },
@@ -77,26 +74,17 @@ export function Toolbar({
   lineupSheets,
   currentLineup,
   setCurrentLineup,
-  unitsAssets,
+  unitsAssetsList,
+  artAssets,
 }: ToolbarProps) {
-  const unitsAssetsList = !!unitsAssets.data
-    ? [
-        ...unitsAssets.data?.goldenEra,
-        ...unitsAssets.data?.heroicEra,
-        ...unitsAssets.data?.blueEra,
-        ...unitsAssets.data?.greenEra,
-        ...unitsAssets.data?.greyEra,
-      ]
-    : [];
   return (
     <TooltipProvider>
       <div className="flex flex-col gap-4 p-4 border rounded-lg w-72 overflow-y-auto">
-        <Tabs defaultValue="lineups" className="w-full">
-          <TabsList className="mb-2">
+        <Tabs defaultValue="tools" className="w-full">
+          <TabsList className="mb-2 flex flex-wrap h-fit">
             <TabsTrigger value="maps">Maps</TabsTrigger>
             <TabsTrigger value="lineups">Lineups</TabsTrigger>
             <TabsTrigger value="tools">Tools</TabsTrigger>
-            <TabsTrigger value="style">Style</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
           <TabsContent value="maps" className="space-y-4">
@@ -161,7 +149,7 @@ export function Toolbar({
                     <Button
                       variant="ghost"
                       key={sheet.name}
-                      className={clsx("p-1", {
+                      className={clsx("p-1 w-full", {
                         "bg-background":
                           !!currentLineup && currentLineup.name === sheet.name,
                       })}
@@ -175,49 +163,77 @@ export function Toolbar({
                 )}
               </div>
               <div>
-                {!!currentLineup && !!unitsAssets.data && (
+                {!!currentLineup && (
                   <div className="flex flex-col gap-2">
                     <h3 className="font-medium mb-2">Current Lineup</h3>
                     <div className="flex flex-col gap-1">
-                      {currentLineup.sheet.map((member, i) => (
-                        <div
-                          key={i}
-                          className="flex items-center gap-3 p-2 border rounded-lg cursor-pointer"
-                        >
-                          <div className="flex-1">
-                            <h4 className="font-medium">{`${i}. ${member.username}`}</h4>
+                      {currentLineup.sheet
+                        .filter((e) => e.username !== "")
+                        .map((member, i) => (
+                          <div
+                            key={i}
+                            className="flex items-center gap-3 p-2 rounded-lg cursor-pointer"
+                          >
+                            <div className="flex-1">
+                              <h4 className="font-medium">{`${i + 1}. ${
+                                member.username
+                              }`}</h4>
+                              <div className="flex gap-1">
+                                {member.unit1 !== "" ? (
+                                  <img
+                                    src={
+                                      unitsAssetsList.find(
+                                        (e) => e.name === member.unit1
+                                      )?.icon
+                                    }
+                                    alt={member.unit1}
+                                    className="w-6 h-6"
+                                  />
+                                ) : null}
+                                {member.unit2 !== "" ? (
+                                  <img
+                                    src={
+                                      unitsAssetsList.find(
+                                        (e) => e.name === member.unit2
+                                      )?.icon
+                                    }
+                                    alt={member.unit2}
+                                    className="w-6 h-6"
+                                  />
+                                ) : null}
+                                {member.unit3 !== "" ? (
+                                  <img
+                                    src={
+                                      unitsAssetsList.find(
+                                        (e) => e.name === member.unit3
+                                      )?.icon
+                                    }
+                                    alt={member.unit3}
+                                    className="w-6 h-6"
+                                  />
+                                ) : null}
+                              </div>
+                            </div>
                             <div className="flex gap-1">
-                              <img
-                                src={
-                                  unitsAssetsList.find(
-                                    (e) => e.name === member.unit1
-                                  )?.icon
-                                }
-                                alt={member.unit1}
-                                className="w-6 h-6"
-                              />
-                              <img
-                                src={
-                                  unitsAssetsList.find(
-                                    (e) => e.name === member.unit2
-                                  )?.icon
-                                }
-                                alt={member.unit2}
-                                className="w-6 h-6"
-                              />
-                              <img
-                                src={
-                                  unitsAssetsList.find(
-                                    (e) => e.name === member.unit3
-                                  )?.icon
-                                }
-                                alt={member.unit3}
-                                className="w-6 h-6"
-                              />
+                              {!!member.artillery && !!artAssets.data
+                                ? member.artillery
+                                    .filter((elem) => elem.check)
+                                    .map((e, i) => (
+                                      <img
+                                        key={i}
+                                        src={
+                                          artAssets.data.find(
+                                            (asset) => asset.id === e.id
+                                          )?.src
+                                        }
+                                        alt={e.id.toString()}
+                                        className="w-6 h-6 rounded-full"
+                                      />
+                                    ))
+                                : null}
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
                     </div>
                   </div>
                 )}
@@ -256,19 +272,21 @@ export function Toolbar({
                 <h3 className="font-medium mb-2">Icon Type</h3>
                 <Select
                   value={selectedIconType}
-                  onValueChange={(value) =>
-                    setSelectedIconType(value as IconType)
-                  }
+                  onValueChange={(value) => setSelectedIconType(value)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select icon type" />
                   </SelectTrigger>
                   <SelectContent>
-                    {militaryIcons.map((icon) => (
-                      <SelectItem key={icon.type} value={icon.type}>
+                    {unitsAssetsList.map((icon) => (
+                      <SelectItem key={icon.name} value={icon.name}>
                         <div className="flex items-center gap-2">
-                          <span className="text-lg">{icon.symbol}</span>
-                          <span>{icon.label}</span>
+                          <img
+                            src={icon.icon}
+                            alt={icon.name}
+                            className="w-6 h-6"
+                          />
+                          <span>{icon.name}</span>
                         </div>
                       </SelectItem>
                     ))}
@@ -276,6 +294,82 @@ export function Toolbar({
                 </Select>
               </div>
             )}
+            <div>
+              <div>
+                <h3 className="font-medium mb-2">Color</h3>
+                <div className="grid grid-cols-6 gap-2 mb-2">
+                  {[
+                    "#ff0000",
+                    "#00ff00",
+                    "#0000ff",
+                    "#ffff00",
+                    "#ff00ff",
+                    "#000000",
+                    "#ffffff",
+                    "#888888",
+                    "#ff8800",
+                    "#00ffff",
+                    "#8800ff",
+                    "#88ff00",
+                  ].map((color) => (
+                    <Tooltip key={color}>
+                      <TooltipTrigger asChild>
+                        <button
+                          className={`w-8 h-8 rounded-full border-2 ${
+                            selectedColor === color
+                              ? "border-gray-900"
+                              : "border-gray-200"
+                          }`}
+                          style={{ backgroundColor: color }}
+                          onClick={() => setSelectedColor(color)}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>{color}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  ))}
+                </div>
+                <Input
+                  type="color"
+                  value={selectedColor}
+                  onChange={(e) => setSelectedColor(e.target.value)}
+                  className="w-full h-8 p-1 border rounded"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="stroke-width" className="font-medium">
+                  Stroke Width: {strokeWidth}px
+                </Label>
+                <Slider
+                  id="stroke-width"
+                  min={1}
+                  max={20}
+                  step={1}
+                  value={[strokeWidth]}
+                  onValueChange={(value) => setStrokeWidth(value[0])}
+                  className="mt-2"
+                />
+              </div>
+
+              {selectedTool === "text" && (
+                <div>
+                  <Label htmlFor="font-size" className="font-medium">
+                    Font Size: {selectedFontSize}px
+                  </Label>
+                  <Slider
+                    id="font-size"
+                    min={8}
+                    max={48}
+                    step={1}
+                    value={[selectedFontSize]}
+                    onValueChange={(value) => setSelectedFontSize(value[0])}
+                    className="mt-2"
+                  />
+                </div>
+              )}
+            </div>
             <div>
               <h3 className="font-medium mb-2">Actions</h3>
               <div className="flex gap-2">
@@ -298,93 +392,13 @@ export function Toolbar({
               </div>
             </div>
           </TabsContent>
-
-          <TabsContent value="style" className="space-y-4">
-            <div>
-              <h3 className="font-medium mb-2">Color</h3>
-              <div className="grid grid-cols-6 gap-2 mb-2">
-                {[
-                  "#ff0000",
-                  "#00ff00",
-                  "#0000ff",
-                  "#ffff00",
-                  "#ff00ff",
-                  "#000000",
-                  "#ffffff",
-                  "#888888",
-                  "#ff8800",
-                  "#00ffff",
-                  "#8800ff",
-                  "#88ff00",
-                ].map((color) => (
-                  <Tooltip key={color}>
-                    <TooltipTrigger asChild>
-                      <button
-                        className={`w-8 h-8 rounded-full border-2 ${
-                          selectedColor === color
-                            ? "border-gray-900"
-                            : "border-gray-200"
-                        }`}
-                        style={{ backgroundColor: color }}
-                        onClick={() => setSelectedColor(color)}
-                      />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{color}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                ))}
-              </div>
-              <Input
-                type="color"
-                value={selectedColor}
-                onChange={(e) => setSelectedColor(e.target.value)}
-                className="w-full h-8 p-1 border rounded"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="stroke-width" className="font-medium">
-                Stroke Width: {strokeWidth}px
-              </Label>
-              <Slider
-                id="stroke-width"
-                min={1}
-                max={20}
-                step={1}
-                value={[strokeWidth]}
-                onValueChange={(value) => setStrokeWidth(value[0])}
-                className="mt-2"
-              />
-            </div>
-
-            {selectedTool === "text" && (
-              <div>
-                <Label htmlFor="font-size" className="font-medium">
-                  Font Size: {selectedFontSize}px
-                </Label>
-                <Slider
-                  id="font-size"
-                  min={8}
-                  max={48}
-                  step={1}
-                  value={[selectedFontSize]}
-                  onValueChange={(value) => setSelectedFontSize(value[0])}
-                  className="mt-2"
-                />
-              </div>
-            )}
-          </TabsContent>
-
           <TabsContent value="settings" className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label htmlFor="grid-toggle" className="font-medium">
                   Grid
                 </Label>
-                <p className="text-sm text-gray-500">
-                  Show grid lines on the canvas
-                </p>
+                <p className="text-sm">Show grid lines on the canvas</p>
               </div>
               <Switch
                 id="grid-toggle"
