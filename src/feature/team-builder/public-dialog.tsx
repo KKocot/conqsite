@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { SheetTypes } from "@/lib/type";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Calendar } from "../../components/ui/calendar";
-import { Send } from "lucide-react";
+import { Info, Send } from "lucide-react";
 import {
   DiscordDataByName,
   getPublicLineup,
@@ -34,6 +34,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { useLocalStorage } from "usehooks-ts";
 import { useSession } from "next-auth/react";
+import HoverClickTooltip from "@/components/hover-click-tooltip";
 
 export interface MessageData {
   url: string;
@@ -41,6 +42,7 @@ export interface MessageData {
   role_id: string;
   author: string;
   tread: boolean;
+  change_nick: boolean;
 }
 
 export function PublicDialog({
@@ -71,6 +73,7 @@ export function PublicDialog({
     role_id: discordData.default_role_id,
     author: user?.user.id ?? "",
     tread: false,
+    change_nick: false,
   };
 
   const [publicationName, setPublicationName] = useState("");
@@ -208,6 +211,7 @@ export function PublicDialog({
                 onChange={(e) => setPublicationName(e.target.value)}
                 className="col-span-3"
               />
+
               <Button
                 variant="custom"
                 size="sm"
@@ -223,6 +227,7 @@ export function PublicDialog({
                     date: date,
                     sheet: data,
                     commander: commander ?? "",
+                    change_nick: storedMessageData.change_nick ?? false,
                   });
                   try {
                     fetch("/api/discord-bot/message-lineup", {
@@ -281,7 +286,7 @@ export function PublicDialog({
               <div>
                 <Label
                   htmlFor="tread"
-                  className="text-sm text-muted-foreground flex justify-between p-1 items-center"
+                  className="text-sm text-muted-foreground flex justify-between p-1 items-center cursor-pointer"
                 >
                   <div>Post in Tread</div>
 
@@ -299,7 +304,39 @@ export function PublicDialog({
                   }}
                 />
               </div>
+              <div>
+                <Label
+                  htmlFor="change-nick"
+                  className="text-sm text-muted-foreground flex justify-between p-1 items-center cursor-pointer"
+                >
+                  <div>
+                    Change nicknames
+                    <HoverClickTooltip
+                      triggerChildren={<Info className="w-4 h-4" />}
+                      buttonStyle="rounded-full"
+                    >
+                      <div className="ml-2 w-56">
+                        Change usernames to usernames with index numbers on TW
+                        discord server
+                      </div>
+                    </HoverClickTooltip>
+                  </div>
+                  {storedMessageData.change_nick ? "✅" : "❌"}
+                </Label>
+                <Checkbox
+                  id="change-nick"
+                  className="hidden"
+                  checked={storedMessageData.change_nick ?? false}
+                  onCheckedChange={(e) =>
+                    setStorageMessageData((prev) => ({
+                      ...prev,
+                      change_nick: !prev.change_nick,
+                    }))
+                  }
+                />
+              </div>
             </div>
+
             <div className="w-1/2">
               <Label>DC role</Label>
               <Select

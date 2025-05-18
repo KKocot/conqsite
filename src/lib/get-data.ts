@@ -154,6 +154,7 @@ export interface PublicLineup {
   date: string;
   commander?: string;
   sheet: SheetTypes[];
+  change_nick: boolean;
 }
 export const getPublicLineup = async (
   house: string,

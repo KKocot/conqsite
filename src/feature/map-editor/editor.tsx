@@ -88,7 +88,6 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
     });
     const stageRef = useRef<Konva.Stage>(null);
     const layerRef = useRef<Konva.Layer>(null);
-    console.log(iconType);
     // Calculate stage dimensions based on window size
     const stageWidth = 750;
     const stageHeight = 750;

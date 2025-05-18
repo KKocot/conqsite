@@ -22,7 +22,6 @@ export async function POST(request: Request) {
 
     const highCommandAccess = highCommandAllowed(roles, session, data.house);
     if (!highCommandAccess) return new Response("401");
-
     const existingPublicLineup = await PublicLineup.findOne({
       house: data.house,
       name: data.name,
@@ -41,7 +40,6 @@ export async function POST(request: Request) {
     } else {
       publicLineup = await PublicLineup.create(data);
     }
-
     return NextResponse.json(publicLineup, { status: 201 });
   } catch (error) {
     if (error instanceof ZodError)

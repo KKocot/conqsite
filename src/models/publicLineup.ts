@@ -5,6 +5,7 @@ const PublicLineupSchema = new Schema({
   house: { type: String, required: true },
   date: { type: String, required: true },
   commander: { type: String, required: false },
+  change_nick: { type: Boolean, required: false, default: false },
   sheet: [
     {
       artillery: [
