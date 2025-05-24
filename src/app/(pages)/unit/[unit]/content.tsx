@@ -297,18 +297,16 @@ const Content = ({
               </div>
             </div>
             <div className="flex justify-between w-full">
-              <div className="max-w-64">
-                <Image
-                  src={shortEntry.src}
-                  alt={shortEntry.name}
-                  width={500}
-                  height={500}
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                  }}
-                />
-              </div>
+              <Image
+                alt={shortEntry.name}
+                width={512}
+                height={512}
+                src={`http://${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}:${
+                  process.env.NEXT_PUBLIC_IMAGES_IP_PORT
+                }/images/units-cards/${shortEntry.name
+                  .toLowerCase()
+                  .replaceAll(" ", "-")}-lg.png`}
+              />
               <FormField
                 control={form.control}
                 name="description"
