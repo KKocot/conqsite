@@ -16,6 +16,11 @@ const nextConfig = {
         protocol: "https",
         hostname: "**",
       },
+      {
+        protocol: "http",
+        hostname: process.env.NEXT_PUBLIC_IMAGES_IP_HOST,
+        port: process.env.NEXT_PUBLIC_IMAGES_IP_PORT,
+      },
     ],
   },
 };

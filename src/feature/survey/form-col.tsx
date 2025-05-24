@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import clsx from "clsx";
 import { Button } from "../../components/ui/button";
@@ -7,6 +9,7 @@ import { FormControl, FormField, FormItem } from "@/components/ui/form";
 import { CustomSwitch } from "@/components/ui/customSwitch";
 import { ShieldCheck, ShieldX } from "lucide-react";
 import { Unit } from "@/lib/type";
+import Image from "next/image";
 
 const FormCol = ({
   era,
@@ -44,7 +47,16 @@ const FormCol = ({
           </h2>
           <div className="items-center grid grid-cols-2">
             <div className="flex justify-center">
-              <img className="h-40" alt={e.name} src={e.src} />
+              <Image
+                width={160}
+                height={160}
+                alt={e.name}
+                src={`http://${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}:${
+                  process.env.NEXT_PUBLIC_IMAGES_IP_PORT
+                }/images/units-cards/${e.name
+                  .toLowerCase()
+                  .replaceAll(" ", "-")}-sm.png`}
+              />
             </div>
             <RadioComponent unitData={e} controller={controller} era={era} />
           </div>
