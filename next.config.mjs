@@ -18,8 +18,8 @@ const nextConfig = {
       },
       {
         protocol: "http",
-        hostname: process.env.NEXT_PUBLIC_IMAGES_IP_HOST,
-        port: process.env.NEXT_PUBLIC_IMAGES_IP_PORT,
+        hostname: process.env.NEXT_PUBLIC_IMAGES_IP_HOST ?? "nginx",
+        port: process.env.NEXT_PUBLIC_IMAGES_IP_PORT ?? "8080",
       },
     ],
   },
