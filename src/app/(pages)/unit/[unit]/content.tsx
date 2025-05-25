@@ -301,7 +301,9 @@ const Content = ({
                 alt={shortEntry.name}
                 width={512}
                 height={512}
-                src={`http://nginx:8080/images/units-cards/${shortEntry.name
+                src={`${
+                  process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+                }/images/units-cards/${shortEntry.name
                   .toLowerCase()
                   .replaceAll(" ", "-")}-lg.png`}
               />
