@@ -51,7 +51,9 @@ const FormCol = ({
                 width={160}
                 height={160}
                 alt={e.name}
-                src={`http://nginx:8080/images/units-cards/${e.name
+                src={`${
+                  process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+                }/images/units-cards/${e.name
                   .toLowerCase()
                   .replaceAll(" ", "-")}-sm.png`}
               />

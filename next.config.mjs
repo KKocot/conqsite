@@ -21,6 +21,11 @@ const nextConfig = {
         hostname: "nginx",
         port: "8080",
       },
+      {
+        protocol: "http",
+        hostname: "conqsite.bard-dev.com",
+        port: "8080",
+      },
     ],
   },
 };

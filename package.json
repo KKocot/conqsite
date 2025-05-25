@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 80",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -57,6 +57,7 @@
     "recharts": "^2.15.1",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
+    "sharp": "^0.34.2",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "use-image": "^1.1.1",
