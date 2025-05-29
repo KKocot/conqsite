@@ -43,10 +43,14 @@ const DoctrineItem = ({ doctrine }: DoctrineProps) => {
             className={`${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
           >
             <Image
-              src={doctrine.img}
+              src={`${
+                process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+              }/images/doctrines/${doctrine.name
+                .toLowerCase()
+                .replace(/[ ':]/g, "-")}.png`}
               alt={doctrine.name}
-              width={48}
-              height={48}
+              width={64}
+              height={64}
               title={doctrine.name}
             />
           </div>

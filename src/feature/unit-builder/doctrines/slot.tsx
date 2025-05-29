@@ -48,7 +48,11 @@ const DoctrineSlot = ({ slot, onDrop }: DoctrineSlotProps) => {
     >
       {slot.name && (
         <Image
-          src={slot.img}
+          src={`${
+            process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+          }/images/doctrines/${slot.name
+            .toLowerCase()
+            .replace(/[ ':]/g, "-")}.png`}
           alt={slot.name}
           width={140}
           height={140}

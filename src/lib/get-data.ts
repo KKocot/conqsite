@@ -688,6 +688,14 @@ export const getDoctrineAssets = async (): Promise<DoctrineType[]> => {
   return result;
 };
 
+export const getDoctrineByName = async (
+  name: string
+): Promise<DoctrineType | null> => {
+  const response = await fetch(`/api/assets/doctrines?doctrine=${name}`);
+  const result = await response.json();
+  return result;
+};
+
 export const getUnitDoctrines = async (
   unit: string
 ): Promise<DoctrineType[]> => {
