@@ -33,11 +33,7 @@ const DoctrinesGroup = ({ doctrines }: DoctrineGroupProps) => {
                     top: `calc(50% + ${y}px)`,
                   }}
                 >
-                  <DoctrineTooltip
-                    img={doctrine.img}
-                    label={doctrine.name}
-                    description={doctrine.stats}
-                  />
+                  <DoctrineTooltip label={doctrine.name} />
                 </div>
               );
             })}

@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import doctrineSchema from "./schema";
 import { Doctrine } from "@/models/assets/doctrine";
-import { DoctrineType, UnitAsset } from "@/lib/get-data";
 import UnitTypes from "@/models/assets/unit";
 
 export async function POST(request: Request) {
@@ -37,7 +36,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const rarity = searchParams.get("rarity");
   const unit = searchParams.get("unit");
-
+  const doctrine = searchParams.get("doctrine");
   try {
     await connectMongoDB();
     if (unit) {
@@ -87,41 +86,30 @@ export async function GET(request: Request) {
       const doctrineAsset = await Doctrine.findOne({ rarity });
       return NextResponse.json(doctrineAsset);
     }
+    if (doctrine) {
+      const decriptedParam = decodeURIComponent(doctrine);
+      const doctrineAsset = await Doctrine.findOne({ name: decriptedParam });
+      return NextResponse.json(doctrineAsset);
+    }
     const doctrines = await Doctrine.find();
-    return NextResponse.json(doctrines);
+    const sortedDoctrines = doctrines.sort((a, b) => {
+      const rarityOrder: Record<
+        "common" | "uncommon" | "rare" | "epic",
+        number
+      > = {
+        common: 1,
+        uncommon: 2,
+        rare: 3,
+        epic: 4,
+      };
+      return (
+        (rarityOrder[a.rarity as keyof typeof rarityOrder] || 0) -
+        (rarityOrder[b.rarity as keyof typeof rarityOrder] || 0)
+      );
+    });
+    return NextResponse.json(sortedDoctrines);
   } catch (error) {
     if (error instanceof Error)
       return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
-
-// const unitDoctrines = doctrineAsset.map((doctrine) => {
-//   if (doctrine.dedicated === "all") {
-//     doctrines.push(doctrine);
-//   }
-//   if (
-//     doctrine.dedicated === "unit" &&
-//     doctrine.forUnit.includes(unitName)
-//   ) {
-//     doctrines.push(doctrine);
-//   }
-//   if (doctrine.dedicated === "group") {
-//     if (doctrine.forUnit.includes(unitName)) {
-//       doctrines.push(doctrine);
-//     }
-//     if (unitAssets && doctrine.forUnit.includes(unitAssets.types[0])) {
-//       doctrines.push(doctrine);
-//     }
-//     if (unitAssets && doctrine.forUnit.includes(unitAssets.types[1])) {
-//       doctrines.push(doctrine);
-//     }
-//     if (
-//       unitAssets &&
-//       doctrine.forUnit.includes(
-//         unitAssets.types[1] + " " + unitAssets.types[0]
-//       )
-//     ) {
-//       doctrines.push(doctrine);
-//     }
-//   }
-// });

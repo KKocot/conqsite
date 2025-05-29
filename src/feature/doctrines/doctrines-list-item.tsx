@@ -1,6 +1,5 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
   CardContent,
@@ -11,30 +10,40 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { DoctrineType } from "@/lib/get-data";
 import Link from "next/link";
+import Image from "next/image";
 
 const DoctrinesLisItem = ({ doctrine }: { doctrine: DoctrineType }) => {
   const statsList = doctrine.stats.split(". ").filter(Boolean);
   return (
     <Card className="w-[260px] flex flex-col">
-      <CardHeader>
-        <CardTitle className="text-lg h-14">{doctrine.name}</CardTitle>
-      </CardHeader>
-      <CardContent className="flex flex-col items-center">
-        <div className="w-64 h-32 flex justify-center items-center">
-          <Avatar className="w-1/2 h-full rounded-none">
-            <AvatarImage src={doctrine.img} alt={`${doctrine.name} avatar`} />
-            <AvatarFallback>{doctrine.name.substring(0, 2)}</AvatarFallback>
-          </Avatar>
-        </div>
-        <ul className="mt-2">
-          {statsList.map((stat, index) => (
-            <li key={index} className="text-sm">
-              {stat}
-            </li>
-          ))}
-        </ul>
-      </CardContent>
-      <div className="flex-grow" />
+      <Link
+        href={`/dashboard/doctrines/${doctrine.name}`}
+        className="hover:bg-accent/10"
+      >
+        <CardHeader>
+          <CardTitle className="text-lg h-14">{doctrine.name}</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col items-center">
+          <Image
+            src={`${
+              process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+            }/images/doctrines/${doctrine.name
+              .toLowerCase()
+              .replace(/[ ':]/g, "-")}.png`}
+            alt={`${doctrine.name} avatar`}
+            width={256}
+            height={256}
+          />
+          <ul className="mt-2">
+            {statsList.map((stat, index) => (
+              <li key={index} className="text-sm">
+                {stat}
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+        <div className="flex-grow" />
+      </Link>
       <Separator className="w-full my-4" />
       <CardFooter className="flex flex-col">
         <span className="text-sm font-semibold">For Unit:</span>
@@ -46,6 +55,7 @@ const DoctrinesLisItem = ({ doctrine }: { doctrine: DoctrineType }) => {
                 : `/dashboard/units`
             }
             key={i}
+            className="hover:underline hover:text-accent"
           >
             - {unit}
           </Link>
