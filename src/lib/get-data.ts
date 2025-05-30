@@ -628,7 +628,7 @@ export interface Badge {
   card?: HouseDetails;
 }
 
-export const getHouseBadges = async (house: string): Promise<Badge[]> => {
+export const getHouseBadges = async (house: string): Promise<Badge> => {
   const response = await fetch(`/api/house/badges?house=${house}`);
   const result = await response.json();
   return result;
