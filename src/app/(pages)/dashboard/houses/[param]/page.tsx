@@ -4,12 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
-import { getHighRoles, getHouseDetails } from "@/lib/get-data";
+import { getHighRoles, getHouseBadges, getHouseDetails } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import { Globe, Users } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image from "next/image";
+import HouseBadges from "@/feature/house-settings/house-badges";
 
 const Page = () => {
   const { param }: { param: string } = useParams();
@@ -26,6 +27,11 @@ const Page = () => {
     queryFn: () => getHighRoles(house),
     enabled: !!house,
   });
+  const { data: badgesData } = useQuery({
+    queryKey: ["houseBadges", house],
+    queryFn: () => getHouseBadges(house),
+    enabled: !!house,
+  });
   if (cardLoading || leaderLoading) return <LoadingComponent />;
   if (!card || !leaderData) return <NoData />;
   const houseLeader = leaderData.find((role) => role.role === "HouseLeader");
@@ -33,12 +39,9 @@ const Page = () => {
     <div className="w-full flex items-center justify-center">
       <Card className="w-full max-w-6xl overflow-hidden rder-2">
         <div className="flex flex-col md:flex-row">
-          <div className="relative w-full md:w-2/5 h-80 md:h-auto">
-            <div className="absolute inset-0 " />
-            <Avatar className="w-[362px] h-[362px] rounded-none">
-              <AvatarImage src={card.avatar} alt={`${card.name} avatar`} />
-              <AvatarFallback>{card.name.substring(0, 2)}</AvatarFallback>
-            </Avatar>
+          <div className="flex items-center justify-center relative">
+            <Image src={card.avatar} alt={card.name} width={362} height={362} />
+            <HouseBadges badgesData={badgesData} />
           </div>
           <CardContent className="flex-1 p-8 md:p-10 space-y-8">
             <div className="space-y-4">

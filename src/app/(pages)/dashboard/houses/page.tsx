@@ -23,7 +23,7 @@ const HousesPage = () => {
   if (!data) return <NoData />;
   const sortedData = [...data].sort((a, b) => (b.premium ? 1 : -1));
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center sm:px-6">
       <ul className="flex flex-wrap gap-4 my-12 justify-around">
         {sortedData.map((house) => (
           <HouseCard
