@@ -95,7 +95,7 @@ const Content = ({ doctrines }: { doctrines: DoctrineType[] }) => {
                     >
                       {rarity} Doctrines
                     </AccordionTrigger>
-                    <AccordionContent className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+                    <AccordionContent className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 py-6">
                       {doctrines
                         .filter((d) => d.rarity === rarity)
                         .map((doctrine) => (
