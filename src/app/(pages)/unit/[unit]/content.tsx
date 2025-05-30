@@ -285,13 +285,19 @@ const Content = ({
                 <p className="text-sm text-muted-foreground">Unit Types:</p>
                 <div className="flex gap-2 flex-col">
                   {shortEntry.types.map((type) => (
-                    <Badge
+                    <Link
+                      href={`/dashboard/units?card=fillList&sort=${
+                        type.charAt(0).toUpperCase() + type.slice(1)
+                      }`}
                       key={type}
-                      variant="secondary"
-                      className="text-xs font-normal"
                     >
-                      {type.charAt(0).toUpperCase() + type.slice(1)}
-                    </Badge>
+                      <Badge
+                        variant="secondary"
+                        className="text-xs font-normal hover:underline hover:text-accent"
+                      >
+                        {type.charAt(0).toUpperCase() + type.slice(1)}
+                      </Badge>
+                    </Link>
                   ))}
                 </div>
               </div>

@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { DoctrineType } from "@/lib/get-data";
 import Link from "next/link";
 import Image from "next/image";
+import { unitTypes } from "../units/list-tab";
 
 const DoctrinesLisItem = ({ doctrine }: { doctrine: DoctrineType }) => {
   const statsList = doctrine.stats.split(". ").filter(Boolean);
@@ -50,9 +51,11 @@ const DoctrinesLisItem = ({ doctrine }: { doctrine: DoctrineType }) => {
         {doctrine.forUnit.map((unit, i) => (
           <Link
             href={
-              doctrine.dedicated === "unit"
-                ? `/unit/${unit.replaceAll(" ", "_")}`
-                : `/dashboard/units`
+              doctrine.dedicated === "all"
+                ? `/dashboard/units`
+                : doctrine.dedicated === "group" && unitTypes.includes(unit)
+                ? `/dashboard/units?card=fillList&sort=${unit}`
+                : `/unit/${unit.replaceAll(" ", "_")}`
             }
             key={i}
             className="hover:underline hover:text-accent"

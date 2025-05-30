@@ -26,6 +26,7 @@ const Content = () => {
   const params = useSearchParams();
   const router = useRouter();
   const card = params.get("card") as CardType;
+  const sort = params.get("sort") ?? "All";
   const [tab, setTab] = useState(card ?? "fillList");
   const onTabChange = (value: CardType) => {
     if (value === null) return;
@@ -43,7 +44,7 @@ const Content = () => {
           ))}
         </TabsList>
         <TabsContent value="fillList">
-          <ListTab />
+          <ListTab sort={sort} />
         </TabsContent>
         <TabsContent value="CommunityTierList">
           <TierListContainer />

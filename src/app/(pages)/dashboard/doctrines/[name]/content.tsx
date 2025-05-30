@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { unitTypes } from "@/feature/units/list-tab";
 import clsx from "clsx";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
@@ -87,7 +88,7 @@ const Content = ({ doctrine }: DoctrinePageProps) => {
                   </p>
                   <div className="flex gap-3 flex-wrap justify-around items-center">
                     {doctrine.forUnit.map((unit, index) =>
-                      doctrine.dedicated !== "unit" ? (
+                      doctrine.dedicated === "all" ? (
                         <div
                           key={index}
                           className="flex items-center gap-2 p-3 bg-muted/30 rounded-lg border"
@@ -97,6 +98,16 @@ const Content = ({ doctrine }: DoctrinePageProps) => {
                             <Link href="/dashboard/units">{unit}</Link>
                           </span>
                         </div>
+                      ) : doctrine.dedicated === "group" &&
+                        unitTypes.includes(unit) ? (
+                        <Link
+                          href={`/dashboard/units?card=fillList&sort=${unit}`}
+                          key={index}
+                          className="flex items-center gap-2 p-3 bg-muted/30 rounded-lg border"
+                        >
+                          <div className="w-2 h-2 bg-primary rounded-full"></div>
+                          <span className="font-medium">{unit}</span>
+                        </Link>
                       ) : (
                         <Link
                           href={`/unit/${unit.replaceAll(" ", "_")}`}
