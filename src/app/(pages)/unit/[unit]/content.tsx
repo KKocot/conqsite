@@ -172,7 +172,6 @@ const Content = ({
               <span>{`Your rate: ${userVote}`}</span>
               <Stars rating={userVote} setRating={(e: number) => onVote(e)} />
             </div>
-
             <div className="flex justify-around">
               <div className="flex flex-col items-center">
                 <p className="text-sm text-muted-foreground">Leadership</p>
@@ -302,18 +301,19 @@ const Content = ({
                 </div>
               </div>
             </div>
-            <div className="flex justify-between w-full">
+            <div className="grid grid-cols-2 w-full">
               <Image
                 alt={shortEntry.name}
                 width={512}
                 height={512}
+                className="col-span-1"
                 src={`${
                   process.env.NEXT_PUBLIC_IMAGES_IP_HOST
                 }/images/units-cards/${shortEntry.name
                   .toLowerCase()
                   .replaceAll(" ", "-")}-lg.png`}
               />
-              <div className="flex w-full p-2 flex-col gap-2 h-[512px] overflow-y-scroll">
+              <div className="flex w-full p-2 flex-col gap-2 h-[512px] overflow-y-scroll col-span-1">
                 <h1 className="text-xl text-center p-2 flex items-center justify-center gap-2">
                   Community builds
                   <Link

@@ -19,6 +19,8 @@ import { useRouter } from "next/navigation";
 
 export const unitTypes = [
   "All",
+  "Melee",
+  "Lancer",
   "Melee Infantry",
   "Buckler Shield",
   "Tower Shield",
@@ -33,6 +35,7 @@ export const unitTypes = [
   "Crossbow",
   "Arqebusier",
   "Cavalry",
+  "Musketeer",
   "Cavalry Melee",
   "Cavalry Lancer",
   "Cavalry Javelineers",
