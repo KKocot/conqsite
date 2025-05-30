@@ -9,7 +9,15 @@ export interface ContentProps {
   greenEra: UnitAsset[];
   greyEra: UnitAsset[];
 }
-const List = ({ data, query }: { data: ContentProps; query: string }) => {
+const List = ({
+  data,
+  query,
+  filter,
+}: {
+  data: ContentProps;
+  query: string;
+  filter: string;
+}) => {
   const { goldenEra, heroicEra, blueEra, greenEra, greyEra } = data;
   const units = useMemo(() => {
     const filteredUnits = [
@@ -20,11 +28,17 @@ const List = ({ data, query }: { data: ContentProps; query: string }) => {
       greyEra,
     ].map((unitList) =>
       unitList
-        .filter((unit) => unit.name.toLowerCase().includes(query.toLowerCase()))
+        .filter(
+          (unit) =>
+            unit.name.toLowerCase().includes(query.toLowerCase()) &&
+            (filter === "All" ||
+              `${unit.types[0]} ${unit.types[1]}`.includes(filter))
+        )
+
         .sort((a, b) => a.name.localeCompare(b.name))
     );
     return filteredUnits;
-  }, [query]);
+  }, [query, filter]);
   return units.map((unit, index) => <ListItem key={index} units={unit} />);
 };
 
