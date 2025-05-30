@@ -313,21 +313,34 @@ const Content = ({
                   .toLowerCase()
                   .replaceAll(" ", "-")}-lg.png`}
               />
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    {editMode ? (
-                      <FormControl>
-                        <Textarea {...field} placeholder="Description" />
-                      </FormControl>
-                    ) : (
-                      <p className="font-medium">{field.value}</p>
-                    )}
-                  </FormItem>
+              <div className="flex w-full p-2 flex-col gap-2 h-[512px] overflow-y-scroll">
+                <h1 className="text-xl text-center p-2 flex items-center justify-center gap-2">
+                  Community builds
+                  <Link
+                    href={`/unit/builder/${entry?.name.replaceAll(" ", "_")}`}
+                    className="hover:text-accent"
+                  >
+                    <PlusCircle />
+                  </Link>
+                </h1>
+                {postsLoading ? (
+                  [...Array(4)].map((_, i) => (
+                    <Card key={i} className="w-full">
+                      <CardHeader>
+                        <Skeleton className="h-6 w-12" />
+                      </CardHeader>
+                      <CardContent>
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-4 w-3/4 mt-2" />
+                      </CardContent>
+                    </Card>
+                  ))
+                ) : posts && posts.length > 0 ? (
+                  posts.map((e) => <PostCard key={e._id} post={e} />)
+                ) : (
+                  <div>No Posts</div>
                 )}
-              />
+              </div>
             </div>
             <div className="flex justify-center flex-col py-4">
               <h2 className="text-2xl font-semibold mb-4 text-center">Tree</h2>
@@ -389,34 +402,6 @@ const Content = ({
             </div>
           </CardContent>
         </Card>
-        <h1 className="text-xl text-center p-2 flex items-center justify-center gap-2">
-          Community builds
-          <Link
-            href={`/unit/builder/${entry?.name.replaceAll(" ", "_")}`}
-            className="hover:text-accent"
-          >
-            <PlusCircle />
-          </Link>
-        </h1>
-        <div className="flex gap-4 justify-center flex-wrap mb-4 max-w-4xl mx-auto">
-          {postsLoading ? (
-            [...Array(4)].map((_, i) => (
-              <Card key={i} className="w-52">
-                <CardHeader>
-                  <Skeleton className="h-6 w-12" />
-                </CardHeader>
-                <CardContent>
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-3/4 mt-2" />
-                </CardContent>
-              </Card>
-            ))
-          ) : posts && posts.length > 0 ? (
-            posts.map((e) => <PostCard key={e._id} post={e} />)
-          ) : (
-            <div>No Posts</div>
-          )}
-        </div>
       </form>
     </Form>
   );

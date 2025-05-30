@@ -10,7 +10,7 @@ interface PostCardProps {
 }
 const PostCard = ({ post }: PostCardProps) => {
   return (
-    <Card className="w-48 hover:shadow-xl">
+    <Card className="w-full hover:shadow-xl">
       <CardHeader className="h-1/4">
         <h2>
           <Link

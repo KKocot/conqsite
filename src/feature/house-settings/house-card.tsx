@@ -1,4 +1,5 @@
-import Image from "next/image";
+"use client";
+
 import {
   Card,
   CardContent,
@@ -13,7 +14,6 @@ import { Badge } from "@/lib/get-data";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import HoverClickTooltip from "@/components/hover-click-tooltip";
 import HouseBadges from "./house-badges";
 
 interface HouseDetails {
