@@ -25,6 +25,17 @@ const Home = () => {
         />
       </section>
       <Hero data={data} />
+      <div className="flex justify-center">
+        <div className="aspect-video w-full overflow-hidden rounded-md max-w-4xl">
+          <iframe
+            src="https://www.youtube.com/embed/tpehq6c5zeE"
+            title="Tutorial"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="w-full h-full"
+          />
+        </div>
+      </div>
       <Problem />
       <Solution />
       <Image

@@ -12,7 +12,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Steper from "@/components/steper";
 import { toast } from "react-toastify";
-
+import Link from "next/link";
 export interface ConfigProps {
   guild_id: string;
   tw_discord: string;
@@ -96,15 +96,25 @@ const Content = ({
   };
   return (
     <div className="flex flex-col items-center w-full pt-6">
-      <Steper
-        step={step}
-        tooltips={[
-          "Discord Servers",
-          "Bot Configuration",
-          "High Roles",
-          "Card",
-        ]}
-      />
+      <div className="flex w-full justify-between items-center px-4">
+        <div className="w-28" />
+        <Steper
+          step={step}
+          tooltips={[
+            "Discord Servers",
+            "Bot Configuration",
+            "High Roles",
+            "Card",
+          ]}
+        />
+        <Link
+          href="https://www.youtube.com/watch?v=F53_7ISiLlc"
+          target="_blank"
+          className="underline text-ellipsis text-center text-accent hover:text-accent/80 w-28"
+        >
+          Tutorial Video
+        </Link>
+      </div>
       <div className="container pt-8">
         {step === 1 ? (
           <CreateHouseDiscordServers
