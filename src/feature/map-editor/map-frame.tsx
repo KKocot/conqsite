@@ -31,14 +31,10 @@ const MapFrame = ({
   const [selectedColor, setSelectedColor] = useState<string>("#ff0000");
   const [strokeWidth, setStrokeWidth] = useState<number>(3);
   const [mapImage, setMapImage] = useState<string>("");
-  const [planName, setPlanName] = useState<string>("");
   const [gridEnabled, setGridEnabled] = useState<boolean>(false);
   const [gridSize, setGridSize] = useState<number>(20);
   const [selectedFontSize, setSelectedFontSize] = useState<number>(16);
   const [selectedIconType, setSelectedIconType] = useState<string>("");
-  const [currentPlanId, setCurrentPlanId] = useState<string | undefined>(
-    undefined
-  );
   const [lineupSheets, setLineupSheets] = useState<PublicLineup[] | null>(null);
   const [currentLineup, setCurrentLineup] = useState<PublicLineup | null>(null);
 
@@ -86,30 +82,10 @@ const MapFrame = ({
         </div>
       )}
       <Toolbar
-        selectedTool={selectedTool}
-        setSelectedTool={setSelectedTool}
-        selectedColor={selectedColor}
-        setSelectedColor={setSelectedColor}
-        strokeWidth={strokeWidth}
-        setStrokeWidth={setStrokeWidth}
-        onClearAll={handleClearAll}
-        gridEnabled={gridEnabled}
-        setGridEnabled={setGridEnabled}
-        gridSize={gridSize}
-        setGridSize={setGridSize}
-        selectedFontSize={selectedFontSize}
-        setSelectedFontSize={setSelectedFontSize}
-        selectedIconType={selectedIconType}
-        setSelectedIconType={setSelectedIconType}
-        selectedMapImage={mapImage}
-        setSelectedMapImage={setMapImage}
-        dates={dates}
-        onDateChange={onDateChange}
-        lineupSheets={lineupSheets}
-        currentLineup={currentLineup}
-        setCurrentLineup={handleSetCurrentLineup}
         unitsAssetsList={unitsAssetsList}
-        artAssets={artAssets}
+        house={house}
+        dates={dates.data}
+        artAssets={artAssets.data}
       />
     </div>
   );
