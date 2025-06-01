@@ -100,7 +100,6 @@ export interface ToolbarProps {
   strokeWidth: number;
   setStrokeWidth: (width: number) => void;
   onClearAll: () => void;
-  onDeleteSelected: () => void;
   gridEnabled: boolean;
   setGridEnabled: (enabled: boolean) => void;
   gridSize: number;

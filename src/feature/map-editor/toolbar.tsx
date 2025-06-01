@@ -10,7 +10,6 @@ import {
   Info,
   Trash2,
   Type,
-  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,7 +31,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type { ToolbarProps, IconType } from "./types";
+import type { ToolbarProps } from "./types";
 import clsx from "clsx";
 
 const maps = [
@@ -58,7 +57,6 @@ export function Toolbar({
   strokeWidth,
   setStrokeWidth,
   onClearAll,
-  onDeleteSelected,
   gridEnabled,
   setGridEnabled,
   gridSize,
@@ -372,24 +370,14 @@ export function Toolbar({
             </div>
             <div>
               <h3 className="font-medium mb-2">Actions</h3>
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  onClick={onDeleteSelected}
-                  className="flex items-center gap-1 flex-1"
-                >
-                  <X size={14} />
-                  Delete Selected
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={onClearAll}
-                  className="flex items-center gap-1 flex-1 text-red-500 hover:text-red-700"
-                >
-                  <Trash2 size={14} />
-                  Clear All
-                </Button>
-              </div>
+              <Button
+                variant="outline"
+                onClick={onClearAll}
+                className="flex items-center gap-1 flex-1 text-red-500 hover:text-red-700"
+              >
+                <Trash2 size={14} />
+                Clear All
+              </Button>
             </div>
           </TabsContent>
           <TabsContent value="settings" className="space-y-4">
@@ -423,9 +411,7 @@ export function Toolbar({
                 />
               </div>
             )}
-
             <Separator />
-
             <div>
               <h3 className="font-medium mb-2">Keyboard Shortcuts</h3>
               <div className="text-sm space-y-1">
