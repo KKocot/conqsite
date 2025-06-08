@@ -27,8 +27,9 @@ export default function TacticalMapPage({
     "tactical-map-plan",
     undefined
   );
-  const [loadedPlan, setLoadedPlan] = useState<boolean>(false);
-
+  const [loadedPlan, setLoadedPlan] = useState<boolean>(true);
+  const templates: any[] = []; // This should be fetched or defined based on your application logic
+  const publicLineups: any[] = []; // This should be fetched or defined based on your application logic
   const onLoadPlan = (plan?: MapData) => {
     if (editorRef.current && plan) {
       editorRef.current.loadMapData(plan);
@@ -80,21 +81,33 @@ export default function TacticalMapPage({
         <div className="flex justify-evenly">
           <div className="flex flex-col gap-4 mr-4 text-center">
             <h2 className="text-xl font-semibold">Load Template</h2>
-            <p className="text-sm">Use an existing map template</p>
-            {[...Array(5)].map((_, i) => (
-              <Button key={i} variant="custom">
-                Templates Name {i + 1}
-              </Button>
-            ))}
+            {templates.length > 0 ? (
+              <>
+                <p className="text-sm">Use an existing map template</p>
+                {templates.map((_, i) => (
+                  <Button key={i} variant="custom">
+                    Templates Name {i + 1}
+                  </Button>
+                ))}
+              </>
+            ) : (
+              <p className="text-sm">No templates available</p>
+            )}
           </div>
           <div className="flex flex-col gap-4 mr-4 text-center">
             <h2 className="text-xl font-semibold">Load Public Lineup</h2>
-            <p className="text-sm">Import from public lineup</p>
-            {[...Array(5)].map((_, i) => (
-              <Button key={i} variant="custom">
-                Public Lineup Name {i + 1}
-              </Button>
-            ))}
+            {publicLineups.length > 0 ? (
+              <>
+                <p className="text-sm">Import from public lineup</p>
+                {publicLineups.map((_, i) => (
+                  <Button key={i} variant="custom">
+                    Public Lineup Name {i + 1}
+                  </Button>
+                ))}
+              </>
+            ) : (
+              <p className="text-sm">No public lineups available</p>
+            )}
           </div>
           <div className="flex flex-col gap-4 mr-4 text-center">
             <h2 className="text-xl font-semibold">Continue</h2>

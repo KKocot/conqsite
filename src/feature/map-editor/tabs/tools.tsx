@@ -25,8 +25,8 @@ import {
   Trash2,
   Type,
 } from "lucide-react";
-import { ToolbarState, ToolsProps } from "../toolbar";
 import { Dispatch, SetStateAction } from "react";
+import { ToolbarState, ToolsProps } from "../types";
 
 interface ToolProp {
   id: ToolsProps;

@@ -7,7 +7,7 @@ import {
   UnitAssetsGroup,
 } from "@/lib/get-data";
 import { RefObject, useState } from "react";
-import { MapEditorRef } from "./types";
+import { MapEditorRef, ToolbarState } from "./types";
 import { MapEditor } from "./editor";
 import { Toolbar } from "./toolbar";
 import { UseQueryResult } from "@tanstack/react-query";
@@ -27,16 +27,21 @@ const MapFrame = ({
   dates: UseQueryResult<string[], Error>;
   artAssets: UseQueryResult<ArtilleryAsset[], Error>;
 }) => {
-  const [selectedTool, setSelectedTool] = useState<string>("map");
-  const [selectedColor, setSelectedColor] = useState<string>("#ff0000");
-  const [strokeWidth, setStrokeWidth] = useState<number>(3);
-  const [mapImage, setMapImage] = useState<string>("");
-  const [gridEnabled, setGridEnabled] = useState<boolean>(false);
-  const [gridSize, setGridSize] = useState<number>(20);
-  const [selectedFontSize, setSelectedFontSize] = useState<number>(16);
-  const [selectedIconType, setSelectedIconType] = useState<string>("");
-  const [lineupSheets, setLineupSheets] = useState<PublicLineup[] | null>(null);
-  const [currentLineup, setCurrentLineup] = useState<PublicLineup | null>(null);
+  const [toolbarState, setToolbarState] = useState<ToolbarState>({
+    map: "/maps/fort1.jpg",
+    lineup: {
+      house: house,
+      name: "",
+      date: "",
+      sheet: [],
+      change_nick: false,
+    },
+    currentTool: "select",
+    iconValue: "",
+    toolColor: "#ff0000",
+    strokeWidth: 3,
+    selectedFontSize: 16,
+  });
 
   const handleClearAll = () => {
     if (editorRef.current) {
@@ -46,35 +51,20 @@ const MapFrame = ({
     }
   };
 
-  const handleSetCurrentLineup = (lineup: PublicLineup) => {
-    setCurrentLineup(lineup);
-  };
-  const onDateChange = async (date: string) => {
-    try {
-      const response = await getPublicLineup(house, date);
-      if (!response) {
-        console.error("Error occurred:", response);
-      } else {
-        setLineupSheets(response);
-      }
-    } catch (error) {
-      console.error("Error occurred:", error);
-    }
-  };
-
   return (
     <div className="flex justify-center gap-2 overflow-hidden">
-      {mapImage ? (
+      {toolbarState.map ? (
         <MapEditor
           ref={editorRef}
-          mapImage={mapImage}
-          tool={selectedTool}
-          color={selectedColor}
-          strokeWidth={strokeWidth}
-          gridEnabled={gridEnabled}
-          gridSize={gridSize}
-          fontSize={selectedFontSize}
-          unitAssets={unitAssets}
+          map={toolbarState.map}
+          lineup={toolbarState.lineup}
+          currentTool={toolbarState.currentTool}
+          iconValue={toolbarState.iconValue}
+          toolColor={toolbarState.toolColor}
+          strokeWidth={toolbarState.strokeWidth}
+          selectedFontSize={toolbarState.selectedFontSize}
+          tool={toolbarState.currentTool}
+          color={toolbarState.toolColor}
         />
       ) : (
         <div className="flex items-center justify-center w-[750px] h-[750px] border-2 border-dashed rounded-lg">
@@ -82,6 +72,9 @@ const MapFrame = ({
         </div>
       )}
       <Toolbar
+        handleClearAll={handleClearAll}
+        setToolbarState={setToolbarState}
+        toolbarState={toolbarState}
         unitsAssetsList={unitsAssetsList}
         house={house}
         dates={dates.data}

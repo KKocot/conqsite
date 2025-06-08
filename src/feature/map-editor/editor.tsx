@@ -25,7 +25,6 @@ import {
 } from "@/components/ui/tooltip";
 import { nanoid } from "nanoid";
 import type {
-  MapEditorProps,
   MapEditorRef,
   PenElement,
   LineElement,
@@ -35,37 +34,47 @@ import type {
   TextElement,
   TooltipData,
   MapData,
-  IconType,
+  ToolsProps,
 } from "./types";
 import type { KonvaEventObject } from "konva/lib/Node";
 import type Konva from "konva";
 import { useImageLoader } from "@/components/hooks/use-image-loader";
-import { UnitAssetsGroup } from "@/lib/get-data";
+import { PublicLineup, UnitAssetsGroup } from "@/lib/get-data";
 
-interface ExtendedMapEditorProps extends MapEditorProps {
-  gridEnabled?: boolean;
-  gridSize?: number;
-  fontSize?: number;
-  iconType?: IconType;
+interface ExtendedMapEditorProps {
+  map: string;
+  lineup: PublicLineup;
+  currentTool: string;
+  iconValue: string;
+  toolColor: string;
+  selectedFontSize: number;
   unitAssets?: UnitAssetsGroup;
+  tool: ToolsProps;
+  color: string;
+  strokeWidth: number;
+  fontSize?: number;
+  iconType?: string;
 }
 
 export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
   (
     {
-      mapImage,
+      map,
+      lineup,
+      currentTool,
+      iconValue,
+      toolColor,
+      selectedFontSize,
+      unitAssets = [],
       tool,
       color,
-      strokeWidth,
-      gridEnabled = false,
-      gridSize = 20,
+      strokeWidth = 3,
       fontSize = 16,
       iconType = "",
-      unitAssets = [],
     },
     ref
   ) => {
-    const image = useImageLoader(mapImage);
+    const image = useImageLoader(map);
 
     const [elements, setElements] = useState<
       (
@@ -97,8 +106,6 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
         return {
           elements,
           tooltips,
-          gridEnabled,
-          gridSize,
         };
       },
       loadMapData: (data: MapData) => {
@@ -170,13 +177,10 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
       }
     };
 
-    // Function to snap position to grid
-    const snapToGrid = (pos: { x: number; y: number }) => {
-      if (!gridEnabled) return pos;
-
+    const snap = (pos: { x: number; y: number }) => {
       return {
-        x: Math.round(pos.x / gridSize) * gridSize,
-        y: Math.round(pos.y / gridSize) * gridSize,
+        x: Math.round(pos.x),
+        y: Math.round(pos.y),
       };
     };
 
@@ -196,8 +200,7 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
       const pos = stage.getPointerPosition();
       if (!pos) return;
 
-      // Snap to grid if enabled
-      const snappedPos = snapToGrid(pos);
+      const snappedPos = snap(pos);
 
       if (tool === "text") {
         setTextPosition(snappedPos);
@@ -267,8 +270,7 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
       const point = stage.getPointerPosition();
       if (!point) return;
 
-      // Snap to grid if enabled
-      const snappedPoint = snapToGrid(point);
+      const snappedPoint = snap(point);
 
       const lastIndex = elements.length - 1;
       const lastElement = elements[lastIndex];
@@ -338,10 +340,7 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
       if (index !== -1) {
         const element = elements[index];
 
-        // Snap position to grid if enabled
-        const newPos = gridEnabled
-          ? snapToGrid({ x: e.target.x(), y: e.target.y() })
-          : { x: e.target.x(), y: e.target.y() };
+        const newPos = { x: e.target.x(), y: e.target.y() };
 
         if ("x" in element) {
           const updatedElement = {
@@ -362,10 +361,7 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
     ) => {
       const index = tooltips.findIndex((t) => t.id === id);
       if (index !== -1) {
-        // Snap position to grid if enabled
-        const newPos = gridEnabled
-          ? snapToGrid({ x: e.target.x(), y: e.target.y() })
-          : { x: e.target.x(), y: e.target.y() };
+        const newPos = { x: e.target.x(), y: e.target.y() };
 
         const updatedTooltip = {
           ...tooltips[index],
@@ -392,15 +388,20 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
     };
 
     const renderElement = (
-      element:
-        | PenElement
-        | LineElement
-        | ArrowElement
-        | CircleElement
-        | IconElement
-        | TextElement
+      element: PenElement | LineElement | ArrowElement | CircleElement | IconElement | TextElement
     ) => {
       const isSelected = selectedId === element.id;
+      const commonProps = {
+        id: element.id,
+        onClick: () => handleElementClick(element.id),
+        onTap: () => handleElementClick(element.id),
+        draggable: tool === "select",
+        onDragEnd: (e: KonvaEventObject<DragEvent>) => handleDragEnd(e, element.id),
+        shadowEnabled: isSelected,
+        shadowColor: "black",
+        shadowBlur: 10,
+        shadowOpacity: 0.5,
+      };
 
       switch (element.tool) {
         case "pen":
@@ -408,20 +409,13 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
             return (
               <Line
                 key={element.id}
+                {...commonProps}
                 points={element.points}
                 stroke={element.color}
                 strokeWidth={element.strokeWidth}
                 tension={0.5}
                 lineCap="round"
                 lineJoin="round"
-                onClick={() => handleElementClick(element.id)}
-                onTap={() => handleElementClick(element.id)}
-                draggable={tool === "select"}
-                onDragEnd={(e) => handleDragEnd(e, element.id)}
-                shadowEnabled={isSelected}
-                shadowColor="black"
-                shadowBlur={10}
-                shadowOpacity={0.5}
               />
             );
           }
@@ -431,18 +425,11 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
             return (
               <Line
                 key={element.id}
+                {...commonProps}
                 points={element.points}
                 stroke={element.color}
                 strokeWidth={element.strokeWidth}
                 lineCap="round"
-                onClick={() => handleElementClick(element.id)}
-                onTap={() => handleElementClick(element.id)}
-                draggable={tool === "select"}
-                onDragEnd={(e) => handleDragEnd(e, element.id)}
-                shadowEnabled={isSelected}
-                shadowColor="black"
-                shadowBlur={10}
-                shadowOpacity={0.5}
               />
             );
           }
@@ -452,20 +439,13 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
             return (
               <Arrow
                 key={element.id}
+                {...commonProps}
                 points={element.points}
                 stroke={element.color}
                 strokeWidth={element.strokeWidth}
                 fill={element.color}
                 pointerLength={10}
                 pointerWidth={10}
-                onClick={() => handleElementClick(element.id)}
-                onTap={() => handleElementClick(element.id)}
-                draggable={tool === "select"}
-                onDragEnd={(e) => handleDragEnd(e, element.id)}
-                shadowEnabled={isSelected}
-                shadowColor="black"
-                shadowBlur={10}
-                shadowOpacity={0.5}
               />
             );
           }
@@ -475,19 +455,12 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
             return (
               <Circle
                 key={element.id}
+                {...commonProps}
                 x={element.x}
                 y={element.y}
                 radius={element.radius}
                 stroke={element.color}
                 strokeWidth={element.strokeWidth}
-                onClick={() => handleElementClick(element.id)}
-                onTap={() => handleElementClick(element.id)}
-                draggable={tool === "select"}
-                onDragEnd={(e) => handleDragEnd(e, element.id)}
-                shadowEnabled={isSelected}
-                shadowColor="black"
-                shadowBlur={10}
-                shadowOpacity={0.5}
               />
             );
           }
@@ -551,6 +524,7 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
       return tooltips.map((tooltip) => (
         <Group
           key={tooltip.id}
+          id={tooltip.id}
           x={tooltip.x}
           y={tooltip.y}
           draggable={tool === "select"}
@@ -571,39 +545,6 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
           {/* Tooltip content is rendered outside of Konva */}
         </Group>
       ));
-    };
-
-    // Render grid
-    const renderGrid = () => {
-      if (!gridEnabled) return null;
-
-      const gridLines = [];
-
-      // Vertical lines
-      for (let x = 0; x <= stageWidth; x += gridSize) {
-        gridLines.push(
-          <Line
-            key={`v-${x}`}
-            points={[x, 0, x, stageHeight]}
-            stroke="#ddd"
-            strokeWidth={0.5}
-          />
-        );
-      }
-
-      // Horizontal lines
-      for (let y = 0; y <= stageHeight; y += gridSize) {
-        gridLines.push(
-          <Line
-            key={`h-${y}`}
-            points={[0, y, stageWidth, y]}
-            stroke="#ddd"
-            strokeWidth={0.5}
-          />
-        );
-      }
-
-      return gridLines;
     };
 
     // This component renders React tooltips outside of Konva
@@ -689,7 +630,29 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
           ref={stageRef}
           width={stageWidth}
           height={stageHeight}
-          onMouseDown={handleMouseDown}
+          onMouseDown={(e) => {
+            if (tool === "delete") {
+              const target = e.target;
+              // Find the top-most group or element
+              let elementToDelete: Konva.Node = target;
+              while (
+                elementToDelete &&
+                !elementToDelete.attrs?.id &&
+                elementToDelete.parent
+              ) {
+                elementToDelete = elementToDelete.parent;
+              }
+
+              const id = elementToDelete?.attrs?.id;
+              if (id && elementToDelete !== e.target.getStage()) {
+                setElements(elements.filter((el) => el.id !== id));
+                setTooltips(tooltips.filter((t) => t.id !== id));
+                setSelectedId(null);
+              }
+            } else {
+              handleMouseDown(e);
+            }
+          }}
           onMousemove={handleMouseMove}
           onMouseup={handleMouseUp}
           onTouchStart={handleMouseDown}
@@ -707,7 +670,6 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
                 y={0}
               />
             )}
-            {gridEnabled && renderGrid()}
             {elements.map(renderElement)}
             {renderTooltips()}
           </Layer>
