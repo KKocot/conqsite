@@ -1,18 +1,15 @@
 "use client";
 
 import type React from "react";
-
-import { useState, useRef } from "react";
-import { Toolbar } from "@/feature/map-editor/toolbar";
-import { MapEditor } from "@/feature/map-editor/editor";
-import { MapEditorRef, Plan } from "@/feature/map-editor/types";
+import { useState, useRef, useEffect } from "react";
+import { MapData, MapEditorRef } from "@/feature/map-editor/types";
 import { UseQueryResult } from "@tanstack/react-query";
-import {
-  ArtilleryAsset,
-  getPublicLineup,
-  PublicLineup,
-  UnitAssetsGroup,
-} from "@/lib/get-data";
+import { ArtilleryAsset, UnitAssetsGroup } from "@/lib/get-data";
+import { Button } from "@/components/ui/button";
+import { useLocalStorage } from "usehooks-ts";
+import MapFrame from "@/feature/map-editor/map-frame";
+import { ArrowBigLeftDashIcon } from "lucide-react";
+import clsx from "clsx";
 
 export default function TacticalMapPage({
   dates,
@@ -25,21 +22,21 @@ export default function TacticalMapPage({
   unitsAssets: UseQueryResult<UnitAssetsGroup, Error>;
   artAssets: UseQueryResult<ArtilleryAsset[], Error>;
 }) {
-  const [selectedTool, setSelectedTool] = useState<string>("select");
-  const [selectedColor, setSelectedColor] = useState<string>("#ff0000");
-  const [strokeWidth, setStrokeWidth] = useState<number>(3);
-  const [mapImage, setMapImage] = useState<string>("");
-  const [planName, setPlanName] = useState<string>("");
-  const [gridEnabled, setGridEnabled] = useState<boolean>(false);
-  const [gridSize, setGridSize] = useState<number>(20);
-  const [selectedFontSize, setSelectedFontSize] = useState<number>(16);
-  const [selectedIconType, setSelectedIconType] = useState<string>("");
-  const [currentPlanId, setCurrentPlanId] = useState<string | undefined>(
+  const editorRef = useRef<MapEditorRef>(null);
+  const [storedPlan, setStoredPlan] = useLocalStorage<MapData | undefined>(
+    "tactical-map-plan",
     undefined
   );
-  const editorRef = useRef<MapEditorRef>(null);
-  const [lineupSheets, setLineupSheets] = useState<PublicLineup[] | null>(null);
-  const [currentLineup, setCurrentLineup] = useState<PublicLineup | null>(null);
+  const [loadedPlan, setLoadedPlan] = useState<boolean>(true);
+  const templates: any[] = []; // This should be fetched or defined based on your application logic
+  const publicLineups: any[] = []; // This should be fetched or defined based on your application logic
+  const onLoadPlan = (plan?: MapData) => {
+    if (editorRef.current && plan) {
+      editorRef.current.loadMapData(plan);
+    }
+    setLoadedPlan(true);
+  };
+
   const unitsAssetsList = !!unitsAssets.data
     ? [
         ...unitsAssets.data?.goldenEra,
@@ -53,105 +50,85 @@ export default function TacticalMapPage({
         icon: unit.icon,
       }))
     : [];
-  const loadPlan = (plan: Plan) => {
-    if (editorRef.current) {
-      setMapImage(plan.mapImage);
-      editorRef.current.loadMapData(plan.elements);
-      setPlanName(plan.name);
-      setCurrentPlanId(plan.id);
-
-      // Set grid settings if available
-      if (plan.elements.gridEnabled !== undefined) {
-        setGridEnabled(plan.elements.gridEnabled);
-      }
-      if (plan.elements.gridSize !== undefined) {
-        setGridSize(plan.elements.gridSize);
-      }
-    }
-  };
-  const handleClearAll = () => {
-    if (editorRef.current) {
-      if (confirm("Are you sure you want to clear all elements?")) {
-        editorRef.current.clearAll();
-      }
-    }
-  };
-
-  const handleDeleteSelected = () => {
-    if (editorRef.current) {
-      editorRef.current.deleteSelected();
-    }
-  };
-
-  const handleSetCurrentLineup = (lineup: PublicLineup) => {
-    setCurrentLineup(lineup);
-  };
-
-  const onDateChange = async (date: string) => {
-    try {
-      const response = await getPublicLineup(house, date);
-      if (!response) {
-        console.error("Error occurred:", response);
-      } else {
-        setLineupSheets(response);
-      }
-    } catch (error) {
-      console.error("Error occurred:", error);
-    }
-  };
 
   return (
     <div className="container mx-auto p-4 flex flex-col">
-      <h1 className="text-2xl font-bold mb-4 text-center">
-        Tactical Map Editor
-      </h1>
-      <div className="flex justify-center gap-2 overflow-hidden">
-        {mapImage ? (
-          <MapEditor
-            ref={editorRef}
-            mapImage={mapImage}
-            tool={selectedTool}
-            color={selectedColor}
-            strokeWidth={strokeWidth}
-            gridEnabled={gridEnabled}
-            gridSize={gridSize}
-            fontSize={selectedFontSize}
-            unitAssets={unitsAssets.data}
-          />
-        ) : (
-          <div className="flex items-center justify-center w-[750px] h-[750px] border-2 border-dashed rounded-lg">
-            <p>No map selected</p>
-          </div>
-        )}
+      <div className="flex justify-between items-center mb-4">
+        <Button
+          onClick={() => setLoadedPlan(false)}
+          variant="ghost"
+          className={clsx("rounded-full", {
+            "opacity-50 cursor-not-allowed": !loadedPlan,
+          })}
+        >
+          <ArrowBigLeftDashIcon />
+        </Button>
+        <h1 className="text-2xl font-bold mb-4 text-center">
+          Tactical Map Editor
+        </h1>
+        <div className="w-14" />
+      </div>
 
-        <Toolbar
-          selectedTool={selectedTool}
-          setSelectedTool={setSelectedTool}
-          selectedColor={selectedColor}
-          setSelectedColor={setSelectedColor}
-          strokeWidth={strokeWidth}
-          setStrokeWidth={setStrokeWidth}
-          onClearAll={handleClearAll}
-          onDeleteSelected={handleDeleteSelected}
-          gridEnabled={gridEnabled}
-          setGridEnabled={setGridEnabled}
-          gridSize={gridSize}
-          setGridSize={setGridSize}
-          selectedFontSize={selectedFontSize}
-          setSelectedFontSize={setSelectedFontSize}
-          selectedIconType={selectedIconType}
-          setSelectedIconType={setSelectedIconType}
-          selectedMapImage={mapImage}
-          setSelectedMapImage={setMapImage}
-          dates={dates}
-          onDateChange={onDateChange}
-          lineupSheets={lineupSheets}
-          currentLineup={currentLineup}
-          setCurrentLineup={handleSetCurrentLineup}
+      {loadedPlan ? (
+        <MapFrame
+          editorRef={editorRef}
+          house={house}
           unitsAssetsList={unitsAssetsList}
+          dates={dates}
           artAssets={artAssets}
         />
-      </div>
+      ) : (
+        <div className="flex justify-evenly">
+          <div className="flex flex-col gap-4 mr-4 text-center">
+            <h2 className="text-xl font-semibold">Load Template</h2>
+            {templates.length > 0 ? (
+              <>
+                <p className="text-sm">Use an existing map template</p>
+                {templates.map((_, i) => (
+                  <Button key={i} variant="custom">
+                    Templates Name {i + 1}
+                  </Button>
+                ))}
+              </>
+            ) : (
+              <p className="text-sm">No templates available</p>
+            )}
+          </div>
+          <div className="flex flex-col gap-4 mr-4 text-center">
+            <h2 className="text-xl font-semibold">Load Public Lineup</h2>
+            {publicLineups.length > 0 ? (
+              <>
+                <p className="text-sm">Import from public lineup</p>
+                {publicLineups.map((_, i) => (
+                  <Button key={i} variant="custom">
+                    Public Lineup Name {i + 1}
+                  </Button>
+                ))}
+              </>
+            ) : (
+              <p className="text-sm">No public lineups available</p>
+            )}
+          </div>
+          <div className="flex flex-col gap-4 mr-4 text-center">
+            <h2 className="text-xl font-semibold">Continue</h2>
+            <p className="text-sm">Resume previous work</p>
+            <Button
+              variant="custom"
+              disabled={!storedPlan}
+              onClick={() => onLoadPlan(storedPlan)}
+            >
+              Load
+            </Button>
+          </div>
+          <div className="flex flex-col gap-4 mr-4 text-center">
+            <h2 className="text-xl font-semibold">Create New</h2>
+            <p className="text-sm">Start from scratch</p>
+            <Button variant="custom" onClick={() => onLoadPlan()}>
+              Start
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

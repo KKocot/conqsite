@@ -8,7 +8,7 @@ const PostsList = ({ posts }: { posts: UnitData[] }) => {
   const deletePostMutation = useDeletePostMutation();
 
   return (
-    <div className="grid gap-6">
+    <div className="flex flex-wrap gap-6">
       {posts.map((post) => (
         <PostCard
           key={post._id}

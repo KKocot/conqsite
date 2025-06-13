@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import Stars from "@/components/ui/stars";
 import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
 import ChallengesArea from "@/feature/unit-builder/challenges-area";
 import DoctrinesArea from "@/feature/unit-builder/doctrines/area";
 import FormationsArea from "@/feature/unit-builder/formations-area";
@@ -142,11 +141,15 @@ const Content = ({
           <CardHeader>
             <div className="flex items-center gap-4">
               <Image
-                height={64}
-                width={64}
-                src={shortEntry.icon}
+                src={`${
+                  process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+                }/images/unit-icons/${shortEntry.name
+                  .toLowerCase()
+                  .replace(/[ ':]/g, "-")}-icon.png`}
                 alt={shortEntry.name}
                 className="object-contain"
+                width={64}
+                height={64}
               />
               <CardTitle className="text-3xl sm:text-4xl lg:text-5xl">
                 {shortEntry.name}

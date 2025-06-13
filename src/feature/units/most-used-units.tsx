@@ -2,7 +2,7 @@ import { getMostUsedUnits } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import LoadingComponent from "../ifs/loading";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image from "next/image";
 
 const MostUsedUnits = () => {
   const { data, isLoading } = useQuery({
@@ -25,10 +25,16 @@ const MostUsedUnits = () => {
                 key={unit.id}
                 className="p-[2px]"
               >
-                <Avatar className="rounded-none w-16 h-16 border-2 border-accent/40">
-                  <AvatarImage src={unit.image} alt={unit.name} />
-                  <AvatarFallback>{unit.name.substring(0, 2)}</AvatarFallback>
-                </Avatar>
+                <Image
+                  src={`${
+                    process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+                  }/images/unit-icons/${unit.name
+                    .toLowerCase()
+                    .replace(/[ ':]/g, "-")}-icon.png`}
+                  alt={unit.name}
+                  width={90}
+                  height={90}
+                />
               </Link>
               <span className="text-sm font-semibold">{unit.name}</span>
               <span className="text-xs">Popularity points: {unit.rating}</span>

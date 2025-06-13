@@ -34,7 +34,11 @@ const Content = ({ data, doctrines, unitTree }: ContentProps) => {
               className="flex items-center gap-2"
             >
               <Image
-                src={unitTree.icon}
+                src={`${
+                  process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+                }/images/unit-icons/${unitTree.name
+                  .toLowerCase()
+                  .replace(/[ ':]/g, "-")}-icon.png`}
                 alt={unitTree.name}
                 width={48}
                 height={48}

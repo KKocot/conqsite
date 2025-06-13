@@ -57,8 +57,6 @@ export interface MapData {
     | TextElement
   )[];
   tooltips: TooltipData[];
-  gridEnabled?: boolean;
-  gridSize?: number;
 }
 
 export interface Plan {
@@ -76,51 +74,8 @@ export interface MapEditorRef {
   getMapData: () => MapData;
   loadMapData: (data: MapData) => void;
   clearAll: () => void;
-  deleteSelected: () => void;
   getDataURL: () => string;
   getThumbnail: () => string;
-}
-
-export interface MapEditorProps {
-  mapImage: string;
-  tool: string;
-  color: string;
-  strokeWidth: number;
-  gridEnabled?: boolean;
-  gridSize?: number;
-  fontSize?: number;
-  iconType?: IconType;
-}
-
-export interface ToolbarProps {
-  selectedTool: string;
-  setSelectedTool: (tool: string) => void;
-  selectedColor: string;
-  setSelectedColor: (color: string) => void;
-  strokeWidth: number;
-  setStrokeWidth: (width: number) => void;
-  onClearAll: () => void;
-  onDeleteSelected: () => void;
-  gridEnabled: boolean;
-  setGridEnabled: (enabled: boolean) => void;
-  gridSize: number;
-  setGridSize: (size: number) => void;
-  selectedFontSize: number;
-  setSelectedFontSize: (size: number) => void;
-  selectedIconType: string;
-  setSelectedIconType: (type: string) => void;
-  selectedMapImage: string;
-  setSelectedMapImage: (image: string) => void;
-  dates: UseQueryResult<string[], Error>;
-  onDateChange: (date: string) => void;
-  lineupSheets: PublicLineup[] | null;
-  currentLineup: PublicLineup | null;
-  setCurrentLineup: (lineup: PublicLineup) => void;
-  unitsAssetsList: {
-    name: string;
-    icon: string;
-  }[];
-  artAssets: UseQueryResult<ArtilleryAsset[], Error>;
 }
 
 export interface WindowSize {
@@ -134,4 +89,25 @@ export interface IconDefinition {
   type: IconType;
   symbol: string;
   label: string;
+}
+
+export type ToolsProps =
+  | "select"
+  | "pen"
+  | "line"
+  | "arrow"
+  | "circle"
+  | "icon"
+  | "icon"
+  | "text"
+  | "tooltip"
+  | "delete";
+export interface ToolbarState {
+  map: string;
+  lineup: PublicLineup;
+  currentTool: ToolsProps;
+  iconValue: string;
+  toolColor: string;
+  strokeWidth: number;
+  selectedFontSize: number;
 }
