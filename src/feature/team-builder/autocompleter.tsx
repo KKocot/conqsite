@@ -73,7 +73,14 @@ export function Autocompleter({
       <div className="flex">
         {units ? (
           <Avatar className="h-8 w-8 rounded-none">
-            <AvatarImage alt={unit?.name} src={unit?.icon} />
+            <AvatarImage
+              alt={unit?.name}
+              src={`${
+                process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+              }/images/unit-icons/${unit?.name
+                .toLowerCase()
+                .replace(/[ ':]/g, "-")}-icon.png`}
+            />
           </Avatar>
         ) : weapon ? (
           <Avatar className="h-8 w-8 rounded-none">
@@ -207,7 +214,14 @@ const renderCommandItem = (
       title={item.name}
     >
       <Avatar className="h-8 w-8 rounded-none" title={item.name}>
-        <AvatarImage alt={item.name} src={item.icon} />
+        <AvatarImage
+          alt={item.name}
+          src={`${
+            process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+          }/images/unit-icons/${item.name
+            .toLowerCase()
+            .replace(/[ ':]/g, "-")}-icon.png`}
+        />
         <AvatarFallback className="rounded-none">
           {item.name.substring(0, 2)}
         </AvatarFallback>

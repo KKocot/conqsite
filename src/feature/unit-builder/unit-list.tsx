@@ -1,11 +1,11 @@
 "use client";
 
-import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 import { TableCell } from "@/components/ui/table";
 import clsx from "clsx";
 import { ShieldCheck } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Unit {
   era: string;
@@ -47,20 +47,17 @@ const List = ({ units, value }: { units: Unit[]; value: string }) => {
                 href={`/unit/${unit?.name.replaceAll(" ", "_")}`}
                 target="_blank"
               >
-                <Avatar
-                  className={clsx(
-                    "h-8 w-8 md:h-12 md:w-12 border-solid border-2 border-transparent shadow-md rounded-none",
-                    {
-                      "border-red-600": unit.value >= 9,
-                    }
-                  )}
+                <Image
+                  src={`${
+                    process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+                  }/images/unit-icons/${unit.name
+                    .toLowerCase()
+                    .replace(/[ ':]/g, "-")}-icon.png`}
                   title={unit.name}
-                >
-                  <AvatarImage alt={unit.name} src={unit.icon} />
-                  <AvatarFallback className="rounded-none">
-                    {unit.name.substring(0, 2)}
-                  </AvatarFallback>
-                </Avatar>
+                  alt={unit.name}
+                  width={48}
+                  height={48}
+                />
               </Link>
             </span>
           ) : null

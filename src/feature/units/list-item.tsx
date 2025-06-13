@@ -53,7 +53,16 @@ const ListItem = ({ units }: { units: Unit[] }) => {
               href={`/unit/${unit.name.replaceAll(" ", "_")}`}
               className="flex items-center gap-2 p-2 hover:bg-background"
             >
-              <Image src={unit.icon} alt={unit.name} width={48} height={48} />
+              <Image
+                src={`${
+                  process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+                }/images/unit-icons/${unit.name
+                  .toLowerCase()
+                  .replace(/[ ':]/g, "-")}-icon.png`}
+                alt={unit.name}
+                width={48}
+                height={48}
+              />
               <h1>{unit.name}</h1>
             </Link>
           </div>

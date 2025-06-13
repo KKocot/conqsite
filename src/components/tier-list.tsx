@@ -2,12 +2,12 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TierUnits } from "@/lib/get-data";
 import LoadingComponent from "../feature/ifs/loading";
 import HoverClickTooltip from "@/components/hover-click-tooltip";
 import Link from "next/link";
 import clsx from "clsx";
+import Image from "next/image";
 
 // Type for the tier list items
 type TierListItem = {
@@ -163,16 +163,16 @@ const TierList = ({
                             key={item.id}
                             className="p-[2px]"
                           >
-                            <Avatar className="rounded-none w-12 h-12">
-                              <AvatarImage
-                                className=""
-                                src={item.image}
-                                alt={item.name}
-                              />
-                              <AvatarFallback>
-                                {item.name.substring(0, 2)}
-                              </AvatarFallback>
-                            </Avatar>
+                            <Image
+                              src={`${
+                                process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+                              }/images/unit-icons/${item.name
+                                .toLowerCase()
+                                .replace(/[ ':]/g, "-")}-icon.png`}
+                              alt={item.name}
+                              width={48}
+                              height={48}
+                            />
                           </Link>
                         }
                       >

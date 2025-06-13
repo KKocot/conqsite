@@ -114,11 +114,15 @@ const Content = ({ data, unitTree, doctrines }: ContentProps) => {
         <CardHeader>
           <div className="flex items-center gap-4">
             <Image
-              height={64}
-              width={64}
-              src={data.icon}
-              alt={data.name}
               className="object-contain"
+              src={`${
+                process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+              }/images/unit-icons/${data.name
+                .toLowerCase()
+                .replace(/[ ':]/g, "-")}-icon.png`}
+              alt={data.name}
+              width={64}
+              height={64}
             />
             <CardTitle className="text-3xl sm:text-4xl lg:text-5xl">
               {data.name}
