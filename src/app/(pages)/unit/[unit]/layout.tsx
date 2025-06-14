@@ -6,6 +6,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   let data;
   const origin = process.env.ORIGIN;
+  const imageOrigin = process.env.NEXT_PUBLIC_IMAGES_IP_HOST;
   const unitName = params.unit.replaceAll("_", " ");
   try {
     const response = await fetch(`${origin}/api/assets/units?name=${unitName}`);
@@ -19,6 +20,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: unitName,
+    openGraph: {
+      url: `${imageOrigin}/images/unit-icons/${unitName
+        .toLowerCase()
+        .replace(/[ ':]/g, "-")}-icon.png`,
+    },
   };
 }
 
