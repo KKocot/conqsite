@@ -30,7 +30,7 @@ export interface CircleElement extends MapElement {
 export interface IconElement extends MapElement {
   x: number;
   y: number;
-  iconType: string;
+  iconValue: string;
 }
 
 export interface TextElement extends MapElement {

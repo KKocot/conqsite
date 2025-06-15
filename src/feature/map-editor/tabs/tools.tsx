@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 import { ToolbarState, ToolsProps } from "../types";
+import Image from "next/image";
 
 interface ToolProp {
   id: ToolsProps;
@@ -100,7 +101,16 @@ const ToolsTab = ({
               {unitsAssetsList.map((icon) => (
                 <SelectItem key={icon.name} value={icon.name}>
                   <div className="flex items-center gap-2">
-                    <img src={icon.icon} alt={icon.name} className="w-6 h-6" />
+                    <Image
+                      alt={icon.name}
+                      src={`${
+                        process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+                      }/images/unit-icons/${icon.name
+                        .toLowerCase()
+                        .replace(/[ ':]/g, "-")}-icon.png`}
+                      width={24}
+                      height={24}
+                    />
                     <span>{icon.name}</span>
                   </div>
                 </SelectItem>

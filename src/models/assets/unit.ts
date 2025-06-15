@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { types } from "util";
 
 const UnitAssetSchema = new Schema({
   id: { type: Number, required: true },
@@ -8,6 +9,7 @@ const UnitAssetSchema = new Schema({
   era: { type: String, required: true },
   icon: { type: String, required: true },
   src: { type: String, required: true },
+  types: { type: [String], required: false },
 });
 
 const UnitAsset =
