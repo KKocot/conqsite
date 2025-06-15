@@ -15,7 +15,6 @@ export async function POST(request: Request) {
   try {
     await connectMongoDB();
     const data = putSurveySchema.parse(await request.json());
-
     const userAccount = data.discordId === session?.user.id;
     if (!userAccount) return new Response("401");
     if (subSurvey === "true") {
