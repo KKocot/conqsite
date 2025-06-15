@@ -40,6 +40,7 @@ import type { KonvaEventObject } from "konva/lib/Node";
 import type Konva from "konva";
 import { useImageLoader } from "@/components/hooks/use-image-loader";
 import { PublicLineup, UnitAssetsGroup } from "@/lib/get-data";
+import useImage from "use-image";
 
 interface ExtendedMapEditorProps {
   map: string;
@@ -62,7 +63,7 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
       map,
       lineup,
       currentTool,
-      iconValue,
+      iconValue = "Cataphract Lancers",
       toolColor,
       selectedFontSize,
       unitAssets = [],
@@ -70,12 +71,10 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
       color,
       strokeWidth = 3,
       fontSize = 16,
-      iconType = "",
+      iconType,
     },
     ref
   ) => {
-    const image = useImageLoader(map);
-
     const [elements, setElements] = useState<
       (
         | PenElement
@@ -86,6 +85,79 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
         | TextElement
       )[]
     >([]);
+    console.log(elements);
+    const image = useImageLoader(map);
+
+    // Store loaded images in a map to avoid reloading
+    const [loadedImages, setLoadedImages] = useState<
+      Map<string, HTMLImageElement>
+    >(new Map());
+
+    // Helper function to get image for a specific icon value
+    const getIconImage = (iconVal: string): HTMLImageElement | undefined => {
+      return loadedImages.get(iconVal);
+    };
+
+    // Load image for current icon value (for new icons being placed)
+    const currentIconUrl = `/api/proxy-image?url=${encodeURIComponent(
+      `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/unit-icons/${iconValue
+        .toLowerCase()
+        .replace(/[ ':]/g, "-")}-icon.png`
+    )}`;
+
+    const [currentImageIcon] = useImage(currentIconUrl);
+
+    // Store the current icon image when it loads
+    useEffect(() => {
+      if (currentImageIcon && iconValue) {
+        setLoadedImages((prev) =>
+          new Map(prev).set(iconValue, currentImageIcon)
+        );
+      }
+    }, [currentImageIcon, iconValue]);
+
+    // Load images for existing icon elements
+    useEffect(() => {
+      const uniqueIconValues = Array.from(
+        new Set(
+          elements
+            .filter(
+              (el): el is IconElement => el.tool === "icon" && "iconValue" in el
+            )
+            .map((el) => el.iconValue)
+        )
+      );
+
+      uniqueIconValues.forEach((iconVal) => {
+        if (!loadedImages.has(iconVal)) {
+          const img = new window.Image();
+          img.crossOrigin = "anonymous";
+          img.onload = () => {
+            setLoadedImages((prev) => new Map(prev).set(iconVal, img));
+          };
+          img.onerror = () => {
+            // Try fallback image
+            const fallbackImg = new window.Image();
+            fallbackImg.onload = () => {
+              setLoadedImages((prev) =>
+                new Map(prev).set(iconVal, fallbackImg)
+              );
+            };
+            fallbackImg.src = `/images/unit-icons/${iconVal
+              .toLowerCase()
+              .replace(/[ ':]/g, "-")}-icon.png`;
+          };
+          img.src = `/api/proxy-image?url=${encodeURIComponent(
+            `${
+              process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+            }/images/unit-icons/${iconVal
+              .toLowerCase()
+              .replace(/[ ':]/g, "-")}-icon.png`
+          )}`;
+        }
+      });
+    }, [elements, loadedImages]);
+
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
     const [tooltips, setTooltips] = useState<TooltipData[]>([]);
@@ -245,7 +317,7 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
           tool,
           x: snappedPos.x,
           y: snappedPos.y,
-          iconType,
+          iconValue,
           color,
           strokeWidth,
         };
@@ -388,7 +460,13 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
     };
 
     const renderElement = (
-      element: PenElement | LineElement | ArrowElement | CircleElement | IconElement | TextElement
+      element:
+        | PenElement
+        | LineElement
+        | ArrowElement
+        | CircleElement
+        | IconElement
+        | TextElement
     ) => {
       const isSelected = selectedId === element.id;
       const commonProps = {
@@ -396,7 +474,8 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
         onClick: () => handleElementClick(element.id),
         onTap: () => handleElementClick(element.id),
         draggable: tool === "select",
-        onDragEnd: (e: KonvaEventObject<DragEvent>) => handleDragEnd(e, element.id),
+        onDragEnd: (e: KonvaEventObject<DragEvent>) =>
+          handleDragEnd(e, element.id),
         shadowEnabled: isSelected,
         shadowColor: "black",
         shadowBlur: 10,
@@ -466,7 +545,10 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
           }
           return null;
         case "icon":
-          if ("x" in element && "y" in element && "iconType" in element) {
+          if ("x" in element && "y" in element && "iconValue" in element) {
+            // Get the specific image for this icon element
+            const iconImage = getIconImage(element.iconValue);
+
             return (
               <Group
                 key={element.id}
@@ -477,18 +559,17 @@ export const MapEditor = forwardRef<MapEditorRef, ExtendedMapEditorProps>(
                 draggable={tool === "select"}
                 onDragEnd={(e) => handleDragEnd(e, element.id)}
               >
-                <Image image={undefined} />
-                <Text
-                  text={element.iconType}
-                  fontSize={fontSize}
-                  fill={element.color}
-                  onClick={() => handleElementClick(element.id)}
-                  onTap={() => handleElementClick(element.id)}
-                  shadowEnabled={isSelected}
-                  shadowColor="black"
-                  shadowBlur={10}
-                  shadowOpacity={0.5}
-                />
+                {iconImage ? (
+                  <Image image={iconImage} width={25} height={25} />
+                ) : (
+                  // Fallback to a simple circle if no image loads
+                  <Circle
+                    radius={25}
+                    fill="lightgray"
+                    stroke="darkgray"
+                    strokeWidth={2}
+                  />
+                )}
               </Group>
             );
           }
