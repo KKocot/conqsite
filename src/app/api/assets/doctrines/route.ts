@@ -72,7 +72,7 @@ export async function GET(request: Request) {
             if (
               type0 &&
               type1 &&
-              doctrine.forUnit.includes(`${type1} ${type0}`)
+              doctrine.forUnit.includes(`${type0} ${type1}`)
             )
               return true;
           }
