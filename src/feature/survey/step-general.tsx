@@ -58,12 +58,11 @@ const StepGeneral = ({
           <FormField
             control={form.control}
             name="inGameNick"
-            disabled={surveyType === "sub"}
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="font-bold">{t("nick_in_game")}</FormLabel>
                 <FormControl>
-                  <Input {...field} required />
+                  <Input {...field} required disabled={surveyType === "sub"} />
                 </FormControl>
               </FormItem>
             )}

@@ -11,6 +11,29 @@ export async function POST(request: Request) {
   try {
     await connectMongoDB();
     const data = putUnitPostSchema.parse(await request.json());
+    const session = await getServerSession(authOptions);
+    if (!session)
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    const postExist = await UnitPost.findOne({ _id: data._id });
+    const userAccount = data.author === session.user.id;
+    if (postExist && userAccount) {
+      const updatedPost = await UnitPost.findOneAndUpdate(
+        {
+          _id: data._id,
+        },
+        {
+          title: data.title,
+          unit: data.unit,
+          ytlink: data.ytlink,
+          description: data.description,
+          doctrines: data.doctrines,
+          tree: data.tree,
+        },
+        { new: true }
+      );
+      return NextResponse.json(updatedPost, { status: 200 });
+    }
+
     const userPost = await UnitPost.create(data);
     return NextResponse.json(userPost, { status: 201 });
   } catch (error) {

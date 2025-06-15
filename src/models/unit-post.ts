@@ -4,7 +4,6 @@ const UnitPostSchema = new Schema({
   title: { type: String, required: true },
   author: { type: String, required: true },
   date: { type: String, required: true },
-  house: { type: String, required: true },
   unit: { type: String },
   ytlink: { type: String },
   description: { type: String },

@@ -48,18 +48,7 @@ const Content = ({ data }: ContentProps) => {
                 This user has shared {data.posts.length} posts about various
                 units and strategies.
               </p>
-              <div className="mt-4">
-                <h3 className="font-medium mb-2">Favorite Houses:</h3>
-                <div className="flex flex-wrap gap-2">
-                  {Array.from(
-                    new Set(data.posts.map((post) => post.house))
-                  ).map((house) => (
-                    <Badge key={house} variant="secondary">
-                      {house}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
+
               <div className="mt-4">
                 <h3 className="font-medium mb-2">Favorite Units:</h3>
                 <div className="flex flex-wrap gap-2">

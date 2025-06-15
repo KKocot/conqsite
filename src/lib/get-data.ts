@@ -548,7 +548,6 @@ export interface UnitData {
   title: string;
   date: string;
   unit: string;
-  house: string;
   ytlink: string;
   description: string;
   tree: { structure: Map<number, number>; maxlvl: number };

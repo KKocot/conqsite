@@ -1,4 +1,4 @@
-import { DoctrineType, UnitData, UnitObject } from "@/lib/get-data";
+import { DoctrineType, UnitAsset, UnitData, UnitObject } from "@/lib/get-data";
 import {
   Card,
   CardContent,
@@ -11,19 +11,35 @@ import Image from "next/image";
 import DoctrinesGroup from "@/feature/unit-builder/post/doctrines-group";
 import Tree from "@/feature/unit-builder/tree";
 import clsx from "clsx";
+import { useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
+import { PenIcon } from "lucide-react";
+import { useState } from "react";
+import BuilderForm from "@/feature/unit-builder/builder-form";
 
 interface ContentProps {
   data: UnitData;
   doctrines: DoctrineType[];
   unitTree: UnitObject;
+  unitAssets: UnitAsset;
 }
 
-const Content = ({ data, doctrines, unitTree }: ContentProps) => {
+const Content = ({ data, doctrines, unitTree, unitAssets }: ContentProps) => {
+  const { data: user } = useSession();
+  const isAuthor = user?.user.id === data.author;
   const doctrinesMap = doctrines.filter((d) =>
     data.doctrines.some((e) => e.name === d.name)
   );
+  const [editMode, setEditMode] = useState(false);
 
-  return (
+  return editMode ? (
+    <BuilderForm
+      data={unitAssets}
+      unitTree={unitTree}
+      doctrines={doctrines}
+      dataToEdit={data}
+    />
+  ) : (
     <Card className="max-w-3xl mx-auto overflow-hidden h-fit my-8">
       <CardHeader className="pb-0">
         <div className="flex justify-between items-start">
@@ -115,6 +131,15 @@ const Content = ({ data, doctrines, unitTree }: ContentProps) => {
               {new Date(data.date).toLocaleDateString("en-GB")}
             </p>
           </div>
+          {isAuthor && (
+            <Button
+              className="rounded-full p-2"
+              variant="custom"
+              onClick={() => setEditMode(() => true)}
+            >
+              <PenIcon />
+            </Button>
+          )}
         </div>
       </CardFooter>
     </Card>
