@@ -1,10 +1,10 @@
 import { z } from "zod";
 
 const putUnitPostSchema = z.object({
+  _id: z.string().optional(),
   title: z.string(),
   unit: z.string(),
   author: z.string(),
-  house: z.string(),
   date: z.string(),
   ytlink: z.string().optional(),
   description: z.string().optional(),

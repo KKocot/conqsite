@@ -24,7 +24,6 @@ const DEFAULT_UNIT_DATA: UnitData = {
   ytlink: "",
   date: "",
   description: "",
-  house: "all",
   tree: {
     structure: new Map<number, number>(),
     maxlvl: 0,
@@ -47,7 +46,6 @@ const unitSchema = z.object({
   unit: z.string(),
   ytlink: z.string().url({ message: "Invalid URL" }).optional(),
   author: z.string(),
-  house: z.string(),
   date: z.string(),
   description: z
     .string()
@@ -81,25 +79,33 @@ interface ContentProps {
   data: UnitAsset;
   unitTree: UnitObject;
   doctrines: DoctrineType[];
+  dataToEdit?: UnitData;
 }
-const Content = ({ data, unitTree, doctrines }: ContentProps) => {
+const BuilderForm = ({
+  data,
+  unitTree,
+  doctrines,
+  dataToEdit,
+}: ContentProps) => {
   const user = useSession();
   const postBuildMutation = usePostBuildMutation();
   const form = useForm({
     resolver: zodResolver(unitSchema),
-    values: {
-      ...DEFAULT_UNIT_DATA,
-      date: new Date().toString(),
-      author: user.data?.user.id || "",
-      unit: data.name || "",
-      description: data.description || "",
-      tree: {
-        structure: new Map<number, number>(
-          new Map(unitTree.treeStructure.map((node) => [node.id, 0]) || [])
-        ),
-        maxlvl: Number(unitTree?.maxlvl) || 0,
-      },
-    },
+    values: !!dataToEdit
+      ? { ...dataToEdit }
+      : {
+          ...DEFAULT_UNIT_DATA,
+          date: new Date().toString(),
+          author: user.data?.user.id || "",
+          unit: data.name || "",
+          description: data.description || "",
+          tree: {
+            structure: new Map<number, number>(
+              new Map(unitTree.treeStructure.map((node) => [node.id, 0]) || [])
+            ),
+            maxlvl: Number(unitTree?.maxlvl) || 0,
+          },
+        },
   });
   const values = form.getValues();
 
@@ -212,4 +218,4 @@ const Content = ({ data, unitTree, doctrines }: ContentProps) => {
     </div>
   );
 };
-export default Content;
+export default BuilderForm;

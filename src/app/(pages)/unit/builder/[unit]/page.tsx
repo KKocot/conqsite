@@ -3,9 +3,9 @@
 import { useParams } from "next/navigation";
 import { getUnitDoctrines, getUnitAssets, getUnitWiki } from "@/lib/get-data";
 import NoData from "@/feature/ifs/no-data";
-import Content from "./content";
 import { useQuery } from "@tanstack/react-query";
 import LoadingComponent from "@/feature/ifs/loading";
+import BuilderForm from "@/feature/unit-builder/builder-form";
 
 const Page = () => {
   const unitName = useParams().unit.toString().replaceAll("_", " ");
@@ -29,7 +29,7 @@ const Page = () => {
   if (isLoading || doctrinesAssetsLoading) return <LoadingComponent />;
   if (!unitAssets || !data || !doctrinesAssets) return <NoData />;
   return (
-    <Content
+    <BuilderForm
       data={unitAssets}
       unitTree={data[data.length - 1]}
       doctrines={doctrinesAssets}
