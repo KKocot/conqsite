@@ -246,7 +246,11 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
             </HoverClickTooltip>
           </div>
           {data ? (
-            <NavUser name={data.user.name} avatar={data.user.image} />
+            <NavUser
+              name={data.user.name}
+              avatar={data.user.image}
+              id={data.user.id}
+            />
           ) : (
             <div className="flex items-center justify-around">
               <LanguageToggle />

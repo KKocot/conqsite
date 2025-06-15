@@ -21,13 +21,16 @@ import { ModeToggle } from "./theme-menu";
 import { signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 function NavUser({
   name,
   avatar,
+  id,
 }: {
   name?: string | null;
   avatar?: string | null;
+  id?: string;
 }) {
   const { isMobile } = useSidebar();
   const t = useTranslations("Navigation");
@@ -63,7 +66,10 @@ function NavUser({
             sideOffset={4}
           >
             <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+              <Link
+                href={`/profile/${id}`}
+                className="flex items-center gap-2 px-1 py-1.5 text-left text-sm"
+              >
                 <Avatar className="h-8 w-8 rounded-full">
                   <AvatarImage
                     src={avatar ?? "/logo.png"}
@@ -77,7 +83,7 @@ function NavUser({
                   <span className="truncate font-semibold">{name}</span>
                   <span className="truncate text-xs"></span>
                 </div>
-              </div>
+              </Link>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup className="flex items-center justify-between p-1">
