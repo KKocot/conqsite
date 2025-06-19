@@ -10,6 +10,7 @@ import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 import { Unit, WeaponsTypes } from "@/lib/type";
 import clsx from "clsx";
 import { Survey } from "@/lib/get-data";
+import Image from "next/image";
 
 export function Autocompleter({
   value,
@@ -68,20 +69,23 @@ export function Autocompleter({
     }
   }
   const user_preferences = findUserPrefences(user, unit);
+
   return (
     <Command className="w-full border h-fit" ref={autocompleteRef}>
       <div className="flex">
         {units ? (
-          <Avatar className="h-8 w-8 rounded-none">
-            <AvatarImage
-              alt={unit?.name}
+          unit ? (
+            <Image
+              alt={unit?.name ?? "Unknown Unit"}
               src={`${
                 process.env.NEXT_PUBLIC_IMAGES_IP_HOST
               }/images/unit-icons/${unit?.name
                 .toLowerCase()
                 .replace(/[ ':]/g, "-")}-icon.png`}
+              width={32}
+              height={32}
             />
-          </Avatar>
+          ) : null
         ) : weapon ? (
           <Avatar className="h-8 w-8 rounded-none">
             <AvatarImage alt={weapon.name} src={weapon?.src} />
@@ -195,7 +199,7 @@ const renderCommandItem = (
         setIsOpen(false);
       }}
       className={clsx(
-        "w-56 px-2 py-1 flex items-center gap-2 hover:text-white hover:dark:bg-slate-900 hover:bg-slate-600 dark:bg-slate-800 bg-slate-300",
+        "w-56 px-1 py-1 flex items-center gap-2 hover:text-white hover:dark:bg-slate-900 hover:bg-slate-600 dark:bg-slate-800 bg-slate-300",
         {
           "to-40% bg-gradient-to-r from-yellow-700 dark:to-slate-800 to-slate-300 hover:to-yellow-700":
             item.pref === "4",
@@ -213,19 +217,16 @@ const renderCommandItem = (
       )}
       title={item.name}
     >
-      <Avatar className="h-8 w-8 rounded-none" title={item.name}>
-        <AvatarImage
-          alt={item.name}
-          src={`${
-            process.env.NEXT_PUBLIC_IMAGES_IP_HOST
-          }/images/unit-icons/${item.name
-            .toLowerCase()
-            .replace(/[ ':]/g, "-")}-icon.png`}
-        />
-        <AvatarFallback className="rounded-none">
-          {item.name.substring(0, 2)}
-        </AvatarFallback>
-      </Avatar>
+      <Image
+        alt={item?.name ?? "Unknown Unit"}
+        src={`${
+          process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+        }/images/unit-icons/${item?.name
+          .toLowerCase()
+          .replace(/[ ':]/g, "-")}-icon.png`}
+        width={32}
+        height={32}
+      />
       <span>{item.name}</span>
     </div>
   </CommandItem>

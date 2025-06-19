@@ -14,6 +14,7 @@ import { OctagonAlert } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArtilleryAsset, WeaponAsset } from "@/lib/get-data";
+import Image from "next/image";
 
 const Preview = ({
   data,
@@ -92,21 +93,22 @@ const Preview = ({
                   <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
                     <div className="flex items-center gap-2">
                       {unit1 ? (
-                        <Avatar className="h-8 w-8" title={unit1?.name}>
-                          <Link
-                            href={`/unit/${unit1.name.replaceAll(" ", "_")}`}
-                            target="_blank"
-                          >
-                            <AvatarImage
-                              alt={unit1.name}
-                              src={`${
-                                process.env.NEXT_PUBLIC_IMAGES_IP_HOST
-                              }/images/unit-icons/${unit1.name
-                                .toLowerCase()
-                                .replace(/[ ':]/g, "-")}-icon.png`}
-                            />
-                          </Link>
-                        </Avatar>
+                        <Link
+                          href={`/unit/${unit1.name.replaceAll(" ", "_")}`}
+                          target="_blank"
+                          className="w-8 h-8"
+                        >
+                          <Image
+                            alt={unit1.name}
+                            src={`${
+                              process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+                            }/images/unit-icons/${unit1.name
+                              .toLowerCase()
+                              .replace(/[ ':]/g, "-")}-icon.png`}
+                            width={32}
+                            height={32}
+                          />
+                        </Link>
                       ) : null}
                       {show ? <span>{unit1?.name}</span> : null}
                     </div>
@@ -114,21 +116,24 @@ const Preview = ({
                   <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
                     <div className="flex items-center gap-2">
                       {unit2 ? (
-                        <Avatar className="h-8 w-8" title={unit2?.name}>
-                          <Link
-                            href={`/unit/${unit2?.name.replaceAll(" ", "_")}`}
-                            target="_blank"
-                          >
-                            <AvatarImage
+                        <Link
+                          href={`/unit/${unit2?.name.replaceAll(" ", "_")}`}
+                          target="_blank"
+                          className="w-8 h-8"
+                        >
+                          {unit2 ? (
+                            <Image
                               alt={unit2.name}
                               src={`${
                                 process.env.NEXT_PUBLIC_IMAGES_IP_HOST
                               }/images/unit-icons/${unit2.name
                                 .toLowerCase()
                                 .replace(/[ ':]/g, "-")}-icon.png`}
+                              width={32}
+                              height={32}
                             />
-                          </Link>
-                        </Avatar>
+                          ) : null}
+                        </Link>
                       ) : null}
                       {show ? <span>{unit2?.name}</span> : null}
                     </div>
@@ -136,21 +141,22 @@ const Preview = ({
                   <TableCell className="p-1 px-2 whitespace-nowrap overflow-clip">
                     <div className="flex items-center gap-2">
                       {unit3 ? (
-                        <Avatar className="h-8 w-8" title={unit3?.name}>
-                          <Link
-                            href={`/unit/${unit3.name.replaceAll(" ", "_")}`}
-                            target="_blank"
-                          >
-                            <AvatarImage
-                              alt={unit3.name}
-                              src={`${
-                                process.env.NEXT_PUBLIC_IMAGES_IP_HOST
-                              }/images/unit-icons/${unit3.name
-                                .toLowerCase()
-                                .replace(/[ ':]/g, "-")}-icon.png`}
-                            />
-                          </Link>
-                        </Avatar>
+                        <Link
+                          href={`/unit/${unit3.name.replaceAll(" ", "_")}`}
+                          target="_blank"
+                          className="w-8 h-8"
+                        >
+                          <Image
+                            alt={unit3.name}
+                            src={`${
+                              process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+                            }/images/unit-icons/${unit3.name
+                              .toLowerCase()
+                              .replace(/[ ':]/g, "-")}-icon.png`}
+                            width={32}
+                            height={32}
+                          />
+                        </Link>
                       ) : null}
                       {show ? <span>{unit3?.name}</span> : null}
                     </div>
