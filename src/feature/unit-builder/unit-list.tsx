@@ -1,7 +1,6 @@
 "use client";
 
 import { TableCell } from "@/components/ui/table";
-import clsx from "clsx";
 import { ShieldCheck } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
