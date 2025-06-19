@@ -2,7 +2,7 @@ import { getMostUsedUnits } from "@/lib/get-data";
 import { useQuery } from "@tanstack/react-query";
 import LoadingComponent from "../ifs/loading";
 import Link from "next/link";
-import Image from "next/image";
+import UnitIcon from "@/components/unit-icon";
 
 const MostUsedUnits = () => {
   const { data, isLoading } = useQuery({
@@ -25,16 +25,7 @@ const MostUsedUnits = () => {
                 key={unit.id}
                 className="p-[2px]"
               >
-                <Image
-                  src={`${
-                    process.env.NEXT_PUBLIC_IMAGES_IP_HOST
-                  }/images/unit-icons/${unit.name
-                    .toLowerCase()
-                    .replace(/[ ':]/g, "-")}-icon.png`}
-                  alt={unit.name}
-                  width={90}
-                  height={90}
-                />
+                <UnitIcon unitName={unit.name} width={90} height={90} />
               </Link>
               <span className="text-sm font-semibold">{unit.name}</span>
               <span className="text-xs">Popularity points: {unit.rating}</span>

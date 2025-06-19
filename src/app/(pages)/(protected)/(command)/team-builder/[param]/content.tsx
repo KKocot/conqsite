@@ -237,11 +237,6 @@ const Content = ({
             sheetData={sheetData}
             units={units.map((e) => ({
               name: e.name,
-              icon: `${
-                process.env.NEXT_PUBLIC_IMAGES_IP_HOST
-              }/images/unit-icons/${e.name
-                .toLowerCase()
-                .replace(/[ ':]/g, "-")}-icon.png`,
               types: e.types,
             }))}
           />

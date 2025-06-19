@@ -10,7 +10,7 @@ import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 import { Unit, WeaponsTypes } from "@/lib/type";
 import clsx from "clsx";
 import { Survey } from "@/lib/get-data";
-import Image from "next/image";
+import UnitIcon from "@/components/unit-icon";
 
 export function Autocompleter({
   value,
@@ -75,16 +75,7 @@ export function Autocompleter({
       <div className="flex">
         {units ? (
           unit ? (
-            <Image
-              alt={unit?.name ?? "Unknown Unit"}
-              src={`${
-                process.env.NEXT_PUBLIC_IMAGES_IP_HOST
-              }/images/unit-icons/${unit?.name
-                .toLowerCase()
-                .replace(/[ ':]/g, "-")}-icon.png`}
-              width={32}
-              height={32}
-            />
+            <UnitIcon unitName={unit.name} width={48} height={48} />
           ) : null
         ) : weapon ? (
           <Avatar className="h-8 w-8 rounded-none">
@@ -217,16 +208,7 @@ const renderCommandItem = (
       )}
       title={item.name}
     >
-      <Image
-        alt={item?.name ?? "Unknown Unit"}
-        src={`${
-          process.env.NEXT_PUBLIC_IMAGES_IP_HOST
-        }/images/unit-icons/${item?.name
-          .toLowerCase()
-          .replace(/[ ':]/g, "-")}-icon.png`}
-        width={32}
-        height={32}
-      />
+      <UnitIcon unitName={item.name} />
       <span>{item.name}</span>
     </div>
   </CommandItem>

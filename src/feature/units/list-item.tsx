@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import UnitIcon from "@/components/unit-icon";
 import { Unit } from "@/lib/type";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 import Link from "next/link";
 
 const ListItem = ({ units }: { units: Unit[] }) => {
@@ -53,16 +53,7 @@ const ListItem = ({ units }: { units: Unit[] }) => {
               href={`/unit/${unit.name.replaceAll(" ", "_")}`}
               className="flex items-center gap-2 p-2 hover:bg-background"
             >
-              <Image
-                src={`${
-                  process.env.NEXT_PUBLIC_IMAGES_IP_HOST
-                }/images/unit-icons/${unit.name
-                  .toLowerCase()
-                  .replace(/[ ':]/g, "-")}-icon.png`}
-                alt={unit.name}
-                width={48}
-                height={48}
-              />
+              <UnitIcon unitName={unit.name} width={48} height={48} />
               <h1>{unit.name}</h1>
             </Link>
           </div>
