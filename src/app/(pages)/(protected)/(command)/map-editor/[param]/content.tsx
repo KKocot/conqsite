@@ -1,64 +1,57 @@
 "use client";
 
-import type React from "react";
-import { useState, useRef, useEffect } from "react";
-import { MapData, MapEditorRef } from "@/feature/map-editor/types";
-import { UseQueryResult } from "@tanstack/react-query";
-import { ArtilleryAsset, UnitAssetsGroup } from "@/lib/get-data";
-import { Button } from "@/components/ui/button";
-import { useLocalStorage } from "usehooks-ts";
+import { UnitAssetsGroup } from "@/lib/get-data";
 import MapFrame from "@/feature/map-editor/map-frame";
-import { ArrowBigLeftDashIcon } from "lucide-react";
+import { useLocalStorage } from "usehooks-ts";
+import { Plan } from "@/feature/map-editor/lib/types";
+import { DEFAULT_PLANS } from "@/feature/map-editor/lib/assets";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 import clsx from "clsx";
+import { ArrowBigLeftDashIcon } from "lucide-react";
+
+const templates: any[] = []; // This should be fetched or defined based on your application logic
+const publicLineups: any[] = []; // This should be fetched or defined based on your application logic
 
 export default function TacticalMapPage({
-  dates,
-  house,
   unitsAssets,
-  artAssets,
 }: {
-  dates: UseQueryResult<string[], Error>;
-  house: string;
-  unitsAssets: UseQueryResult<UnitAssetsGroup, Error>;
-  artAssets: UseQueryResult<ArtilleryAsset[], Error>;
+  unitsAssets: UnitAssetsGroup;
 }) {
-  const editorRef = useRef<MapEditorRef>(null);
-  const [storedPlan, setStoredPlan] = useLocalStorage<MapData | undefined>(
-    "tactical-map-plan",
-    undefined
+  const units = [
+    ...unitsAssets.goldenEra,
+    ...unitsAssets.otherEra,
+    ...unitsAssets.heroicEra,
+    ...unitsAssets.blueEra,
+    ...unitsAssets.greenEra,
+    ...unitsAssets.greyEra,
+  ].map((unit) => unit.name);
+  const [storedPlans, setStoredPlans] = useLocalStorage<Plan[]>(
+    "mapPlans",
+    DEFAULT_PLANS
   );
-  const [loadedPlan, setLoadedPlan] = useState<boolean>(true);
-  const templates: any[] = []; // This should be fetched or defined based on your application logic
-  const publicLineups: any[] = []; // This should be fetched or defined based on your application logic
-  const onLoadPlan = (plan?: MapData) => {
-    if (editorRef.current && plan) {
-      editorRef.current.loadMapData(plan);
-    }
-    setLoadedPlan(true);
-  };
+  const [currentPlan, setCurrentPlan] = useState<Plan[]>(
+    storedPlans || DEFAULT_PLANS
+  );
 
-  const unitsAssetsList = !!unitsAssets.data
-    ? [
-        ...unitsAssets.data?.goldenEra,
-        ...unitsAssets.data?.heroicEra,
-        ...unitsAssets.data?.blueEra,
-        ...unitsAssets.data?.greenEra,
-        ...unitsAssets.data?.greyEra,
-        ...unitsAssets.data?.otherEra,
-      ].map((unit) => ({
-        name: unit.name,
-        icon: unit.icon,
-      }))
-    : [];
+  const [mode, setMode] = useState<
+    "new" | "stored" | "template" | "public" | ""
+    // >("");
+  >("stored"); // Default mode is "", changed for development purposes
+  useEffect(() => {
+    if (mode !== "") {
+      setStoredPlans(currentPlan);
+    }
+  }, [JSON.stringify(currentPlan)]);
 
   return (
-    <div className="container mx-auto p-4 flex flex-col">
+    <div className="container mx-auto p-4 flex flex-col pb-24">
       <div className="flex justify-between items-center mb-4">
         <Button
-          onClick={() => setLoadedPlan(false)}
+          onClick={() => setMode("")}
           variant="ghost"
           className={clsx("rounded-full", {
-            "opacity-50 cursor-not-allowed": !loadedPlan,
+            "opacity-50 cursor-not-allowed": false,
           })}
         >
           <ArrowBigLeftDashIcon />
@@ -69,13 +62,11 @@ export default function TacticalMapPage({
         <div className="w-14" />
       </div>
 
-      {loadedPlan ? (
+      {mode !== "" ? (
         <MapFrame
-          editorRef={editorRef}
-          house={house}
-          unitsAssetsList={unitsAssetsList}
-          dates={dates}
-          artAssets={artAssets}
+          units={units}
+          plan={currentPlan}
+          onPlanChange={setCurrentPlan}
         />
       ) : (
         <div className="flex justify-evenly">
@@ -85,7 +76,11 @@ export default function TacticalMapPage({
               <>
                 <p className="text-sm">Use an existing map template</p>
                 {templates.map((_, i) => (
-                  <Button key={i} variant="custom">
+                  <Button
+                    key={i}
+                    variant="custom"
+                    onClick={() => setMode("template")}
+                  >
                     Templates Name {i + 1}
                   </Button>
                 ))}
@@ -100,7 +95,11 @@ export default function TacticalMapPage({
               <>
                 <p className="text-sm">Import from public lineup</p>
                 {publicLineups.map((_, i) => (
-                  <Button key={i} variant="custom">
+                  <Button
+                    key={i}
+                    variant="custom"
+                    onClick={() => setMode("public")}
+                  >
                     Public Lineup Name {i + 1}
                   </Button>
                 ))}
@@ -114,8 +113,10 @@ export default function TacticalMapPage({
             <p className="text-sm">Resume previous work</p>
             <Button
               variant="custom"
-              disabled={!storedPlan}
-              onClick={() => onLoadPlan(storedPlan)}
+              disabled={storedPlans[0].map === ""}
+              onClick={() => {
+                setCurrentPlan(storedPlans || DEFAULT_PLANS), setMode("stored");
+              }}
             >
               Load
             </Button>
@@ -123,7 +124,12 @@ export default function TacticalMapPage({
           <div className="flex flex-col gap-4 mr-4 text-center">
             <h2 className="text-xl font-semibold">Create New</h2>
             <p className="text-sm">Start from scratch</p>
-            <Button variant="custom" onClick={() => onLoadPlan()}>
+            <Button
+              variant="custom"
+              onClick={() => {
+                setCurrentPlan(DEFAULT_PLANS), setMode("new");
+              }}
+            >
               Start
             </Button>
           </div>

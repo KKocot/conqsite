@@ -29,7 +29,7 @@ export const authOptions: AuthOptions = {
             image: credentials.image,
           };
         } catch (err) {
-          console.log(err);
+          console.error(err);
           return null;
         }
       },

@@ -26,7 +26,7 @@ import {
   Type,
 } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
-import { ToolbarState, ToolsProps } from "../types";
+import { ToolbarState, ToolsProps } from "../lib/types";
 import UnitIcon from "@/components/unit-icon";
 
 interface ToolProp {

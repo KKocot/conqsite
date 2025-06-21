@@ -8,6 +8,8 @@ import {
   getPublicLineupDates,
   getUnitsAssets,
 } from "@/lib/get-data";
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 
 const Page = () => {
   const { param }: { param: string } = useParams();
@@ -27,14 +29,10 @@ const Page = () => {
     queryFn: () => getArtilleryAssets(),
     enabled: true,
   });
-  return (
-    <Content
-      dates={dates}
-      house={house}
-      unitsAssets={unitsAssets}
-      artAssets={artAssets}
-    />
-  );
+  if (unitsAssets.isLoading) return <LoadingComponent />;
+  if (!unitsAssets.data) return <NoData />;
+
+  return <Content unitsAssets={unitsAssets.data} />;
 };
 
 export default Page;

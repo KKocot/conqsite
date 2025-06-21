@@ -1,12 +1,45 @@
 import { ArtilleryAsset, PublicLineup, UnitAssetsGroup } from "@/lib/get-data";
 import { UseQueryResult } from "@tanstack/react-query";
 
+type Elements =
+  | PenElement
+  | LineElement
+  | ArrowElement
+  | CircleElement
+  | IconElement
+  | TextElement;
+
+export interface Plan {
+  title: string;
+  description: string;
+  map: string;
+  index: number;
+  elements: Elements[];
+}
+
 export interface MapElement {
   id: string;
   tool: string;
   color: string;
   strokeWidth: number;
   zIndex?: number;
+}
+
+export interface ToolsConfig {
+  tool:
+    | "select"
+    | "pen"
+    | "line"
+    | "arrow"
+    | "circle"
+    | "unitIcon"
+    | "artilleryIcon"
+    | "tooltip"
+    | "delete"
+    | "text";
+  iconValue: string;
+  toolColor: string;
+  size: number;
 }
 
 export interface PenElement extends MapElement {
@@ -57,17 +90,6 @@ export interface MapData {
     | TextElement
   )[];
   tooltips: TooltipData[];
-}
-
-export interface Plan {
-  id: string;
-  name: string;
-  mapImage: string;
-  elements: MapData;
-  createdAt: string;
-  updatedAt: string;
-  version: number;
-  thumbnail?: string;
 }
 
 export interface MapEditorRef {

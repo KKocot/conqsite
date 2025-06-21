@@ -1,85 +1,81 @@
 "use client";
 
-import {
-  ArtilleryAsset,
-  getPublicLineup,
-  PublicLineup,
-  UnitAssetsGroup,
-} from "@/lib/get-data";
-import { RefObject, useState } from "react";
-import { MapEditorRef, ToolbarState } from "./types";
-import { MapEditor } from "./editor";
-import { Toolbar } from "./toolbar";
-import { UseQueryResult } from "@tanstack/react-query";
+import TooltipContainer from "@/components/tooltip-container";
+import MapEditor from "./editor";
+import { Plan, ToolsConfig } from "./lib/types";
+import { BookTemplate, Map, Send, Sheet } from "lucide-react";
+import MapPicker from "./sidemenu/map-picker";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import LayersMenu from "./sidemenu/layers-menu";
+import ToolbarMenu from "./toolbar/toolbar-menu";
+import { DEFAULT_TOOLS_CONFIG } from "./lib/assets";
 
 const MapFrame = ({
-  editorRef,
-  house,
-  unitsAssetsList,
-  unitAssets,
-  dates,
-  artAssets,
+  units,
+  plan,
+  onPlanChange,
 }: {
-  editorRef: RefObject<MapEditorRef>;
-  house: string;
-  unitsAssetsList: { name: string; icon: string }[];
-  unitAssets?: UnitAssetsGroup;
-  dates: UseQueryResult<string[], Error>;
-  artAssets: UseQueryResult<ArtilleryAsset[], Error>;
+  units: string[];
+  plan: Plan[];
+  onPlanChange: Dispatch<SetStateAction<Plan[]>>;
 }) => {
-  const [toolbarState, setToolbarState] = useState<ToolbarState>({
-    map: "/maps/fort1.jpg",
-    lineup: {
-      house: house,
-      name: "",
-      date: "",
-      sheet: [],
-      change_nick: false,
-    },
-    currentTool: "select",
-    iconValue: "",
-    toolColor: "#ff0000",
-    strokeWidth: 3,
-    selectedFontSize: 16,
-  });
+  const [currentPlan, setCurrentPlan] = useState<Plan>(plan[0]);
+  const [toolsConfig, setToolsConfig] =
+    useState<ToolsConfig>(DEFAULT_TOOLS_CONFIG);
 
-  const handleClearAll = () => {
-    if (editorRef.current) {
-      if (confirm("Are you sure you want to clear all elements?")) {
-        editorRef.current.clearAll();
-      }
+  useEffect(() => {
+    if (plan.length > 0) {
+      onPlanChange((prev) => {
+        const updatedPlans = prev.map((p) =>
+          p.index === currentPlan.index ? currentPlan : p
+        );
+        return updatedPlans;
+      });
     }
-  };
-
+  }, [JSON.stringify(currentPlan)]);
   return (
     <div className="flex justify-center gap-2 overflow-hidden">
-      {toolbarState.map ? (
-        <MapEditor
-          ref={editorRef}
-          map={toolbarState.map}
-          lineup={toolbarState.lineup}
-          currentTool={toolbarState.currentTool}
-          iconValue={toolbarState.iconValue}
-          toolColor={toolbarState.toolColor}
-          strokeWidth={toolbarState.strokeWidth}
-          selectedFontSize={toolbarState.selectedFontSize}
-          tool={toolbarState.currentTool}
-          color={toolbarState.toolColor}
-        />
-      ) : (
-        <div className="flex items-center justify-center w-[750px] h-[750px] border-2 border-dashed rounded-lg">
-          <p>No map selected</p>
-        </div>
-      )}
-      <Toolbar
-        handleClearAll={handleClearAll}
-        setToolbarState={setToolbarState}
-        toolbarState={toolbarState}
-        unitsAssetsList={unitsAssetsList}
-        house={house}
-        dates={dates.data}
-        artAssets={artAssets.data}
+      <LayersMenu
+        layers={plan}
+        onLayerChange={onPlanChange}
+        currentLayer={currentPlan}
+        onCurrentLayerChange={(currentLayer) => setCurrentPlan(currentLayer)}
       />
+      <MapEditor
+        plan={currentPlan}
+        currentTool={toolsConfig}
+        onPlanChange={setCurrentPlan}
+      />
+      <ToolbarMenu
+        values={toolsConfig}
+        onValueChange={setToolsConfig}
+        onTitleChange={(title) =>
+          setCurrentPlan((prev) => ({ ...prev, title }))
+        }
+        onDescriptionChange={(description) =>
+          setCurrentPlan((prev) => ({ ...prev, description }))
+        }
+        title={currentPlan.title}
+        description={currentPlan.description}
+      />
+      <nav className="fixed bottom-4 right-4 z-50 flex gap-2 rounded-full bg-background px-1 py-2 shadow-lg">
+        <TooltipContainer title="Maps" side="top">
+          <MapPicker
+            value={currentPlan.map}
+            onChange={(map) => setCurrentPlan((prev) => ({ ...prev, map }))}
+          />
+        </TooltipContainer>
+        <TooltipContainer title="Public Plan" side="top">
+          <div className="rounded-full flex items-center justify-center p-3 cursor-pointer hover:bg-accent hover:text-background">
+            <Send className="h-5 w-5" />
+          </div>
+        </TooltipContainer>
+        <TooltipContainer title="Save Template" side="top">
+          <div className="rounded-full flex items-center justify-center p-3 cursor-pointer hover:bg-accent hover:text-background">
+            <BookTemplate className="h-5 w-5" />
+          </div>
+        </TooltipContainer>
+      </nav>
     </div>
   );
 };
