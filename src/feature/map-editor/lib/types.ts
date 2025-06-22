@@ -1,7 +1,6 @@
-import { ArtilleryAsset, PublicLineup, UnitAssetsGroup } from "@/lib/get-data";
-import { UseQueryResult } from "@tanstack/react-query";
+import { PublicLineup } from "@/lib/get-data";
 
-type Elements =
+export type Elements =
   | PenElement
   | LineElement
   | ArrowElement
@@ -10,6 +9,7 @@ type Elements =
   | TextElement;
 
 export interface Plan {
+  _id?: string;
   title: string;
   description: string;
   map: string;
@@ -36,7 +36,10 @@ export interface ToolsConfig {
     | "artilleryIcon"
     | "tooltip"
     | "delete"
-    | "text";
+    | "text"
+    | "map"
+    | "templates"
+    | "public";
   iconValue: string;
   toolColor: string;
   size: number;

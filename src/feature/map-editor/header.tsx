@@ -1,5 +1,5 @@
 import { CardHeader } from "@/components/ui/card";
-import { ToolsConfig } from "../lib/types";
+import { ToolsConfig } from "./lib/types";
 import { Dispatch, SetStateAction } from "react";
 import ToolContainer from "./tool-container";
 import {
@@ -13,6 +13,9 @@ import {
   ScrollText,
   Sword,
   Trash2,
+  Map,
+  BookTemplate,
+  Send,
 } from "lucide-react";
 
 const Header = ({
@@ -93,6 +96,27 @@ const Header = ({
         onToolChange={onValueChange}
       >
         <Trash2 className="h-4 w-4" />
+      </ToolContainer>
+      <ToolContainer
+        currentTool={values.tool === "map"}
+        toolName="map"
+        onToolChange={onValueChange}
+      >
+        <Map className="h-4 w-4" />
+      </ToolContainer>
+      <ToolContainer
+        currentTool={values.tool === "templates"}
+        toolName="templates"
+        onToolChange={onValueChange}
+      >
+        <BookTemplate className="h-4 w-4" />
+      </ToolContainer>
+      <ToolContainer
+        currentTool={values.tool === "public"}
+        toolName="public"
+        onToolChange={onValueChange}
+      >
+        <Send className="h-4 w-4" />
       </ToolContainer>
     </CardHeader>
   );

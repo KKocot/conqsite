@@ -7,10 +7,10 @@ import {
   PlusCircle,
   Trash,
 } from "lucide-react";
-import { Plan } from "../lib/types";
+import { Plan } from "./lib/types";
 import { Dispatch, SetStateAction } from "react";
 import { Button } from "@/components/ui/button";
-import { DEFAULT_PLAN } from "../lib/assets";
+import { DEFAULT_PLAN } from "./lib/assets";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 const LayersMenu = ({

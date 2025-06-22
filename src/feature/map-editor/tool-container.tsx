@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { ReactNode } from "react";
-import { ToolsConfig } from "../lib/types";
-import { DEFAULT_TOOLS_CONFIG } from "../lib/assets";
+import { ToolsConfig } from "./lib/types";
+import { DEFAULT_TOOLS_CONFIG } from "./lib/assets";
 
 const ToolContainer = ({
   children,
