@@ -8,7 +8,6 @@ import { Textarea } from "@/components/ui/textarea";
 import DoctrinedBuilder from "@/feature/unit-builder/doctrines/builder";
 import { useForm } from "react-hook-form";
 import { Form, FormField, FormItem } from "@/components/ui/form";
-import Image from "next/image";
 import { DoctrineType, UnitAsset, UnitData, UnitObject } from "@/lib/get-data";
 import Tree from "@/feature/unit-builder/tree";
 import * as z from "zod";
@@ -16,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { usePostBuildMutation } from "@/components/hooks/use-post-build-mutation";
 import { useSession } from "next-auth/react";
 import Loading from "react-loading";
+import UnitIcon from "@/components/unit-icon";
 
 const DEFAULT_UNIT_DATA: UnitData = {
   title: "",
@@ -119,16 +119,11 @@ const BuilderForm = ({
       <Card className="w-full max-w-4xl mx-auto">
         <CardHeader>
           <div className="flex items-center gap-4">
-            <Image
-              className="object-contain"
-              src={`${
-                process.env.NEXT_PUBLIC_IMAGES_IP_HOST
-              }/images/unit-icons/${data.name
-                .toLowerCase()
-                .replace(/[ ':]/g, "-")}-icon.png`}
-              alt={data.name}
+            <UnitIcon
+              unitName={data.name}
               width={64}
               height={64}
+              className="object-contain"
             />
             <CardTitle className="text-3xl sm:text-4xl lg:text-5xl">
               {data.name}

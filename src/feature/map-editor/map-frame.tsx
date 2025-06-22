@@ -1,84 +1,70 @@
 "use client";
 
-import {
-  ArtilleryAsset,
-  getPublicLineup,
-  PublicLineup,
-  UnitAssetsGroup,
-} from "@/lib/get-data";
-import { RefObject, useState } from "react";
-import { MapEditorRef, ToolbarState } from "./types";
-import { MapEditor } from "./editor";
-import { Toolbar } from "./toolbar";
-import { UseQueryResult } from "@tanstack/react-query";
+import MapEditor from "./editor";
+import { Plan, ToolsConfig } from "./lib/types";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import LayersMenu from "./layers-menu";
+import ToolbarMenu from "./toolbar-menu";
+import { DEFAULT_TOOLS_CONFIG } from "./lib/assets";
 
 const MapFrame = ({
-  editorRef,
+  plan,
+  onPlanChange,
   house,
-  unitsAssetsList,
-  unitAssets,
-  dates,
-  artAssets,
 }: {
-  editorRef: RefObject<MapEditorRef>;
+  plan: Plan[];
+  onPlanChange: Dispatch<SetStateAction<Plan[]>>;
   house: string;
-  unitsAssetsList: { name: string; icon: string }[];
-  unitAssets?: UnitAssetsGroup;
-  dates: UseQueryResult<string[], Error>;
-  artAssets: UseQueryResult<ArtilleryAsset[], Error>;
 }) => {
-  const [toolbarState, setToolbarState] = useState<ToolbarState>({
-    map: "/maps/fort1.jpg",
-    lineup: {
-      house: house,
-      name: "",
-      date: "",
-      sheet: [],
-      change_nick: false,
-    },
-    currentTool: "select",
-    iconValue: "",
-    toolColor: "#ff0000",
-    strokeWidth: 3,
-    selectedFontSize: 16,
-  });
+  const [currentPlan, setCurrentPlan] = useState<Plan>(plan[0]);
+  const [toolsConfig, setToolsConfig] =
+    useState<ToolsConfig>(DEFAULT_TOOLS_CONFIG);
 
-  const handleClearAll = () => {
-    if (editorRef.current) {
-      if (confirm("Are you sure you want to clear all elements?")) {
-        editorRef.current.clearAll();
-      }
+  useEffect(() => {
+    if (plan.length > 0) {
+      onPlanChange((prev) => {
+        const updatedPlans = prev.map((p) =>
+          p.index === currentPlan.index ? currentPlan : p
+        );
+        return updatedPlans;
+      });
     }
-  };
-
+  }, [JSON.stringify(currentPlan)]);
   return (
     <div className="flex justify-center gap-2 overflow-hidden">
-      {toolbarState.map ? (
-        <MapEditor
-          ref={editorRef}
-          map={toolbarState.map}
-          lineup={toolbarState.lineup}
-          currentTool={toolbarState.currentTool}
-          iconValue={toolbarState.iconValue}
-          toolColor={toolbarState.toolColor}
-          strokeWidth={toolbarState.strokeWidth}
-          selectedFontSize={toolbarState.selectedFontSize}
-          tool={toolbarState.currentTool}
-          color={toolbarState.toolColor}
-        />
-      ) : (
-        <div className="flex items-center justify-center w-[750px] h-[750px] border-2 border-dashed rounded-lg">
-          <p>No map selected</p>
-        </div>
-      )}
-      <Toolbar
-        handleClearAll={handleClearAll}
-        setToolbarState={setToolbarState}
-        toolbarState={toolbarState}
-        unitsAssetsList={unitsAssetsList}
+      <LayersMenu
+        layers={plan}
+        onLayerChange={onPlanChange}
+        currentLayer={currentPlan}
+        onCurrentLayerChange={(currentLayer) => setCurrentPlan(currentLayer)}
+      />
+      <MapEditor
+        plan={currentPlan}
+        currentTool={toolsConfig}
+        onPlanChange={setCurrentPlan}
+      />
+      <ToolbarMenu
+        map={currentPlan.map}
+        plan={plan}
+        onPlanChange={onPlanChange}
+        onChangeCurrentPlan={setCurrentPlan}
         house={house}
-        dates={dates.data}
-        artAssets={artAssets.data}
+        onCleanMap={() => {
+          setCurrentPlan((prev) => ({
+            ...prev,
+            elements: [],
+          }));
+        }}
+        values={toolsConfig}
+        onValueChange={setToolsConfig}
+        onTitleChange={(title) =>
+          setCurrentPlan((prev) => ({ ...prev, title }))
+        }
+        onDescriptionChange={(description) =>
+          setCurrentPlan((prev) => ({ ...prev, description }))
+        }
+        title={currentPlan.title}
+        description={currentPlan.description}
       />
     </div>
   );

@@ -1,19 +1,17 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { SheetTypes } from "@/lib/type";
 import { Sheet } from "lucide-react";
 import { useMemo } from "react";
+import UnitIcon from "@/components/unit-icon";
 
 interface Unit {
   name: string;
-  icon: string;
   types: string[];
 }
 
 type UnitCount = {
   name: string;
   count: number;
-  icon: string;
 };
 
 type TypeCount = {
@@ -29,7 +27,7 @@ const PickedUnitsStats = ({
   units: Unit[];
 }) => {
   const unitsList = useMemo(() => {
-    return countUniqueUnits(sheetData, units);
+    return countUniqueUnits(sheetData);
   }, [JSON.stringify(sheetData)]);
 
   const typeStats = useMemo(() => {
@@ -101,9 +99,7 @@ const PickedUnitsStats = ({
                   className="flex items-center justify-between rounded bg-accent pr-2 font-medium text-background text-sm"
                 >
                   <div className="flex items-center gap-2">
-                    <Avatar className="h-8 w-8 rounded-none">
-                      <AvatarImage alt={unit.name} src={unit.icon} />
-                    </Avatar>
+                    <UnitIcon unitName={unit.name} />
                     <p>{unit.name === "" ? "Empty" : unit.name}</p>
                   </div>
                   <p>{unit.count}</p>
@@ -119,7 +115,7 @@ const PickedUnitsStats = ({
 
 export default PickedUnitsStats;
 
-function countUniqueUnits(sheetData: SheetTypes[], unit: Unit[]): UnitCount[] {
+function countUniqueUnits(sheetData: SheetTypes[]): UnitCount[] {
   const units = [
     ...sheetData.flatMap((user) => [user.unit1, user.unit2, user.unit3]),
   ];
@@ -132,6 +128,5 @@ function countUniqueUnits(sheetData: SheetTypes[], unit: Unit[]): UnitCount[] {
   return Object.entries(countMap).map(([name, count]) => ({
     name,
     count,
-    icon: unit.find((u) => u.name === name)?.icon || "/logo.png",
   }));
 }

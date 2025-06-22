@@ -14,7 +14,7 @@ import { OctagonAlert } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArtilleryAsset, WeaponAsset } from "@/lib/get-data";
-import Image from "next/image";
+import UnitIcon from "@/components/unit-icon";
 
 const Preview = ({
   data,
@@ -98,16 +98,7 @@ const Preview = ({
                           target="_blank"
                           className="w-8 h-8"
                         >
-                          <Image
-                            alt={unit1.name}
-                            src={`${
-                              process.env.NEXT_PUBLIC_IMAGES_IP_HOST
-                            }/images/unit-icons/${unit1.name
-                              .toLowerCase()
-                              .replace(/[ ':]/g, "-")}-icon.png`}
-                            width={32}
-                            height={32}
-                          />
+                          <UnitIcon unitName={unit1.name} />
                         </Link>
                       ) : null}
                       {show ? <span>{unit1?.name}</span> : null}
@@ -121,18 +112,11 @@ const Preview = ({
                           target="_blank"
                           className="w-8 h-8"
                         >
-                          {unit2 ? (
-                            <Image
-                              alt={unit2.name}
-                              src={`${
-                                process.env.NEXT_PUBLIC_IMAGES_IP_HOST
-                              }/images/unit-icons/${unit2.name
-                                .toLowerCase()
-                                .replace(/[ ':]/g, "-")}-icon.png`}
-                              width={32}
-                              height={32}
-                            />
-                          ) : null}
+                          <UnitIcon
+                            unitName={unit2.name}
+                            width={32}
+                            height={32}
+                          />
                         </Link>
                       ) : null}
                       {show ? <span>{unit2?.name}</span> : null}
@@ -146,13 +130,8 @@ const Preview = ({
                           target="_blank"
                           className="w-8 h-8"
                         >
-                          <Image
-                            alt={unit3.name}
-                            src={`${
-                              process.env.NEXT_PUBLIC_IMAGES_IP_HOST
-                            }/images/unit-icons/${unit3.name
-                              .toLowerCase()
-                              .replace(/[ ':]/g, "-")}-icon.png`}
+                          <UnitIcon
+                            unitName={unit3.name}
                             width={32}
                             height={32}
                           />

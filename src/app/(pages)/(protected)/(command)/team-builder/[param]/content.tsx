@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArtilleryProps, SheetTypes } from "@/lib/type";
-import React, { ReactNode, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import clsx from "clsx";
 import Item from "@/feature/team-builder/sheet-form-item";
 import { Rows4, ScanEye, Table, TableIcon } from "lucide-react";
@@ -23,16 +23,11 @@ import { PublicDialog } from "@/feature/team-builder/public-dialog";
 import { useParams } from "next/navigation";
 import ItemRow from "@/feature/team-builder/sheet-form-item-row";
 import Preview from "@/feature/team-builder/preview";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import Loading from "react-loading";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import PickedUnitsStats from "@/feature/team-builder/picked-units-stats";
+import TooltipContainer from "@/components/tooltip-container";
 
 interface ContentProps {
   surveysData: Survey[];
@@ -237,11 +232,6 @@ const Content = ({
             sheetData={sheetData}
             units={units.map((e) => ({
               name: e.name,
-              icon: `${
-                process.env.NEXT_PUBLIC_IMAGES_IP_HOST
-              }/images/unit-icons/${e.name
-                .toLowerCase()
-                .replace(/[ ':]/g, "-")}-icon.png`,
               types: e.types,
             }))}
           />
@@ -315,20 +305,3 @@ const Content = ({
 
 export default Content;
 // TODO translation
-
-const TooltipContainer = ({
-  children,
-  title,
-}: {
-  children: ReactNode;
-  title: string;
-}) => {
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger>{children}</TooltipTrigger>
-        <TooltipContent side="left">{title}</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  );
-};
