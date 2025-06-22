@@ -9,15 +9,18 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import LayersMenu from "./sidemenu/layers-menu";
 import ToolbarMenu from "./toolbar/toolbar-menu";
 import { DEFAULT_TOOLS_CONFIG } from "./lib/assets";
+import { ArtilleryAsset } from "@/lib/get-data";
 
 const MapFrame = ({
   units,
   plan,
   onPlanChange,
+  artillery,
 }: {
   units: string[];
   plan: Plan[];
   onPlanChange: Dispatch<SetStateAction<Plan[]>>;
+  artillery: ArtilleryAsset[];
 }) => {
   const [currentPlan, setCurrentPlan] = useState<Plan>(plan[0]);
   const [toolsConfig, setToolsConfig] =
@@ -47,6 +50,13 @@ const MapFrame = ({
         onPlanChange={setCurrentPlan}
       />
       <ToolbarMenu
+        onCleanMap={() => {
+          setCurrentPlan((prev) => ({
+            ...prev,
+            elements: [],
+          }));
+        }}
+        artillery={artillery}
         values={toolsConfig}
         onValueChange={setToolsConfig}
         onTitleChange={(title) =>
@@ -57,6 +67,7 @@ const MapFrame = ({
         }
         title={currentPlan.title}
         description={currentPlan.description}
+        units={units}
       />
       <nav className="fixed bottom-4 right-4 z-50 flex gap-2 rounded-full bg-background px-1 py-2 shadow-lg">
         <TooltipContainer title="Maps" side="top">

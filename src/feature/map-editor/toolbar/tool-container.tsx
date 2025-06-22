@@ -26,6 +26,16 @@ const ToolContainer = ({
         onToolChange({
           ...DEFAULT_TOOLS_CONFIG,
           tool: toolName,
+          size:
+            toolName === "unitIcon" || toolName === "artilleryIcon"
+              ? 25
+              : DEFAULT_TOOLS_CONFIG.size,
+          iconValue:
+            toolName === "unitIcon"
+              ? "Siphonarioi"
+              : toolName === "artilleryIcon"
+              ? "/artillery/Bombard.webp"
+              : DEFAULT_TOOLS_CONFIG.iconValue,
         })
       }
     >

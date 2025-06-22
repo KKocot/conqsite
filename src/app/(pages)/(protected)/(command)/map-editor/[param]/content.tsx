@@ -1,6 +1,6 @@
 "use client";
 
-import { UnitAssetsGroup } from "@/lib/get-data";
+import { ArtilleryAsset, UnitAssetsGroup } from "@/lib/get-data";
 import MapFrame from "@/feature/map-editor/map-frame";
 import { useLocalStorage } from "usehooks-ts";
 import { Plan } from "@/feature/map-editor/lib/types";
@@ -15,8 +15,10 @@ const publicLineups: any[] = []; // This should be fetched or defined based on y
 
 export default function TacticalMapPage({
   unitsAssets,
+  artAssets,
 }: {
   unitsAssets: UnitAssetsGroup;
+  artAssets: ArtilleryAsset[];
 }) {
   const units = [
     ...unitsAssets.goldenEra,
@@ -64,6 +66,7 @@ export default function TacticalMapPage({
 
       {mode !== "" ? (
         <MapFrame
+          artillery={artAssets}
           units={units}
           plan={currentPlan}
           onPlanChange={setCurrentPlan}

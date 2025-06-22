@@ -29,10 +29,10 @@ const Page = () => {
     queryFn: () => getArtilleryAssets(),
     enabled: true,
   });
-  if (unitsAssets.isLoading) return <LoadingComponent />;
-  if (!unitsAssets.data) return <NoData />;
+  if (unitsAssets.isLoading || artAssets.isLoading) return <LoadingComponent />;
+  if (!unitsAssets.data || !artAssets.data) return <NoData />;
 
-  return <Content unitsAssets={unitsAssets.data} />;
+  return <Content unitsAssets={unitsAssets.data} artAssets={artAssets.data} />;
 };
 
 export default Page;

@@ -12,13 +12,13 @@ export const DEFAULT_PLANS: Plan[] = [DEFAULT_PLAN];
 export const maps = ["1-1", "fort1"];
 
 export const stageSize = {
-  width: 750,
-  height: 750,
+  width: 800,
+  height: 800,
 };
 
 export const DEFAULT_TOOLS_CONFIG: ToolsConfig = {
   tool: "select",
   iconValue: "",
-  toolColor: "#000000",
+  toolColor: "#ff0000",
   size: 4,
 };

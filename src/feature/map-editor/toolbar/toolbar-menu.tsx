@@ -6,6 +6,12 @@ import { ToolsConfig } from "../lib/types";
 import { Dispatch, SetStateAction } from "react";
 import Header from "./header";
 import { Textarea } from "@/components/ui/textarea";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import clsx from "clsx";
+import UnitIcon from "@/components/unit-icon";
+import { Button } from "@/components/ui/button";
+import { ArtilleryAsset } from "@/lib/get-data";
+import Image from "next/image";
 
 const ToolbarMenu = ({
   values,
@@ -14,6 +20,9 @@ const ToolbarMenu = ({
   onTitleChange,
   description,
   onDescriptionChange,
+  units,
+  onCleanMap,
+  artillery,
 }: {
   values: ToolsConfig;
   onValueChange: Dispatch<SetStateAction<ToolsConfig>>;
@@ -21,6 +30,9 @@ const ToolbarMenu = ({
   onTitleChange: (title: string) => void;
   description: string;
   onDescriptionChange: (description: string) => void;
+  units: string[];
+  onCleanMap: () => void;
+  artillery: ArtilleryAsset[];
 }) => {
   return (
     <div className="flex flex-col items-center h-full">
@@ -34,14 +46,20 @@ const ToolbarMenu = ({
           values.tool === "arrow" ||
           values.tool === "unitIcon" ||
           values.tool === "artilleryIcon" ? (
-            <div className="flex flex-col items-center gap-2">
-              <h4 className="text-sm">Brush Size</h4>
+            <div className="flex flex-col items-center gap-2 p-2">
+              <h4 className="text-sm">Size - {values.size}</h4>
               <Slider
-                defaultValue={[50]}
                 max={100}
-                min={0}
+                min={1}
+                onValueChange={(value) =>
+                  onValueChange((prev) => ({
+                    ...prev,
+                    size: value[0],
+                  }))
+                }
+                value={[values.size]}
                 step={1}
-                className="w-48"
+                className="w-44"
               />
             </div>
           ) : null}
@@ -49,16 +67,51 @@ const ToolbarMenu = ({
           values.tool === "line" ||
           values.tool === "arrow" ||
           values.tool === "circle" ? (
-            <div className="flex flex-wrap justify-center items-center gap-1 w-full">
-              {Array.from({ length: 8 }, (_, index) => (
+            <div className="flex flex-wrap justify-center items-center gap-3 w-full">
+              {[
+                "ff0000",
+                "00ff00",
+                "0000ff",
+                "ffff00",
+                "ff00ff",
+                "00ffff",
+                "800000",
+                "008000",
+              ].map((color) => (
                 <div
-                  key={index}
-                  className="flex items-center justify-center p-2 cursor-pointer hover:bg-accent hover:text-background"
+                  key={color}
+                  onClick={() =>
+                    onValueChange((prev) => ({
+                      ...prev,
+                      toolColor: `#${color}`,
+                    }))
+                  }
+                  className={clsx(
+                    "flex items-center justify-center cursor-pointer border-2 rounded-full",
+                    {
+                      "border-accent": values.toolColor === `#${color}`,
+                    }
+                  )}
                 >
-                  <div className="h-6 w-6 bg-red-400 rounded-full" />
+                  <div
+                    className="h-6 w-6 rounded-full"
+                    style={{
+                      backgroundColor: `#${color}`,
+                    }}
+                  />
                 </div>
               ))}
-              <Input type="color" className="w-full h-8 p-1 border rounded" />
+              <Input
+                type="color"
+                className="w-full h-8 p-1 border rounded"
+                value={values.toolColor}
+                onChange={(e) =>
+                  onValueChange((prev) => ({
+                    ...prev,
+                    toolColor: e.target.value,
+                  }))
+                }
+              />
             </div>
           ) : null}
           {values.tool === "text" ? (
@@ -77,6 +130,76 @@ const ToolbarMenu = ({
               />
             </div>
           ) : null}
+          {values.tool === "unitIcon" ? (
+            <ScrollArea className="w-full h-[480px]">
+              <div>
+                {units.map((unit) => (
+                  <div
+                    key={unit}
+                    className={clsx(
+                      "flex items-center gap-2 text-xs mb-1 cursor-pointer",
+                      {
+                        "bg-accent text-background": values.iconValue === unit,
+                      }
+                    )}
+                    onClick={() =>
+                      onValueChange((prev) => ({
+                        ...prev,
+                        iconValue: unit,
+                      }))
+                    }
+                  >
+                    <div className="w-8 h-8">
+                      <UnitIcon unitName={unit} />
+                    </div>
+                    {unit}
+                  </div>
+                ))}
+              </div>
+            </ScrollArea>
+          ) : null}
+          {values.tool === "artilleryIcon" ? (
+            <ScrollArea className="w-full h-[480px]">
+              <div>
+                {artillery.map((art) => (
+                  <div
+                    key={art.name}
+                    className={clsx(
+                      "flex items-center gap-2 text-xs mb-1 cursor-pointer",
+                      {
+                        "bg-accent text-background":
+                          values.iconValue === art.src,
+                      }
+                    )}
+                    onClick={() =>
+                      onValueChange((prev) => ({
+                        ...prev,
+                        iconValue: art.src,
+                      }))
+                    }
+                  >
+                    <div className="w-8 h-8">
+                      <Image
+                        src={art.src}
+                        alt={art.name}
+                        width={32}
+                        height={32}
+                      />
+                    </div>
+                    {art.name}
+                  </div>
+                ))}
+              </div>
+            </ScrollArea>
+          ) : null}
+          {values.tool === "delete" ? (
+            <div>
+              <Button variant="destructive" onClick={onCleanMap}>
+                Clean Map
+              </Button>
+            </div>
+          ) : null}
+          {values.tool === "tooltip" ? <div>Not supported yet</div> : null}
         </CardContent>
       </Card>
     </div>
