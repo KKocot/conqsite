@@ -34,7 +34,7 @@ const ToolContainer = ({
             toolName === "unitIcon"
               ? "Siphonarioi"
               : toolName === "artilleryIcon"
-              ? "/artillery/Bombard.webp"
+              ? "Ballista"
               : DEFAULT_TOOLS_CONFIG.iconValue,
         })
       }

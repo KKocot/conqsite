@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
 import { Plan, ToolsConfig } from "./lib/types";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import Header from "./header";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -11,14 +11,16 @@ import clsx from "clsx";
 import UnitIcon from "@/components/unit-icon";
 import { Button } from "@/components/ui/button";
 import {
-  getArtilleryAssets,
   getPublicLineupDates,
   getUnitsAssets,
+  PublicLineup,
 } from "@/lib/get-data";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import TemplatesTab from "./templates-tab";
 import MapTab from "./map-tab";
+import { artillery } from "./lib/assets";
+import LineupLoader from "./lineup-loader";
 
 const ToolbarMenu = ({
   values,
@@ -47,11 +49,8 @@ const ToolbarMenu = ({
   onChangeCurrentPlan: Dispatch<SetStateAction<Plan>>;
   map: string;
 }) => {
-  const artAssets = useQuery({
-    queryKey: ["artilleryAssets"],
-    queryFn: () => getArtilleryAssets(),
-    enabled: true,
-  });
+  const [lineup, setLineup] = useState<PublicLineup | undefined>(undefined);
+
   const unitsAssets = useQuery({
     queryKey: ["unitsAssets"],
     queryFn: getUnitsAssets,
@@ -62,6 +61,7 @@ const ToolbarMenu = ({
     queryFn: () => getPublicLineupDates(house),
     enabled: !!house,
   });
+
   return (
     <div className="flex flex-col items-center h-full">
       <h2 className="text-center">Toolbar</h2>
@@ -205,40 +205,37 @@ const ToolbarMenu = ({
           {values.tool === "artilleryIcon" ? (
             <ScrollArea className="w-full h-[480px]">
               <div>
-                {artAssets.isLoading ? (
-                  <div>Loading...</div>
-                ) : !artAssets.data ? (
-                  <div>No Artillery Assets</div>
-                ) : (
-                  artAssets.data.map((art) => (
-                    <div
-                      key={art.name}
-                      className={clsx(
-                        "flex items-center gap-2 text-xs mb-1 cursor-pointer",
-                        {
-                          "bg-accent text-background":
-                            values.iconValue === art.src,
-                        }
-                      )}
-                      onClick={() =>
-                        onValueChange((prev) => ({
-                          ...prev,
-                          iconValue: art.src,
-                        }))
+                {artillery.map((art) => (
+                  <div
+                    key={art}
+                    className={clsx(
+                      "flex items-center gap-2 text-xs mb-1 cursor-pointer",
+                      {
+                        "bg-accent text-background": values.iconValue === art,
                       }
-                    >
-                      <div className="w-8 h-8">
-                        <Image
-                          src={art.src}
-                          alt={art.name}
-                          width={32}
-                          height={32}
-                        />
-                      </div>
-                      {art.name}
+                    )}
+                    onClick={() =>
+                      onValueChange((prev) => ({
+                        ...prev,
+                        iconValue: art,
+                      }))
+                    }
+                  >
+                    <div className="w-8 h-8">
+                      <Image
+                        src={`${
+                          process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+                        }/images/artillery/${art
+                          .toLowerCase()
+                          .replace(/[ ':]/g, "-")}.png`}
+                        alt={art}
+                        width={32}
+                        height={32}
+                      />
                     </div>
-                  ))
-                )}
+                    {art}
+                  </div>
+                ))}
               </div>
             </ScrollArea>
           ) : null}
@@ -250,20 +247,53 @@ const ToolbarMenu = ({
             </div>
           ) : null}
           {values.tool === "tooltip" ? (
-            <div>
-              <div>Not supported yet</div>
+            <ScrollArea className="w-full h-[530px]">
               {dates.isLoading ? (
                 <div>Loading...</div>
               ) : !dates.data ? (
                 <div>No Data</div>
               ) : (
-                dates.data.map((date) => (
-                  <div key={date} className="text-xs mb-1 cursor-pointer">
-                    {date}
-                  </div>
-                ))
+                <>
+                  <ul>
+                    {lineup
+                      ? lineup.sheet.map((e, i) => (
+                          <li
+                            className={`border-2 p-1 border${e.color}`}
+                            key={i}
+                          >
+                            <span className="underline text-lg">{`${i + 1} ${
+                              e.username
+                            }`}</span>
+                            <div className="flex items-center justify-around">
+                              {e.unit1 !== "" ? (
+                                <span>
+                                  <UnitIcon unitName={e.unit1} />
+                                </span>
+                              ) : null}
+                              {e.unit2 !== "" ? (
+                                <span>
+                                  <UnitIcon unitName={e.unit2} />
+                                </span>
+                              ) : null}
+                              {e.unit3 !== "" ? (
+                                <span>
+                                  <UnitIcon unitName={e.unit3} />
+                                </span>
+                              ) : null}
+                            </div>
+                          </li>
+                        ))
+                      : null}
+                  </ul>
+                  <LineupLoader
+                    dates={dates.data}
+                    house={house}
+                    lineup={lineup}
+                    onLineupChange={(lineup) => setLineup(lineup)}
+                  />
+                </>
               )}
-            </div>
+            </ScrollArea>
           ) : null}
           {values.tool === "templates" ? (
             <TemplatesTab
