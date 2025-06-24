@@ -12,6 +12,7 @@ import { Dispatch, SetStateAction } from "react";
 import { Button } from "@/components/ui/button";
 import { DEFAULT_PLAN } from "./lib/assets";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import clsx from "clsx";
 
 const LayersMenu = ({
   layers,
@@ -29,7 +30,12 @@ const LayersMenu = ({
       <h2 className="text-center">Layers Menu</h2>
       <ul className="max-h-[670px] overflow-y-auto">
         {layers.map((layer, index) => (
-          <Card key={index} className="flex flex-col justify-between">
+          <Card
+            key={index}
+            className={clsx("flex flex-col justify-between border-2", {
+              "border-accent": layer.index === currentLayer.index,
+            })}
+          >
             <CardHeader className="p-2 text-center">
               {layer.title !== "" ? layer.title : `Layer ${layer.index}`}
             </CardHeader>
@@ -105,15 +111,13 @@ const LayersMenu = ({
             ...prev,
             {
               ...DEFAULT_PLAN,
+              map: currentLayer.map,
               index: prev[prev.length - 1].index + 1,
             },
           ]);
         }}
       >
-        <PlusCircle
-          className="h-6 w-6 cursor-pointer"
-          onClick={() => console.log("Add new layer")}
-        />
+        <PlusCircle className="h-6 w-6 cursor-pointer" />
       </Button>
     </div>
   );

@@ -10,17 +10,16 @@ import { nanoid } from "nanoid";
 
 // Custom component for unit icons
 const UnitIconImage = ({ element }: { element: IconElement }) => {
+  const unit = element.tool === "unitIcon";
   const [image] = useImage(
-    element.tool === "unitIcon"
-      ? `${
-          process.env.NEXT_PUBLIC_IMAGES_IP_HOST
-        }/images/unit-icons/${element.iconValue
-          .toLowerCase()
-          .replace(/[ ':]/g, "-")}-icon.png`
-      : element.iconValue
+    `/api/images/${unit ? "unit-icons" : "artillery"}/${element.iconValue
+      .toLowerCase()
+      .replace(/[ ':]/g, "-")}${unit ? "-icon" : ""}.png`
   );
 
   if (!image) return null;
+  // image.src = image.src.replace("https", "http");
+  console.log("Rendering unit icon:", image);
   return (
     <Image
       x={element.x - element.strokeWidth / 2}
@@ -592,16 +591,9 @@ const MapEditor = ({
             if (
               (element.tool === "unitIcon" ||
                 element.tool === "artilleryIcon") &&
-              "x" in element &&
-              "y" in element &&
               "iconValue" in element
             ) {
-              return (
-                <UnitIconImage
-                  key={element.id}
-                  element={element as IconElement}
-                />
-              );
+              return <UnitIconImage key={element.id} element={element} />;
             }
             return null;
           })}
