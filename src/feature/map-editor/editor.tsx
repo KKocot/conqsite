@@ -1,6 +1,6 @@
 "use client";
 
-import { Stage, Layer, Image, Line, Arrow, Circle, Group } from "react-konva";
+import { Stage, Layer, Image, Line, Arrow, Circle } from "react-konva";
 import Konva from "konva";
 import useImage from "use-image";
 import { IconElement, Plan, ToolsConfig } from "./lib/types";
@@ -18,8 +18,6 @@ const UnitIconImage = ({ element }: { element: IconElement }) => {
   );
 
   if (!image) return null;
-  // image.src = image.src.replace("https", "http");
-  console.log("Rendering unit icon:", image);
   return (
     <Image
       x={element.x - element.strokeWidth / 2}
@@ -86,8 +84,12 @@ const MapEditor = ({
             const hitBuffer = element.strokeWidth / 2;
             return distance <= element.radius + hitBuffer;
           }
-          // Hit detection for unit icons
-          if ("x" in element && "y" in element && element.tool === "unitIcon") {
+          // Hit detection for unit icons and artillery icons
+          if (
+            "x" in element &&
+            "y" in element &&
+            (element.tool === "unitIcon" || element.tool === "artilleryIcon")
+          ) {
             const halfSize = element.strokeWidth / 2;
             return (
               pos.x >= element.x - halfSize &&
@@ -149,7 +151,6 @@ const MapEditor = ({
           onPlanChange((prev) => {
             const newElements = [...prev.elements];
             const lastElement = newElements[newElements.length - 1];
-
             if (lastElement.tool === "line") {
               const updatedElement = {
                 ...lastElement,
