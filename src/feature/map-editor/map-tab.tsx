@@ -1,20 +1,8 @@
 import clsx from "clsx";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
-const mapAssets = [
-  {
-    name: "Map 1",
-    image: "/maps/1-1.jpg",
-    occurrence: ["map1", "map2"],
-    src: "1-1",
-  },
-  {
-    name: "Map 2",
-    image: "/maps/fort1.jpg",
-    occurrence: ["map3", "map4"],
-    src: "fort1",
-  },
-];
+import { maps } from "./lib/assets";
+import Image from "next/image";
+import ImageComponent from "@/components/image-component";
 
 const MapTab = ({
   value,
@@ -25,24 +13,20 @@ const MapTab = ({
 }) => {
   return (
     <ScrollArea className="w-full h-[550px]">
-      {mapAssets.map((map) => (
+      {maps.map((map) => (
         <div
-          key={map.name}
+          key={map}
           className={clsx(
             "flex flex-col items-center gap-3 p-2 border-2 cursor-pointer w-full mb-2",
             {
-              "border-accent": value === map.src,
+              "border-accent": value === map,
             }
           )}
-          onClick={() => onChange(map.src)}
+          onClick={() => onChange(map)}
         >
-          <h4 className="font-medium">{map.name}</h4>
+          <h4 className="font-medium">{map}</h4>
           <div className="w-full">
-            <img
-              src={map.image}
-              alt={map.name}
-              className="h-full w-full object-cover"
-            />
+            <ImageComponent name={map} width={150} height={150} type="map" />
           </div>
         </div>
       ))}

@@ -4,7 +4,7 @@ import { TableCell } from "@/components/ui/table";
 import { ShieldCheck } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import UnitIcon from "@/components/unit-icon";
+import ImageComponent from "@/components/image-component";
 
 interface Unit {
   era: string;
@@ -46,7 +46,7 @@ const List = ({ units, value }: { units: Unit[]; value: string }) => {
                 href={`/unit/${unit?.name.replaceAll(" ", "_")}`}
                 target="_blank"
               >
-                <UnitIcon unitName={unit.name} width={48} height={48} />
+                <ImageComponent name={unit.name} width={48} height={48} />
               </Link>
             </span>
           ) : null

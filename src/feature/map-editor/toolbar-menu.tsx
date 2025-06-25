@@ -8,7 +8,7 @@ import Header from "./header";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import clsx from "clsx";
-import UnitIcon from "@/components/unit-icon";
+import ImageComponent from "@/components/image-component";
 import { Button } from "@/components/ui/button";
 import {
   getPublicLineupDates,
@@ -198,7 +198,7 @@ const ToolbarMenu = ({
                         }
                       >
                         <div className="w-8 h-8">
-                          <UnitIcon unitName={unit} />
+                          <ImageComponent name={unit} />
                         </div>
                         {unit}
                       </div>
@@ -272,17 +272,17 @@ const ToolbarMenu = ({
                             <div className="flex items-center justify-around">
                               {e.unit1 !== "" ? (
                                 <span>
-                                  <UnitIcon unitName={e.unit1} />
+                                  <ImageComponent name={e.unit1} />
                                 </span>
                               ) : null}
                               {e.unit2 !== "" ? (
                                 <span>
-                                  <UnitIcon unitName={e.unit2} />
+                                  <ImageComponent name={e.unit2} />
                                 </span>
                               ) : null}
                               {e.unit3 !== "" ? (
                                 <span>
-                                  <UnitIcon unitName={e.unit3} />
+                                  <ImageComponent name={e.unit3} />
                                 </span>
                               ) : null}
                             </div>

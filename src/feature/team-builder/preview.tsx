@@ -14,7 +14,7 @@ import { OctagonAlert } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArtilleryAsset, WeaponAsset } from "@/lib/get-data";
-import UnitIcon from "@/components/unit-icon";
+import ImageComponent from "@/components/image-component";
 
 const Preview = ({
   data,
@@ -98,7 +98,7 @@ const Preview = ({
                           target="_blank"
                           className="w-8 h-8"
                         >
-                          <UnitIcon unitName={unit1.name} />
+                          <ImageComponent name={unit1.name} />
                         </Link>
                       ) : null}
                       {show ? <span>{unit1?.name}</span> : null}
@@ -112,8 +112,8 @@ const Preview = ({
                           target="_blank"
                           className="w-8 h-8"
                         >
-                          <UnitIcon
-                            unitName={unit2.name}
+                          <ImageComponent
+                            name={unit2.name}
                             width={32}
                             height={32}
                           />
@@ -130,8 +130,8 @@ const Preview = ({
                           target="_blank"
                           className="w-8 h-8"
                         >
-                          <UnitIcon
-                            unitName={unit3.name}
+                          <ImageComponent
+                            name={unit3.name}
                             width={32}
                             height={32}
                           />
