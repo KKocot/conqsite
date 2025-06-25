@@ -42,12 +42,7 @@ const TemplatesTab = ({
     handleAddTemplate.mutate({
       templateName: templateName,
       house: house,
-      layers: plan.map((layer) => ({
-        title: layer.title || `Layer ${layer.index}`,
-        description: layer.description || `Layer ${layer.index}`,
-        map: layer.map,
-        elements: layer.elements,
-      })),
+      layers: plan,
     });
     if (handleAddTemplate.isSuccess) {
       existingTemplate

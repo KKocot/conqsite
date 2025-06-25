@@ -1,4 +1,4 @@
-import { Elements } from "@/feature/map-editor/lib/types";
+import { Elements, Plan } from "@/feature/map-editor/lib/types";
 import { SheetTypes } from "./type";
 
 export interface Roles {
@@ -133,25 +133,30 @@ export const getNextTWLineups = async (
   return result;
 };
 
-interface Layer {
-  title: string;
-  description: string;
-  map: string;
-  elements: Elements[];
-}
 export interface PlanTemplate {
   _id?: string;
   templateName: string;
   house: string;
-  layers: Layer[];
+  layers: Plan[];
 }
 
 export interface PlanPublic {
   _id?: string;
   publicName: string;
   house: string;
-  layers: Layer[];
+  layers: Plan[];
 }
+
+export const getPublicPlans = async (
+  house: string,
+  planName: string
+): Promise<PlanPublic> => {
+  const response = await fetch(
+    `/api/plan-public?house=${house}&planName=${planName}`
+  );
+  const result = await response.json();
+  return result.publicPlan;
+};
 
 export const getMapTemplates = async (
   house: string

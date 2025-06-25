@@ -2,7 +2,7 @@ import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { SheetTypes } from "@/lib/type";
 import { Sheet } from "lucide-react";
 import { useMemo } from "react";
-import UnitIcon from "@/components/unit-icon";
+import ImageComponent from "@/components/image-component";
 
 interface Unit {
   name: string;
@@ -99,7 +99,7 @@ const PickedUnitsStats = ({
                   className="flex items-center justify-between rounded bg-accent pr-2 font-medium text-background text-sm"
                 >
                   <div className="flex items-center gap-2">
-                    <UnitIcon unitName={unit.name} />
+                    <ImageComponent name={unit.name} />
                     <p>{unit.name === "" ? "Empty" : unit.name}</p>
                   </div>
                   <p>{unit.count}</p>

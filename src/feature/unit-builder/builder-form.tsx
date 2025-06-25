@@ -15,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { usePostBuildMutation } from "@/components/hooks/use-post-build-mutation";
 import { useSession } from "next-auth/react";
 import Loading from "react-loading";
-import UnitIcon from "@/components/unit-icon";
+import ImageComponent from "@/components/image-component";
 
 const DEFAULT_UNIT_DATA: UnitData = {
   title: "",
@@ -119,8 +119,8 @@ const BuilderForm = ({
       <Card className="w-full max-w-4xl mx-auto">
         <CardHeader>
           <div className="flex items-center gap-4">
-            <UnitIcon
-              unitName={data.name}
+            <ImageComponent
+              name={data.name}
               width={64}
               height={64}
               className="object-contain"

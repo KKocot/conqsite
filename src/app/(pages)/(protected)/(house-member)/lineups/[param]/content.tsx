@@ -1,13 +1,22 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
+import MapEditor from "@/feature/map-editor/editor";
+import {
+  DEFAULT_PLAN,
+  DEFAULT_TOOLS_CONFIG,
+} from "@/feature/map-editor/lib/assets";
+import { Plan } from "@/feature/map-editor/lib/types";
 import Preview from "@/feature/team-builder/preview";
 import {
   ArtilleryAsset,
   getPublicLineup,
+  getPublicPlans,
   getSurvey,
+  PlanPublic,
   WeaponAsset,
 } from "@/lib/get-data";
 import { Unit } from "@/lib/type";
@@ -45,6 +54,18 @@ const Content = ({
   const [name, setName] = useState<string>(
     cleanedLineupName ?? data?.[0]?.name ?? ""
   );
+  const { data: plan } = useQuery({
+    queryKey: ["plan", name, house],
+    queryFn: () => getPublicPlans(house, name),
+    enabled: !!name,
+  });
+  const [currentPlan, setCurrentPlan] = useState<Plan>(DEFAULT_PLAN);
+  useEffect(() => {
+    if (!!plan) {
+      setCurrentPlan(plan.layers[0]);
+    }
+  }, [!!plan]);
+
   useEffect(() => {
     const found = data?.find((e) => e.name === cleanedLineupName);
     if (cleanedLineupName && data) {
@@ -87,8 +108,45 @@ const Content = ({
         <TabsContent
           key={e.name + "content"}
           value={e.name}
-          className="flex self-center"
+          className="flex self-center flex-col"
         >
+          {!!plan && currentPlan.map !== "" ? (
+            <div className="flex flex-col items-center">
+              <h2 className="text-2xl font-bold mb-4">
+                {currentPlan.title !== ""
+                  ? currentPlan.title
+                  : "Untitled Layer"}
+              </h2>
+              <div className="flex">
+                <p>{currentPlan.description}</p>
+                <MapEditor
+                  plan={currentPlan}
+                  currentTool={{ ...DEFAULT_TOOLS_CONFIG, tool: "text" }}
+                  onPlanChange={setCurrentPlan}
+                />
+                {plan.layers.length > 1 ? (
+                  <div className="flex flex-col items-center mt-4">
+                    <h3 className="text-xl font-semibold mb-2">Layers</h3>
+                    <div className="flex gap-2 flex-col">
+                      {plan.layers.map((layer, i) => (
+                        <Button
+                          key={i}
+                          variant={
+                            currentPlan.title === layer.title
+                              ? "custom"
+                              : "default"
+                          }
+                          onClick={() => setCurrentPlan(layer)}
+                        >
+                          {layer.title !== "" ? layer.title : "Untitled Layer"}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+            </div>
+          ) : null}
           <Preview
             weapons={weapons}
             data={e.sheet}

@@ -3,31 +3,11 @@
 import { Stage, Layer, Image, Line, Arrow, Circle } from "react-konva";
 import Konva from "konva";
 import useImage from "use-image";
-import { IconElement, Plan, ToolsConfig } from "./lib/types";
+import { Plan, ToolsConfig } from "./lib/types";
 import { stageSize } from "./lib/assets";
 import { Dispatch, SetStateAction, useRef } from "react";
 import { nanoid } from "nanoid";
-
-// Custom component for unit icons
-const UnitIconImage = ({ element }: { element: IconElement }) => {
-  const unit = element.tool === "unitIcon";
-  const [image] = useImage(
-    `/api/images/${unit ? "unit-icons" : "artillery"}/${element.iconValue
-      .toLowerCase()
-      .replace(/[ ':]/g, "-")}${unit ? "-icon" : ""}.png`
-  );
-
-  if (!image) return null;
-  return (
-    <Image
-      x={element.x - element.strokeWidth / 2}
-      y={element.y - element.strokeWidth / 2}
-      image={image}
-      width={element.strokeWidth}
-      height={element.strokeWidth}
-    />
-  );
-};
+import UnitIconImage from "./unit-icon-image";
 
 const MapEditor = ({
   plan,
@@ -38,7 +18,10 @@ const MapEditor = ({
   currentTool: ToolsConfig;
   onPlanChange: Dispatch<SetStateAction<Plan>>;
 }) => {
-  const [backgroundImage] = useImage(`/maps/${plan.map}.jpg`);
+  // const [backgroundImage] = useImage(`/maps/${plan.map}.jpg`);
+  const [backgroundImage] = useImage(
+    `/api/images/maps/${plan.map.toLowerCase().replaceAll(/[ ':]/g, "-")}.png`
+  );
   const stageRef = useRef<Konva.Stage>(null);
   const isDrawing = useRef(false);
   const selectedElementId = useRef<string | null>(null);
