@@ -61,7 +61,7 @@ export async function GET(request: Request) {
     if (!houseUserAccess) return new Response("401");
 
     if (house && planName) {
-      const publicPlan = await PlanPublic.find({
+      const publicPlan = await PlanPublic.findOne({
         house: house,
         publicName: planName,
       });
