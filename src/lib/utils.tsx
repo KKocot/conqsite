@@ -83,6 +83,8 @@ export const servers = [
   "EU2",
   "EU3",
   "EU4",
+  "EU5",
+  "EU6",
   "APAC7",
   "APAC1",
   "APAC2",

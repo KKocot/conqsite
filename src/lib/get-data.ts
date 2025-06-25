@@ -146,6 +146,13 @@ export interface PlanTemplate {
   layers: Layer[];
 }
 
+export interface PlanPublic {
+  _id?: string;
+  publicName: string;
+  house: string;
+  layers: Layer[];
+}
+
 export const getMapTemplates = async (
   house: string
 ): Promise<PlanTemplate[] | undefined> => {

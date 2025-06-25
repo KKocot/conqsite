@@ -21,6 +21,8 @@ import TemplatesTab from "./templates-tab";
 import MapTab from "./map-tab";
 import { artillery } from "./lib/assets";
 import LineupLoader from "./lineup-loader";
+import { useAddMapPublicMutation } from "@/components/hooks/use-plan-public-mutation";
+import { toast } from "react-toastify";
 
 const ToolbarMenu = ({
   values,
@@ -35,6 +37,8 @@ const ToolbarMenu = ({
   onPlanChange,
   onChangeCurrentPlan,
   map,
+  lineup,
+  onChangeLineup,
 }: {
   values: ToolsConfig;
   onValueChange: Dispatch<SetStateAction<ToolsConfig>>;
@@ -48,9 +52,10 @@ const ToolbarMenu = ({
   onPlanChange: Dispatch<SetStateAction<Plan[]>>;
   onChangeCurrentPlan: Dispatch<SetStateAction<Plan>>;
   map: string;
+  lineup: PublicLineup | undefined;
+  onChangeLineup: (lineup: PublicLineup | undefined) => void;
 }) => {
-  const [lineup, setLineup] = useState<PublicLineup | undefined>(undefined);
-
+  const addMapPublicMutation = useAddMapPublicMutation();
   const unitsAssets = useQuery({
     queryKey: ["unitsAssets"],
     queryFn: getUnitsAssets,
@@ -289,7 +294,7 @@ const ToolbarMenu = ({
                     dates={dates.data}
                     house={house}
                     lineup={lineup}
-                    onLineupChange={(lineup) => setLineup(lineup)}
+                    onLineupChange={(lineup) => onChangeLineup(lineup)}
                   />
                 </>
               )}
@@ -310,6 +315,56 @@ const ToolbarMenu = ({
                 onChangeCurrentPlan((prev) => ({ ...prev, map: map }))
               }
             />
+          ) : null}
+          {values.tool === "public" ? (
+            <>
+              <div className="flex flex-col items-center gap-2">
+                <h4 className="text-sm">Connect with Public Lineup</h4>
+                {dates.isLoading ? (
+                  <div>Loading...</div>
+                ) : !!dates.data ? (
+                  <LineupLoader
+                    dates={dates.data}
+                    house={house}
+                    lineup={lineup}
+                    onLineupChange={(lineup) => onChangeLineup(lineup)}
+                  />
+                ) : null}
+                {lineup ? (
+                  <>
+                    <Input
+                      type="text"
+                      placeholder="Enter House Name"
+                      value={`${lineup.name} - ${lineup.date}`}
+                      className="w-full h-8 p-1 border rounded"
+                    />
+                  </>
+                ) : (
+                  <div>No Lineup Data Available</div>
+                )}
+              </div>
+              <Button
+                variant="custom"
+                className="w-full"
+                disabled={!lineup || addMapPublicMutation.isPending}
+                onClick={() => {
+                  if (!lineup) {
+                    toast.error("Please select a lineup first.");
+                    return;
+                  }
+                  addMapPublicMutation.mutate({
+                    publicName: lineup.name,
+                    house: house,
+                    layers: plan,
+                  });
+                  if (addMapPublicMutation.isSuccess) {
+                    toast.success("Map connected successfully!");
+                  }
+                }}
+              >
+                Connect
+              </Button>
+            </>
           ) : null}
         </CardContent>
       </Card>

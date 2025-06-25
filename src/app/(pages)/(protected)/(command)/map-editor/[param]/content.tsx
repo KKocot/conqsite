@@ -11,6 +11,7 @@ export default function TacticalMapPage({ house }: { house: string }) {
     "mapPlans",
     DEFAULT_PLANS
   );
+
   const [currentPlan, setCurrentPlan] = useState<Plan[]>(storedPlans);
 
   useEffect(() => {
