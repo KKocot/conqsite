@@ -77,6 +77,7 @@ const ToolbarMenu = ({
           {values.tool === "pen" ||
           values.tool === "line" ||
           values.tool === "arrow" ||
+          values.tool === "circle" ||
           values.tool === "unitIcon" ||
           values.tool === "artilleryIcon" ? (
             <div className="flex flex-col items-center gap-2 p-2">

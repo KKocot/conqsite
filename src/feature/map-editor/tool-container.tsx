@@ -1,7 +1,6 @@
 import clsx from "clsx";
-import { ReactNode } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 import { ToolsConfig } from "./lib/types";
-import { DEFAULT_TOOLS_CONFIG } from "./lib/assets";
 
 const ToolContainer = ({
   children,
@@ -12,7 +11,7 @@ const ToolContainer = ({
   children: ReactNode;
   currentTool: boolean;
   toolName: ToolsConfig["tool"];
-  onToolChange: (tool: ToolsConfig) => void;
+  onToolChange: Dispatch<SetStateAction<ToolsConfig>>;
 }) => {
   return (
     <div
@@ -23,20 +22,10 @@ const ToolContainer = ({
         }
       )}
       onClick={() =>
-        onToolChange({
-          ...DEFAULT_TOOLS_CONFIG,
+        onToolChange((prev) => ({
+          ...prev,
           tool: toolName,
-          size:
-            toolName === "unitIcon" || toolName === "artilleryIcon"
-              ? 25
-              : DEFAULT_TOOLS_CONFIG.size,
-          iconValue:
-            toolName === "unitIcon"
-              ? "Siphonarioi"
-              : toolName === "artilleryIcon"
-              ? "Ballista"
-              : DEFAULT_TOOLS_CONFIG.iconValue,
-        })
+        }))
       }
     >
       {children}
