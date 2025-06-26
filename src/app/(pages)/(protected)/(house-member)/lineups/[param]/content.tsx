@@ -16,7 +16,6 @@ import {
   getPublicLineup,
   getPublicPlans,
   getSurvey,
-  PlanPublic,
   WeaponAsset,
 } from "@/lib/get-data";
 import { Unit } from "@/lib/type";

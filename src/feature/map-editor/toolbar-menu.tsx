@@ -66,7 +66,8 @@ const ToolbarMenu = ({
     queryFn: () => getPublicLineupDates(house),
     enabled: !!house,
   });
-
+  const [unitValue, setUnitValue] = useState<string>("");
+  const [otherValue, setOtherValue] = useState<string>("");
   return (
     <div className="flex flex-col items-center h-full">
       <h2 className="text-center">Toolbar</h2>
@@ -77,6 +78,7 @@ const ToolbarMenu = ({
           {values.tool === "pen" ||
           values.tool === "line" ||
           values.tool === "arrow" ||
+          values.tool === "circle" ||
           values.tool === "unitIcon" ||
           values.tool === "artilleryIcon" ? (
             <div className="flex flex-col items-center gap-2 p-2">
@@ -164,85 +166,110 @@ const ToolbarMenu = ({
             </div>
           ) : null}
           {values.tool === "unitIcon" ? (
-            <ScrollArea className="w-full h-[480px]">
-              <div>
-                {unitsAssets.isLoading ? (
-                  <div>Loading...</div>
-                ) : !unitsAssets.data ? (
-                  <div>No Unit Assets</div>
-                ) : (
-                  [
-                    ...unitsAssets.data.goldenEra,
-                    ...unitsAssets.data.otherEra,
-                    ...unitsAssets.data.heroicEra,
-                    ...unitsAssets.data.blueEra,
-                    ...unitsAssets.data.greenEra,
-                    ...unitsAssets.data.greyEra,
-                  ]
-                    .map((unit) => unit.name)
-                    .map((unit) => (
+            <>
+              <Input
+                type="text"
+                placeholder="Search Unit"
+                value={unitValue}
+                onChange={(e) => setUnitValue(e.target.value)}
+              />
+              <ScrollArea className="w-full h-[480px]">
+                <div>
+                  {unitsAssets.isLoading ? (
+                    <div>Loading...</div>
+                  ) : !unitsAssets.data ? (
+                    <div>No Unit Assets</div>
+                  ) : (
+                    [
+                      ...unitsAssets.data.goldenEra,
+                      ...unitsAssets.data.otherEra,
+                      ...unitsAssets.data.heroicEra,
+                      ...unitsAssets.data.blueEra,
+                      ...unitsAssets.data.greenEra,
+                      ...unitsAssets.data.greyEra,
+                    ]
+                      .map((unit) => unit.name)
+                      .filter((unit) =>
+                        unit.toLowerCase().includes(unitValue.toLowerCase())
+                      )
+
+                      .map((unit) => (
+                        <div
+                          key={unit}
+                          className={clsx(
+                            "flex items-center gap-2 text-xs mb-1 cursor-pointer",
+                            {
+                              "bg-accent text-background":
+                                values.iconValue === unit,
+                            }
+                          )}
+                          onClick={() =>
+                            onValueChange((prev) => ({
+                              ...prev,
+                              iconValue: unit,
+                            }))
+                          }
+                        >
+                          <div className="w-8 h-8">
+                            <ImageComponent name={unit} />
+                          </div>
+                          {unit}
+                        </div>
+                      ))
+                  )}
+                </div>
+              </ScrollArea>
+            </>
+          ) : null}
+          {values.tool === "artilleryIcon" ? (
+            <>
+              <Input
+                type="text"
+                placeholder="Search Artillery"
+                value={otherValue}
+                onChange={(e) => setOtherValue(e.target.value)}
+              />
+              <ScrollArea className="w-full h-[480px]">
+                <div>
+                  {artillery
+                    .filter((e) =>
+                      e.toLowerCase().includes(unitValue.toLowerCase())
+                    )
+                    .map((art) => (
                       <div
-                        key={unit}
+                        key={art}
                         className={clsx(
                           "flex items-center gap-2 text-xs mb-1 cursor-pointer",
                           {
                             "bg-accent text-background":
-                              values.iconValue === unit,
+                              values.iconValue === art,
                           }
                         )}
                         onClick={() =>
                           onValueChange((prev) => ({
                             ...prev,
-                            iconValue: unit,
+                            iconValue: art,
                           }))
                         }
                       >
                         <div className="w-8 h-8">
-                          <ImageComponent name={unit} />
+                          <Image
+                            src={`${
+                              process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+                            }/images/artillery/${art
+                              .toLowerCase()
+                              .replace(/[ ':]/g, "-")}.png`}
+                            alt={art}
+                            width={32}
+                            height={32}
+                          />
                         </div>
-                        {unit}
+                        {art}
                       </div>
-                    ))
-                )}
-              </div>
-            </ScrollArea>
-          ) : null}
-          {values.tool === "artilleryIcon" ? (
-            <ScrollArea className="w-full h-[480px]">
-              <div>
-                {artillery.map((art) => (
-                  <div
-                    key={art}
-                    className={clsx(
-                      "flex items-center gap-2 text-xs mb-1 cursor-pointer",
-                      {
-                        "bg-accent text-background": values.iconValue === art,
-                      }
-                    )}
-                    onClick={() =>
-                      onValueChange((prev) => ({
-                        ...prev,
-                        iconValue: art,
-                      }))
-                    }
-                  >
-                    <div className="w-8 h-8">
-                      <Image
-                        src={`${
-                          process.env.NEXT_PUBLIC_IMAGES_IP_HOST
-                        }/images/artillery/${art
-                          .toLowerCase()
-                          .replace(/[ ':]/g, "-")}.png`}
-                        alt={art}
-                        width={32}
-                        height={32}
-                      />
-                    </div>
-                    {art}
-                  </div>
-                ))}
-              </div>
-            </ScrollArea>
+                    ))}
+                </div>
+              </ScrollArea>
+            </>
           ) : null}
           {values.tool === "delete" ? (
             <div>

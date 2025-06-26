@@ -18,7 +18,6 @@ const MapEditor = ({
   currentTool: ToolsConfig;
   onPlanChange: Dispatch<SetStateAction<Plan>>;
 }) => {
-  // const [backgroundImage] = useImage(`/maps/${plan.map}.jpg`);
   const [backgroundImage] = useImage(
     `/api/images/maps/${plan.map.toLowerCase().replaceAll(/[ ':]/g, "-")}.png`
   );
