@@ -119,6 +119,7 @@ const Content = ({
               <div className="flex">
                 <p>{currentPlan.description}</p>
                 <MapEditor
+                  lineup={e}
                   plan={currentPlan}
                   currentTool={{ ...DEFAULT_TOOLS_CONFIG, tool: "text" }}
                   onPlanChange={setCurrentPlan}

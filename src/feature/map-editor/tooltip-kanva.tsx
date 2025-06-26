@@ -2,11 +2,29 @@ import { useState, useRef } from "react";
 import { Tag, Text, Label, Group, Circle } from "react-konva";
 import { IconElement } from "./lib/types";
 import Konva from "konva";
+import { PublicLineup } from "@/lib/get-data";
+import UnitIconImage from "./unit-icon-image";
 
-const TooltipKanva = ({ element }: { element: IconElement }) => {
+const TooltipKanva = ({
+  element,
+  lineup,
+}: {
+  element: IconElement;
+  lineup: PublicLineup;
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   const groupRef = useRef<Konva.Group>(null);
-
+  const currentPlayer = lineup.sheet.find(
+    (player) => player.username === element.iconValue
+  );
+  const labelText = currentPlayer
+    ? `User: ${currentPlayer.username}
+Unit 1: ${currentPlayer.unit1}
+Unit 2: ${currentPlayer.unit2}
+Unit 3: ${currentPlayer.unit3}
+Weapon: ${currentPlayer.weapon}
+Desc: ${currentPlayer.description}`
+    : "No data available";
   return (
     <Group
       ref={groupRef}
@@ -38,12 +56,7 @@ const TooltipKanva = ({ element }: { element: IconElement }) => {
             lineJoin="round"
             cornerRadius={4}
           />
-          <Text
-            text={element.iconValue}
-            fontSize={14}
-            fill="white"
-            padding={5}
-          />
+          <Text text={labelText} fontSize={14} fill="white" padding={5} />
         </Label>
       )}
     </Group>

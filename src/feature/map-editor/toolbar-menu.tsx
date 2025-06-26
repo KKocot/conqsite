@@ -373,14 +373,12 @@ const ToolbarMenu = ({
                   />
                 ) : null}
                 {lineup ? (
-                  <>
-                    <Input
-                      type="text"
-                      placeholder="Enter House Name"
-                      value={`${lineup.name} - ${lineup.date}`}
-                      className="w-full h-8 p-1 border rounded"
-                    />
-                  </>
+                  <div className="text-sm border-2 border-accent p-2">
+                    <h2 className="text-center">Sheet:</h2>
+                    <span>
+                      {lineup.name} - {lineup.date}
+                    </span>
+                  </div>
                 ) : (
                   <div>No Lineup Data Available</div>
                 )}

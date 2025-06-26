@@ -9,15 +9,18 @@ import { Dispatch, SetStateAction, useRef } from "react";
 import { nanoid } from "nanoid";
 import UnitIconImage from "./unit-icon-image";
 import TooltipKanva from "./tooltip-kanva";
+import { PublicLineup } from "@/lib/get-data";
 
 const MapEditor = ({
   plan,
   currentTool,
   onPlanChange,
+  lineup,
 }: {
   plan: Plan;
   currentTool: ToolsConfig;
   onPlanChange: Dispatch<SetStateAction<Plan>>;
+  lineup: PublicLineup | undefined;
 }) => {
   const [backgroundImage] = useImage(
     `/api/images/maps/${plan.map.toLowerCase().replaceAll(/[ ':]/g, "-")}.png`
@@ -634,8 +637,18 @@ const MapEditor = ({
             ) {
               return <UnitIconImage key={element.id} element={element} />;
             }
-            if (element.tool === "tooltip" && "iconValue" in element) {
-              return <TooltipKanva key={element.id} element={element} />;
+            if (
+              element.tool === "tooltip" &&
+              "iconValue" in element &&
+              !!lineup
+            ) {
+              return (
+                <TooltipKanva
+                  lineup={lineup}
+                  key={element.id}
+                  element={element}
+                />
+              );
             }
 
             return null;

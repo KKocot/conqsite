@@ -47,6 +47,7 @@ const MapFrame = ({
         plan={currentPlan}
         currentTool={toolsConfig}
         onPlanChange={setCurrentPlan}
+        lineup={storedLineup}
       />
       <ToolbarMenu
         lineup={storedLineup}
