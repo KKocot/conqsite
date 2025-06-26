@@ -16,7 +16,9 @@ export const stageSize = {
 
 export const DEFAULT_TOOLS_CONFIG: ToolsConfig = {
   tool: "select",
-  iconValue: "",
+  otherIconValue: "Well Made Mortar",
+  unitIconValue: "Siphonarioi",
+  tooltipValue: "1",
   toolColor: "#ff0000",
   size: 4,
 };

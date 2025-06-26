@@ -224,9 +224,8 @@ const MapEditor = ({
         }
         break;
       case "unitIcon":
-      case "artilleryIcon":
         // Handle unit icon tool logic
-        if (currentTool.iconValue) {
+        if (currentTool.unitIconValue) {
           onPlanChange((prev) => ({
             ...prev,
             elements: [
@@ -239,7 +238,28 @@ const MapEditor = ({
                 size: currentTool.size,
                 x: pos.x,
                 y: pos.y,
-                iconValue: currentTool.iconValue,
+                iconValue: currentTool.unitIconValue,
+              },
+            ],
+          }));
+        }
+        break;
+      case "artilleryIcon":
+        // Handle unit icon tool logic
+        if (currentTool.otherIconValue) {
+          onPlanChange((prev) => ({
+            ...prev,
+            elements: [
+              ...prev.elements,
+              {
+                id: nanoid(),
+                tool: currentTool.tool,
+                color: currentTool.toolColor,
+                strokeWidth: currentTool.size,
+                size: currentTool.size,
+                x: pos.x,
+                y: pos.y,
+                iconValue: currentTool.otherIconValue,
               },
             ],
           }));

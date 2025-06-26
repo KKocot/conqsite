@@ -200,13 +200,13 @@ const ToolbarMenu = ({
                             "flex items-center gap-2 text-xs mb-1 cursor-pointer",
                             {
                               "bg-accent text-background":
-                                values.iconValue === unit,
+                                values.unitIconValue === unit,
                             }
                           )}
                           onClick={() =>
                             onValueChange((prev) => ({
                               ...prev,
-                              iconValue: unit,
+                              unitIconValue: unit,
                             }))
                           }
                         >
@@ -242,13 +242,13 @@ const ToolbarMenu = ({
                           "flex items-center gap-2 text-xs mb-1 cursor-pointer",
                           {
                             "bg-accent text-background":
-                              values.iconValue === art,
+                              values.otherIconValue === art,
                           }
                         )}
                         onClick={() =>
                           onValueChange((prev) => ({
                             ...prev,
-                            iconValue: art,
+                            otherIconValue: art,
                           }))
                         }
                       >

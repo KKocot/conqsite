@@ -40,7 +40,9 @@ export interface ToolsConfig {
     | "map"
     | "templates"
     | "public";
-  iconValue: string;
+  otherIconValue: string;
+  unitIconValue: string;
+  tooltipValue: string;
   toolColor: string;
   size: number;
 }
