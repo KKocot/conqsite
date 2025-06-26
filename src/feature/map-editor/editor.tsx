@@ -1,13 +1,25 @@
 "use client";
 
-import { Stage, Layer, Image, Line, Arrow, Circle } from "react-konva";
+import {
+  Stage,
+  Layer,
+  Image,
+  Line,
+  Arrow,
+  Circle,
+  Tag,
+  Text,
+  Label,
+  Group,
+} from "react-konva";
 import Konva from "konva";
 import useImage from "use-image";
 import { Plan, ToolsConfig } from "./lib/types";
 import { stageSize } from "./lib/assets";
-import { Dispatch, SetStateAction, useRef } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { nanoid } from "nanoid";
 import UnitIconImage from "./unit-icon-image";
+import TooltipKanva from "./tooltip-kanva";
 
 const MapEditor = ({
   plan,
@@ -30,7 +42,7 @@ const MapEditor = ({
   const isDrawingCircle = useRef(false);
   const dragStartPos = useRef<{ x: number; y: number } | null>(null);
 
-  const handleMouseDown = (e: Konva.KonvaEventObject<MouseEvent>) => {
+  const handleMouseDown = (_e: Konva.KonvaEventObject<MouseEvent>) => {
     const pos = stageRef.current?.getPointerPosition();
     if (!pos) return;
     switch (currentTool.tool) {
@@ -267,6 +279,23 @@ const MapEditor = ({
         break;
       case "tooltip":
         // Handle tooltip tool logic
+        if (currentTool.tooltipValue) {
+          onPlanChange((prev) => ({
+            ...prev,
+            elements: [
+              ...prev.elements,
+              {
+                id: nanoid(),
+                tool: currentTool.tool,
+                color: currentTool.toolColor,
+                strokeWidth: currentTool.size,
+                x: pos.x,
+                y: pos.y,
+                iconValue: currentTool.tooltipValue,
+              },
+            ],
+          }));
+        }
         break;
       case "delete":
         // Handle delete tool logic
@@ -598,6 +627,10 @@ const MapEditor = ({
             ) {
               return <UnitIconImage key={element.id} element={element} />;
             }
+            if (element.tool === "tooltip" && "iconValue" in element) {
+              return <TooltipKanva element={element} />;
+            }
+
             return null;
           })}
         </Layer>

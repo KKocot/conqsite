@@ -19,7 +19,7 @@ import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import TemplatesTab from "./templates-tab";
 import MapTab from "./map-tab";
-import { artillery } from "./lib/assets";
+import { artillery, convertToColor } from "./lib/assets";
 import LineupLoader from "./lineup-loader";
 import { useAddMapPublicMutation } from "@/components/hooks/use-plan-public-mutation";
 import { toast } from "react-toastify";
@@ -279,7 +279,7 @@ const ToolbarMenu = ({
             </div>
           ) : null}
           {values.tool === "tooltip" ? (
-            <ScrollArea className="w-full h-[530px]">
+            <ScrollArea className="w-full h-[530px] scroll-m-0">
               {dates.isLoading ? (
                 <div>Loading...</div>
               ) : !dates.data ? (
@@ -288,33 +288,48 @@ const ToolbarMenu = ({
                 <>
                   <ul>
                     {lineup
-                      ? lineup.sheet.map((e, i) => (
-                          <li
-                            className={`border-2 p-1 border${e.color}`}
-                            key={i}
-                          >
-                            <span className="underline text-lg">{`${i + 1} ${
-                              e.username
-                            }`}</span>
-                            <div className="flex items-center justify-around">
-                              {e.unit1 !== "" ? (
-                                <span>
-                                  <ImageComponent name={e.unit1} />
-                                </span>
-                              ) : null}
-                              {e.unit2 !== "" ? (
-                                <span>
-                                  <ImageComponent name={e.unit2} />
-                                </span>
-                              ) : null}
-                              {e.unit3 !== "" ? (
-                                <span>
-                                  <ImageComponent name={e.unit3} />
-                                </span>
-                              ) : null}
-                            </div>
-                          </li>
-                        ))
+                      ? lineup.sheet
+                          .filter((el) => el.username !== "")
+                          .map((e, i) => (
+                            <li
+                              className={clsx(
+                                `border-2 bg-gradient-to-t from${e.color} p-1 cursor-pointer hover:bg-opacity-80`,
+                                {
+                                  "border-accent":
+                                    values.tooltipValue === e.username,
+                                }
+                              )}
+                              key={i}
+                              onClick={() =>
+                                onValueChange((prev) => ({
+                                  ...prev,
+                                  tooltipValue: e.username,
+                                  toolColor: convertToColor(e.color),
+                                }))
+                              }
+                            >
+                              <span className="underline text-lg">{`${i + 1} ${
+                                e.username
+                              }`}</span>
+                              <div className="flex items-center gap-2">
+                                {e.unit1 !== "" ? (
+                                  <span>
+                                    <ImageComponent name={e.unit1} />
+                                  </span>
+                                ) : null}
+                                {e.unit2 !== "" ? (
+                                  <span>
+                                    <ImageComponent name={e.unit2} />
+                                  </span>
+                                ) : null}
+                                {e.unit3 !== "" ? (
+                                  <span>
+                                    <ImageComponent name={e.unit3} />
+                                  </span>
+                                ) : null}
+                              </div>
+                            </li>
+                          ))
                       : null}
                   </ul>
                   <LineupLoader
