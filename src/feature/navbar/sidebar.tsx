@@ -143,6 +143,14 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         iconPath: "/icons/builder.svg",
       },
       {
+        title: "Map Editor",
+        url: `/map-editor/${house}`,
+        visibleTo: commanders.some(
+          (e) => e.discordId === data?.user.id && e.house === house
+        ),
+        iconPath: "/icons/plans.png",
+      },
+      {
         title: t("house.house_stats"),
         url: `/stats/${house}`,
         visibleTo: commanders.some(

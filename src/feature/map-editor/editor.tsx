@@ -8,15 +8,19 @@ import { stageSize } from "./lib/assets";
 import { Dispatch, SetStateAction, useRef } from "react";
 import { nanoid } from "nanoid";
 import UnitIconImage from "./unit-icon-image";
+import TooltipKanva from "./tooltip-kanva";
+import { PublicLineup } from "@/lib/get-data";
 
 const MapEditor = ({
   plan,
   currentTool,
   onPlanChange,
+  lineup,
 }: {
   plan: Plan;
   currentTool: ToolsConfig;
   onPlanChange: Dispatch<SetStateAction<Plan>>;
+  lineup: PublicLineup | undefined;
 }) => {
   const [backgroundImage] = useImage(
     `/api/images/maps/${plan.map.toLowerCase().replaceAll(/[ ':]/g, "-")}.png`
@@ -30,7 +34,7 @@ const MapEditor = ({
   const isDrawingCircle = useRef(false);
   const dragStartPos = useRef<{ x: number; y: number } | null>(null);
 
-  const handleMouseDown = (e: Konva.KonvaEventObject<MouseEvent>) => {
+  const handleMouseDown = (_e: Konva.KonvaEventObject<MouseEvent>) => {
     const pos = stageRef.current?.getPointerPosition();
     if (!pos) return;
     switch (currentTool.tool) {
@@ -73,6 +77,15 @@ const MapEditor = ({
             (element.tool === "unitIcon" || element.tool === "artilleryIcon")
           ) {
             const halfSize = element.strokeWidth / 2;
+            return (
+              pos.x >= element.x - halfSize &&
+              pos.x <= element.x + halfSize &&
+              pos.y >= element.y - halfSize &&
+              pos.y <= element.y + halfSize
+            );
+          }
+          if (element.tool === "tooltip" && "iconValue" in element) {
+            const halfSize = 15;
             return (
               pos.x >= element.x - halfSize &&
               pos.x <= element.x + halfSize &&
@@ -224,9 +237,8 @@ const MapEditor = ({
         }
         break;
       case "unitIcon":
-      case "artilleryIcon":
         // Handle unit icon tool logic
-        if (currentTool.iconValue) {
+        if (currentTool.unitIconValue) {
           onPlanChange((prev) => ({
             ...prev,
             elements: [
@@ -239,7 +251,28 @@ const MapEditor = ({
                 size: currentTool.size,
                 x: pos.x,
                 y: pos.y,
-                iconValue: currentTool.iconValue,
+                iconValue: currentTool.unitIconValue,
+              },
+            ],
+          }));
+        }
+        break;
+      case "artilleryIcon":
+        // Handle unit icon tool logic
+        if (currentTool.otherIconValue) {
+          onPlanChange((prev) => ({
+            ...prev,
+            elements: [
+              ...prev.elements,
+              {
+                id: nanoid(),
+                tool: currentTool.tool,
+                color: currentTool.toolColor,
+                strokeWidth: currentTool.size,
+                size: currentTool.size,
+                x: pos.x,
+                y: pos.y,
+                iconValue: currentTool.otherIconValue,
               },
             ],
           }));
@@ -247,6 +280,23 @@ const MapEditor = ({
         break;
       case "tooltip":
         // Handle tooltip tool logic
+        if (currentTool.tooltipValue) {
+          onPlanChange((prev) => ({
+            ...prev,
+            elements: [
+              ...prev.elements,
+              {
+                id: nanoid(),
+                tool: currentTool.tool,
+                color: currentTool.toolColor,
+                strokeWidth: currentTool.size,
+                x: pos.x,
+                y: pos.y,
+                iconValue: currentTool.tooltipValue,
+              },
+            ],
+          }));
+        }
         break;
       case "delete":
         // Handle delete tool logic
@@ -288,6 +338,15 @@ const MapEditor = ({
             (element.tool === "unitIcon" || element.tool === "artilleryIcon")
           ) {
             const halfSize = element.strokeWidth / 2;
+            return (
+              pos.x >= element.x - halfSize &&
+              pos.x <= element.x + halfSize &&
+              pos.y >= element.y - halfSize &&
+              pos.y <= element.y + halfSize
+            );
+          }
+          if (element.tool === "tooltip" && "iconValue" in element) {
+            const halfSize = 15;
             return (
               pos.x >= element.x - halfSize &&
               pos.x <= element.x + halfSize &&
@@ -578,6 +637,20 @@ const MapEditor = ({
             ) {
               return <UnitIconImage key={element.id} element={element} />;
             }
+            if (
+              element.tool === "tooltip" &&
+              "iconValue" in element &&
+              !!lineup
+            ) {
+              return (
+                <TooltipKanva
+                  lineup={lineup}
+                  key={element.id}
+                  element={element}
+                />
+              );
+            }
+
             return null;
           })}
         </Layer>

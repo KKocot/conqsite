@@ -107,7 +107,7 @@ const Content = ({
         <TabsContent
           key={e.name + "content"}
           value={e.name}
-          className="flex self-center flex-col"
+          className="flex self-center flex-col p-12"
         >
           {!!plan && currentPlan.map !== "" ? (
             <div className="flex flex-col items-center">
@@ -117,8 +117,11 @@ const Content = ({
                   : "Untitled Layer"}
               </h2>
               <div className="flex">
-                <p>{currentPlan.description}</p>
+                <p className="max-w-[220px] break-words whitespace-pre-wrap">
+                  {currentPlan.description}
+                </p>
                 <MapEditor
+                  lineup={e}
                   plan={currentPlan}
                   currentTool={{ ...DEFAULT_TOOLS_CONFIG, tool: "text" }}
                   onPlanChange={setCurrentPlan}
