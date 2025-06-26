@@ -1,22 +1,11 @@
 "use client";
 
-import {
-  Stage,
-  Layer,
-  Image,
-  Line,
-  Arrow,
-  Circle,
-  Tag,
-  Text,
-  Label,
-  Group,
-} from "react-konva";
+import { Stage, Layer, Image, Line, Arrow, Circle } from "react-konva";
 import Konva from "konva";
 import useImage from "use-image";
 import { Plan, ToolsConfig } from "./lib/types";
 import { stageSize } from "./lib/assets";
-import { Dispatch, SetStateAction, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
 import { nanoid } from "nanoid";
 import UnitIconImage from "./unit-icon-image";
 import TooltipKanva from "./tooltip-kanva";
@@ -85,6 +74,15 @@ const MapEditor = ({
             (element.tool === "unitIcon" || element.tool === "artilleryIcon")
           ) {
             const halfSize = element.strokeWidth / 2;
+            return (
+              pos.x >= element.x - halfSize &&
+              pos.x <= element.x + halfSize &&
+              pos.y >= element.y - halfSize &&
+              pos.y <= element.y + halfSize
+            );
+          }
+          if (element.tool === "tooltip" && "iconValue" in element) {
+            const halfSize = 15;
             return (
               pos.x >= element.x - halfSize &&
               pos.x <= element.x + halfSize &&
@@ -337,6 +335,15 @@ const MapEditor = ({
             (element.tool === "unitIcon" || element.tool === "artilleryIcon")
           ) {
             const halfSize = element.strokeWidth / 2;
+            return (
+              pos.x >= element.x - halfSize &&
+              pos.x <= element.x + halfSize &&
+              pos.y >= element.y - halfSize &&
+              pos.y <= element.y + halfSize
+            );
+          }
+          if (element.tool === "tooltip" && "iconValue" in element) {
+            const halfSize = 15;
             return (
               pos.x >= element.x - halfSize &&
               pos.x <= element.x + halfSize &&
@@ -628,7 +635,7 @@ const MapEditor = ({
               return <UnitIconImage key={element.id} element={element} />;
             }
             if (element.tool === "tooltip" && "iconValue" in element) {
-              return <TooltipKanva element={element} />;
+              return <TooltipKanva key={element.id} element={element} />;
             }
 
             return null;
