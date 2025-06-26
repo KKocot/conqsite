@@ -148,7 +148,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         visibleTo: commanders.some(
           (e) => e.discordId === data?.user.id && e.house === house
         ),
-        iconPath: "/icons/plans.svg",
+        iconPath: "/icons/plans.png",
       },
       {
         title: t("house.house_stats"),
