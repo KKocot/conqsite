@@ -1,5 +1,6 @@
 import { PlanPublic } from "@/lib/get-data";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 export const useAddMapPublicMutation = () => {
   const queryClient = useQueryClient();
@@ -21,11 +22,14 @@ export const useAddMapPublicMutation = () => {
 
       return response.json();
     },
+
     onSuccess: (data) => {
-      const { house } = data;
-      queryClient.invalidateQueries({ queryKey: ["PlanPublic", house] });
+      const { name } = data;
+      queryClient.invalidateQueries({ queryKey: ["plan", name] });
+      toast.success("Map connected successfully!");
     },
     onError: (error: Error) => {
+      toast.error(`Error occurred: ${error.message}`);
       console.error("Error occurred:", error.message);
     },
   });
@@ -47,9 +51,9 @@ export const useDeletePlanPublicMutation = () => {
     },
 
     onSuccess: (data) => {
-      const { publicPlan } = data;
+      const { name } = data;
       queryClient.invalidateQueries({
-        queryKey: ["PlanPublic", publicPlan.house],
+        queryKey: ["plan", name],
       });
     },
     onError: (error: Error) => {

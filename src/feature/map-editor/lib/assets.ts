@@ -71,35 +71,6 @@ export const artillery = [
   "Siege Engine",
 ];
 
-export const maps = [
-  "Allenburg",
-  "Augolia Outskirts",
-  "Augolia",
-  "Border Fort",
-  "Canyon",
-  "Combat Arena",
-  "Dasuo",
-  "Emerald River",
-  "Field Camp",
-  "Frontier Camp",
-  "Ghost Town",
-  "Grassland",
-  "Harbour City",
-  "Heilung Fjord",
-  "Hidden City",
-  "Khamsin",
-  "Kurak Castle(New)",
-  "Marauder Settlement",
-  "Riverlands Castle",
-  "Stalemate Creek",
-  "Sun City",
-  "TW City 1",
-  "Valley Fortress",
-  "Wall Fort",
-  "Westwood",
-  "White Elk Fort",
-];
-
 export const convertToColor = (color: string): string => {
   switch (color) {
     case "-red-700":

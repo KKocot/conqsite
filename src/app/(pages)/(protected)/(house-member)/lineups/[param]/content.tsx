@@ -54,7 +54,7 @@ const Content = ({
     cleanedLineupName ?? data?.[0]?.name ?? ""
   );
   const { data: plan } = useQuery({
-    queryKey: ["plan", name, house],
+    queryKey: ["plan", name],
     queryFn: () => getPublicPlans(house, name),
     enabled: !!name,
   });

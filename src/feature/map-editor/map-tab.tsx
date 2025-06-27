@@ -1,9 +1,10 @@
 import clsx from "clsx";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { maps } from "./lib/assets";
 import ImageComponent from "@/components/image-component";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getMapsAssets } from "@/lib/get-data";
 
 const MapTab = ({
   value,
@@ -12,8 +13,16 @@ const MapTab = ({
   value: string;
   onChange: (map: string) => void;
 }) => {
+  const { data, isLoading } = useQuery({
+    queryKey: ["maps"],
+    queryFn: () => getMapsAssets(),
+  });
   const [mapValue, setMapValue] = useState<string>("");
-  return (
+  return isLoading ? (
+    <div>Loading...</div>
+  ) : !data ? (
+    <div>No maps available</div>
+  ) : (
     <>
       <Input
         type="text"
@@ -22,7 +31,8 @@ const MapTab = ({
         onChange={(e) => setMapValue(e.target.value)}
       />
       <ScrollArea className="w-full h-[550px]">
-        {maps
+        {data
+          .map((e) => e.name)
           .filter((e) => e.toLowerCase().includes(mapValue.toLowerCase()))
           .map((map) => (
             <div
