@@ -60,8 +60,10 @@ const putEventSchema = z.object({
   bot_type: z.string(),
   date_start_event: z.string().min(1, "Date is required"),
   time_start_event: z.string().min(1, "Hour is required"),
-  interval: z.number().min(-1),
-  activity_time: z.number(),
+  interval: z.coerce.number().min(-1),
+  activity_time: z.coerce
+    .number()
+    .min(1, "Activity time must be at least 1 hour"),
   title: z.string().min(1, "Title is required"),
   description: z
     .string()
@@ -103,12 +105,11 @@ const EventDialog = ({
   const edit_mode = !!entry;
 
   const botEventMutation = useBotEventMutation(edit_mode ? "edit" : "create");
-
   const onSubmit = () => {
     const data = form.getValues();
     botEventMutation.mutate({
       ...data,
-      // Convert string to number
+      interval: Number(data.interval),
       activity_time: Number(data.activity_time),
     });
   };

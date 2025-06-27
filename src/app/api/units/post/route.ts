@@ -67,8 +67,8 @@ export async function GET(request: Request) {
           doctrines: post.doctrines,
           author: post.author,
           date: post.date,
-          authorNick: authorSurvey.discordNick,
-          authorAvatar: authorSurvey.avatar,
+          authorNick: !!authorSurvey ? authorSurvey.discordNick : "Unknown",
+          authorAvatar: !!authorSurvey ? authorSurvey.avatar : "Unknown",
         },
         { status: 200 }
       );
@@ -86,8 +86,8 @@ export async function GET(request: Request) {
           unit: post.unit,
           description: post.description,
           author: post.author,
-          authorNick: authorSurvey.discordNick,
-          authorAvatar: authorSurvey.avatar,
+          authorNick: !!authorSurvey ? authorSurvey.discordNick : "Unknown",
+          authorAvatar: !!authorSurvey ? authorSurvey.avatar : "Unknown",
         });
       }
       return NextResponse.json(userPost, { status: 200 });
@@ -99,7 +99,10 @@ export async function GET(request: Request) {
       const posts = await UnitPost.find({ author: author });
       return NextResponse.json(
         {
-          author: { img: authorSurvey.avatar, nick: authorSurvey.discordNick },
+          author: {
+            img: !!authorSurvey ? authorSurvey.avatar : "Unknown",
+            nick: !!authorSurvey ? authorSurvey.discordNick : "Unknown",
+          },
           posts,
         },
         { status: 200 }

@@ -21,7 +21,7 @@ const List = ({ units, value }: { units: Unit[]; value: string }) => {
   const t = useTranslations("MyProfile");
   return (
     <TableCell>
-      <div className="flex flex-wrap gap-3 justify-center">
+      <div className="flex flex-wrap gap-3 min-w-12 justify-center">
         {units.map((unit) =>
           unit.matchingUnit?.value === value ? (
             <span key={unit.id} className="w-fit">
@@ -46,7 +46,12 @@ const List = ({ units, value }: { units: Unit[]; value: string }) => {
                 href={`/unit/${unit?.name.replaceAll(" ", "_")}`}
                 target="_blank"
               >
-                <ImageComponent name={unit.name} width={48} height={48} />
+                <ImageComponent
+                  name={unit.name}
+                  width={48}
+                  height={48}
+                  className="w-12 h-12"
+                />
               </Link>
             </span>
           ) : null
