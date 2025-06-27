@@ -68,7 +68,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         title: "Maps",
         url: "/dashboard/maps",
         disabled: false,
-        iconPath: "/icons/castle.svg",
+        iconPath: "/icons/castle.png",
       },
     ],
   };

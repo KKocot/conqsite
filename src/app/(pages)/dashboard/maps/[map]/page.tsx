@@ -11,7 +11,7 @@ const Page = () => {
   const { map }: { map: string } = useParams();
   const cleanMapName = map.replaceAll("_", " ");
   const { data, isLoading } = useQuery({
-    queryKey: ["maps"],
+    queryKey: ["maps", map],
     queryFn: () => getMapAssets(cleanMapName),
   });
   if (isLoading) return <LoadingComponent />;
