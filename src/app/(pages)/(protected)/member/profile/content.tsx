@@ -116,13 +116,15 @@ export default function Content({
                   })}
                   title={t("leadership") + ": " + e.matchingWeapon.leadership}
                 >
-                  <Image
-                    height={48}
-                    width={48}
-                    src={e.src}
-                    alt={e.name}
-                    className="rounded-full"
-                  />
+                  <div className="w-12 h-12">
+                    <Image
+                      height={48}
+                      width={48}
+                      src={e.src}
+                      alt={e.name}
+                      className="rounded-full"
+                    />
+                  </div>
                   <span className="text-sm">{e.name}</span>
                 </li>
               ) : null
