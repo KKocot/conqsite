@@ -397,9 +397,6 @@ const ToolbarMenu = ({
                     house: house,
                     layers: plan,
                   });
-                  if (addMapPublicMutation.isSuccess) {
-                    toast.success("Map connected successfully!");
-                  }
                 }}
               >
                 Connect
