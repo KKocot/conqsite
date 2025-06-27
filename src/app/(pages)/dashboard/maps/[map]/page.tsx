@@ -2,14 +2,17 @@
 
 import { useQuery } from "@tanstack/react-query";
 import Content from "./content";
-import { getMapsAssets } from "@/lib/get-data";
+import { getMapAssets } from "@/lib/get-data";
 import NoData from "@/feature/ifs/no-data";
 import LoadingComponent from "@/feature/ifs/loading";
+import { useParams } from "next/navigation";
 
 const Page = () => {
+  const { map }: { map: string } = useParams();
+  const cleanMapName = map.replaceAll("_", " ");
   const { data, isLoading } = useQuery({
-    queryKey: ["maps"],
-    queryFn: () => getMapsAssets(),
+    queryKey: ["maps", map],
+    queryFn: () => getMapAssets(cleanMapName),
   });
   if (isLoading) return <LoadingComponent />;
   if (!data) return <NoData />;
