@@ -36,7 +36,12 @@ const LayersMenu = ({
               "border-accent": layer.index === currentLayer.index,
             })}
           >
-            <CardHeader className="p-2 text-center">
+            <CardHeader
+              className="p-2 text-center cursor-pointer"
+              onClick={() => {
+                onCurrentLayerChange(layer);
+              }}
+            >
               {layer.title !== "" ? layer.title : `Layer ${layer.index}`}
             </CardHeader>
             <CardContent className="flex items-center p-0">
@@ -48,14 +53,6 @@ const LayersMenu = ({
                 }}
               >
                 <Trash className="h-4 w-4" />
-              </Button>
-              <Button
-                className="p-0 w-8 bg-transparent text-green-500 hover:bg-green-500 hover:text-black"
-                onClick={() => {
-                  onCurrentLayerChange(layer);
-                }}
-              >
-                <FolderDown className="h-4 w-4" />
               </Button>
               <Button
                 className="p-0 w-8 bg-transparent"
