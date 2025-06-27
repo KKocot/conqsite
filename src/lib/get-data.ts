@@ -1,4 +1,4 @@
-import { Elements, Plan } from "@/feature/map-editor/lib/types";
+import { Plan } from "@/feature/map-editor/lib/types";
 import { SheetTypes } from "./type";
 
 export interface Roles {
@@ -779,4 +779,22 @@ export const getMostUsedUnits = async (): Promise<MostUsedUnits[]> => {
   const response = await fetch(`/api/units/most-used-units`);
   const result = await response.json();
   return result;
+};
+
+export interface MapAsset {
+  name: string;
+  cities: string[];
+  types: string[];
+}
+
+export const getMapsAssets = async (): Promise<MapAsset[]> => {
+  const response = await fetch(`/api/assets/maps`);
+  const result = await response.json();
+  return result.mapsAssets;
+};
+
+export const getMapAssets = async (name: string): Promise<MapAsset> => {
+  const response = await fetch(`/api/assets/maps?map=${name}`);
+  const result = await response.json();
+  return result.mapAssets;
 };

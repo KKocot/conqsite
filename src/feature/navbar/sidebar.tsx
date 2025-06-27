@@ -64,19 +64,12 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         disabled: false,
         iconPath: "/icons/doctrines.svg",
       },
-      // {
-      //   title: "Map (Soon)",
-      //   url: "/dashboard/maps",
-      //   disabled: false,
-      //   // TODO translate
-      //   iconPath: "/icons/doctrines.svg",
-      // },
-      // {
-      //   title: "Wiki requests",
-      //   url: `/dashboard/wiki-requests`,
-      //   visibleTo: data?.user.id ? true : false,
-      //   iconPath: "/icons/wiki.svg",
-      // },
+      {
+        title: "Maps",
+        url: "/dashboard/maps",
+        disabled: false,
+        iconPath: "/icons/castle.svg",
+      },
     ],
   };
   const membersLinks = {
@@ -148,7 +141,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         visibleTo: commanders.some(
           (e) => e.discordId === data?.user.id && e.house === house
         ),
-        iconPath: "/icons/plans.svg",
+        iconPath: "/icons/plans.png",
       },
       {
         title: t("house.house_stats"),
