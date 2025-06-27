@@ -107,7 +107,7 @@ const Content = ({
         <TabsContent
           key={e.name + "content"}
           value={e.name}
-          className="flex self-center flex-col p-12"
+          className="flex self-center flex-col"
         >
           {!!plan && currentPlan.map !== "" ? (
             <div className="flex flex-col items-center">
@@ -117,7 +117,7 @@ const Content = ({
                   : "Untitled Layer"}
               </h2>
               <div className="flex">
-                <p className="max-w-[220px] break-words whitespace-pre-wrap">
+                <p className="w-[150px] break-words whitespace-pre-wrap">
                   {currentPlan.description}
                 </p>
                 <MapEditor
@@ -126,26 +126,30 @@ const Content = ({
                   currentTool={{ ...DEFAULT_TOOLS_CONFIG, tool: "text" }}
                   onPlanChange={setCurrentPlan}
                 />
-                {plan.layers.length > 1 ? (
-                  <div className="flex flex-col items-center mt-4">
-                    <h3 className="text-xl font-semibold mb-2">Layers</h3>
-                    <div className="flex gap-2 flex-col">
-                      {plan.layers.map((layer, i) => (
-                        <Button
-                          key={i}
-                          variant={
-                            currentPlan.title === layer.title
-                              ? "custom"
-                              : "default"
-                          }
-                          onClick={() => setCurrentPlan(layer)}
-                        >
-                          {layer.title !== "" ? layer.title : "Untitled Layer"}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
+                <div className="flex flex-col items-center mt-4 w-[150px]">
+                  {plan.layers.length > 1 ? (
+                    <>
+                      <h3 className="text-xl font-semibold mb-2">Layers</h3>
+                      <div className="flex gap-2 flex-col">
+                        {plan.layers.map((layer, i) => (
+                          <Button
+                            key={i}
+                            variant={
+                              currentPlan.title === layer.title
+                                ? "custom"
+                                : "default"
+                            }
+                            onClick={() => setCurrentPlan(layer)}
+                          >
+                            {layer.title !== ""
+                              ? layer.title
+                              : "Untitled Layer"}
+                          </Button>
+                        ))}
+                      </div>
+                    </>
+                  ) : null}
+                </div>
               </div>
             </div>
           ) : null}
