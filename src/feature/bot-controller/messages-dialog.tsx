@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/tooltip";
 import { HouseAssets } from "@/lib/get-data";
 import { Settings } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { toast } from "react-toastify";
 
 interface Props {
@@ -27,7 +28,7 @@ interface Props {
 const AssetsDialog = ({ assets, house }: Props) => {
   // Update assets mutation hook
   const updateHouseAssets = useUpdateAssetsMutation();
-
+  const t = useTranslations("CommandPages.BotController");
   // Update assets on switch change
   const onSwitchChange = () => {
     updateHouseAssets.mutate({
@@ -62,7 +63,11 @@ const AssetsDialog = ({ assets, house }: Props) => {
     } finally {
       if (data.status === "ok") {
         toast(
-          `Emtpy surveys: ${data.empty_survey}, but ${data.failed_members.length} failed`
+          // `Emtpy surveys: ${data.empty_survey}, but ${data.failed_members.length} failed`
+          t("empty_survey_message", {
+            empty: data.empty_survey,
+            failed: data.failed_members.length,
+          })
         );
       }
     }
@@ -80,10 +85,10 @@ const AssetsDialog = ({ assets, house }: Props) => {
           </DialogTrigger>
           <DialogContent className="">
             <DialogHeader>
-              <DialogTitle>Bot messages</DialogTitle>
+              <DialogTitle>{t("bot_messages")}</DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
-              <h2 className="font-bold">Permisions</h2>
+              <h2 className="font-bold">{t("permissions")}</h2>
               <div className="flex items-center space-x-2">
                 <Switch
                   id="messages"
@@ -91,22 +96,20 @@ const AssetsDialog = ({ assets, house }: Props) => {
                   checked={assets?.messages ?? true}
                   onCheckedChange={onSwitchChange}
                 />
-                <Label htmlFor="messages">
-                  Bot is allowed to message to players
-                </Label>
+                <Label htmlFor="messages">{t("bot_allowed")}</Label>
               </div>
             </div>
             <div className="space-y-4">
-              <h2 className="font-bold">Pings</h2>
+              <h2 className="font-bold">{t("pings")}</h2>
               <div className="flex flex-col space-y-2">
                 <Button variant="tab" onClick={onSurveysPing}>
-                  Empty surveys
+                  {t("empty_surveys")}
                 </Button>
               </div>
             </div>
           </DialogContent>
         </Dialog>
-        <TooltipContent>Bot messages</TooltipContent>
+        <TooltipContent>{t("bot_messages_permission")}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

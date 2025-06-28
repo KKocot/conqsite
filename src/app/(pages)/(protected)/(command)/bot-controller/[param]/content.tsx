@@ -26,6 +26,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useTranslations } from "next-intl";
 interface Props {
   house: string;
   userId: string;
@@ -43,6 +44,8 @@ const Content = ({
   botContent,
   assets = { name: house, premium: false, sharedList: false, signupBot: "" },
 }: Props) => {
+  const t = useTranslations("CommandPages.BotController");
+
   // Data for discord server: channels, roles, users
   const { data: discordData, isLoading: discordDataLoading } = useQuery({
     queryKey: ["discordData", house],
@@ -74,7 +77,7 @@ const Content = ({
     <div className="container py-8 px-4">
       {/* Check if events list is empty */}
       {events.length === 0 ? (
-        <div className="text-center">No events found</div>
+        <div className="text-center">{t("no_events_found")}</div>
       ) : (
         <div className="flex gap-4 flex-wrap">
           {events.map((event, i) => (
@@ -85,27 +88,57 @@ const Content = ({
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div>Description: {event.description}</div>
-                <div>{`Event start: ${event.date_start_event} ${event.time_start_event}`}</div>
-                <div>{`Next event: ${
-                  event.interval === -1
-                    ? "TW"
-                    : event.interval === 0
-                    ? "Never"
-                    : `${event.interval} days`
-                }`}</div>
-                <div>{`Activity time: ${event.activity_time} hours`}</div>
-                <div>{`Channel ID: ${
-                  discordData?.channels.find((e) => e.id === event.channel_id)
-                    ?.label
-                }`}</div>
-                <div>{`Role ID: ${
-                  discordData?.roles.find((e) => e.id === event.role_id)?.label
-                }`}</div>
-                <div>{`List: ${event.signUps.length}`}</div>
+                <div>
+                  {t("description", {
+                    description: event.description,
+                  })}
+                </div>
+                <div>
+                  {t("event_start", {
+                    date: event.date_start_event,
+                    time: event.time_start_event,
+                  })}
+                </div>
+                <div>
+                  {t("next_event", {
+                    interval:
+                      event.interval === -1
+                        ? t("tw")
+                        : event.interval === 0
+                        ? t("never")
+                        : t("days", {
+                            days: event.interval,
+                          }),
+                  })}
+                </div>
+                <div>
+                  {t("activity_time", {
+                    time: event.activity_time,
+                  })}
+                </div>
+                <div>
+                  {t("channel_id", {
+                    label:
+                      discordData?.channels.find(
+                        (e) => e.id === event.channel_id
+                      )?.label ?? t("unknown_channel"),
+                  })}
+                </div>
+                <div>
+                  {t("role_id", {
+                    label:
+                      discordData?.roles.find((e) => e.id === event.role_id)
+                        ?.label ?? t("unknown_role"),
+                  })}
+                </div>
+                <div>
+                  {t("list", {
+                    count: event.signUps.length,
+                  })}
+                </div>
               </CardContent>
               <CardFooter className="flex justify-end gap-4">
-                <span>Actions:</span>
+                <span>{t("actions")}</span>
                 {discordDataLoading || !discordData ? null : (
                   <EventDialog
                     disabled={limited}
@@ -145,7 +178,7 @@ const Content = ({
                   </div>
                 </DialogContent>
               </Dialog>
-              <TooltipContent>Info</TooltipContent>
+              <TooltipContent>{t("info")}</TooltipContent>
             </Tooltip>
           </TooltipProvider>
           <AssetsDialog assets={assets} house={house} />

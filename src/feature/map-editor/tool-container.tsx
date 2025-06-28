@@ -16,7 +16,7 @@ const ToolContainer = ({
   return (
     <div
       className={clsx(
-        "flex items-center justify-center p-2 cursor-pointer hover:bg-accent hover:text-background border-2 border-background-foreground",
+        "flex items-center justify-center p-2 cursor-pointer hover:bg-accent hover:text-background border-2 border-background-foreground mt-2",
         {
           "border-accent": currentTool,
         }

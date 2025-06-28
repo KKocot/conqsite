@@ -26,6 +26,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useTranslations } from "next-intl";
 
 // Default values for the form
 const defaultValues = {
@@ -54,28 +55,6 @@ const signUpSchema = z.object({
   userId: z.string(),
 });
 
-// Event schema with all required fields
-const putEventSchema = z.object({
-  _id: z.string().optional(),
-  bot_type: z.string(),
-  date_start_event: z.string().min(1, "Date is required"),
-  time_start_event: z.string().min(1, "Hour is required"),
-  interval: z.coerce.number().min(-1),
-  activity_time: z.coerce
-    .number()
-    .min(1, "Activity time must be at least 1 hour"),
-  title: z.string().min(1, "Title is required"),
-  description: z
-    .string()
-    .min(1, "Description is required")
-    .max(250, "Description is too long"),
-  house_name: z.string(),
-  channel_id: z.string().min(1, "Channel is required"),
-  role_id: z.string().min(1, "Role is required"),
-  signUps: z.array(signUpSchema),
-  active: z.boolean(),
-});
-
 const EventDialog = ({
   disabled,
   discordData,
@@ -90,6 +69,27 @@ const EventDialog = ({
   roleId: string;
 }) => {
   const [open, setOpen] = useState(false);
+  const t = useTranslations("CommandPages.BotController");
+
+  // Event schema with all required fields
+  const putEventSchema = z.object({
+    _id: z.string().optional(),
+    bot_type: z.string(),
+    date_start_event: z.string().min(1, t("date_required")),
+    time_start_event: z.string().min(1, t("hour_required")),
+    interval: z.coerce.number().min(-1),
+    activity_time: z.coerce.number().min(1, t("activity_time_min")),
+    title: z.string().min(1, t("title_required")),
+    description: z
+      .string()
+      .min(1, t("description_required"))
+      .max(250, t("description_too_long")),
+    house_name: z.string(),
+    channel_id: z.string().min(1, t("channel_required")),
+    role_id: z.string().min(1, t("role_required")),
+    signUps: z.array(signUpSchema),
+    active: z.boolean(),
+  });
   const form = useForm<BotEvent>({
     resolver: zodResolver(putEventSchema),
     values: {
@@ -119,11 +119,20 @@ const EventDialog = ({
     if (botEventMutation.isSuccess) {
       setOpen(false);
       form.reset();
-      toast.success(`Event ${edit_mode ? "update" : "created"}`);
+      // toast.success(`Event ${edit_mode ? "update" : "created"}`);
+      toast.success(
+        t("event_success", {
+          action: edit_mode ? t("updated") : t("created"),
+        })
+      );
     }
     // On request fail show error toast message
     if (botEventMutation.isError) {
-      toast.error(`Failed to ${edit_mode ? "update" : "create"} event`);
+      toast.error(
+        t("event_failed", {
+          action: edit_mode ? t("update") : t("create"),
+        })
+      );
     }
   }, [
     botEventMutation.isSuccess,
@@ -146,7 +155,7 @@ const EventDialog = ({
   }:00`;
 
   // Default title for TW event
-  const tw_tilte = `TW Event ${date}`;
+  const tw_tilte = t("tw_tilte", { date: date });
 
   // Set default title, date and hour for TW event
   useEffect(() => {
@@ -180,21 +189,18 @@ const EventDialog = ({
           </DialogTrigger>
           <DialogContent className="max-h-screen overflow-y-scroll">
             <DialogHeader>
-              <DialogTitle>Create Attendance Event</DialogTitle>
-              <DialogDescription>
-                Event will be posted in the selected channel after you press
-                Create Event
-              </DialogDescription>
+              <DialogTitle>{t("create_attendance")}</DialogTitle>
+              <DialogDescription>{t("event_info")}</DialogDescription>
             </DialogHeader>
             <EventForm discordData={discordData} form={form} />
             <DialogFooter>
               <Button onClick={form.handleSubmit(onSubmit)}>
-                Create Event
+                {t("create_event")}
               </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        <TooltipContent>Create event</TooltipContent>
+        <TooltipContent> {t("create_event")}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );
