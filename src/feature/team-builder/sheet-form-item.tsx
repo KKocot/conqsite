@@ -266,53 +266,59 @@ const Item = ({
             <AccordionTrigger>{t("artillery")}</AccordionTrigger>
             <AccordionContent>
               <div className="flex flex-wrap gap-2 justify-center">
-                {artillery.map((e) => (
-                  <Image
-                    height={40}
-                    width={40}
-                    className={clsx(
-                      "rounded-full mt-2 p-1 cursor-pointer hover:shadow-md transition duration-300 ease-in-out transform hover:scale-110 hover:bg-gray-300",
-                      {
-                        "bg-emerald-700 hover:bg-emerald-900":
-                          data.artillery.find((a) => a.id === e.id)?.check,
-                      }
-                    )}
-                    key={e.id}
-                    title={e.name}
-                    alt={e.name}
-                    src={e.src}
-                    onClick={() => {
-                      const artilleryIndex = data.artillery.findIndex(
-                        (art) => art.id === e.id
-                      );
-
-                      let updatedArtillery;
-                      if (artilleryIndex !== -1) {
-                        updatedArtillery = data.artillery.map((art, index) =>
-                          index === artilleryIndex
-                            ? { ...art, check: !art.check }
-                            : art
+                {artillery
+                  .filter((f) => f.id < 13)
+                  .map((e) => (
+                    <Image
+                      height={40}
+                      width={40}
+                      className={clsx(
+                        "rounded-full mt-2 p-1 cursor-pointer hover:shadow-md transition duration-300 ease-in-out transform hover:scale-110 hover:bg-gray-300 h-10 w-10",
+                        {
+                          "bg-emerald-700 hover:bg-emerald-900":
+                            data.artillery.find((a) => a.id === e.id)?.check,
+                        }
+                      )}
+                      key={e.id}
+                      title={e.name}
+                      alt={e.name}
+                      src={`${
+                        process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+                      }/images/artillery/${e.name
+                        .toLowerCase()
+                        .replace(/[ ':]/g, "-")}.png`}
+                      onClick={() => {
+                        const artilleryIndex = data.artillery.findIndex(
+                          (art) => art.id === e.id
                         );
-                      } else {
-                        updatedArtillery = [
-                          ...data.artillery,
-                          { id: e.id, check: true },
-                        ];
-                      }
-                      onEdit(
-                        index,
-                        data.username,
-                        data.unit1,
-                        data.unit2,
-                        data.unit3,
-                        data.weapon,
-                        data.description,
-                        data.color,
-                        updatedArtillery
-                      );
-                    }}
-                  />
-                ))}
+
+                        let updatedArtillery;
+                        if (artilleryIndex !== -1) {
+                          updatedArtillery = data.artillery.map((art, index) =>
+                            index === artilleryIndex
+                              ? { ...art, check: !art.check }
+                              : art
+                          );
+                        } else {
+                          updatedArtillery = [
+                            ...data.artillery,
+                            { id: e.id, check: true },
+                          ];
+                        }
+                        onEdit(
+                          index,
+                          data.username,
+                          data.unit1,
+                          data.unit2,
+                          data.unit3,
+                          data.weapon,
+                          data.description,
+                          data.color,
+                          updatedArtillery
+                        );
+                      }}
+                    />
+                  ))}
                 <span
                   title={user_artillery.title}
                   className="flex flex-col items-center mt-2"

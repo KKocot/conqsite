@@ -39,7 +39,9 @@ export interface ToolsConfig {
     | "text"
     | "map"
     | "templates"
-    | "public";
+    | "public"
+    | "otherIcon";
+  artyIconValue: string;
   otherIconValue: string;
   unitIconValue: string;
   tooltipValue: string;

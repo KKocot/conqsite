@@ -16,7 +16,9 @@ import {
   Map,
   BookTemplate,
   Send,
+  LandPlot,
 } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 const Header = ({
   values,
@@ -26,7 +28,7 @@ const Header = ({
   onValueChange: Dispatch<SetStateAction<ToolsConfig>>;
 }) => {
   return (
-    <CardHeader className="flex flex-row justify-around items-center gap-2 flex-wrap p-2">
+    <CardHeader className="flex flex-row justify-around items-center gap-1 flex-wrap p-2">
       <ToolContainer
         currentTool={values.tool === "select"}
         toolName="select"
@@ -63,6 +65,14 @@ const Header = ({
         <Circle className="h-4 w-4" />
       </ToolContainer>
       <ToolContainer
+        currentTool={values.tool === "delete"}
+        toolName="delete"
+        onToolChange={onValueChange}
+      >
+        <Trash2 className="h-4 w-4" />
+      </ToolContainer>
+      <Separator />
+      <ToolContainer
         currentTool={values.tool === "unitIcon"}
         toolName="unitIcon"
         onToolChange={onValueChange}
@@ -77,12 +87,20 @@ const Header = ({
         <Car className="h-4 w-4" />
       </ToolContainer>
       <ToolContainer
+        currentTool={values.tool === "otherIcon"}
+        toolName="otherIcon"
+        onToolChange={onValueChange}
+      >
+        <LandPlot className="h-4 w-4" />
+      </ToolContainer>
+      <ToolContainer
         currentTool={values.tool === "tooltip"}
         toolName="tooltip"
         onToolChange={onValueChange}
       >
         <BadgeInfoIcon className="h-4 w-4" />
       </ToolContainer>
+      <Separator />
       <ToolContainer
         currentTool={values.tool === "text"}
         toolName="text"
@@ -91,19 +109,13 @@ const Header = ({
         <ScrollText className="h-4 w-4" />
       </ToolContainer>
       <ToolContainer
-        currentTool={values.tool === "delete"}
-        toolName="delete"
-        onToolChange={onValueChange}
-      >
-        <Trash2 className="h-4 w-4" />
-      </ToolContainer>
-      <ToolContainer
         currentTool={values.tool === "map"}
         toolName="map"
         onToolChange={onValueChange}
       >
         <Map className="h-4 w-4" />
       </ToolContainer>
+      <Separator />
       <ToolContainer
         currentTool={values.tool === "templates"}
         toolName="templates"

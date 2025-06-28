@@ -27,6 +27,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useTranslations } from "next-intl";
 
 const EventForm = ({
   discordData,
@@ -35,6 +36,7 @@ const EventForm = ({
   discordData: DiscordProps;
   form: UseFormReturn<BotEvent, any, undefined>;
 }) => {
+  const t = useTranslations("CommandPages.BotController");
   return (
     <Form {...form}>
       <form>
@@ -44,7 +46,7 @@ const EventForm = ({
             name="date_start_event"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Date</FormLabel>
+                <FormLabel className="text-lg">{t("date_text")}</FormLabel>
                 <FormControl>
                   <Input
                     disabled={form.getValues("interval") === -1}
@@ -55,7 +57,7 @@ const EventForm = ({
                   />
                 </FormControl>
                 <FormDescription className="text-xs">
-                  Enter the date of the event
+                  {t("date")}
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -66,7 +68,7 @@ const EventForm = ({
             name="time_start_event"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Hour</FormLabel>
+                <FormLabel className="text-lg">{t("hour_text")}</FormLabel>
                 <FormControl>
                   <Input
                     disabled={form.getValues("interval") === -1}
@@ -78,7 +80,7 @@ const EventForm = ({
                   />
                 </FormControl>
                 <FormDescription className="text-xs">
-                  Enter the hour of the event
+                  {t("hour")}
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -90,7 +92,7 @@ const EventForm = ({
           name="interval"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-lg">Interval</FormLabel>
+              <FormLabel className="text-lg">{t("interval_text")}</FormLabel>
               <FormControl>
                 <div className="flex items-center space-x-2">
                   <div>
@@ -101,7 +103,7 @@ const EventForm = ({
                             field.value === -1,
                         })}
                       >
-                        TW
+                        {t("tw")}
                       </Badge>
                     </Label>
                     <Input
@@ -120,7 +122,7 @@ const EventForm = ({
                             field.value === 0,
                         })}
                       >
-                        Never
+                        {t("never")}
                       </Badge>
                     </Label>
                     <Input
@@ -156,7 +158,7 @@ const EventForm = ({
                 </div>
               </FormControl>
               <FormDescription className="text-xs">
-                Enter when the event will come back again in days
+                {t("interval")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -168,11 +170,11 @@ const EventForm = ({
           name="channel_id"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-lg">Channel</FormLabel>
+              <FormLabel className="text-lg">{t("channel_text")}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a channel" />
+                    <SelectValue placeholder={t("select_placeholder")} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -184,7 +186,7 @@ const EventForm = ({
                 </SelectContent>
               </Select>
               <FormDescription className="text-xs">
-                Select a channel where the event will be posted
+                {t("channel")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -192,19 +194,19 @@ const EventForm = ({
         />
         <Accordion type="single" collapsible>
           <AccordionItem value="item-1">
-            <AccordionTrigger>Advanced Settings</AccordionTrigger>
+            <AccordionTrigger>{t("advanced_settings")}</AccordionTrigger>
             <AccordionContent>
               <FormField
                 control={form.control}
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-lg">Title</FormLabel>
+                    <FormLabel className="text-lg">{t("title_text")}</FormLabel>
                     <FormControl>
                       <Input type="text" {...field} required min={1} />
                     </FormControl>
                     <FormDescription className="text-xs">
-                      Enter the title of the event
+                      {t("title")}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -215,12 +217,14 @@ const EventForm = ({
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-lg">Description</FormLabel>
+                    <FormLabel className="text-lg">
+                      {t("description_text")}
+                    </FormLabel>
                     <FormControl>
                       <Input type="text" {...field} required min={1} />
                     </FormControl>
                     <FormDescription className="text-xs">
-                      Enter the description of the event
+                      {t("enter_description")}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -231,7 +235,9 @@ const EventForm = ({
                 name="activity_time"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-lg">Activity Time</FormLabel>
+                    <FormLabel className="text-lg">
+                      {t("activity_time_title")}
+                    </FormLabel>
                     <FormControl>
                       <Input
                         id="activity_time"
@@ -241,7 +247,7 @@ const EventForm = ({
                       />
                     </FormControl>
                     <FormDescription className="text-xs">
-                      Enter the time in hours the event will be active
+                      {t("activity_time_description")}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -252,14 +258,14 @@ const EventForm = ({
                 name="role_id"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-lg">Role</FormLabel>
+                    <FormLabel className="text-lg">{t("role_text")}</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a role" />
+                          <SelectValue placeholder={t("select_role")} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -271,7 +277,7 @@ const EventForm = ({
                       </SelectContent>
                     </Select>
                     <FormDescription className="text-xs">
-                      Select a role to be mentioned when the event starts
+                      {t("role_description")}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

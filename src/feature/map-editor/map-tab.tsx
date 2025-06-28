@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ImageComponent from "@/components/image-component";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getMapsAssets } from "@/lib/get-data";
 
@@ -32,29 +32,32 @@ const MapTab = ({
       />
       <ScrollArea className="w-full h-[550px]">
         {data
-          .map((e) => e.name)
-          .filter((e) => e.toLowerCase().includes(mapValue.toLowerCase()))
+          .filter((e) => e.name.toLowerCase().includes(mapValue.toLowerCase()))
           .map((map) => (
-            <div
-              key={map}
-              className={clsx(
-                "flex flex-col items-center gap-3 p-2 border-2 cursor-pointer w-full mb-2",
-                {
-                  "border-accent": value === map,
-                }
-              )}
-              onClick={() => onChange(map)}
-            >
-              <h4 className="font-medium">{map}</h4>
-              <div className="w-full">
-                <ImageComponent
-                  name={map}
-                  width={150}
-                  height={150}
-                  type="map"
-                />
-              </div>
-            </div>
+            <Fragment key={map.name}>
+              {map.types.map((type) => (
+                <div
+                  key={`${map.name} ${type}`}
+                  className={clsx(
+                    "flex flex-col items-center gap-3 p-2 border-2 cursor-pointer w-full mb-2",
+                    {
+                      "border-accent": value === `${map.name}-${type}`,
+                    }
+                  )}
+                  onClick={() => onChange(`${map.name}-${type}`)}
+                >
+                  <h4 className="font-medium text-center">{`${map.name}-${type}`}</h4>
+                  <div className="w-full">
+                    <ImageComponent
+                      name={`${map.name}-${type}`}
+                      width={150}
+                      height={150}
+                      type="map"
+                    />
+                  </div>
+                </div>
+              ))}
+            </Fragment>
           ))}
       </ScrollArea>
     </>

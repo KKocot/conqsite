@@ -74,7 +74,9 @@ const MapEditor = ({
           if (
             "x" in element &&
             "y" in element &&
-            (element.tool === "unitIcon" || element.tool === "artilleryIcon")
+            (element.tool === "unitIcon" ||
+              element.tool === "artilleryIcon" ||
+              element.tool === "otherIcon")
           ) {
             const halfSize = element.strokeWidth / 2;
             return (
@@ -258,6 +260,27 @@ const MapEditor = ({
         }
         break;
       case "artilleryIcon":
+        // Handle artillery icon tool logic
+        if (currentTool.artyIconValue) {
+          onPlanChange((prev) => ({
+            ...prev,
+            elements: [
+              ...prev.elements,
+              {
+                id: nanoid(),
+                tool: currentTool.tool,
+                color: currentTool.toolColor,
+                strokeWidth: currentTool.size,
+                size: currentTool.size,
+                x: pos.x,
+                y: pos.y,
+                iconValue: currentTool.artyIconValue,
+              },
+            ],
+          }));
+        }
+        break;
+      case "otherIcon":
         // Handle unit icon tool logic
         if (currentTool.otherIconValue) {
           onPlanChange((prev) => ({
@@ -335,7 +358,9 @@ const MapEditor = ({
             "x" in element &&
             "y" in element &&
             "size" in element &&
-            (element.tool === "unitIcon" || element.tool === "artilleryIcon")
+            (element.tool === "unitIcon" ||
+              element.tool === "artilleryIcon" ||
+              element.tool === "otherIcon")
           ) {
             const halfSize = element.strokeWidth / 2;
             return (
@@ -632,7 +657,8 @@ const MapEditor = ({
             }
             if (
               (element.tool === "unitIcon" ||
-                element.tool === "artilleryIcon") &&
+                element.tool === "artilleryIcon" ||
+                element.tool === "otherIcon") &&
               "iconValue" in element
             ) {
               return <UnitIconImage key={element.id} element={element} />;

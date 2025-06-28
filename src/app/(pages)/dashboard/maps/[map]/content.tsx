@@ -13,12 +13,16 @@ const Content = ({ data }: { data: MapAsset }) => {
       />
       <div className="flex flex-col gap-4 justify-center items-center p-12 justify-self-center">
         <h1 className="text-5xl font-bold">{data.name}</h1>
-        <ImageComponent
-          name={data.name}
-          width={1000}
-          height={1000}
-          type="map"
-        />
+        <div>{data.type}</div>
+        {data.types.map((type) => (
+          <ImageComponent
+            key={`${data.name}-${type}`}
+            name={`${data.name}-${type}`}
+            width={1000}
+            height={1000}
+            type="map"
+          />
+        ))}
       </div>
     </div>
   );

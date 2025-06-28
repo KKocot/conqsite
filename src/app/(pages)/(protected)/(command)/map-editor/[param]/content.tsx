@@ -20,12 +20,6 @@ export default function TacticalMapPage({ house }: { house: string }) {
 
   return (
     <div className="container mx-auto p-4 flex flex-col">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold mb-4 text-center">
-          Tactical Map Editor
-        </h1>
-      </div>
-
       <MapFrame
         plan={currentPlan}
         onPlanChange={setCurrentPlan}
