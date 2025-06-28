@@ -799,3 +799,13 @@ export const getMapAssets = async (name: string): Promise<MapAsset> => {
   const result = await response.json();
   return result.mapAssets;
 };
+
+interface OtherIconAsset {
+  name: string;
+}
+export const getOtherIconsAssets = async (): Promise<OtherIconAsset[]> => {
+  const response = await fetch(`/api/assets/other-icons`);
+  const result = await response.json();
+
+  return result.otherIcons;
+};
