@@ -785,6 +785,7 @@ export interface MapAsset {
   name: string;
   cities: string[];
   types: string[];
+  type: string;
 }
 
 export const getMapsAssets = async (): Promise<MapAsset[]> => {
