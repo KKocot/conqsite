@@ -258,6 +258,7 @@ const MapEditor = ({
         }
         break;
       case "artilleryIcon":
+      case "otherIcon":
         // Handle unit icon tool logic
         if (currentTool.otherIconValue) {
           onPlanChange((prev) => ({
@@ -632,7 +633,8 @@ const MapEditor = ({
             }
             if (
               (element.tool === "unitIcon" ||
-                element.tool === "artilleryIcon") &&
+                element.tool === "artilleryIcon" ||
+                element.tool === "otherIcon") &&
               "iconValue" in element
             ) {
               return <UnitIconImage key={element.id} element={element} />;

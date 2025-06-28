@@ -19,7 +19,7 @@ import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import TemplatesTab from "./templates-tab";
 import MapTab from "./map-tab";
-import { artillery, convertToColor } from "./lib/assets";
+import { artillery, convertToColor, otherIcons } from "./lib/assets";
 import LineupLoader from "./lineup-loader";
 import { useAddMapPublicMutation } from "@/components/hooks/use-plan-public-mutation";
 import { toast } from "react-toastify";
@@ -68,9 +68,9 @@ const ToolbarMenu = ({
   });
   const [unitValue, setUnitValue] = useState<string>("");
   const [otherValue, setOtherValue] = useState<string>("");
+  const [artValue, setArtValue] = useState<string>("");
   return (
     <div className="flex flex-col items-center h-full">
-      <h2 className="text-center">Toolbar</h2>
       <Card className="h-full w-48">
         <Header values={values} onValueChange={onValueChange} />
         <Separator className="my-1" />
@@ -80,6 +80,7 @@ const ToolbarMenu = ({
           values.tool === "arrow" ||
           values.tool === "circle" ||
           values.tool === "unitIcon" ||
+          values.tool === "otherIcon" ||
           values.tool === "artilleryIcon" ? (
             <div className="flex flex-col items-center gap-2 p-2">
               <h4 className="text-sm">Size - {values.size}</h4>
@@ -226,12 +227,62 @@ const ToolbarMenu = ({
               <Input
                 type="text"
                 placeholder="Search Artillery"
+                value={artValue}
+                onChange={(e) => setArtValue(e.target.value)}
+              />
+              <ScrollArea className="w-full h-[480px]">
+                <div>
+                  {artillery
+                    .filter((e) =>
+                      e.toLowerCase().includes(unitValue.toLowerCase())
+                    )
+                    .map((art) => (
+                      <div
+                        key={art}
+                        className={clsx(
+                          "flex items-center gap-2 text-xs mb-1 cursor-pointer",
+                          {
+                            "bg-accent text-background":
+                              values.otherIconValue === art,
+                          }
+                        )}
+                        onClick={() =>
+                          onValueChange((prev) => ({
+                            ...prev,
+                            otherIconValue: art,
+                          }))
+                        }
+                      >
+                        <div className="w-8 h-8">
+                          <Image
+                            src={`${
+                              process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+                            }/images/artillery/${art
+                              .toLowerCase()
+                              .replace(/[ ':]/g, "-")}.png`}
+                            alt={art}
+                            width={32}
+                            height={32}
+                          />
+                        </div>
+                        {art}
+                      </div>
+                    ))}
+                </div>
+              </ScrollArea>
+            </>
+          ) : null}
+          {values.tool === "otherIcon" ? (
+            <>
+              <Input
+                type="text"
+                placeholder="Search..."
                 value={otherValue}
                 onChange={(e) => setOtherValue(e.target.value)}
               />
               <ScrollArea className="w-full h-[480px]">
                 <div>
-                  {artillery
+                  {otherIcons
                     .filter((e) =>
                       e.toLowerCase().includes(unitValue.toLowerCase())
                     )

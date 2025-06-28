@@ -59,6 +59,9 @@ export const artillery = [
   "Battle Ram",
   "Trebuchet",
   "Siege Tower",
+];
+
+export const otherIcons = [
   "Supply Red",
   "Supply Blue",
   "Cap Red",
