@@ -11,7 +11,7 @@ const HouseBadges = ({ badgesData }: { badgesData?: Badge }) => {
         <HoverClickTooltip
           triggerChildren={
             <Image
-              src="/badges/image-1.webp"
+              src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/badges/premium-badge.png`}
               alt="premiumBadge"
               width={50}
               height={50}
@@ -22,7 +22,7 @@ const HouseBadges = ({ badgesData }: { badgesData?: Badge }) => {
         >
           <div className="flex flex-col items-center">
             <Image
-              src="/badges/image-1.webp"
+              src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/badges/premium-badge.png`}
               alt="premiumBadge"
               width={120}
               height={120}
@@ -38,7 +38,7 @@ const HouseBadges = ({ badgesData }: { badgesData?: Badge }) => {
         <HoverClickTooltip
           triggerChildren={
             <Image
-              src="/badges/image.webp"
+              src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/badges/surveys-badge.png`}
               alt="premiumBadge"
               width={50}
               height={50}
@@ -49,7 +49,7 @@ const HouseBadges = ({ badgesData }: { badgesData?: Badge }) => {
         >
           <div className="flex flex-col items-center">
             <Image
-              src="/badges/image.webp"
+              src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/badges/surveys-badge.png`}
               alt="premiumBadge"
               width={120}
               height={120}
@@ -62,7 +62,7 @@ const HouseBadges = ({ badgesData }: { badgesData?: Badge }) => {
         <HoverClickTooltip
           triggerChildren={
             <Image
-              src="/badges/recorded-badge.webp"
+              src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/badges/recorded-badge.png`}
               alt="recordedBadge"
               width={50}
               height={50}
@@ -73,7 +73,7 @@ const HouseBadges = ({ badgesData }: { badgesData?: Badge }) => {
         >
           <div className="flex flex-col items-center">
             <Image
-              src="/badges/recorded-badge.webp"
+              src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/badges/recorded-badge.png`}
               alt="recordedBadge"
               width={120}
               height={120}
@@ -86,7 +86,7 @@ const HouseBadges = ({ badgesData }: { badgesData?: Badge }) => {
         <HoverClickTooltip
           triggerChildren={
             <Image
-              src="/badges/Konkerus1.webp"
+              src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/badges/conq-bot.png`}
               alt="conqBotBadge"
               width={50}
               height={50}
@@ -97,7 +97,7 @@ const HouseBadges = ({ badgesData }: { badgesData?: Badge }) => {
         >
           <div className="flex flex-col items-center">
             <Image
-              src="/badges/Konkerus1.webp"
+              src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/badges/conq-bot.png`}
               alt="conqBotBadge"
               width={120}
               height={120}
@@ -110,7 +110,7 @@ const HouseBadges = ({ badgesData }: { badgesData?: Badge }) => {
         <HoverClickTooltip
           triggerChildren={
             <Image
-              src="/badges/public-badge.webp"
+              src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/badges/public-badge.png`}
               alt="publicBadge"
               width={50}
               height={50}
@@ -121,7 +121,7 @@ const HouseBadges = ({ badgesData }: { badgesData?: Badge }) => {
         >
           <div className="flex flex-col items-center">
             <Image
-              src="/badges/public-badge.webp"
+              src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/badges/public-badge.png`}
               alt="publicBadge"
               width={120}
               height={120}

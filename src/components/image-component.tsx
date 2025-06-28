@@ -28,7 +28,7 @@ const ImageComponent = ({
       imageSrc = `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/unit-cards/${nameLower}-card.png`;
       break;
     default:
-      imageSrc = "/logo.png";
+      imageSrc = `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/others/logo.png`;
   }
 
   return (
@@ -40,7 +40,7 @@ const ImageComponent = ({
         width={width}
         height={height}
         onError={(e) => {
-          e.currentTarget.src = "/logo.png"; // Fallback image
+          e.currentTarget.src = `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/others/logo.png`; // Fallback image
         }}
       />
     </div>

@@ -76,7 +76,7 @@ const ResposiveSidebar = ({
               })}
             >
               <Image
-                src="/website-logo.webp"
+                src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/others/website-logo.png`}
                 alt="logo"
                 width={160}
                 height={80}
@@ -227,7 +227,7 @@ const ResposiveSidebar = ({
               })}
             >
               <Image
-                src="/website-logo.webp"
+                src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/others/website-logo.png`}
                 alt="logo"
                 width={160}
                 height={80}

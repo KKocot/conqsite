@@ -45,7 +45,10 @@ function NavUser({
             >
               <Avatar className="h-8 w-8 rounded-full">
                 <AvatarImage
-                  src={avatar ?? "/logo.png"}
+                  src={
+                    avatar ??
+                    `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/others/logo.png`
+                  }
                   alt={name ?? "avatar"}
                 />
                 <AvatarFallback className="rounded-lg">
@@ -72,7 +75,10 @@ function NavUser({
               >
                 <Avatar className="h-8 w-8 rounded-full">
                   <AvatarImage
-                    src={avatar ?? "/logo.png"}
+                    src={
+                      avatar ??
+                      `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/others/logo.png`
+                    }
                     alt={name ?? "avatar"}
                   />
                   <AvatarFallback className="rounded-lg">
