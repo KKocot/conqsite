@@ -91,7 +91,7 @@ const Page = () => {
     return <NoData />;
 
   return (
-    <div className="flex justify-center w-full">
+    <div className="flex justify-center w-full relative">
       <Content
         weapons={weaponsAssets}
         date={date}
@@ -100,11 +100,13 @@ const Page = () => {
         lineupName={urlName}
         artillery={artilleryAssets}
       />
-      <DateSelector
-        currentDate={date}
-        dates={data}
-        onChangeDate={onChangeDate}
-      />
+      <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 rounded-full bg-background px-1 py-2 shadow-lg">
+        <DateSelector
+          currentDate={date}
+          dates={data}
+          onChangeDate={onChangeDate}
+        />
+      </div>
     </div>
   );
 };
@@ -122,9 +124,11 @@ const DateSelector = ({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button className="absolute right-0">{currentDate}</Button>
+        <div className="rounded-full flex items-center justify-center p-2 cursor-pointer hover:bg-accent hover:text-background">
+          {currentDate}
+        </div>
       </SheetTrigger>
-      <SheetContent className="overflow-y-auto">
+      <SheetContent className="overflow-y-auto" aria-description="Change Date">
         <SheetHeader>
           <SheetTitle>{t("change_data")}</SheetTitle>
         </SheetHeader>

@@ -96,9 +96,13 @@ const Content = ({
         onChangeName(e);
       }}
     >
-      <TabsList>
+      <TabsList className="fixed top-4 right-4 z-50 flex gap-2 rounded-full bg-background px-1 py-2 shadow-lg">
         {data.map((e) => (
-          <TabsTrigger key={e.name + "triggers"} value={e.name}>
+          <TabsTrigger
+            key={e.name + "triggers"}
+            value={e.name}
+            className="rounded-full flex items-center justify-center p-2 cursor-pointer hover:bg-accent hover:text-background"
+          >
             {e.name}
           </TabsTrigger>
         ))}
