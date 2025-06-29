@@ -13,6 +13,8 @@ const getImageSrc = (name: string, type: string) => {
       return `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/unit-cards/${nameLower}-card.png`;
     case "weapon":
       return `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/weapons/${nameLower}.png`;
+    case "artillery":
+      return `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/artillery/${nameLower}.png`;
     default:
       return `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/others/logo.png`;
   }
@@ -29,7 +31,7 @@ const ImageComponent = ({
   width?: number;
   height?: number;
   className?: string;
-  type?: "unit" | "map" | "unitCard" | "weapon";
+  type?: "unit" | "map" | "unitCard" | "weapon" | "artillery";
 }) => {
   const imageSrc = getImageSrc(name, type);
 

@@ -163,17 +163,10 @@ const Preview = ({
                     <div className="flex items-center gap-1 justify-center">
                       {art.map((a) => (
                         <div key={a.id} className="h-8 w-8">
-                          <Image
-                            alt={a.name}
-                            width={32}
-                            height={32}
+                          <ImageComponent
+                            name={a.name}
                             className="rounded-full"
-                            src={`${
-                              process.env.NEXT_PUBLIC_IMAGES_IP_HOST
-                            }/images/artillery/${a.name
-                              .toLowerCase()
-                              .replaceAll(" ", "-")}.png`}
-                            title={a.name}
+                            type="artillery"
                           />
                         </div>
                       ))}
