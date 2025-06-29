@@ -239,7 +239,7 @@ const StepGeneral = ({
                   height={80}
                   width={80}
                   title={weapons[i].name}
-                  src={weapons[i].src}
+                  src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images${weapons[i].src}`}
                   alt={weapons[i].name}
                   onClick={() => {
                     const newValue = !e.value;

@@ -45,7 +45,7 @@ const ProfileData = ({ profile, unitsAssets, weapons }: ProfileDataProps) => {
               <Image
                 height={48}
                 width={48}
-                src={e.src}
+                src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images${e.src}`}
                 alt={e.name}
                 className="rounded-full"
               />
