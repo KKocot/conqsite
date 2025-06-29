@@ -261,13 +261,13 @@ const ToolbarMenu = ({
                             "flex items-center gap-2 text-xs mb-1 cursor-pointer",
                             {
                               "bg-accent text-background":
-                                values.otherIconValue === art,
+                                values.artyIconValue === art,
                             }
                           )}
                           onClick={() =>
                             onValueChange((prev) => ({
                               ...prev,
-                              otherIconValue: art,
+                              artyIconValue: art,
                             }))
                           }
                         >
