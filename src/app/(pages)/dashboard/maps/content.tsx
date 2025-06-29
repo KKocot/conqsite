@@ -30,7 +30,7 @@ const Content = ({ data }: { data: MapAsset[] }) => {
               <CardHeader className="text-center">{map.name}</CardHeader>
               <CardContent>
                 <ImageComponent
-                  name={`${map.name}-clean`}
+                  name={`${map.name}-mini`}
                   width={300}
                   height={300}
                   type="map"

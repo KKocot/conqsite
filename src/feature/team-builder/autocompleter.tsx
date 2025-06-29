@@ -6,7 +6,6 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { useEffect, useRef, useState } from "react";
-import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 import { Unit, WeaponsTypes } from "@/lib/type";
 import clsx from "clsx";
 import { Survey } from "@/lib/get-data";
@@ -78,13 +77,18 @@ export function Autocompleter({
             <ImageComponent name={unit.name} width={48} height={48} />
           ) : null
         ) : weapon ? (
-          <Avatar className="h-8 w-8 rounded-none">
-            <AvatarImage alt={weapon.name} src={weapon?.src} />
-          </Avatar>
+          <div className="h-12 w-12">
+            <ImageComponent
+              name={weapon.name}
+              width={48}
+              height={48}
+              className="rounded-full"
+              type="weapon"
+            />
+          </div>
         ) : (
           <div className="w-9" />
         )}
-
         <CommandInput
           placeholder={placeholder}
           className="h-6 py-0"
@@ -156,12 +160,15 @@ export function Autocompleter({
                       className="w-56 px-2 py-1 flex items-center gap-2"
                       title={item.name}
                     >
-                      <Avatar className="h-8 w-8" title={item.name}>
-                        <AvatarImage alt={item.name} src={item.src} />
-                        <AvatarFallback>
-                          {item.name.substring(0, 2)}
-                        </AvatarFallback>
-                      </Avatar>
+                      <div className="h-6 w-6">
+                        <ImageComponent
+                          name={item.name}
+                          width={24}
+                          height={24}
+                          className="rounded-full"
+                          type="weapon"
+                        />
+                      </div>
                       <span>{item.name}</span>
                     </div>
                   </CommandItem>

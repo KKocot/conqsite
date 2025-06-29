@@ -6,7 +6,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { SheetTypes, Unit } from "@/lib/type";
 import { Fragment, useState } from "react";
 import { useTranslations } from "next-intl";
@@ -15,7 +14,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArtilleryAsset, WeaponAsset } from "@/lib/get-data";
 import ImageComponent from "@/components/image-component";
-import Image from "next/image";
 
 const Preview = ({
   data,
@@ -144,18 +142,15 @@ const Preview = ({
                   <TableCell className="p-1 w-fit">
                     <div className="flex items-center gap-2 justify-center">
                       <div className="h-8 w-8">
-                        <Image
-                          alt={weapon?.name ?? "Weapon"}
-                          width={32}
-                          height={32}
-                          className="rounded-full"
-                          src={
-                            weapon?.src
-                              ? `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/${weapon.src}`
-                              : `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/others/logo.png`
-                          }
-                          title={weapon?.name}
-                        />
+                        {weapon?.name ? (
+                          <ImageComponent
+                            name={weapon.name}
+                            width={32}
+                            height={32}
+                            className="rounded-full"
+                            type="weapon"
+                          />
+                        ) : null}
                       </div>
                     </div>
                   </TableCell>
