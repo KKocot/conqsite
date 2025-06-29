@@ -92,7 +92,7 @@ const ResposiveSidebar = ({
               <SidebarMenuButton asChild className="p-0">
                 <Link href="/home">
                   <Image
-                    src="/icons/home.svg"
+                    src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/home.png`}
                     alt="home"
                     width={40}
                     height={40}
@@ -244,7 +244,7 @@ const ResposiveSidebar = ({
                 <Link href="/home">
                   <div className="bg-accent rounded-xl p-1">
                     <Image
-                      src="/icons/home.svg"
+                      src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/home.png`}
                       alt="home"
                       width={20}
                       height={20}

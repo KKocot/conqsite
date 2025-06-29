@@ -44,62 +44,62 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
   const openLinks = {
     title: t("dashboard.dashboard"),
     url: "/dashboard",
-    icon: "/icons/book.svg",
+    icon: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/book.png`,
     items: [
       {
         title: t("dashboard.list_of_house"),
         url: "/dashboard/houses",
         disabled: false,
-        iconPath: "/icons/houses.svg",
+        iconPath: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/houses.png`,
       },
       {
         title: t("dashboard.units"),
         url: "/dashboard/units",
         disabled: false,
-        iconPath: "/icons/units.svg",
+        iconPath: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/units.png`,
       },
       {
         title: t("dashboard.doctrines"),
         url: "/dashboard/doctrines",
         disabled: false,
-        iconPath: "/icons/doctrines.svg",
+        iconPath: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/doctrines.png`,
       },
       {
         title: "Maps",
         url: "/dashboard/maps",
         disabled: false,
-        iconPath: "/icons/castle.png",
+        iconPath: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/castle.png`,
       },
     ],
   };
   const membersLinks = {
     title: t("member.member"),
     url: "/member",
-    icon: "/icons/profile.svg",
+    icon: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/profile.png`,
     items: [
       {
         title: t("member.my_profile"),
         url: "/member/profile",
         disabled: !profile,
-        iconPath: "/icons/myprofile.svg",
+        iconPath: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/myprofile.png`,
       },
       {
         title: t("member.my_stats"),
         url: "/member/stats",
         disabled: !profile,
-        iconPath: "/icons/stats.svg",
+        iconPath: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/stats.png`,
       },
       {
         title: t("member.update_form"),
         url: "/member/update-form",
         disabled: false,
-        iconPath: "/icons/update.svg",
+        iconPath: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/update.png`,
       },
       {
         title: "My Archive",
         url: "/member/my-history",
         disabled: !profile,
-        iconPath: "/icons/archive.svg",
+        iconPath: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/archive.png`,
       },
     ],
   };
@@ -112,20 +112,20 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         title: t("house.lineups"),
         url: `/lineups/${house}`,
         visibleTo: true,
-        iconPath: "/icons/lineups.svg",
+        iconPath: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/lineups.png`,
       },
       {
         title: "Archive",
         url: `/history/${house}`,
         visibleTo: true,
         // TODO translate
-        iconPath: "/icons/archive.svg",
+        iconPath: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/archive.png`,
       },
       {
         title: t("house.my_house"),
         url: `/my-house/${house}`,
         visibleTo: true,
-        iconPath: "/icons/myhouse.svg",
+        iconPath: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/myhouse.png`,
       },
       {
         title: t("house.build_team"),
@@ -133,7 +133,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         visibleTo: commanders.some(
           (e) => e.discordId === data?.user.id && e.house === house
         ),
-        iconPath: "/icons/builder.svg",
+        iconPath: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/builder.png`,
       },
       {
         title: "Map Editor",
@@ -141,7 +141,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         visibleTo: commanders.some(
           (e) => e.discordId === data?.user.id && e.house === house
         ),
-        iconPath: "/icons/plans.png",
+        iconPath: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/plans.png`,
       },
       {
         title: t("house.house_stats"),
@@ -149,7 +149,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         visibleTo: commanders.some(
           (e) => e.discordId === data?.user.id && e.house === house
         ),
-        iconPath: "/icons/stats.svg",
+        iconPath: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/stats.png`,
       },
       {
         title: t("house.bot_controller"),
@@ -157,7 +157,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         visibleTo: commanders.some(
           (e) => e.discordId === data?.user.id && e.house === house
         ),
-        iconPath: "/icons/bot.svg",
+        iconPath: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/bot.png`,
       },
       {
         title: "House Settings",
@@ -168,7 +168,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
             e.house === house &&
             (e.role === "HouseLeader" || e.role === "RightHand")
         ),
-        iconPath: "/icons/settings.svg",
+        iconPath: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/settings.png`,
       },
     ],
   }));
@@ -196,7 +196,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
                   className="hover:opacity-80 transition-opacity"
                 >
                   <Image
-                    src="/icons/policy.svg"
+                    src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/policy.png`}
                     alt="policy"
                     width={30}
                     height={30}
@@ -215,7 +215,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
                   className="hover:opacity-80 transition-opacity"
                 >
                   <Image
-                    src="/icons/tos.svg"
+                    src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/tos.png`}
                     alt="tos"
                     width={30}
                     height={30}
@@ -234,7 +234,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
                   className="hover:opacity-80 transition-opacity"
                 >
                   <Image
-                    src="/icons/docs.svg"
+                    src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/docs.png`}
                     alt="docs"
                     width={30}
                     height={30}
