@@ -17,6 +17,8 @@ import {
   BookTemplate,
   Send,
   LandPlot,
+  BellRing,
+  ZoomIn,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
@@ -116,6 +118,13 @@ const Header = ({
         <Map className="h-4 w-4" />
       </ToolContainer>
       <Separator />
+      <ToolContainer
+        currentTool={values.tool === "ping"}
+        toolName="ping"
+        onToolChange={onValueChange}
+      >
+        <BellRing className="h-4 w-4" />
+      </ToolContainer>
       <ToolContainer
         currentTool={values.tool === "templates"}
         toolName="templates"

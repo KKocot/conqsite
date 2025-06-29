@@ -5,7 +5,7 @@ import Konva from "konva";
 import useImage from "use-image";
 import { Plan, ToolsConfig } from "./lib/types";
 import { stageSize } from "./lib/assets";
-import { Dispatch, SetStateAction, useRef } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { nanoid } from "nanoid";
 import UnitIconImage from "./unit-icon-image";
 import TooltipKanva from "./tooltip-kanva";
@@ -26,6 +26,11 @@ const MapEditor = ({
     `/api/images/maps/${plan.map.toLowerCase().replaceAll(/[ ':]/g, "-")}.png`
   );
   const stageRef = useRef<Konva.Stage>(null);
+  const MIN_ZOOM = 1;
+  const MAX_ZOOM = 5;
+  // Add new state for position and scale
+  const [stagePosition, setStagePosition] = useState({ x: 0, y: 0 });
+  const [stageScale, setStageScale] = useState(1);
   const isDrawing = useRef(false);
   const selectedElementId = useRef<string | null>(null);
   const isDragging = useRef(false);
@@ -33,10 +38,100 @@ const MapEditor = ({
   const isDrawingArrow = useRef(false);
   const isDrawingCircle = useRef(false);
   const dragStartPos = useRef<{ x: number; y: number } | null>(null);
+  const [pingRings, setPingRings] = useState<
+    { x: number; y: number; rings: { radius: number; opacity: number }[] }[]
+  >([]);
 
-  const handleMouseDown = (_e: Konva.KonvaEventObject<MouseEvent>) => {
-    const pos = stageRef.current?.getPointerPosition();
+  // Add ping animation frame
+  useEffect(() => {
+    let animationId: number;
+    const animate = () => {
+      setPingRings((prev) =>
+        prev
+          .map((ping) => ({
+            ...ping,
+            rings: ping.rings
+              .map((ring) => ({
+                radius: ring.radius + 1,
+                opacity: Math.max(0, ring.opacity - 0.02),
+              }))
+              .filter((ring) => ring.opacity > 0),
+          }))
+          .filter((ping) => ping.rings.length > 0)
+      );
+      animationId = requestAnimationFrame(animate);
+    };
+    animationId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationId);
+  }, []);
+
+  // Add new wheel handler
+  const handleWheel = (e: Konva.KonvaEventObject<WheelEvent>) => {
+    if (currentTool.tool !== "zoom") return;
+    e.evt.preventDefault();
+
+    const stage = stageRef.current;
+    if (!stage) return;
+
+    const oldScale = stageScale;
+    const pointer = stage.getPointerPosition();
+    if (!pointer) return;
+
+    const mousePointTo = {
+      x: (pointer.x - stagePosition.x) / oldScale,
+      y: (pointer.y - stagePosition.y) / oldScale,
+    };
+
+    // Handle zooming with constraints
+    const scaleBy = 1.1;
+    const newScale =
+      e.evt.deltaY < 0
+        ? Math.min(oldScale * scaleBy, MAX_ZOOM)
+        : Math.max(oldScale / scaleBy, MIN_ZOOM);
+
+    // Only update if within bounds
+    if (newScale !== oldScale) {
+      setStageScale(newScale);
+
+      // Calculate new position
+      const newPos = {
+        x: pointer.x - mousePointTo.x * newScale,
+        y: pointer.y - mousePointTo.y * newScale,
+      };
+      setStagePosition(newPos);
+    }
+  };
+
+  // Add this helper function after state declarations
+  const getRelativePointerPosition = () => {
+    const stage = stageRef.current;
+    if (!stage) return null;
+
+    const pointerPosition = stage.getPointerPosition();
+    if (!pointerPosition) return null;
+
+    return {
+      x: (pointerPosition.x - stagePosition.x) / stageScale,
+      y: (pointerPosition.y - stagePosition.y) / stageScale,
+    };
+  };
+
+  const handleMouseDown = (e: Konva.KonvaEventObject<MouseEvent>) => {
+    const pos = getRelativePointerPosition();
     if (!pos) return;
+
+    if (currentTool.tool === "ping") {
+      setPingRings((prev) => [
+        ...prev,
+        {
+          x: pos.x,
+          y: pos.y,
+          rings: [{ radius: 10, opacity: 1 }],
+        },
+      ]);
+      return;
+    }
+
     switch (currentTool.tool) {
       case "select":
         // Handle select and move logic
@@ -336,6 +431,21 @@ const MapEditor = ({
     }
   };
   const handleMouseMove = (e: Konva.KonvaEventObject<MouseEvent>) => {
+    const pos = getRelativePointerPosition();
+    if (!pos) return;
+
+    if (currentTool.tool === "ping" && e.evt.buttons === 1) {
+      setPingRings((prev) => [
+        ...prev,
+        {
+          x: pos.x,
+          y: pos.y,
+          rings: [{ radius: 10, opacity: 1 }],
+        },
+      ]);
+      return;
+    }
+
     if (
       isDragging.current &&
       selectedElementId.current &&
@@ -521,7 +631,7 @@ const MapEditor = ({
   };
 
   return (
-    <div className="relative w-[800px] h-[800px]">
+    <div className="relative w-[800px] h-[800px] overflow-hidden">
       <Stage
         width={stageSize.width}
         height={stageSize.height}
@@ -529,6 +639,13 @@ const MapEditor = ({
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
+        onWheel={handleWheel}
+        position={stagePosition}
+        scale={{ x: stageScale, y: stageScale }}
+        draggable={currentTool.tool === "zoom"}
+        onDragEnd={(e) => {
+          setStagePosition(e.target.position());
+        }}
       >
         <Layer>
           <Image
@@ -647,6 +764,21 @@ const MapEditor = ({
 
             return null;
           })}
+        </Layer>
+        <Layer>
+          {pingRings.map((ping, i) =>
+            ping.rings.map((ring, j) => (
+              <Circle
+                key={`ping-${i}-${j}`}
+                x={ping.x}
+                y={ping.y}
+                radius={ring.radius}
+                stroke={currentTool.toolColor}
+                opacity={ring.opacity}
+                strokeWidth={2}
+              />
+            ))
+          )}
         </Layer>
       </Stage>
     </div>

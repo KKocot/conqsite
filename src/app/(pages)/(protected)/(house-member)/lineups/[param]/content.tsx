@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LoadingComponent from "@/feature/ifs/loading";
 import NoData from "@/feature/ifs/no-data";
@@ -9,7 +10,7 @@ import {
   DEFAULT_PLAN,
   DEFAULT_TOOLS_CONFIG,
 } from "@/feature/map-editor/lib/assets";
-import { Plan } from "@/feature/map-editor/lib/types";
+import { Plan, ToolsConfig } from "@/feature/map-editor/lib/types";
 import Preview from "@/feature/team-builder/preview";
 import {
   ArtilleryAsset,
@@ -40,6 +41,7 @@ const Content = ({
 }) => {
   const { data: user } = useSession();
   const cleanedLineupName = lineupName?.replaceAll("_", " ");
+  const [tool, setTool] = useState<ToolsConfig["tool"]>("ping");
   const { data, isLoading } = useQuery({
     queryKey: ["lineups", house, date],
     queryFn: () => getPublicLineup(house, date),
@@ -88,6 +90,7 @@ const Content = ({
     newUrl.searchParams.set("date", date || "");
     window.history.pushState({}, "", newUrl);
   };
+
   return (
     <Tabs
       value={name}
@@ -115,11 +118,23 @@ const Content = ({
         >
           {!!plan && currentPlan.map !== "" ? (
             <div className="flex flex-col items-center">
-              <h2 className="text-2xl font-bold mb-4">
-                {currentPlan.title !== ""
-                  ? currentPlan.title
-                  : "Untitled Layer"}
-              </h2>
+              <div>
+                <h2 className="text-2xl font-bold mb-4 text-center">
+                  {currentPlan.title !== ""
+                    ? currentPlan.title
+                    : "Untitled Layer"}
+                </h2>
+                <div className="flex items-center gap-2">
+                  <span>Zoom</span>
+                  <Switch
+                    checked={tool === "ping"}
+                    onCheckedChange={(checked) =>
+                      setTool(checked ? "ping" : "zoom")
+                    }
+                  />
+                  <span>Ping</span>
+                </div>
+              </div>
               <div className="flex">
                 <p className="w-[150px] break-words whitespace-pre-wrap">
                   {currentPlan.description}
@@ -127,7 +142,7 @@ const Content = ({
                 <MapEditor
                   lineup={e}
                   plan={currentPlan}
-                  currentTool={{ ...DEFAULT_TOOLS_CONFIG, tool: "text" }}
+                  currentTool={{ ...DEFAULT_TOOLS_CONFIG, tool: tool }}
                   onPlanChange={setCurrentPlan}
                 />
                 <div className="flex flex-col items-center mt-4 w-[150px]">

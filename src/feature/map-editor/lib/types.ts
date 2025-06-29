@@ -40,7 +40,9 @@ export interface ToolsConfig {
     | "map"
     | "templates"
     | "public"
-    | "otherIcon";
+    | "otherIcon"
+    | "zoom"
+    | "ping";
   artyIconValue: string;
   otherIconValue: string;
   unitIconValue: string;
