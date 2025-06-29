@@ -40,13 +40,18 @@ export interface ToolsConfig {
     | "map"
     | "templates"
     | "public"
-    | "otherIcon";
+    | "otherIcon"
+    | "zoom"
+    | "ping"
+    | "info";
   artyIconValue: string;
   otherIconValue: string;
   unitIconValue: string;
   tooltipValue: string;
   toolColor: string;
-  size: number;
+  linesSize: number;
+  iconsSize: number;
+  tooltipSize: number;
 }
 
 export interface PenElement extends MapElement {
@@ -68,6 +73,13 @@ export interface CircleElement extends MapElement {
 }
 
 export interface IconElement extends MapElement {
+  x: number;
+  y: number;
+  iconValue: string;
+}
+
+export interface IconElementWithTooltip extends IconElement {
+  tooltipSize: number;
   x: number;
   y: number;
   iconValue: string;

@@ -39,7 +39,7 @@ const Home = () => {
       <Problem />
       <Solution />
       <Image
-        src="/graf.png"
+        src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/others/graf.png`}
         alt="graf"
         width={600}
         height={800}

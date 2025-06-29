@@ -17,6 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import LoadingComponent from "../ifs/loading";
 import HoverClickTooltip from "@/components/hover-click-tooltip";
+import ImageComponent from "@/components/image-component";
 
 const StepGeneral = ({
   form,
@@ -234,20 +235,20 @@ const StepGeneral = ({
               <li
                 key={i}
                 className="flex flex-col items-center whitespace-nowrap gap-2 h-[200px]"
+                onClick={() => {
+                  const newValue = !e.value;
+                  form.setValue(`weapons.${i}.value`, newValue);
+                  if (!newValue) {
+                    form.setValue(`weapons.${i}.leadership`, 0);
+                    form.setValue(`weapons.${i}.pref`, 0);
+                  }
+                }}
               >
-                <Image
-                  height={80}
+                <ImageComponent
+                  name={weapons[i].name}
                   width={80}
-                  title={weapons[i].name}
-                  src={weapons[i].src}
-                  alt={weapons[i].name}
-                  onClick={() => {
-                    const newValue = !e.value;
-                    form.setValue(`weapons.${i}.value`, newValue);
-                    if (!newValue) {
-                      form.setValue(`weapons.${i}.leadership`, 0);
-                    }
-                  }}
+                  height={80}
+                  type="weapon"
                   className={clsx(
                     "rounded-full p-2 mx-6 cursor-pointer hover:shadow-md transition duration-300 ease-in-out transform hover:scale-110 hover:bg-gray-300",
                     { "bg-red-700 hover:bg-red-900": e.value }

@@ -18,10 +18,12 @@ export const DEFAULT_TOOLS_CONFIG: ToolsConfig = {
   tool: "select",
   otherIconValue: "Supply Red",
   unitIconValue: "Siphonarioi",
-  artyIconValue: "Well Made Mortar",
+  artyIconValue: "Bombard",
   tooltipValue: "",
   toolColor: "#ff0000",
-  size: 4,
+  linesSize: 2,
+  iconsSize: 20,
+  tooltipSize: 1,
 };
 
 export const convertToColor = (color: string): string => {

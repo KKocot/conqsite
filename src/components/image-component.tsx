@@ -2,6 +2,24 @@
 
 import Image from "next/image";
 
+const getImageSrc = (name: string, type: string) => {
+  const nameLower = name.toLowerCase().replaceAll(/[ ':]/g, "-");
+  switch (type) {
+    case "unit":
+      return `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/unit-icons/${nameLower}-icon.png`;
+    case "map":
+      return `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/maps/${nameLower}.png`;
+    case "unitCard":
+      return `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/unit-cards/${nameLower}-card.png`;
+    case "weapon":
+      return `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/weapons/${nameLower}.png`;
+    case "artillery":
+      return `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/artillery/${nameLower}.png`;
+    default:
+      return `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/others/logo.png`;
+  }
+};
+
 const ImageComponent = ({
   name,
   width = 32,
@@ -13,23 +31,9 @@ const ImageComponent = ({
   width?: number;
   height?: number;
   className?: string;
-  type?: "unit" | "map" | "unitCard";
+  type?: "unit" | "map" | "unitCard" | "weapon" | "artillery";
 }) => {
-  const nameLower = name.toLowerCase().replaceAll(/[ ':]/g, "-");
-  let imageSrc = "";
-  switch (type) {
-    case "unit":
-      imageSrc = `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/unit-icons/${nameLower}-icon.png`;
-      break;
-    case "map":
-      imageSrc = `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/maps/${nameLower}.png`;
-      break;
-    case "unitCard":
-      imageSrc = `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/unit-cards/${nameLower}-card.png`;
-      break;
-    default:
-      imageSrc = "/logo.png";
-  }
+  const imageSrc = getImageSrc(name, type);
 
   return (
     <div className="flex items-center justify-center">
@@ -40,7 +44,7 @@ const ImageComponent = ({
         width={width}
         height={height}
         onError={(e) => {
-          e.currentTarget.src = "/logo.png"; // Fallback image
+          e.currentTarget.src = `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/others/logo.png`; // Fallback image
         }}
       />
     </div>

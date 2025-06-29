@@ -9,8 +9,8 @@ import {
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { Survey, UnitAssetsGroup, WeaponAsset } from "@/lib/get-data";
-import Image from "next/image";
 import List from "@/feature/unit-builder/unit-list";
+import ImageComponent from "./image-component";
 
 interface ProfileDataProps {
   profile: Survey;
@@ -42,12 +42,12 @@ const ProfileData = ({ profile, unitsAssets, weapons }: ProfileDataProps) => {
               className="flex flex-col items-center w-18"
               title={t("leadership") + ": " + e.matchingWeapon.leadership}
             >
-              <Image
-                height={48}
-                width={48}
-                src={e.src}
-                alt={e.name}
+              <ImageComponent
+                name={e.name}
+                type="weapon"
                 className="rounded-full"
+                width={48}
+                height={48}
               />
               <span
                 className={clsx("text-sm", {

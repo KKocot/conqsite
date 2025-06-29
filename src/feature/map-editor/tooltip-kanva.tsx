@@ -3,7 +3,21 @@ import { Tag, Text, Label, Group, Circle } from "react-konva";
 import { IconElement } from "./lib/types";
 import Konva from "konva";
 import { PublicLineup } from "@/lib/get-data";
-import UnitIconImage from "./unit-icon-image";
+
+const getSizes = (size: number) => {
+  switch (size) {
+    case 1:
+      return { fontSize: 8, radius: 8, x: -5, y: -3 };
+    case 2:
+      return { fontSize: 12, radius: 13, x: -9, y: -5 };
+    case 3:
+      return { fontSize: 17, radius: 19, x: -11, y: -8 };
+    case 4:
+      return { fontSize: 20, radius: 24, x: -13, y: -9 };
+    default:
+      return { fontSize: 14, radius: 15, x: -10, y: -7 };
+  }
+};
 
 const TooltipKanva = ({
   element,
@@ -25,6 +39,7 @@ Unit 3: ${currentPlayer.unit3}
 Weapon: ${currentPlayer.weapon}
 Desc: ${currentPlayer.description}`
     : "No data available";
+  const { fontSize, radius, x, y } = getSizes(element.strokeWidth);
   return (
     <Group
       ref={groupRef}
@@ -37,14 +52,14 @@ Desc: ${currentPlayer.description}`
       }}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Circle radius={15} fill="white" stroke={element.color} />
+      <Circle radius={radius} fill="white" stroke={element.color} />
       <Text
         text={element.iconValue.slice(0, 2)}
-        fontSize={16}
+        fontSize={fontSize}
         fontStyle="bold"
         fill={element.color}
-        x={-10}
-        y={-7}
+        x={x}
+        y={y}
       />
       {isHovered && (
         <Label x={0} y={-10}>

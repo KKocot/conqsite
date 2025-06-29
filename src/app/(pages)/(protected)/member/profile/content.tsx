@@ -20,6 +20,7 @@ import NoData from "@/feature/ifs/no-data";
 import { Survey, UnitAssetsGroup, WeaponAsset } from "@/lib/get-data";
 import Link from "next/link";
 import { CircleUser } from "lucide-react";
+import ImageComponent from "@/components/image-component";
 
 interface ContentProps {
   unitsAssets: UnitAssetsGroup | undefined;
@@ -117,12 +118,12 @@ export default function Content({
                   title={t("leadership") + ": " + e.matchingWeapon.leadership}
                 >
                   <div className="w-12 h-12">
-                    <Image
-                      height={48}
-                      width={48}
-                      src={e.src}
-                      alt={e.name}
+                    <ImageComponent
+                      name={e.name}
+                      type="weapon"
                       className="rounded-full"
+                      width={48}
+                      height={48}
                     />
                   </div>
                   <span className="text-sm">{e.name}</span>

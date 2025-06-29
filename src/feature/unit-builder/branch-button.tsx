@@ -41,7 +41,7 @@ const BranchButton: FC<{
           <Tooltip>
             <TooltipTrigger asChild>
               <Image
-                src={node.img}
+                src={`${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images${node.img}`}
                 alt={node.name}
                 width={48}
                 height={48}

@@ -15,6 +15,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArtilleryAsset, WeaponAsset } from "@/lib/get-data";
 import ImageComponent from "@/components/image-component";
+import Image from "next/image";
 
 const Preview = ({
   data,
@@ -140,29 +141,34 @@ const Preview = ({
                       {show ? <span>{unit3?.name}</span> : null}
                     </div>
                   </TableCell>
-
                   <TableCell className="p-1 w-fit">
                     <div className="flex items-center gap-2 justify-center">
-                      <Avatar className="h-8 w-8" title={weapon?.name}>
-                        <AvatarImage
+                      <div className="h-8 w-8">
+                        <Image
+                          alt={weapon?.name ?? "Weapon"}
+                          width={32}
+                          height={32}
                           className="rounded-full"
-                          alt={weapon?.name}
-                          src={weapon?.src}
+                          src={
+                            weapon?.src
+                              ? `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/${weapon.src}`
+                              : `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/others/logo.png`
+                          }
+                          title={weapon?.name}
                         />
-                      </Avatar>
+                      </div>
                     </div>
                   </TableCell>
                   <TableCell className="p-1 w-fit">
                     <div className="flex items-center gap-1 justify-center">
                       {art.map((a) => (
-                        <Avatar className="h-8 w-8" key={a.id}>
-                          <AvatarImage
+                        <div key={a.id} className="h-8 w-8">
+                          <ImageComponent
+                            name={a.name}
                             className="rounded-full"
-                            alt={a?.name}
-                            src={a?.src}
-                            title={a?.name}
+                            type="artillery"
                           />
-                        </Avatar>
+                        </div>
                       ))}
                     </div>
                   </TableCell>
