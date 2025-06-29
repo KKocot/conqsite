@@ -125,118 +125,57 @@ const MapEditor = ({
         }));
         break;
       case "line":
-        // Handle line tool logic
-        if (!isDrawingLine.current) {
-          // Start drawing line
-          isDrawingLine.current = true;
-          onPlanChange((prev) => ({
-            ...prev,
-            elements: [
-              ...prev.elements,
-              {
-                id: nanoid(),
-                tool: currentTool.tool,
-                color: currentTool.toolColor,
-                strokeWidth: currentTool.size,
-                points: [pos.x, pos.y, pos.x, pos.y],
-              },
-            ],
-          }));
-        } else {
-          // Finish drawing line
-          isDrawingLine.current = false;
-          onPlanChange((prev) => {
-            const newElements = [...prev.elements];
-            const lastElement = newElements[newElements.length - 1];
-            if (lastElement.tool === "line") {
-              const updatedElement = {
-                ...lastElement,
-                points: [
-                  "points" in lastElement ? lastElement.points[0] : pos.x,
-                  "points" in lastElement ? lastElement.points[1] : pos.y,
-                  pos.x,
-                  pos.y,
-                ],
-              };
-              newElements[newElements.length - 1] = updatedElement;
-            }
-
-            return {
-              ...prev,
-              elements: newElements,
-            };
-          });
-        }
+        // Start drawing line immediately on mouse down
+        isDrawingLine.current = true;
+        onPlanChange((prev) => ({
+          ...prev,
+          elements: [
+            ...prev.elements,
+            {
+              id: nanoid(),
+              tool: currentTool.tool,
+              color: currentTool.toolColor,
+              strokeWidth: currentTool.size,
+              points: [pos.x, pos.y, pos.x, pos.y],
+            },
+          ],
+        }));
         break;
       case "arrow":
-        // Handle arrow tool logic
-        if (!isDrawingArrow.current) {
-          // Start drawing arrow
-          isDrawingArrow.current = true;
-          onPlanChange((prev) => ({
-            ...prev,
-            elements: [
-              ...prev.elements,
-              {
-                id: nanoid(),
-                tool: currentTool.tool,
-                color: currentTool.toolColor,
-                strokeWidth: currentTool.size,
-                points: [pos.x, pos.y, pos.x, pos.y],
-              },
-            ],
-          }));
-        } else {
-          // Finish drawing arrow
-          isDrawingArrow.current = false;
-          onPlanChange((prev) => {
-            const newElements = [...prev.elements];
-            const lastElement = newElements[newElements.length - 1];
-
-            if (lastElement.tool === "arrow") {
-              const updatedElement = {
-                ...lastElement,
-                points: [
-                  "points" in lastElement ? lastElement.points[0] : pos.x,
-                  "points" in lastElement ? lastElement.points[1] : pos.y,
-                  pos.x,
-                  pos.y,
-                ],
-              };
-              newElements[newElements.length - 1] = updatedElement;
-            }
-
-            return {
-              ...prev,
-              elements: newElements,
-            };
-          });
-        }
+        // Start drawing arrow immediately on mouse down
+        isDrawingArrow.current = true;
+        onPlanChange((prev) => ({
+          ...prev,
+          elements: [
+            ...prev.elements,
+            {
+              id: nanoid(),
+              tool: currentTool.tool,
+              color: currentTool.toolColor,
+              strokeWidth: currentTool.size,
+              points: [pos.x, pos.y, pos.x, pos.y],
+            },
+          ],
+        }));
         break;
       case "circle":
-        // Handle circle tool logic
-        if (!isDrawingCircle.current) {
-          // Start drawing circle
-          isDrawingCircle.current = true;
-          onPlanChange((prev) => ({
-            ...prev,
-            elements: [
-              ...prev.elements,
-              {
-                id: nanoid(),
-                tool: currentTool.tool,
-                color: currentTool.toolColor,
-                strokeWidth: currentTool.size,
-                x: pos.x,
-                y: pos.y,
-                radius: 0,
-              },
-            ],
-          }));
-        } else {
-          // Finish drawing circle
-          isDrawingCircle.current = false;
-        }
+        // Start drawing circle immediately on mouse down
+        isDrawingCircle.current = true;
+        onPlanChange((prev) => ({
+          ...prev,
+          elements: [
+            ...prev.elements,
+            {
+              id: nanoid(),
+              tool: currentTool.tool,
+              color: currentTool.toolColor,
+              strokeWidth: currentTool.size,
+              x: pos.x,
+              y: pos.y,
+              radius: 0,
+            },
+          ],
+        }));
         break;
       case "unitIcon":
         // Handle unit icon tool logic
@@ -575,6 +514,10 @@ const MapEditor = ({
     isDrawing.current = false;
     isDragging.current = false;
     dragStartPos.current = null;
+    // Add these lines to finish drawing on mouse up
+    isDrawingLine.current = false;
+    isDrawingArrow.current = false;
+    isDrawingCircle.current = false;
   };
 
   return (
@@ -622,13 +565,38 @@ const MapEditor = ({
                 />
               );
             }
-            if (element.tool === "arrow" && "points" in element) {
+            if (
+              element.tool === "arrow" &&
+              "points" in element &&
+              "strokeWidth" in element
+            ) {
               return (
                 <Arrow
                   key={element.id}
                   points={element.points}
                   stroke={element.color}
                   fill={element.color}
+                  strokeWidth={element.strokeWidth}
+                  lineCap="round"
+                  lineJoin="round"
+                  pointerLength={10}
+                  pointerWidth={8}
+                />
+              );
+            }
+            if (
+              element.tool === "circle" &&
+              "x" in element &&
+              "y" in element &&
+              "radius" in element
+            ) {
+              return (
+                <Circle
+                  key={element.id}
+                  x={element.x}
+                  y={element.y}
+                  radius={element.radius}
+                  stroke={element.color}
                   strokeWidth={element.strokeWidth}
                   lineCap="round"
                   lineJoin="round"
