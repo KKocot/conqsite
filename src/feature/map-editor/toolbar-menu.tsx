@@ -97,7 +97,7 @@ const ToolbarMenu = ({
             <div className="flex flex-col items-center gap-2 p-2">
               <h4 className="text-sm">Size - {values.size}</h4>
               <Slider
-                max={100}
+                max={30}
                 min={1}
                 onValueChange={(value) =>
                   onValueChange((prev) => ({
