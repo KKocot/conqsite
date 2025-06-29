@@ -362,7 +362,7 @@ export function PublicDialog({
           </div>
           <Calendar
             mode="single"
-            selected={date ? new Date(date) : undefined}
+            selected={date ? new Date(date) : new Date()}
             onSelect={(d) =>
               d &&
               setDate(
