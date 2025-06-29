@@ -21,7 +21,9 @@ export const DEFAULT_TOOLS_CONFIG: ToolsConfig = {
   artyIconValue: "Bombard",
   tooltipValue: "",
   toolColor: "#ff0000",
-  size: 4,
+  linesSize: 2,
+  iconsSize: 20,
+  tooltipSize: 1,
 };
 
 export const convertToColor = (color: string): string => {

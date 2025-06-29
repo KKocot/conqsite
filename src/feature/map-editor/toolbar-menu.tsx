@@ -90,12 +90,9 @@ const ToolbarMenu = ({
           {values.tool === "pen" ||
           values.tool === "line" ||
           values.tool === "arrow" ||
-          values.tool === "circle" ||
-          values.tool === "unitIcon" ||
-          values.tool === "otherIcon" ||
-          values.tool === "artilleryIcon" ? (
+          values.tool === "circle" ? (
             <div className="flex flex-col items-center gap-2 p-2">
-              <h4 className="text-sm">Size - {values.size}</h4>
+              <h4 className="text-sm">Size - {values.linesSize}</h4>
               <Slider
                 max={30}
                 min={1}
@@ -105,7 +102,27 @@ const ToolbarMenu = ({
                     size: value[0],
                   }))
                 }
-                value={[values.size]}
+                value={[values.linesSize]}
+                step={1}
+                className="w-44"
+              />
+            </div>
+          ) : null}
+          {values.tool === "unitIcon" ||
+          values.tool === "otherIcon" ||
+          values.tool === "artilleryIcon" ? (
+            <div className="flex flex-col items-center gap-2 p-2">
+              <h4 className="text-sm">Size - {values.iconsSize}</h4>
+              <Slider
+                max={30}
+                min={1}
+                onValueChange={(value) =>
+                  onValueChange((prev) => ({
+                    ...prev,
+                    size: value[0],
+                  }))
+                }
+                value={[values.iconsSize]}
                 step={1}
                 className="w-44"
               />
@@ -355,77 +372,121 @@ const ToolbarMenu = ({
             </div>
           ) : null}
           {values.tool === "tooltip" ? (
-            <ScrollArea className="w-full h-[530px] scroll-m-0">
-              {dates.isLoading ? (
-                <div>Loading...</div>
-              ) : !dates.data ? (
-                <div>No Data</div>
-              ) : (
-                <>
-                  <ul>
-                    {lineup
-                      ? lineup.sheet
-                          .filter((el) => el.username !== "")
-                          .map((e, i) => (
-                            <li
-                              className={clsx(
-                                `border-2 bg-gradient-to-t from${e.color} p-1 cursor-pointer hover:bg-opacity-80`,
-                                {
-                                  "border-accent":
-                                    values.tooltipValue === e.username,
+            <>
+              <div className="flex gap-1">
+                <span
+                  className={clsx("border-2 rounded px-2 py-1 cursor-pointer", {
+                    "border-accent": values.tooltipSize === 1,
+                  })}
+                  onClick={() =>
+                    onValueChange((prev) => ({ ...prev, tooltipSize: 1 }))
+                  }
+                >
+                  sm
+                </span>
+                <span
+                  className={clsx("border-2 rounded px-2 py-1 cursor-pointer", {
+                    "border-accent": values.tooltipSize === 2,
+                  })}
+                  onClick={() =>
+                    onValueChange((prev) => ({ ...prev, tooltipSize: 2 }))
+                  }
+                >
+                  md
+                </span>
+                <span
+                  className={clsx("border-2 rounded px-2 py-1 cursor-pointer", {
+                    "border-accent": values.tooltipSize === 3,
+                  })}
+                  onClick={() =>
+                    onValueChange((prev) => ({ ...prev, tooltipSize: 3 }))
+                  }
+                >
+                  lg
+                </span>
+                <span
+                  className={clsx("border-2 rounded px-2 py-1 cursor-pointer", {
+                    "border-accent": values.tooltipSize === 4,
+                  })}
+                  onClick={() =>
+                    onValueChange((prev) => ({ ...prev, tooltipSize: 4 }))
+                  }
+                >
+                  xl
+                </span>
+              </div>
+              <ScrollArea className="w-full h-[530px] scroll-m-0">
+                {dates.isLoading ? (
+                  <div>Loading...</div>
+                ) : !dates.data ? (
+                  <div>No Data</div>
+                ) : (
+                  <>
+                    <ul>
+                      {lineup
+                        ? lineup.sheet
+                            .filter((el) => el.username !== "")
+                            .map((e, i) => (
+                              <li
+                                className={clsx(
+                                  `border-2 bg-gradient-to-t from${e.color} p-1 cursor-pointer hover:bg-opacity-80`,
+                                  {
+                                    "border-accent":
+                                      values.tooltipValue === e.username,
+                                  }
+                                )}
+                                key={i}
+                                onClick={() =>
+                                  onValueChange((prev) => ({
+                                    ...prev,
+                                    tooltipValue: e.username,
+                                    toolColor: convertToColor(e.color),
+                                  }))
                                 }
-                              )}
-                              key={i}
-                              onClick={() =>
-                                onValueChange((prev) => ({
-                                  ...prev,
-                                  tooltipValue: e.username,
-                                  toolColor: convertToColor(e.color),
-                                }))
-                              }
-                            >
-                              <span className="underline text-lg">{`${i + 1} ${
-                                e.username
-                              }`}</span>
-                              <div className="flex items-center gap-2">
-                                {e.unit1 !== "" ? (
-                                  <span className="h-8 w-8">
-                                    <ImageComponent name={e.unit1} />
-                                  </span>
-                                ) : null}
-                                {e.unit2 !== "" ? (
-                                  <span className="h-8 w-8">
-                                    <ImageComponent name={e.unit2} />
-                                  </span>
-                                ) : null}
-                                {e.unit3 !== "" ? (
-                                  <span className="h-8 w-8">
-                                    <ImageComponent name={e.unit3} />
-                                  </span>
-                                ) : null}
-                                {e.weapon !== "" ? (
-                                  <span className="h-8 w-8">
-                                    <ImageComponent
-                                      className="rounded-full"
-                                      name={e.weapon}
-                                      type="weapon"
-                                    />
-                                  </span>
-                                ) : null}
-                              </div>
-                            </li>
-                          ))
-                      : null}
-                  </ul>
-                  <LineupLoader
-                    dates={dates.data}
-                    house={house}
-                    lineup={lineup}
-                    onLineupChange={(lineup) => onChangeLineup(lineup)}
-                  />
-                </>
-              )}
-            </ScrollArea>
+                              >
+                                <span className="underline text-lg">{`${
+                                  i + 1
+                                } ${e.username}`}</span>
+                                <div className="flex items-center gap-2">
+                                  {e.unit1 !== "" ? (
+                                    <span className="h-8 w-8">
+                                      <ImageComponent name={e.unit1} />
+                                    </span>
+                                  ) : null}
+                                  {e.unit2 !== "" ? (
+                                    <span className="h-8 w-8">
+                                      <ImageComponent name={e.unit2} />
+                                    </span>
+                                  ) : null}
+                                  {e.unit3 !== "" ? (
+                                    <span className="h-8 w-8">
+                                      <ImageComponent name={e.unit3} />
+                                    </span>
+                                  ) : null}
+                                  {e.weapon !== "" ? (
+                                    <span className="h-8 w-8">
+                                      <ImageComponent
+                                        className="rounded-full"
+                                        name={e.weapon}
+                                        type="weapon"
+                                      />
+                                    </span>
+                                  ) : null}
+                                </div>
+                              </li>
+                            ))
+                        : null}
+                    </ul>
+                    <LineupLoader
+                      dates={dates.data}
+                      house={house}
+                      lineup={lineup}
+                      onLineupChange={(lineup) => onChangeLineup(lineup)}
+                    />
+                  </>
+                )}
+              </ScrollArea>
+            </>
           ) : null}
           {values.tool === "templates" ? (
             <TemplatesTab
