@@ -94,12 +94,12 @@ const ToolbarMenu = ({
             <div className="flex flex-col items-center gap-2 p-2">
               <h4 className="text-sm">Size - {values.linesSize}</h4>
               <Slider
-                max={30}
+                max={25}
                 min={1}
                 onValueChange={(value) =>
                   onValueChange((prev) => ({
                     ...prev,
-                    size: value[0],
+                    linesSize: value[0],
                   }))
                 }
                 value={[values.linesSize]}
@@ -114,12 +114,12 @@ const ToolbarMenu = ({
             <div className="flex flex-col items-center gap-2 p-2">
               <h4 className="text-sm">Size - {values.iconsSize}</h4>
               <Slider
-                max={30}
+                max={50}
                 min={1}
                 onValueChange={(value) =>
                   onValueChange((prev) => ({
                     ...prev,
-                    size: value[0],
+                    iconsSize: value[0],
                   }))
                 }
                 value={[values.iconsSize]}
