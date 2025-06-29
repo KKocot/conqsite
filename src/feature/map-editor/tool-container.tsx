@@ -25,11 +25,6 @@ const ToolContainer = ({
         onToolChange((prev) => ({
           ...prev,
           tool: toolName,
-          size:
-            (toolName === "unitIcon" || toolName === "artilleryIcon") &&
-            prev.size === 4
-              ? 25
-              : prev.size,
         }))
       }
     >
