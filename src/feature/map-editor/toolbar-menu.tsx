@@ -389,18 +389,27 @@ const ToolbarMenu = ({
                               }`}</span>
                               <div className="flex items-center gap-2">
                                 {e.unit1 !== "" ? (
-                                  <span>
+                                  <span className="h-8 w-8">
                                     <ImageComponent name={e.unit1} />
                                   </span>
                                 ) : null}
                                 {e.unit2 !== "" ? (
-                                  <span>
+                                  <span className="h-8 w-8">
                                     <ImageComponent name={e.unit2} />
                                   </span>
                                 ) : null}
                                 {e.unit3 !== "" ? (
-                                  <span>
+                                  <span className="h-8 w-8">
                                     <ImageComponent name={e.unit3} />
+                                  </span>
+                                ) : null}
+                                {e.weapon !== "" ? (
+                                  <span className="h-8 w-8">
+                                    <ImageComponent
+                                      className="rounded-full"
+                                      name={e.weapon}
+                                      type="weapon"
+                                    />
                                   </span>
                                 ) : null}
                               </div>
