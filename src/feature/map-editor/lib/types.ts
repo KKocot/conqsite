@@ -42,7 +42,8 @@ export interface ToolsConfig {
     | "public"
     | "otherIcon"
     | "zoom"
-    | "ping";
+    | "ping"
+    | "info";
   artyIconValue: string;
   otherIconValue: string;
   unitIconValue: string;

@@ -1,6 +1,6 @@
 import { CardHeader } from "@/components/ui/card";
 import { ToolsConfig } from "./lib/types";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import ToolContainer from "./tool-container";
 import {
   ArrowRightIcon,
@@ -18,7 +18,7 @@ import {
   Send,
   LandPlot,
   BellRing,
-  ZoomIn,
+  Info,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
@@ -29,6 +29,44 @@ const Header = ({
   values: ToolsConfig;
   onValueChange: Dispatch<SetStateAction<ToolsConfig>>;
 }) => {
+  useEffect(() => {
+    const shortcuts: Record<string, ToolsConfig["tool"]> = {
+      v: "select",
+      p: "pen",
+      l: "line",
+      a: "arrow",
+      c: "circle",
+      d: "delete",
+      u: "unitIcon",
+      g: "artilleryIcon",
+      o: "otherIcon",
+      t: "tooltip",
+      x: "text",
+      m: "map",
+      n: "ping",
+      b: "templates",
+      s: "public",
+      i: "info",
+    };
+
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement
+      ) {
+        return;
+      }
+
+      const tool = shortcuts[e.key.toLowerCase()];
+      if (tool) {
+        onValueChange((prev) => ({ ...prev, tool }));
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, [onValueChange]);
+
   return (
     <CardHeader className="flex flex-row justify-around items-center gap-1 flex-wrap p-2">
       <ToolContainer
@@ -118,6 +156,13 @@ const Header = ({
         <Map className="h-4 w-4" />
       </ToolContainer>
       <Separator />
+      <ToolContainer
+        currentTool={values.tool === "info"}
+        toolName="info"
+        onToolChange={onValueChange}
+      >
+        <Info className="h-4 w-4" />
+      </ToolContainer>
       <ToolContainer
         currentTool={values.tool === "ping"}
         toolName="ping"

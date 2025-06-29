@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
 import { Plan, ToolsConfig } from "./lib/types";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState, useEffect } from "react";
 import Header from "./header";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -58,6 +58,26 @@ const ToolbarMenu = ({
   onChangeLineup: (lineup: PublicLineup | undefined) => void;
 }) => {
   const addMapPublicMutation = useAddMapPublicMutation();
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key.toLowerCase() === "z") {
+        e.preventDefault();
+        onChangeCurrentPlan((prev) => {
+          const newElements = [...prev.elements];
+          if (newElements.length > 0) {
+            newElements.pop();
+            return { ...prev, elements: newElements };
+          }
+          return prev;
+        });
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onChangeCurrentPlan]);
+
   const unitsAssets = useQuery({
     queryKey: ["unitsAssets"],
     queryFn: getUnitsAssets,
@@ -548,6 +568,30 @@ const ToolbarMenu = ({
                 Connect
               </Button>
             </>
+          ) : null}
+          {values.tool === "info" ? (
+            <div className="flex flex-col items-center gap-2">
+              <h4 className="text-sm">Map Information</h4>
+              <ScrollArea className="text-sm space-y-1">
+                <p>Keyboard Shortcuts:</p>
+                <p>v - Select</p>
+                <p>p - Pen</p>
+                <p>l - Line</p>
+                <p>a - Arrow</p>
+                <p>c - Circle</p>
+                <p>d - Delete</p>
+                <p>u - Unit Icon</p>
+                <p>g - Artillery Icon</p>
+                <p>o - Other Icon</p>
+                <p>t - Tooltip</p>
+                <p>x - Text</p>
+                <p>m - Map</p>
+                <p>n - Ping</p>
+                <p>b - Templates</p>
+                <p>s - Public</p>
+                <p>Control + z - Delete last placed item</p>
+              </ScrollArea>
+            </div>
           ) : null}
         </CardContent>
       </Card>
