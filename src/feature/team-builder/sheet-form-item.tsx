@@ -15,6 +15,7 @@ import {
 import { useTranslations } from "next-intl";
 import { ArtilleryAsset, Survey } from "@/lib/get-data";
 import Image from "next/image";
+import ImageComponent from "@/components/image-component";
 function findUserByNick(users: Survey[], nickname: string) {
   return users.find(
     (user) => user.discordNick === nickname || user.inGameNick === nickname
@@ -129,11 +130,11 @@ const Item = ({
                   className="flex flex-col items-center justify-around"
                   title={weapon.name}
                 >
-                  <Image
-                    src={weapon.src}
-                    alt={weapon.name}
-                    width={20}
-                    height={20}
+                  <ImageComponent
+                    type="weapon"
+                    name={weapon.name}
+                    width={25}
+                    height={25}
                     className={clsx("rounded-full shadow-md", {
                       "shadow-yellow-500": user.weapons[index].pref === 1,
                       "shadow-purple-500": user.weapons[index].pref === 2,

@@ -165,7 +165,7 @@ const Content = ({
           </div>
         </div>
         {row ? (
-          <ul className="">
+          <ul>
             {sheetData.map((e, index) => (
               <ItemRow
                 artillery={artillery}
