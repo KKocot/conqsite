@@ -26,20 +26,23 @@ const ImageComponent = ({
   height = 32,
   className = "",
   type = "unit",
+  onClick,
 }: {
   name: string;
   width?: number;
   height?: number;
   className?: string;
   type?: "unit" | "map" | "unitCard" | "weapon" | "artillery";
+  onClick?: () => void;
 }) => {
   const imageSrc = getImageSrc(name, type);
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center" onClick={onClick}>
       <Image
         src={imageSrc}
         alt={name}
+        id={name}
         className={className}
         width={width}
         height={height}
