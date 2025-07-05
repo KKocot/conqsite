@@ -658,6 +658,7 @@ export interface Badge {
   conqBot: number;
   lineups: number;
   card?: HouseDetails;
+  quality: number;
 }
 
 export const getHouseBadges = async (house: string): Promise<Badge> => {

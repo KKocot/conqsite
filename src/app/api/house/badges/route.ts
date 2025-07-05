@@ -7,6 +7,7 @@ import History from "@/models/house/twHistory";
 import Event from "@/models/events";
 import PublicLineup from "@/models/publicLineup";
 import House from "@/models/house";
+import { HouseDetails } from "@/lib/get-data";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -19,17 +20,22 @@ export async function GET(request: Request) {
     const history = await getHistory();
     const conqBotUsers = await getConqBotUsers();
     const publicLineups = await getPublicLineups();
+    const lowQualityHouses = await getLowQualityHouses(cards);
 
-    const combinedData = cards.map((card) => ({
-      house: card.name,
-      premium:
-        assets.find((asset) => asset.name === card.name)?.premium || false,
-      surveys: filledSurveys.find((s) => s.house === card.name)?.percent || 0,
-      history: history.find((h) => h._id === card.name)?.count || 0,
-      conqBot: conqBotUsers.find((c) => c._id === card.name)?.count || 0,
-      lineups: publicLineups.find((l) => l._id === card.name)?.count || 0,
-      card: card,
-    }));
+    const combinedData = cards
+      .map((card) => ({
+        house: card.name,
+        premium:
+          assets.find((asset) => asset.name === card.name)?.premium || false,
+        surveys: filledSurveys.find((s) => s.house === card.name)?.percent || 0,
+        history: history.find((h) => h._id === card.name)?.count || 0,
+        conqBot: conqBotUsers.find((c) => c._id === card.name)?.count || 0,
+        lineups: publicLineups.find((l) => l._id === card.name)?.count || 0,
+        card: card,
+        quality:
+          lowQualityHouses.find((h) => h.name === card.name)?.quality || 1,
+      }))
+      .sort((a, b) => b.quality - a.quality);
 
     if (house) {
       const houseData = combinedData.find(
@@ -149,6 +155,7 @@ const getConqBotUsers = async () => {
   ]);
   return conqBotUsers;
 };
+
 const getPublicLineups = async () => {
   const publicLineups = await PublicLineup.aggregate([
     {
@@ -162,4 +169,54 @@ const getPublicLineups = async () => {
     },
   ]);
   return publicLineups;
+};
+
+const defaultAvatar = "https://i.imgur.com/4VEMy1m.png";
+const default_surveys_number = 15;
+
+const getLowQualityHouses = async (cards: HouseDetails[]) => {
+  const noAvatar = await House.aggregate([
+    {
+      $match: {
+        avatar: defaultAvatar,
+      },
+    },
+    {
+      $project: {
+        name: 1,
+        _id: 0,
+      },
+    },
+  ]);
+  const lowAmmountOfSurveys = await Survey.aggregate([
+    {
+      $unwind: "$house",
+    },
+    {
+      $group: {
+        _id: "$house",
+        memberCount: { $sum: 1 },
+      },
+    },
+    {
+      $match: {
+        memberCount: { $lt: default_surveys_number },
+      },
+    },
+    {
+      $project: {
+        house: "$_id",
+        _id: 0,
+      },
+    },
+  ]);
+  return cards.map((card) => {
+    let quality = 1;
+    if (noAvatar.some((h) => h.name === card.name)) quality++;
+    if (lowAmmountOfSurveys.some((h) => h.house === card.name)) quality++;
+    return {
+      name: card.name,
+      quality,
+    };
+  });
 };
