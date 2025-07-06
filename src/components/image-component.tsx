@@ -4,6 +4,7 @@ import Image from "next/image";
 
 const getImageSrc = (name: string, type: string) => {
   const nameLower = name.toLowerCase().replaceAll(/[ ':]/g, "-");
+  console.log(nameLower, type);
   switch (type) {
     case "unit":
       return `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/unit-icons/${nameLower}-icon.png`;
@@ -15,6 +16,8 @@ const getImageSrc = (name: string, type: string) => {
       return `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/weapons/${nameLower}.png`;
     case "artillery":
       return `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/artillery/${nameLower}.png`;
+    case "material":
+      return `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/materials/${nameLower}.png`;
     default:
       return `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/others/logo.png`;
   }
@@ -32,7 +35,7 @@ const ImageComponent = ({
   width?: number;
   height?: number;
   className?: string;
-  type?: "unit" | "map" | "unitCard" | "weapon" | "artillery";
+  type?: "unit" | "map" | "unitCard" | "weapon" | "artillery" | "material";
   onClick?: () => void;
 }) => {
   const imageSrc = getImageSrc(name, type);
