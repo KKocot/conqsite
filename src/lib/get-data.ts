@@ -672,10 +672,16 @@ export const getAllHousesBadges = async (): Promise<Badge[]> => {
   return result;
 };
 
+type Materials = {
+  name: string;
+  amount: number;
+};
 export interface ArtilleryAsset {
   name: string;
   src: string;
   id: number;
+  rarity: "common" | "rare" | "epic" | "legendary";
+  materials: Materials[];
 }
 
 export const getArtilleryAssets = async (): Promise<ArtilleryAsset[]> => {
@@ -684,6 +690,13 @@ export const getArtilleryAssets = async (): Promise<ArtilleryAsset[]> => {
   return result.artilleriesAsset;
 };
 
+export const getArtilleryAsset = async (
+  name: string
+): Promise<ArtilleryAsset> => {
+  const response = await fetch(`/api/assets/artillery?name=${name}`);
+  const result = await response.json();
+  return result.artilleryAsset;
+};
 export interface KitsAssets {
   image: string;
   unit: string;

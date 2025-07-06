@@ -70,6 +70,12 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
         disabled: false,
         iconPath: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/castle.png`,
       },
+      {
+        title: "Artilleries",
+        url: "/dashboard/artilleries",
+        disabled: false,
+        iconPath: `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/icons/stats.png`,
+      },
     ],
   };
   const membersLinks = {
