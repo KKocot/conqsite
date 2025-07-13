@@ -74,7 +74,7 @@ const MapEditor = ({
     if (!stage) return;
 
     const oldScale = stageScale;
-    const pointer = stage.getPointerPosition();
+    const pointer = stage.getRelativePointerPosition();
     if (!pointer) return;
 
     const mousePointTo = {
@@ -452,7 +452,7 @@ const MapEditor = ({
       dragStartPos.current
     ) {
       const stage = e.target.getStage();
-      const point = stage?.getPointerPosition();
+      const point = stage?.getRelativePointerPosition();
 
       if (!point) return;
 
@@ -502,7 +502,7 @@ const MapEditor = ({
     // Handle circle preview while drawing
     if (isDrawingCircle.current && plan.elements.length > 0) {
       const stage = e.target.getStage();
-      const point = stage?.getPointerPosition();
+      const point = stage?.getRelativePointerPosition();
       if (!point) return;
 
       onPlanChange((prev) => {
@@ -536,7 +536,7 @@ const MapEditor = ({
     // Handle arrow preview while drawing
     if (isDrawingArrow.current && plan.elements.length > 0) {
       const stage = e.target.getStage();
-      const point = stage?.getPointerPosition();
+      const point = stage?.getRelativePointerPosition();
       if (!point) return;
 
       onPlanChange((prev) => {
@@ -567,7 +567,7 @@ const MapEditor = ({
     // Handle line preview while drawing
     if (isDrawingLine.current && plan.elements.length > 0) {
       const stage = e.target.getStage();
-      const point = stage?.getPointerPosition();
+      const point = stage?.getRelativePointerPosition();
       if (!point) return;
 
       onPlanChange((prev) => {
@@ -596,7 +596,7 @@ const MapEditor = ({
     }
 
     const stage = e.target.getStage();
-    const point = stage?.getPointerPosition();
+    const point = stage?.getRelativePointerPosition();
 
     if (!point || plan.elements.length === 0) {
       return;

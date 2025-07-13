@@ -19,6 +19,7 @@ import {
   LandPlot,
   BellRing,
   Info,
+  ZoomInIcon,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
@@ -47,6 +48,7 @@ const Header = ({
       b: "templates",
       s: "public",
       i: "info",
+      z: "zoom",
     };
 
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -90,6 +92,7 @@ const Header = ({
       >
         <Minus className="h-4 w-4" />
       </ToolContainer>
+
       <ToolContainer
         currentTool={values.tool === "arrow"}
         toolName="arrow"
@@ -149,6 +152,13 @@ const Header = ({
         <ScrollText className="h-4 w-4" />
       </ToolContainer>
       <ToolContainer
+        currentTool={values.tool === "info"}
+        toolName="info"
+        onToolChange={onValueChange}
+      >
+        <Info className="h-4 w-4" />
+      </ToolContainer>
+      <ToolContainer
         currentTool={values.tool === "map"}
         toolName="map"
         onToolChange={onValueChange}
@@ -156,13 +166,6 @@ const Header = ({
         <Map className="h-4 w-4" />
       </ToolContainer>
       <Separator />
-      <ToolContainer
-        currentTool={values.tool === "info"}
-        toolName="info"
-        onToolChange={onValueChange}
-      >
-        <Info className="h-4 w-4" />
-      </ToolContainer>
       <ToolContainer
         currentTool={values.tool === "ping"}
         toolName="ping"
@@ -183,6 +186,13 @@ const Header = ({
         onToolChange={onValueChange}
       >
         <Send className="h-4 w-4" />
+      </ToolContainer>
+      <ToolContainer
+        currentTool={values.tool === "zoom"}
+        toolName="zoom"
+        onToolChange={onValueChange}
+      >
+        <ZoomInIcon className="h-4 w-4" />
       </ToolContainer>
     </CardHeader>
   );

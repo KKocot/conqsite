@@ -142,7 +142,8 @@ export type ToolsProps =
   | "icon"
   | "text"
   | "tooltip"
-  | "delete";
+  | "delete"
+  | "zoom";
 export interface ToolbarState {
   map: string;
   lineup: PublicLineup;
