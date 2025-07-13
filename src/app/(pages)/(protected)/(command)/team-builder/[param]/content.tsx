@@ -7,14 +7,7 @@ import clsx from "clsx";
 import Item from "@/feature/team-builder/sheet-form-item";
 import { Rows4, ScanEye, Table, TableIcon } from "lucide-react";
 import UsersList from "@/feature/team-builder/users-list";
-import {
-  ArtilleryAsset,
-  DiscordDataByName,
-  HouseAssets,
-  Survey,
-  UnitAssetsGroup,
-  WeaponAsset,
-} from "@/lib/get-data";
+import { Survey } from "@/lib/get-data";
 import { DEFAULT_CARD } from "@/lib/defaults";
 import Filters from "@/feature/team-builder/filters";
 import Templates from "@/feature/team-builder/templates";
@@ -28,19 +21,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import PickedUnitsStats from "@/feature/team-builder/picked-units-stats";
 import TooltipContainer from "@/components/tooltip-container";
-
-interface ContentProps {
-  surveysData: Survey[];
-  assets?: HouseAssets;
-  publicLineups: {
-    dates?: string[];
-    loading: boolean;
-    discordData: DiscordDataByName;
-  };
-  unitsAssets: UnitAssetsGroup;
-  artillery: ArtilleryAsset[];
-  weapons: WeaponAsset[];
-}
+import { useLocalStorage } from "usehooks-ts";
+import {
+  ContentProps,
+  DEFAULT_FILTERS,
+  FiltersProps,
+} from "@/feature/team-builder/utils/lib";
 
 const Content = ({
   surveysData,
@@ -61,22 +47,18 @@ const Content = ({
   const [sheetData, setSheetData] = useState<SheetTypes[]>(
     Array(10).fill(DEFAULT_CARD)
   );
-  const [filterUnits, setFilterUnits] = useState({
-    rustic_checked: true,
-    chivalric_checked: true,
-    silver_checked: true,
-    heroic_checked: true,
-    golden_checked: true,
-    other_checked: true,
-    meta_units_only: true,
-  });
+  const [storedFilters, setStoredFilters] = useLocalStorage<FiltersProps>(
+    `filters-${house}`,
+    DEFAULT_FILTERS
+  );
+
   const units = useMemo(() => {
-    const golden_era = filterUnits.golden_checked ? goldenEra : [];
-    const heroic_era = filterUnits.heroic_checked ? heroicEra : [];
-    const silver_era = filterUnits.silver_checked ? blueEra : [];
-    const chivalric_era = filterUnits.chivalric_checked ? greenEra : [];
-    const rustic_era = filterUnits.rustic_checked ? greyEra : [];
-    const others_unit = filterUnits.other_checked ? otherEra : [];
+    const golden_era = storedFilters.golden_checked ? goldenEra : [];
+    const heroic_era = storedFilters.heroic_checked ? heroicEra : [];
+    const silver_era = storedFilters.silver_checked ? blueEra : [];
+    const chivalric_era = storedFilters.chivalric_checked ? greenEra : [];
+    const rustic_era = storedFilters.rustic_checked ? greyEra : [];
+    const others_unit = storedFilters.other_checked ? otherEra : [];
     return [
       ...golden_era,
       ...heroic_era,
@@ -86,12 +68,12 @@ const Content = ({
       ...others_unit,
     ];
   }, [
-    filterUnits.golden_checked,
-    filterUnits.heroic_checked,
-    filterUnits.silver_checked,
-    filterUnits.chivalric_checked,
-    filterUnits.rustic_checked,
-    filterUnits.other_checked,
+    storedFilters.golden_checked,
+    storedFilters.heroic_checked,
+    storedFilters.chivalric_checked,
+    storedFilters.silver_checked,
+    storedFilters.rustic_checked,
+    storedFilters.other_checked,
   ]);
   const moveItemUp = (index: number) => {
     if (index > 0) {
@@ -174,7 +156,7 @@ const Content = ({
                 key={index}
                 index={index}
                 units={
-                  filterUnits.meta_units_only
+                  storedFilters.meta_units_only
                     ? units.filter((e) => e.value > 7)
                     : units
                 }
@@ -196,7 +178,7 @@ const Content = ({
                 key={index}
                 index={index}
                 units={
-                  filterUnits.meta_units_only
+                  storedFilters.meta_units_only
                     ? units.filter((e) => e.value > 7)
                     : units
                 }
@@ -272,7 +254,7 @@ const Content = ({
           />
         </TooltipContainer>
         <TooltipContainer title="Filters">
-          <Filters filters={filterUnits} setFilter={setFilterUnits} />
+          <Filters filters={storedFilters} setFilter={setStoredFilters} />
         </TooltipContainer>
         <TooltipContainer title="Preview">
           <div
