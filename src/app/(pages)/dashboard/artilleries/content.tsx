@@ -19,29 +19,27 @@ const Content = ({ data }: { data: ArtilleryAsset[] }) => {
             key={asset.name}
             href={`/dashboard/artilleries/${asset.name.replaceAll(" ", "-")}`}
           >
-            <Card
-              className={clsx("text-lg font-medium text-center", {
-                "bg-gradient-to-t from-yellow-300 to-yellow-800":
-                  asset.rarity === "legendary",
-                "bg-gradient-to-t from-violet-300 to-violet-800":
-                  asset.rarity === "epic",
-                "bg-gradient-to-t from-blue-300 to-blue-800":
-                  asset.rarity === "rare",
-                "bg-gradient-to-t from-green-300 to-green-800":
-                  asset.rarity === "common",
-              })}
-            >
-              <CardHeader className="px-2">
-                <h2 className="font-semibold h-[48px] text-center">
-                  {asset.name}
-                </h2>
+            <Card className="text-lg font-medium text-center">
+              <CardHeader
+                className={clsx("p-1 h-[64px] flex justify-center", {
+                  "bg-gradient-to-t from-yellow-600 to-yellow-900":
+                    asset.rarity === "legendary",
+                  "bg-gradient-to-t from-violet-600 to-violet-900":
+                    asset.rarity === "epic",
+                  "bg-gradient-to-t from-blue-600 to-blue-900":
+                    asset.rarity === "rare",
+                  "bg-gradient-to-t from-green-600 to-green-900":
+                    asset.rarity === "common",
+                })}
+              >
+                <h2 className="font-semibold text-center">{asset.name}</h2>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-0">
                 <ImageComponent
                   type="artillery"
                   name={asset.name}
-                  width={150}
-                  height={150}
+                  width={300}
+                  height={300}
                 />
               </CardContent>
             </Card>
