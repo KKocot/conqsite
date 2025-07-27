@@ -47,7 +47,7 @@ const Page = () => {
     queryFn: () => getHouseAssets(house),
     enabled: !!house,
   });
-  const { data: botData, isLoading: botLoading } = useQuery({
+  const { data: botData } = useQuery({
     queryKey: ["bot"],
     queryFn: () => getPageMD("bot"),
   });
@@ -67,7 +67,7 @@ const Page = () => {
   if (isLoading || eventsLoading) return <LoadingComponent />;
   // Show no data component if no data is found
   if (!data || !user || !events) return <NoData />;
-
+  console.log("House:", data);
   return (
     <Content
       botContent={botContent}

@@ -3,11 +3,13 @@ import connectMongoDB from "@/lib/mongodb";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
-import { headers } from "next/headers";
 import HouseSettings from "@/models/houseSettings";
 import putHouseSettingsSchema from "./shema";
 import Roles from "@/models/roles";
-import { highestRolesAllowed } from "@/lib/endpoints-protections";
+import {
+  highCommandAllowed,
+  highestRolesAllowed,
+} from "@/lib/endpoints-protections";
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
@@ -57,9 +59,7 @@ export async function GET(request: Request) {
     await connectMongoDB();
     const roles = await Roles.find({ house: name });
 
-    const discordKey = headers().get("discord-key");
-    const envKey = process.env.BOT_KEY;
-    const highestRolesAccess = highestRolesAllowed(roles, session, name);
+    const highestRolesAccess = highCommandAllowed(roles, session, name);
 
     if (!highestRolesAccess) return new Response("401");
 
