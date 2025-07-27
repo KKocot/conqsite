@@ -4,7 +4,6 @@ import Image from "next/image";
 
 const getImageSrc = (name: string, type: string) => {
   const nameLower = name.toLowerCase().replaceAll(/[ ':]/g, "-");
-  console.log(nameLower, type);
   switch (type) {
     case "unit":
       return `${process.env.NEXT_PUBLIC_IMAGES_IP_HOST}/images/unit-icons/${nameLower}-icon.png`;

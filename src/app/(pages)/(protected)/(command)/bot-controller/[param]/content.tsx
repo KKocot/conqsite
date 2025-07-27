@@ -45,7 +45,6 @@ const Content = ({
   assets = { name: house, premium: false, sharedList: false, signupBot: "" },
 }: Props) => {
   const t = useTranslations("CommandPages.BotController");
-
   // Data for discord server: channels, roles, users
   const { data: discordData, isLoading: discordDataLoading } = useQuery({
     queryKey: ["discordData", house],

@@ -1,5 +1,6 @@
 "use client";
 
+import { FaDiscord } from "react-icons/fa";
 import { ReactNode } from "react";
 import {
   SidebarContent,
@@ -7,14 +8,6 @@ import {
   SidebarProvider,
   Sidebar,
 } from "@/components/ui/sidebar";
-import {
-  SquareUserRound,
-  Frame,
-  Castle,
-  Notebook,
-  Info,
-  BookTypeIcon,
-} from "lucide-react";
 import LanguageToggle from "./language-toggle";
 import { ModeToggle } from "./theme-menu";
 import { useSession } from "next-auth/react";
@@ -195,7 +188,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
           <SupportButton />
           <div className="flex items-center justify-between px-4 py-1">
             <HoverClickTooltip
-              buttonStyle="rounded-md"
+              buttonStyle="rounded-full"
               triggerChildren={
                 <Link
                   href="/policy"
@@ -214,7 +207,7 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
               <p className="text-sm w-40">{t("dashboard.privacy_policy")}</p>
             </HoverClickTooltip>
             <HoverClickTooltip
-              buttonStyle="rounded-md"
+              buttonStyle="rounded-full"
               triggerChildren={
                 <Link
                   href="/tos"
@@ -251,6 +244,19 @@ const CustomSidebarProvider = ({ children }: { children: ReactNode }) => {
             >
               <p className="text-sm w-40">{t("dashboard.documentation")}</p>
             </HoverClickTooltip>
+
+            <Link
+              href="https://discord.gg/CCVJauxa2Y"
+              target="_blank"
+              title="Our Discord"
+            >
+              <Image
+                src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/66e3d7f4ef6498ac018f2c55_Symbol.svg"
+                alt="Discord Logo"
+                width={30}
+                height={30}
+              />
+            </Link>
           </div>
           {data ? (
             <NavUser

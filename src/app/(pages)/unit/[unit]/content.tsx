@@ -77,7 +77,6 @@ const Content = ({
       icon: shortEntry.icon,
       era: shortEntry.era,
       image: shortEntry.src,
-      leadership: entry?.leadership || shortEntry.leadership.toString(),
       value: entry?.value || [],
       authors: entry?.authors || [],
       masteryPoints: entry?.masteryPoints || false,
