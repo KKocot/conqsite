@@ -187,7 +187,7 @@ const Content = ({
                           <Input className="w-16" {...field} />
                         </FormControl>
                       ) : (
-                        <p className="font-medium">{field.value}</p>
+                        <p className="font-medium">{shortEntry.leadership}</p>
                       )}
                     </FormItem>
                   )}
