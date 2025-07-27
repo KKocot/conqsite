@@ -67,7 +67,6 @@ const Page = () => {
   if (isLoading || eventsLoading) return <LoadingComponent />;
   // Show no data component if no data is found
   if (!data || !user || !events) return <NoData />;
-  console.log("House:", data);
   return (
     <Content
       botContent={botContent}
