@@ -15,6 +15,8 @@ const HouseAssetsSchema = new Schema({
   sharedList: Boolean,
   signupBot: String,
   messages: Boolean,
+  premiumPlan: String,
+  premiumEndTime: String,
 });
 
 const HouseAssets =

@@ -106,6 +106,7 @@ const Content = ({
             "High Roles",
             "Card",
           ]}
+          maxSteps={4}
         />
         <Link
           href="https://www.youtube.com/watch?v=F53_7ISiLlc"

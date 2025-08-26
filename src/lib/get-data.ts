@@ -67,6 +67,19 @@ export const getHouseSettings = async (
   return result;
 };
 
+export interface PremiumStatus {
+  name: string;
+  avatar: string;
+  premium: string;
+  userHouse: boolean;
+  premiumEndTime: string;
+}
+export const getPremiumStatus = async (): Promise<PremiumStatus[]> => {
+  const response = await fetch(`/api/house/premium-status`);
+  const result = await response.json();
+  return result;
+};
+
 export interface Survey {
   _id?: string;
   updates?: String[];
@@ -341,6 +354,8 @@ export interface HouseAssets {
   sharedList: boolean;
   signupBot: string;
   messages?: boolean;
+  premiumEndTime?: string;
+  premiumPlan?: "silver" | "gold" | "platinum";
 }
 
 export const getHouseAssets = async (house: string): Promise<HouseAssets> => {
