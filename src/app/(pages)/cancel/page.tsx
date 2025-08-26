@@ -1,1 +1,2 @@
-export default () => <h1>Payment canceled ❌</h1>;
+const CancelPage = () => <h1>Payment canceled ❌</h1>;
+export default CancelPage;
