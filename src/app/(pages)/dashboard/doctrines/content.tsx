@@ -16,10 +16,14 @@ import {
 } from "@/components/ui/accordion";
 import { Input } from "@/components/ui/input";
 import { Filter } from "lucide-react";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { doctrineAssetsOptions } from "@/feature/doctrines/lib/query";
 
 type CardType = "all" | "groups" | "unit" | null;
 
-const Content = ({ doctrines }: { doctrines: DoctrineType[] }) => {
+const Content = () => {
+  const { data } = useSuspenseQuery(doctrineAssetsOptions);
+  const doctrines: DoctrineType[] = data;
   const params = useSearchParams();
   const router = useRouter();
   const card = params.get("card") as CardType;

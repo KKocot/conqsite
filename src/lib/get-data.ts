@@ -730,12 +730,6 @@ export interface DoctrineType {
   rarity: "common" | "uncommon" | "rare" | "epic";
 }
 
-export const getDoctrineAssets = async (): Promise<DoctrineType[]> => {
-  const response = await fetch(`/api/assets/doctrines`);
-  const result = await response.json();
-  return result;
-};
-
 export const getDoctrineByName = async (
   name: string
 ): Promise<DoctrineType | null> => {
