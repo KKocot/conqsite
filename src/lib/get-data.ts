@@ -483,14 +483,6 @@ export const getUnitWikiById = async (id: string): Promise<UnitObject> => {
   return result.wikiPost;
 };
 
-export const getSurveysAndHousesNumber = async (): Promise<{
-  surveys: number;
-  houses: number;
-}> => {
-  const response = await fetch(`/api/housesAndSurveysInfo`);
-  const result = await response.json();
-  return result;
-};
 export interface FilledSurveys {
   filled_surveys: number;
   not_filled_surveys: number;
@@ -678,11 +670,6 @@ export interface Badge {
 
 export const getHouseBadges = async (house: string): Promise<Badge> => {
   const response = await fetch(`/api/house/badges?house=${house}`);
-  const result = await response.json();
-  return result;
-};
-export const getAllHousesBadges = async (): Promise<Badge[]> => {
-  const response = await fetch(`/api/house/badges`);
   const result = await response.json();
   return result;
 };
