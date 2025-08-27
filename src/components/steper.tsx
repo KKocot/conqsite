@@ -1,10 +1,20 @@
 import clsx from "clsx";
 import { MoveRight } from "lucide-react";
 
-const Steper = ({ tooltips, step }: { tooltips: string[]; step: number }) => {
+const Steper = ({
+  tooltips,
+  step,
+  maxSteps,
+  className,
+}: {
+  tooltips: string[];
+  step: number;
+  maxSteps: number;
+  className?: string;
+}) => {
   return (
-    <ul className="flex gap-4 text-accent">
-      {Array.from({ length: 4 }).map((_, i) => (
+    <ul className={clsx("flex gap-4 text-accent", className)}>
+      {Array.from({ length: maxSteps }).map((_, i) => (
         <li key={i} className="flex items-center gap-4">
           <div
             className={clsx("rounded-full", {
@@ -24,7 +34,7 @@ const Steper = ({ tooltips, step }: { tooltips: string[]; step: number }) => {
               page={i + 1}
             />
           </div>
-          {i !== 3 ? <MoveRight /> : null}
+          {i !== maxSteps - 1 ? <MoveRight /> : null}
         </li>
       ))}
     </ul>

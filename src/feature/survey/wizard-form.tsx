@@ -131,6 +131,7 @@ export default function WizardForm({
       >
         <h1 className="text-3xl font-bold">{t("form")}</h1>
         <Steper
+          maxSteps={4}
           step={step}
           tooltips={[
             t("low_eras"),

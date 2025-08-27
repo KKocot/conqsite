@@ -15,6 +15,7 @@ const houseAssetsSchema = z.object({
   sharedList: z.boolean(),
   signupBot: z.string(),
   messages: z.boolean().optional(),
+  premiumPlan: z.string().optional(),
 });
 
 export default houseAssetsSchema;
