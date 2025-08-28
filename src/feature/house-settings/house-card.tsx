@@ -13,8 +13,9 @@ import Link from "next/link";
 import { Badge } from "@/lib/get-data";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image from "next/image";
 import HouseBadges from "./house-badges";
+import { useState } from "react";
 
 interface HouseDetails {
   name: string;
@@ -33,6 +34,7 @@ export default function HouseCard({
   badgesData?: Badge;
 }) {
   const t = useTranslations("ListOfHouses");
+  const [img, setImg] = useState(house.avatar);
   return (
     <div className="relative">
       <HouseBadges badgesData={badgesData} />
@@ -46,10 +48,13 @@ export default function HouseCard({
       >
         <div className="w-full h-[362px]">
           <Link href={`/dashboard/houses/${house.name}`} target="_blank">
-            <Avatar className="w-[362px] h-[362px] rounded-none">
-              <AvatarImage src={house.avatar} alt={`${house.name} avatar`} />
-              <AvatarFallback>{house.name.substring(0, 2)}</AvatarFallback>
-            </Avatar>
+            <Image
+              src={img}
+              width={362}
+              height={362}
+              alt={`${house.name} avatar`}
+              onError={() => setImg("https://i.imgur.com/4VEMy1m.png")}
+            />
           </Link>
         </div>
         <CardHeader className="pt-2 ">
