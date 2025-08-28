@@ -10,7 +10,7 @@ const Page = () => {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="flex justify-center p-10 w-full">
-        <Content />;
+        <Content />
       </div>
     </HydrationBoundary>
   );
