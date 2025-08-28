@@ -3,43 +3,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { TierUnits } from "@/lib/get-data";
-import LoadingComponent from "../feature/ifs/loading";
 import HoverClickTooltip from "@/components/hover-click-tooltip";
 import Link from "next/link";
 import clsx from "clsx";
 import Image from "next/image";
+import { TierListItem, tiers } from "@/feature/units/lib/utils";
 
-// Type for the tier list items
-type TierListItem = {
-  tier: {
-    value: number;
-    color: string;
-    label: string;
-  };
-  items: TierUnits[];
-};
-
-// Define all 11 tiers (0-10)
-const tiers = [
-  { value: 10, color: "bg-red-600", label: "10" },
-  { value: 9, color: "bg-red-500", label: "9" },
-  { value: 8, color: "bg-orange-500", label: "8" },
-  { value: 7, color: "bg-orange-400", label: "7" },
-  { value: 6, color: "bg-yellow-500", label: "6" },
-  { value: 5, color: "bg-yellow-400", label: "5" },
-  { value: 4, color: "bg-green-500", label: "4" },
-  { value: 3, color: "bg-green-400", label: "3" },
-  { value: 2, color: "bg-blue-500", label: "2" },
-  { value: 1, color: "bg-blue-400", label: "1" },
-];
-
-const TierList = ({
-  data,
-  isLoading,
-}: {
-  data?: TierUnits[];
-  isLoading: boolean;
-}) => {
+const TierList = ({ data }: { data: TierUnits[] }) => {
   const [units, setUnits] = useState<TierListItem[]>([]);
   const [filter, setFilter] = useState({
     golden: true,
@@ -49,23 +19,21 @@ const TierList = ({
     grey: true,
   });
   useEffect(() => {
-    if (data) {
-      // Group items by their exact rating value
-      const itemsByTier = tiers.map((tier) => {
-        let tierItems: TierUnits[];
+    // Group items by their exact rating value
+    const itemsByTier = tiers.map((tier) => {
+      let tierItems: TierUnits[];
 
-        if (tier.value === 0) {
-          // For the 0 tier, include both items with rating 0 and undefined
-          tierItems = data.filter((item) => item.rating === undefined);
-        } else {
-          // For all other tiers, match the exact rating value
-          tierItems = data.filter((item) => item.rating === tier.value);
-        }
+      if (tier.value === 0) {
+        // For the 0 tier, include both items with rating 0 and undefined
+        tierItems = data.filter((item) => item.rating === undefined);
+      } else {
+        // For all other tiers, match the exact rating value
+        tierItems = data.filter((item) => item.rating === tier.value);
+      }
 
-        return { tier, items: tierItems };
-      });
-      setUnits(itemsByTier);
-    }
+      return { tier, items: tierItems };
+    });
+    setUnits(itemsByTier);
   }, [data]); // Also fixed dependency array to use data directly
 
   const filteredUnitsByEra = useMemo(() => {
@@ -134,60 +102,54 @@ const TierList = ({
         Rating Tier List (1-10)
       </h1>
 
-      {isLoading ? (
-        <LoadingComponent />
-      ) : (
-        filteredUnitsByEra.map(({ tier, items }) => (
-          <div key={tier.value} className="flex">
-            <div
-              className={`${tier.color} flex items-center justify-center w-16 rounded-l-lg`}
-            >
-              <span className="font-bold text-xl text-center">
-                {tier.label}
-              </span>
-            </div>
-            <Card className="flex-1 rounded-l-none">
-              <CardContent className="p-0">
-                {items.length === 0 ? (
-                  <div className="h-12 flex items-center justify-center text-grey-400">
-                    No items with rating {tier.label}
-                  </div>
-                ) : (
-                  <div className="flex flex-wrap h-full ">
-                    {items.map((item) => (
-                      <HoverClickTooltip
-                        key={item.id}
-                        triggerChildren={
-                          <Link
-                            href={`/unit/${item.name.replaceAll(" ", "_")}`}
-                            key={item.id}
-                            className="p-[2px]"
-                          >
-                            <Image
-                              src={`${
-                                process.env.NEXT_PUBLIC_IMAGES_IP_HOST
-                              }/images/unit-icons/${item.name
-                                .toLowerCase()
-                                .replace(/[ ':]/g, "-")}-icon.png`}
-                              alt={item.name}
-                              width={48}
-                              height={48}
-                            />
-                          </Link>
-                        }
-                      >
-                        <span className="text-xs mt-1 text-center truncate w-full">
-                          {item.name}
-                        </span>
-                      </HoverClickTooltip>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+      {filteredUnitsByEra.map(({ tier, items }) => (
+        <div key={tier.value} className="flex">
+          <div
+            className={`${tier.color} flex items-center justify-center w-16 rounded-l-lg`}
+          >
+            <span className="font-bold text-xl text-center">{tier.label}</span>
           </div>
-        ))
-      )}
+          <Card className="flex-1 rounded-l-none">
+            <CardContent className="p-0">
+              {items.length === 0 ? (
+                <div className="h-12 flex items-center justify-center text-grey-400">
+                  No items with rating {tier.label}
+                </div>
+              ) : (
+                <div className="flex flex-wrap h-full ">
+                  {items.map((item) => (
+                    <HoverClickTooltip
+                      key={item.id}
+                      triggerChildren={
+                        <Link
+                          href={`/unit/${item.name.replaceAll(" ", "_")}`}
+                          key={item.id}
+                          className="p-[2px]"
+                        >
+                          <Image
+                            src={`${
+                              process.env.NEXT_PUBLIC_IMAGES_IP_HOST
+                            }/images/unit-icons/${item.name
+                              .toLowerCase()
+                              .replace(/[ ':]/g, "-")}-icon.png`}
+                            alt={item.name}
+                            width={48}
+                            height={48}
+                          />
+                        </Link>
+                      }
+                    >
+                      <span className="text-xs mt-1 text-center truncate w-full">
+                        {item.name}
+                      </span>
+                    </HoverClickTooltip>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      ))}
     </div>
   );
 };

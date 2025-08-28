@@ -1,22 +1,23 @@
-"use client";
-
-import { useParams } from "next/navigation";
+import { getProfileTierlistOptions } from "@/feature/profile/lib/query";
 import Content from "./content";
-import { getUserUnitsPosts } from "@/lib/get-data";
-import { useQuery } from "@tanstack/react-query";
-import LoadingComponent from "@/feature/ifs/loading";
-import NoData from "@/feature/ifs/no-data";
+import { getQueryClient } from "@/lib/react-query";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-const Page = () => {
-  const { username } = useParams();
-  const { data, isLoading } = useQuery({
-    queryKey: ["userPosts", username],
-    queryFn: () => getUserUnitsPosts(username.toString()),
-    enabled: !!username,
-  });
-  if (isLoading) return <LoadingComponent />;
-  if (!data) return <NoData />;
-  return <Content data={data} />;
+type Props = {
+  params: { username: string };
+};
+const Page = ({ params }: Props) => {
+  const id = params.username.toString();
+
+  const profileTierlistOptions = getProfileTierlistOptions(id);
+  const queryClient = getQueryClient();
+  void queryClient.prefetchQuery(profileTierlistOptions);
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Content />
+    </HydrationBoundary>
+  );
 };
 
 export default Page;

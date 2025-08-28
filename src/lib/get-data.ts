@@ -778,19 +778,6 @@ export const getCommunityTierList = async (): Promise<TierUnits[]> => {
   return result;
 };
 
-interface MostUsedUnits {
-  id: string;
-  name: string;
-  image: string;
-  rating: number;
-}
-
-export const getMostUsedUnits = async (): Promise<MostUsedUnits[]> => {
-  const response = await fetch(`/api/units/most-used-units`);
-  const result = await response.json();
-  return result;
-};
-
 export interface MapAsset {
   name: string;
   cities: string[];

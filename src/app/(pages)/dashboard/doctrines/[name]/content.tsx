@@ -1,7 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { unitTypes } from "@/feature/units/list-tab";
+import { unitTypes } from "@/feature/units/lib/utils";
 import clsx from "clsx";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";

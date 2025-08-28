@@ -11,7 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { DoctrineType } from "@/lib/get-data";
 import Link from "next/link";
 import Image from "next/image";
-import { unitTypes } from "../units/list-tab";
+import { unitTypes } from "../units/lib/utils";
 
 const DoctrinesLisItem = ({ doctrine }: { doctrine: DoctrineType }) => {
   const statsList = doctrine.stats.split(". ").filter(Boolean);

@@ -1,4 +1,6 @@
-import { UserUnitPost } from "@/lib/get-data";
+"use client";
+
+import { getUserUnitsPosts } from "@/lib/get-data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -7,12 +9,11 @@ import PostsList from "@/feature/profile/posts-list";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import TierListContainer from "@/feature/profile/tier-list-container";
+import { useQuery } from "@tanstack/react-query";
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 
-interface ContentProps {
-  data: UserUnitPost;
-}
-
-const Content = ({ data }: ContentProps) => {
+const Content = () => {
   const params = useSearchParams();
   const router = useRouter();
   const { username } = useParams();
@@ -22,6 +23,13 @@ const Content = ({ data }: ContentProps) => {
     setTab(value);
     router.push(`/profile/${username}?card=${value}`);
   };
+  const { data, isLoading } = useQuery({
+    queryKey: ["userPosts", username],
+    queryFn: () => getUserUnitsPosts(username.toString()),
+    enabled: !!username,
+  });
+  if (isLoading) return <LoadingComponent />;
+  if (!data) return <NoData />;
   return (
     <div className="container mx-auto py-8 px-4">
       <ProfileHeader author={data.author} postCount={data.posts.length} />
