@@ -25,7 +25,7 @@ export async function GET(request: Request) {
     const kits = await Kit.find({
       unit: cleanName,
     });
-    const doctrineAsset = await Doctrine.find({});
+    const doctrineAsset = await Doctrine.find();
     const doctrines = doctrineAsset.filter((doctrine) => {
       if (
         doctrine.dedicated === "unit" &&
