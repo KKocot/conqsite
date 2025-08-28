@@ -32,3 +32,14 @@ export const mostUsedUnitsOptions = queryOptions({
     return response.json();
   },
 });
+
+export const getFullUnitInfoOptions = (unitName: string) =>
+  queryOptions({
+    queryKey: ["full-unit-info", unitName],
+    queryFn: async () => {
+      const response = await fetch(
+        new URL(`/api/units/full-info?name=${unitName}`, process.env.ORIGIN)
+      );
+      return response.json();
+    },
+  });
