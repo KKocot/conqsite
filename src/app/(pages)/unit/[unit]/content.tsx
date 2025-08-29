@@ -38,7 +38,7 @@ import { toast } from "react-toastify";
 
 const Content = ({ unitName }: { unitName: string }) => {
   const { data: user } = useSession();
-  const fullUnitInfoOptions = getFullUnitInfoOptions(unitName);
+  const fullUnitInfoOptions = getFullUnitInfoOptions(unitName, "unitPage");
   const { data } = useSuspenseQuery(fullUnitInfoOptions);
   const shortEntry: Unit = data.asset;
   const entry: UnitObject | undefined = data.wiki;

@@ -10,7 +10,7 @@ const Page = ({ params }: Props) => {
   const unitName = params.unit.toString().replaceAll("_", " ");
   const id = params.id;
 
-  const fullPostInfoOptions = getFullPostInfoOptions(id, unitName);
+  const fullPostInfoOptions = getFullPostInfoOptions(unitName, "postPage", id);
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(fullPostInfoOptions);
   return (

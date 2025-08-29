@@ -9,7 +9,7 @@ type Props = {
 const Page = ({ params }: Props) => {
   const unitName = params.unit.toString().replaceAll("_", " ");
 
-  const fullPostInfoOptions = getFullPostInfoOptions("", unitName);
+  const fullPostInfoOptions = getFullPostInfoOptions(unitName, "unitPage");
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(fullPostInfoOptions);
   return (

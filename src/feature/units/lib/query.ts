@@ -33,9 +33,9 @@ export const mostUsedUnitsOptions = queryOptions({
   },
 });
 
-export const getFullUnitInfoOptions = (unitName: string) =>
+export const getFullUnitInfoOptions = (unitName: string, queryKey?: string) =>
   queryOptions({
-    queryKey: ["full-unit-info", unitName],
+    queryKey: ["full-unit-info", unitName, queryKey],
     queryFn: async () => {
       const response = await fetch(
         new URL(`/api/units/full-info?name=${unitName}`, process.env.ORIGIN)

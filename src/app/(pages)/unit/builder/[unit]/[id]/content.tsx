@@ -26,8 +26,9 @@ const Content = () => {
   const { data: user } = useSession();
   const params = useParams();
   const fullPostInfoOptions = getFullPostInfoOptions(
-    params.id.toString(),
-    params.unit.toString()
+    params.unit.toString(),
+    "postPage",
+    params.id.toString()
   );
   const { data } = useSuspenseQuery(fullPostInfoOptions);
   const doctrines: DoctrineType[] = data.doctrinesForUnit;
@@ -67,7 +68,7 @@ const Content = () => {
                 width={48}
                 height={48}
               />
-              <div>{data.unit}</div>
+              <div>{unitAssets.name}</div>
             </Link>
           </div>
         </div>
@@ -125,7 +126,7 @@ const Content = () => {
       <CardFooter className="border-t pt-4">
         <div className="flex items-center space-x-4">
           <Avatar>
-            <AvatarImage src={post.authorAvatar} alt={data.authorNick} />
+            <AvatarImage src={post.authorAvatar} alt={post.authorNick} />
             <AvatarFallback>{post.authorNick}</AvatarFallback>
           </Avatar>
           <div>

@@ -9,7 +9,7 @@ import { getFullPostInfoOptions } from "@/feature/unit-builder/lib/query";
 const Contact = () => {
   const unitName = useParams();
   const cleanUnitName = unitName.unit.toString().replaceAll("_", " ");
-  const fullPostInfoOptions = getFullPostInfoOptions("", cleanUnitName);
+  const fullPostInfoOptions = getFullPostInfoOptions(cleanUnitName, "unitPage");
 
   const { data } = useSuspenseQuery(fullPostInfoOptions);
   const doctrines: DoctrineType[] = data.doctrinesForUnit;

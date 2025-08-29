@@ -9,7 +9,7 @@ type Props = {
 
 const Page = ({ params }: Props) => {
   const unit = params.unit.replaceAll("%20", " ");
-  const fullUnitInfo = getFullUnitInfoOptions(unit);
+  const fullUnitInfo = getFullUnitInfoOptions(unit, "unitPage");
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(fullUnitInfo);
 
