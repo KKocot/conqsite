@@ -1,24 +1,22 @@
-"use client";
-
-import LoadingComponent from "@/feature/ifs/loading";
-import { getDoctrineByName } from "@/lib/get-data";
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import Content from "./content";
-import NoData from "@/feature/ifs/no-data";
+import { getQueryClient } from "@/lib/react-query";
+import { getDoctrineAssetOptions } from "@/feature/doctrines/lib/query";
 
-const Page = () => {
-  const { name }: { name: string } = useParams();
-  const { data, isLoading } = useQuery({
-    queryKey: ["doctrine", name],
-    queryFn: () => getDoctrineByName(name),
-  });
-  return isLoading ? (
-    <LoadingComponent />
-  ) : !data ? (
-    <NoData />
-  ) : (
-    <Content doctrine={data} />
+type Props = {
+  params: { name: string };
+};
+
+const Page = (props: Props) => {
+  const name = props.params.name.toString();
+  const doctrineAssetOptions = getDoctrineAssetOptions(name);
+  const queryClient = getQueryClient();
+  void queryClient.prefetchQuery(doctrineAssetOptions);
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Content />
+    </HydrationBoundary>
   );
 };
 export default Page;

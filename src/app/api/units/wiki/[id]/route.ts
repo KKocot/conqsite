@@ -60,13 +60,7 @@ export async function GET(
   const session = await getServerSession(authOptions);
   try {
     await connectMongoDB();
-    const reviewer = await Roles.findOne({
-      discordId: session?.user.id,
-      role: "Reviewer",
-    });
-    // if (!session || !reviewer) return new Response("401");
     if (!session) return new Response("401");
-
     const wikiPost = await UnitWiki.findById(id);
     return NextResponse.json({ wikiPost }, { status: 200 });
   } catch (error) {

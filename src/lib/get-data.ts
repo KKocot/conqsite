@@ -483,14 +483,6 @@ export const getUnitWikiById = async (id: string): Promise<UnitObject> => {
   return result.wikiPost;
 };
 
-export const getSurveysAndHousesNumber = async (): Promise<{
-  surveys: number;
-  houses: number;
-}> => {
-  const response = await fetch(`/api/housesAndSurveysInfo`);
-  const result = await response.json();
-  return result;
-};
 export interface FilledSurveys {
   filled_surveys: number;
   not_filled_surveys: number;
@@ -681,11 +673,6 @@ export const getHouseBadges = async (house: string): Promise<Badge> => {
   const result = await response.json();
   return result;
 };
-export const getAllHousesBadges = async (): Promise<Badge[]> => {
-  const response = await fetch(`/api/house/badges`);
-  const result = await response.json();
-  return result;
-};
 
 type Materials = {
   name: string;
@@ -743,12 +730,6 @@ export interface DoctrineType {
   rarity: "common" | "uncommon" | "rare" | "epic";
 }
 
-export const getDoctrineAssets = async (): Promise<DoctrineType[]> => {
-  const response = await fetch(`/api/assets/doctrines`);
-  const result = await response.json();
-  return result;
-};
-
 export const getDoctrineByName = async (
   name: string
 ): Promise<DoctrineType | null> => {
@@ -793,19 +774,6 @@ export const getTierUnits = async (id: string): Promise<TierUnits[]> => {
 
 export const getCommunityTierList = async (): Promise<TierUnits[]> => {
   const response = await fetch(`/api/units/tierList`);
-  const result = await response.json();
-  return result;
-};
-
-interface MostUsedUnits {
-  id: string;
-  name: string;
-  image: string;
-  rating: number;
-}
-
-export const getMostUsedUnits = async (): Promise<MostUsedUnits[]> => {
-  const response = await fetch(`/api/units/most-used-units`);
   const result = await response.json();
   return result;
 };

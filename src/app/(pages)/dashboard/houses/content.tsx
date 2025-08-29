@@ -1,5 +1,6 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -8,8 +9,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import HouseCard from "@/feature/house-settings/house-card";
-import { Badge } from "@/lib/get-data";
+import { allHousesBadgesOptions } from "@/feature/houses-list/lib/query";
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 import { servers } from "@/lib/utils";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Filter } from "lucide-react";
 import { useMemo, useState } from "react";
 
@@ -22,25 +26,35 @@ const defaultCard = {
   server: "House server",
 };
 
-const Content = ({ data }: { data: Badge[] }) => {
+const Content = () => {
+  const { data, isLoading } = useSuspenseQuery(allHousesBadgesOptions);
+  const sortedData = [...data].sort((_a, b) => (b.premium ? 1 : -1));
   const [serverSelect, setServerSelect] = useState<string>("All");
   const [showAll, setShowAll] = useState<boolean>(false);
   const filteredHouses = useMemo(() => {
     if (serverSelect === "All")
-      return data.filter((houses) => (!showAll ? houses.quality === 1 : true));
-    return data
+      return sortedData.filter((houses) =>
+        !showAll ? houses.quality === 1 : true
+      );
+    return sortedData
       .filter((house) => house.card?.server === serverSelect)
       .filter((house) => (!showAll ? house.quality === 1 : true));
-  }, [data, serverSelect, showAll]);
+  }, [sortedData, serverSelect, showAll]);
+  if (!data) return <NoData />;
+  if (isLoading) return <LoadingComponent />;
   return (
     <ul className="flex flex-wrap gap-4 my-12 justify-around">
-      {filteredHouses.map((house) => (
-        <HouseCard
-          key={house.house}
-          house={house.card ?? defaultCard}
-          badgesData={house}
-        />
-      ))}
+      {filteredHouses.length === 0 ? (
+        <li>No houses found</li>
+      ) : (
+        filteredHouses.map((house) => (
+          <HouseCard
+            key={house.house}
+            house={house.card ?? defaultCard}
+            badgesData={house}
+          />
+        ))
+      )}
       {!showAll ? (
         <Button
           className="w-full"

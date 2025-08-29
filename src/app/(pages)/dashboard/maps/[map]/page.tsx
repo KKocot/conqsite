@@ -1,22 +1,22 @@
-"use client";
-
-import { useQuery } from "@tanstack/react-query";
 import Content from "./content";
-import { getMapAssets } from "@/lib/get-data";
-import NoData from "@/feature/ifs/no-data";
-import LoadingComponent from "@/feature/ifs/loading";
-import { useParams } from "next/navigation";
+import { getQueryClient } from "@/lib/react-query";
+import { getMapAssetsOptions } from "@/feature/map-editor/lib/query";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-const Page = () => {
-  const { map }: { map: string } = useParams();
-  const cleanMapName = map.replaceAll("_", " ");
-  const { data, isLoading } = useQuery({
-    queryKey: ["maps", map],
-    queryFn: () => getMapAssets(cleanMapName),
-  });
-  if (isLoading) return <LoadingComponent />;
-  if (!data) return <NoData />;
-  return <Content data={data} />;
+type Props = {
+  params: { map: string };
+};
+
+const Page = ({ params }: Props) => {
+  const cleanMapName = params.map.replaceAll("_", " ");
+  const queryClient = getQueryClient();
+  const mapAssetsOptions = getMapAssetsOptions(cleanMapName);
+  void queryClient.prefetchQuery(mapAssetsOptions);
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Content />
+    </HydrationBoundary>
+  );
 };
 
 export default Page;

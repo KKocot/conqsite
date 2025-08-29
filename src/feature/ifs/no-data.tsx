@@ -1,7 +1,7 @@
 const NoData = () => {
   return (
     <div className="flex justify-center items-center h-screen w-full">
-      Data not found
+      Problem loading data, please try again later or contact support.
     </div>
   );
 };

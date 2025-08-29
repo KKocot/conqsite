@@ -1,3 +1,5 @@
+"use client";
+
 import { DoctrineType, UnitAsset, UnitData, UnitObject } from "@/lib/get-data";
 import {
   Card,
@@ -16,35 +18,45 @@ import { Button } from "@/components/ui/button";
 import { PenIcon } from "lucide-react";
 import { useState } from "react";
 import BuilderForm from "@/feature/unit-builder/builder-form";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { getFullPostInfoOptions } from "@/feature/unit-builder/lib/query";
+import { useParams } from "next/navigation";
+import NoData from "@/feature/ifs/no-data";
+import LoadingComponent from "@/feature/ifs/loading";
 
-interface ContentProps {
-  data: UnitData;
-  doctrines: DoctrineType[];
-  unitTree: UnitObject;
-  unitAssets: UnitAsset;
-}
-
-const Content = ({ data, doctrines, unitTree, unitAssets }: ContentProps) => {
+const Content = () => {
   const { data: user } = useSession();
-  const isAuthor = user?.user.id === data.author;
-  const doctrinesMap = doctrines.filter((d) =>
-    data.doctrines.some((e) => e.name === d.name)
+  const params = useParams();
+  const fullPostInfoOptions = getFullPostInfoOptions(
+    params.unit.toString(),
+    "postPage",
+    params.id.toString()
   );
-  const [editMode, setEditMode] = useState(false);
+  const { data, isLoading } = useSuspenseQuery(fullPostInfoOptions);
+  const doctrines: DoctrineType[] = data.doctrinesForUnit;
+  const unitAssets: UnitAsset = data.asset;
+  const unitTree: UnitObject = data.wiki;
+  const post: UnitData = data.fullPost;
+  const doctrinesMap: DoctrineType[] = data.doctrinesMap;
 
+  const isAuthor = user?.user.id === post.author;
+
+  const [editMode, setEditMode] = useState(false);
+  if (!data) return <NoData />;
+  if (isLoading) return <LoadingComponent />;
   return editMode ? (
     <BuilderForm
       data={unitAssets}
       unitTree={unitTree}
       doctrines={doctrines}
-      dataToEdit={data}
+      dataToEdit={post}
     />
   ) : (
     <Card className="max-w-3xl mx-auto overflow-hidden h-fit my-8">
       <CardHeader className="pb-0">
         <div className="flex justify-between items-start">
           <div>
-            <h2 className="text-2xl font-bold mb-4">{data.title}</h2>
+            <h2 className="text-2xl font-bold mb-4">{post.title}</h2>
             <Link
               href={`/unit/${unitTree.name.replaceAll(" ", "_")}`}
               className="flex items-center gap-2"
@@ -59,20 +71,20 @@ const Content = ({ data, doctrines, unitTree, unitAssets }: ContentProps) => {
                 width={48}
                 height={48}
               />
-              <div>{data.unit}</div>
+              <div>{unitAssets.name}</div>
             </Link>
           </div>
         </div>
       </CardHeader>
 
       <CardContent className="space-y-4 pt-4">
-        {data.ytlink && (
+        {post.ytlink && (
           <div className="aspect-video w-full overflow-hidden rounded-md">
             <iframe
               src={`https://www.youtube.com/embed/${
-                data.ytlink.split("v=")[1]?.split("&")[0] || data.ytlink
+                post.ytlink.split("v=")[1]?.split("&")[0] || post.ytlink
               }`}
-              title={data.title}
+              title={post.title}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               className="w-full h-full"
@@ -81,7 +93,7 @@ const Content = ({ data, doctrines, unitTree, unitAssets }: ContentProps) => {
         )}
 
         <div className="prose max-w-none">
-          <p>{data.description}</p>
+          <p>{post.description}</p>
         </div>
         <div className="gap-2 w-full grid grid-cols-3">
           <DoctrinesGroup doctrines={doctrinesMap} />
@@ -103,13 +115,13 @@ const Content = ({ data, doctrines, unitTree, unitAssets }: ContentProps) => {
             ))}
           </div>
         </div>
-        {data.tree.structure && Array(data.tree.structure).length > 0 ? (
+        {post.tree.structure && Array(post.tree.structure).length > 0 ? (
           <Tree
             nodes={unitTree.treeStructure || []}
             unitlvl={Number(unitTree.maxlvl)}
             mode="builded"
             unitTree={unitTree}
-            entry={data.tree.structure}
+            entry={post.tree.structure}
           />
         ) : null}
       </CardContent>
@@ -117,18 +129,18 @@ const Content = ({ data, doctrines, unitTree, unitAssets }: ContentProps) => {
       <CardFooter className="border-t pt-4">
         <div className="flex items-center space-x-4">
           <Avatar>
-            <AvatarImage src={data.authorAvatar} alt={data.authorNick} />
-            <AvatarFallback>{data.authorNick}</AvatarFallback>
+            <AvatarImage src={post.authorAvatar} alt={post.authorNick} />
+            <AvatarFallback>{post.authorNick}</AvatarFallback>
           </Avatar>
           <div>
             <Link
-              href={`/profile/${data.author}`}
+              href={`/profile/${post.author}`}
               className="text-sm font-medium"
             >
-              {data.authorNick}
+              {post.authorNick}
             </Link>
             <p className="text-xs text-muted-foreground">
-              {new Date(data.date).toLocaleDateString("en-GB")}
+              {new Date(post.date).toLocaleDateString("en-GB")}
             </p>
           </div>
           {isAuthor && (

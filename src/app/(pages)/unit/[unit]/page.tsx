@@ -1,69 +1,22 @@
-"use client";
-
-import { useParams } from "next/navigation";
 import Content from "./content";
-import { useQuery } from "@tanstack/react-query";
-import {
-  getAllUnitPosts,
-  getKitsAssets,
-  getUnitAssets,
-  getUnitDoctrines,
-  getUnitRate,
-  getUnitWiki,
-} from "@/lib/get-data";
-import LoadingComponent from "@/feature/ifs/loading";
-import NoData from "@/feature/ifs/no-data";
+import { getFullUnitInfoOptions } from "@/feature/units/lib/query";
+import { getQueryClient } from "@/lib/react-query";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-const Page = () => {
-  const params = useParams();
-  const unit = params.unit.toString();
-  const { data: unitAssets } = useQuery({
-    queryKey: ["unitsAssets", unit],
-    queryFn: () => getUnitAssets(unit),
-    enabled: !!unit,
-  });
-  const { data, isLoading } = useQuery({
-    queryKey: ["unitWiki", unit],
-    queryFn: () => getUnitWiki(unit, "accepted"),
-    enabled: !!unit,
-  });
-  const { data: posts, isLoading: loadingPosts } = useQuery({
-    queryKey: ["unitPosts", unit],
-    queryFn: () => getAllUnitPosts(unit),
-    enabled: !!unit,
-  });
-  const { data: unitRate } = useQuery({
-    queryKey: ["unitRate", unit],
-    queryFn: () => getUnitRate(unit),
-    enabled: !!unit,
-  });
-  const { data: KitsAssets } = useQuery({
-    queryKey: ["kitsAssets", unit],
-    queryFn: () => getKitsAssets(unit),
-    enabled: !!unit,
-  });
-  const { data: doctrinesAssets, isLoading: doctrinesAssetsLoading } = useQuery(
-    {
-      queryKey: ["doctrinesAssets", unit],
-      queryFn: () => getUnitDoctrines(unit),
-      select: (data) =>
-        data.filter((doctrine) =>
-          doctrine.forUnit.includes(unit.replaceAll("_", " "))
-        ),
-    }
-  );
-  if (isLoading) return <LoadingComponent />;
-  if (!unitAssets) return <NoData />;
+type Props = {
+  params: { unit: string };
+};
+
+const Page = ({ params }: Props) => {
+  const unit = params.unit.replaceAll("%20", " ");
+  const fullUnitInfo = getFullUnitInfoOptions(unit, "unitPage");
+  const queryClient = getQueryClient();
+  void queryClient.prefetchQuery(fullUnitInfo);
+
   return (
-    <Content
-      doctrines={doctrinesAssets ?? []}
-      kits={KitsAssets ?? []}
-      entry={data?.[data.length - 1] ?? undefined}
-      shortEntry={unitAssets}
-      posts={posts}
-      postsLoading={loadingPosts}
-      votes={unitRate?.votes || []}
-    />
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Content unitName={unit} />
+    </HydrationBoundary>
   );
 };
 export default Page;

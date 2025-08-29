@@ -1,3 +1,5 @@
+"use client";
+
 import { useVoteUnitMutation } from "@/components/hooks/use-vote-unit-mutation";
 import useWikiMutation from "@/components/hooks/use-wiki-mutation";
 import { Badge } from "@/components/ui/badge";
@@ -5,9 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Skeleton } from "@/components/ui/skeleton";
 import Stars from "@/components/ui/stars";
 import { Switch } from "@/components/ui/switch";
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 import ChallengesArea from "@/feature/unit-builder/challenges-area";
 import DoctrinesArea from "@/feature/unit-builder/doctrines/area";
 import FormationsArea from "@/feature/unit-builder/formations-area";
@@ -15,49 +18,47 @@ import KitsArea from "@/feature/unit-builder/kits-area";
 import PostCard from "@/feature/unit-builder/post/card";
 import SkillsArea from "@/feature/unit-builder/skills-area";
 import Tree from "@/feature/unit-builder/tree";
+import { getFullUnitInfoOptions } from "@/feature/units/lib/query";
 import {
   DoctrineType,
   getRoleById,
+  getUnitRate,
   KitsAssets,
   UnitData,
   UnitObject,
 } from "@/lib/get-data";
 import { Unit } from "@/lib/type";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowBigLeft, PenIcon, PlusCircle, Save, X } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import Loading from "react-loading";
 import { toast } from "react-toastify";
 
-const Content = ({
-  entry,
-  shortEntry,
-  posts,
-  postsLoading,
-  votes,
-  kits,
-  doctrines,
-}: {
-  doctrines: DoctrineType[];
-  entry?: UnitObject;
-  shortEntry: Unit;
-  posts?: UnitData[];
-  postsLoading: boolean;
-  kits: KitsAssets[];
-  votes: {
-    id: string;
-    rate: number;
-  }[];
-}) => {
+const Content = ({ unitName }: { unitName: string }) => {
   const { data: user } = useSession();
+  const fullUnitInfoOptions = getFullUnitInfoOptions(unitName, "unitPage");
+  const { data, isLoading } = useSuspenseQuery(fullUnitInfoOptions);
+  const shortEntry: Unit = data.asset;
+  const entry: UnitObject | undefined = data.wiki;
+  const posts: UnitData[] = data.posts;
+  const doctrines: DoctrineType[] = data.doctrines;
+  const kits: KitsAssets[] = data.kits;
+
   const { data: roles, isLoading: rolesLoading } = useQuery({
     queryKey: ["roles", user?.user.id],
     queryFn: () => getRoleById(user?.user.id ?? ""),
     enabled: !!user?.user.id,
   });
+  const { data: votesData, isLoading: votesLoading } = useQuery({
+    queryKey: ["unitRate", unitName],
+    queryFn: () => getUnitRate(unitName),
+    enabled: !!unitName,
+  });
+  const votes = votesData?.votes || [];
   const autoStatus =
     roles?.some((role) => role.role === "Reviewer") ||
     roles?.some((role) => role.role === "Trusted")
@@ -129,6 +130,8 @@ const Content = ({
       toast.error("Failed to submit vote");
     }
   }, [voteUnitMutation.isSuccess, voteUnitMutation.isError]);
+  if (!data) return <NoData />;
+  if (isLoading) return <LoadingComponent />;
   return (
     <Form {...form}>
       <form className="container mx-auto py-8">
@@ -156,24 +159,30 @@ const Content = ({
             </div>
           </CardHeader>
           <CardContent className="grid gap-6">
-            <div className="flex justify-center flex-col items-center gap-2">
-              <span>
-                Average rate:{" "}
-                {votes.length === 0 ? (
-                  "No votes"
-                ) : (
-                  <>
-                    <span className="font-bold underline text-accent">
-                      {averageVote.toFixed(2)}
-                    </span>
-                    {` from ${votes.length} votes`}
-                  </>
-                )}
-              </span>
+            {votesLoading ? (
+              <div className="flex justify-center items-center w-full">
+                <Loading color="#94a3b8" />
+              </div>
+            ) : (
+              <div className="flex justify-center flex-col items-center gap-2">
+                <span>
+                  Average rate:{" "}
+                  {votes.length === 0 ? (
+                    "No votes"
+                  ) : (
+                    <>
+                      <span className="font-bold underline text-accent">
+                        {averageVote.toFixed(2)}
+                      </span>
+                      {` from ${votes.length} votes`}
+                    </>
+                  )}
+                </span>
 
-              <span>{`Your rate: ${userVote}`}</span>
-              <Stars rating={userVote} setRating={(e: number) => onVote(e)} />
-            </div>
+                <span>{`Your rate: ${userVote}`}</span>
+                <Stars rating={userVote} setRating={(e: number) => onVote(e)} />
+              </div>
+            )}
             <div className="flex justify-around">
               <div className="flex flex-col items-center">
                 <p className="text-sm text-muted-foreground">Leadership</p>
@@ -325,19 +334,7 @@ const Content = ({
                     <PlusCircle />
                   </Link>
                 </h1>
-                {postsLoading ? (
-                  [...Array(4)].map((_, i) => (
-                    <Card key={i} className="w-full">
-                      <CardHeader>
-                        <Skeleton className="h-6 w-12" />
-                      </CardHeader>
-                      <CardContent>
-                        <Skeleton className="h-4 w-full" />
-                        <Skeleton className="h-4 w-3/4 mt-2" />
-                      </CardContent>
-                    </Card>
-                  ))
-                ) : posts && posts.length > 0 ? (
+                {posts && posts.length > 0 ? (
                   posts.map((e) => <PostCard key={e._id} post={e} />)
                 ) : (
                   <div>No Posts</div>

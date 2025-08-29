@@ -16,10 +16,16 @@ import {
 } from "@/components/ui/accordion";
 import { Input } from "@/components/ui/input";
 import { Filter } from "lucide-react";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { doctrineAssetsOptions } from "@/feature/doctrines/lib/query";
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 
 type CardType = "all" | "groups" | "unit" | null;
 
-const Content = ({ doctrines }: { doctrines: DoctrineType[] }) => {
+const Content = () => {
+  const { data, isLoading } = useSuspenseQuery(doctrineAssetsOptions);
+  const doctrines: DoctrineType[] = data;
   const params = useSearchParams();
   const router = useRouter();
   const card = params.get("card") as CardType;
@@ -51,6 +57,8 @@ const Content = ({ doctrines }: { doctrines: DoctrineType[] }) => {
     setTab(value);
     router.push(`/dashboard/doctrines?card=${value}`);
   };
+  if (!data) return <NoData />;
+  if (isLoading) return <LoadingComponent />;
   return (
     <div className="relative w-full">
       <Tabs value={tab} onValueChange={(e) => onTabChange(e as CardType)}>

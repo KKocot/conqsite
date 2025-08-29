@@ -1,36 +1,18 @@
-"use client";
-
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/react-query";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import Content from "./content";
-import { getDoctrineAssets } from "@/lib/get-data";
-import LoadingComponent from "@/feature/ifs/loading";
-import NoData from "@/feature/ifs/no-data";
-
-const queryClient = new QueryClient();
-
-const DoctrinesContent = () => {
-  const { data, isLoading } = useQuery({
-    queryKey: ["doctrines"],
-    queryFn: getDoctrineAssets,
-  });
-
-  if (isLoading) return <LoadingComponent />;
-  if (!data) return <NoData />;
-
-  return <Content doctrines={data} />;
-};
+import { getQueryClient } from "@/lib/react-query";
+import { doctrineAssetsOptions } from "@/feature/doctrines/lib/query";
 
 const Page = () => {
+  const queryClient = getQueryClient();
+  void queryClient.prefetchQuery(doctrineAssetsOptions);
+
   return (
-    <QueryClientProvider client={queryClient}>
+    <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="flex justify-center p-10 w-full">
-        <DoctrinesContent />
+        <Content />
       </div>
-    </QueryClientProvider>
+    </HydrationBoundary>
   );
 };
 

@@ -1,11 +1,17 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { unitTypes } from "@/feature/units/list-tab";
+import { getDoctrineAssetOptions } from "@/feature/doctrines/lib/query";
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
+import { unitTypes } from "@/feature/units/lib/utils";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 interface DoctrineType {
   name: string;
@@ -16,11 +22,14 @@ interface DoctrineType {
   rarity: "common" | "uncommon" | "rare" | "epic";
 }
 
-interface DoctrinePageProps {
-  doctrine: DoctrineType;
-}
+const Content = () => {
+  const { name } = useParams();
+  const doctrineAssetOptions = getDoctrineAssetOptions(name.toString());
 
-const Content = ({ doctrine }: DoctrinePageProps) => {
+  const { data, isLoading } = useSuspenseQuery(doctrineAssetOptions);
+  const doctrine: DoctrineType = data;
+  if (!data) return <NoData />;
+  if (isLoading) return <LoadingComponent />;
   return (
     <div className="flex flex-col w-full">
       <div

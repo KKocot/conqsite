@@ -1,5 +1,7 @@
 "use client";
 
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 import CallToAction from "@/feature/landingPage/call-to-action";
 import Hero from "@/feature/landingPage/hero";
 import { surveysAndHousesNumberOptions } from "@/feature/landingPage/lib/query";
@@ -9,7 +11,9 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import Image from "next/image";
 
 const Content = () => {
-  const { data } = useSuspenseQuery(surveysAndHousesNumberOptions);
+  const { data, isLoading } = useSuspenseQuery(surveysAndHousesNumberOptions);
+  if (!data) return <NoData />;
+  if (isLoading) return <LoadingComponent />;
   return (
     <div className="w-full h-64">
       <section className="relative py-56 overflow-hidden">

@@ -1,19 +1,16 @@
-"use client";
-
-import { useQuery } from "@tanstack/react-query";
+import { getQueryClient } from "@/lib/react-query";
+import { mapsAssetsOptions } from "@/feature/map-editor/lib/query";
 import Content from "./content";
-import { getMapsAssets } from "@/lib/get-data";
-import NoData from "@/feature/ifs/no-data";
-import LoadingComponent from "@/feature/ifs/loading";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 const Page = () => {
-  const { data, isLoading } = useQuery({
-    queryKey: ["maps"],
-    queryFn: () => getMapsAssets(),
-  });
-  if (isLoading) return <LoadingComponent />;
-  if (!data) return <NoData />;
-  return <Content data={data} />;
+  const queryClient = getQueryClient();
+  void queryClient.prefetchQuery(mapsAssetsOptions);
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Content />
+    </HydrationBoundary>
+  );
 };
 
 export default Page;

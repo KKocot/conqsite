@@ -6,22 +6,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import ListTab from "@/feature/units/list-tab";
 import TierListContainer from "@/feature/units/tier-list-containter";
 import MostUsedUnits from "@/feature/units/most-used-units";
+import { CardType, listTab } from "@/feature/units/lib/utils";
 
-const listTab = [
-  {
-    value: "fillList",
-    label: "Full List",
-  },
-  {
-    value: "CommunityTierList",
-    label: "Community Tier List",
-  },
-  {
-    value: "MostUsedUnits",
-    label: "Most Used Units",
-  },
-];
-type CardType = "fillList" | "CommunityTierList" | "MostUsedUnits" | null;
 const Content = () => {
   const params = useSearchParams();
   const router = useRouter();
