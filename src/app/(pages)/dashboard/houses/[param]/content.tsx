@@ -21,8 +21,8 @@ const Content = () => {
   const { param }: { param: string } = useParams();
   const house = param.replaceAll("%20", " ");
   const t = useTranslations("HouseCard");
-  const housesDetailsOptions = getHousesDetailsOptions(house);
-  const housesBadgesOptions = getHousesBadgesOptions(house);
+  const housesDetailsOptions = getHousesDetailsOptions(param);
+  const housesBadgesOptions = getHousesBadgesOptions(param);
 
   const { data: card, isLoading: isLoadingCard } =
     useSuspenseQuery(housesDetailsOptions);
