@@ -5,10 +5,14 @@ import Link from "next/link";
 import ImageComponent from "@/components/image-component";
 import { mostUsedUnitsOptions } from "./lib/query";
 import { MostUsedUnitsType } from "./lib/utils";
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 
 const MostUsedUnits = () => {
-  const { data } = useSuspenseQuery(mostUsedUnitsOptions);
+  const { data, isLoading } = useSuspenseQuery(mostUsedUnitsOptions);
   const units: MostUsedUnitsType[] = data || [];
+  if (!data) return <NoData />;
+  if (isLoading) return <LoadingComponent />;
   return (
     <div className="flex flex-col gap-6 mt-6">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

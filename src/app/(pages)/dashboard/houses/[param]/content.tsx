@@ -14,6 +14,8 @@ import {
   getHousesDetailsOptions,
 } from "@/feature/house-profile/lib/query";
 import { HouseCard } from "@/feature/house-profile/lib/utils";
+import NoData from "@/feature/ifs/no-data";
+import LoadingComponent from "@/feature/ifs/loading";
 
 const Content = () => {
   const { param }: { param: string } = useParams();
@@ -22,11 +24,14 @@ const Content = () => {
   const housesDetailsOptions = getHousesDetailsOptions(house);
   const housesBadgesOptions = getHousesBadgesOptions(house);
 
-  const { data: card } = useSuspenseQuery(housesDetailsOptions);
-  const { data: badges } = useSuspenseQuery(housesBadgesOptions);
+  const { data: card, isLoading: isLoadingCard } =
+    useSuspenseQuery(housesDetailsOptions);
+  const { data: badges, isLoading: isLoadingBadges } =
+    useSuspenseQuery(housesBadgesOptions);
   const cardData: HouseCard = card;
   const badgesData: Badge = badges;
-
+  if (!card || !badges) return <NoData />;
+  if (isLoadingCard || isLoadingBadges) return <LoadingComponent />;
   return (
     <div className="w-full flex items-center justify-center">
       <Card className="w-full max-w-6xl overflow-hidden rder-2">

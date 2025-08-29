@@ -4,7 +4,8 @@ import { Input } from "@/components/ui/input";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import List from "./list";
-import NoData from "../ifs/no-data";
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 import { Filter } from "lucide-react";
 import {
   Accordion,
@@ -20,13 +21,15 @@ import { allUnitsAssetsOptions } from "./lib/query";
 import { unitTypes } from "./lib/utils";
 
 const ListTab = ({ sort }: { sort: string }) => {
-  const { data } = useSuspenseQuery(allUnitsAssetsOptions);
+  const { data, isLoading } = useSuspenseQuery(allUnitsAssetsOptions);
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<string>(sort);
+  if (!data) return <NoData />;
+  if (isLoading) return <LoadingComponent />;
   return (
     <div className="relative flex flex-col gap-6 mt-6 mb-24">
-      {data ? <List data={data} query={query} filter={filter} /> : <NoData />}
+      <List data={data} query={query} filter={filter} />
       <div className="fixed bottom-4 right-4 bg-background border rounded-lg p-2 shadow-lg w-64">
         <div className="flex items-center gap-2">
           <Filter className="w-6 h-6 text-muted-foreground" />

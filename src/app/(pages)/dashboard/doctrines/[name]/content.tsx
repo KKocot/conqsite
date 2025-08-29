@@ -3,6 +3,8 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getDoctrineAssetOptions } from "@/feature/doctrines/lib/query";
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 import { unitTypes } from "@/feature/units/lib/utils";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import clsx from "clsx";
@@ -24,8 +26,10 @@ const Content = () => {
   const { name } = useParams();
   const doctrineAssetOptions = getDoctrineAssetOptions(name.toString());
 
-  const { data } = useSuspenseQuery(doctrineAssetOptions);
+  const { data, isLoading } = useSuspenseQuery(doctrineAssetOptions);
   const doctrine: DoctrineType = data;
+  if (!data) return <NoData />;
+  if (isLoading) return <LoadingComponent />;
   return (
     <div className="flex flex-col w-full">
       <div

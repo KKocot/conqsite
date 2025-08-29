@@ -21,6 +21,8 @@ import BuilderForm from "@/feature/unit-builder/builder-form";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getFullPostInfoOptions } from "@/feature/unit-builder/lib/query";
 import { useParams } from "next/navigation";
+import NoData from "@/feature/ifs/no-data";
+import LoadingComponent from "@/feature/ifs/loading";
 
 const Content = () => {
   const { data: user } = useSession();
@@ -30,7 +32,7 @@ const Content = () => {
     "postPage",
     params.id.toString()
   );
-  const { data } = useSuspenseQuery(fullPostInfoOptions);
+  const { data, isLoading } = useSuspenseQuery(fullPostInfoOptions);
   const doctrines: DoctrineType[] = data.doctrinesForUnit;
   const unitAssets: UnitAsset = data.asset;
   const unitTree: UnitObject = data.wiki;
@@ -40,7 +42,8 @@ const Content = () => {
   const isAuthor = user?.user.id === post.author;
 
   const [editMode, setEditMode] = useState(false);
-
+  if (!data) return <NoData />;
+  if (isLoading) return <LoadingComponent />;
   return editMode ? (
     <BuilderForm
       data={unitAssets}

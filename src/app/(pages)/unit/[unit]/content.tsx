@@ -9,6 +9,8 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Stars from "@/components/ui/stars";
 import { Switch } from "@/components/ui/switch";
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 import ChallengesArea from "@/feature/unit-builder/challenges-area";
 import DoctrinesArea from "@/feature/unit-builder/doctrines/area";
 import FormationsArea from "@/feature/unit-builder/formations-area";
@@ -39,7 +41,7 @@ import { toast } from "react-toastify";
 const Content = ({ unitName }: { unitName: string }) => {
   const { data: user } = useSession();
   const fullUnitInfoOptions = getFullUnitInfoOptions(unitName, "unitPage");
-  const { data } = useSuspenseQuery(fullUnitInfoOptions);
+  const { data, isLoading } = useSuspenseQuery(fullUnitInfoOptions);
   const shortEntry: Unit = data.asset;
   const entry: UnitObject | undefined = data.wiki;
   const posts: UnitData[] = data.posts;
@@ -128,6 +130,8 @@ const Content = ({ unitName }: { unitName: string }) => {
       toast.error("Failed to submit vote");
     }
   }, [voteUnitMutation.isSuccess, voteUnitMutation.isError]);
+  if (!data) return <NoData />;
+  if (isLoading) return <LoadingComponent />;
   return (
     <Form {...form}>
       <form className="container mx-auto py-8">

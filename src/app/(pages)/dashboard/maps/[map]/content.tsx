@@ -1,6 +1,8 @@
 "use client";
 
 import ImageComponent from "@/components/image-component";
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 import { getMapAssetsOptions } from "@/feature/map-editor/lib/query";
 import { MapAsset } from "@/lib/get-data";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -11,9 +13,10 @@ const Content = () => {
   const { map } = useParams();
   const cleanMapName = map.toString().replaceAll("_", " ");
   const mapAssetsOptions = getMapAssetsOptions(cleanMapName);
-  const { data } = useSuspenseQuery(mapAssetsOptions);
+  const { data, isLoading } = useSuspenseQuery(mapAssetsOptions);
   const mapData: MapAsset = data.mapAssets;
-
+  if (!data) return <NoData />;
+  if (isLoading) return <LoadingComponent />;
   return (
     <div className="flex flex-col w-full">
       <ArrowBigLeft

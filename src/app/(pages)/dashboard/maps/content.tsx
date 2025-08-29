@@ -3,6 +3,8 @@
 import ImageComponent from "@/components/image-component";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 import { mapsAssetsOptions } from "@/feature/map-editor/lib/query";
 import { MapAsset } from "@/lib/get-data";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -11,7 +13,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 const Content = () => {
-  const { data } = useSuspenseQuery(mapsAssetsOptions);
+  const { data, isLoading } = useSuspenseQuery(mapsAssetsOptions);
   const maps: MapAsset[] = data.mapsAssets ?? [];
   const [searchQuery, setSearchQuery] = useState("");
   const filteredData = useMemo(
@@ -21,6 +23,8 @@ const Content = () => {
       ),
     [maps, searchQuery]
   );
+  if (!data) return <NoData />;
+  if (isLoading) return <LoadingComponent />;
   return (
     <div className="flex flex-col gap-4 p-12">
       <h1 className="text-2xl font-bold">Maps</h1>

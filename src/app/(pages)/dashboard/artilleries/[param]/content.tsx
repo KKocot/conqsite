@@ -2,6 +2,8 @@
 
 import ImageComponent from "@/components/image-component";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import LoadingComponent from "@/feature/ifs/loading";
+import NoData from "@/feature/ifs/no-data";
 import { ArtilleryAsset } from "@/lib/get-data";
 import { getArtilleryAssetOptions } from "@/lib/query";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -12,10 +14,11 @@ const Content = () => {
   const { param }: { param: string } = useParams();
   const cleanedParam = param.replaceAll("-", " ");
   const artilleryAssetOptions = getArtilleryAssetOptions(cleanedParam);
-  const { data } = useSuspenseQuery(artilleryAssetOptions);
+  const { data, isLoading } = useSuspenseQuery(artilleryAssetOptions);
   const artilleryData: ArtilleryAsset = data.artilleryAsset;
 
-  if (!data) return <div>No data available</div>;
+  if (!data) return <NoData />;
+  if (isLoading) return <LoadingComponent />;
   return (
     <div className="p-4 sm:p-8 w-full flex flex-col items-center justify-center">
       <Card className="w-full max-w-md">
