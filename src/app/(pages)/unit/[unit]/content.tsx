@@ -47,7 +47,6 @@ const Content = ({ unitName }: { unitName: string }) => {
   const posts: UnitData[] = data.posts;
   const doctrines: DoctrineType[] = data.doctrines;
   const kits: KitsAssets[] = data.kits;
-
   const { data: roles, isLoading: rolesLoading } = useQuery({
     queryKey: ["roles", user?.user.id],
     queryFn: () => getRoleById(user?.user.id ?? ""),
@@ -327,12 +326,14 @@ const Content = ({ unitName }: { unitName: string }) => {
               <div className="flex w-full p-2 flex-col gap-2 h-[512px] overflow-y-scroll col-span-1">
                 <h1 className="text-xl text-center p-2 flex items-center justify-center gap-2">
                   Community builds
-                  <Link
-                    href={`/unit/builder/${entry?.name.replaceAll(" ", "_")}`}
-                    className="hover:text-accent"
-                  >
-                    <PlusCircle />
-                  </Link>
+                  {!!user?.user ? (
+                    <Link
+                      href={`/unit/builder/${entry?.name.replaceAll(" ", "_")}`}
+                      className="hover:text-accent"
+                    >
+                      <PlusCircle />
+                    </Link>
+                  ) : null}
                 </h1>
                 {posts && posts.length > 0 ? (
                   posts.map((e) => <PostCard key={e._id} post={e} />)
