@@ -1,10 +1,19 @@
 "use client";
 
 import ImageComponent from "@/components/image-component";
+import { getMapAssetsOptions } from "@/feature/map-editor/lib/query";
 import { MapAsset } from "@/lib/get-data";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowBigLeft } from "lucide-react";
+import { useParams } from "next/navigation";
 
-const Content = ({ data }: { data: MapAsset }) => {
+const Content = () => {
+  const { map } = useParams();
+  const cleanMapName = map.toString().replaceAll("_", " ");
+  const mapAssetsOptions = getMapAssetsOptions(cleanMapName);
+  const { data } = useSuspenseQuery(mapAssetsOptions);
+  const mapData: MapAsset = data.mapAssets;
+
   return (
     <div className="flex flex-col w-full">
       <ArrowBigLeft
@@ -12,13 +21,13 @@ const Content = ({ data }: { data: MapAsset }) => {
         onClick={() => history.back()}
       />
       <div className="flex flex-col gap-4 justify-center items-center p-12 justify-self-center">
-        <h1 className="text-5xl font-bold">{data.name}</h1>
-        <div>{data.type}</div>
-        {data.cities.length > 0 ? (
+        <h1 className="text-5xl font-bold">{mapData.name}</h1>
+        <div>{mapData.type}</div>
+        {mapData.cities.length > 0 ? (
           <div>
             <span>Occurrence:</span>
             <ul className="font-semibold">
-              {data.cities.map((e) => (
+              {mapData.cities.map((e) => (
                 <li key={e} className="list-disc">
                   {e}
                 </li>
@@ -26,10 +35,10 @@ const Content = ({ data }: { data: MapAsset }) => {
             </ul>
           </div>
         ) : null}
-        {data.types.map((type) => (
+        {mapData.types.map((type) => (
           <ImageComponent
-            key={`${data.name}-${type}`}
-            name={`${data.name}-${type}`}
+            key={`${mapData.name}-${type}`}
+            name={`${mapData.name}-${type}`}
             width={1000}
             height={1000}
             type="map"

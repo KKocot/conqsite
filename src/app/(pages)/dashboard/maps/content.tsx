@@ -3,19 +3,23 @@
 import ImageComponent from "@/components/image-component";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { mapsAssetsOptions } from "@/feature/map-editor/lib/query";
 import { MapAsset } from "@/lib/get-data";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Filter } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-const Content = ({ data }: { data: MapAsset[] }) => {
+const Content = () => {
+  const { data } = useSuspenseQuery(mapsAssetsOptions);
+  const maps: MapAsset[] = data.mapsAssets ?? [];
   const [searchQuery, setSearchQuery] = useState("");
   const filteredData = useMemo(
     () =>
-      data.filter((map) =>
+      maps.filter((map) =>
         map.name.toLowerCase().includes(searchQuery.toLowerCase())
       ),
-    [data, searchQuery]
+    [maps, searchQuery]
   );
   return (
     <div className="flex flex-col gap-4 p-12">
