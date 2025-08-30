@@ -177,9 +177,15 @@ const Content = ({ unitName }: { unitName: string }) => {
                     </>
                   )}
                 </span>
-
-                <span>{`Your rate: ${userVote}`}</span>
-                <Stars rating={userVote} setRating={(e: number) => onVote(e)} />
+                {!!user?.user ? (
+                  <>
+                    <span>{`Your rate: ${userVote}`}</span>
+                    <Stars
+                      rating={userVote}
+                      setRating={(e: number) => onVote(e)}
+                    />
+                  </>
+                ) : null}
               </div>
             )}
             <div className="flex justify-around">
