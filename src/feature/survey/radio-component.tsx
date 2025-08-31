@@ -9,6 +9,7 @@ import {
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { Unit } from "@/lib/type";
+import { FormSurveyControl } from "./lib/utils";
 
 const Component = ({
   unitValue,
@@ -55,7 +56,7 @@ const Component = ({
 };
 const RadioComponent: FC<{
   unitData: Unit;
-  controller: any;
+  controller: FormSurveyControl;
   era: "golden" | "heroic" | "low";
 }> = ({ unitData, controller, era }) => {
   const t = useTranslations("AddForm");

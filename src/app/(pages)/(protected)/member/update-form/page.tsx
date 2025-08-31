@@ -8,6 +8,7 @@ import NoData from "@/feature/ifs/no-data";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import Content from "./content";
+import LoadingComponent from "@/feature/ifs/loading";
 
 const Page = () => {
   const { data } = useSession();
@@ -32,7 +33,8 @@ const Page = () => {
       setSurveyData(profileData);
     }
   }, [!!profileData, loadingProfile]);
-  if (!data) return <NoData />;
+  if (loadingProfile) return <LoadingComponent />;
+  if (!data || !surveyData) return <NoData />;
 
   return (
     <div className="flex flex-col justify-center items-center w-full">
@@ -56,8 +58,10 @@ const Page = () => {
           <Button
             variant="custom"
             onClick={() => {
-              setSurveyData(undefined);
-              setSurveyType("newSub");
+              getSurvey("new").then((res) => {
+                setSurveyData(res);
+                setSurveyType("newSub");
+              });
             }}
             className="min-w-[200px] flex items-center justify-center gap-2 p-4 text-lg font-medium rounded-lg shadow-md transition-colors"
           >

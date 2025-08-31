@@ -9,6 +9,7 @@ import useSubmitSurveyMutation from "../../components/hooks/use-survey-mutation"
 import LoadingComponent from "../ifs/loading";
 import { createNewUnits, createNewWeapons } from "@/lib/utils";
 import Steper from "@/components/steper";
+import { no_new_units, no_new_weapons } from "./lib/utils";
 
 export default function WizardForm({
   user_id,
@@ -24,7 +25,7 @@ export default function WizardForm({
   avatar?: string;
   unitsAssets: UnitAssetsGroup;
   weapons: WeaponAsset[];
-  profileData?: Survey;
+  profileData: Survey;
   profileIsLoading: boolean;
   surveyType: "main" | "sub" | "newSub";
   userHouses: string[];
@@ -36,75 +37,44 @@ export default function WizardForm({
   const lowEras = [...greyEra, ...greenEra, ...blueEra].sort(
     (a, b) => a.id - b.id
   );
-  const DEFAULT_FORM_DATA: Survey = {
-    discordNick: "",
-    inGameNick: "",
-    discordId: "",
-    characterLevel: "",
-    avatar: "",
-    house: userHouses,
-    artyAmount: "none",
-    updates: [],
-    weapons: weapons.map(() => ({ value: false, leadership: 0, pref: 0 })),
-    units: {
-      low: lowEras.map((unit) => ({
-        id: unit.id,
-        value: "0",
-        pref: "0",
-        reduceCost: false,
-      })),
-      heroic: heroicEra.map((unit) => ({
-        id: unit.id,
-        value: "0",
-        reduceCost: false,
-      })),
-      golden: goldenEra.map((unit) => ({
-        id: unit.id,
-        value: "0",
-        reduceCost: false,
-      })),
-    },
-  };
-  const unitForm = profileData ?? DEFAULT_FORM_DATA;
-  const low_units_diff = lowEras.length - unitForm.units.low.length;
-  const heroic_units_diff = heroicEra.length - unitForm.units.heroic.length;
-  const golden_units_diff = goldenEra.length - unitForm.units.golden.length;
-  const no_new_units = 0;
-  const weapons_diff = weapons.length - unitForm.weapons.length;
-  const no_new_weapons = 0;
+
+  const low_units_diff = lowEras.length - profileData.units.low.length;
+  const heroic_units_diff = heroicEra.length - profileData.units.heroic.length;
+  const golden_units_diff = goldenEra.length - profileData.units.golden.length;
+  const weapons_diff = weapons.length - profileData.weapons.length;
 
   const form = useForm({
     values: {
-      ...unitForm,
+      ...profileData,
       weapons:
         weapons_diff > no_new_weapons
-          ? createNewWeapons(unitForm.weapons, weapons_diff)
-          : unitForm.weapons,
+          ? createNewWeapons(profileData.weapons, weapons_diff)
+          : profileData.weapons,
       units: {
         low:
           low_units_diff > no_new_units
             ? createNewUnits(
-                unitForm.units.low,
+                profileData.units.low,
                 low_units_diff,
-                unitForm.units.low.length
+                profileData.units.low.length
               )
-            : unitForm.units.low,
+            : profileData.units.low,
         heroic:
           heroic_units_diff > no_new_units
             ? createNewUnits(
-                unitForm.units.heroic,
+                profileData.units.heroic,
                 heroic_units_diff,
-                unitForm.units.heroic.length
+                profileData.units.heroic.length
               )
-            : unitForm.units.heroic,
+            : profileData.units.heroic,
         golden:
           golden_units_diff > no_new_units
             ? createNewUnits(
-                unitForm.units.golden,
+                profileData.units.golden,
                 golden_units_diff,
-                unitForm.units.golden.length
+                profileData.units.golden.length
               )
-            : unitForm.units.golden,
+            : profileData.units.golden,
       },
     },
   });
