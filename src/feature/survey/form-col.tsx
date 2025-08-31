@@ -10,6 +10,7 @@ import { CustomSwitch } from "@/components/ui/customSwitch";
 import { ShieldCheck, ShieldX } from "lucide-react";
 import { Unit } from "@/lib/type";
 import Image from "next/image";
+import { FormSurveyControl } from "./lib/utils";
 
 const FormCol = ({
   era,
@@ -20,7 +21,7 @@ const FormCol = ({
 }: {
   era: "golden" | "heroic" | "low";
   data: Unit[];
-  controller: any;
+  controller: FormSurveyControl;
   moveToStep: (step: number) => void;
   step: number;
 }) => {

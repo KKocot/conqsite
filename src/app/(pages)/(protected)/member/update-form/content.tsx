@@ -12,7 +12,7 @@ const Content = ({
   userHouses,
 }: {
   user: { id: string; avatar: string };
-  surveyData?: Survey;
+  surveyData: Survey;
   surveyLoading: boolean;
   surveyType: "main" | "sub" | "newSub";
   userHouses: string[];
