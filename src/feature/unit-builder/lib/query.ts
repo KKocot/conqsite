@@ -18,7 +18,9 @@ export const getFullPostInfoOptions = (
       url.searchParams.set("id", id!);
       url.searchParams.set("unit", unit!);
 
-      const response = await fetch(url.toString());
+      const response = await fetch(url.toString(), {
+        cache: "no-store",
+      });
       if (!response.ok) {
         throw new Error(`Failed to fetch full post info (${response.status})`);
       }

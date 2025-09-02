@@ -4,7 +4,10 @@ export const mapsAssetsOptions = queryOptions({
   queryKey: ["maps"],
   queryFn: async () => {
     const response = await fetch(
-      new URL("/api/assets/maps", process.env.ORIGIN)
+      new URL("/api/assets/maps", process.env.ORIGIN),
+      {
+        cache: "no-store",
+      }
     );
 
     return response.json();
@@ -16,7 +19,10 @@ export const getMapAssetsOptions = (map: string) =>
     queryKey: ["maps", map],
     queryFn: async () => {
       const response = await fetch(
-        new URL(`/api/assets/maps?map=${map}`, process.env.ORIGIN)
+        new URL(`/api/assets/maps?map=${map}`, process.env.ORIGIN),
+        {
+          cache: "no-store",
+        }
       );
 
       return response.json();
