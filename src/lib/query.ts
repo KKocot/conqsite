@@ -4,7 +4,10 @@ export const artilleriesAssetsOptions = queryOptions({
   queryKey: ["artilleries"],
   queryFn: async () => {
     const response = await fetch(
-      new URL("/api/assets/artillery", process.env.ORIGIN)
+      new URL("/api/assets/artillery", process.env.ORIGIN),
+      {
+        cache: "no-store",
+      }
     );
 
     return response.json();
@@ -16,7 +19,10 @@ export const getArtilleryAssetOptions = (name: string) => {
     queryKey: ["artilleries", name],
     queryFn: async () => {
       const response = await fetch(
-        new URL(`/api/assets/artillery?name=${name}`, process.env.ORIGIN)
+        new URL(`/api/assets/artillery?name=${name}`, process.env.ORIGIN),
+        {
+          cache: "no-store",
+        }
       );
 
       return response.json();
