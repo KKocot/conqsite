@@ -24,3 +24,25 @@ export async function GET(
       return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
+
+export async function DELETE(
+  _request: Request,
+  { params: { id } }: { params: { id: string } }
+) {
+  const session = await getServerSession(authOptions);
+  try {
+    await connectMongoDB();
+    const subSurvey = await SubSurvey.findOne({ discordNick: id });
+    const userAccess = subSurvey?.discordId === session?.user.id;
+    if (!userAccess) return new Response("401");
+    if (!subSurvey) return new Response("404");
+
+    await SubSurvey.findByIdAndDelete(subSurvey._id);
+    return new Response(subSurvey, { status: 200 });
+  } catch (error) {
+    if (error instanceof ZodError)
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    if (error instanceof Error)
+      return NextResponse.json({ message: error.message }, { status: 500 });
+  }
+}
