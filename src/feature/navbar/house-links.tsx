@@ -14,7 +14,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import Link from "next/link";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useQuery } from "@tanstack/react-query";
 import { getHouseDetails } from "@/lib/get-data";
 import Image from "next/image";
@@ -38,6 +38,7 @@ const HouseLinks = ({ house }: { house: SidebarLink }) => {
                   ) : (
                     <Avatar className="h-8 w-8 p-0">
                       <AvatarImage src={data?.avatar} alt="House Icon" />
+                      <AvatarFallback>H</AvatarFallback>
                     </Avatar>
                   )}
                   {house.title}{" "}
