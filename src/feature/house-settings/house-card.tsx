@@ -57,7 +57,7 @@ export default function HouseCard({
             />
           </Link>
         </div>
-        <CardHeader className="pt-2 ">
+        <CardHeader className="pt-2">
           <CardTitle
             className={clsx("text-xl font-bold", {
               "text-accent": badgesData?.premium,
