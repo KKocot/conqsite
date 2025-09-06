@@ -16,10 +16,10 @@ import {
 import { HouseCard } from "@/feature/house-profile/lib/utils";
 import NoData from "@/feature/ifs/no-data";
 import LoadingComponent from "@/feature/ifs/loading";
+import { useState } from "react";
 
 const Content = () => {
   const { param }: { param: string } = useParams();
-  const house = param.replaceAll("%20", " ");
   const t = useTranslations("HouseCard");
   const housesDetailsOptions = getHousesDetailsOptions(param);
   const housesBadgesOptions = getHousesBadgesOptions(param);
@@ -30,6 +30,7 @@ const Content = () => {
     useSuspenseQuery(housesBadgesOptions);
   const cardData: HouseCard = card;
   const badgesData: Badge = badges;
+  const [img, setImg] = useState(cardData.houseDetails.avatar);
   if (!card || !badges) return <NoData />;
   if (isLoadingCard || isLoadingBadges) return <LoadingComponent />;
   return (
@@ -38,7 +39,8 @@ const Content = () => {
         <div className="flex flex-col md:flex-row">
           <div className="flex items-center justify-center relative">
             <Image
-              src={cardData.houseDetails.avatar}
+              src={img}
+              onError={() => setImg("https://i.imgur.com/4VEMy1m.png")}
               alt={cardData.houseDetails.name}
               width={362}
               height={362}
@@ -60,7 +62,7 @@ const Content = () => {
                 {t("house_leader")}
               </p>
               <p className="text-2xl font-semibold">
-                {cardData?.houseLeader?.discordNick ?? "BardDev"}
+                {cardData?.houseLeader?.discordNick ?? "Unknown"}
               </p>
             </div>
 

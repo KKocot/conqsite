@@ -1,0 +1,388 @@
+{
+  "shared": {
+    "language": "{locale, select, gb {English} pl {Polski} fr {Français} de {German} tr {Türkçe} es {Español} cz {čeština} hu {български} ru {Русский} other {Unknown}}"
+  },
+  "Login": {
+    "login_to_access_your_profile": "Login to access your profile",
+    "login": "Login"
+  },
+  "Authority": {
+    "hello": "Hello ",
+    "you_are_about_to_login": "You are about to authorize access to account with id ",
+    "authorize": "Authorize"
+  },
+  "Navigation": {
+    "dashboard": {
+      "dashboard": "Dashboard",
+      "list_of_house": "List of House",
+      "units": "Units",
+      "doctrines": "Doctrines",
+      "privacy_policy": "Privacy Policy",
+      "terms_of_service": "Terms of Service",
+      "documentation": "Documentation"
+    },
+    "member": {
+      "member": "Member",
+      "my_profile": "My Profile",
+      "my_stats": "My Stats",
+      "update_form": "Update Profile",
+      "create_house": "Create House"
+    },
+    "house": {
+      "lineups": "Lineups",
+      "my_house": "My House",
+      "build_team": "Build Lineup",
+      "house_stats": "House Stats",
+      "bot_controller": "Bot Controller",
+      "high_roles": "High Roles",
+      "bot_config": "Bot Config",
+      "house_card": "House Card"
+    },
+    "auth": {
+      "login": "Login",
+      "logout": "Logout"
+    }
+  },
+  "ListOfHouses": {
+    "join_discord": "Join Discord"
+  },
+  "Units": {
+    "golden_era": "Golden Era",
+    "heroic_era": "Heroic Era",
+    "silver_era": "Silver Era",
+    "knight_era": "Knight Era",
+    "feudal_and_rustical_era": "Feudal & Rustical Era"
+  },
+  "Doctrines": {
+    "general_doctrines": "General Doctrines",
+    "dedicated_for_groups": "Dedicated for Groups",
+    "dedicated_for_units": "Dedicated for Units"
+  },
+  "MyProfile": {
+    "houses": "Houses",
+    "max_and_preffer": "Max and Preffer",
+    "preffer": "Preffer",
+    "maxed": "Maxed",
+    "i_have": "I have",
+    "i_dont_have": "I don't have",
+    "meta": "Meta unit",
+    "leadership": "Leadership"
+  },
+  "MyStats": {
+    "season_start": "Season Start",
+    "season_end": "Season End",
+    "list_of_drillmodes": "List of Drillmodes",
+    "list_of_tw": "List of TW",
+    "attendance_in_percent": "Attendance in %",
+    "tw_not_started": "TW not started yet"
+  },
+  "AddForm": {
+    "you_have_no_access": "You have no access",
+    "form": "Form",
+    "low_eras": "Low Eras",
+    "heroic_eras": "Heroic Eras",
+    "golden_era": "Golden Era",
+    "general": "General",
+    "i_dont_have": "I don't have",
+    "i_have": "I have",
+    "maxed": "Maxed",
+    "preffer": "Preffer",
+    "maxed_and_preffer": "Maxed and Preffer",
+    "show_meta_only": "Show meta units only",
+    "show_all": "Show all units",
+    "previous": "Previous",
+    "next": "Next",
+    "submit": "Submit",
+    "discord_nick": "Discord Nick",
+    "nick_in_game": "Nick in Game",
+    "hero_level": "Hero Level",
+    "house": "House",
+    "amount_of_artillery": "Amount of Artillery",
+    "not_at_all": "Not at all",
+    "some": "Some",
+    "average": "Average",
+    "a_lot": "A lot",
+    "weapons": "Weapons",
+    "i_preffer": "I preffer",
+    "not_preffer": "I can take, but preffer not",
+    "leadership": "Leadership",
+    "preferences": "Preferences"
+  },
+  "Settings": {
+    "previous": "Previous",
+    "next": "Next",
+    "verification": {
+      "discord_verification": "Discord Verification",
+      "house_id": "Give us your house Discord ID",
+      "get_id": "How to find Discord ID",
+      "discord_id": "Discord ID",
+      "tooltip_one": "Go to your Discord User Settings",
+      "tooltip_two": "Go to Advanced and turn Developer mode on",
+      "tooltip_three": "Right-click on the server and click Copy Server ID",
+      "tw_discord_id": "TW Discord ID",
+      "point_one": "- Make sure ",
+      "point_two": " is on your Discord and got high role to see all roles and channels",
+      "point_three": "- Make sure you have admin role on that Discord",
+      "point_four": "- Also Konquerus can track your house attendance by scaning all discord and record 3 time(at start, after 30min and at the end) and save it for you. If your house using different discord for TW, click checkbox, make sure you are an admin on that server and ",
+      "point_five": " is on that server too."
+    },
+    "config": {
+      "config": "Konquerys Config",
+      "type": "Type",
+      "description": "Description",
+      "list": "List",
+      "member_role": "Member Role",
+      "member_role_description": "Choose the common member discord role to let the bot know who should be added to your house.",
+      "member_pleaceholder": "Member",
+      "logs_channel": "Logs Channel",
+      "logs_channel_description": "Konquerus need a channel to communicate you who joined or leave your house.",
+      "logs_pleaceholder": "Logs",
+      "tw_role": "TW Role",
+      "tw_role_description": "Konquerus need to know the common role on the TW discord to",
+      "tw_pleaceholder": "Common role on TW channel",
+      "lineup": "Lineup",
+      "lineup_description": "Bot needs to know how to split your house into lineups if you have more than one raid, so pick channel with attendance bot and role for this lineup.",
+      "channel_label": "Channel",
+      "channel_pleaceholder": "Pick sign up bot channel",
+      "role_label": "Role",
+      "role_pleaceholder": "Pick Lineup role",
+      "add_lineup": "Add Lineup",
+      "remove_lineup": "Remove Lineup",
+      "update_config": "Update Config"
+    },
+    "high_roles": {
+      "pick_your_commanders": "Pick Your Commanders",
+      "house_leader": "House Leader",
+      "choose_your_right_hand": "Choose Your Right Hand",
+      "choose_your_commanders": "Choose Your 3 Commanders",
+      "choose_right_hand_placeholder": "Choose Right Hand",
+      "choose_commanders_placeholder": "Choose Commanders",
+      "permissions": "Permissions:",
+      "build_team": "Build Teams",
+      "publishing_lineups": "Publishing Lineups",
+      "manage_all_roles": "Manage all roles",
+      "manage_house_info": "Manage house info",
+      "manage_house_config": "Manage house config",
+      "manage_commands": "Manage command roles",
+      "you": "You"
+    },
+    "house_card": {
+      "house_card": "House Card Details",
+      "name": "House Name",
+      "name_info": "House Name should be unique and not longer them 20 character",
+      "description": "House Description",
+      "description_info": "House Description is required, not offensive to others and not longer them 45 characters",
+      "country": "Country",
+      "country_info": "Country e.g. 'Poland', 'UK' or maybe 'International'",
+      "link": "Discord Link",
+      "link_info": "Discord Link for your house discord server",
+      "logo": "House Logo",
+      "logo_info": "Image url address. I recommend to use free imagehoster like https://imgur.com/ to upload your house Image. DONT use url from discord images, cause will disappear after a few days.",
+      "server": "Server",
+      "server_info": "Where users can find your house",
+      "join_discord": "Join Discord",
+      "edit_card": "Edit Card",
+      "submit": "Create House and add all your Members",
+      "error_one": "House Name is already taken",
+      "error_two": "House Name is too long",
+      "error_three": "Description is too long",
+      "error_four": "Discord link is invalid",
+      "error_five": "Country name is too long",
+      "error_six": "Server is required"
+    }
+  },
+  "Lineups": {
+    "change_data": "Change Data",
+    "hide_name": "Hide Name",
+    "show_name": "Show Name",
+    "username": "Username",
+    "1st_unit": "First Unit",
+    "2nd_unit": "Second Unit",
+    "3rd_unit": "Third Unit",
+    "weapon": "Weapon",
+    "artillery": "Artillery",
+    "description": "Description",
+    "group": "Group",
+    "you": "You"
+  },
+  "MyHouse": {
+    "visible": "Visible to Members",
+    "blocked": "Blocked for members"
+  },
+  "BuildTeam": {
+    "maxed_and_preffer": "Maxed and Preffer",
+    "preffer": "Preffer",
+    "maxed": "Maxed",
+    "i_have": "I have",
+    "card": {
+      "username": "Username",
+      "1st_unit": "1st Unit",
+      "2nd_unit": "2nd Unit",
+      "3rd_unit": "3rd Unit",
+      "weapon": "Weapon",
+      "cost": "Cost:",
+      "artillery": "Artillery",
+      "description": "Description"
+    },
+    "public": {
+      "public": "Public",
+      "no_lineups": "No lineups",
+      "lineups_from": "Lineups from ",
+      "lineup_name": "Lineup name",
+      "add": "Add",
+      "delete": "Delete",
+      "load": "Load",
+      "update": "Update",
+      "lineup_added": "Lineup added",
+      "lineup_deleted": "Lineup deleted",
+      "lineup_updated": "Lineup updated",
+      "lineup_loaded": "Lineup loaded",
+      "date_loaded": "Date loaded",
+      "are_you_sure": "Are you sure you want to delete this sheet?"
+    },
+    "templates": {
+      "templates": "Templates",
+      "no_templates": "No templates",
+      "template_name": "Template name",
+      "add": "Add",
+      "delete": "Delete",
+      "load": "Load",
+      "update": "Update",
+      "template_added": "Template added",
+      "template_deleted": "Template deleted",
+      "template_updated": "Template updated",
+      "template_loaded": "Template loaded"
+    },
+    "bot": {
+      "load_list": "Load list form Discord",
+      "choose_date": "Choose a date",
+      "next_tw": "Next TW",
+      "load_attendance": "Load attendance from Discord Bot",
+      "upload": "Upload",
+      "upload_all": "Upload all players",
+      "pick_lineup": "Pick Lineup"
+    },
+    "filters": {
+      "filters": "Filters",
+      "meta_units_only": "Meta units only",
+      "golden_era": "Golden Era",
+      "heroic_era": "Heroic Era",
+      "silver_era": "Silver Era",
+      "knight_era": "Knight Era",
+      "feudal__and_rustical_era": "Feudal & Rustical Era",
+      "general": "General"
+    },
+    "artillery": {
+      "not_at_all": "Not at all",
+      "no_artillery": "No Artillery",
+      "some_artillery": "Some Artillery",
+      "average_artillery": "Average Artillery",
+      "some": "Some",
+      "average": "Average",
+      "a_lot_artillery": "A lot of Artillery",
+      "a_lot": "A lot"
+    }
+  },
+  "HouseStats": {
+    "username": "Username",
+    "attendance_in_percent": "Attendance in %",
+    "season_start": "Season Start",
+    "season_end": "Season End",
+    "drillmodes": "Drillmodes",
+    "tw": "TW"
+  },
+  "HouseCard": {
+    "house_leader": "House Leader",
+    "join_discord": "Join Discord"
+  },
+  "Home": {
+    "HeroSection": {
+      "title": "Conquerors Blade House Management",
+      "description": "Save time, automate your house management for free",
+      "stat_one": "Houses using our website and bot",
+      "stat_two": "Warriors surveys"
+    },
+    "ProblemSection": {
+      "problem_one": "Leaders and commanders have a lot of work to manage the house and the members",
+      "problem_two": "Create sheets for TW, track attendance, share sheet only with members of your house"
+    },
+    "SolutionSection": {
+      "features_one": "Team Builder - to easy sheet create, based on your house members surveys",
+      "features_two": "Prepare Preview for Members - create nice and easy to read preview",
+      "features_three": "TW Attendance tracing - bot checking 3 times your discord channels to create attendance list with players",
+      "features_four": "Track Surveys - easy way to check members surveys",
+      "features_five": "Permissions management - decide who should be able to create teams in your house",
+      "features_six": "Easy Way to Login - Login with Discord account or behalf our discord bot "
+    },
+    "CallSection": {
+      "call_one": "Ready to lead your house to glory?",
+      "call_two": "Join thousands of commanders already using our battle-tested platform",
+      "button_title": "Create Your House (Free)"
+    }
+  },
+  "CommandPages": {
+    "BotController": {
+      "no_events_found": "No events found",
+      "description": "Description: {description}",
+      "event_start": "Event start: {date} {time}",
+      "next_event": "Next event: {interval}",
+      "tw": "TW",
+      "never": "Never",
+      "days": "{days} days",
+      "activity_time": "Activity time: {time} hours",
+      "channel_id": "Channel ID: {label}",
+      "unknown_channel": "Unknown channel",
+      "role_id": "Role ID: {label}",
+      "unknown_role": "Unknown role",
+      "list": "List: {count}",
+      "actions": "Actions",
+      "info": "Info",
+      "date_required": "Date is required",
+      "hour_required": "Hour is required",
+      "activity_time_min": "Activity time must be at least 1 hour",
+      "title_required": "Title is required",
+      "description_required": "Description is required",
+      "description_too_long": "Description is too long",
+      "channel_required": "Channel is required",
+      "role_required": "Role is required",
+      "edit": "edit",
+      "create": "create",
+      "update": "update",
+      "event_success": "Event {action}",
+      "updated": "updated",
+      "created": "created",
+      "event_failed": "Failed to {action} event",
+      "create_attendance": "Create Attendance Event",
+      "tw_tilte": "TW Event {date}",
+      "event_info": "Event will be posted in the selected channel after you press Create Event",
+      "create_event": "Create Event",
+      "date": "Enter the date of the event",
+      "hour": "Enter the hour of the event",
+      "hour_text": "Hour",
+      "interval": "Enter when the event will come back again in days",
+      "channel": "Select a channel where the event will be posted",
+      "title": "Enter the title of the event",
+      "date_text": "Date",
+      "interval_text": "Interval",
+      "select_placeholder": "Select a channel",
+      "custom": "Custom",
+      "channel_text": "Channel",
+      "advanced_settings": "Advanced Settings",
+      "title_text": "Title",
+      "enter_description": "Enter the description of the event",
+      "activity_time_title": "Activity Time",
+      "activity_time_description": "Enter the time in hours the event will be active",
+      "role_text": "Role",
+      "select_role": "Select a role",
+      "role_description": "Select a role to be mentioned when the event starts",
+      "bot_messages": "Bot messages",
+      "bot_allowed": "Bot is allowed to message to players",
+      "pings": "Pings",
+      "empty_surveys": "Empty surveys",
+      "permissions": "Permissions",
+      "empty_survey_message": "Empty surveys: {empty}, but {failed} failed",
+      "bot_messages_permission": "Bot messages",
+      "description_text": "Description"
+    }
+  }
+}
