@@ -20,7 +20,8 @@ const CreateHousePage = () => {
     enabled: !!user,
   });
   const houseLeader =
-    userRole && userRole.map((role) => role.role === "houseLeader");
+    userRole && userRole?.some((role) => role.role === "HouseLeader");
+
   if (!!houseLeader) {
     return (
       <div className="w-full h-full flex flex-col items-center justify-center space-y-4">
