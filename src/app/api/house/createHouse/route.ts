@@ -13,6 +13,16 @@ export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
   const { searchParams } = new URL(request.url);
   const house = searchParams.get("house");
+  const roleCheck = await Roles.findOne({
+    discordId: session?.user.id,
+    role: "HouseLeader",
+  });
+  if (!!roleCheck) {
+    return NextResponse.json(
+      { message: "You are already a house leader in one house" },
+      { status: 403 }
+    );
+  }
   if (!session)
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   try {
