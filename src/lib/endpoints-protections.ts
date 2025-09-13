@@ -1,10 +1,11 @@
 import { Survey } from "@/queries/profile.query";
-import { Role } from "@/queries/roles.query";
+
 import { Session } from "next-auth";
+import { Roles } from "./get-data";
 
 // Leader Access
 export const leaderRoleAllowed = (
-  roles: Role[] | null,
+  roles: Roles[] | null,
   session: Session | null,
   house: string | null
 ) => {
@@ -19,7 +20,7 @@ export const leaderRoleAllowed = (
 
 // Highest Access
 export const highestRolesAllowed = (
-  roles: Role[] | null,
+  roles: Roles[] | null,
   session: Session | null,
   house: string | null
 ) => {
@@ -28,19 +29,21 @@ export const highestRolesAllowed = (
     (role) =>
       role.discordId === session?.user?.id &&
       role.house === house &&
-      (role.role === "HouseLeader" || role.role === "RightHand")
+      (role.role === "HouseLeader" || role.role === "RightHand") &&
+      !role.muted
   );
 };
 
 // High Command Access
 export const highCommandAllowed = (
-  roles: Role[] | null,
+  roles: Roles[] | null,
   session: Session | null,
   house: string | null | undefined
 ) => {
   if (!roles || !session || !house) return false;
   return roles.some(
-    (role) => role.discordId === session.user.id && role.house === house
+    (role) =>
+      role.discordId === session.user.id && role.house === house && !role.muted
   );
 };
 

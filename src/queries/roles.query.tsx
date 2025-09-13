@@ -6,6 +6,7 @@ const roleSchema = z.object({
   house: z.string(),
   role: z.string(),
   discordNick: z.string(),
+  muted: z.boolean().optional(),
 });
 export type Role = z.infer<typeof roleSchema>;
 

@@ -16,6 +16,7 @@ const PlanTemplateArraySchema = new Schema({
   templateName: { type: String, required: true },
   house: { type: String, required: true },
   layers: [PlanTemplateSchema],
+  muted: { type: Boolean, default: false },
 });
 
 const PlanTemplate =

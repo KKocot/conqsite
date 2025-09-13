@@ -11,7 +11,13 @@ export const useAddMapTemplateMutation = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(planTemplate),
+        body: JSON.stringify({
+          ...planTemplate,
+          layers: planTemplate.layers.map((layer, index) => ({
+            ...layer,
+            title: layer.title || `Layer ${index + 1}`,
+          })),
+        }),
       });
 
       if (!response.ok) {

@@ -7,6 +7,7 @@ export interface Roles {
   house: string;
   role: string;
   discordNick: string;
+  muted?: boolean;
 }
 
 export const getRoleById = async (id: string): Promise<Roles[]> => {
@@ -151,6 +152,7 @@ export interface PlanTemplate {
   templateName: string;
   house: string;
   layers: Plan[];
+  muted?: boolean;
 }
 
 export interface PlanPublic {
@@ -158,6 +160,7 @@ export interface PlanPublic {
   publicName: string;
   house: string;
   layers: Plan[];
+  muted?: boolean;
 }
 
 export const getPublicPlans = async (
@@ -184,6 +187,7 @@ export interface Template {
   templateName: string;
   commander?: string;
   sheet: SheetTypes[];
+  muted?: boolean;
 }
 
 export const getTemplates = async (

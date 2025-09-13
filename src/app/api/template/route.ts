@@ -7,6 +7,7 @@ import { authOptions } from "@/lib/auth";
 import { putTemplateSchema } from "./schema";
 import Roles from "@/models/roles";
 import { highCommandAllowed } from "@/lib/endpoints-protections";
+import { Template as TemplateType } from "@/lib/get-data";
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
@@ -53,7 +54,7 @@ export async function GET(request: Request) {
 
     if (!highCommandAccess) return new Response("401");
 
-    const templates = await Template.find({ house: query });
+    const templates: TemplateType[] = await Template.find({ house: query });
     return NextResponse.json({ templates });
   } catch (error) {
     if (error instanceof ZodError)

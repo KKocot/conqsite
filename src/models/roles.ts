@@ -5,6 +5,7 @@ const RolestSchema = new Schema({
   discordId: String,
   role: String,
   house: String,
+  muted: Boolean,
 });
 
 const Roles = mongoose.models.Roles || mongoose.model("Roles", RolestSchema);
