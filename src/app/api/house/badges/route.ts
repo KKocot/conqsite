@@ -23,6 +23,7 @@ export async function GET(request: Request) {
     const lowQualityHouses = await getLowQualityHouses(cards);
 
     const combinedData = cards
+      .filter((card) => !card.muted)
       .map((card) => ({
         house: card.name,
         premium:

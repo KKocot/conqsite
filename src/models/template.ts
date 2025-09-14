@@ -21,6 +21,7 @@ const TemplateSchema = new Schema({
       weapon: { type: String, required: false },
     },
   ],
+  muted: Boolean,
 });
 
 const Template =

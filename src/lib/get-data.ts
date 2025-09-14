@@ -7,6 +7,7 @@ export interface Roles {
   house: string;
   role: string;
   discordNick: string;
+  muted?: boolean;
 }
 
 export const getRoleById = async (id: string): Promise<Roles[]> => {
@@ -62,7 +63,7 @@ export interface HouseSettings {
 export const getHouseSettings = async (
   name: string
 ): Promise<HouseSettings> => {
-  const response = await fetch(`/api/houseSettings?name=${name}`);
+  const response = await fetch(`/api/house/houseSettings?name=${name}`);
   const result = await response.json();
   return result;
 };
@@ -151,6 +152,7 @@ export interface PlanTemplate {
   templateName: string;
   house: string;
   layers: Plan[];
+  muted?: boolean;
 }
 
 export interface PlanPublic {
@@ -158,6 +160,7 @@ export interface PlanPublic {
   publicName: string;
   house: string;
   layers: Plan[];
+  muted?: boolean;
 }
 
 export const getPublicPlans = async (
@@ -184,6 +187,7 @@ export interface Template {
   templateName: string;
   commander?: string;
   sheet: SheetTypes[];
+  muted?: boolean;
 }
 
 export const getTemplates = async (
@@ -235,12 +239,6 @@ export const getUserStats = async (id: string): Promise<UsersStats> => {
   return result;
 };
 
-export const getHouseStats = async (house: string): Promise<UsersStats[]> => {
-  const response = await fetch(`/api/userStats?house=${house}`);
-  const result = await response.json();
-  return result;
-};
-
 export interface UsersStatsSorted {
   nick: string;
   id: string;
@@ -260,22 +258,6 @@ export const getHouseSortedStats = async (
 interface BotSettings {
   status: string;
 }
-
-export const getBotSettings = async (
-  guild_id: string,
-  member_id: string,
-  member: string,
-  logs: string,
-  attendance: string,
-  tw_server: string,
-  tw_member: string
-): Promise<BotSettings> => {
-  const response = await fetch(
-    `/api/discord-bot/settingsVerification?guild_id=${guild_id}&member_id=${member_id}&member=${member}&logs=${logs}&attendance=${attendance}&tw_server=${tw_server}&tw_member=${tw_member}`
-  );
-  const result = await response.json();
-  return result;
-};
 
 export interface DiscordProps {
   status: "ok" | "error";
@@ -359,15 +341,9 @@ export interface HouseAssets {
 }
 
 export const getHouseAssets = async (house: string): Promise<HouseAssets> => {
-  const response = await fetch(`/api/houseAssets?name=${house}`);
+  const response = await fetch(`/api/house/houseAssets?name=${house}`);
   const result = await response.json();
   return result.houseAssets;
-};
-
-export const getHousesAssets = async (): Promise<HouseAssets[]> => {
-  const response = await fetch(`/api/houseAssets`);
-  const result = await response.json();
-  return result.housesAssets;
 };
 
 type SignUp = {
@@ -395,13 +371,6 @@ export interface BotEvent {
 // Function to get all active events from house
 export const getBotEvents = async (house: string): Promise<BotEvent[]> => {
   const response = await fetch(`/api/event?house=${house}`);
-  const result = await response.json();
-  return result;
-};
-
-// Function to get one event by id
-export const getBotEvent = async (id: string): Promise<BotEvent> => {
-  const response = await fetch(`/api/event?eventId=${id}`);
   const result = await response.json();
   return result;
 };
@@ -466,13 +435,6 @@ export const getUnitWiki = async (
   status: "rejected" | "accepted" | "pending"
 ): Promise<UnitObject[]> => {
   const response = await fetch(`/api/units/wiki?name=${unit}&status=${status}`);
-  const result = await response.json();
-  return result;
-};
-export const getUnitsReview = async (
-  status: "pending" | "accepted" | "rejected"
-): Promise<UnitObject[]> => {
-  const response = await fetch(`/api/units/wiki?status=${status}`);
   const result = await response.json();
   return result;
 };
@@ -574,12 +536,6 @@ export const getUnitsAssets = async (): Promise<UnitAssetsGroup> => {
   return result;
 };
 
-export const getUnitAssets = async (name: string): Promise<UnitAsset> => {
-  const response = await fetch(`/api/assets/units?name=${name}`);
-  const result = await response.json();
-  return result.unitAsset;
-};
-
 export interface UnitData {
   _id?: string;
   author: string;
@@ -593,24 +549,6 @@ export interface UnitData {
   tree: { structure: Map<number, number>; maxlvl: number };
   doctrines: { id: number; name: string; img: string; stats: string }[];
 }
-
-export const getUnitPost = async (id: string): Promise<UnitData> => {
-  const response = await fetch(`/api/units/post?id=${id}`);
-  const result = await response.json();
-  return result;
-};
-
-export const getAllUnitPosts = async (unit: string): Promise<UnitData[]> => {
-  const response = await fetch(`/api/units/post?unit=${unit}`);
-  const result = await response.json();
-  return result;
-};
-
-export const getAllUnitsPosts = async (): Promise<UnitData[]> => {
-  const response = await fetch(`/api/units/post`);
-  const result = await response.json();
-  return result;
-};
 
 export interface UserUnitPost {
   author: {
@@ -668,12 +606,6 @@ export interface Badge {
   quality: number;
 }
 
-export const getHouseBadges = async (house: string): Promise<Badge> => {
-  const response = await fetch(`/api/house/badges?house=${house}`);
-  const result = await response.json();
-  return result;
-};
-
 type Materials = {
   name: string;
   amount: number;
@@ -692,23 +624,10 @@ export const getArtilleryAssets = async (): Promise<ArtilleryAsset[]> => {
   return result.artilleriesAsset;
 };
 
-export const getArtilleryAsset = async (
-  name: string
-): Promise<ArtilleryAsset> => {
-  const response = await fetch(`/api/assets/artillery?name=${name}`);
-  const result = await response.json();
-  return result.artilleryAsset;
-};
 export interface KitsAssets {
   image: string;
   unit: string;
 }
-
-export const getKitsAssets = async (unit: string): Promise<KitsAssets[]> => {
-  const response = await fetch(`/api/assets/kits?unit=${unit}`);
-  const result = await response.json();
-  return result.artilleryAsset;
-};
 
 export interface WeaponAsset {
   id: number;
@@ -730,22 +649,6 @@ export interface DoctrineType {
   rarity: "common" | "uncommon" | "rare" | "epic";
 }
 
-export const getDoctrineByName = async (
-  name: string
-): Promise<DoctrineType | null> => {
-  const response = await fetch(`/api/assets/doctrines?doctrine=${name}`);
-  const result = await response.json();
-  return result;
-};
-
-export const getUnitDoctrines = async (
-  unit: string
-): Promise<DoctrineType[]> => {
-  const response = await fetch(`/api/assets/doctrines?unit=${unit}`);
-  const result = await response.json();
-  return result;
-};
-
 export interface PageMD {
   page: string;
   body: string;
@@ -766,18 +669,6 @@ export interface TierUnits {
   era: "golden" | "heroic" | "blue" | "green" | "grey";
 }
 
-export const getTierUnits = async (id: string): Promise<TierUnits[]> => {
-  const response = await fetch(`/api/user/tierList?userId=${id}`);
-  const result = await response.json();
-  return result;
-};
-
-export const getCommunityTierList = async (): Promise<TierUnits[]> => {
-  const response = await fetch(`/api/units/tierList`);
-  const result = await response.json();
-  return result;
-};
-
 export interface MapAsset {
   name: string;
   cities: string[];
@@ -789,12 +680,6 @@ export const getMapsAssets = async (): Promise<MapAsset[]> => {
   const response = await fetch(`/api/assets/maps`);
   const result = await response.json();
   return result.mapsAssets;
-};
-
-export const getMapAssets = async (name: string): Promise<MapAsset> => {
-  const response = await fetch(`/api/assets/maps?map=${name}`);
-  const result = await response.json();
-  return result.mapAssets;
 };
 
 interface OtherIconAsset {

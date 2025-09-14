@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 const useDeleteSubSurvey = () => {
@@ -13,28 +12,10 @@ const useDeleteSubSurvey = () => {
       });
 
       if (!response.ok) {
-        let message = "Failed to delete sub survey";
-        try {
-          const errorData = await response.clone().json();
-          message = errorData?.message || message;
-        } catch {
-          try {
-            const text = await response.text();
-            if (text) message = text;
-          } catch {
-            // ignore, keep default message
-          }
-        }
-        throw new Error(message);
+        throw new Error("Failed to delete sub survey");
       }
-      toast.success("Sub survey deleted successfully, refrashe the page");
-      // Safely handle empty or non-JSON response bodies (e.g., 204 No Content)
-      try {
-        const text = await response.text();
-        return text ? JSON.parse(text) : null;
-      } catch {
-        return null;
-      }
+      toast.success("Sub survey deleted successfully");
+      return response;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({

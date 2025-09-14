@@ -7,6 +7,7 @@ const HouseSchema = new Schema({
   discordLink: String,
   avatar: String,
   server: String,
+  muted: Boolean,
 });
 
 const House = mongoose.models.House || mongoose.model("House", HouseSchema);

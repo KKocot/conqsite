@@ -4,6 +4,7 @@ import { ZodError } from "zod";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import SubSurvey from "@/models/user/subSurvey";
+import { Survey } from "@/lib/get-data";
 
 export async function GET(
   _request: Request,
@@ -12,8 +13,11 @@ export async function GET(
   const session = await getServerSession(authOptions);
   try {
     await connectMongoDB();
-    const subSurvey = await SubSurvey.find({ discordId: id });
-    const userAccess = subSurvey[0]?.discordId === session?.user.id;
+    const subSurvey: Survey[] = await SubSurvey.find({ discordId: id });
+    if (subSurvey.length === 0) {
+      return new Response(JSON.stringify({ subSurvey: [] }), { status: 200 });
+    }
+    const userAccess = subSurvey[0].discordId === session?.user.id;
     if (!userAccess) return new Response("401");
 
     return NextResponse.json({ subSurvey }, { status: 200 });
@@ -32,13 +36,19 @@ export async function DELETE(
   const session = await getServerSession(authOptions);
   try {
     await connectMongoDB();
-    const subSurvey = await SubSurvey.findOne({ discordNick: id });
-    const userAccess = subSurvey?.discordId === session?.user.id;
-    if (!userAccess) return new Response("401");
-    if (!subSurvey) return new Response("404");
-
-    await SubSurvey.findByIdAndDelete(subSurvey._id);
-    return new Response(subSurvey, { status: 200 });
+    const subSurveys: Survey[] = await SubSurvey.find({
+      discordId: session?.user.id,
+    });
+    const findSubSurvey = subSurveys.find(
+      (survey) => survey.discordNick === id
+    );
+    if (findSubSurvey) {
+      const deletedSubSurvey = await SubSurvey.findByIdAndDelete(
+        findSubSurvey._id
+      );
+      return new Response(deletedSubSurvey, { status: 200 });
+    }
+    return new Response("Sub survey not found", { status: 404 });
   } catch (error) {
     if (error instanceof ZodError)
       return NextResponse.json({ message: error.message }, { status: 400 });

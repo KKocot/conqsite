@@ -70,7 +70,8 @@ const TemplatesTab = ({
             disabled={
               houseAssets.isLoading ||
               (!existingTemplate &&
-                (data?.length ?? 0) >= (houseAssets.data?.premium ? 10 : 5))
+                (data?.length ?? 0) >= (houseAssets.data?.premium ? 10 : 5)) ||
+              !!existingTemplate?.muted
             }
           >
             {existingTemplate ? "Update" : "Add"}
@@ -87,6 +88,7 @@ const TemplatesTab = ({
               <div className="pl-1">{template.templateName}</div>
               <div className="flex flex-col">
                 <Button
+                  disabled={template.muted}
                   className="p-1"
                   variant="custom"
                   onClick={() => {

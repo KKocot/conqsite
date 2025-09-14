@@ -69,8 +69,9 @@ const Templates = ({
               variant="custom"
               className="absolute right-1 top-1/2 -translate-y-1/2"
               disabled={
-                !existingTemplate &&
-                (data?.length ?? 0) >= (assets?.premium ? 10 : 5)
+                (!existingTemplate &&
+                  (data?.length ?? 0) >= (assets?.premium ? 10 : 5)) ||
+                (existingTemplate && !!existingTemplate.muted)
               }
               onClick={() => {
                 addTemplate.mutate({
@@ -101,6 +102,7 @@ const Templates = ({
                 <div className="flex items-center">
                   <Button
                     variant="custom"
+                    disabled={!!template.muted}
                     onClick={() => {
                       setSheetData(template.sheet);
                       setTemplateName(template.templateName);

@@ -6,7 +6,7 @@ export const useUpdateAssetsMutation = () => {
 
   return useMutation({
     mutationFn: async (houseAssets: HouseAssets) => {
-      const response = await fetch("/api/houseAssets", {
+      const response = await fetch("/api/house/houseAssets", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
