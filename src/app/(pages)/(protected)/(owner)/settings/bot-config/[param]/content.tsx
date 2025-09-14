@@ -45,34 +45,37 @@ const Content = ({
   });
   const onUpdate = async () => {
     try {
-      const response = await fetch(`/api/houseSettings?name=${values.name}`, {
-        method: "POST",
-        body: JSON.stringify({
-          id: values.guild_id,
-          name: values.name,
-          member: {
-            name: values.member,
-            id: values.member,
-          },
-          lineup: values.lineup.map((item) => ({
-            name: item.name,
-            id: item.channelID,
-            roleId: item.roleID,
-          })),
-          logs: {
-            logs: values.logs,
-            attendance: values.logs,
-          },
-          tw: {
-            server: values.tw_discord,
-            member: values.tw_member,
-          },
-        }),
+      const response = await fetch(
+        `/api/house/houseSettings?name=${values.name}`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            id: values.guild_id,
+            name: values.name,
+            member: {
+              name: values.member,
+              id: values.member,
+            },
+            lineup: values.lineup.map((item) => ({
+              name: item.name,
+              id: item.channelID,
+              roleId: item.roleID,
+            })),
+            logs: {
+              logs: values.logs,
+              attendance: values.logs,
+            },
+            tw: {
+              server: values.tw_discord,
+              member: values.tw_member,
+            },
+          }),
 
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
