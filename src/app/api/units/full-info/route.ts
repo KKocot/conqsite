@@ -30,7 +30,7 @@ export async function GET(request: Request) {
       if (
         doctrine.dedicated === "unit" &&
         doctrine.forUnit &&
-        doctrine.forUnit.includes(name)
+        doctrine.forUnit.includes(cleanName)
       ) {
         return true;
       }
