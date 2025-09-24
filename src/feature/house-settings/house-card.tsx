@@ -57,7 +57,7 @@ export default function HouseCard({
             />
           </Link>
         </div>
-        <CardHeader className="pt-2">
+        <CardHeader className="pt-2 bg-card">
           <CardTitle
             className={clsx("text-xl font-bold", {
               "text-accent": badgesData?.premium,
@@ -69,10 +69,10 @@ export default function HouseCard({
             <span title="Server">{house.server}</span> {house.country}
           </p>
         </CardHeader>
-        <CardContent className="flex-grow">
+        <CardContent className="flex-grow bg-card">
           <p className="text-sm mb-2">{house.description}</p>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="bg-card">
           <Button asChild className="w-full" variant="custom">
             <Link
               href={house.discordLink}
